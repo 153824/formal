@@ -619,10 +619,10 @@ Page({
     var that = this;
     var paperDetail = that.data.paperDetail;
     var userPapersNum = paperDetail.userPapersNum || {};
-    // wx.navigateTo({
-    //   url: './sharePaper?id=' + paperDetail.id + "&count=" + userPapersNum.total,
-    // });
-    // return;
+    wx.navigateTo({
+      url: './sharePaper?id=' + paperDetail.id + "&count=" + userPapersNum.total,
+    });
+    return;
     app.doAjax({
       url: 'toSharePaper',
       method: 'post',

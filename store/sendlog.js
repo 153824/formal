@@ -53,10 +53,16 @@ Page({
       success: function(res) {
         var now = new Date().getTime();
         res.data.forEach(function(node) {
+          console.log(node.id)
           var createdAt = node.createdAt;
           var beentime = ((now - new Date(createdAt).getTime()) / 1000 / 60 / 60).toFixed(1);
           node.beentime = beentime;
           node.createdAt = app.changeDate(node.createdAt, "yyyy-MM-dd hh:mm");
+          //临时解决方案
+          var peoplesId = node.peoplesId ||[];
+          console.log(peoplesId);
+          node.count = node.count - peoplesId.length;
+          // node.count = node.count - 4;
         });
         that.setData({
           paperlist: res.data

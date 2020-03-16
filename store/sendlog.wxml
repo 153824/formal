@@ -77,10 +77,10 @@
         </view>
       </view>
 
-      <view class="list" wx:if="{{listitem.status == 0}}">
+      <view class="list" wx:if="{{listitem.status == 0 &&listitem.count >0}}">
         <view class="listleft">
           <view class="lefttop">
-            <view class="listtitle">待领取</view>
+            <view class="listtitle">{{listitem.count}}份待领取</view>
             <text class="liststatus">（已发{{listitem.beentime}}小时）</text>
           </view>
           <view class="leftbottom">发放时间：{{listitem.createdAt}}</view>

@@ -15,7 +15,7 @@
     </view>
     <view wx:if="{{!list.length}}" class="listNoData">
       <image src="../img/index/icon6.png"></image>
-      <view>没有可查看的报告</view>
+      <view>暂无可查看的报告~</view>
     </view>
     <view class="list" wx:else>
       <block wx:for="{{list}}" wx:key="unique">
@@ -79,7 +79,7 @@
     <view class="footerbox" style="background-color: {{paperList.length?'#efeff3':'#fff'}};">
       <view wx:if="{{!paperList.length}}" class="listNoData">
         <image src="../img/index/icon6.png"></image>
-        <view>还没有记录～</view>
+        <view>暂无已购买的测评，请前往测评商城购买～</view>
       </view>
       <block wx:else>
         <view class="card" wx:for="{{paperList}}" wx:key="unique" bindtap="changePage" data-url="../store/detail?id={{item.paper.id}}">

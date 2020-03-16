@@ -3,7 +3,7 @@ var app = getApp();
 Page({
   data: {
     kefuWX: "LIN_7890",
-    kefuMobile: "0592-29299293949",
+    kefuMobile: "18559297592",
     buyVipType: 1,
     isIos: false,
     noBuy: true,
@@ -33,7 +33,7 @@ Page({
         var otherSetting = ret.otherSetting || {};
         that.setData({
           kefuWX: otherSetting.kefuWX || "LIN_7890",
-          kefuMobile: otherSetting.kefuMobile || "0592-29299293949",
+          kefuMobile: otherSetting.kefuMobile || "18559297592",
         });
       }
     });

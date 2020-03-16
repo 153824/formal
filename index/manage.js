@@ -1,5 +1,6 @@
 // index/manage/manage.js
 var app = getApp();
+var paperId="";
 Page({
   data: {
     order: 0,
@@ -112,6 +113,7 @@ Page({
   gotodati: function(e) {
     // console.log(e)
     var that = this;
+    paperId = e.target.dataset.id;
     app.doAjax({
       url: 'toSharePaper',
       method: 'post',
@@ -128,9 +130,13 @@ Page({
       }
     })
   },
-  closedati: function() {
+  closedati: function(e) {
+    console.log(JSON.stringify(e))
     this.setData({
       dati: false
+    })
+    wx.redirectTo({
+      url: '../store/sendlog?id=' + paperId
     })
   },
   changePage: function(e) {

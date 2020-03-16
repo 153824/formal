@@ -62,6 +62,7 @@ Page({
         id: app.teamId
       },
       success: function(ret) {
+        adminNum = ret.adminMemberMax || adminNum;
         var members = ret.members || [];
         var memberRole = ret.memberRole || {};
         var adminMember = []; //管理员

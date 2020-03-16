@@ -1,4 +1,69 @@
 /* index/store/charge/charge.wxss */
+.getGift {
+  background:rgba(254,237,234,1);
+  display: block;
+  height: 80rpx;
+  width: 100%;
+  font-size: 26rpx;
+  text-align: center;
+  line-height: 80rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(255, 77, 79, 1);
+  text-decoration: underline;
+}
+
+.giftDlg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.69);
+  z-index: 99999;
+}
+
+.giftDlg .dlgContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.giftDlg .dlgContent .closeImg {
+  width: 76rpx;
+  height: 76rpx;
+  position: absolute;
+  top: 0rpx;
+  right: 0rpx;
+}
+
+.giftDlg .dlgContent .msgImg {
+  width: 494rpx;
+  height: 646rpx;
+  display: block;
+  margin: auto;
+}
+
+.giftDlg .dlgContent .btnImg {
+  width: 362rpx;
+  height: 110rpx;
+  display: block;
+  margin: -1px auto 0;
+}
+
+.giftDlg .dlgContent .btnImg.btnImgBtn {
+  background: transparent;
+  position: absolute;
+  opacity: 0;
+  z-index: 999;
+  left: 0;
+  right: 0;
+  width: auto;
+}
+.giftDlg .dlgContent .btnImg.btnImgBtn1{
+  bottom: 0rpx;
+}
 .topTestView {
   height: 80rpx;
   line-height: 80rpx;

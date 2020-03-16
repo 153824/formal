@@ -230,6 +230,13 @@
 					"pathName": "user/index",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "测评发放",
+					"pathName": "store/sharePaper",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

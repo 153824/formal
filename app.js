@@ -16,6 +16,7 @@ App({
   teamRole: "",
   nowhF: 1,
   isTodayTeam: false,
+  couponGet0: false,
   couponGet: false,
   couponGet1: false,
   isLogin: false,
@@ -90,6 +91,14 @@ App({
         that.globalData.userMsg = ret.userMsg || {};
         // console.log(wx.getStorageSync("isvip"))
         var userData = ret.data;
+        var now = new Date().getTime();
+        var createdAt = new Date(userData.createdAt).getTime();
+        var isTodayTeam = false;
+        if (now - createdAt < (24 * 60 * 60 * 1000)) {
+          //24小时内注册的团队--默认为新用户
+          isTodayTeam = true;
+        }
+        that.isTodayTeam = isTodayTeam;
         if (0 == ret.code) {
           var userMsg = that.globalData.userMsg;
           wx.hideLoading();
@@ -152,10 +161,12 @@ App({
       //24小时内注册的团队--默认为新用户
       isTodayTeam = true;
     }
+    var couponGet0 = ret.couponGet0 || false;
     var couponGet = ret.couponGet || false;
     var couponGet1 = ret.couponGet1 || false;
-    isTodayTeam = true;
-    this.isTodayTeam = isTodayTeam;
+    // isTodayTeam = false;
+    // this.isTodayTeam = isTodayTeam;
+    this.couponGet0 = couponGet0;
     this.couponGet = couponGet;
     this.couponGet1 = couponGet1;
     var nowtime = new Date().getTime();

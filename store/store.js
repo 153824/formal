@@ -23,6 +23,7 @@ Page({
       };
       return;
     }
+    var couponGet0 = app.couponGet0 || false;
     var couponGet = app.couponGet || false;
     var couponGet1 = app.couponGet1 || false;
     var isTodayTeam = app.isTodayTeam || false;
@@ -91,6 +92,7 @@ Page({
         },
         success: function(res) {
           that.setData({
+            userInfo: app.globalData.userInfo,
             skipFreeTicket: skipFreeTicket,
             freeTickId: freeTickId || "",
             columnId_ticket: columnId_ticket || "",
@@ -132,14 +134,19 @@ Page({
             noLoading: true,
             success: function(ret) {
               var showGiftDlg = false;
-              if (!couponGet && firstLoad && app.teamRole == 3) {
+              if (hasOldFreeTicks) {
+                couponGet = true;
+                couponGet1 = true;
+              }
+              if ((!couponGet || (!couponGet0 && isTodayTeam) || !couponGet1) && !hasOldFreeTicks && firstLoad && app.teamRole == 3) {
                 firstLoad = false;
                 showGiftDlg = true;
               }
               that.setData({
                 teamRole: app.teamRole,
                 showGiftDlg: showGiftDlg,
-                couponGet: couponGet,
+                couponGet0: couponGet0,
+                couponGet: hasOldFreeTicks ? true : couponGet,
                 couponGet1: hasOldFreeTicks ? true : couponGet1,
                 isTodayTeam: isTodayTeam,
                 hotPaper: ret.hotPaper || []
@@ -193,11 +200,31 @@ Page({
   },
 
   changepage: function(e) {
+    console.log("e", e);
     var d = e.currentTarget.dataset;
     var listid = e.currentTarget.id
     var i = d.i;
-    var fullUrl = d.fullUrl;
+    var fullUrl = d.fullurl;
     if (fullUrl) {
+      var detail = e.detail;
+      if (detail && detail.errMsg && !detail.encryptedData) return;
+      if (detail && detail.encryptedData) {
+        var iv = detail.iv;
+        var encryptedData = detail.encryptedData;
+        if (encryptedData) {
+          //用户授权手机号
+          var userMsg = app.globalData.userMsg || {};
+          userMsg["iv"] = iv;
+          userMsg["encryptedData"] = encryptedData;
+          app.doAjax({
+            url: "updatedUserMobile",
+            data: userMsg,
+            success: function(ret) {
+              app.getUserInfo();
+            }
+          });
+        }
+      }
       wx.navigateTo({
         url: fullUrl
       });
@@ -254,4 +281,7 @@ Page({
       showGiftDlg: false
     });
   },
+  onHide: function() {
+    this.closeGiftDlg();
+  }
 })

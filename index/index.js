@@ -46,9 +46,9 @@ Page({
         });
         if (!hasFreeTick && app.teamRole == 3) {
           if (!skipFreeTicket) {
-            wx.navigateTo({
-              url: './getFreeTicket'
-            });
+            // wx.navigateTo({
+            //   url: './getFreeTicket'
+            // });
           }
         }
         that.setData({

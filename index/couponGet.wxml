@@ -22,7 +22,7 @@
       <view class="name">{{item.name}}兑换券
         <text>{{item.count}}张</text>
       </view>
-      <view class="mindMsg">·仅限于{{item.name1}}</view>
+      <view class="mindMsg">·{{item.name1}}</view>
       <view class="mindMsg" wx:if="{{item.endTime}}">·有效期至{{item.endTime}}</view>
       <view class="btnView" bindtap="changePage" data-i="{{index}}" wx:if="{{type==1}}">
         <view class="userBtn">立即使用</view>

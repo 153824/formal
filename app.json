@@ -36,14 +36,16 @@
     "user/selTeamAdmin",
     "report/shareReport",
     "index/getFreeTicket",
-    "index/pcGetTickSuccess"
+    "index/pcGetTickSuccess",
+    "store/sharePaper"
   ],
   "tabBar": {
     "color": "#5C6171",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
     "selectedColor": "#5960ED",
-    "list": [{
+    "list": [
+      {
         "pagePath": "store/store",
         "text": "测评商城",
         "iconPath": "img/index/store.png",

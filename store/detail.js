@@ -4,6 +4,7 @@ var app = getApp();
 var isFirstLoad = true;
 Page({
   data: {
+    showGiftDlg: false,
     hasFreeTick: false,
     isFreeTickId: false,
     teamRole: app.teamRole,
@@ -77,12 +78,14 @@ Page({
           if (ret && ret.length) {
             hasOldFreeTicks = true; //还有未使用完的礼包券--无法获取第二次的免费券
           }
+          var couponGet0 = app.couponGet0 || false;
           var couponGet = app.couponGet || false;
           var couponGet1 = app.couponGet1 || false;
           var isTodayTeam = app.isTodayTeam || false;
           that.setData({
             teamRole: app.teamRole,
-            couponGet: couponGet,
+            couponGet0: couponGet0,
+            couponGet: hasOldFreeTicks ? true : couponGet,
             couponGet1: hasOldFreeTicks ? true : couponGet1,
             isTodayTeam: isTodayTeam,
           });
@@ -121,7 +124,7 @@ Page({
                 }
               });
               that.setData({
-                hasFreeTick: hasFreeTick,
+                hasFreeTick: true,
                 freeTick: freeTick
               });
               that.setData({
@@ -150,6 +153,16 @@ Page({
         }
       });
     }
+  },
+  closeGiftDlg: function() {
+    this.setData({
+      showGiftDlg: false
+    });
+  },
+  toShowGiftDlg: function() {
+    this.setData({
+      showGiftDlg: true
+    });
   },
   toGetPaperDetail: function(noLoading) {
     var that = this;
@@ -604,6 +617,12 @@ Page({
   gotodati: function() {
     //发放测评
     var that = this;
+    var paperDetail = that.data.paperDetail;
+    var userPapersNum = paperDetail.userPapersNum || {};
+    // wx.navigateTo({
+    //   url: './sharePaper?id=' + paperDetail.id + "&count=" + userPapersNum.total,
+    // });
+    // return;
     app.doAjax({
       url: 'toSharePaper',
       method: 'post',
@@ -666,6 +685,7 @@ Page({
     });
   },
   changePage: function(e) {
+    var that = this;
     var d = e.currentTarget.dataset;
     if (d.url) {
       var detail = e.detail;
@@ -688,6 +708,7 @@ Page({
         }
       }
     }
+    that.closeGiftDlg();
     app.changePage(d.url, d.tab);
   },
   closepopup: function() {

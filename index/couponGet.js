@@ -40,13 +40,15 @@ Page({
           var column = node.column;
           var paper = node.paper;
           node.endTime = node.endTime ? app.changeDate(node.endTime, "yyyy-MM-dd") : "";
-          if (column) {
-            node.name = column.name;
-            node.name1 = node.name + "的测评";
-          }
           if (paper) {
             node.name = paper.name;
-            node.name1 = node.name;
+            node.name1 = "仅限于" + node.name;
+          } else if (column) {
+            node.name = column.name;
+            node.name1 = "仅限于" + node.name + "的测评";
+          } else {
+            node.name = "通用";
+            node.name1 = "可用于兑换平台上任意测评";
           }
         });
         that.setData({
@@ -112,14 +114,16 @@ Page({
     var obj = list[index];
     if (!obj) return;
     var url = "";
-    if (obj.paper) { //测评详情
-      url = "../store/detail?id=" + obj.paper.id;
-    } else if (obj.column) { //栏目详情
-      // url = "../store/category?id=" + obj.column.id;
-      return wx.switchTab({
-        url: '../store/store'
-      });
-    }
-    app.changePage(url);
+    app.getUserInfo(function() {
+      if (obj.paper) { //测评详情
+        url = "../store/detail?id=" + obj.paper.id;
+      } else { //栏目详情
+        // url = "../store/category?id=" + obj.column.id;
+        return wx.switchTab({
+          url: '../store/store'
+        });
+      }
+      app.changePage(url);
+    });
   }
 })

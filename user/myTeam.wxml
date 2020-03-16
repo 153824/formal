@@ -1,0 +1,62 @@
+<!--user/myTeam.wxml-->
+<view class="adminUser flex">
+  <image class="headerIcon" src="{{adminUser.avatar}}"></image>
+  <view class="flex-main">
+    <view class="name">{{adminUser.nickname}}</view>
+    <view class="roleName">超级管理员</view>
+  </view>
+  <view wx:if="{{adminMember.length||member.length}}" class="changeAdminUser" bindtap="changeAdminUser">转让超级管理员</view>
+</view>
+<view class="list">
+  <view class="listInfo flex">
+    <view class="flex-main">
+      <view class="title">子管理员</view>
+      <view class="info">购买、发放、体验测评/查看报告</view>
+    </view>
+    <button wx:if="{{adminMember.length<adminNum}}" open-type="share" class="shareBtn" bindtap="inviteMember" data-role="2">
+      <image src="../img/user/teams/icon6.png"></image>
+    </button>
+    <button wx:else class="shareBtn" bindtap="inviteMember" data-num="{{adminNum}}" data-n="子管理员">
+      <image src="../img/user/teams/icon6.png"></image>
+    </button>
+  </view>
+  <block wx:for="{{adminMember}}" wx:key="unique">
+    <view class="item flex">
+      <image src="{{item.avatar}}" class="headerIcon"></image>
+      <view class="flex-main name">{{item.nickname}}</view>
+      <view class="editBtn" bindtap="showEditMenu1" data-index="{{index}}">
+        <image src="../img/user/teams/icon8.png"></image>
+      </view>
+      <!-- <view class="delBtn" bindtap="delMember" data-index="{{index}}">
+        <image src="../img/user/teams/icon7.png"></image>
+        <text>删除</text>
+      </view> -->
+    </view>
+  </block>
+</view>
+<view style="height:60rpx;"></view>
+<view class="list">
+  <view class="listInfo flex">
+    <view class="flex-main">
+      <view class="title">普通成员</view>
+      <view class="info">查看他人分享给自己的报告</view>
+      <view class="info">请通过报告详情页分享报告来邀请</view>
+    </view>
+    <!-- <button wx:if="{{member.length<5}}" open-type="share" class="shareBtn" bindtap="inviteMember" data-role="1">
+      <image src="../img/user/teams/icon6.png"></image>
+    </button>
+    <button wx:else class="shareBtn" bindtap="inviteMember" data-num="{{memberNum}}" data-n="普通成员">
+      <image src="../img/user/teams/icon6.png"></image>
+    </button> -->
+  </view>
+  <block wx:for="{{member}}" wx:key="unique">
+    <view class="item flex">
+      <image src="{{item.avatar}}" class="headerIcon"></image>
+      <view class="flex-main name">{{item.nickname}}</view>
+      <view class="editBtn" bindtap="showEditMenu" data-index="{{index}}">
+        <image src="../img/user/teams/icon8.png"></image>
+      </view>
+    </view>
+  </block>
+</view>
+<view style="height:60rpx;"></view>

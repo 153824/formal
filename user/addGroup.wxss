@@ -1,0 +1,42 @@
+/* user/addGroup.wxss */
+
+.centerView {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.mind {
+  text-align: center;
+  font-size: 36rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 600;
+  color: rgba(50, 53, 65, 1);
+  line-height: 50rpx;
+}
+
+.mind1 {
+  margin-top: 110rpx;
+  text-align: center;
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(50, 53, 65, 1);
+  line-height: 50rpx;
+}
+
+.toCopy {
+  width: 336rpx;
+  height: 92rpx;
+  background: rgba(89, 96, 237, 1);
+  border-radius: 8rpx;
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  margin: 42rpx auto 0;
+  text-align: center;
+  line-height: 92rpx;
+}

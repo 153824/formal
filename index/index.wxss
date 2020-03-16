@@ -1,0 +1,378 @@
+/**index.wxss**/
+
+/* 首页 */
+
+.topTestView {
+  height: 80rpx;
+  line-height: 80rpx;
+  color: #5960ed;
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  padding: 0 34rpx 0 26rpx;
+  background: rgba(239, 240, 253, 1);
+}
+
+.topTestView span {
+  width: 120rpx;
+  line-height: 1;
+  white-space: nowrap;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topTestView .icon25 {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 20rpx;
+}
+
+.topTestView .icon24 {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.topCouponGetView {
+  position: relative;
+}
+
+.topCouponGetView button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  opacity: 0;
+}
+
+.topCouponGetView image {
+  display: block;
+  width: 100%;
+  height: 80rpx;
+}
+
+/* banner */
+
+.banner {
+  height: 294rpx;
+  margin: 40rpx 32rpx 50rpx 32rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.banner {
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.banner swiper {
+  height: 294rpx;
+}
+
+.banner image {
+  width: 100%;
+  height: 294rpx;
+  border-radius: 16rpx;
+}
+
+/* threebtn */
+
+.threebtn {
+  margin: 0 72rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50rpx;
+}
+
+.threebox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.threebox>view {
+  width: 102rpx;
+  height: 102rpx;
+  background-color: #5c78f1;
+  border-radius: 50%;
+}
+
+.threebox>view image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.threebox>text {
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  letter-spacing: 1px;
+  line-height: 40rpx;
+  color: #333541;
+}
+
+/* choiceness */
+
+.choiceness {
+}
+
+.choiceheader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 42rpx;
+  margin-left: 34rpx;
+}
+
+.choiceleft, .choiceright {
+  display: flex;
+  align-items: center;
+}
+
+.choiceleft>image {
+  width: 50rpx;
+  height: 52rpx;
+  margin-right: 12rpx;
+}
+
+.choiceleft>text {
+  font-size: 34rpx;
+  line-height: 48rpx;
+  color: #323541;
+  font-weight: 500;
+}
+
+.choiceright>image {
+  width: 14rpx;
+  height: 24rpx;
+}
+
+.choiceright>text {
+  font-size: 28rpx;
+  line-height: 40rpx;
+  color: #5c6171;
+  margin-right: 20rpx;
+}
+
+/* card */
+
+.card {
+  padding: 0 0 20rpx 34rpx;
+  white-space: nowrap;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+  overflow: auto;
+}
+
+.card .cardbox {
+  display: inline-block;
+  background-color: #fff;
+  width: 422rpx;
+  height: 428rpx;
+  box-shadow: 0px 4rpx 20rpx 0px rgba(22, 49, 128, 0.14);
+  border-radius: 5px;
+  margin-right: 34rpx;
+}
+
+.boxhead {
+  width: 100%;
+  height: 224rpx;
+  position: relative;
+}
+
+.boxhead image {
+  width: 100%;
+  height: 224rpx;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.bluebox {
+  width: 140rpx;
+  height: 48rpx;
+  background-color: #2259ef;
+  position: absolute;
+  bottom: 12rpx;
+  left: 8rpx;
+  color: #fff;
+  font-size: 26rpx;
+  line-height: 48rpx;
+  text-align: center;
+}
+
+.boxbody {
+  padding: 26rpx 30rpx 30rpx;
+}
+
+.bodyfirst {
+  font-size: 34rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 600;
+  color: rgba(49, 53, 65, 1);
+  line-height: 48rpx;
+}
+
+.bodysecond {
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(92, 97, 114, 1);
+  line-height: 34rpx;
+}
+
+.bodysecond text {
+  margin-right: 30rpx;
+}
+
+.bodythird {
+  margin-top: 22rpx;
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(92, 97, 113, 1);
+  line-height: 34rpx;
+}
+
+.bodythird image {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 14rpx;
+}
+
+.bodythird text {
+  font-size: 24rpx;
+  line-height: 34rpx;
+  color: #5c6171;
+}
+
+/* recommend */
+
+.recommend {
+  padding-left: 32rpx;
+  padding-right: 28rpx;
+}
+
+.rehead {
+  display: flex;
+  align-items: center;
+  margin-bottom: 28rpx;
+}
+
+.rehead>image {
+  width: 52rpx;
+  height: 60rpx;
+  margin-right: 12rpx;
+}
+
+.rehead>text {
+  font-size: 34rpx;
+  line-height: 48rpx;
+  color: #323541;
+  font-weight: 500;
+}
+
+.rebody {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18rpx;
+}
+
+.rebodyright {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 5px;
+  background-color: #5c78f1;
+  margin-left: 46rpx;
+}
+
+.rebodyright image {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+
+.reone {
+  font-size: 28rpx;
+  letter-spacing: 1px;
+  line-height: 40rpx;
+  color: #333;
+  font-weight: 600;
+}
+
+.retwo {
+  font-size: 22rpx;
+  color: #999;
+  line-height: 32rpx;
+  display: flex;
+  align-items: center;
+  margin-top: 18rpx;
+}
+
+.rebodyline {
+  width: 2rpx;
+  height: 32rpx;
+  background-color: #e7e7e7;
+  margin: 0 38rpx;
+}
+
+.getGift {
+  height: 90rpx;
+  width: 100%;
+}
+
+.giftDlg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.69);
+  z-index: 99999;
+}
+
+.giftDlg .dlgContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.giftDlg .dlgContent .closeImg {
+  width: 48rpx;
+  height: 48rpx;
+  position: absolute;
+  top: -24rpx;
+  right: -24rpx;
+}
+
+.giftDlg .dlgContent .msgImg {
+  width: 494rpx;
+  height: 646rpx;
+  display: block;
+  margin: auto;
+}
+
+.giftDlg .dlgContent .btnImg {
+  width: 362rpx;
+  height: 110rpx;
+  display: block;
+  margin: -1px auto 0;
+}
+
+.giftDlg .dlgContent .btnImg.btnImgBtn {
+  background: transparent;
+  position: absolute;
+  opacity: 0;
+  z-index: 999;
+  left: 0;
+  right: 0;
+  width: auto;
+}

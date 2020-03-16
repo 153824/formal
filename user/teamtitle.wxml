@@ -1,0 +1,13 @@
+<!--user/company/cover.wxml-->
+<view class="container font">
+  <view class="box">
+    <view class="bigtitle">企业认证获取专属测评封面</view>
+    <view class="blueline"></view>
+    <view class="graytext">用户进行企业认证后，在发放测评时将获得企业专属认证封面，添加专属认证标志。</view>
+    <view class="imgbox">
+      <image class="imgleft" src="../img/user/teams/bg2.png"></image>
+      <image class="iconcenter" src="../img/user/teams/icon5.png"></image>
+      <image class="imgright" src="../img/user/teams/bg3.png"></image>
+    </view>
+  </view>
+</view>

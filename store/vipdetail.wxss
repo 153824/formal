@@ -1,0 +1,328 @@
+/* store/vipdetail.wxss */
+
+.topView {
+  position: relative;
+  height: 456rpx;
+  box-sizing: border-box;
+}
+
+.topView .bgImg {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 456rpx;
+}
+
+.topView .userView {
+  padding: 72rpx 40rpx 38rpx;
+  position: relative;
+  z-index: 2;
+  font-size: 28rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 400;
+  color: rgba(231, 193, 146, 1);
+  line-height: 40rpx;
+}
+
+.topView .userView .name {
+  height: 36rpx;
+  line-height: 36rpx;
+  margin-bottom: 6rpx;
+  font-weight: 600;
+}
+
+.topView .userView .name text {
+  position: relative;
+  top: -10rpx;
+}
+
+.topView .userView .name image {
+  position: relative;
+  margin-left: 28rpx;
+}
+
+.topView .userView .avatar {
+  width: 84rpx;
+  height: 84rpx;
+  border-radius: 50%;
+  margin-right: 22rpx;
+}
+
+.topView .cardView {
+  position: absolute;
+  top: 194rpx;
+  left: 40rpx;
+  right: 40rpx;
+  background: rgba(254, 255, 254, 1);
+  box-shadow: 0px 4rpx 14rpx 0px rgba(69, 69, 70, 0.21);
+  border-radius: 24rpx;
+  z-index: 3;
+  padding: 30rpx 88rpx 46rpx;
+  text-align: center;
+}
+
+.topView .cardView .title {
+  position: relative;
+  font-size: 32rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 600;
+  color: rgba(50, 53, 65, 1);
+  line-height: 44rpx;
+  padding-bottom: 12rpx;
+}
+
+.topView .cardView .title:after {
+  content: "";
+  position: absolute;
+  width: 46rpx;
+  height: 4rpx;
+  background: rgba(144, 145, 156, 1);
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+}
+
+.topView .cardView .vipView .icon1 {
+  width: 84rpx;
+  height: 84rpx;
+  margin-right: 24rpx;
+}
+
+.topView .cardView .vipView .msg {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(49, 48, 77, 1);
+  line-height: 36rpx;
+  letter-spacing: 1px;
+}
+
+.topView .cardView .vipView .icon2 {
+  width: 64rpx;
+  height: 64rpx;
+  display: block;
+  margin: 50rpx auto 0;
+}
+
+.topView .cardView .vipView .numMsg {
+  margin-top: 10rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 600;
+  color: rgba(50, 53, 65, 1);
+  line-height: 44rpx;
+}
+
+.topView .cardView .vipView .mind {
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(92, 97, 113, 1);
+  line-height: 42rpx;
+}
+
+.topImg {
+  width: 750rpx;
+  height: 304rpx;
+}
+
+.topImg image {
+  width: 100%;
+  height: 100%;
+}
+
+.userView image {
+  width: 42rpx;
+  height: 42rpx;
+}
+
+.vipView image {
+  width: 42rpx;
+  height: 42rpx;
+}
+
+.vip2View image {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.vipView image {
+  width: 42rpx;
+  height: 42rpx;
+}
+
+.cardView {
+  text-align: center;
+  padding: 0 64rpx 60rpx;
+}
+
+.cardView .title {
+  margin-top: 24rpx;
+  font-size: 48rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 600;
+  color: rgba(50, 53, 65, 1);
+  line-height: 40rpx;
+  letter-spacing: 1px;
+}
+
+.cardView .mind {
+  margin-top: 20rpx;
+}
+
+.cardView .mind .msg {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(128, 93, 45, 1);
+  line-height: 44rpx;
+}
+
+.cardView .mind .msg1 {
+  margin-left: 20rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(144, 145, 156, 1);
+  line-height: 40rpx;
+}
+
+.cardView .mindImg {
+  width: 504rpx;
+  height: 310rpx;
+  margin: 16rpx auto 0;
+}
+
+.cardView .mindImg image {
+  width: 100%;
+  height: 100%;
+}
+
+.noMore {
+  margin-top: 264rpx;
+  text-align: center;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(144, 145, 156, 1);
+  line-height: 40rpx;
+}
+
+.cardView1 {
+  position: relative;
+  padding: 56rpx 26rpx;
+  text-align: center;
+}
+
+.cardView1 .logoImg {
+  width: 58rpx;
+  height: 66rpx;
+}
+
+.cardView1 .title {
+  margin-top: 20rpx;
+  font-size: 42rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 600;
+  color: rgba(50, 53, 65, 1);
+  line-height: 40rpx;
+}
+
+.cardView1 .mind {
+  margin-top: 20rpx;
+}
+
+.cardView1 .mind .msg {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(128, 93, 45, 1);
+  line-height: 44rpx;
+}
+
+.cardView1 .mind .msg1 {
+  margin-left: 20rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(144, 145, 156, 1);
+  line-height: 40rpx;
+  text-decoration-line: line-through;
+}
+
+.cardView1 .mind2 {
+  margin-top: 52rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 600;
+  color: rgba(50, 53, 65, 1);
+  height: 64rpx;
+}
+
+.cardView1 .mind2 image {
+  width: 64rpx;
+  height: 64rpx;
+  margin-right: 32rpx;
+}
+
+.cardView1 .mind2  text {
+  display: inline-block;
+  height: 64rpx;
+  line-height: 64rpx;
+  position: relative;
+  top: -16rpx;
+}
+
+.cardView1 .mind3 {
+  margin-top: 8rpx;
+  padding: 0 30rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(92, 97, 113, 1);
+  line-height: 42rpx;
+}
+
+.cardView1 .mindImg {
+  position: absolute;
+  height: 280rpx;
+  left: 0;
+  right: 0;
+  margin-bottom: 30rpx;
+  margin-top: -228rpx;
+}
+
+.cardView1 .mindImg image {
+  width: 668rpx;
+  height: 220rpx;
+}
+
+.spaceView {
+  height: 20rpx;
+  background: rgba(233, 240, 242, 1);
+}
+
+.bottomView {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 134rpx;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 1);
+  border-top: 1px solid rgba(233, 230, 231, 1);
+  padding: 24rpx 52rpx;
+}
+
+.bottomView .buyBtn {
+  text-align: center;
+  line-height: 88rpx;
+  height: 88rpx;
+  background: linear-gradient(270deg, rgba(227, 195, 138, 1) 0%, rgba(244, 223, 190, 1) 100%);
+  border-radius: 8rpx;
+  font-size: 36rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 600;
+  color: rgba(128, 93, 45, 1);
+}

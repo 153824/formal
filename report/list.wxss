@@ -1,0 +1,98 @@
+/* admins/reportList.wxss */
+
+.title {
+  padding: 4rpx 42rpx 62rpx 34rpx;
+}
+
+.title .name {
+  font-size: 60rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 600;
+  color: rgba(50, 53, 65, 1);
+  line-height: 84rpx;
+  letter-spacing: 1px;
+}
+
+.title .share {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(89, 96, 237, 1);
+  line-height: 40rpx;
+  letter-spacing: 1px;
+  text-decoration: underline;
+}
+
+.title .changeOrder {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(92, 97, 113, 1);
+  line-height: 40rpx;
+}
+
+.title .changeOrder image {
+  width: 24rpx;
+  height: 16rpx;
+  margin-right: 18rpx;
+}
+
+.list .item image {
+  padding: 24rpx 40rpx 24rpx 32rpx;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+}
+
+.list .item .rightItem {
+  border-bottom: 1px solid #d8d8d8;
+  padding: 24rpx 0;
+}
+
+.list .item .rightItem .name {
+  font-size: 28rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 600;
+  color: rgba(50, 53, 65, 1);
+  line-height: 40rpx;
+  letter-spacing: 1px;
+}
+
+.list .item .rightItem .name .noRead {
+  display: inline-block;
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  margin-right: 14rpx;
+  background-color: #5960ed;
+}
+
+.list .item .rightItem .name .total {
+  margin-left: 20rpx;
+}
+
+.list .item .rightItem .reportName {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(137, 137, 137, 1);
+  line-height: 40rpx;
+  margin-top: 10rpx;
+}
+
+.list .item .rightItem .time {
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(144, 145, 156, 1);
+  line-height: 34rpx;
+  text-align: right;
+  padding-right: 32rpx;
+}
+
+.list .item .rightItem .time image {
+  width: 10rpx;
+  height: 20rpx;
+  margin-left: 20rpx;
+  padding: 0;
+}

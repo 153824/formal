@@ -1,0 +1,160 @@
+<!--index/store/charge/be come vip.wxml-->
+<image class="topImg" src="../img/user/vip/icon6.png" bindtap="toShowDlg"></image>
+<swiper previous-margin="{{66}}rpx" next-margin="{{66}}rpx" class="centerSwiper" bindchange="changeBuyType">
+  <swiper-item>
+    <view class="cardView">
+      <image class="bgImg" src="../img/user/vip/icon7.png"></image>
+      <image class="rightImg" src="../img/user/vip/icon14.png"></image>
+      <view class="cost">
+        <span>￥2980 </span>/年</view>
+      <view class="mind">
+        <span class="name">标准版会员</span>（测评低至¥15.9/份）
+        <span class="defaultPrice"> 38.2/份 </span>
+      </view>
+    </view>
+  </swiper-item>
+  <swiper-item>
+    <view class="cardView cardView1">
+      <image class="bgImg" src="../img/user/vip/icon13.png"></image>
+      <view class="cost">
+        <span>￥498 </span>/30天</view>
+      <view class="mind">
+        <span class="name">体验版会员</span>（（测评低至¥49.8/份））
+      </view>
+    </view>
+  </swiper-item>
+</swiper>
+<view class="flex pointsView">
+  <view class="flex-main"></view>
+  <view class="pointView {{buyVipType==1?'active':''}}"></view>
+  <view class="pointView {{buyVipType==2?'active':''}}"></view>
+  <view class="flex-main"></view>
+</view>
+<view wx:if="{{buyVipType==1}}">
+  <!-- 购买标准版会员 -->
+  <view class="buyBtn" bindtap="formal" wx:if="{{isvip0&&!hasBuy1}}">升级标准版会员</view>
+  <view class="buyBtn" bindtap="formal" wx:elif="{{!hasBuy1}}">开通标准版会员</view>
+  <view class="buyBtn" bindtap="formal" wx:else>续费标准版会员</view>
+  <view class="buyMsg flex">
+    <image class="iconImg" src="../img/user/vip/icon8.png"></image>
+    <view class="count">200</view>
+    <view class="flex-main">
+      <view class="mind">张测评兑换券</view>
+      <view class="mind1">可兑换任意测评 有效期1年</view>
+    </view>
+    <image class="iconImg1" src="../img/user/vip/icon15.png"></image>
+  </view>
+  <view class="title1">
+    <span>功能权益</span>
+  </view>
+  <view class="flex equityView">
+    <view class="flex-main">
+      <view class="iconView">
+        <image src="../img/user/vip/icon11.png"></image>
+      </view>
+      <view class="name">测评购买</view>
+    </view>
+    <view class="flex-main">
+      <view class="iconView">
+        <image src="../img/user/vip/icon9.png"></image>
+      </view>
+      <view class="name">测评发放</view>
+    </view>
+    <view class="flex-main">
+      <view class="iconView">
+        <image src="../img/user/vip/icon10.png"></image>
+      </view>
+      <view class="name">查看报告</view>
+    </view>
+  </view>
+  <view class="title2">
+    <span>协作账号数</span>
+  </view>
+  <view class="flex cooperationView">
+    <!-- <view class="flex-main">
+      <image src="../img/user/vip/icon12.png"></image>
+      报告查看者*5
+    </view> -->
+    <view  class="flex-main"></view>
+    <view class="">
+      <image src="../img/user/vip/icon12.png"></image>
+      子管理员*4
+    </view>
+    <view  class="flex-main"></view>
+  </view>
+</view>
+<view wx:elif="{{buyVipType==2}}">
+  <view class="buyBtn buyBtn2" bindtap="experience" wx:if="{{noBuy||isvip2}}">开通体验版会员</view>
+  <view class="buyBtn buyBtn2" bindtap="experience" wx:else>续费体验版会员</view>
+  <view class="buyMsg flex" style="padding-bottom:0;">
+    <image class="iconImg" src="../img/user/vip/icon8.png"></image>
+    <view class="count">10</view>
+    <view class="flex-main">
+      <view class="mind">张测评兑换券</view>
+      <view class="mind1">可兑换任意测评 有效期30天</view>
+    </view>
+  </view>
+  <view class="title1">
+    <span>功能权益</span>
+  </view>
+  <view class="flex equityView">
+    <view class="flex-main">
+      <view class="iconView">
+        <image src="../img/user/vip/icon11.png"></image>
+      </view>
+      <view class="name">测评购买</view>
+    </view>
+    <view class="flex-main">
+      <view class="iconView">
+        <image src="../img/user/vip/icon9.png"></image>
+      </view>
+      <view class="name">测评发放</view>
+    </view>
+    <view class="flex-main">
+      <view class="iconView">
+        <image src="../img/user/vip/icon10.png"></image>
+      </view>
+      <view class="name">查看报告</view>
+    </view>
+  </view>
+  <view class="title2">
+    <span>协作账号数</span>
+  </view>
+  <view class="flex cooperationView">
+    <!-- <view class="flex-main">
+      <image src="../img/user/vip/icon12.png"></image>
+      报告查看者*2
+    </view> -->
+    <view  class="flex-main"></view>
+    <view>
+      <image src="../img/user/vip/icon12.png"></image>
+      子管理员*2
+    </view>
+    <view  class="flex-main"></view>
+  </view>
+</view>
+<view class="coverView" wx:if="{{showDlg}}" bindtap="hideDlg"></view>
+<view class="dlg" wx:if="{{showDlg}}">
+  <view class="title">联系方式</view>
+  <view class="flex">
+    <view class="flex-main">
+      <view class="callMobile">
+        <image src="../img/user/vip/icon16.png"></image>
+        点击拨打电话
+      </view>
+      <view class="kefuMobile" bindtap="callIt">{{kefuMobile}}</view>
+    </view>
+  </view>
+  <view class="borderView"></view>
+  <view class="flex">
+    <view class="flex-main">
+      <view class="callWX">
+        <image src="../img/user/vip/icon17.png"></image>
+        客服微信
+      </view>
+      <view class="kefuWX">{{kefuWX}}</view>
+    </view>
+    <view class="copyBtn" bindtap="copyIt">复制微信号</view>
+  </view>
+  <view class="mind">添加时，请备注公司所属行业和规模</view>
+</view>

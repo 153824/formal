@@ -1,0 +1,56 @@
+<!--store/vipdetail.wxml-->
+<view class="topView" style="height:{{type==2?456:516}}rpx;">
+  <image class="bgImg" src="../img/user/vip/icon5.png"></image>
+  <view class="userView flex">
+    <image class="avatar" src="{{userInfo.avatar||'../img/user/useravatar.png'}}"></image>
+    <view class="flex-main">
+      <view class="name">
+        <text>{{userInfo.nickname||'昵称'}}</text>
+        <image wx:if="{{type==1}}" src="../img/user/index/icon12.png"></image>
+        <image wx:if="{{type==2}}" src="../img/user/index/icon5.png"></image>
+      </view>
+      <view wx:if="{{type==1}}" class="time">体验版版会员 {{userInfo.vipEndTime}} 到期</view>
+      <view wx:if="{{type==2}}" class="time">标准版会员 {{userInfo.vipEndTime}} 到期</view>
+    </view>
+  </view>
+  <view class="cardView">
+    <view class="title">权益介绍</view>
+    <view class="vipView flex" wx:if="{{type==1}}" style="margin-top:54rpx;">
+      <image class="icon1" src="../img/store/vip7.png"></image>
+      <view class="msg">赠送10张测评兑换券</view>
+    </view>
+    <view class="vipView" wx:if="{{type==2}}">
+      <image class="icon2" src="../img/store/vipicon.png"></image>
+      <view class="numMsg">限时赠送200张付费测评兑换券</view>
+      <view class="mind">12个月内可用于兑换任意收费测评<text wx:if="{{!isIos}}">，比起单买，平均每份测评仅需15.9元</text>。</view>
+    </view>
+  </view>
+</view>
+<view wx:if="{{type==2}}" class="noMore">更多权益敬请期待...</view>
+<block wx:if="{{type==1}}">
+  <view class="spaceView"></view>
+  <view class="cardView1">
+    <image src="../img/user/icon6.png" class="logoImg"></image>
+    <view class="title">标准版会员</view>
+    <view class="mind" wx:if="{{!isIos}}">
+      <text class="msg">¥2980/12个月</text>
+      <text class="msg1">¥4000</text>
+    </view>
+    <view class="mind2">
+      <image src="../img/user/icon9.png"></image>
+      <text>限时200张付费测评兑换券</text>
+    </view>
+    <view class="mind3">
+      12个月内可用于兑换任意收费测评
+      <text wx:if="{{!isIos}}">，比起单买，平均每份测评仅需15.9元</text>。
+    </view>
+    <view style="height:210rpx;"></view>
+    <view class="mindImg">
+      <image src="../img/user/vip/icon4.png"></image>
+    </view>
+  </view>
+</block>
+<view style="height:100rpx;" wx:if="{{!isIos}}"></view>
+<view class="bottomView" wx:if="{{!isIos}}">
+  <view class="buyBtn" bindtap="changePage" data-url="../store/becomevip">{{type==2?'立即续费':'升级为标准版会员'}}</view>
+</view>

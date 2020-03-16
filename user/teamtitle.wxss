@@ -1,0 +1,63 @@
+/* user/company/cover.wxss */
+
+.container {
+  height: 100vh;
+  background: rgba(238, 238, 239, 1);
+  padding-top: 28rpx;
+}
+
+.box {
+  background-color: #fff;
+  padding: 40rpx 0rpx 54rpx 0rpx;
+  box-sizing: border-box;
+}
+
+.bigtitle {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: rgba(50, 53, 65, 1);
+  line-height: 44rpx;
+  margin: 0 60rpx 0 40rpx;
+}
+
+.blueline {
+  width: 72rpx;
+  height: 8rpx;
+  background: rgba(89, 96, 237, 1);
+  margin: 8rpx 60rpx 0 40rpx;
+}
+
+.graytext {
+  font-size: 28rpx;
+  font-weight: 400;
+  color: rgba(92, 97, 113, 1);
+  line-height: 40rpx;
+  margin: 30rpx 60rpx 30rpx 40rpx;
+}
+
+.graytext>text {
+  font-weight: 600 !important;
+}
+
+.imgbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 16rpx;
+  box-sizing: border-box;
+}
+
+.imgleft {
+  width: 290rpx;
+  height: 178rpx;
+}
+
+.iconcenter {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.imgright {
+  width: 424rpx;
+  height: 264rpx;
+}

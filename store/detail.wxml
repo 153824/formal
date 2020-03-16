@@ -1,0 +1,442 @@
+<!--index/store/charge/charge.wxml-->
+<scroll-view class="fullPage" scroll-y scroll-top="{{pageScrollTop}}">
+  <view wx:if="{{(!couponGet||!couponGet1)&&teamRole==3}}" class="topCouponGetView">
+    <button wx:if="{{!userData.phone}}" class="btnImg btnImgBtn" open-type="getPhoneNumber" bindgetphonenumber="changePage" data-url="../index/couponGet?type=2" src="../img/index/icon7.png" data-n="getPhoneNumber">
+    </button>
+    <image wx:if="{{!couponGet||!couponGet1}}" src="../img/store/detail/icon18.png"></image>
+    <image wx:else bindtap="changePage" data-url="../index/couponGet?type=2" src="../img/store/detail/icon18.png"></image>
+  </view>
+  <!-- <view class="topCouponGetView" wx:if="{{!hasFreeTick}}">
+    <image bindtap="changePage" data-url="../index/getFreeTicket?type=2&paperId={{paperid}}" src="../img/store/detail/icon29.png"></image>
+  </view> -->
+  <view class="topTestView flex" wx:if="{{oldShareInfo&&oldShareInfo.id}}" bindtap="continueTest">
+    <image class="icon25" src="../img/index/icon25.png"></image>
+    <view class="flex-main">您有一份《
+      <span>{{oldShareInfo.paperName}}</span>》测试未完成，戳我继续</view>
+    <image class="icon24" src="../img/index/icon24.png" data-t="2"></image>
+  </view>
+  <button wx:if="{{!userData.isBind&&!freeTickId}}" class="userInfoBtn1" open-type="getUserInfo" bindgetuserinfo="getUserInfo"></button>
+  <view class="container font {{phoneModel ? 'iscontainer':''}}">
+    <view class="headbox">
+      <view class="picture">
+        <image src="{{paperDetail.setting.img}}"></image>
+        <view class="paperDate" bindtap="showDlg">测评有效期：{{paperDetail.setting.dateNum}}个月
+          <image src="../img/store/detail/icon14.png"></image>
+        </view>
+      </view>
+      <view class="toBuyVip flex" wx:if="{{teamRole!=1&&!isAllFree&&!isvip0&&!isvip1&&!isvip2&&paperDetail.userPapersNum.hasOld&&!isIos}}" bindtap="changePage" data-url="./becomevip">
+        <image class="bgImg" src="../img/store/detail/icon27.png"></image>
+        <view class="flex-main"></view>
+        <view>
+          <image class="img1" src="../img/store/detail/icon15.png"></image>
+          <text>升级成为会员，不限量使用测评</text>
+          <image class="img2" src="../img/store/detail/icon16.png"></image>
+          <!-- <view class="animationView"></view> -->
+        </view>
+        <view class="flex-main"></view>
+      </view>
+      <view class="paperName">{{paperDetail.name}}</view>
+      <view class="paperMsg flex">
+        <text>·{{paperDetail.setting.type}}{{paperDetail.setting.type1 == '' ? '' :'-'}}{{paperDetail.setting.type1}}</text>
+        <text>·{{paperDetail.quesCount || 0}}题</text>
+        <text>·约{{paperDetail.setting.time || 0}}分钟</text>
+      </view>
+      <view class="limit" wx:if="{{dataLoaded}}">
+        <view class="limitleft">
+          <view class="flex">
+            <text class="freetext" wx:if="{{isAllFree}}">{{isIos?'免费':'限时免费'}}</text>
+            <text class="paperPrice" wx:elif="{{(!isfree||(isfree&&paperDetail.setting.price&&paperDetail.userPapersNum.freeCount>=paperDetail.setting.testRule.count))&&!isIos}}">￥{{paperDetail.setting.price||0}}</text>
+            <text class="freetext" wx:elif="{{isfree && paperDetail.setting.testRule.count != 0}}">{{isIos?'免费':'限时免费'}}</text>
+            <text class="defaultPrice" wx:if="{{paperDetail.setting.defaultPrice&&!isIos}}">￥{{paperDetail.setting.defaultPrice||0}}</text>
+          </view>
+          <!-- <view>{{paperDetail.setting.useCount}}次测评</view> -->
+        </view>
+        <view class="limitright" bindtap="userPraise">
+          <text style="{{paperDetail.isUserPraise?'color:#FF4141;':''}}">{{paperDetail.setting.praiseCount+(paperDetail.userPraiseCount||0)}}</text>
+          <image src="{{paperDetail.isUserPraise?'../img/store/detail/icon17.png':'../img/store/detail/icon26.png'}}"></image>
+        </view>
+      </view>
+      <view class="more flex {{!isAllFree&&!paperDetail.userPapersNum.freeTicket&&!paperDetail.userPapersNum.vipTicket&&isIos?'more1':''}}" wx:if="{{paperDetail.userPapersNum.hasOld&&dataLoaded}}">
+        <view class="moreleft flex-main">剩余可用数量：
+          <!-- <text wx:if="{{isfree}}">{{paperDetail.setting.testRule.count}}份</text> -->
+          <text wx:if="{{!isAllFree}}">{{paperDetail.userPapersNum.total}}份</text>
+          <text wx:if="{{isAllFree||isvip1}}">无限量</text>
+        </view>
+        <view class="moreright moreright1 {{!isAllFree&&!paperDetail.userPapersNum.freeTicket&&!paperDetail.userPapersNum.vipTicket&&isIos?'moreright2':''}}" wx:if="{{teamRole!=1&&!isAllFree&&!paperDetail.userPapersNum.freeTicket&&!paperDetail.userPapersNum.vipTicket&&isIos}}">ios暂不支持购买更多</view>
+        <view class="moreright" wx:elif="{{!isAllFree&&teamRole!=1}}" bindtap="paymore">{{isIos?'用券兑换':'购买更多'}}</view>
+      </view>
+      <view class="freeget" wx:if="{{hasFreeTick&&!freeTickId&&teamRole!=1&&((paperDetail.setting.price&&!isfree && paperDetail.setting.testRule.maxInvite != 0)&&dataLoaded)||(isfree&&paperDetail.userPapersNum.hasOld&&paperDetail.setting.price)}}" bindtap="openpopup">
+        <image class="freegetbg" src="../img/store/detail/bg.png"></image>
+        <text class="freegettext"></text>
+        <text class="freegetredfont" wx:if="{{!freeTick}}">免费再领3份测评</text>
+        <text class="freegetredfont" wx:else>加客服微信，领更多测评</text>
+        <image class="freegeticon" src="../img/store/detail/icon9.png"></image>
+      </view>
+      <!-- <view class="picturetop">
+        <view>{{paperDetail.name}}</view>
+        <view wx:if="{{paperDetail.setting.showlv||paperDetail.setting.showJobTag||paperDetail.setting.showJob1}}">
+          <text wx:if="{{paperDetail.setting.showJobTag}}">{{paperDetail.setting.jobTag[0]}}</text>
+          <text wx:if="{{paperDetail.setting.showJob1}}">{{paperDetail.setting.job1}}</text>
+        </view>
+      </view> -->
+      <!-- <view class="threebox">
+        <view class="smallbox">
+          <view class="bigtitle">题量</view>
+          <view class="bluetitle">{{paperDetail.quesCount || 0}}
+            <text>题</text>
+          </view>
+        </view>
+        <view class="grayline"></view>
+        <view class="smallbox">
+          <view class="bigtitle">预估用时</view>
+          <view class="bluetitle">{{paperDetail.setting.time || 0}}
+            <text>分钟</text>
+          </view>
+        </view>
+        <view class="grayline"></view>
+        <view class="smallbox">
+          <view class="bigtitle">测评类型</view>
+          <view class="bluetitle">{{paperDetail.setting.type}}{{paperDetail.setting.type1 == '' ? '' :'-'}}{{paperDetail.setting.type1}}
+          </view>
+        </view>
+      </view> -->
+    </view>
+
+    <view class="bodybox" wx:if="{{dataLoaded}}">
+      <!-- <view class="bodyhead">
+        <view class="rowline"></view>
+        <view class="bodytitle" bindtap="showDlg">测评有效期：{{paperDetail.setting.dateNum}}个月
+          <image src="../img/store/detail/icon11.png"></image>
+        </view>
+        <view class="rowline"></view>
+      </view> -->
+
+      <view class="intro">
+        <view class="introtitle">
+          <view class="blueline"></view>
+          <text>测评简介</text>
+        </view>
+        <view class="introbody">
+          <text class="{{!istext ? 'introtext' : 'introtexthidden'}}">{{paperDetail.setting.info}}</text>
+          <text class="introbluetext" wx:if="{{!istext}}" bindtap="texthidden">更多</text>
+        </view>
+      </view>
+      <view class="intro" wx:if="{{paperDetail.setting.showApplyObjArr}}">
+        <view class="introtitle">
+          <view class="blueline"></view>
+          <text>适用行业</text>
+        </view>
+        <view class="introbody">
+          <text wx:for="{{paperDetail.setting.applyObjArr}}" wx:key="unique" class="pillTxt1">{{item}}</text>
+        </view>
+      </view>
+      <view class="intro" wx:if="{{paperDetail.setting.showMeasureDimension}}">
+        <view class="introtitle">
+          <view class="blueline"></view>
+          <text>测量维度</text>
+        </view>
+        <view class="introbody">
+          <text wx:for="{{paperDetail.setting.measureDimension}}" wx:key="unique" class="pillTxt1">{{item}}</text>
+          <view class="dimensionCount" wx:if="{{paperDetail.setting.dimensionCount}}">…等{{paperDetail.setting.dimensionCount}}个维度</view>
+        </view>
+      </view>
+      <view class="intro" wx:if="{{paperDetail.setting.apply.length}}">
+        <view class="introtitle">
+          <view class="blueline"></view>
+          <text>适用场景</text>
+        </view>
+        <view class="introbody" wx:for="{{paperDetail.setting.apply}}" wx:for-item="applyitem" wx:for-index="applyindex" wx:key="unique">
+          <view class="imagetitle imgmargintop">
+            <image class="imgpaper" src="{{applyitem.icon||'../img/store/detail/icon3.png'}}"></image>
+            <text>{{applyitem.name}}</text>
+          </view>
+          <view class="introtexthidden introblock">{{applyitem.content}}</view>
+        </view>
+      </view>
+
+      <view class="intro" wx:if="{{paperDetail.setting.quesType.length}}">
+        <view class="introtitle introbottom">
+          <view class="blueline"></view>
+          <text>例题</text>
+        </view>
+        <view class="quesType" wx:for="{{paperDetail.setting.quesType}}" wx:for-item="quesTypeitem" wx:for-index="quesTypeindex" wx:key="unique" data-i="{{quesTypeindex}}">
+          <rich-text class="queStem" nodes="<p>{{quesTypeindex+1}}、{{quesTypeitem.stem}}</p>"></rich-text>
+          <view class="options">
+            <block wx:for="{{quesTypeitem.options}}" wx:key="unique" wx:for-item="node">
+              <view class="flex item">
+                <text class="txt">{{node.txt}}</text>
+                <text class="flex-main msg">{{node.msg}}</text>
+              </view>
+            </block>
+          </view>
+          <!-- <view class="stripleft">{{quesTypeitem.name}}</view>
+          <view class="stripright">
+            <text>查看例题</text>
+            <image src="../img/store/detail/icon2.png"></image>
+          </view> -->
+        </view>
+      </view>
+
+      <view class="intro marbot" wx:if="{{paperDetail.setting.report&&paperDetail.setting.report.length>0}}">
+        <view class="introtitle introbottom">
+          <view class="blueline"></view>
+          <text>报告组成</text>
+        </view>
+        <view class="strip" wx:for="{{paperDetail.setting.report}}" wx:for-item="reportitem" wx:for-index="reportindex" wx:key="unique" bindtap="showBigImg" data-url="{{reportitem.img}}">
+          <view class="stripleft">{{reportitem.name}}</view>
+          <view class="stripright">
+            <text>查看样例</text>
+            <image src="../img/store/detail/icon2.png"></image>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view style="height:128rpx;" class="{{phoneModel ? 'isiphoneX':''}}"></view>
+    <!-- popup -->
+    <view class="popup" style="top:{{ispopup?0:'-99999px'}};">
+      <view class="popcenterbox">
+        <view class="popbluebox">
+          <image src="{{shareImg}}" show-menu-by-longpress="true"></image>
+          <image class="popclosebtn" bindtap="closepopup" src="../img/store/detail/icon10.png"></image>
+        </view>
+        <view class="txt">长按保存图片或发送给好友，好友识别二维码 关注公众号后您即可获得3份测评</view>
+        <!-- <view class="txt">长按保存图片或发送给好友，好友识别二维码 关注公众号后您即可获得测评兑换券 -->
+        <!-- <view>（上限：{{paperDetail.setting.testRule.maxInvite||0}}份）</view> -->
+        <!-- </view> -->
+      </view>
+    </view>
+
+    <!-- 底部 -->
+    <view class="bottomtab {{phoneModel ? 'isiphoneX':''}}" wx:if="{{dataLoaded}}">
+      <button wx:if="{{!userData.isBind&&freeTickId}}" class="userInfoBtn1" open-type="getUserInfo" bindgetuserinfo="getUserInfo"></button>
+      <!-- 提示用券购买弹窗 -->
+      <view wx:if="{{teamRole!=1&&showMindToast}}" class="bottomMindToast">
+        <image src="../img/store/icon35.png"></image>
+        <text>您有{{(paperDetail.userPapersNum.freeTicket ||0)+ (paperDetail.userPapersNum.vipTicket||0)}}张兑换券可用于本测评</text>
+        <view class="closeView" bindtap="closeMindToast">
+          <image class="closeImg" src="../img/store/icon36.png"></image>
+        </view>
+      </view>
+      <!-- 团队普通成员 -->
+      <view wx:if="{{teamRole==1}}" class="bottabbox">
+        <view wx:if="{{isAllFree&&!paperDetail.setting.price&&paperDetail.userPapersNum.hasOld}}" class="flex">
+          <view class="tabbtn flex-main" style="background:#fff;color:#90919C;font-size:24rpx;text-align:left;justify-content:left;text-overflow: ellipsis;white-space:nowrap;overflow: hidden;width: 480rpx;">
+            如需发放测评请联系管理员：{{teamAdminUser}}
+          </view>
+          <view class="payforIos" bindtap="toReportDetail">查看报告</view>
+        </view>
+        <view wx:elif="{{isAllFree&&!paperDetail.setting.price}}" class="tabbtnfree" bindtap="gotoguide">免费体验</view>
+        <view wx:else class="tabbtnfree" style="font-size:24rpx;text-overflow: ellipsis;white-space:nowrap;overflow: hidden;">如需发放测评请联系管理员：{{teamAdminUser}}</view>
+      </view>
+      <!-- 完全免费测评 -->
+      <view class="bottabbox" wx:elif="{{isAllFree&&!showFullBtn&&!paperDetail.userPapersNum.hasOld}}">
+        <button wx:if="{{!userData.phone}}" class="tabbtnfree" open-type="getPhoneNumber" bindgetphonenumber="changeStatus2">免费领取</button>
+        <button wx:else class="tabbtnfree" bindtap="changeStatus2">免费领取</button>
+      </view>
+      <!-- 有免费的测评体验券 -->
+      <view wx:elif="{{freeTickId}}" class="bottabbox">
+        <button wx:if="{{!userData.phone}}" class="tabbtnfree" open-type="getPhoneNumber" bindgetphonenumber="changeStatus2" data-t="1">用券免费体验</button>
+        <button wx:else class="tabbtnfree" bindtap="changeStatus2" data-t="1">用券免费体验</button>
+      </view>
+      <!-- 测评可分发 -->
+      <view class="botbox flex" wx:elif="{{isvip1||paperDetail.userPapersNum.type==-1||paperDetail.userPapersNum.hasOld||showFullBtn}}">
+        <view class="botboxrd btn0 flex-main" bindtap="gototailed">
+          <image src="../img/store/detail/icon25.png"></image>
+          <view>发放记录</view>
+        </view>
+        <view class="botboxrd btn1" bindtap="gotodati">
+          <view>发放测评</view>
+        </view>
+        <view class="botboxrd btn2" bindtap="gotoguide">
+          <view>{{oldShareId?'继续体验':'体验测评'}}</view>
+        </view>
+      </view>
+      <!-- vip购买测评 -->
+      <view class="bottabbox" wx:elif="{{(isvip0||isvip2)&&!paperDetail.userPapersNum.hasOld}}">
+        <button class="tabbtnfree" bindtap="paymoney">{{isIos?'用券兑换':'立即购买'}}</button>
+      </view>
+      <!-- 付费测评底部 -->
+      <view class="bottabbox" wx:elif="{{!isAllFree &&!freeCount&&!paperDetail.userPapersNum.hasOld}}">
+        <view class="payfor" bindtap="paymoney" wx:if="{{!isIos}}">
+          <image src="../img/store/detail/icon8.png"></image>
+          <text>立即购买</text>
+        </view>
+        <view class="tabbtn" wx:if="{{isIos}}" style="background:#fff;color:#90919C;font-size:28rpx;text-align:left;justify-content:left;">
+          由于相关规范ios暂不支持购买
+        </view>
+        <view wx:if="{{isIos}}" class="payforIos" bindtap="paymoney">用券兑换</view>
+        <view class="tabbtn" wx:else bindtap="changePage" data-url="./becomevip">
+          <image src="../img/store/detail/icon6.png"></image>升级成为会员，免费用测评
+        </view>
+      </view>
+      <!-- 限量免费测评 -->
+      <view class="bottabbox" wx:if="{{!isAllFree && freeCount&&isfree}}">
+        <button wx:if="{{!userData.phone}}" class="tabbtnfree" open-type="getPhoneNumber" bindgetphonenumber="changeStatus">免费领取</button>
+        <button wx:else class="tabbtnfree" bindtap="changeStatus">免费领取</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="datibox" wx:if="{{dati}}" catchtouchmove="true">
+    <view class="daticenterbox">
+      <image class="daticenterboximg" src="{{pictureUrl}}" show-menu-by-longpress="true"></image>
+      <image class="daticlosebtn" bindtap="closedati" src="../img/store/icon1.png"></image>
+    </view>
+    <view class="datiboxfoottext">长按图片保存或发送给微信好友</view>
+  </view>
+</scroll-view>
+
+
+<!-- 支付 -->
+<view class="paypage" wx:if="{{ispay&&!isIos}}" catchtouchmove="true">
+  <view class="closebox" bindtap="closepaypage"></view>
+  <view class="paybox">
+    <view class="toBuyVip flex" style="margin:40rpx 26rpx 0;" wx:if="{{teamRole!=1&&!isAllFree&&!isvip1&&!isvip2&&paperDetail.userPapersNum.hasOld&&!isIos}}" bindtap="changePage" data-url="./becomevip">
+      <image class="bgImg" src="../img/store/detail/icon27.png"></image>
+      <view class="flex-main"></view>
+      <view>
+        <image class="img1" src="../img/store/detail/icon15.png"></image>
+        <text>升级成为会员，不限量使用测评</text>
+        <image class="img2" src="../img/store/detail/icon16.png"></image>
+        <!-- <view class="animationView"></view> -->
+      </view>
+      <view class="flex-main"></view>
+    </view>
+    <view class="paypagehead">
+      <view class="payheadleft">
+        <view>{{paperDetail.name}}</view>
+        <text>单价：¥{{paperDetail.setting.price||0}}</text>
+      </view>
+      <view class="payheadright">
+        <image src="{{paperDetail.setting.smallImg}}"></image>
+      </view>
+    </view>
+    <view class="paypagebody">
+      <wxs module="filters" src="./filters.wxs"></wxs>
+      <view class="paybodyleft">合计：￥{{filters.toFix((paperDetail.setting.price||0) * count)}}</view>
+      <view class="paybodyright">
+        <button bindtap="jiancount">-</button>
+        <!-- <view>{{count}}</view> -->
+        <input type="number" bindinput="inputprice" value="{{count}}"></input>
+        <button bindtap="addcount">+</button>
+      </view>
+    </view>
+    <view style="height:14rpx;background:rgba(248, 248, 248, 1);"></view>
+    <view class="wechatpay">
+      <view>支付方式</view>
+      <view class="wechatpaybox" bindtap="changePaymentmoney">
+        <view>
+          <image class="wechatpayimg" src="../img/store/icon31.png"></image>
+          <text class="allpaytext">微信支付</text>
+        </view>
+        <view>
+          <image class="checkicon" src="{{isticket ? '../img/store/icon33.png':'../img/store/icon34.png'}}"></image>
+        </view>
+      </view>
+    </view>
+    <view class="ticketpay" bindtap="changePaymentticket">
+      <view class="ticketpaybox">
+        <view>
+          <image class="ticketpayimg" src="../img/store/icon32.png"></image>
+          <text class="allpaytext">用券兑换</text>
+        </view>
+        <view>
+          <text class="allpaygraytext">{{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)}}张券可用于本测评</text>
+          <image class="checkicon" src="{{!isticket ? '../img/store/icon33.png':'../img/store/icon34.png'}}"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="paytabbox {{phoneModel ? 'isiphoneX':''}}">
+    <view wx:if="{{isticket}}" class="checkusebtn {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)<count?'disabledBtn':''}}" bindtap="useticket">
+      {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)
+      <count? '券数量不足': '用券兑换'+count+ '份'}} </view>
+        <view wx:if="{{!isticket}}" class="checkusebtn" bindtap="payfished">
+          微信支付￥{{filters.toFix((paperDetail.setting.price||0) * count)}}
+        </view>
+    </view>
+  </view>
+  <!-- 支付IOS -->
+  <view class="paypage paypageIos" wx:if="{{ispay&&isIos}}" catchtouchmove="true">
+    <view class="closebox" bindtap="closepaypage"></view>
+    <view class="paybox">
+      <view class="paypagehead">
+        <view class="payheadleft">
+          <view>{{paperDetail.name}}</view>
+          <view class="allpaygraytext">{{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)}}张券可用于本测评</view>
+        </view>
+        <view class="payheadright">
+          <image src="{{paperDetail.setting.smallImg}}"></image>
+        </view>
+      </view>
+      <view class="paybodyright">
+        <button bindtap="jiancount">-</button>
+        <!-- <view>{{count}}</view> -->
+        <input type="number" bindinput="inputprice" value="{{count}}"></input>
+        <button bindtap="addcount">+</button>
+      </view>
+    </view>
+    <view class="lineView"></view>
+    <view class="paytabbox {{phoneModel ? 'isiphoneX':''}}">
+      <view wx:if="{{isticket}}" class="checkusebtn {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)<count?'disabledBtn':''}}" bindtap="useticket">
+        {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)
+        <count? '券数量不足': '用券兑换'+count+ '份'}} </view>
+      </view>
+    </view>
+    <view class="cover" wx:if="{{dlgShow||showDlg1}}" bindtap="hidenDlg"></view>
+    <view class="dlg" wx:if="{{dlgShow}}">
+      <image src="../img/store/detail/icon12.png"></image>
+      <view class="txtView">{{paperDetail.setting.dateDesc}}</view>
+    </view>
+    <view class="coverView" wx:if="{{showMindDlg}}" bindtap="hidenDlg"></view>
+    <view wx:if="{{showDlg1}}" class="dlg1">
+      <view class="title">客服微信号</view>
+      <view class="flex content">
+        <view class="flex-main"></view>
+        <image src='../img/store/icon39.png'></image>
+        <text>LIN_7890</text>
+        <view class="flex-main"></view>
+      </view>
+      <view bindtap="copyIt" class="copyBtn">复制</view>
+      <view class="mind">添加时，请备注公司所属行业和规模</view>
+    </view>
+    <view class="pointerView flex" wx:if="{{showMindDlg&&!isFreeTickId}}" style="padding-bottom:{{phoneModel?80:0}}rpx;">
+      <text class="flex-main"></text>
+      <view class="{{activePointer==0?'active':''}}"></view>
+      <view class="{{activePointer==1?'active':''}}"></view>
+      <view class="{{activePointer==2?'active':''}}"></view>
+      <text class="flex-main"></text>
+    </view>
+    <swiper wx:if="{{showMindDlg&&!isFreeTickId}}" current="{{activePointer}}" bindchange="changeActivePointer" class="dlgMsg" style="padding-bottom:{{phoneModel?80:0}}rpx;">
+      <swiper-item class="item1">
+        <view class="title">发放记录</view>
+        <view class="mindMsg">发放测评后，您可在此查看发放记录及完成状态。</view>
+        <image src="../img/store/detail/icon20.png" class="pointerImg"></image>
+        <image class="btnImg" bindtap="gototailed" src="../img/store/detail/icon19.png"></image>
+        <view class="btnView" bindtap="hidenDlg">我知道了</view>
+      </swiper-item>
+      <swiper-item class="item2">
+        <view class="title">发放测评</view>
+        <view class="mindMsg">点击生成测评邀请函，对方通过邀请函完成测试后，您可查看他的报告结果。</view>
+        <image src="../img/store/detail/icon22.png" class="pointerImg"></image>
+        <image class="btnImg" bindtap="gotodati" src="../img/store/detail/icon21.png"></image>
+        <view class="btnView" bindtap="showMindDlgFn">我知道了</view>
+      </swiper-item>
+      <swiper-item class="item3">
+        <view class="title">立即体验</view>
+        <view class="mindMsg">点击可体验本测评，完成后，系统将生成对应的报告。</view>
+        <image src="../img/store/detail/icon24.png" class="pointerImg"></image>
+        <image class="btnImg" bindtap="gotoguide" src="../img/store/detail/icon23.png"></image>
+        <view class="btnView" bindtap="showMindDlgFn">我知道了</view>
+      </swiper-item>
+    </swiper>
+    <view wx:if="{{showMindDlg&&isFreeTickId}}" class="dlgMsg" style="margin-bottom:{{phoneModel?80:0}}rpx;">
+      <view class="item3">
+        <view class="title">立即体验</view>
+        <view class="mindMsg">点击可体验本测评，完成后，系统将生成对应的报告。</view>
+        <image src="../img/store/detail/icon24.png" class="pointerImg"></image>
+        <image class="btnImg" bindtap="gotoguide" src="../img/store/detail/icon23.png"></image>
+        <!-- <view class="btnView" bindtap="showMindDlgFn">我知道了</view> -->
+      </view>
+    </view>

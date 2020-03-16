@@ -1,0 +1,24 @@
+/* index/pcGetTickSuccess.wxss */
+
+.content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 32rpx;
+  font-family: PingFangSC-Light, PingFang SC;
+  font-weight: 300;
+  color: rgba(2, 34, 50, 1);
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.content image {
+  width: 566rpx;
+  height: 424rpx;
+}
+
+.content .mind{
+  line-height: 44rpx;
+  margin-top: 12rpx;
+}

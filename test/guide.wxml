@@ -1,0 +1,54 @@
+<!--test/guide.wxml-->
+<view class="container font">
+  <view class="headbox flex">
+    <image src="{{userInfo.avatar}}" wx:if="{{userInfo.avatar}}"></image>
+    <view class="headtitle flex-main">
+      <view>{{userInfo.userCompany.name||''}}</view>
+      <view class="invitetext">邀您参加测评</view>
+    </view>
+  </view>
+
+  <view class="bodybox">
+    <view class="topic">
+      <text class="bodytitle">测评题目</text>
+      <view class="bigtext">{{paperList.setting.name1}}</view>
+    </view>
+    <view class="topicnum">
+      <text class="bodytitle">题量</text>
+      <view class="smalltext">本测评共{{paperList.quesCount}}题</view>
+    </view>
+    <view class="topictime">
+      <text class="bodytitle">用时</text>
+      <view class="smalltext">平均用时{{paperList.setting.time}}分钟</view>
+    </view>
+  </view>
+  <view class="begin" bindtap="closemask">{{draftAnswer?'继续体验':'开始作答'}}</view>
+  <text class="infotext">好啦测评提供技术支持</text>
+  <view class="mask" wx:if="{{isok}}">
+    <view class="commitment">
+      <view class="commithead">
+        <view class="comtitlebox">
+          <image src="../img/guide/bg.png"></image>
+          <text>作答须知</text>
+        </view>
+        <view class="comtextbox">
+          <!-- <view class="combigtitle">为保证作答结果真实、有效。
+            <text>本人承诺：</text>
+          </view> -->
+          <view class="comtext">1.本次测评报告内容将严格遵循保密原则，不对不相关人员公开您的的测评报告内容；</view>
+          <view class="comtext">2.由用人单位推送的测评，将默认允许用人方阅读您的测评报告内容。并且限于用人单位面试组相关人员阅读；</view>
+          <view class="comtext">3.为了保证测评结果的有效性，请独立完成所有题目，不查阅任何资料，不向他人求助；</view>
+          <view class="comtext">4.如实作答，保持认真负责的态度；对试题保密，不记录、传播试题；</view>
+          <view class="comtext">5.如果测试者违背测评要求，将由测试者自己承担后果。</view>
+        </view>
+        <!-- <view class="comimgbox">
+          <image src="../img/guide/icon.png"></image>
+        </view> -->
+      </view>
+      <view class="combtn" bindtap="closemask">
+        <view class="disagree">不同意</view>
+        <view class="agree" bindtap="gototakephoto">同意，立即作答</view>
+      </view>
+    </view>
+  </view>
+</view>

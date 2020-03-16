@@ -1,0 +1,98 @@
+<!--index.wxml-->
+<!-- <image class="getGift" wx:if="{{!couponGet&&showTopGift&&teamRole==3}}" src="../img/index/gitfImg.png" bindtap="toFetGift"></image> -->
+<!-- <view class="giftDlg" wx:if="{{showGiftDlg}}">
+  <view class="dlgContent">
+    <image class="closeImg" bindtap="closeGiftDlg" src="../img/index/icon8.png"></image>
+    <image class="msgImg" src="../img/index/icon9.png"></image>
+    <button class="btnImg btnImgBtn" open-type="getPhoneNumber" bindgetphonenumber="changePage" data-url="./couponGet" src="../img/index/icon7.png" data-n="getPhoneNumber">
+    </button>
+    <image class="btnImg" bindtap="changePage" data-url="./couponGet" src="../img/index/icon7.png"></image>
+  </view>
+</view> -->
+<view class="topTestView flex" wx:if="{{oldShareInfo&&oldShareInfo.id}}" bindtap="continueTest">
+  <image class="icon25" src="../img/index/icon25.png"></image>
+  <view class="flex-main">您有一份《
+    <span>{{oldShareInfo.paperName}}</span>》测试未完成，戳我继续</view>
+  <image class="icon24" src="../img/index/icon24.png" data-t="2"></image>
+</view>
+<view class="topCouponGetView" wx:if="{{!hasFreeTick&&skipFreeTicket}}">
+  <image bindtap="changePage" data-url="../index/getFreeTicket" src="../img/store/detail/icon29.png"></image>
+</view>
+<view class="container font">
+  <view class="banner">
+    <swiper autoplay="true" indicator-dots="{{imgs.length>1?true:false}}" circular="true" indicator-color="rgba(255,255,255,0.3)" indicator-active-color="#fff">
+      <block wx:for="{{imgs}}" wx:key="index">
+        <swiper-item bindtap="changePage" data-url="{{item.url||''}}">
+          <image src="{{item.img||'http://img01.luoke101.com/banner09201.png'}}" class="slide-image" width="355" height="150" />
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
+  <view class="threebtn" wx:if="{{navigation&&navigation.length}}">
+    <block wx:for="{{navigation}}" wx:key="unique">
+      <view class="threebox" bindtap="changePage" data-url="{{item.url}}" data-name="navigation">
+        <view>
+          <image src="{{item.img||''}}"></image>
+        </view>
+        <text>{{item.title}}</text>
+      </view>
+    </block>
+  </view>
+
+  <view class="choiceness" wx:if="{{papers&&papers.length}}">
+    <view class="choiceheader">
+      <view class="choiceleft">
+        <image src="../img/index/icon1.png"></image>
+        <text>精选测评</text>
+      </view>
+      <view class="choiceright" bindtap="changePage" data-tab="../store/store">
+        <text>更多</text>
+        <image src="../img/index/icon4.png"></image>
+      </view>
+    </view>
+    <view class="card">
+      <block wx:for="{{papers}}" wx:key="unique">
+        <view class="cardbox" bindtap="changePage" data-url='../store/detail?id={{item.id}}'>
+          <view class="boxhead">
+            <image src="{{item.img}}"></image>
+            <view class="bluebox" wx:if="{{!item.price}}">限时免费</view>
+          </view>
+          <view class="boxbody">
+            <view class="bodyfirst">{{item.name}}</view>
+            <view class="bodysecond">
+              <text>{{item.time||'-'}}分钟</text>
+              <text>{{item.quesCount||'-'}}题</text>
+              <!-- <text>8页报告</text> -->
+            </view>
+            <view class="bodythird">
+              <image src="../img/index/icon3.png"></image>
+              <text>{{(item.praiseCount-0+(item.userPraiseCount||0))||'-'}} 人觉得好用</text>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+  <view class="recommend">
+    <view class="rehead">
+      <image src="../img/index/icon2.png"></image>
+      <text>推荐阅读</text>
+    </view>
+    <block wx:for="{{news}}" wx:key="unique">
+      <view class="rebody flex" bindtap="navWebView" data-url="{{item.url}}">
+        <view class="rebodyleft flex-main">
+          <view class="reone">{{item.title}}</view>
+          <view class="retwo">
+            <!-- <text>阅读 {{item.readCount}}</text> -->
+            <!-- <view class="rebodyline"></view> -->
+            <text>{{item.publishDate}}</text>
+          </view>
+        </view>
+        <view class="rebodyright" wx:if="{{item.img}}">
+          <image src="{{item.img}}"></image>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

@@ -1,0 +1,32 @@
+<!--index/couponGet.wxml-->
+<image class="bgImg" src="../img/index/icon15.png" mode="widthFix"></image>
+<view class="headerView flex" style="top:{{statusBarHeight}}px;">
+  <view class="back" bindtap="pageBack">
+    <image src="../img/index/icon14.png"></image>
+  </view>
+  <view class="flex-main">{{title}}</view>
+  <view style="width:138rpx;"></view>
+</view>
+<view class="topMsg" style="margin-top:{{statusBarHeight}}px;">
+  <view class="txt1">
+    <text>领取成功</text>
+    <image src="../img/index/icon13.png"></image>
+  </view>
+  <view class="txt2">券已放入您的账户，</view>
+  <view class="txt2">可在
+    <text>个人中心-我的卡券</text> 中查看。</view>
+</view>
+<view class="list" style="margin-top:{{statusBarHeight}}px;">
+  <block wx:for="{{list}}" wx:key="unique">
+    <view class="item">
+      <view class="name">{{item.name}}兑换券
+        <text>{{item.count}}张</text>
+      </view>
+      <view class="mindMsg">·仅限于{{item.name1}}</view>
+      <view class="mindMsg" wx:if="{{item.endTime}}">·有效期至{{item.endTime}}</view>
+      <view class="btnView" bindtap="changePage" data-i="{{index}}" wx:if="{{type==1}}">
+        <view class="userBtn">立即使用</view>
+      </view>
+    </view>
+  </block>
+</view>

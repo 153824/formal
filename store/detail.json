@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "测评详情",
+  "usingComponents": {
+    "popup": "../common/popup"
+  }
+}

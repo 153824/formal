@@ -1,0 +1,249 @@
+<!--admins/report.wxml-->
+<view wx:if="{{noTeamMember&&showPage}}" class="noTeamMemberView">
+  <image src="../img/report/icon15.png"></image>
+  <view class="mind">
+    <view>仅团队内部成员有权限访问该报告</view>
+    <view>请联系管理员{{teamAdminNickname?("："+teamAdminNickname):""}}添加</view>
+    <view class="back" bindtap="back">返回首页</view>
+  </view>
+</view>
+<view wx:elif="{{showPage}}">
+  <!-- 头部信息 -->
+  <view class="box0">
+    <view class="paperName">
+      <text class="underLineBg">{{paper.name}}</text>
+    </view>
+    <!-- <view class="mind">
+    <text>LINWEI等5人已读</text>
+  </view> -->
+    <view class="time">
+      <text>报告生成时间：{{finishTime}}</text>
+    </view>
+  </view>
+  <view class="spaceView" style="height:40rpx;"></view>
+  <!-- 用户信息 -->
+  <view class="box">
+    <view class="title">
+      <text class="underLineBg">测评者信息</text>
+      <!-- <view class="showImg flex" bindtap="showBigImg" data-url="{{userMsg.imgUrl}}">
+        <image src="{{userMsg.imgUrl}}" class="userImg"></image>
+        <text>查看照片</text>
+        <image src="../img/report/icon1.png" class="pointerImg"></image>
+      </view> -->
+    </view>
+    <view class="people flex">
+      <image src="{{userMsg.avatar}}" class="avatar"></image>
+      <view class="flex-main">
+        <view class="name">{{userMsg.username}}</view>
+        <view class="otherMsg">
+          <text>年龄：{{userMsg.age}}</text>
+          <text>性别：{{userMsg.info.gender==1?'男':'女'}}</text>
+          <text>学历：{{userMsg.educationName}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="title" style="margin-top:100rpx;" wx:if="{{show}}">
+      <text class="underLineBg">{{name}}</text>
+    </view>
+    <view class="list flex" wx:if="{{show}}">
+      <view class="item flex-main" wx:if="{{showAnswerTime}}" bindtap="showDlg" data-n="{{timeNormal==1?'':'timeDlg'}}">
+        <view class="topView {{timeNormal==1?'':'topView1'}}"></view>
+        <view class="name">作答时长</view>
+        <view class="msg" wx:if="{{timeNormal==1}}">{{timeTotal}}分钟（正常）</view>
+        <view class="msg msg1" wx:else>异常</view>
+        <image src="../img/report/icon{{timeNormal==1?'9':'5'}}.png"></image>
+      </view>
+      <view class="item flex-main" wx:if="{{matchArr.show}}" bindtap="showDlg" data-n="{{matchArr.type==1?'':'noMatchDlg'}}">
+        <view class="topView {{matchArr.type==1?'':'topView1'}}"></view>
+        <view class="name">作答一致性</view>
+        <view class="msg" wx:if="{{matchArr.type==1}}">正常</view>
+        <view class="msg msg1" wx:else>异常</view>
+        <image src="../img/report/icon{{matchArr.type==1?'9':'5'}}.png"></image>
+      </view>
+      <view class="item flex-main" wx:if="{{optionChoose}}" bindtap="showDlg" data-n="optionChooseDlg">
+        <view class="topView {{timeNormal==1?'':'topView1'}}"></view>
+        <view class="name">选项分布</view>
+        <view class="msg" wx:if="{{timeNormal==1}}">{{time}}分钟（正常）</view>
+        <view class="msg msg1" wx:else>异常</view>
+        <image src="../img/report/icon{{timeNormal==1?'9':'5'}}.png"></image>
+      </view>
+      <!-- <view style="opacity: 0;">1</view> -->
+    </view>
+    <view class="content" wx:if="{{rule}}">{{(matchArr.type!=1||timeNormal!=1)?rule2:rule1}}</view>
+  </view>
+  <!-- 报告总述 -->
+  <view class="box1" wx:if="{{showSummary}}">
+    <view class="title">
+      <text>{{summaryName}}</text>
+    </view>
+    <view class="flex temple" wx:if="{{showSummaryTotal||showSummaryDefinition||summaryRankOrg||summaryRankAll}}">
+      <view class="flex-main item noramlTem" style="padding:56rpx 0;{{!summaryRankOrg&&!summaryRankAll?'':'margin-right:20rpx;'}}{{(!summaryRankOrg||!summaryRankAll)&&!showSummaryTotal?'height:230rpx;':''}}" wx:if="{{showSummaryTotal||showSummaryDefinition||summary.title}}">
+        <view style="width: 100%;">
+          <view class="name" wx:if="{{showSummaryDefinition}}">{{summaryDefinitionName}}</view>
+          <view class="lvName" wx:if="{{showSummaryDefinition}}">{{summary.title}}</view>
+          <view class="lvNum" wx:if="{{showSummaryTotal}}">
+            <canvas class="circle" canvas-id="canvasArcCir"></canvas>
+            <view class="num">{{total1}}分</view>
+          </view>
+        </view>
+      </view>
+      <view class="flex-main noramlTem" wx:if="{{summaryRankOrg||summaryRankAll}}" style="{{((summaryRankOrg&&summaryRankAll)||showSummaryTotal)?'':'height:230rpx;'}}">
+        <view class="topView item" wx:if="{{summaryRankOrg}}" style="{{!summaryRankAll&&showSummaryTotal?'height:476rpx;':''}}">
+          <view>
+            <progress percent="{{main.order||0}}" border-radius="6rpx" backgroundColor="#E7E7E7" activeColor="#5960ED"></progress>
+            <view class="orderView">组织排名：
+              <text>{{main.order||0}}%</text>
+            </view>
+          </view>
+        </view>
+        <view style="height:16rpx;" wx:if="{{summaryRankAll&&summaryRankOrg}}"></view>
+        <view class="bottomView item" wx:if="{{summaryRankAll}}" style="{{!summaryRankOrg&&showSummaryTotal?'height:476rpx;':''}}">
+          <view>
+            <progress percent="{{main.orderAll||32}}" border-radius="6rpx" backgroundColor="#E7E7E7" activeColor="#5960ED"></progress>
+            <view class="orderView">全国排名：
+              <text>{{main.orderAll||32}}%</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="content" wx:if="{{summary.txt}}">
+      <rich-text nodes="{{summary.txt}}"></rich-text>
+    </view>
+  </view>
+  <!-- 模型介绍 -->
+  <view class="box2" wx:if="{{showModelIntroduce&&dimension['1']}}">
+    <view class="title">
+      <text class="underLineBg">{{modelIntroduceName||"模型介绍"}}</text>
+    </view>
+    <view class="content">
+      <rich-text nodes="<p>{{modelIntroduceTxt||''}}</p>"></rich-text>
+      <block wx:for="{{dimension}}" wx:key="unique">
+        <view class="dimensionName">
+          <text></text> {{item.name}}
+        </view>
+      </block>
+    </view>
+  </view>
+  <!-- 维度分析 -->
+  <view class="box3" wx:if="{{showDimension}}">
+    <block wx:for="{{dimension}}" wx:key="unique">
+      <block wx:if="{{item.show&&item.name}}">
+        <view class="spaceView" wx:if="{{index==1}}" style="height:20rpx;"></view>
+        <view class="title">
+          <text class="underLineBg">{{item.name}}</text>
+        </view>
+        <view class="flex total" wx:if="{{item.showTotal||item.rankOrg||item.rankAll}}">
+          <view class="flex-main" wx:if="{{item.showTotal}}">
+            <view class="name">得分</view>
+            <view class="lv">{{item.total}}</view>
+          </view>
+          <view class="flex-main" wx:if="{{item.rankOrg}}">
+            <view class="name">组织排名</view>
+            <view class="lv" wx:if="{{index==0}}">{{d1.order||0}}%</view>
+            <view class="lv" wx:if="{{index==1}}">{{d2.order||0}}%</view>
+          </view>
+          <view class="flex-main" wx:if="{{item.rankAll}}">
+            <view class="name">全国排名</view>
+            <view class="lv" wx:if="{{index==0}}">{{d1.orderAll||0}}%</view>
+            <view class="lv" wx:if="{{index==1}}">{{d2.orderAll||0}}%</view>
+          </view>
+        </view>
+        <view class="content" wx:if="{{item.lvDesc}}">
+          <rich-text nodes="<p>{{item.lvDesc||''}}</p>"></rich-text>
+        </view>
+        <!-- 柱状图 -->
+        <!-- <view class="chartImg" wx:if="{{item.chartType==2}}">
+        <ec-canvas id="mychart{{index}}" canvas-id="mychartcanvas{{index}}" ec="{{getChartMsg}}"></ec-canvas>
+      </view> -->
+        <!-- 雷达图 -->
+        <view class="chartImg" wx:if="{{item.chartType!=1}}">
+          <ec-canvas id="mychart{{index}}" canvas-id="mychartcanvas{{index}}" ec="{{getChartMsg1}}"></ec-canvas>
+        </view>
+        <view style="height:50rpx;" wx:if="{{!item.lvDesc&&!item.showTotal&&!item.rankOrg&&!item.rankAll&&item.chartType==1}}"></view>
+        <!-- 维度 -->
+        <view class="list" wx:if="{{show}}">
+          <block wx:for="{{item.child}}" wx:key="unique" wx:for-item="node" wx:for-index="i">
+            <view class="item">
+              <view class="title {{node.active}}" bindtap="activeItem" data-index="{{index}}" data-i="{{i}}">{{node.name}}：
+                <text style="color:{{node.color}};">{{node.lvName}}</text>
+                <image src="../img/report/icon2.png"></image>
+              </view>
+              <view class="contentMsg" wx:if="{{node.active}}">
+                <block wx:for="{{node.lvTexts}}" wx:key="unique" wx:for-item="n" wx:for-index="j">
+                  <view class="title1">
+                    <text class="underLineBg">{{n.title}}：</text>
+                  </view>
+                  <rich-text class="msg" nodes="<p>{{n.content}}</p>"></rich-text>
+                </block>
+              </view>
+            </view>
+          </block>
+        </view>
+      </block>
+    </block>
+  </view>
+  <view class="spaceView" wx:if="{{proposalShow}}" style="height:18rpx;"></view>
+  <!-- 建议 -->
+  <view class="box4" wx:if="{{proposalShow}}">
+    <scroll-view class="tabs" scroll-x>
+      <block wx:for="{{proposal}}" wx:key="unique">
+        <view wx:if="{{item.show}}" class="item {{activeProposal==index?'active':''}}" bindtap="changeProposal" data-i="{{index}}">{{item.name}}</view>
+      </block>
+    </scroll-view>
+    <view class="content">
+      <view class="stars flex" wx:if="{{proposal[activeProposal].color}}">
+        <image src="../img/report/icon{{proposal[activeProposal].color>=1?6:7}}.png"></image>
+        <image src="../img/report/icon{{proposal[activeProposal].color>=2?6:7}}.png"></image>
+        <image src="../img/report/icon{{proposal[activeProposal].color>=3?6:7}}.png"></image>
+        <image src="../img/report/icon{{proposal[activeProposal].color>=4?6:7}}.png"></image>
+        <image src="../img/report/icon{{proposal[activeProposal].color>=5?6:7}}.png"></image>
+      </view>
+      <rich-text class="msg" style="{{proposal[activeProposal].color?'':'padding-top:0;'}}" nodes="<p>{{proposal[activeProposal].content}}</p>"></rich-text>
+    </view>
+  </view>
+  <!-- 分享报告按钮--普通团队成员无法使用该按钮 -->
+  <button class="sharebtn" bindtap="toShareReport" wx:if="{{teamRole!=1}}">
+    <image src="../img/report/icon4.png"></image>分享报告</button>
+  <!-- 申请查看报告 -->
+  <view wx:if="{{(applyStatus==1||applyStatus==2)&&teamRole!=1}}" class="hasApply">
+    <view class="msg">被测者申请查看报告结果，是否同意？</view>
+    <view class="agreenBtn flex" wx:if="{{applyStatus==1}}" bindtap="applyReportAudit">
+      <view class="flex-main"></view>
+      <image src="../img/report/icon13.png"></image>
+      同意
+      <view class="flex-main"></view>
+    </view>
+    <view class="agreenBtn agreenBtn1 flex" wx:if="{{applyStatus==2}}" bindtap="applyReportAudit">
+      <view class="flex-main"></view>
+      <image src="../img/report/icon14.png"></image>
+      已同意
+      <view class="flex-main"></view>
+    </view>
+  </view>
+  <!-- 免责声明 -->
+  <view class="bottomMsg" wx:if="{{statement}}">
+    <rich-text nodes="{{statement}}"></rich-text>
+  </view>
+  <!-- 底部固定 -->
+  <view class="ownerMsg">©好啦测评</view>
+  <!-- 弹窗信息 -->
+  <view class="coverView" wx:if="{{showDlg}}" bindtap="hideDlg"></view>
+  <view class="dlgView" wx:if="{{showDlg}}">
+    <view wx:if="{{dlgName=='timeDlg'}}">
+      <image src="../img/report/icon10.png"></image>
+      <view class="msgTitle">作答时长：{{timeTotal}}分钟</view>
+      <view class="msg">{{answerTimeTxt}}</view>
+    </view>
+    <view wx:if="{{dlgName=='noMatchDlg'}}">
+      <image src="../img/report/icon12.png"></image>
+      <view class="msgTitle">作答一致性：异常</view>
+      <view class="msg">{{matchArr.txt}}</view>
+    </view>
+    <view wx:if="{{dlgName=='optionChooseDlg'}}">
+      <image src="../img/report/icon11.png"></image>
+      <view class="msgTitle">选项分布：异常</view>
+      <view class="msg">{{matchArr.txt}}</view>
+    </view>
+  </view>
+</view>

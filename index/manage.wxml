@@ -27,7 +27,7 @@
                 <view class="name">
                   <text class="noRead" wx:if="{{!item.isRead}}"></text>
                   <text>{{item.people.name}}</text>
-                  <text class="total">{{item.report.total1}}分</text>
+                  <text class="total" >{{item.report.total1}}分</text>
                 </view>
               </view>
               <view class="flex-main time">{{item.report.finishTime}}
@@ -100,7 +100,7 @@
               <text data-child="true">{{!item.isTop?"置顶":"取消置顶"}}</text>
             </view>
             <view class="btn1 flex-main" bindtap="changePage" data-child="true" data-url="../report/list?id={{item.paper.id}}">看报告</view>
-            <view class="btn2 flex-main" bindtap="gotodati" data-child="true" data-id="{{item.paper.id}}">发测评</view>
+            <view class="btn2 flex-main" bindtap="gotodati" data-child="true" data-url="../store/sharePaper?id={{item.paper.id}}&count={{(item.freeCount||0)+(item.buyCount||0)-(item.count||0)}}" data-id="{{item.paper.id}}">发测评</view>
           </view>
         </view>
         <view style="height:40rpx;"></view>

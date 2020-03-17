@@ -112,23 +112,28 @@ Page({
 
   gotodati: function(e) {
     // console.log(e)
-    var that = this;
-    paperId = e.target.dataset.id;
-    app.doAjax({
-      url: 'toSharePaper',
-      method: 'post',
-      data: {
-        id: e.target.dataset.id,
-      },
-      success: function(res) {
-        console.log(res)
-        that.setData({
-          pictureUrl: res.img,
-          dati: true
-        })
-        that.onShow()
-      }
-    })
+    // var that = this;
+    // paperId = e.target.dataset.id;
+    // app.doAjax({
+    //   url: 'toSharePaper',
+    //   method: 'post',
+    //   data: {
+    //     id: e.target.dataset.id,
+    //   },
+    //   success: function(res) {
+    //     console.log(res)
+    //     that.setData({
+    //       pictureUrl: res.img,
+    //       dati: true
+    //     })
+    //     that.onShow()
+    //   }
+    // })
+    var d = e.currentTarget.dataset;
+    var url = d.url;
+    wx.navigateTo({
+      url: url,
+    });
   },
   closedati: function(e) {
     console.log(JSON.stringify(e))

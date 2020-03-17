@@ -1,7 +1,7 @@
 <!--store/sharePaper.wxml-->
 <view class="pageView">
   <view class="content">
-    <view class="title">作答人数上限</view>
+    <view class="title">二维码作答人数上限</view>
     <view class="flex box1">
       <view class="reduceBtn" bindtap="changeCount" data-t="1">-</view>
       <input type="number" value="{{count}}" bindinput="changeCount"></input>

@@ -37,7 +37,6 @@
         <view class="name">{{userMsg.username}}</view>
         <view class="otherMsg">
           <text>年龄：{{userMsg.age}}</text>
-          <text>性别：{{userMsg.info.gender==1?'男':'女'}}</text>
           <text>学历：{{userMsg.educationName}}</text>
         </view>
       </view>

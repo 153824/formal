@@ -71,7 +71,7 @@
     <view class="centerbox" wx:else>
       <image src="../img/user/index/bg.png"></image>
       <view class="centertext1">
-        <text>你还不是会员</text>
+        <text>iOS暂不支持购买会员</text>
       </view>
     </view>
   </block>

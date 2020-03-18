@@ -20,7 +20,7 @@ Page({
       method: "get",
       data: {
         page: 1,
-        pageSize: 1000
+        pageSize: 12
       },
       success: function(ret) {
         that.setData({

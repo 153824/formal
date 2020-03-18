@@ -336,7 +336,7 @@ App({
       data: {
         teamId: that.teamId,
         page: 1,
-        pageSize: 1000
+        pageSize: 12
       },
       success: function(list) {
         if (that.checkUser && !that.isLogin) {

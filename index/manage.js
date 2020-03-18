@@ -47,7 +47,7 @@ Page({
         data: {
           type: 1,
           page: 1,
-          pageSize: 1000
+          pageSize: 12
         },
         success: function(res) {
           res.data.forEach(function(node) {
@@ -81,7 +81,7 @@ Page({
       data: {
         isRead: false,
         page: 1,
-        pageSize: 1000
+        pageSize: 12
       },
       success: function(ret) {
         var hasNewReoprt = false;
@@ -212,7 +212,7 @@ Page({
       data: {
         isMember: true,
         page: 1,
-        pageSize: 1000
+        pageSize: 12
       },
       success: function(ret) {
         ret.data.forEach(function(node) {

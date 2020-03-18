@@ -58,7 +58,7 @@ Page({
       noLoading: true,
       data: {
         page: 1,
-        pageSize: 1000,
+        pageSize: 12,
         type: 2
       },
       success: function(ret) {
@@ -88,7 +88,7 @@ Page({
         method: "get",
         data: {
           page: 1,
-          pageSize: 1000
+          pageSize: 12
         },
         success: function(res) {
           that.setData({
@@ -120,7 +120,7 @@ Page({
         noLoading: true,
         data: {
           page: 1,
-          pageSize: 1000,
+          pageSize: 12,
           type: 5
         },
         success: function(ret) {

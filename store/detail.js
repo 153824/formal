@@ -70,7 +70,7 @@ Page({
         noLoading: true,
         data: {
           page: 1,
-          pageSize: 1000,
+          pageSize: 12,
           type: 5
         },
         success: function(ret) {
@@ -97,7 +97,7 @@ Page({
         noLoading: true,
         data: {
           page: 1,
-          pageSize: 1000,
+          pageSize: 12,
           type: 2
         },
         success: function(ret) {
@@ -113,7 +113,7 @@ Page({
             noLoading: true,
             data: {
               page: 1,
-              pageSize: 1000,
+              pageSize: 12,
               type: 1
             },
             success: function(ret) {

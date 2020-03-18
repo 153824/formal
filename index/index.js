@@ -34,7 +34,7 @@ Page({
       noLoading: true,
       data: {
         page: 1,
-        pageSize: 1000,
+        pageSize: 12,
         type: 2
       },
       success: function(ret) {

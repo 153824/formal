@@ -48,7 +48,7 @@ Page({
       noLoading: true,
       data: {
         page: 1,
-        pageSize: 1000,
+        pageSize: 12,
         type: 2
       },
       success: function(ret) {
@@ -70,7 +70,7 @@ Page({
           data: {
             allPapers: true,
             page: 1,
-            pageSize: 1000
+            pageSize: 12
           },
           success: function(res) {
             that.setData({
@@ -201,7 +201,7 @@ Page({
         noLoading: true,
         data: {
           page: 1,
-          pageSize: 1000,
+          pageSize: 12,
           type: 2
         },
         success: function(ret) {

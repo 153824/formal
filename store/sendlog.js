@@ -29,7 +29,7 @@ Page({
         type: 1,
         paperId: that.data.id,
         page: 1,
-        pageSize: 1000
+        pageSize: 12
       },
       success: function(res) {
         that.setData({
@@ -48,7 +48,7 @@ Page({
         type: 2,
         id: that.data.id,
         page: 1,
-        pageSize: 1000
+        pageSize: 12
       },
       success: function(res) {
         var now = new Date().getTime();

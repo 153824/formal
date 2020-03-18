@@ -28,7 +28,7 @@ Page({
       data: {
         id: paperId,
         page: page,
-        pageSize: 1000
+        pageSize: 12
       },
       success: function(ret) {
         ret.data.forEach(function(node) {

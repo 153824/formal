@@ -37,7 +37,7 @@ Page({
       data: {
         type: 1,
         page: 1,
-        pageSize: 12
+        pageSize: 1000
       },
       success: function(res) {
         var now = new Date().getFullYear();

@@ -44,7 +44,7 @@ Page({
       method: "GET",
       data: {
         page: 1,
-        pageSize: 12
+        pageSize: 1000
       },
       success: function(ret) {
         var list = ret.data;

@@ -265,7 +265,7 @@ App({
     params.data["teamId"] = that.teamId;
     params.data["teamRole"] = that.teamRole;
     wx.request({
-      url: that.host + params.url,
+      url: that.host2 + params.url,
       method: params.method || "POST",
       data: params.data || {},
       success: function(ret) {

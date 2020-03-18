@@ -1,6 +1,7 @@
 // index/manage/manage.js
 var app = getApp();
-var paperId="";
+var paperId = "";
+let page = 1;
 Page({
   data: {
     order: 0,
@@ -46,8 +47,8 @@ Page({
         noLoading: true,
         data: {
           type: 1,
-          page: 1,
-          pageSize: 12
+          page: page,
+          pageSize: 1000
         },
         success: function(res) {
           res.data.forEach(function(node) {
@@ -80,8 +81,8 @@ Page({
       method: "get",
       data: {
         isRead: false,
-        page: 1,
-        pageSize: 12
+        page: page,
+        pageSize: 1000
       },
       success: function(ret) {
         var hasNewReoprt = false;
@@ -212,7 +213,7 @@ Page({
       data: {
         isMember: true,
         page: 1,
-        pageSize: 12
+        pageSize: 1000
       },
       success: function(ret) {
         ret.data.forEach(function(node) {
@@ -232,6 +233,96 @@ Page({
         that.setData({
           list: ret.data
         });
+      }
+    });
+  },
+  // 下拉刷新
+  onPullDownRefresh: function() {
+    // 显示顶部刷新图标
+    wx.showNavigationBarLoading();
+    var that = this;
+    console.log("onPullDownRefresh")
+    setTimeout(function(ope) {
+      // 隐藏导航栏加载框
+      wx.hideNavigationBarLoading();
+      // 停止下拉动作
+      wx.stopPullDownRefresh();
+    }, 1500)
+    // wx.request({
+    //   url: 'https://xxx/?page=0',
+    //   method: "GET",
+    //   header: {
+    //     'content-type': 'application/text'
+    //   },
+    //   success: function (res) {
+    //     that.setData({
+    //       moment: res.data.data
+    //     });
+    //     console.log(that.data.moment);
+    //    
+    //   }
+    // })
+  },
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function() {
+    var that = this;
+    // 显示加载图标
+    console.log("onReachBottom")
+    wx.showLoading({
+      title: '正在加载中...',
+    })
+
+    // // 页数+1
+    // page = page + 1;
+    // wx.request({
+    //   url: 'https://xxx/?page=' + page,
+    //   method: "GET",
+    //   // 请求头部
+    //   header: {
+    //     'content-type': 'application/text'
+    //   },
+    //   success: function (res) {
+    //     // 回调函数
+    //     var moment_list = that.data.moment;
+    //     const oldData = that.data.moment;
+    //     that.setData({
+    //       moment: oldData.concat(res.data.data)
+    //     })
+    //     // 隐藏加载框
+    //     wx.hideLoading();
+    //   }
+    // })
+    app.doAjax({
+      url: "getReportList",
+      method: "get",
+      data: {
+        isMember: true,
+        page: page,
+        pageSize: 1000
+      },
+      success: function(ret) {
+        // 隐藏加载框
+        wx.hideLoading();
+        ret.data.forEach(function(node) {
+          node.report = node.report || {};
+          if (node.report.finishTime) {
+            node.finishTime = node.report.finishTime;
+            node.report.finishTime = app.changeDate(node.report.finishTime, "yyyy-MM-dd hh:mm");
+            node.report.finishTime = node.report.finishTime.substring(2);
+          }
+        });
+        ret.data.sort(function(n1, n2) {
+          //创建时间倒序
+          var it1 = new Date(n1.finishTime).getTime();
+          var it2 = new Date(n2.finishTime).getTime();
+          return it2 - it1;
+        });
+        that.setData({
+          list: list.push(ret.data)
+        });
+
       }
     });
   },

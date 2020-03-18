@@ -30,7 +30,7 @@ Page({
       method: "get",
       data: {
         page: 1,
-        pageSize: 12,
+        pageSize: 1000,
         type: 2
       },
       success: function(ret) {

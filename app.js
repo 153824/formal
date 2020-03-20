@@ -232,23 +232,24 @@ App({
   changeDate2: function(time, dateType) {
     //日期格式化处理
     //dateType示例：yyyy-MM-dd hh:mm:ss
+     dateType ="MM-dd hh:mm"
     time = new Date(time);
     // var y = time.getFullYear();
     var M = time.getMonth() + 1;
     var d = time.getDate();
-    // var h = time.getHours();
-    // var m = time.getMinutes();
+    var h = time.getHours();
+    var m = time.getMinutes();
     // var s = time.getSeconds();
     M = M < 10 ? ("0" + M) : M;
     d = d < 10 ? ("0" + d) : d;
-    // h = h < 10 ? ("0" + h) : h;
-    // m = m < 10 ? ("0" + m) : m;
+    h = h < 10 ? ("0" + h) : h;
+    m = m < 10 ? ("0" + m) : m;
     // s = s < 10 ? ("0" + s) : s;
     // dateType = dateType.replace("yyyy", y);
     dateType = dateType.replace("MM", M);
     dateType = dateType.replace("dd", d);
-    // dateType = dateType.replace("hh", h);
-    // dateType = dateType.replace("mm", m);
+    dateType = dateType.replace("hh", h);
+    dateType = dateType.replace("mm", m);
     // dateType = dateType.replace("ss", s);
     return dateType;
   },
@@ -289,7 +290,7 @@ App({
     params.data["teamId"] = that.teamId;
     params.data["teamRole"] = that.teamRole;
     wx.request({
-      url: that.host2 + params.url,
+      url: that.host + params.url,
       method: params.method || "POST",
       data: params.data || {},
       success: function(ret) {

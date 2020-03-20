@@ -26,15 +26,16 @@
             <view class="name">
               <text class="noRead" wx:if="{{!item.isRead}}"></text>
               <text>{{item.people.name}}</text>
-             <text class="total" wx:if="{{item.report.isDangerTest}}"></text>
-              <text class="total2" wx:else> {{item.report.total1}}分</text>
+              <text class="total" wx:if="{{item.report.isDangerTest}}">- {{item.report.reportType}}</text>
+              <text class="total" wx:else> - {{item.report.total1}}分 - {{item.report.reportType}}</text>
             </view>
           </view>
-          <view class="flex-main time">{{item.report.finishTime}}
-            <image src="../img/user/icon5.png"></image>
-          </view>
+          <image src="../img/user/icon5.png"></image>
         </view>
-        <view class="reportName">{{item.paper.name}}</view>
+        <view class="report">
+          <text class="reportName">{{item.paper.name}}</text>
+          <text class="reportTime">{{item.updatedAt}}</text>
+        </view>
       </view>
     </view>
   </block>

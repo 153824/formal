@@ -82,7 +82,7 @@ Page({
       data: {
         isRead: false,
         page: page,
-        pageSize: 1000
+        pageSize: 12
       },
       success: function(ret) {
         var hasNewReoprt = false;
@@ -213,7 +213,7 @@ Page({
       data: {
         isMember: true,
         page: 1,
-        pageSize: 1000
+        pageSize: 12
       },
       success: function(ret) {
         ret.data.forEach(function(node) {
@@ -300,7 +300,7 @@ Page({
       data: {
         isMember: true,
         page: page,
-        pageSize: 1000
+        pageSize: 12
       },
       success: function(ret) {
         // 隐藏加载框

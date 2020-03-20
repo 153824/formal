@@ -34,11 +34,11 @@ Page({
       },
       success: function (ret) {
         ret.data.forEach(function (node) {
-          node.report = node.report || {};
-          if (node.report.finishTime) {
-            node.finishTime = node.report.finishTime;
-            node.report.finishTime = app.changeDate(node.report.finishTime, "yyyy-MM-dd hh:mm");
-            node.report.finishTime = node.report.finishTime.substring(2);
+          // node.report = node.report || {};
+          if (node.updatedAt) {
+            // node.updatedAt = node.updatedAt;
+            node.updatedAt = app.changeDate2(node.updatedAt, "MM-dd");
+            // node.report.finishTime = node.report.finishTime.substring(2);
           }
         });
         ret.data.sort(function (n1, n2) {
@@ -60,6 +60,7 @@ Page({
       }
     });
   },
+
   /**
    * 进入报告详情
    */
@@ -94,6 +95,7 @@ Page({
       order: +value
     });
   },
+
   /**
    * 进入分享记录
    */

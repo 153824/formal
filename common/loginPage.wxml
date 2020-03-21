@@ -1,0 +1,7 @@
+<!--common/loginPage.wxml-->
+<view class="content">
+  <image src="../img/user/icon2.png"></image>
+  <view class="txt">登录以管理和发放测评</view>
+</view>
+<button class="getUserInfo" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+  <image src="../img/user/icon3.png"></image>微信授权登录</button>

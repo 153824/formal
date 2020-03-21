@@ -1,0 +1,103 @@
+<!--index/store/tailed.wxml-->
+<view class="container font">
+  <view class="headbox">
+    <image src="{{sumlist.paper.setting.img||paperDetail.setting.img}}"></image>
+    <view class="headboxright">
+      <view class="bigtitle">{{sumlist.paper.name||paperDetail.name||""}}</view>
+      <view class="headsmalltitle">适用于：
+        <text>{{sumlist.paper.setting.applyArr||paperDetail.setting.applyArr}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="centerbox">
+    <view class="colbox">
+      <view>共发放</view>
+      <text>{{sumlist.count || "0"}}</text>
+    </view>
+    <view class="grayline"></view>
+    <view class="colbox">
+      <view>待领取</view>
+      <text>{{(sumlist.count - sumlist.count1) || "0"}}</text>
+    </view>
+    <view class="grayline"></view>
+    <view class="colbox">
+      <view>作答中</view>
+      <text>{{sumlist.count1-sumlist.count2 || "0"}}</text>
+    </view>
+    <view class="grayline"></view>
+    <view class="colbox">
+      <view>已完成</view>
+      <text>{{sumlist.count2 || "0"}}</text>
+    </view>
+  </view>
+  <view wx:if="{{!paperlist.length}}" class="listNoData">
+    <image src="../img/index/icon6.png"></image>
+    <view>还没有发放记录～</view>
+  </view>
+  <view class="botbox" wx:else>
+    <view class="notext" wx:if="{{notext}}">
+      <image mode="bottom" src="../img/store/bg2.png"></image>
+      <view class="notintro">暂未收到测评邀约</view>
+    </view>
+
+    <block wx:for="{{paperlist}}" wx:key="unique" wx:for-item="listitem" wx:for-index="listindex">
+      <view class="list" wx:if="{{listitem.status == 3}}">
+        <view class="listleft">
+          <view class="lefttop">
+            <view class="listtitle">已撤销</view>
+            <!-- <text class="liststatus">（已发{{listitem.beentime}}小时）</text> -->
+          </view>
+          <view class="leftbottom">发放时间：{{listitem.createdAt}}</view>
+        </view>
+      </view>
+
+      <view class="list" wx:if="{{listitem.status == 2}}">
+        <view class="listleft">
+          <view class="lefttop">
+            <view class="listtitle">{{listitem.people.name|| ""}}</view>
+            <text class="liststatus fished">已完成</text>
+          </view>
+          <view class="leftbottom">发放时间：{{listitem.createdAt}}</view>
+        </view>
+        <view class="listright" bindtap="changePage" data-url="../report/detail?id={{listitem.id}}">
+          <text class="fontblue">查看报告</text>
+        </view>
+      </view>
+
+      <view class="list" wx:if="{{listitem.status == 1}}">
+        <view class="listleft">
+          <view class="lefttop">
+            <view class="listtitle">{{listitem.people.name|| ""}}</view>
+            <text class="liststatus underway">作答中</text>
+          </view>
+          <view class="leftbottom">发放时间：{{listitem.createdAt}}</view>
+        </view>
+        <view class="listright">
+          <text>正在作答中</text>
+        </view>
+      </view>
+
+      <view class="list" wx:if="{{listitem.status == 0 &&listitem.count >0}}">
+        <view class="listleft">
+          <view class="lefttop">
+            <view class="listtitle">{{listitem.count}}份待领取</view>
+            <text class="liststatus">（已发{{listitem.beentime}}小时）</text>
+          </view>
+          <view class="leftbottom">发放时间：{{listitem.createdAt}}</view>
+        </view>
+        <view class="listright">
+          <text class="fontblue" bindtap="showImg" data-img="{{listitem.img}}">分享码</text>
+          <view class="listline"></view>
+          <text class="fontblue" bindtap="revocation" data-id="{{listitem.id}}">撤回</text>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>
+<view class="datibox" wx:if="{{shareImg}}" catchtouchmove="true">
+  <view class="daticenterbox">
+    <image class="daticenterboximg" src="{{shareImg}}" show-menu-by-longpress="true"></image>
+    <image class="daticlosebtn" bindtap="closedati" src="../img/store/icon1.png"></image>
+  </view>
+  <view class="datiboxfoottext">长按图片保存或发送给微信好友</view>
+</view>

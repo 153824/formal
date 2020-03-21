@@ -1,0 +1,42 @@
+<!--admins/reportList.wxml-->
+<view class="title flex">
+  <view class="flex-main">
+    <view class="name">报告管理</view>
+    <!-- <view class="share" bindtap="toShareList">报告分享记录</view> -->
+  </view>
+  <view class="changeOrder">
+    <picker bindchange="changeOrder" value="{{order}}" range="{{orderArr}}">
+      <view class="picker">
+        <image src="../img/user/icon4.png"></image>{{orderArr[order]}}
+      </view>
+    </picker>
+  </view>
+</view>
+<view wx:if="{{!list.length}}" class="listNoData">
+  <image src="../img/index/icon6.png"></image>
+  <view>没有可查看的报告</view>
+</view>
+<view class="list" wx:else>
+  <block wx:for="{{list}}" wx:key="unique">
+    <view class="item flex" bindtap="toDetail" data-index="{{index}}">
+      <image src="{{item.people.avatar}}"></image>
+      <view class="flex-main rightItem">
+        <view class="flex">
+          <view class="flex-main">
+            <view class="name">
+              <text class="noRead" wx:if="{{!item.isRead}}"></text>
+              <text>{{item.people.name}}</text>
+              <text class="total" wx:if="{{item.report.isDangerTest}}">- {{item.report.reportType}}</text>
+              <text class="total" wx:else> - {{item.report.total1}}分 - {{item.report.reportType}}</text>
+            </view>
+          </view>
+          <image src="../img/user/icon5.png"></image>
+        </view>
+        <view class="report">
+          <text class="reportName">{{item.paper.name}}</text>
+          <text class="reportTime">{{item.updatedAt}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

@@ -1,0 +1,8 @@
+<!--common/home/home.wxml-->
+<view class="home">
+  <image src="{{homeBgImg}}" style="width:100%;height:{{h}}rpx;margin:0 auto;" mode="aspectFit"></image>
+</view>
+<view class="footer">
+  <!-- <button class="toPay" bindgetuserinfo="tiku_updataUserInfo" data-t="pay" open-type='getUserInfo'>9.9元解锁</button> -->
+  <button class="shareBtn" bindgetuserinfo="tiku_updataUserInfo" data-t="free" open-type='getUserInfo'>免费试用</button>
+</view>

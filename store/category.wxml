@@ -1,0 +1,55 @@
+<!--index/store/unfold.wxml-->
+<view class="container font {{phoneModel ? 'isiphoneX':''}}">
+  <view class="header" id="headerView">
+    <view class="bigtitle">
+      <view class="blueline"></view>
+      {{isChild?paperObj.classify[0].name:paperObj.name}}
+    </view>
+    <view class="headertext">{{paperObj.info}}</view>
+    <view class="flex tabs" wx:if="{{paperObj.classify.length>1}}">
+      <block wx:for="{{paperObj.classify}}" wx:key="unique">
+        <view class="flex-main item {{index==activeIndex ? 'active':''}}" data-i="{{index}}" bindtap="changecard">{{item.name}}
+          <view class="underline" wx:if="{{index==activeIndex}}"></view>
+        </view>
+      </block>
+    </view>
+  </view>
+  <swiper class="swiperList" bindchange="changecard" style="height:{{listHeight}}px;" current="{{activeIndex}}">
+    <block wx:for="{{paperObj.classify}}" wx:for-item="item" wx:for-index="classifyindex" wx:key="unique">
+      <swiper-item class="bodybox">
+        <scroll-view scroll-y style="height:{{listHeight}}px;">
+          <view style="height:20rpx;"></view>
+          <block wx:for="{{item.papers}}" wx:for-item="paperitem" wx:for-index="paperindex" wx:key="unique">
+            <view class="list flex" bindtap="toDetail" id="{{paperitem.id}}">
+              <view class="orgbox">
+                <image src="{{paperitem.img || ''}}"></image>
+                <view class="cover" wx:if="{{paperitem.isFree&&!isIos}}">限时免费</view>
+              </view>
+              <view class="listtext flex-main">
+                <text class="bigtitle1">{{paperitem.name}}</text>
+                <!-- <text class="detail">{{'    '||paperitem.info}}</text> -->
+                <view class="footerlist">
+                  <view class="flistleft">
+                    <text>{{paperitem.time}}分钟</text>
+                    <text>{{paperitem.quesCount}}道题</text>
+                  </view>
+                </view>
+              </view>
+              <view class="flistright" wx:if="{{columnId_ticket==id}}">
+                <view class="freeTest">免费体验</view>
+              </view>
+              <view class="flistright" wx:elif="{{paperitem.isFree}}">
+                <view class="freeTest">免费领取</view>
+              </view>
+              <!-- <view class="flistright" wx:elif="{{!isIos}}">
+                <view class="dollar">￥{{paperitem.isFree ? "0" : paperitem.price}}</view>
+                <view class="del" wx:if="{{paperitem.defaultPrice||(paperitem.isFree&&paperitem.price)}}">￥{{paperitem.isFree ? paperitem.price : paperitem.defaultPrice}}</view>
+              </view> -->
+            </view>
+          </block>
+          <view style="height:40rpx;"></view>
+        </scroll-view>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>

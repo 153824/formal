@@ -1,0 +1,115 @@
+<!--test/index.wxml-->
+<!-- 填写个人信息 -->
+<view wx:if="{{isChangeQue}}" class="isChangeQue"></view>
+<view class="container1 font" wx:if="{{pathIndex==1}}">
+  <view class="bigtitle">请填写以下信息</view>
+  <text class="smalltitle">请准确填写以确认您的身份</text>
+  <form bindsubmit="submit">
+    <text class="inputtext">姓名</text>
+    <input name="username" value="{{username}}" bindinput="userInput" data-n="username"></input>
+    <picker name="birthday" fields="month" mode="date" value="{{birthday == '' ? '1995-01': birthday}}" bindchange="userInput" data-n="birthday">
+      <view class="picker">
+        <text>出生年月</text>{{birthday}}</view>
+    </picker>
+    <picker name="education" mode="selector" bindchange="userInput" value="{{education == -1 ? '5' : education}}" range="{{array}}" data-n="education">
+      <view class="picker">
+        <text>选择学历</text>{{array[education] || ''}}</view>
+    </picker>
+
+    <!-- <view class="photobox" bindtap="takePhoto">
+      <image class="photobtn" wx:if="{{!selImg}}" src="../img/guide/takephoto.png"></image>
+      <view wx:if="{{!selImg}}">点击拍照认证</view>
+      <text wx:if="{{!selImg}}">为确认是本人作答，请您拍摄正面照</text>
+      <text wx:if="{{!selImg}}">并将您的头像保持在画面正中央</text>
+      <image class="photo" wx:if="{{selImg}}" src="{{selImg}}"></image>
+    </view>
+    <view class="retakebox" wx:if="{{selImg}}" bindtap="takePhoto">
+      <image class="rebtn" src="../img/guide/takephoto.png"></image>
+      <text>重新拍摄</text>
+    </view> -->
+    <view wx:if="{{!username||!birthday||(!education&&education!=0)}}" class="graybtn">下一步</view>
+    <!-- getphoneNum -->
+    <block wx:else>
+      <button wx:if="{{!getphoneNum}}" form-type="submit" open-type="getPhoneNumber" bindgetphonenumber="submit">下一步</button>
+      <button wx:if="{{getphoneNum}}" form-type="submit">下一步</button>
+    </block>
+  </form>
+</view>
+<!-- 答题前说明 -->
+<view class="container2 font" wx:if="{{pathIndex==2}}">
+  <view class="bigtitle">测评即将开始</view>
+  <block wx:for="{{paperList.setting.reminds}}" wx:key="">
+    <text class="smalltitle">{{index + 1}}、{{item}}</text>
+  </block>
+  <view class="quernum">共{{paperList.ques.length}}题，平均用时{{paperList.setting.time}}分钟</view>
+  <view class="count" wx:if="{{count}}">({{count}}s)</view>
+  <view class="testbtn {{isok ? 'btnactive':''}}" bindtap="gototest">进入答题</view>
+</view>
+<!-- 章节选择 -->
+<view class="chooseChapter" wx:if="{{pathIndex==4}}">
+  <view class="paperTitle">
+    <view class="name">{{paperList.setting.name1}}</view>
+    <view class="mind">请依次作答每个部分，并注意作答时限</view>
+  </view>
+  <view class="chapterList">
+    <view class="item" wx:for="{{chapter}}" wx:key="unique">
+      <view class="name">第{{numArr[index]}}部分：{{item.title}}</view>
+      <view class="flex">
+        <view class="flex flex-main">
+          <image src="../img/guide/icon3.png"></image>
+          <text>题量：{{item.ques.length}}题</text>
+        </view>
+        <view class="flex flex-main">
+          <image src="../img/guide/icon2.png"></image>
+          <text>作答限时：{{item.type==2?(item.time+'分钟'):'不限时'}}</text>
+        </view>
+      </view>
+      <view class="btn " wx:if="{{item.status==1}}" bindtap="toAnswerIt" data-index="{{index}}">开始作答</view>
+      <view class="btn btn1" wx:if="{{item.status==2}}">完成上一部分作答后，解锁此部分</view>
+      <view class="btn btn1" wx:if="{{item.status==3}}">作答已完成，请继续其他部分作答</view>
+    </view>
+  </view>
+</view>
+<!-- 答题页面 -->
+<view class="coverView" style="background-color:transparent;" wx:if="{{isChangeQue}}"></view>
+<view class="container font {{pathIndex==3?'':'pageHide'}}">
+  <view class="timebox" wx:if="{{chapterTimeDownFull}}">剩余时间：{{chapterTimeDownFull}}</view>
+  <form bindsubmit="formSubmit">
+    <view class="paper {{phoneModel ? 'isiphoneXpaper':'notiphoneXpaper'}}" style="top:{{chapterTimeDownFull?84:32}}rpx;">
+      <swiper current="{{swiperCurrent1}}">
+        <block wx:for="{{showQues}}" wx:for-index="quesindex" wx:for-item="quesitem" wx:key="unique">
+          <swiper-item catchtouchmove="pageTouch" wx:if="{{quesindex<(swiperCurrent+3)&&quesindex>(swiperCurrent-3)}}">
+            <scroll-view scroll-y="true" wx:if="{{quesitem}}">
+              <view class="paperhead">
+                <rich-text class="title" space="nbsp" nodes="<p>{{quesitem.maxChoose>1?html:''}}{{quesitem.stem}}</p>"></rich-text>
+              </view>
+              <view class="paperbody">
+                <view class="options">
+                  <block wx:for="{{quesitem.options}}" wx:for-index="i" wx:for-item="item" wx:key="unique">
+                    <view class="selectItem {{answers[quesitem.id][i]!=null?'active':''}}" bindtap="change" data-index="{{quesindex}}" data-i="{{i}}">
+                      <label>
+                        <text class="langoption">{{optionsAry[i]}}:</text>
+                        <rich-text class="optiontext" nodes="<p>{{item}}</p>"></rich-text>
+                      </label>
+                    </view>
+                  </block>
+                </view>
+              </view>
+              <view style="height:40rpx;"></view>
+            </scroll-view>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+    <view class="bottombtn {{phoneModel ? 'isiphoneX':''}}">
+      <view class="btnprev" bindtap="prev" data-index="{{swiperCurrent}}">上一题</view>
+      <view>
+        <text>{{swiperCurrent + 1}} / {{quesAll.length}}</text>
+      </view>
+      <view class="btnnext" data-index="{{swiperCurrent}}" wx:if="{{(swiperCurrent + 1) != quesAll.length}}" bindtap="next">下一题</view>
+      <button class="btnnext" bindtap="next" data-n="finish" wx:if="{{(swiperCurrent + 1) == quesAll.length&&!isFillAll}}">提交</button>
+      <button class="btnnext btnnextUp" wx:if="{{(swiperCurrent + 1) == quesAll.length&&isFillAll}}" form-type="submit">提交</button>
+    </view>
+  </form>
+
+</view>

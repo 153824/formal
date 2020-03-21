@@ -1,0 +1,75 @@
+/* index/getFreeTicket.wxss */
+
+.topView {
+  padding: 98rpx 60rpx 60rpx;
+}
+
+.topView image {
+  width: 96rpx;
+  height: 96rpx;
+  margin-right: 56rpx;
+}
+
+.topView .title {
+  font-size: 36rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 1);
+  line-height: 50rpx;
+}
+
+.topView .mind {
+  font-size: 30rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  line-height: 42rpx;
+}
+
+.listView {
+  padding: 0 56rpx;
+}
+
+.listView .item {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  height: 172rpx;
+  border-radius: 8rpx;
+  border: 1px solid rgba(231, 231, 231, 1);
+  text-align: center;
+  line-height: 172rpx;
+  margin-bottom: 20rpx;
+}
+
+.listView .item.active {
+  border-color: #5960ed;
+  color: #5960ed;
+}
+
+.bottomBtn {
+  margin: 60rpx auto;
+  width: 634rpx;
+  height: 114rpx;
+  background: #90919c;
+  border-radius: 12rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgba(254, 255, 254, 1);
+  line-height: 114rpx;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.bottomBtn.active {
+  background: rgba(89, 96, 237, 1);
+}
+
+.btnSkip{
+    margin: 60rpx auto;
+    text-align: center;
+    color: #90919c;
+    line-height: 0rpx;
+}

@@ -1,0 +1,463 @@
+/* index/manage/manage.wxss */
+
+/* 管理中心 */
+.noPower {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+}
+
+.noPower image {
+  width: 254rpx;
+  height: 176rpx;
+  display: block;
+  margin: auto;
+}
+
+.noPower .txt {
+  margin-top: 78rpx;
+  text-align: center;
+  display: block;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(50, 53, 65, 1);
+  line-height: 42rpx;
+}
+
+.footerboxBlock {
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  background-color: #efeff3;
+  overflow: hidden;
+}
+
+.headbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 196rpx;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  /* margin-bottom: 20rpx; */
+  overflow: hidden;
+}
+
+.line {
+  width: 2rpx;
+  height: 50rpx;
+  background-color: #e7e7e7;
+}
+
+.leftbox, .rightbox {
+  position: relative;
+  background-color: #fff;
+  width: calc(50% - 1rpx);
+  /* height: 100%; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.leftbox>image {
+  width: 46rpx;
+  height: 50rpx;
+}
+
+.rightbox>image {
+  width: 46rpx;
+  height: 50rpx;
+}
+
+.leftbox>text, .rightbox>text {
+  margin-top: 18rpx;
+  font-size: 28rpx;
+  color: #323541;
+}
+
+.rightbox .hasNewIcon {
+  width: 70rpx;
+  height: 34rpx;
+  position: absolute;
+  top: -10rpx;
+  right: 88rpx;
+}
+
+/* card */
+
+.footerbox {
+  position: fixed;
+  top: 196rpx;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  /* background-color: #fff; *//* padding: 0 30rpx; */
+}
+
+.card {
+  background: rgba(254, 255, 254, 1);
+  border-radius: 22rpx;
+  margin: 20rpx 20rpx 0;
+}
+
+.card .cardcenter {
+  padding: 28rpx 30rpx 0;
+}
+
+.card .cardcenter image {
+  width: 160rpx;
+  height: 160rpx;
+  box-shadow: 0px 4rpx 12rpx 0px rgba(158, 158, 158, 0.5);
+  border-radius: 12rpx;
+  margin-right: 30rpx;
+}
+
+.card .cardcenter .paperName {
+  font-size: 32rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgba(51, 51, 51, 1);
+  line-height: 50rpx;
+}
+
+.card .cardcenter .paperInfo {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(95, 100, 115, 1);
+  line-height: 40rpx;
+}
+
+.card .cardcenter .cardtime {
+  margin-top: 30rpx;
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(144, 145, 155, 1);
+  line-height: 34rpx;
+}
+
+.card .cardcenter .cardtime .paperCount {
+  font-size: 28rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgba(89, 96, 237, 1);
+  line-height: 40rpx;
+}
+
+.card .cardfooter {
+  margin-top: 30rpx;
+  text-align: center;
+  padding: 32rpx 24rpx;
+}
+
+.card .cardfooter .btn0 {
+  width: 172rpx;
+  height: 66rpx;
+  background: rgba(255, 255, 255, 1);
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(92, 97, 113, 1);
+  line-height: 66rpx;
+}
+
+.card .cardfooter .btn1 {
+  width: 172rpx;
+  height: 66rpx;
+  margin-left: 116rpx;
+  border-radius: 16rpx;
+  border: 1px solid rgba(231, 231, 231, 1);
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(50, 53, 65, 1);
+  line-height: 66rpx;
+}
+
+.card .cardfooter .btn2 {
+  width: 172rpx;
+  height: 66rpx;
+  margin-left: 30rpx;
+  border-radius: 16rpx;
+  border: 1px solid rgba(89, 96, 237, 1);
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(89, 96, 237, 1);
+  line-height: 66rpx;
+}
+
+/* 二维码 */
+
+.datibox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.daticenterbox {
+  width: 556rpx;
+  height: 990rpx;
+  position: relative;
+}
+
+.daticenterboximg {
+  width: 556rpx;
+  height: 990rpx;
+}
+
+.daticlosebtn {
+  width: 56rpx;
+  height: 56rpx;
+  position: absolute;
+  top: -28rpx;
+  right: -28rpx;
+}
+
+.datiboxfoottext {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1);
+  line-height: 40rpx;
+  margin-top: 32rpx;
+}
+
+/* 登陆 */
+
+.loginView .content {
+  text-align: center;
+  padding: 198rpx 60rpx 0;
+}
+
+.loginView .content image {
+  width: 440rpx;
+  height: 332rpx;
+}
+
+.loginView .content .txt {
+  margin-top: 68rpx;
+  font-size: 36rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 600;
+  color: rgba(50, 53, 65, 1);
+  line-height: 50rpx;
+}
+
+.loginView .getUserInfo {
+  margin: 80rpx 60rpx 0;
+  height: 88rpx;
+  background: rgba(0, 167, 98, 1);
+  border-radius: 8rpx;
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  line-height: 88rpx;
+  letter-spacing: 1rpx;
+}
+
+.loginView .getUserInfo image {
+  width: 48rpx;
+  height: 48rpx;
+  margin-right: 16rpx;
+  position: relative;
+  top: 14rpx;
+}
+
+.toContact {
+  height: 80rpx;
+  background: rgba(177, 181, 253, 0.23);
+  font-size: 26rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(92, 97, 113, 1);
+  line-height: 80rpx;
+  padding-left: 32rpx;
+}
+
+.toContact button {
+  position: relative;
+  top: 14rpx;
+  display: inline-block;
+  width: 204rpx;
+  height: 52rpx;
+  border-radius: 26rpx;
+  border: 1px solid rgba(89, 96, 237, 1);
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(89, 96, 237, 1);
+  line-height: 52rpx;
+  text-align: center;
+  margin-left: 14rpx;
+}
+
+.dlgMsg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99999;
+  font-size: 36rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1);
+  line-height: 50rpx;
+  letter-spacing: 1px;
+  text-align: right;
+}
+
+.dlgMsg .btnImg {
+  width: 310rpx;
+  height: 144rpx;
+  display: block;
+  margin: 20rpx 38rpx auto auto;
+}
+
+.dlgMsg .pointerImg {
+  width: 150rpx;
+  height: 158rpx;
+  display: block;
+  margin: 36rpx 144rpx auto auto;
+}
+
+.dlgMsg .mindMsg {
+  margin-top: 40rpx;
+  padding-right: 100rpx;
+}
+
+.dlgMsg .btnView {
+  margin: 18rpx 106rpx auto auto;
+  text-align: center;
+  width: 262rpx;
+  height: 82rpx;
+  border-radius: 53rpx;
+  border: 1px solid rgba(255, 255, 255, 1);
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  line-height: 82rpx;
+  letter-spacing: 1px;
+}
+
+.coverView {
+  background-color: rgba(0, 0, 0, 0.84);
+}
+
+/* 报告管理 */
+
+.reportDiv .title {
+  padding: 4rpx 42rpx 62rpx 34rpx;
+}
+
+.reportDiv .title .name {
+  font-size: 60rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 600;
+  color: rgba(50, 53, 65, 1);
+  line-height: 84rpx;
+  letter-spacing: 1px;
+}
+
+.reportDiv .title .share {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(89, 96, 237, 1);
+  line-height: 40rpx;
+  letter-spacing: 1px;
+  text-decoration: underline;
+}
+
+.reportDiv .title .changeOrder {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(92, 97, 113, 1);
+  line-height: 40rpx;
+}
+
+.reportDiv .title .changeOrder image {
+  width: 24rpx;
+  height: 16rpx;
+  margin-right: 18rpx;
+}
+
+.reportDiv .list .item image {
+  padding: 24rpx 40rpx 24rpx 32rpx;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+}
+
+.reportDiv .list .item .rightItem {
+  border-bottom: 1px solid #d8d8d8;
+  padding: 24rpx 0;
+}
+
+.reportDiv .list .item .rightItem .name {
+  font-size: 28rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 600;
+  color: rgba(50, 53, 65, 1);
+  line-height: 40rpx;
+  letter-spacing: 1px;
+}
+
+.reportDiv .list .item .rightItem .name .noRead {
+  display: inline-block;
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  margin-right: 14rpx;
+  background-color: #5960ed;
+}
+
+.reportDiv .list .item .rightItem .name .total {
+  margin-left: 20rpx;
+}
+
+.reportDiv .list .item .rightItem .reportName {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(137, 137, 137, 1);
+  line-height: 40rpx;
+  margin-top: 10rpx;
+}
+
+.reportDiv .list .item .rightItem .time {
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(144, 145, 156, 1);
+  line-height: 34rpx;
+  text-align: right;
+  padding-right: 32rpx;
+}
+
+.reportDiv .list .item .rightItem .time image {
+  width: 10rpx;
+  height: 20rpx;
+  margin-left: 20rpx;
+  padding: 0;
+}

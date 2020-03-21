@@ -1,0 +1,78 @@
+{
+  "pages": [
+    "index/index",
+    "index/manage",
+    "index/couponGet",
+    "index/mySharePapers",
+    "test/index",
+    "test/guide",
+    "test/finish",
+    "store/store",
+    "store/sendlog",
+    "store/category",
+    "store/detail",
+    "store/becomevip",
+    "store/quesExample",
+    "store/vipdetail",
+    "common/webView",
+    "common/loginPage",
+    "user/teamticket",
+    "user/teamtitle",
+    "user/setting",
+    "user/index",
+    "user/upgrade",
+    "user/teams",
+    "user/feedback",
+    "user/teamuser",
+    "user/ticket",
+    "user/about",
+    "report/list",
+    "report/detail",
+    "user/invoice",
+    "report/shareList",
+    "user/addGroup",
+    "user/myTeam",
+    "user/teamInvite",
+    "user/selTeamAdmin",
+    "report/shareReport",
+    "index/getFreeTicket",
+    "index/pcGetTickSuccess",
+    "store/sharePaper"
+  ],
+  "tabBar": {
+    "color": "#5C6171",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "selectedColor": "#5960ED",
+    "list": [
+      {
+        "pagePath": "store/store",
+        "text": "测评商城",
+        "iconPath": "img/index/store.png",
+        "selectedIconPath": "img/index/store1.png"
+      },
+      {
+        "pagePath": "index/manage",
+        "text": "测评管理",
+        "iconPath": "img/index/manage.png",
+        "selectedIconPath": "img/index/manage1.png"
+      },
+      {
+        "pagePath": "user/index",
+        "text": "我的",
+        "iconPath": "img/index/mine.png",
+        "selectedIconPath": "img/index/mine1.png"
+      }
+    ]
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "好啦测评",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json",
+  "navigateToMiniProgramAppIdList": [
+    "wx0ef45039046afc95"
+  ]
+}

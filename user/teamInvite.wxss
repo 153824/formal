@@ -1,0 +1,95 @@
+/* user/teamInvite.wxss */
+
+.isPass {
+  padding-top: 128rpx;
+}
+
+.isPass image {
+  width: 332rpx;
+  height: 218rpx;
+  display: block;
+  margin: auto;
+}
+
+.isPass .mind1 {
+  text-align: center;
+  margin-top: 28rpx;
+  font-size: 30rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgba(50, 53, 65, 1);
+  line-height: 42rpx;
+}
+
+.isPass .back {
+  width: 528rpx;
+  height: 106rpx;
+  background: rgba(89, 96, 237, 1);
+  border-radius: 18rpx;
+  text-align: center;
+  margin: 410rpx auto 0;
+  font-size: 32rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1);
+  line-height: 106rpx;
+}
+
+.teamInvite {
+  padding-top: 28rpx;
+}
+
+.teamInvite image {
+  display: block;
+  width: 416rpx;
+  height: 384rpx;
+  margin: 0 auto 48rpx;
+}
+
+.teamInvite .mind1 {
+  text-align: center;
+  font-size: 36rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgba(50, 53, 65, 1);
+  line-height: 54rpx;
+}
+
+.teamInvite .bottomView {
+  text-align: center;
+  margin-top: 182rpx;
+}
+
+.teamInvite .bottomView .mind {
+  font-size: 30rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(50, 53, 65, 1);
+  line-height: 42rpx;
+}
+
+.teamInvite .bottomView .join {
+  margin: auto;
+  margin-top: 42rpx;
+  width: 528rpx;
+  height: 106rpx;
+  background: rgba(89, 96, 237, 1);
+  border-radius: 18rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1);
+  line-height: 106rpx;
+}
+
+.teamInvite .bottomView .back {
+  margin: auto;
+  font-size: 32rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgba(50, 53, 65, 1);
+  line-height: 106rpx;
+  width: 528rpx;
+  height: 106rpx;
+  border-radius: 18rpx;
+}

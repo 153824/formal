@@ -1,0 +1,9 @@
+<!--user/addGroup.wxml-->
+<view class="centerView">
+  <view class="mind">
+    <view>意见反馈，HR经验交流</view>
+    <view style="margin-top:20rpx;">请添加客服微信</view>
+  </view>
+  <view class="mind1">微信号：LIN_7890</view>
+  <view class="toCopy" bindtap="copyIt">复制微信号</view>
+</view>

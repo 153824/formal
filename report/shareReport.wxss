@@ -1,0 +1,254 @@
+/* report/shareReport.wxss */
+
+.inviteView {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.inviteView .icon21 {
+  margin: auto;
+  display: block;
+  margin-top: 128rpx;
+  width: 286rpx;
+  height: 308rpx;
+}
+
+.inviteView .mindView {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(92, 97, 113, 1);
+  line-height: 40rpx;
+  letter-spacing: 1px;
+  margin-top: 40rpx;
+  text-align: center;
+}
+
+.inviteView .sharebtn3 {
+  width: 694rpx;
+  height: 96rpx;
+  background: rgba(53, 62, 232, 1);
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  line-height: 96rpx;
+  letter-spacing: 1px;
+  text-align: center;
+  margin: 222rpx auto 0;
+}
+
+.inviteView .listTitle {
+  padding: 20rpx 46rpx 30rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgba(50, 53, 65, 1);
+  line-height: 44rpx;
+}
+
+.inviteView .memberList {
+  padding: 0 46rpx;
+  position: absolute;
+  top: 94rpx;
+  bottom: 522rpx;
+  left: 0;
+  width: 100%;
+}
+
+.inviteView .memberList .item {
+  padding: 20rpx 0;
+  border-bottom: 1px solid #d1d1d1;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(92, 97, 113, 1);
+  line-height: 40rpx;
+}
+
+.inviteView .memberList .item .headerIcon {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  margin-right: 46rpx;
+}
+
+.inviteView .shareSetting {
+  text-align: center;
+  /* height: 522rpx; */
+  height: 230rpx;
+  background: rgba(255, 255, 255, 0.91);
+  box-shadow: 0px -1px 8rpx 0px rgba(181, 209, 255, 0.5);
+  box-sizing: border-box;
+  /* padding-top: 60rpx; */
+  padding-top: 40rpx;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.inviteView .shareSetting .addIcon {
+  width: 86rpx;
+  height: 86rpx;
+  display: block;
+  margin: auto;
+}
+
+.inviteView .shareSetting .mind1 {
+  margin-top: 10rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  line-height: 40rpx;
+}
+
+.inviteView .shareSetting .checkView {
+  margin-top: 22rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(47, 48, 56, 1);
+  line-height: 40rpx;
+}
+
+.inviteView .shareSetting .checkView .checkIcon {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 18rpx;
+}
+
+.inviteView .shareSetting .mind2 {
+  /* margin-top: 70rpx; */
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(235, 47, 47, 1);
+  line-height: 40rpx;
+  letter-spacing: 1px;
+}
+
+.inviteView .shareSetting .sharebtn1 {
+  border: 0;
+  background: transparent;
+}
+
+.inviteView .shareSetting .sharebtn1:after {
+  content: none;
+}
+
+.inviteView .shareSetting .sharebtn {
+  width: 512rpx;
+  height: 96rpx;
+  background: rgba(89, 96, 237, 1);
+  border-radius: 52rpx;
+  margin: 20rpx auto 0;
+  font-size: 28rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1);
+  line-height: 96rpx;
+  letter-spacing: 1px;
+}
+
+.inviteView .noData {
+  text-align: center;
+  padding-top: 140rpx;
+}
+
+.inviteView .noData image {
+  width: 300rpx;
+  height: 190rpx;
+  display: block;
+  margin: auto;
+}
+
+.inviteView .noData view {
+  margin-top: 78rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(144, 145, 156, 1);
+  line-height: 40rpx;
+  letter-spacing: 1px;
+}
+
+.inviteView1 {
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+}
+
+.inviteView1 .mind1 {
+  font-size: 28rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgba(235, 47, 47, 1);
+  line-height: 40rpx;
+  letter-spacing: 1px;
+}
+
+.inviteView1 .mind2 {
+  margin-top: 36rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(92, 97, 113, 1);
+  line-height: 40rpx;
+  letter-spacing: 1px;
+}
+
+.inviteView1 .borderView {
+  width: 90rpx;
+  height: 1px;
+  background: rgba(216, 216, 216, 1);
+  margin: 30rpx auto 0;
+}
+
+.inviteView1 .mind3 {
+  margin-top: 30rpx;
+  font-size: 40rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 1);
+  line-height: 56rpx;
+}
+
+.inviteView1 .headerIcon {
+  width: 112rpx;
+  height: 112rpx;
+  display: block;
+  border-radius: 50%;
+  margin: 36rpx auto 0;
+}
+
+.inviteView1 .name {
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgba(50, 53, 65, 1);
+  line-height: 40rpx;
+}
+
+.inviteView1 .sharebtn {
+  margin-top: 246rpx;
+  width: 512rpx;
+  height: 96rpx;
+  background: rgba(89, 96, 237, 1);
+  border-radius: 52rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1);
+  line-height: 96rpx;
+  letter-spacing: 1px;
+}

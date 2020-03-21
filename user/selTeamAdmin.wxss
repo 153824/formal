@@ -1,0 +1,76 @@
+/* user/selTeamAdmin.wxss */
+
+.title {
+  font-size: 44rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgba(50, 53, 65, 1);
+  line-height: 60rpx;
+  padding: 46rpx 40rpx 68rpx;
+}
+
+.list {
+  padding: 0 40rpx;
+  background: #fff;
+}
+
+.list .item {
+  padding: 20rpx 4rpx;
+  border-bottom: 1px solid #d8d8d8;
+}
+
+.list .item .headerIcon {
+  width: 72rpx;
+  height: 72rpx;
+  margin-right: 24rpx;
+}
+
+.list .item .name {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(50, 53, 65, 1);
+  line-height: 40rpx;
+}
+
+.list .item .checkView {
+  width: 60rpx;
+  height: 60rpx;
+  background: rgba(82, 196, 26, 1);
+  text-align: center;
+  border-radius: 50%;
+}
+
+.list .item .checkView image {
+  width: 28rpx;
+  height: 24rpx;
+  position: relative;
+}
+
+.bottomView {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 134rpx;
+  background: rgba(255, 255, 255, 1);
+  border: 1px solid rgba(233, 230, 231, 1);
+}
+
+.bottomView .sureBtn {
+  width: 616rpx;
+  height: 96rpx;
+  background: #90919c;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  color: #fff;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  line-height: 96rpx;
+  text-align: center;
+  margin: 20rpx auto 18px;
+}
+
+.bottomView .sureBtn.active {
+  background: rgba(89, 96, 237, 1);
+}

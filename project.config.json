@@ -1,0 +1,244 @@
+{
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"coverView": true,
+		"autoAudits": false,
+		"uglifyFileName": true,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.8.0",
+	"appid": "wx85cde7d3e8f3d949",
+	"projectname": "hola-new",
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"scripts": {
+		"beforeCompile": "",
+		"beforePreview": "",
+		"beforeUpload": "./push.bat"
+	},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 15,
+			"list": [
+				{
+					"id": -1,
+					"name": "index/manage",
+					"pathName": "index/manage",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "test/index",
+					"pathName": "test/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "答题",
+					"pathName": "test/index",
+					"query": "pid=5db1624aa673f5007249c9ee&id=5dd7b4e521460d0071fbfc29",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "栏目详情",
+					"pathName": "store/category",
+					"query": "id=5d647727ba39c800675b3ddc",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "发放记录（单个测评）",
+					"pathName": "store/sendlog",
+					"query": "id=5d79a22ea673f5007080cdb1",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的",
+					"pathName": "user/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 8,
+					"name": "测试详情界面",
+					"pathName": "store/detail",
+					"query": "id=5d8c521da91c930068f95812",
+					"scene": null
+				},
+				{
+					"id": 9,
+					"name": "会员权益",
+					"pathName": "store/vipdetail",
+					"query": "type=1",
+					"scene": null
+				},
+				{
+					"id": 10,
+					"name": "会员权益2",
+					"pathName": "store/vipdetail",
+					"query": "type=2",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的卡券",
+					"pathName": "user/ticket",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "新用户大礼包",
+					"pathName": "index/couponGet",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "提交答题成功",
+					"pathName": "test/finish",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 12,
+					"name": "报告详情",
+					"pathName": "report/detail",
+					"query": "id=5e16f53c5620710077a34622",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "vip购买",
+					"pathName": "store/becomevip",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "团队管理",
+					"pathName": "user/myTeam",
+					"query": "id=5db5993c6e9ba1006d1f5622",
+					"scene": null
+				},
+				{
+					"id": 15,
+					"name": "邀请",
+					"pathName": "user/teamInvite",
+					"query": "key=teamMsg_5e095efe7796d9006a820d21_1",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "企业认证",
+					"pathName": "user/teams",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "分享报告",
+					"pathName": "report/shareReport",
+					"query": "id=5dc53478fc36ed0071ec094f",
+					"scene": null
+				},
+				{
+					"id": 18,
+					"name": "新人领取免费测评券",
+					"pathName": "index/getFreeTicket",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 19,
+					"name": "index/index",
+					"pathName": "index/index",
+					"query": "",
+					"scene": 1043,
+					"referrerInfo": {
+						"appId": "wx68b480755b09f358"
+					}
+				},
+				{
+					"id": -1,
+					"name": "index/pcGetTickSuccess",
+					"pathName": "index/pcGetTickSuccess",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "  领券",
+					"pathName": "index/getFreeTicket",
+					"query": "fromPc=true",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "vip购买",
+					"pathName": "store/becomevip",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "个人中心",
+					"pathName": "user/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "测评发放",
+					"pathName": "store/sharePaper",
+					"query": "",
+					"scene": null
+				}
+			]
+		}
+	}
+}

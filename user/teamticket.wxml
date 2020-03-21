@@ -1,0 +1,10 @@
+<!--user/company/ticket.wxml-->
+<view class="container font">
+  <view class="box">
+    <view class="bigtitle">企业认证送兑换券</view>
+    <view class="blueline"></view>
+    <view class="graytext">用户进行企业认证后，系统将自动发放10张通用测评兑换券。</view>
+    <view class="graytext">该兑换券可用于兑换平台上的所有测评。</view>
+    <view class="graytext">完成认证后可在“<text>个人中心-我的卡券</text>”中查看。</view>
+  </view>
+</view>

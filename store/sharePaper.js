@@ -12,7 +12,7 @@ Page({
     maxCount: 0,
     paperId: 0,
     count: 1,
-    reportMeet: 2,
+    reportMeet: 1,
     startTime: "",
     endTime: ""
   },

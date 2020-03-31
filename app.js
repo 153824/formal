@@ -289,6 +289,7 @@ App({
     params.data["userId"] = (that.globalData.userInfo || {}).id || "";
     params.data["teamId"] = that.teamId;
     params.data["teamRole"] = that.teamRole;
+    // console.log("main= " + that.host2 + params.url);
     wx.request({
       url: that.host + params.url,
       method: params.method || "POST",

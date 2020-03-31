@@ -255,10 +255,10 @@
           <view>发放记录</view>
         </view>
         <view class="botboxrd btn1" bindtap="gotodati">
-          <view>发放测评</view>
+          <view>测别人</view>
         </view>
         <view class="botboxrd btn2" bindtap="gotoguide">
-          <view>{{oldShareId?'继续体验':'体验测评'}}</view>
+          <view>{{oldShareId?'继续体验':'自己体验'}}</view>
         </view>
       </view>
       <!-- vip购买测评 -->
@@ -419,23 +419,23 @@
       <text class="flex-main"></text>
     </view>
     <swiper wx:if="{{showMindDlg&&!isFreeTickId}}" current="{{activePointer}}" bindchange="changeActivePointer" class="dlgMsg" style="padding-bottom:{{phoneModel?80:0}}rpx;">
-      <swiper-item class="item1">
+      <!-- <swiper-item class="item1">
         <view class="title">发放记录</view>
         <view class="mindMsg">发放测评后，您可在此查看发放记录及完成状态。</view>
-        <image src="../img/store/detail/icon20.png" class="pointerImg"></image>
+        <image src="../img/store/detail/icon30.png" class="pointerImg"></image>
         <image class="btnImg" bindtap="gototailed" src="../img/store/detail/icon19.png"></image>
         <view class="btnView" bindtap="hidenDlg">我知道了</view>
-      </swiper-item>
+      </swiper-item> -->
       <swiper-item class="item2">
-        <view class="title">发放测评</view>
-        <view class="mindMsg">点击生成测评邀请函，对方通过邀请函完成测试后，您可查看他的报告结果。</view>
+        <view class="title">测别人</view>
+        <view class="mindMsg">测别人点这里</view>
         <image src="../img/store/detail/icon22.png" class="pointerImg"></image>
         <image class="btnImg" bindtap="gotodati" src="../img/store/detail/icon21.png"></image>
         <view class="btnView" bindtap="showMindDlgFn">我知道了</view>
       </swiper-item>
       <swiper-item class="item3">
-        <view class="title">立即体验</view>
-        <view class="mindMsg">点击可体验本测评，完成后，系统将生成对应的报告。</view>
+        <view class="title">自己体验</view>
+        <view class="mindMsg">自测点这里</view>
         <image src="../img/store/detail/icon24.png" class="pointerImg"></image>
         <image class="btnImg" bindtap="gotoguide" src="../img/store/detail/icon23.png"></image>
         <view class="btnView" bindtap="showMindDlgFn">我知道了</view>

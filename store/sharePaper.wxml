@@ -1,5 +1,9 @@
 <!--store/sharePaper.wxml-->
 <view class="pageView">
+  <view>
+    <view class="top_title_main">使用二维码方式发放测评</view>
+    <view class="top_title">支持多人扫同一个二维码进行作答</view>
+  </view>
   <view class="content">
     <view class="title">二维码作答人数上限</view>
     <view class="flex box1">
@@ -23,13 +27,13 @@
     </view>
     <view class="title1">是否允许受测者作答后直接查看报告</view>
     <view class="flex box3">
+     <view class="flex-main {{reportMeet==1?'active':''}}" bindtap="changeReportMeet" data-k="1">
+        <span></span>
+        允许
+      </view>
       <view class="flex-main {{reportMeet==2?'active':''}}" bindtap="changeReportMeet" data-k="2">
         <span></span>
         不允许
-      </view>
-      <view class="flex-main {{reportMeet==1?'active':''}}" bindtap="changeReportMeet" data-k="1">
-        <span></span>
-        允许
       </view>
     </view>
   </view>

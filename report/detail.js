@@ -234,13 +234,14 @@ Page({
           indicator_1[n] = indicator_1[n] || [];
           value_2[n] = value_2[n] || [];
           indicator_2[n] = indicator_2[n] || [];
+          console.log("max值=" + objs[n].max);
           for (var i in arr) {
             var node = arr[i];
             value_1[n].push(node.average);
             indicator_1[n].push({
               text: node.name,
               color: "#323541",
-              max: node.max || 5
+              max: objs[n].max || 5
             });
             indicator_2[n].push({
               value: node.name,
@@ -453,6 +454,15 @@ Page({
     wx.navigateTo({
       url: './shareReport?id=' + this.data.id + "&username=" + userMsg.username + "&paperName=" + paper.name
     });
+  },
+
+  toTestOtherUser:function(){
+    var paperDetail = this.data.paper;
+    var userPapersNum = this.data.userPapersNum;
+    wx.navigateTo({
+      url: '../store/detail?id=' + paperDetail.id ,
+    })
+   
   },
   /**
    * 返回首页

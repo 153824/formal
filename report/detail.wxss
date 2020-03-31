@@ -28,6 +28,7 @@ page, page>view {
   color: rgba(50, 53, 65, 1);
   line-height: 40rpx;
 }
+
 .noTeamMemberView .back {
   width: 528rpx;
   height: 106rpx;
@@ -568,10 +569,8 @@ page, page>view {
   position: absolute;
   left: 10rpx;
   right: 10rpx;
-  /* width: 400rpx; */
-  /* left: 70rpx;
-  right: 70rpx; */
-  /* left: 50%; *//* transform: translateX(-50%); *//* height: 500rpx; */
+  /* width: 400rpx; *//* left: 70rpx;
+  right: 70rpx; *//* left: 50%; *//* transform: translateX(-50%); *//* height: 500rpx; */
   top: 0;
   bottom: 0;
   display: block;
@@ -724,9 +723,30 @@ page, page>view {
 
 /* sharebtn */
 
+.botbox {
+  display: flex;
+  padding: 8rpx 0;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .sharebtn {
   margin: 62rpx 32rpx 0;
   height: 96rpx;
+  width: 168px;
+  border-radius: 14rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 1);
+  line-height: 96rpx;
+  text-align: center;
+}
+
+.toTestOther {
+  margin: 62rpx 32rpx 0;
+  height: 96rpx;
+  width: 168px;
   background: rgba(89, 96, 237, 1);
   border-radius: 14rpx;
   font-size: 32rpx;
@@ -740,7 +760,15 @@ page, page>view {
 .sharebtn image {
   width: 28rpx;
   height: 28rpx;
-  margin-right: 20rpx;
+  color: rgba(0, 0, 0, 1);
+  margin-right: 8rpx;
+}
+
+.toTestOther image {
+  width: 28rpx;
+  height: 28rpx;
+  color: rgba(0, 0, 0, 1);
+  margin-right: 8rpx;
 }
 
 /* bottomMsg */

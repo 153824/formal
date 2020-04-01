@@ -454,6 +454,9 @@ Page({
     wx.navigateTo({
       url: './shareReport?id=' + this.data.id + "&username=" + userMsg.username + "&paperName=" + paper.name
     });
+    wx.aldstat.sendEvent('详情页分享报告', {
+      '触发点击': '点击数'
+    });
   },
   /**测测他人 */
   toTestOtherUser: function() {
@@ -462,6 +465,9 @@ Page({
     wx.navigateTo({
       url: '../store/detail?id=' + paperDetail.id,
     })
+    wx.aldstat.sendEvent('详情页测测别人', {
+      '触发点击': '点击数'
+    });
   },
   /**返回首页 */
   backToHome: function() {

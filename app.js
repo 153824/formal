@@ -1,5 +1,5 @@
 //app.js 
-//const ald = require('./utils/ald-stat.js')
+const ald = require('./utils/ald-stat.js')
 var qiniuUpload = require("./utils/qiniuUpload");
 qiniuUpload.init({
   region: 'SCN', // 是你注册bucket的时候选择的区域的代码 

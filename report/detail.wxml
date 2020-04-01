@@ -202,7 +202,7 @@
     </view>
   </view>
   <!-- 分享报告按钮--普通团队成员无法使用该按钮 -->
-  <view class="botbox flex">
+  <view class="botbox flex" >
     <button class="sharebtn" bindtap="toShareReport" wx:if="{{teamRole!=1}}">
       <image src="../img/report/icon_share.png"></image>
       分享报告
@@ -211,7 +211,12 @@
       <image src="../img/report/icon_test.png"></image>
       测测别人
     </button>
+    <button class="backToHome" bindtap="backToHome" wx:elseif="{{teamRole==1}}">
+      <image src="../img/report/icon_test.png"></image>
+      体验更多测评
+    </button>
   </view>
+
   <!-- 申请查看报告 -->
   <view wx:if="{{(applyStatus==1||applyStatus==2)&&teamRole!=1}}" class="hasApply">
     <view class="msg">被测者申请查看报告结果，是否同意？</view>

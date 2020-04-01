@@ -757,6 +757,19 @@ page, page>view {
   text-align: center;
 }
 
+.backToHome {
+  margin: 62rpx 32rpx 0;
+  height: 96rpx;
+  width: 168px;
+  background: rgba(89, 96, 237, 1);
+  border-radius: 14rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 600;
+  color:black;
+  line-height: 96rpx;
+  text-align: center;
+}
 .sharebtn image {
   width: 28rpx;
   height: 28rpx;

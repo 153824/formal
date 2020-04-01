@@ -419,13 +419,13 @@
       <text class="flex-main"></text>
     </view>
     <swiper wx:if="{{showMindDlg&&!isFreeTickId}}" current="{{activePointer}}" bindchange="changeActivePointer" class="dlgMsg" style="padding-bottom:{{phoneModel?80:0}}rpx;">
-      <!-- <swiper-item class="item1">
+      <swiper-item class="item1">
         <view class="title">发放记录</view>
         <view class="mindMsg">发放测评后，您可在此查看发放记录及完成状态。</view>
         <image src="../img/store/detail/icon30.png" class="pointerImg"></image>
         <image class="btnImg" bindtap="gototailed" src="../img/store/detail/icon19.png"></image>
         <view class="btnView" bindtap="hidenDlg">我知道了</view>
-      </swiper-item> -->
+      </swiper-item>
       <swiper-item class="item2">
         <view class="title">测别人</view>
         <view class="mindMsg">测别人点这里</view>

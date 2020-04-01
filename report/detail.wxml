@@ -202,14 +202,18 @@
     </view>
   </view>
   <!-- 分享报告按钮--普通团队成员无法使用该按钮 -->
-  <view class="botbox flex">
+  <view class="botbox flex" >
     <button class="sharebtn" bindtap="toShareReport" wx:if="{{teamRole!=1}}">
       <image src="../img/report/icon_share.png"></image>
-      分享报告
+      <text>分享报告</text>
     </button>
     <button class="toTestOther" bindtap="toTestOtherUser" wx:if="{{teamRole!=1}}">
       <image src="../img/report/icon_test.png"></image>
-      测测别人
+      <text>免费测测别人</text>
+    </button>
+    <button class="backToHome" bindtap="backToHome" wx:elseif="{{teamRole==1}}">
+      <image src="../img/report/icon_test.png"></image>
+      体验更多测评
     </button>
   </view>
   <!-- 申请查看报告 -->

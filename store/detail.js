@@ -642,10 +642,17 @@ Page({
   },
 
   gototailed: function() { //发放记录  
-    wx.setStorageSync("paperDetail", this.data.paperDetail);
-    wx.navigateTo({
-      url: './sendlog?id=' + this.data.paperid
-    })
+    // app.getUserInfo();
+    this.checkUserMobile(e, function() {
+      wx.setStorageSync("paperDetail", this.data.paperDetail);
+      wx.navigateTo({
+        url: './sendlog?id=' + this.data.paperid
+      });
+    });
+    // wx.setStorageSync("paperDetail", this.data.paperDetail);
+    // wx.navigateTo({
+    //   url: './sendlog?id=' + this.data.paperid
+    // })
   },
   /**
    * 分享领取测评
@@ -679,9 +686,7 @@ Page({
           isok: noShowDlg ? false : true
         });
       },
-      error: function() {
-
-      }
+      error: function() {}
     });
   },
   changePage: function(e) {

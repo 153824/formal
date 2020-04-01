@@ -730,19 +730,36 @@ page, page>view {
 }
 
 .sharebtn {
-  margin: 62rpx 32rpx 0;
+  margin-top:62rpx;
+  margin-left: 40rpx;
   height: 96rpx;
-  width: 168px;
+  width: 260rpx;
   border-radius: 14rpx;
+  background:#FFFFFF;
+  border:1px solid rgba(7,9,34,0.2);
   font-size: 32rpx;
   font-family: PingFangSC-Semibold, PingFangSC;
-  font-weight: 600;
-  color: rgba(0, 0, 0, 1);
+  color:rgba(7,9,34,1);
   line-height: 96rpx;
   text-align: center;
+  padding:0 22rpx;
 }
 
 .toTestOther {
+  margin: 62rpx 40rpx 0;
+  height: 96rpx;
+  width: 390rpx;
+  background: rgba(89, 96, 237, 1);
+  border-radius: 14rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  color: rgba(245, 245, 245, 1);
+  line-height: 96rpx;
+  text-align: center;
+  padding:0 22rpx;
+}
+
+.backToHome {
   margin: 62rpx 32rpx 0;
   height: 96rpx;
   width: 168px;
@@ -751,23 +768,22 @@ page, page>view {
   font-size: 32rpx;
   font-family: PingFangSC-Semibold, PingFangSC;
   font-weight: 600;
-  color: rgba(245, 245, 245, 1);
+  color:black;
   line-height: 96rpx;
   text-align: center;
 }
-
 .sharebtn image {
-  width: 28rpx;
-  height: 28rpx;
+  width: 40rpx;
+  height: 40rpx;
   color: rgba(0, 0, 0, 1);
-  margin-right: 8rpx;
+  margin-right: 16rpx;
 }
 
 .toTestOther image {
-  width: 28rpx;
-  height: 28rpx;
-  color: rgba(0, 0, 0, 1);
-  margin-right: 8rpx;
+  width: 40rpx;
+  height: 40rpx;
+  color: #000000;
+  margin-right: 16rpx;
 }
 
 /* bottomMsg */

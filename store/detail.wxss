@@ -11,6 +11,9 @@
   font-weight: 400;
   color: rgba(255, 77, 79, 1);
   text-decoration: underline;
+  position: fixed;
+  top: 0;
+  z-index: 99999;
 }
 
 .giftDlg {
@@ -31,8 +34,8 @@
 }
 
 .giftDlg .dlgContent .closeImg {
-  width: 76rpx;
-  height: 76rpx;
+  width: 40rpx;
+  height: 40rpx;
   position: absolute;
   top: 0rpx;
   right: 0rpx;
@@ -124,7 +127,6 @@
 
 .userInfoBtn1 {
   position: absolute;
-  /* position: fixed; */
   height: 100%;
   width: 100%;
   opacity: 0;

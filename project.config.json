@@ -237,6 +237,13 @@
 					"pathName": "store/sharePaper",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": 25,
+					"name": "user/teamInvite",
+					"pathName": "user/teamInvite",
+					"query": "reportId=5e82f09b7d5774006aa69d6a&key=teamMsg_5e1985617d5774006ac4533e_1",
+					"scene": null
 				}
 			]
 		}

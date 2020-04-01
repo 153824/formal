@@ -480,6 +480,7 @@ Page({
     app.getMyTeamList(function(list) {
       // var teamNames = [];
       list.forEach(function(node) {
+        console.log("user role="+node.role);
         if (node.role == 3) {
           app.teamId = node.objectId;
           app.teamName = node.name;

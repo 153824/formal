@@ -295,7 +295,9 @@ Page({
         // }
         ret["statement"] = ret["statement"].replace(/\n/g, "<br>").replace("<bold", "<span style='font-weight: 600;'").replace("</bold", "</span");
         ret["noTeamMember"] = false;
-        ret["teamRole"] = (app.teamId == id) ? app.teamRole : 1;
+        // console.log("teamId ="+ret.teamId+"   "+app.teamId)
+        ret["teamRole"] = (app.teamId == ret.teamId) ? app.teamRole : 1;
+        // console.log("teamRole=" + ret.teamRole + "   " + app.teamRole)
         ret["showPage"] = true;
         that.setData(ret);
         app.doAjax({

@@ -77,8 +77,11 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
-
+  onShow: function () {
+    var that = this;
+    console.log("jio222n...")
+    // that.loadUserMsg();
+    app.getUserInfo(that.loadUserMsg);
   },
 
   /**
@@ -119,50 +122,71 @@ Page({
       url: '../store/store'
     });
   },
-
-  join: function() {
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        this.userLogin(res.code);
-
+  /**
+    * 获取微信用户信息
+    */
+  getUserInfo: function (e) {
+    var that = this;
+    var userInfo = e.detail.userInfo;
+    if (!userInfo) {
+      console.error("获取用户资料失败", e);
+      return;
+    }
+    userInfo["openid"] = wx.getStorageSync("openId") || app.globalData.userMsg.openid;
+    userInfo["unionid"] = wx.getStorageSync("unionId") || app.globalData.userMsg.unionid;
+    app.doAjax({
+      url: "updateUserMsg",
+      method: "post",
+      data: {
+        data: JSON.stringify({
+          wxUserInfo: userInfo,
+          userCompany: {
+            name: userInfo.nickName + "的团队"
+          }
+        }),
+      },
+      success: function (res) {
+        that.hideLoginDlg();
+        app.globalData.userInfo.nickname = userInfo.nickName;
+        app.addNewTeam(that.onShow);
       }
-    })
+    });
+  },
+  join: function() {
     console.log("jion...")
     // //加入团队
-    // var that = this;
-    // var id = that.data.id;
-    // var role = +that.data.role;
-    // app.doAjax({
-    //   url: "updateTeamMember",
-    //   data: {
-    //     id: id,
-    //     type: 1,
-    //     role: role
-    //   },
-    //   success: function () {
-    //     app.teamId = id;
-    //     app.teamName = that.data.name;
-    //     app.getUserInfo();
-    //     app.toast("操作成功");
-    //     setTimeout(function () {
-    //       if (that.data.reportId) {
-    //         //进入报告详情
-    //         wx.reLaunch({
-    //           url: '../report/detail?id=' + that.data.reportId
-    //         });
-    //         return;
-    //       }
-    //       // wx.switchTab({
-    //       //   url: '../index/index'
-    //       // });
-    //       wx.switchTab({
-    //         url: '../store/store'
-    //       });
-    //     }, 1000);
-    //   }
-    // });
+    var that = this;
+    var id = that.data.id;
+    var role = +that.data.role;
+    app.doAjax({
+      url: "updateTeamMember",
+      data: {
+        id: id,
+        type: 1,
+        role: role
+      },
+      success: function () {
+        app.teamId = id;
+        app.teamName = that.data.name;
+        app.getUserInfo();
+        app.toast("操作成功");
+        setTimeout(function () {
+          if (that.data.reportId) {
+            //进入报告详情
+            wx.reLaunch({
+              url: '../report/detail?id=' + that.data.reportId
+            });
+            return;
+          }
+          // wx.switchTab({
+          //   url: '../index/index'
+          // });
+          wx.switchTab({
+            url: '../store/store'
+          });
+        }, 1000);
+      }
+    });
   },
   bindGetUserInfo: function(res) {
     if (res.detail.userInfo) {

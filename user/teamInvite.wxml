@@ -10,7 +10,7 @@
   <view class="mind1">{{name}}</view>
   <view class="bottomView">
     <view class="mind">加入后即可与同事进行协作并查看报告</view>
-    <view class="join" bindtap="join" open-type='getUserInfo' bindgetuserinfo='bindGetUserInfo'>加入</view>
+    <view class="join" bindtap="join" open-type='getUserInfo' bindgetuserinfo='getUserInfo'>加入</view>
     <view class="back" bindtap="back">取消</view>
   </view>
 </view>

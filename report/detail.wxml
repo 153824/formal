@@ -205,11 +205,11 @@
   <view class="botbox flex" >
     <button class="sharebtn" bindtap="toShareReport" wx:if="{{teamRole!=1}}">
       <image src="../img/report/icon_share.png"></image>
-      分享报告
+      <text>分享报告</text>
     </button>
     <button class="toTestOther" bindtap="toTestOtherUser" wx:if="{{teamRole!=1}}">
       <image src="../img/report/icon_test.png"></image>
-      测测别人
+      <text>免费测测别人</text>
     </button>
     <button class="backToHome" bindtap="backToHome" wx:elseif="{{teamRole==1}}">
       <image src="../img/report/icon_test.png"></image>

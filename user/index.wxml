@@ -58,6 +58,7 @@
           <view wx:elif="{{vip3}}">{{userInfo.vip3EndTime}}到期</view>
           <view wx:elif="{{vip2}}">{{userInfo.vip2EndTime}}到期</view>
           <view class="toPay" wx:if="{{!isIos&&teamRole==3}}" bindtap="changePage" data-url="../store/becomevip">续费</view>
+          <view class="toPay1" wx:if="{{isIos&&teamRole==3}}">iOS暂不支持续费</view>
         </view>
       </view>
     </view>

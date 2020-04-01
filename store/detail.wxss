@@ -417,6 +417,14 @@
   letter-spacing: 1px;
 }
 
+.paperPrice1 {
+  font-size: 28rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  color: rgba(89, 96, 237, 1);
+  line-height: 50rpx;
+  letter-spacing: 1px;
+}
+
 .defaultPrice {
   margin-left: 10rpx;
   font-size: 24rpx;

@@ -197,10 +197,16 @@ Page({
     wx.navigateTo({
       url: "./detail?id=" + id
     });
+    wx.aldstat.sendEvent('从商城进入测评详情', {
+      '测评名称': 'id' + id
+    });
   },
 
   changepage: function(e) {
     console.log("e", e);
+    wx.aldstat.sendEvent('首页点击免费领取新人券', {
+      '触发点击': '点击数'
+    });
     var d = e.currentTarget.dataset;
     var listid = e.currentTarget.id
     var i = d.i;
@@ -213,6 +219,9 @@ Page({
         var encryptedData = detail.encryptedData;
         if (encryptedData) {
           //用户授权手机号
+          wx.aldstat.sendEvent('首页就授权了手机', {
+            '触发点击': '点击数'
+          });
           var userMsg = app.globalData.userMsg || {};
           userMsg["iv"] = iv;
           userMsg["encryptedData"] = encryptedData;
@@ -270,12 +279,24 @@ Page({
   },
   //显示领券弹窗
   toFetGift: function(e) {
+    wx.aldstat.sendEvent('首页点击了顶部领券', {
+      '触发点击': '点击数'
+    });
     this.setData({
       showGiftDlg: true
     });
   },
   //隐藏领券弹窗
   closeGiftDlg: function(e) {
+    this.setData({
+      showTopGift: true,
+      showGiftDlg: false
+    });
+  },
+  realCloseGiftDlg: function (e) {
+    wx.aldstat.sendEvent('首页关闭了领券弹窗', {
+      '触发点击': '点击数'
+    });
     this.setData({
       showTopGift: true,
       showGiftDlg: false

@@ -833,7 +833,7 @@ swiper, swiper-item {
   box-shadow: 0px 4rpx 28rpx 0px rgba(177, 177, 177, 0.81);
   border-radius: 16rpx;
   box-sizing: border-box;
-  z-index: 9999;
+  z-index: 99999999999999;
 }
 
 .dlgView image {

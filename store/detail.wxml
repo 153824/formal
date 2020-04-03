@@ -55,7 +55,7 @@
       <view class="limit" wx:if="{{dataLoaded}}">
         <view class="limitleft">
           <view class="flex">
-            <text class="freetext" wx:if="{{isAllFree}}">{{isIos?'免费':'限时免费'}}</text>
+            <text class="freetext" wx:if="{{isAllFree}}">免费</text>
             <text class="paperPrice" wx:elif="{{(!isfree||(isfree&&paperDetail.setting.price&&paperDetail.userPapersNum.freeCount>=paperDetail.setting.testRule.count))&&!isIos}}">￥{{paperDetail.setting.price||0}}</text>
             <text class="freetext" wx:elif="{{isfree && paperDetail.setting.testRule.count != 0}}">{{isIos?'免费':'限时免费'}}</text>
             <text class="defaultPrice" wx:if="{{paperDetail.setting.defaultPrice&&!isIos}}">￥{{paperDetail.setting.defaultPrice||0}}</text>
@@ -71,7 +71,7 @@
         <view class="moreleft flex-main">剩余可用数量：
           <!-- <text wx:if="{{isfree}}">{{paperDetail.setting.testRule.count}}份</text> -->
           <text wx:if="{{!isAllFree}}">{{paperDetail.userPapersNum.total}}份</text>
-          <text wx:if="{{isAllFree||isvip1}}">无限量</text>
+          <text wx:if="{{isAllFree||isvip1}}">不限量</text>
         </view>
         <view class="moreright {{!isAllFree&&!paperDetail.userPapersNum.freeTicket&&!paperDetail.userPapersNum.vipTicket&&isIos?'':''}}" wx:if="{{teamRole!=1&&!isAllFree&&!paperDetail.userPapersNum.freeTicket&&!paperDetail.userPapersNum.vipTicket&&isIos}}"  bindtap="paymore">{{isIos?'用券兑换':'购买更多'}}</view>
         <view class="moreright" wx:elif="{{!isAllFree&&teamRole!=1}}" bindtap="paymore">{{isIos?'用券兑换':'购买更多'}}</view>

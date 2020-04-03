@@ -675,7 +675,7 @@ Page({
   },
 
   gototailed: function() { //发放记录  
-    app.getUserInfo();
+    // app.getUserInfo();
     // this.checkUserMobile(e, function() {
     //   wx.setStorageSync("paperDetail", this.data.paperDetail);
     //   wx.navigateTo({

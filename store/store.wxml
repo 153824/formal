@@ -81,12 +81,12 @@
                   </view>
                 </view>
               </view>
-              <view class="flistright" wx:if="{{columnId_ticket==item.id}}">
+              <!-- <view class="flistright" wx:if="{{columnId_ticket==item.id}}">
                 <view class="freeTest">免费体验</view>
               </view>
               <view class="flistright" wx:elif="{{paperitem.isFree}}">
                 <view class="freeTest">免费领取</view>
-              </view>
+              </view> -->
               <!-- <view class="flistright" wx:elif="{{!isIos}}">
               <view class="dollar">￥{{paperitem.isFree ? "0": paperitem.price}}</view>
               <view class="del" wx:if="{{paperitem.defaultPrice||(paperitem.isFree&&paperitem.price)}}">￥{{paperitem.isFree ? paperitem.price : paperitem.defaultPrice}}</view>

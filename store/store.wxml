@@ -3,7 +3,7 @@
 <view class="getGift" wx:elif="{{(!couponGet||!couponGet1)&&showTopGift&&teamRole==3}}" bindtap="toFetGift">你有一个幸运大礼包待领取，戳我领取！</view>
 <view class="giftDlg" wx:if="{{showGiftDlg}}">
   <view class="dlgContent">
-    <image class="closeImg" bindtap="closeGiftDlg" src="../img/index/icon93.png"></image>
+    <image class="closeImg" bindtap="realCloseGiftDlg" src="../img/index/icon93.png"></image>
     <image wx:if="{{isTodayTeam&&!couponGet0}}" class="msgImg" src="../img/index/icon91.png"></image>
     <image wx:else class="msgImg" style="width:646rpx;height:742rpx;" src="../img/index/icon92.png"></image>
     <button wx:if="{{!userInfo.phone}}" class="btnImg btnImgBtn {{isTodayTeam&&!couponGet0?'':'btnImgBtn1'}}" open-type="getPhoneNumber" bindgetphonenumber="changepage" data-fullurl="../index/couponGet" data-n="getPhoneNumber">
@@ -81,12 +81,12 @@
                   </view>
                 </view>
               </view>
-              <view class="flistright" wx:if="{{columnId_ticket==item.id}}">
+              <!-- <view class="flistright" wx:if="{{columnId_ticket==item.id}}">
                 <view class="freeTest">免费体验</view>
               </view>
               <view class="flistright" wx:elif="{{paperitem.isFree}}">
                 <view class="freeTest">免费领取</view>
-              </view>
+              </view> -->
               <!-- <view class="flistright" wx:elif="{{!isIos}}">
               <view class="dollar">￥{{paperitem.isFree ? "0": paperitem.price}}</view>
               <view class="del" wx:if="{{paperitem.defaultPrice||(paperitem.isFree&&paperitem.price)}}">￥{{paperitem.isFree ? paperitem.price : paperitem.defaultPrice}}</view>

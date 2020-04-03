@@ -159,7 +159,18 @@ Page({
       showGiftDlg: false
     });
   },
+  realCloseGiftDlg: function () {
+    wx.aldstat.sendEvent('详情页关闭新人券弹窗', {
+      '触发点击': '点击数'
+    });
+    this.setData({
+      showGiftDlg: false
+    });
+  },
   toShowGiftDlg: function() {
+    wx.aldstat.sendEvent('详情页点击领新人券', {
+      '触发点击': '点击数'
+    });
     this.setData({
       showGiftDlg: true
     });
@@ -269,9 +280,12 @@ Page({
           showFullBtn: showFullBtn,
           ispay: ispay
         });
-        if (userData.isBind) {
-          that.openpopup(null, true);
-        }
+        // if (userData.isBind) {
+        //   that.openpopup(null, true);
+        //   wx.aldstat.sendEvent('点击了分享再领3张券-1', {
+        //     '触发点击': '点击数'
+        //   });
+        // }
         app.doAjax({
           url: 'toSharePaper',
           method: 'post',
@@ -362,6 +376,9 @@ Page({
    * 用券购买测评
    */
   useticket: function() {
+    wx.aldstat.sendEvent('详情页点击用券兑换', {
+      '触发点击': '点击数'
+    });
     var that = this;
     var count = this.data.count;
     if (!count) return wx.showToast({
@@ -455,7 +472,9 @@ Page({
   /** 体验测评 */
   gotoguide: function() {
     var that = this;
-
+    wx.aldstat.sendEvent('详情页点击测自己', {
+      '触发点击': '点击数'
+    });
     function toNext() {
       app.doAjax({
         url: 'toSharePaper',
@@ -534,6 +553,10 @@ Page({
     }
   },
   paymoney: function(e) {
+    wx.aldstat.sendEvent('详情页点击立即购买', {
+      '触发点击': '点击数'
+    });
+    console.log("统计1", e);
     this.setData({
       isticket: app.isIos || false,
       ispay: true
@@ -615,10 +638,20 @@ Page({
   },
 
   gotodati: function() {
+    wx.aldstat.sendEvent('详情页点击测别人', {
+      '触发点击': '点击数'
+    });
     //发放测评
     var that = this;
     var paperDetail = that.data.paperDetail;
     var userPapersNum = paperDetail.userPapersNum || {};
+    if (userPapersNum.total == 0) {
+      app.toast("测评可用数量不足，请先购买或用券兑换测评");
+      wx.aldstat.sendEvent('详情页点击toast测评数量不足', {
+        '触发点击': '点击数'
+      });
+      return;
+    }
     wx.navigateTo({
       url: './sharePaper?id=' + paperDetail.id + "&count=" + userPapersNum.total,
     });
@@ -643,21 +676,24 @@ Page({
 
   gototailed: function() { //发放记录  
     // app.getUserInfo();
-    this.checkUserMobile(e, function() {
-      wx.setStorageSync("paperDetail", this.data.paperDetail);
-      wx.navigateTo({
-        url: './sendlog?id=' + this.data.paperid
-      });
-    });
-    // wx.setStorageSync("paperDetail", this.data.paperDetail);
-    // wx.navigateTo({
-    //   url: './sendlog?id=' + this.data.paperid
-    // })
+    // this.checkUserMobile(e, function() {
+    //   wx.setStorageSync("paperDetail", this.data.paperDetail);
+    //   wx.navigateTo({
+    //     url: './sendlog?id=' + this.data.paperid
+    //   });
+    // });
+    wx.setStorageSync("paperDetail", this.data.paperDetail);
+    wx.navigateTo({
+      url: './sendlog?id=' + this.data.paperid
+    })
   },
   /**
    * 分享领取测评
    */
   openpopup: function(e, noShowDlg) {
+    wx.aldstat.sendEvent('点击了分享再领3张券', {
+      '触发点击': '点击数'
+    });
     var that = this;
     var data = that.data;
     if (data.freeTick && e) {
@@ -690,9 +726,15 @@ Page({
     });
   },
   changePage: function(e) {
+    
     var that = this;
     var d = e.currentTarget.dataset;
     if (d.url) {
+      if (d.url =="../index/couponGet?type=2"){
+        wx.aldstat.sendEvent('详情页点击免费领取新人券', {
+          '触发点击': '点击数'
+        });
+      }
       var detail = e.detail;
       if ((!detail || !detail.encryptedData) && d.n == "getPhoneNumber") return;
       if (detail && detail.encryptedData) {
@@ -700,6 +742,9 @@ Page({
         var encryptedData = detail.encryptedData;
         if (encryptedData) {
           //用户授权手机号
+          wx.aldstat.sendEvent('详情页授权了手机', {
+            '触发点击': '点击数'
+          });
           var userMsg = app.globalData.userMsg || {};
           userMsg["iv"] = iv;
           userMsg["encryptedData"] = encryptedData;
@@ -761,6 +806,10 @@ Page({
    * 用户授权
    */
   getUserInfo: function(e) {
+    wx.aldstat.sendEvent('详情页触发用户授权', {
+      '触发点击': '点击数'
+    });
+    console.log("统计1", e);
     var that = this;
     var userInfo = e.detail.userInfo;
     if (!userInfo) return;
@@ -780,6 +829,10 @@ Page({
       success: function(res) {
         app.globalData.userInfo.nickname = userInfo.nickName;
         app.addNewTeam(that.onShow);
+        wx.aldstat.sendEvent('详情授权成功', {
+          '触发点击': '点击数'
+        });
+        console.log("统计2", e);
       }
     });
   },

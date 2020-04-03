@@ -295,7 +295,9 @@ Page({
         // }
         ret["statement"] = ret["statement"].replace(/\n/g, "<br>").replace("<bold", "<span style='font-weight: 600;'").replace("</bold", "</span");
         ret["noTeamMember"] = false;
-        ret["teamRole"] = app.teamRole;
+        // console.log("teamId ="+ret.teamId+"   "+app.teamId)
+        ret["teamRole"] = (app.teamId == ret.teamId) ? app.teamRole : 1;
+        // console.log("teamRole=" + ret.teamRole + "   " + app.teamRole)
         ret["showPage"] = true;
         that.setData(ret);
         app.doAjax({
@@ -454,6 +456,9 @@ Page({
     wx.navigateTo({
       url: './shareReport?id=' + this.data.id + "&username=" + userMsg.username + "&paperName=" + paper.name
     });
+    wx.aldstat.sendEvent('详情页分享报告', {
+      '触发点击': '点击数'
+    });
   },
   /**测测他人 */
   toTestOtherUser: function() {
@@ -462,6 +467,9 @@ Page({
     wx.navigateTo({
       url: '../store/detail?id=' + paperDetail.id,
     })
+    wx.aldstat.sendEvent('详情页测测别人', {
+      '触发点击': '点击数'
+    });
   },
   /**返回首页 */
   backToHome: function() {
@@ -480,6 +488,7 @@ Page({
     app.getMyTeamList(function(list) {
       // var teamNames = [];
       list.forEach(function(node) {
+        console.log("user role="+node.role);
         if (node.role == 3) {
           app.teamId = node.objectId;
           app.teamName = node.name;

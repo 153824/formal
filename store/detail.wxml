@@ -1,12 +1,13 @@
 <!--index/store/charge/charge.wxml-->
 <scroll-view class="fullPage" scroll-y scroll-top="{{pageScrollTop}}">
   <view wx:if="{{(!couponGet||!couponGet1)&&teamRole==3}}" class="topCouponGetView">
-    <image class="getGift" wx:if="{{(!couponGet0)&&teamRole==3&&isTodayTeam}}" src="../img/index/gitfImg.png" bindtap="toShowGiftDlg"></image>
+    <!-- <image class="getGift" wx:if="{{(!couponGet0)&&teamRole==3&&isTodayTeam}}" src="../img/index/gitfImg.png" bindtap="toShowGiftDlg"></image> -->
+    <image class="getGift" wx:if="{{(!couponGet0)&&teamRole==3&&isTodayTeam}}" style="height:0"></image>
     <view class="getGift" wx:elif="{{(!couponGet||!couponGet1)&&teamRole==3}}" bindtap="toShowGiftDlg">你有一个幸运大礼包待领取，戳我领取！</view>
   </view>
   <view class="giftDlg" wx:if="{{showGiftDlg}}">
     <view class="dlgContent">
-      <image class="closeImg" bindtap="closeGiftDlg" src="../img/index/icon93.png"></image>
+      <image class="closeImg" bindtap="realCloseGiftDlg" src="../img/index/icon93.png"></image>
       <image wx:if="{{isTodayTeam&&!couponGet0}}" class="msgImg" src="../img/index/icon91.png"></image>
       <image wx:else class="msgImg" style="width:646rpx;height:742rpx;" src="../img/index/icon92.png"></image>
       <button wx:if="{{!userData.phone}}" class="btnImg btnImgBtn {{isTodayTeam&&!couponGet0?'':'btnImgBtn1'}}" open-type="getPhoneNumber" bindgetphonenumber="changePage" data-url="../index/couponGet?type=2" data-n="getPhoneNumber"></button>
@@ -54,7 +55,7 @@
       <view class="limit" wx:if="{{dataLoaded}}">
         <view class="limitleft">
           <view class="flex">
-            <text class="freetext" wx:if="{{isAllFree}}">{{isIos?'免费':'限时免费'}}</text>
+            <text class="freetext" wx:if="{{isAllFree}}">免费</text>
             <text class="paperPrice" wx:elif="{{(!isfree||(isfree&&paperDetail.setting.price&&paperDetail.userPapersNum.freeCount>=paperDetail.setting.testRule.count))&&!isIos}}">￥{{paperDetail.setting.price||0}}</text>
             <text class="freetext" wx:elif="{{isfree && paperDetail.setting.testRule.count != 0}}">{{isIos?'免费':'限时免费'}}</text>
             <text class="defaultPrice" wx:if="{{paperDetail.setting.defaultPrice&&!isIos}}">￥{{paperDetail.setting.defaultPrice||0}}</text>
@@ -70,16 +71,22 @@
         <view class="moreleft flex-main">剩余可用数量：
           <!-- <text wx:if="{{isfree}}">{{paperDetail.setting.testRule.count}}份</text> -->
           <text wx:if="{{!isAllFree}}">{{paperDetail.userPapersNum.total}}份</text>
-          <text wx:if="{{isAllFree||isvip1}}">无限量</text>
+          <text wx:if="{{isAllFree||isvip1}}">不限量</text>
         </view>
         <view class="moreright {{!isAllFree&&!paperDetail.userPapersNum.freeTicket&&!paperDetail.userPapersNum.vipTicket&&isIos?'':''}}" wx:if="{{teamRole!=1&&!isAllFree&&!paperDetail.userPapersNum.freeTicket&&!paperDetail.userPapersNum.vipTicket&&isIos}}"  bindtap="paymore">{{isIos?'用券兑换':'购买更多'}}</view>
         <view class="moreright" wx:elif="{{!isAllFree&&teamRole!=1}}" bindtap="paymore">{{isIos?'用券兑换':'购买更多'}}</view>
       </view>
-      <view class="freeget" wx:if="{{hasFreeTick&&!freeTickId&&teamRole!=1&&((paperDetail.setting.price&&!isfree && paperDetail.setting.testRule.maxInvite != 0)&&dataLoaded)||(isfree&&paperDetail.userPapersNum.hasOld&&paperDetail.setting.price)}}" bindtap="openpopup">
+      <view class="freeget" wx:if="{{hasFreeTick&&!freeTickId&&teamRole!=1&&((paperDetail.setting.price&&!isfree && paperDetail.setting.testRule.maxInvite != 0)&&dataLoaded&&couponGet0)||(isfree&&paperDetail.userPapersNum.hasOld&&paperDetail.setting.price)}}" bindtap="openpopup">
         <image class="freegetbg" src="../img/store/detail/bg.png"></image>
         <text class="freegettext"></text>
         <text class="freegetredfont" wx:if="{{!freeTick}}">免费再领3份测评</text>
         <text class="freegetredfont" wx:else>加客服微信，领更多测评</text>
+        <image class="freegeticon" src="../img/store/detail/icon9.png"></image>
+      </view>
+      <view class="freeget" wx:if="{{(!couponGet0)&&teamRole==3&&isTodayTeam}}" bindtap="toShowGiftDlg">
+        <image class="freegetbg" src="../img/store/detail/bg.png"></image>
+        <text class="freegettext"></text>
+        <text class="freegetredfont" >免费领5张体验券</text>
         <image class="freegeticon" src="../img/store/detail/icon9.png"></image>
       </view>
       <!-- <view class="picturetop">
@@ -411,36 +418,37 @@
       <view bindtap="copyIt" class="copyBtn">复制</view>
       <view class="mind">添加时，请备注公司所属行业和规模</view>
     </view>
-    <view class="pointerView flex" wx:if="{{showMindDlg&&!isFreeTickId}}" style="padding-bottom:{{phoneModel?80:0}}rpx;">
+    <!-- <view class="pointerView flex" wx:if="{{showMindDlg&&!isFreeTickId}}" style="padding-bottom:{{phoneModel?80:0}}rpx;">
       <text class="flex-main"></text>
       <view class="{{activePointer==0?'active':''}}"></view>
       <view class="{{activePointer==1?'active':''}}"></view>
       <view class="{{activePointer==2?'active':''}}"></view>
       <text class="flex-main"></text>
-    </view>
-    <swiper wx:if="{{showMindDlg&&!isFreeTickId}}" current="{{activePointer}}" bindchange="changeActivePointer" class="dlgMsg" style="padding-bottom:{{phoneModel?80:0}}rpx;">
-      <!-- <swiper-item class="item1">
-        <view class="title">发放记录</view>
-        <view class="mindMsg">发放测评后，您可在此查看发放记录及完成状态。</view>
-        <image src="../img/store/detail/icon30.png" class="pointerImg"></image>
-        <image class="btnImg" bindtap="gototailed" src="../img/store/detail/icon19.png"></image>
+    </view> -->
+    <view wx:if="{{showMindDlg&&!isFreeTickId}}" current="{{activePointer}}" bindchange="changeActivePointer" class="dlgMsg" style="padding-bottom:{{phoneModel?80:0}}rpx;" >
+      <view class="item1">
         <view class="btnView" bindtap="hidenDlg">我知道了</view>
-      </swiper-item> -->
-      <swiper-item class="item2">
+        <view class="mindMsg"><text>测别人点这里</text><text style="margin-left:80rpx">自测点这里</text></view>
+        <image class="btnImg3" src="../img/store/detail/icon31.png"></image>
+        <image class="btnImg4" src="../img/store/detail/icon31.png"></image>
+        <image class="btnImg1" bindtap="gotodati" src="../img/store/detail/icon21.png"></image>
+        <image class="btnImg2" bindtap="gotoguide" src="../img/store/detail/icon23.png"></image>
+      </view>
+      <!-- <swiper-item class="item2">
         <view class="title">测别人</view>
         <view class="mindMsg">测别人点这里</view>
         <image src="../img/store/detail/icon22.png" class="pointerImg"></image>
         <image class="btnImg" bindtap="gotodati" src="../img/store/detail/icon21.png"></image>
         <view class="btnView" bindtap="showMindDlgFn">我知道了</view>
-      </swiper-item>
-      <swiper-item class="item3">
-        <view class="title">自己体验</view>
+      </swiper-item> -->
+      <!-- <view class="item3">
+      <view class="g">
+        <view class="mindMsg">测别人点这里</view>
         <view class="mindMsg">自测点这里</view>
-        <image src="../img/store/detail/icon24.png" class="pointerImg"></image>
         <image class="btnImg" bindtap="gotoguide" src="../img/store/detail/icon23.png"></image>
-        <view class="btnView" bindtap="showMindDlgFn">我知道了</view>
-      </swiper-item>
-    </swiper>
+        <view class="btnView" bindtap="hidenDlg">我知道了</view>
+      </view> -->
+    </view>
     <view wx:if="{{showMindDlg&&isFreeTickId}}" class="dlgMsg" style="margin-bottom:{{phoneModel?80:0}}rpx;">
       <view class="item3">
         <view class="title">立即体验</view>

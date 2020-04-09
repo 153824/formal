@@ -28,7 +28,6 @@ page, page>view {
   color: rgba(50, 53, 65, 1);
   line-height: 40rpx;
 }
-
 .noTeamMemberView .back {
   width: 528rpx;
   height: 106rpx;

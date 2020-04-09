@@ -216,7 +216,6 @@
       <text>体验更多测评</text>
     </button>
   </view>
-
   <!-- 申请查看报告 -->
   <view wx:if="{{(applyStatus==1||applyStatus==2)&&teamRole!=1}}" class="hasApply">
     <view class="msg">被测者申请查看报告结果，是否同意？</view>

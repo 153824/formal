@@ -67,6 +67,10 @@ Page({
   toDetail: function (e) {
     var index = e.currentTarget.dataset.index;
     var obj = this.data.list[index];
+    if(!obj.isRead){
+      obj.isRead=true;
+      this.data.list[index]=obj;
+    }
     wx.navigateTo({
       url: '../report/detail?id=' + obj.id + "&name=" + obj.paper.name
     });

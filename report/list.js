@@ -43,11 +43,11 @@ Page({
         });
         ret.data.sort(function (n1, n2) {
           //创建时间倒序
-          var it1 = new Date(n1.finishTime).getTime();
-          var it2 = new Date(n2.finishTime).getTime();
+          var it1 = new Date(n1.updatedAt).getTime();
+          var it2 = new Date(n2.updatedAt).getTime();
           return it2 - it1;
         });
-        if (ret.data.leng < 12) {
+        if (ret.data.length < 12) {
           noNext = true;
         }
         var list = that.data.list.concat(ret.data);
@@ -89,8 +89,8 @@ Page({
         return it2 - it1;
       } else {
         //创建时间倒序
-        var it1 = new Date(n1.finishTime).getTime();
-        var it2 = new Date(n2.finishTime).getTime();
+        var it1 = new Date(n1.updatedAt).getTime();
+        var it2 = new Date(n2.updatedAt).getTime();
         return it2 - it1;
       }
     });

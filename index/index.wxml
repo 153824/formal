@@ -47,36 +47,39 @@
     </view>
   </view>
 
-  <view class="the-last-upload">
-    <view class="the-last-upload-header">
+  <view>
+    <view class="header">
       <text>最新上架</text>
     </view>
-    <view class="the-last-card-set">
-      <view class="card-child">
-        <image src="http://img2.luoke101.com/2019-10-18T03:28:34.403ZnormalImg.png"></image>
-        <view class="card-child-info">
-          <text class="title">基础管理特质</text>
-          <text class="detail">是否是未来的管理者？</text>
-        </view>
-      </view>
-      <view class="card-child">
-        <image src="http://img2.luoke101.com/2019-10-18T03:28:34.403ZnormalImg.png"></image>
-        <view class="card-child-info">
-          <text class="title">基础管理特质</text>
-          <text class="detail">是否是未来的管理者？</text>
-        </view>
-      </view>
-      <view class="card-child">
-        <image src="http://img2.luoke101.com/2019-10-18T03:28:34.403ZnormalImg.png"></image>
-        <view class="card-child-info">
-          <text class="title">基础管理特质</text>
-          <text class="detail">是否是未来的管理者？</text>
-        </view>
-      </view>
-    </view>
+    <card></card>
   </view>
 
-  <view class="choiceness" wx:if="{{papers&&papers.length}}">
+    <view>
+    <view class="header">
+      <text>本周热门</text>
+    </view>
+    <card></card>
+  </view>
+
+  <view>
+    <view class="header">
+      <text>免费专区</text>
+    </view>
+    <skill></skill>
+    <skill></skill>
+    <button class="view-more">查看更多</button>
+  </view>
+
+  <view>
+    <view class="header">
+      <text>经典量表</text>
+    </view>
+    <skill></skill>
+    <skill></skill>
+    <button class="view-more">查看更多</button>
+  </view>
+
+  <!-- <view class="choiceness" wx:if="{{papers&&papers.length}}">
     <view class="choiceheader">
       <view class="choiceleft">
         <image src="../img/index/icon1.png"></image>
@@ -98,9 +101,9 @@
             <view class="bodyfirst">{{item.name}}</view>
             <view class="bodysecond">
               <text>{{item.time||'-'}}分钟</text>
-              <text>{{item.quesCount||'-'}}题</text>
+              <text>{{item.quesCount||'-'}}题</text> -->
               <!-- <text>8页报告</text> -->
-            </view>
+            <!-- </view>
             <view class="bodythird">
               <image src="../img/index/icon3.png"></image>
               <text>{{(item.praiseCount-0+(item.userPraiseCount||0))||'-'}} 人觉得好用</text>
@@ -109,8 +112,8 @@
         </view>
       </block>
     </view>
-  </view>
-  <view class="recommend">
+  </view> -->
+  <!-- <view class="recommend">
     <view class="rehead">
       <image src="../img/index/icon2.png"></image>
       <text>推荐阅读</text>
@@ -119,10 +122,10 @@
       <view class="rebody flex" bindtap="navWebView" data-url="{{item.url}}">
         <view class="rebodyleft flex-main">
           <view class="reone">{{item.title}}</view>
-          <view class="retwo">
+          <view class="retwo"> -->
             <!-- <text>阅读 {{item.readCount}}</text> -->
             <!-- <view class="rebodyline"></view> -->
-            <text>{{item.publishDate}}</text>
+            <!-- <text>{{item.publishDate}}</text>
           </view>
         </view>
         <view class="rebodyright" wx:if="{{item.img}}">
@@ -130,5 +133,39 @@
         </view>
       </view>
     </block>
+  </view> -->
+
+<view class="recomend-reading">
+  <view class="header">
+    <text>推荐阅读</text>
   </view>
+  <view class="recomend-set">
+    <view class="recomend-child">
+      <image src="" class="cover"></image>
+      <view class="recomend-info">
+        <text class="title">破局生长：企业HR如何应对“人才缺口”下的招聘旺季</text>
+        <text class="date">2020年2月14日</text>
+      </view>
+    </view>
+  </view>
+  <view class="recomend-set">
+    <view class="recomend-child">
+      <image src="" class="cover"></image>
+      <view class="recomend-info">
+        <text class="title">破局生长：企业HR如何应对“人才缺口”下的招聘旺季</text>
+        <text class="date">2020年2月14日</text>
+      </view>
+    </view>
+  </view>
+  <view class="recomend-set">
+    <view class="recomend-child">
+      <image src="" class="cover"></image>
+      <view class="recomend-info">
+        <text class="title">破局生长：企业HR如何应对“人才缺口”下的招聘旺季</text>
+        <text class="date">2020年2月14日</text>
+      </view>
+    </view>
+  </view>
+</view>
+
 </view>

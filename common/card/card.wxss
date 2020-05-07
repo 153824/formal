@@ -1,0 +1,55 @@
+/* common/Card/Card.wxss */
+.card-wrapper,.free-base-and-classic-table{
+  margin: 36rpx 0 40rpx 40rpx;
+}
+
+.card-wrapper > .header{
+  font-weight: 600;
+  font-size: 40rpx;
+  margin-bottom: 40rpx;
+}
+
+.card-wrapper .header > text{
+  width: 160rpx;
+  height: 40rpx;
+  line-height: 56rpx;
+}
+
+.card-set{
+  display: flex;
+  justify-content: space-between;
+  width: 710rpx;
+  height: 264rpx;
+  font-size: 34rpx;
+  line-height: 48rpx;
+  margin-bottom: 50rpx;
+  overflow: auto;
+}
+
+.card-child > image{
+  width: 350rpx;
+  height: 160rpx;
+  border-radius: 20rpx;
+}
+
+.card-child{
+  margin-right: 40rpx;
+}
+
+.card-child-info > .title{
+  display: block;
+  font-weight: 700;
+}
+
+.card-child-info > .detail{
+  display: block;
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #5c6171;
+}
+
+.card-wrapper .header > text{
+  width: 160rpx;
+  height: 40rpx;
+  line-height: 56rpx;
+}

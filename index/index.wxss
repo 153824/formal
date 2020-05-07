@@ -57,7 +57,7 @@
 
 .banner {
   height: 294rpx;
-  margin: 40rpx 32rpx 50rpx 32rpx;
+  margin: 40rpx 20rpx 50rpx 20rpx;
   border-radius: 16rpx;
   overflow: hidden;
 }
@@ -113,6 +113,86 @@
   letter-spacing: 1px;
   line-height: 40rpx;
   color: #333541;
+}
+
+/* function-set */
+.function-set{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 66rpx 40rpx 0 40rpx;
+  font-size: 28rpx;
+  color: #070922;
+  font-weight: 400;
+}
+
+.function-set-child{
+  width: 112rpx;
+  height: 150rpx;
+}
+
+.function-set-child > image{
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+  width: 88rpx;
+  height: 90rpx;
+}
+
+.function-set-child > text{
+  display: block;
+  width: 112rpx;
+  margin-top: 20rpx;
+}
+
+/* the-last-upload */
+
+.the-last-upload{
+  margin: 36rpx 0 40rpx 40rpx;
+  font-size: 40rpx;
+  font-weight: 600;
+}
+
+.the-last-upload-header{
+  margin-bottom: 40rpx;
+}
+
+.the-last-card-set{
+  display: flex;
+  justify-content: space-between;
+  width: 710rpx;
+  height: 264rpx;
+  font-size: 34rpx;
+  line-height: 48rpx;
+  margin-bottom: 50rpx;
+  overflow: auto;
+}
+
+.card-child > image{
+  width: 350rpx;
+  height: 160rpx;
+  border-radius: 20rpx;
+}
+
+.card-child{
+  margin-right: 40rpx;
+}
+
+.card-child-info > text[class="title"]{
+  font-weight: 700;
+}
+
+.card-child-info > text[class="detail"]{
+  display: block;
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #5c6171;
+}
+
+.the-last-upload-header > text{
+  width: 160rpx;
+  height: 40rpx;
+  line-height: 56rpx;
 }
 
 /* choiceness */

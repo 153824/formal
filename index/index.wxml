@@ -23,7 +23,7 @@
     <swiper autoplay="true" indicator-dots="{{imgs.length>1?true:false}}" circular="true" indicator-color="rgba(255,255,255,0.3)" indicator-active-color="#fff">
       <block wx:for="{{imgs}}" wx:key="index">
         <swiper-item bindtap="changePage" data-url="{{item.url||''}}">
-          <image src="{{item.img||'http://img01.luoke101.com/banner09201.png'}}" class="slide-image" width="355" height="150" />
+          <image src="{{item.img||'http://img01.luoke101.com/banner09201.png'}}" class="slide-image" width="355" height="160" />
         </swiper-item>
       </block>
     </swiper>
@@ -38,6 +38,42 @@
         <text>{{item.title}}</text>
       </view>
     </block>
+  </view>
+
+  <view class="function-set">
+    <view wx:for="{{functionSet}}" wx:for-item="item" class="function-set-child">
+      <image src="{{item.src}}"></image>
+      <text>{{item.text}}</text>
+    </view>
+  </view>
+
+  <view class="the-last-upload">
+    <view class="the-last-upload-header">
+      <text>最新上架</text>
+    </view>
+    <view class="the-last-card-set">
+      <view class="card-child">
+        <image src="http://img2.luoke101.com/2019-10-18T03:28:34.403ZnormalImg.png"></image>
+        <view class="card-child-info">
+          <text class="title">基础管理特质</text>
+          <text class="detail">是否是未来的管理者？</text>
+        </view>
+      </view>
+      <view class="card-child">
+        <image src="http://img2.luoke101.com/2019-10-18T03:28:34.403ZnormalImg.png"></image>
+        <view class="card-child-info">
+          <text class="title">基础管理特质</text>
+          <text class="detail">是否是未来的管理者？</text>
+        </view>
+      </view>
+      <view class="card-child">
+        <image src="http://img2.luoke101.com/2019-10-18T03:28:34.403ZnormalImg.png"></image>
+        <view class="card-child-info">
+          <text class="title">基础管理特质</text>
+          <text class="detail">是否是未来的管理者？</text>
+        </view>
+      </view>
+    </view>
   </view>
 
   <view class="choiceness" wx:if="{{papers&&papers.length}}">

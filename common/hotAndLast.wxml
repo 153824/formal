@@ -1,0 +1,11 @@
+<!--common/hotAndLast.wxml-->
+<view class="hot-and-last">
+    <view class="hot-and-last">
+      <text>最新上架</text>
+    </view>
+    <swiper>
+      <swiper-item>
+        
+      </swiper-item>
+    </swiper>
+</view>

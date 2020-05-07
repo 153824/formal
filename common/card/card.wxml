@@ -1,8 +1,5 @@
 <!--common/Card/Card.wxml-->
   <view class="card-wrapper">
-    <view class="header">
-      <text>{{title}}</text>
-    </view>
     <view class="card-set">
       <view class="card-child">
         <image src="http://img2.luoke101.com/2019-10-18T03:28:34.403ZnormalImg.png"></image>

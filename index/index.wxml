@@ -139,30 +139,14 @@
   <view class="header">
     <text>推荐阅读</text>
   </view>
-  <view class="recomend-set">
-    <view class="recomend-child">
-      <image src="" class="cover"></image>
-      <view class="recomend-info">
-        <text class="title">破局生长：企业HR如何应对“人才缺口”下的招聘旺季</text>
-        <text class="date">2020年2月14日</text>
-      </view>
+  <view class="recomend-set" wx:for="{{news}}" wx:key="unique">
+    <view class="recomend-child" bindtap="navWebView" data-url="{{item.url}}">
+    <view class="cover-wrapper" wx:if="{{item.img}}">
+      <image src="{{item.img}}" class="cover"></image>
     </view>
-  </view>
-  <view class="recomend-set">
-    <view class="recomend-child">
-      <image src="" class="cover"></image>
       <view class="recomend-info">
-        <text class="title">破局生长：企业HR如何应对“人才缺口”下的招聘旺季</text>
-        <text class="date">2020年2月14日</text>
-      </view>
-    </view>
-  </view>
-  <view class="recomend-set">
-    <view class="recomend-child">
-      <image src="" class="cover"></image>
-      <view class="recomend-info">
-        <text class="title">破局生长：企业HR如何应对“人才缺口”下的招聘旺季</text>
-        <text class="date">2020年2月14日</text>
+        <text class="title">{{item.title}}</text>
+        <text class="date">{{item.publishDate}}</text>
       </view>
     </view>
   </view>

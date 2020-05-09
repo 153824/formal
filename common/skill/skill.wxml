@@ -1,9 +1,9 @@
 <!--common/skill/skill.wxml-->
-  <view class="skill-wrapper">
+  <view class="skill-wrapper" style="margin-left:{{ marginLeft }}rpx;margin-right:{{ marginRight }}rpx;">
     <view class="skill-set">
       <view class="skill-child">
         <view class="test-introduce">
-          <image class="cover" src="../../img/index/classic_test@2x.png"></image>
+          <image class="cover" src="../../img/index/classic_test@2x.png" style="width: {{width}}rpx;height: {{width}}rpx;"></image>
           <view class="introduce">
             <text class="title">Java技能评测</text>
             <text class="word">员工是高驱动，高学习能力的技术人才吗？</text>
@@ -13,7 +13,7 @@
           <text class="use-count">15家企业在用</text>
           <view class="price">
             <text class="origin-price" text>￥100</text>
-            <text class="actual-price">￥75</text>
+            <text class="actual-price">限时免费</text>
           </view>
         </view>
       </view>

@@ -5,8 +5,8 @@
 }
 
 .skill-child{
-  width: 610rpx;
-  height: 178rpx;
+  /* min-width: 482rpx;
+  min-height: 210rpx; */
   padding: 20rpx 30rpx 24rpx 30rpx;
   border: 2rpx solid rgba(7, 9, 34, 0.05);
   border-radius: 20rpx;
@@ -56,9 +56,10 @@
 }
 
 .price{
-  color: #E31A46FF;
   font-size: 28rpx;
   line-height: 40rpx;
+  color: #fff;
+  font-size: 24rpx;
 }
 
 .origin-price{
@@ -66,5 +67,18 @@
   text-decoration: line-through;
   color: #B1B1B1CC;
   font-size: 24rpx;
+}
+
+.actual-price{
+  display: inline-block;
+}
+
+.free{
+  min-width: 174rpx;
+  min-height: 40rpx;
+  background:linear-gradient(136deg,rgba(226,23,61,1) 0%,rgba(240,55,199,1) 100%);
+  border-radius: 30rpx 0rpx 30rpx 0rpx;
+  text-align: center;
+  font-size: 28rpx;
 }
 

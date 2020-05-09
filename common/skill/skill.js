@@ -7,6 +7,18 @@ Component({
     title: {
       type: String,
       value: ""
+    },
+    width: {
+      type: Number,
+      value: 120
+    },
+    marginLeft: {
+      type: Number,
+      value: 40
+    },
+    marginRight: {
+      type: Number,
+      value: 40
     }
   },
 

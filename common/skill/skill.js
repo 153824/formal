@@ -35,6 +35,10 @@ Component({
     subTitleFontSize: {
       type: Number,
       value: 24
+    },
+    marginRight: {
+      type: Number,
+      value: 40
     }
   },
 

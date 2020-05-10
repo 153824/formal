@@ -9,6 +9,7 @@
     <image class="btnImg" bindtap="changePage" data-url="./couponGet" src="../img/index/icon7.png"></image>
   </view>
 </view> -->
+<!-- <change></change> -->
 <view class="topTestView flex" wx:if="{{oldShareInfo&&oldShareInfo.id}}" bindtap="continueTest">
   <image class="icon25" src="../img/index/icon25.png"></image>
   <view class="flex-main">您有一份《
@@ -41,7 +42,7 @@
   </view>
 
   <view class="function-set">
-    <view wx:for="{{functionSet}}" wx:for-item="item" class="function-set-child">
+    <view wx:for="{{functionSet}}" wx:for-item="item" class="function-set-child" wx:key="unique">
       <image src="{{item.src}}"></image>
       <text>{{item.text}}</text>
     </view>

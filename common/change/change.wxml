@@ -1,0 +1,9 @@
+<!--common/change/change.wxml-->
+<view>
+ <!-- 沉浸栏 -->
+  <view class="statusbar"  style="width:100%;height:{{statusBarHeight}}px;"></view>
+<!-- 标题栏 这里就可以自定义写标题 -->
+</view>
+<view class="nav-wrapper" style="height: {{ navHeight - 20 }}px;line-height: {{ navHeight - 20 }}px;">
+  <text>罗课(厦门)网络科技有限公司</text>
+</view>

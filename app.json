@@ -7,6 +7,8 @@
     "test/index",
     "test/guide",
     "test/finish",
+    "station/station",
+    "station/detail",
     "store/store",
     "store/sendlog",
     "store/category",
@@ -52,7 +54,7 @@
         "selectedIconPath": "img/index/index_active.png"
       },
       {
-        "pagePath": "store/store",
+        "pagePath": "station/station",
         "text": "人岗匹配",
         "iconPath": "img/index/person_job_no_active@2x.png",
         "selectedIconPath": "img/index/person_job_active@2x.png"

@@ -1,0 +1,69 @@
+/* common/checkout/checkout.wxss */
+.none{
+  display: none;
+}
+.introduction,.dimension,.scenarios,.example{
+  padding: 80rpx 40rpx 40rpx 40rpx;
+}
+.head{
+  position: relative;
+  z-index: 100;
+}
+.head > .title{
+  height: 56rpx;
+  line-height: 46rpx;
+  font-size: 40rpx;
+  color: #070922FF;
+  z-index: 100;
+}
+.head > .line{
+  position: absolute;
+  bottom: -25rpx;
+  left: 0;
+  width: 84rpx;
+  border: 12rpx solid rgba(53, 62, 232, 1);
+  font-weight: 500;
+}
+.title-bg{
+  position: absolute;
+  top: -55rpx;
+  left: 0;
+  height: 95rpx;
+  font-size: 75rpx;
+  color: rgb(241, 244, 255);
+  z-index: -100;
+}
+.introduction-content,.dimension-content{
+  letter-spacing: 2rpx;
+  line-height: 48rpx;
+  font-size: 28rpx;
+  margin-top: 60rpx;
+}
+
+.dimension-content-wrapper{
+  display: grid;
+  grid-template-rows: 56rpx;
+  grid-row-gap: 20rpx;
+}
+.dimension-child{
+  display: grid;
+  grid-template-columns: repeat(3,212rpx);
+  grid-template-rows: 56rpx;
+  grid-column-gap: 36rpx;
+}
+.dimension-child > text{
+  width: 212rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  background-color: #F6F6F6FF;
+  border-radius: 54rpx;
+  text-align: center;
+}
+.bold{
+  font-size: 28rpx;
+  font-weight: 550;
+}
+.scenarios-icon{
+  width: 60rpx;
+  height: 60rpx;
+}

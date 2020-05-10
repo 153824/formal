@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "card": "../common/card/card",
-    "skill": "../common/skill/skill"
+    "skill": "../common/skill/skill",
+    "change": "../common/change/change"
   }
 }

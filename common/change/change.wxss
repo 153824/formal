@@ -1,0 +1,15 @@
+/* common/change/change.wxss */
+.statusbar{
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  z-index: 99999;
+}
+.nav-wrapper{
+  position: fixed;
+  top: 40rpx;
+  width: 100%;
+  padding-left: 10px;
+  background-color: #fff;
+  z-index: 99999;
+}

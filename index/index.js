@@ -24,7 +24,11 @@ Page({
         text: "经典测试",
         src: "../img/index/classic_test@2x.png"
       },
-    ]
+    ],
+    navHeight: app.globalData.navHeight,
+    navTop: app.globalData.navTop,
+    windowHeight: app.globalData.windowHeight,
+    menuBtnHeight: app.globalData.menuBtnHeight,
   },
   onLoad: function(options) {
     wx.switchTab({

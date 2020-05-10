@@ -11,6 +11,13 @@ App({
   defaultShareObj: {
     imageUrl: "http://ihola.luoke101.com/wxShareImg.png"
   },
+  globalData:{
+    navHeight: 0,
+    navTop: 0,
+    windowHeight: 0,
+    menuBtnHeight: 0,
+    statusBarHeight: 0
+  },
   teamName: "",
   teamId: "",
   teamRole: "",
@@ -28,6 +35,7 @@ App({
   host2: "http://localhost:3000/hola/", //请求host——测试
   onLaunch: function(options) {
     var referrerInfo = options.referrerInfo;
+    var menuBtnObj = wx.getMenuButtonBoundingClientRect();
     if (referrerInfo && referrerInfo.appid) {
       this.fromAppId = referrerInfo.appid;
     }
@@ -76,7 +84,27 @@ App({
         }
       }
     });
+
+    wx.getSystemInfo({
+        success: (res) => {
+          let statusBarHeight = res.statusBarHeight,
+              navTop = menuBtnObj.top,
+              navHeight = statusBarHeight + menuBtnObj.height + (menuBtnObj.top - statusBarHeight)*2,
+              windowHeight = res.windowHeight,
+              menuBtnHeight = menuBtnObj.height;
+              console.log(res, menuBtnObj);
+              this.globalData.navHeight = navHeight;
+              this.globalData.navTop = navTop;
+              this.globalData.windowHeight = windowHeight;
+              this.globalData.menuBtnHeight = menuBtnHeight;
+              this.globalData.statusBarHeight = statusBarHeight;
+        },
+        fail(err){
+          console.log(err);
+        }
+      })
   },
+
   userLogin: function(code) {
     var that = this;
     that.doAjax({

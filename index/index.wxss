@@ -1,7 +1,6 @@
 /**index.wxss**/
 
 /* 首页 */
-
 .topTestView {
   height: 80rpx;
   line-height: 80rpx;
@@ -326,7 +325,6 @@
 .recomend-reading:last-child{
   margin-bottom: 80rpx;
 }
-
 
 /* recommend */
 

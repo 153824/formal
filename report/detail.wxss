@@ -731,9 +731,8 @@ page, page>view {
 
 .sharebtn {
   margin-top:62rpx;
-  margin-left: 40rpx;
+  margin-left: 20rpx;
   height: 96rpx;
-  width: 260rpx;
   border-radius: 14rpx;
   background:#FFFFFF;
   border:1px solid rgba(7,9,34,0.2);
@@ -743,12 +742,25 @@ page, page>view {
   line-height: 96rpx;
   text-align: center;
   padding:0 22rpx;
+  margin-right: 0;
 }
 
 .toTestOther {
-  margin: 62rpx 40rpx 0;
+  margin: 62rpx 20rpx 0 0;
   height: 96rpx;
-  width: 390rpx;
+  background: rgba(89, 96, 237, 1);
+  border-radius: 14rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  color: rgba(245, 245, 245, 1);
+  line-height: 96rpx;
+  text-align: center;
+  padding:0 22rpx;
+}
+.recommand{
+  margin: 24rpx 40rpx 64rpx;
+  height: 96rpx;
+  width: 100%;
   background: rgba(89, 96, 237, 1);
   border-radius: 14rpx;
   font-size: 32rpx;

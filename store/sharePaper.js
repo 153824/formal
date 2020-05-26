@@ -87,6 +87,9 @@ Page({
     });
   },
   toSharePaper: function() {
+    wx.aldstat.sendEvent('点击生成测评二维码', {
+      '触发点击': '点击数'
+    });
     var that = this;
     var d = that.data;
     var costNum = d.count;

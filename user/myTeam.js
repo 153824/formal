@@ -33,7 +33,7 @@ Page({
     var isvip3 = wx.getStorageSync("isvip3");
     var isvip4 = wx.getStorageSync("isvip4");
     var adminNum = 1;
-    var memberNum = 2;
+    var memberNum = -1;
     if (isvip0) {
       adminNum = 2;
       memberNum = -1;

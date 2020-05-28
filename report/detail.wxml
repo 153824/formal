@@ -135,7 +135,7 @@
         <view class="flex total" wx:if="{{item.showTotal||item.rankOrg||item.rankAll}}">
           <view class="flex-main" wx:if="{{item.showTotal}}">
             <view class="name">得分</view>
-            <view class="lv">{{item.total1}}</view>
+            <view class="lv">{{ utils.saveDouble(item.total1) }}</view>
           </view>
           <view class="flex-main" wx:if="{{item.rankOrg}}">
             <view class="name">组织排名</view>
@@ -165,7 +165,7 @@
           <block wx:for="{{item.child}}" wx:key="unique" wx:for-item="node" wx:for-index="i">
             <view class="item">
               <view class="title {{node.active}}" bindtap="activeItem" data-index="{{index}}" data-i="{{i}}">{{node.name}}：
-                <text style="color:{{node.color}};">{{node.lvName}}  {{node.av10}}分</text>
+                <text style="color:{{node.color}};">{{node.lvName}}  {{utils.saveDouble(node.av10)}}分</text>
                 <image src="../img/report/icon2.png"></image>
               </view>
               <view class="contentMsg" wx:if="{{node.active}}">
@@ -263,3 +263,4 @@
     </view>
   </view>
 </view>
+<wxs src="../common/utils.wxs" module="utils"></wxs>

@@ -43,7 +43,8 @@ Page({
             // node.report.finishTime = node.report.finishTime.substring(2);
           }
         });
-        ret.data.sort(function (n1, n2) {
+        var list = that.data.list.concat(ret.data);
+        list.sort(function (n1, n2) {
           if (that.data.orderType == 0) {
             //创建时间倒序
             var it1 = new Date(n1.updatedAt).getTime();
@@ -51,15 +52,15 @@ Page({
             return it2 - it1;
           } else {
             //名字顺序排序
-            var it1 = n1.people.name.substring(0, 1).charCodeAt();
-            var it2 = n2.people.name.substring(0, 1).charCodeAt();
+            var it1 = n1.people.name.trim().substring(0, 1).charCodeAt();
+            var it2 = n2.people.name.trim().substring(0, 1).charCodeAt();
             return it2 - it1;
           }
         });
         if (ret.data.length < 12) {
           noNext = true;
         }
-        var list = that.data.list.concat(ret.data);
+        // var list = that.data.list.concat(ret.data);
         if (page == 1) {
           list = ret.data;
         }

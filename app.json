@@ -39,6 +39,12 @@
     "index/pcGetTickSuccess",
     "store/sharePaper"
   ],
+  "plugins": {
+    "contactPlugin": {
+      "version": "1.3.0",
+      "provider": "wx104a1a20c3f81ec2"
+    }
+  },
   "tabBar": {
     "color": "#5C6171",
     "borderStyle": "black",

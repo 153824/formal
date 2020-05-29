@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "测评商城",
-  "usingComponents": {}
+  "usingComponents": {
+    "cell": "plugin://contactPlugin/cell"
+  }
 }

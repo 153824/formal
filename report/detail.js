@@ -150,6 +150,7 @@ Page({
     dlgName: ""
   },
   onLoad: function(options) {
+    wx.hideShareMenu();
     var that = this;
     ctx = wx.createCanvasContext('canvasArcCir');
     var id = that.data.id || options.id;
@@ -440,13 +441,17 @@ Page({
   /** 
    * 分享内容
    */
-  /*onShareAppMessage: function() {
-    var userName = app.globalData.userInfo.nickname || "";
-    return {
-      title: userName + "邀请你查看报告",
-      imageUrl: "http://ihola.luoke101.com/wxShareImg.png"
-    };
-  },*/
+  onShareAppMessage: function(res) {
+    wx.aldstat.sendEvent('报告详情页推荐好啦测评', {
+      '触发点击': '点击数'
+    });
+      // 来自页面内转发按钮
+      return {
+        path: 'store/store',
+        title: "我发现了一个不错的测评工具，快来试试吧",
+        imageUrl: "http://ihola.luoke101.com/wxShareImg.png"
+      };  
+  },
   /**
    * 进入分享报告页面
    */
@@ -456,7 +461,7 @@ Page({
     wx.navigateTo({
       url: './shareReport?id=' + this.data.id + "&username=" + userMsg.username + "&paperName=" + paper.name
     });
-    wx.aldstat.sendEvent('详情页分享报告', {
+    wx.aldstat.sendEvent('报告详情页分享报告', {
       '触发点击': '点击数'
     });
   },
@@ -467,7 +472,7 @@ Page({
     wx.navigateTo({
       url: '../store/detail?id=' + paperDetail.id,
     })
-    wx.aldstat.sendEvent('详情页测测别人', {
+    wx.aldstat.sendEvent('报告详情页测测别人', {
       '触发点击': '点击数'
     });
   },

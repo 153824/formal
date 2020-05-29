@@ -158,6 +158,9 @@ Page({
 
     }
   },
+  testtest: function (e) {
+    console.log("aaa")
+  },
 
   getUserInfo: function(e) {
     var that = this;
@@ -204,21 +207,21 @@ Page({
 
   changepage: function(e) {
     console.log("e", e);
-    wx.aldstat.sendEvent('首页点击免费领取新人券', {
-      '触发点击': '点击数'
-    });
     var d = e.currentTarget.dataset;
     var listid = e.currentTarget.id
     var i = d.i;
     var fullUrl = d.fullurl;
     if (fullUrl) {
+      wx.aldstat.sendEvent('首页点击免费领取新人券', {
+        '触发点击': '点击数'
+      });
       var detail = e.detail;
       if (detail && detail.errMsg && !detail.encryptedData) return;
       if (detail && detail.encryptedData) {
         var iv = detail.iv;
         var encryptedData = detail.encryptedData;
         if (encryptedData) {
-          //用户授权手机号
+          //用户授权手机号      
           wx.aldstat.sendEvent('首页就授权了手机', {
             '触发点击': '点击数'
           });
@@ -242,6 +245,9 @@ Page({
     var url = "./category?id=" + listid;
     if (i != null) {
       url = url + "&i=" + i;
+      wx.aldstat.sendEvent('商城进入销售类技能测评', {
+        '触发点击': '点击数'
+      });
     }
     wx.navigateTo({
       url: url

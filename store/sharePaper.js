@@ -59,7 +59,7 @@ Page({
     } else {
       count = e.detail.value;
     }
-    if (count > maxCount) {
+    if (count > parseInt(maxCount)) {
       // count = maxCount;
       // that.setData({
       //   count: maxCount
@@ -75,7 +75,6 @@ Page({
       countStr = countStr.substring(1, countStr.length);
     }
     count = Number(countStr);
-    console.log(count)
     that.setData({
       count: count
     });

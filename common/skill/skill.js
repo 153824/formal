@@ -8,6 +8,10 @@ Component({
       type: String,
       value: ""
     },
+    subtitle: {
+      type: String,
+      value: ""
+    },
     width: {
       type: Number,
       value: 120
@@ -30,15 +34,11 @@ Component({
     },
     titleFontSize: {
       type: Number,
-      value: 32
+      value: 28
     },
     subTitleFontSize: {
       type: Number,
       value: 24
-    },
-    marginRight: {
-      type: Number,
-      value: 40
     }
   },
 

@@ -1,0 +1,28 @@
+/* common/title/title.wxss */
+.bar-wrapper{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    z-index: 999999999999;
+}
+.title-bar{
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    line-height: 22px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #070922FF;
+}
+.company-picker{
+    position: absolute;
+    top: 60px;
+}
+.company-picker-image{
+    align-self: center;
+    width: 8px;
+    height: 6px;
+    margin-left: 12px;
+}

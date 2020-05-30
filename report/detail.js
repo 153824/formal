@@ -437,7 +437,7 @@ Page({
     ctx.stroke();
     ctx.draw();
   },
-  /** 
+  /**
    * 分享内容
    */
   /*onShareAppMessage: function() {

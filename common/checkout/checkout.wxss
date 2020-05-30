@@ -33,7 +33,7 @@
   color: rgb(241, 244, 255);
   z-index: -100;
 }
-.introduction-content,.dimension-content{
+.introduction-content,.dimension-content,.scenarios-content,.example-content{
   letter-spacing: 2rpx;
   line-height: 48rpx;
   font-size: 28rpx;
@@ -63,7 +63,53 @@
   font-size: 28rpx;
   font-weight: 550;
 }
+.scenarios-area{
+  margin-top: 60rpx;
+  margin-bottom: 10rpx;
+}
+.scenarios-content{
+  margin-top: 40rpx;
+}
+.scenarios-child{
+  display: flex;
+  align-items: center;
+}
+.scenarios-info{
+  margin-left: 70rpx;
+  color: #5C6171FF;
+  letter-spacing: 4rpx;
+  line-height: 48rpx;
+}
 .scenarios-icon{
+  margin-right: 12rpx;
   width: 60rpx;
   height: 60rpx;
 }
+.scenarios-title{
+  font-size: 28rpx;
+  color: #323541FF;
+  font-weight: 600;
+}
+.example-content{}
+.example-child{}
+.example-child > .bold{
+  color: #2F3038FF;
+  font-size: 32rpx;
+  font-weight:500;
+  letter-spacing: 1.2rpx;
+  line-height: 44rpx;
+}
+.subject-wrapper{}
+.subject-child{
+  display: flex;
+  align-items: center;
+  height: 92rpx;
+  padding: 34rpx 50rpx;
+  margin-top: 40rpx;
+  box-shadow:0px 0px 7px 0px rgba(167,185,237,0.36);
+  border-radius: 16rpx;
+  background:rgba(254,255,254,1);
+}
+/*.subject-child > text{*/
+/*  align-self: center;*/
+/*}*/

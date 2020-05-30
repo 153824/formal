@@ -1,6 +1,9 @@
 <!--user/index.wxml-->
 <!-- 我的 -->
-<view class="container font">
+<block>
+  <title></title>
+</block>
+<view class="container font" style="background-color: #fff;margin-top:{{ (statusbarHeight + titleHeight) }}px;">
   <view class="usermsg" bindtap="changePage" data-url="">
     <!-- 跳转个人信息查看界面 -->
     <button wx:if="{{!userInfo.isBind}}" class="userInfoBtn" bindtap="showLoginDlg"></button>
@@ -76,7 +79,43 @@
       </view>
     </view>
   </block>
+  <view class="test-set-meal">
+    <view class="set-meal-wrapper">
+      <view class="meal-title">
+        <text>测评管理</text>
+        <text class="meal-rule">兑换券使用规则</text>
+      </view>
+      <scroll-view scroll-x="true">
+        <view class="set-meal-group">
+          <view class="set-meal-child">
+            <view class="title">测评兑换券</view>
+            <view class="count">50<text>张</text></view>
+            <view class="price">￥2480</view>
+          </view>
+          <view class="set-meal-child">
+            <view class="title">测评兑换券</view>
+            <view class="count">50<text>张</text></view>
+            <view class="price">￥2480</view>
+          </view>
+          <view class="set-meal-child">
+            <view class="title">测评兑换券</view>
+            <view class="count">50<text>张</text></view>
+            <view class="price">￥2480</view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
   <view class="footerbox">
+<!--    <view class="boxlist" bindtap="changePage" data-n="teams" data-url="./teams" style="padding: 12rpx 0;border-bottom: 12rpx solid #F2F2F2FF;">-->
+<!--      <view class="listleft" style="margin-left: 62rpx;">-->
+<!--        测评套餐-->
+<!--      </view>-->
+<!--      <view class="listright golden">-->
+<!--        <text style="color: #979BA9FF">兑换券使用规则</text>-->
+<!--        <image src="../img/user/index/icon3.png"></image>-->
+<!--      </view>-->
+<!--    </view>-->
     <view class="boxlist" bindtap="changePage" data-n="teams" data-url="./teams" wx:if="{{userInfo.isBind&&teamRole==3}}">
       <view class="listleft">
         <image src="../img/user/index/icon7.png"></image>企业认证
@@ -84,13 +123,13 @@
       <view class="listright golden">
         <image wx:if="{{nowTeam.certConfig}}" style="height:28rpx;width:28rpx;margin-right:12rpx;" src="../img/report/icon9.png"></image>
         <text wx:if="{{nowTeam.certConfig}}" style="color:#323541;">已认证</text>
-        <text wx:else>认证送专属封面</text>
+        <text wx:else style="color: #979BA9FF">认证送专属封面</text>
         <image src="../img/user/index/icon3.png"></image>
       </view>
     </view>
     <view class="boxlist" bindtap="changePage" data-url="./myTeam?id={{teamId}}" wx:if="{{userInfo.isBind&&teamRole==3}}">
       <view class="listleft">
-        <image src="../img/user/index/icon6.png"></image>成员管理
+        <image src="../img/user/index/icon6.png"></image>协作者管理
       </view>
       <view class="listright">设置团队成员的访问权限
         <image src="../img/user/index/icon3.png"></image>
@@ -120,6 +159,14 @@
         <image src="../img/user/index/icon3.png"></image>
       </view>
     </view>
+    <view class="boxlist" bindtap="changePage" data-url="./useHistory" wx:if="{{userInfo.isBind&&teamRole!=1}}">
+      <view class="listleft">
+        <image src="../img/user/index/icon8.png"></image>使用记录
+      </view>
+      <view class="listright">
+        <image src="../img/user/index/icon3.png"></image>
+      </view>
+    </view>
     <view class="boxlist flex">
       <button class="kfBtn" open-type="feedback"></button>
       <view class="listleft flex-main">
@@ -129,11 +176,11 @@
         <image src="../img/user/index/icon3.png"></image>
       </view>
     </view>
-    <view class="boxlist" bindtap="changePage" data-url="./addGroup">
+    <view class="boxlist flex" bindtap="changePage" data-url="./addGroup">
       <view class="listleft">
-        <image src="../img/user/index/icon13.png"></image>微信客服
+        <image src="../img/user/index/icon13.png"></image>成为共创用户
       </view>
-      <view class="listright">
+      <view class="listright"><text class="golden">免费体验更多测评</text>
         <image src="../img/user/index/icon3.png"></image>
       </view>
     </view>

@@ -1,0 +1,4 @@
+<!--common/follow/follow.wxml-->
+<view class="follow">
+  <text>{{ title }}</text>
+</view>

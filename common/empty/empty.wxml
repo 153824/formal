@@ -1,0 +1,15 @@
+<!--common/empty/empty.wxml-->
+<view wx:if="{{ type === 'default' }}" class="empty-wrapper">
+    <image src="../../img/user/use_history_empty.png"></image>
+    <view>{{ title }}</view>
+</view>
+
+<view wx:if="{{ type === 'scan' }}" class="empty-wrapper">
+    <image src="../../img/empty/no_one_scan_code.png" style="height:230rpx;width:230rpx;margin-bottom: 20rpx;"></image>
+    <view style="margin-bottom: 46rpx;">
+        {{ title }}
+    </view>
+    <view style="color: #353EE8FF;font-size: 32rpx;">
+        撤回测评
+    </view>
+</view>

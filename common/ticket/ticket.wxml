@@ -1,0 +1,4 @@
+<!--common/ticket/ticket.wxml-->
+<view class="ticket">
+    <image class="share-take" src="../../img/ticket/ticket-take.png@2x.png"></image>
+</view>

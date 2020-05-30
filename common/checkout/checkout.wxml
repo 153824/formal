@@ -45,30 +45,71 @@
     <text class="title-bg">Scenarios</text>
   </view>
   <view class="scenarios-area">
-    <view>
-      <image class="scenarios-icon" src=""></image>
-      <text>新人录用</text>
-    </view>
-    <text>
-      在招聘中快速淘汰高风险因素过多的候选人，或者在后续面试考察中重点关注候选人的高风险因素。
-    </text>
+      <view class="scenarios-content">
+          <view class="scenarios-child">
+              <image class="scenarios-icon" src="../../img/logo.png"></image>
+              <text class="scenarios-title">新人录用</text>
+          </view>
+          <view class="scenarios-info">
+              在招聘中快速淘汰高风险因素过多的候选人，或者在后续面试考察中重点关注候选人的高风险因素。
+          </view>
+      </view>
+      <view class="scenarios-content">
+          <view class="scenarios-child">
+              <image class="scenarios-icon" src="../../img/logo.png"></image>
+              <text class="scenarios-title">新人录用</text>
+          </view>
+          <view class="scenarios-info">
+              在招聘中快速淘汰高风险因素过多的候选人，或者在后续面试考察中重点关注候选人的高风险因素。
+          </view>
+      </view>
   </view>
 </view>
 
-<!-- <view class="{{ type === 'example' ? 'example' : 'none' }}">
+<view class="{{ type === 'example' ? 'example' : 'none' }}">
   <view class="head">
     <text class="title">{{title}}</text>
     <text class="line"></text>
     <text class="title-bg">Scenarios</text>
   </view>
-  <view>
-    <view>
-      <image class="" src=""></image>
-      <text>新人录用</text>
-    </view>
-    <text>
-      在招聘中快速淘汰高风险因素过多的候选人，或者在后续面试考察中重点关注候选人的高风险因素。
-    </text>
+  <view class="example-content">
+      <view class="example-child">
+          <text class="bold">1、请结合周围朋友对你的评价进行选择。</text>
+          <view class="subject-wrapper">
+              <view class="subject-child">
+                  <view>
+                      A:
+                  </view>
+                  <view>
+                      在团队碰到困难的时候，我总是坚持到最后的
+                  </view>
+              </view>
+              <view class="subject-child">
+                  <view>
+                      B:
+                  </view>
+                  <view>
+                      在团队碰到困难的时候，我总是坚持到最后的
+                  </view>
+              </view>
+              <view class="subject-child">
+                  <view>
+                      C:
+                  </view>
+                  <view>
+                      在团队碰到困难的时候，我总是坚持到最后的
+                  </view>
+              </view>
+              <view class="subject-child">
+                  <view>
+                      D:
+                  </view>
+                  <view>
+                      在团队碰到困难的时候，我总是坚持到最后的
+                  </view>
+              </view>
+          </view>
+      </view>
   </view>
-</view> -->
+</view>
 

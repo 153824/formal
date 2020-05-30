@@ -25,10 +25,9 @@ Page({
         src: "../img/index/classic_test@2x.png"
       },
     ],
-    navHeight: app.globalData.navHeight,
-    navTop: app.globalData.navTop,
-    windowHeight: app.globalData.windowHeight,
-    menuBtnHeight: app.globalData.menuBtnHeight,
+    statusbarHeight: app.globalData.statusbarHeight,
+    titleHeight: app.globalData.titleHeight,
+    navigationSet: []
   },
   onLoad: function(options) {
     wx.switchTab({
@@ -85,7 +84,7 @@ Page({
           method: "GET",
           success: function(ret) {
             ret["couponGet"] = couponGet;
-            that.setData(ret);
+            // that.setData(ret);
             that.setData({
               oldShareInfo: ""
             });
@@ -118,11 +117,130 @@ Page({
         });
       }
     });
+    app.doAjax({
+      url: "../haola/homePages",
+      method: "get",
+      success: function(res){
+        const testData = {
+          "code": 0,
+          "msg": "success",
+          "resultObject": {
+            "navigation": {
+              "name": "导航",
+              "type": 1,
+              "isShow": 1,
+              "data": [
+                {
+                  "id": "5ec631a9d5529d0009410139",
+                  "name": "经典测试",
+                  "picture": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132",
+                  "columnId": "5ec63174d5529d0009410132",
+                  "columnName": "经典测试",
+                  "order": 1
+                },
+                {
+                  "id": "5ec63174d5529d0009410132",
+                  "name": "测程序员",
+                  "picture": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132",
+                  "columnId": "5ec6313fd5529d000941012e",
+                  "columnName": "测程序员",
+                  "order": 1
+                },
+                {
+                  "id": "5ec6313fd5529d000941012e",
+                  "name": "销售技能",
+                  "picture": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132",
+                  "columnId": "5ec630f0d5529d0009410127",
+                  "columnName": "销售技能",
+                  "order": 1
+                },
+                {
+                  "id": "5ec630f0d5529d0009410127",
+                  "name": "免费专区",
+                  "picture": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132",
+                  "columnId": "5e8fdee05c385800081a09f0",
+                  "columnName": "免费专区",
+                  "order": 1
+                }
+              ]
+            },
+            "recommend": {
+              "name": "推荐阅读",
+              "type": 2,
+              "isShow": 0,
+              "data": []
+            },
+            "new": {
+              "name": "最新上架",
+              "type": 3,
+              "isShow": 1,
+              "data": [
+                {
+                  "is_show": 0,
+                  "column_id": "5e709a187796d90076273f46",
+                  "name": "收费专区",
+                  "type": 3,
+                  "picture": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132",
+                  "order": 1,
+                  "column_name": "程序员技能",
+                  "enabled": 1,
+                  "objectId": "5e8fedd3158a7a0006be18cf",
+                  "createdAt": "2020-04-10T03:53:55.858Z",
+                  "updatedAt": "2020-05-23T03:31:52.716Z"
+                },
+                {
+                  "is_show": 0,
+                  "column_id": "5e709a187796d90076273f46",
+                  "name": "收费专区",
+                  "type": 3,
+                  "picture": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132",
+                  "order": 1,
+                  "column_name": "程序员技能",
+                  "enabled": 1,
+                  "objectId": "5e8fedd3158a7a0006be18cf",
+                  "createdAt": "2020-04-10T03:53:55.858Z",
+                  "updatedAt": "2020-05-23T03:31:52.716Z"
+                },
+              ]
+            },
+            "hot": {
+              "name": "本周热门",
+              "type": 4,
+              "isShow": 1,
+              "data": []
+            },
+            "banner": {
+              "name": "轮播图",
+              "type": 0,
+              "isShow": 1,
+              "data": [
+                {
+                  "id": "5e9424346b3a57000970cc6e",
+                  "picture": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132",
+                  "order": 1,
+                  "type": 1,
+                  "linkId": "5e8fdee05c385800081a09f0"
+                },
+                {
+                  "id": "5e9424816b3a57000970cd15",
+                  "picture": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132",
+                  "order": 1,
+                  "type": 1,
+                  "linkId": "5e8fdee05c385800081a09f0"
+                }
+              ]
+            }
+          }
+        }
+        // that.setData(res.resultObject);
+        that.setData(testData.resultObject);
+      }
+    });
+
   },
   onShareAppMessage(options) {
     return app.defaultShareObj;
   },
-
   navWebView: function(e) {
     var url = e.currentTarget.dataset.url;
     wx.setStorageSync("webView_Url", url);
@@ -136,7 +254,6 @@ Page({
     var url = d.url;
     var tab = d.tab;
     var n = d.n;
-    //console.log("changePage url", url, tab);
     if (url) {
       if (url.indexOf('http') != -1) {
         wx.setStorageSync("webView_Url", url);
@@ -205,5 +322,5 @@ Page({
     wx.navigateTo({
       url: '../test/guide?id=' + id
     });
-  }
-})
+  },
+});

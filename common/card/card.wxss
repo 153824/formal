@@ -1,7 +1,7 @@
 /* common/Card/Card.wxss */
 .card-wrapper,.free-base-and-classic-table{
-  margin: 36rpx 0 40rpx 40rpx;
-}
+   margin: 36rpx 0 40rpx 40rpx;
+ }
 
 .card-wrapper > .header{
   font-weight: 600;
@@ -33,7 +33,22 @@
 }
 
 .card-child{
+  position: relative;
   margin-right: 40rpx;
+}
+
+.card-child:after{
+  content: attr(data-feature);
+  position: absolute;
+  bottom: 130rpx;
+  right: 20rpx;
+  width: 160rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 28rpx;
+  background-color: rgba(255,255,255,0.9);
+  border-radius: 10rpx;
+  text-align: center;
 }
 
 .card-child-info > .title{

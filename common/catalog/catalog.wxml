@@ -1,0 +1,8 @@
+<!--common/catalog/catalog.wxml-->
+<view class="catalog">
+    <picker range="{{ range }}" value="{{ index }}" bindchange="pickerChange">
+        <view class="title">
+            {{ range[index] }}
+        </view>
+    </picker>
+</view>

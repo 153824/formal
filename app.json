@@ -39,7 +39,13 @@
     "report/shareReport",
     "index/getFreeTicket",
     "index/pcGetTickSuccess",
-    "store/sharePaper"
+    "store/sharePaper",
+    "station/send",
+    "common/dialog/dialog",
+    "user/useHistory",
+    "manager/manager",
+    "manager/useHistoryDetail",
+    "manager/evaluationReport"
   ],
   "tabBar": {
     "color": "#5C6171",
@@ -55,6 +61,12 @@
       },
       {
         "pagePath": "station/station",
+        "text": "人岗匹配",
+        "iconPath": "img/index/person_job_no_active@2x.png",
+        "selectedIconPath": "img/index/person_job_active@2x.png"
+      },
+      {
+        "pagePath": "manager/manager",
         "text": "人岗匹配",
         "iconPath": "img/index/person_job_no_active@2x.png",
         "selectedIconPath": "img/index/person_job_active@2x.png"

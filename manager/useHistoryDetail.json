@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "press": "../common/press/press",
+    "follow": "../common/follow/follow",
+    "empty": "../common/empty/empty"
+  }
+}

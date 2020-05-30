@@ -13,7 +13,7 @@ Page({
     paperId = options.id || "";
     page = 1;
     noNext = false;
-   
+
   },
   onShow: function () {
     wx.setNavigationBarTitle({

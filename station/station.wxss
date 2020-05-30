@@ -3,7 +3,6 @@
 .store-wrapper{
   display:flex;
   flex-direction: row;
-  height: 100%;
   position: fixed;
   top: 0;
   left: 0;
@@ -31,6 +30,7 @@
   font-size: 28rpx;
   font-weight: 400;
   color: #070922CC;
+  transition: all .1s;
 }
 
 .catalog-child > .title{
@@ -44,6 +44,7 @@
   background-color: #FFFFFFFF;
   font-size: 32rpx;
   font-weight: 500;
+  transition: all .1s;
 }
 
 .right-content{

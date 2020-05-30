@@ -1,0 +1,13 @@
+/* common/empty/empty.wxss */
+.empty-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 116rpx;
+}
+.empty-wrapper > image{
+    width: 190rpx;
+    height: 246rpx;
+    margin-bottom: 64rpx;
+}

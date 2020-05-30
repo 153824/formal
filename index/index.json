@@ -2,6 +2,7 @@
   "usingComponents": {
     "card": "../common/card/card",
     "skill": "../common/skill/skill",
-    "change": "../common/change/change"
-  }
+    "title": "../common/title/title"
+  },
+  "navigationStyle": "custom"
 }

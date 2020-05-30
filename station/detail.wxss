@@ -1,11 +1,13 @@
 /* station/detail.wxss */
 .header{
   display: flex;
-  height: 250rpx;
+  min-height: 250rpx;
+  flex-wrap: wrap;
 }
 .header-wrapper{
   display: flex;
-  padding: 34rpx 0 40rpx 40rpx;
+  flex-wrap: wrap;
+  padding: 34rpx 64rpx 40rpx 40rpx;
   background-color: #fff;
   width: 100%;
 }
@@ -50,4 +52,25 @@
 .use-time{
   color: rgba(7, 9, 34, 0.6);
   font-size: 24rpx;
+}
+.leave-wrapper{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 36rpx;
+  align-items: center;
+  padding: 20rpx 40rpx;
+  height: 40rpx;
+  border-radius: 20rpx;
+  color: #070922FF;
+  background:rgba(53,62,232,0.03);
+  font-size: 28rpx;
+  border: 1px solid rgba(53,62,232,0.2);
+}
+.leave-wrapper > text{
+  line-height: 40rpx;
+}
+.buy-more{
+  font-weight:500;
+  color: #353EE8FF;
 }

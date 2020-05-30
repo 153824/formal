@@ -1,7 +1,8 @@
 {
   "navigationBarTitleText": "人岗匹配",
   "usingComponents": {
-    "change": "../common/change/change",
-    "skill": "../common/skill/skill"
-  }
+    "skill": "../common/skill/skill",
+    "title": "../common/title/title"
+  },
+  "navigationStyle": "custom"
 }

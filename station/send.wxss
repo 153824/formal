@@ -1,0 +1,124 @@
+/* station/send.wxss */
+.send-title{
+    padding: 30rpx 40rpx 0 40rpx;
+    margin-bottom: 80rpx;
+}
+.send-title,.send-func-content > .title{
+    height: 50rpx;
+    line-height: 50rpx;
+    text-align: center;
+    font-size: 36rpx;
+    font-weight: 500;
+    color: #070922FF;
+}
+.send-func-content > .title{
+    font-size: 32rpx;
+}
+.send-title > .subtitle{
+    margin: 14rpx 0 0 0;
+    height: 40rpx;
+    line-height: 40rpx;
+    font-weight: 400;
+    font-size: 28rpx;
+    color: #07092299;
+    text-align: center;
+}
+.send-func-content{
+    padding: 96rpx 0 0 0;
+    margin-bottom: 60rpx;
+    height: 504rpx;
+    font-size: 32rpx;
+    font-weight: 500;
+    color: #070922FF;
+    background-color: #07092208;
+    border-radius:10px;
+}
+.count-controler-wrapper{
+    display: flex;
+    height: 90rpx;
+    justify-content: center;
+    margin: 50rpx 0 80rpx 0;
+}
+.count-controler{
+    display: flex;
+    align-items: center;
+}
+.count-controler > .add{
+    color: #07092266;
+}
+.count-controler > .count{
+    width: 152rpx;
+    font-size: 32rpx;
+    line-height: 90rpx;
+    color: #070922FF;
+}
+.count-controler > .sub{
+    color: #07092233;
+}
+.count-controler > .add,.sub,.count{
+    margin: 0 1rpx;
+    width: 96rpx;
+    height: 90rpx;
+    line-height: 90rpx;
+    background-color: #FFFFFFFF;
+}
+
+
+/* 重写 radio 样式 */
+/* 未选中的 背景样式 */
+radio .wx-radio-input{
+    border-radius: 50%;/* 圆角 */
+    width: 24rpx;
+    height: 24rpx;
+    border: 2rpx solid #717182FF;
+    background: none;
+}
+/* 选中后的 背景样式 （红色背景 无边框 可根据UI需求自己修改） */
+radio .wx-radio-input.wx-radio-input-checked{
+    background: none !important;
+    border: 6rpx solid #353EE8FF !important;
+}
+
+/* 选中后的 对勾样式 （白色对勾 可根据UI需求自己修改） */
+radio .wx-radio-input.wx-radio-input-checked::before{
+    /*border:6rpx solid rgba(53,62,232,1);*/
+    line-height: 40rpx;
+    text-align: center;
+    font-size:38rpx; /* 对勾大小 30rpx */
+    color: transparent; /* 对勾颜色 白色 */
+    background: transparent;
+    transform:translate(-50%, -50%) scale(1);
+    -webkit-transform:translate(-50%, -50%) scale(1);
+}
+.radio-group {
+    background: #fff;
+}
+.radio {
+    display: block;
+    border-top: 1px solid #ddd;
+    padding: 10rpx;
+
+}
+.radio:first-child {
+    border:none;
+}
+.section_gap {
+    line-height: 80rpx;
+}
+/* 重写 radio 样式 */
+
+.radio-wrapper{
+    margin: 50rpx 0 94rpx 0;
+}
+.radio-group-content{
+    display: flex;
+    justify-content: space-around;
+    padding: 0 150rpx;
+}
+label[for="agree"] > radio,label[for="dont-agree"] > radio{
+    margin-right: 10rpx;
+    color: #717182FF;
+}
+label[for="agree"] > radio[aria-checked="true"],label[for="dont-agree"] > radio[aria-checked="true"]{
+    color: #070922FF;
+}

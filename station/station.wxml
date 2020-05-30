@@ -1,44 +1,25 @@
-<view class="store-wrapper">
+<block>
+  <title></title>
+</block>
+<view class="store-wrapper" style="margin-top:{{ (statusbarHeight + titleHeight) }}px;">
   <scroll-view class="left-catalog" scroll-y="true" scroll-x="false" scroll-with-animation="true" bindtap="tabMenu">
     <view class="left-catalog-wrapper">
-      <view id="{{item.id}}" wx:for="{{menu}}" wx:key="id" data-id="{{item.id}}" class="{{ currentLeftId === item.id ? 'catalog-child active' : 'catalog-child' }}">
-        <text class="title" id="{{item.id}}">{{item.name}}</text>
+      <view id="{{item.objectId}}" wx:for="{{menu}}" wx:key="objectId" data-id="{{item.objectId}}" class="{{ checkedId === item.objectId ? 'catalog-child active' : 'catalog-child' }}" bindtap="changeTab">
+        <text class="title" id="{{item.objectId}}">{{item.name}}</text>
       </view>
     </view>
   </scroll-view>
   <scroll-view class="right-content" scroll-y="true" scroll-x="false" >
     <view class="right-content-wrapper">
-      <view class="skill-set none-some-style">
+       <view class="skill-set" wx:for="{{ childs }}" wx:for-item="child">
         <view class="skill-test-child">
           <view class="skill-info">
-            <text class="title">软件开发工程师</text>
+            <text class="title">{{ child.name }}</text>
             <text class="more">更多</text>
           </view>
-          <skill width="80" marginLeft="0" marginRight="0" titleFontSize="28" subTitleFontSize="24"></skill>
-          <skill width="80" marginLeft="0" marginRight="0" titleFontSize="28" subTitleFontSize="24"></skill>
-        </view>
-      </view>
-       <view class="skill-set">
-        <view class="skill-test-child">
-          <view class="skill-info">
-            <text class="title">测试工程师</text>
-            <text class="more">更多</text>
-          </view>
-          <skill width="80" marginLeft="0" marginRight="0"></skill>
-          <skill width="80" marginLeft="0" marginRight="0"></skill>
-          <skill width="80" marginLeft="0" marginRight="0"></skill>
-          <skill width="80" marginLeft="0" marginRight="0"></skill>
-          <skill width="80" marginLeft="0" marginRight="0"></skill>
-          <skill width="80" marginLeft="0" marginRight="0"></skill>
-        </view>
-      </view>
-       <view class="skill-set">
-        <view class="skill-test-child">
-          <view class="skill-info">
-            <text class="title">硬件开发工程师</text>
-            <text class="more">更多</text>
-          </view>
-          <skill width="80" marginLeft="0" marginRight="0"></skill>
+          <block wx:for="{{ child.evaluations }}" wx:for-item="evaluation">
+            <skill title="{{ evaluation.name }}" width="80" marginLeft="0" marginRight="0"></skill>
+          </block>
         </view>
       </view>
     </view>

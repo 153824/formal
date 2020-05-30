@@ -9,8 +9,10 @@
     <image class="btnImg" bindtap="changePage" data-url="./couponGet" src="../img/index/icon7.png"></image>
   </view>
 </view> -->
-<!-- <change></change> -->
-<view class="topTestView flex" wx:if="{{oldShareInfo&&oldShareInfo.id}}" bindtap="continueTest">
+<block>
+  <title></title>
+</block>
+<view class="topTestView flex" style="margin-top:{{ (statusbarHeight + titleHeight) }}px;" wx:if="{{oldShareInfo&&oldShareInfo.id}}" bindtap="continueTest">
   <image class="icon25" src="../img/index/icon25.png"></image>
   <view class="flex-main">您有一份《
     <span>{{oldShareInfo.paperName}}</span>》测试未完成，戳我继续</view>
@@ -19,19 +21,24 @@
 <view class="topCouponGetView" wx:if="{{!hasFreeTick&&skipFreeTicket}}">
   <image bindtap="changePage" data-url="../index/getFreeTicket" src="../img/store/detail/icon29.png"></image>
 </view>
-<view class="container font">
+<view class="container font" style="margin-top:{{ oldShareInfo&&oldShareInfo.id ? 0 : (statusbarHeight + titleHeight) }}px;">
   <view class="banner">
-    <swiper autoplay="true" indicator-dots="{{imgs.length>1?true:false}}" circular="true" indicator-color="rgba(255,255,255,0.3)" indicator-active-color="#fff">
-      <block wx:for="{{imgs}}" wx:key="index">
+    <swiper wx:if="{{ navigation.isShow }}" autoplay="true" indicator-dots="{{banner.data.length>1?true:false}}"
+            circular="true" indicator-color="rgba(255,255,255,0.3)" indicator-active-color="#fff">
+      <block wx:for="{{banner.data}}" wx:key="index">
         <swiper-item bindtap="changePage" data-url="{{item.url||''}}">
-          <image src="{{item.img||'http://img01.luoke101.com/banner09201.png'}}" class="slide-image" width="355" height="160" />
+          <image src="{{item.picture||'http://img01.luoke101.com/banner09201.png'}}" class="slide-image" width="355" height="160" />
         </swiper-item>
       </block>
+<!--      <block wx:for="{{imgs}}" wx:key="index">-->
+<!--        <swiper-item bindtap="changePage" data-url="{{item.url||''}}">-->
+<!--          <image src="{{item.img||'http://img01.luoke101.com/banner09201.png'}}" class="slide-image" width="355" height="160" />-->
+<!--        </swiper-item>-->
+<!--      </block>-->
     </swiper>
   </view>
-
   <view class="threebtn" wx:if="{{navigation&&navigation.length}}">
-    <block wx:for="{{navigation}}" wx:key="unique">
+    <block wx:for="{{ navigation }}" wx:key="unique">
       <view class="threebox" bindtap="changePage" data-url="{{item.url}}" data-name="navigation">
         <view>
           <image src="{{item.img||''}}"></image>
@@ -42,27 +49,45 @@
   </view>
 
   <view class="function-set">
-    <view wx:for="{{functionSet}}" wx:for-item="item" class="function-set-child" wx:key="unique">
-      <image src="{{item.src}}"></image>
-      <text>{{item.text}}</text>
+    <view wx:for="{{ navigation.data }}" wx:key="unique" class="function-set-child" wx:if="{{ item.picture.length > 0 }}">
+      <image src="{{item.picture}}"></image>
+      <text>{{item.name}}</text>
     </view>
+<!--    <view wx:for="{{functionSet}}" wx:for-item="item" class="function-set-child" wx:key="unique">-->
+<!--      <image src="{{item.src}}"></image>-->
+<!--      <text>{{item.text}}</text>-->
+<!--    </view>-->
   </view>
 
-  <view>
+  <view wx:if="{{ new.isShow }}">
     <view class="header">
       <text>最新上架</text>
     </view>
-    <card></card>
+    <view class="card-wrapper">
+      <view class="card-set">
+        <block wx:for="{{ new.data }}" wx:key="unique">
+          <view bindtap="changePage" data-url='../store/detail?id=5e6ee5e3546eaad5ca38cc34'>
+            <card image="{{ item.picture }}"  title="{{ item.title }}" subtitle="{{ item.subtitle }}" feature="{{ item.price > 0 ? item.price : '免费' }}"></card>
+          </view>
+        </block>
+      </view>
+    </view>
   </view>
 
-    <view>
+  <view wx:if="{{ hot.isShow }}">
     <view class="header">
       <text>本周热门</text>
     </view>
-    <card></card>
+    <view class="card-wrapper">
+      <view class="card-set">
+        <block wx:for="{{ hot.data }}" wx:key="unique" bindtap="changePage">
+          <card  title="{{ item.title }}" subtitle="{{ item.subtitle }}" feature="{{ item.price > 0 ? item.price : '免费' }}"></card>
+        </block>
+      </view>
+    </view>
   </view>
 
-  <view>
+  <view wx:if="{{ new.isShow }}">
     <view class="header">
       <text>免费专区</text>
     </view>
@@ -140,13 +165,13 @@
   <view class="header">
     <text>推荐阅读</text>
   </view>
-  <view class="recomend-set" wx:for="{{news}}" wx:key="unique">
+  <view class="recomend-set" wx:for="{{recommend.data}}" wx:key="unique">
     <view class="recomend-child" bindtap="navWebView" data-url="{{item.url}}">
     <view class="cover-wrapper" wx:if="{{item.img}}">
       <image src="{{item.img}}" class="cover"></image>
     </view>
       <view class="recomend-info">
-        <text class="title">{{item.title}}</text>
+        <text class="title">{{item.name}}</text>
         <text class="date">{{item.publishDate}}</text>
       </view>
     </view>

@@ -1,7 +1,8 @@
 // station/station.js
+const app = getApp();
 Page({
   data:{
-    currentLeftId: "JSG",
+    checkedId: "5ea91ca0c81f9b00066426b2",
     menu: [
       {
         id: "GLL",
@@ -58,16 +59,45 @@ Page({
         name:"销售/客服",
         active: false
       },
-    ]
+    ],
+    childs: [],
+    statusbarHeight: app.globalData.statusbarHeight,
+    titleHeight: app.globalData.titleHeight
   },
   onLoad: function(){
-    
+
   },
-  tabMenu: function(e){
-    console.log(e.target);
+  onShow: function(){
+    let that = this;
+    app.doAjax({
+      url: "../haola/positionTags",
+      method: "GET",
+      success: function(ret) {
+        console.log(ret.data[0].childs);
+        that.setData({
+          menu: ret.data,
+          childs: ret.data[0].childs
+        });
+      }
+    });
+  },
+  changeTab: function (e) {
+    const checkedId = e.currentTarget.id,
+          { menu } = this.data;
+    for( let i = 0;i < menu.length;i++ ){
+      if( checkedId === menu[i].objectId ){
+        this.setData({
+          childs: menu[i].childs
+        });
+        break;
+      }else if( i === menu.length-1 ){
+        this.setData({
+          childs: []
+        });
+      }
+    };
     this.setData({
-      currentLeftId: e.target.id,
-      itemScrollId: e.target.id
+      checkedId,
     })
   }
-})
+});

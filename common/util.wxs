@@ -1,0 +1,19 @@
+var getMonthAndDayByFrag = function( fullTime,frag="/" ){
+  var date = getDate(fullTime);
+  return date.getMonth() + frag + date.getDate()
+};
+
+var getHourAndMinByFrag = function( fullTime,frag=":" ){
+  var date = getDate(fullTime);
+  return date.getHours() + frag + date.getMinutes()
+};
+
+var getFullDateByFrag = function( fullTime,frag="/" ){
+  var date = getDate(fullTime);
+  return date.getFullYear()+frag+(date.getMonth()+1)+frag+date.getDate();
+};
+module.exports = {
+  getMonthAndDayByFrag: getMonthAndDayByFrag,
+  getHourAndMinByFrag: getHourAndMinByFrag,
+  getFullDateByFrag: getFullDateByFrag
+};

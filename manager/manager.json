@@ -1,7 +1,8 @@
 {
   "usingComponents": {
     "title": "../common/title/title",
-    "catalog": "../common/catalog/catalog"
+    "catalog": "../common/catalog/catalog",
+    "press": "../common/press/press"
   },
   "navigationStyle": "custom"
 }

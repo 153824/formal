@@ -29,7 +29,8 @@ Page({
     checkedTime: 0,
     evaluationList: [],
     useList: [],
-    catalog: ["全部测评"]
+    catalog: ["全部测评"],
+    shareTrigger: false
   },
 
   /**
@@ -240,9 +241,24 @@ Page({
     })
   },
   toReport: function (e) {
-    const { id,name } = e.currentTarget.dataset;
-    wx.navigateTo({
-      url: '../report/detail?id=' + id + "&name=" + name
-    });
+    const { id,name } = e.currentTarget.dataset,
+          { shareTrigger } = this.data;
+    /*当shareTrigger为true时 禁止跳转到报告详情页*/
+    if( shareTrigger ){
+      return;
+    }else{
+      wx.navigateTo({
+        url: '../report/detail?id=' + id + "&name=" + name
+      });
+    }
+  },
+  changeShareTrigger: function (e) {
+    const { shareTrigger } = this.data;
+    this.setData({
+      shareTrigger: !shareTrigger
+    })
+  },
+  checkboxChange: function (e) {
+    console.log(e.detail.id)
   }
 });

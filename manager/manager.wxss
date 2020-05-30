@@ -92,6 +92,7 @@
     padding: 40rpx 80rpx;
     font-size: 32rpx;
     border-bottom: 1px solid rgba(7,9,34,0.1);
+    transition: padding .5s;
 }
 .report-child view {
     height: 44rpx;
@@ -119,4 +120,54 @@
 }
 .info-wrapper > view{
     text-align: right;
+}
+.check-wrapper{
+    align-self: center;
+    margin-right: 34rpx;
+}
+/*START: Design the checkbox's style*/
+checkbox .wx-checkbox-input {
+    width: 48rpx;
+    height: 48rpx;
+    border-radius: 50%;
+}
+/*checkbox选中后样式  */
+checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+    background: #353EE8FF;
+    border-color: #353EE8FF;
+}
+/*checkbox选中后图标样式  */
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+    width: 20rpx;
+    height: 20rpx;
+    line-height: 20rpx;
+    text-align: center;
+    font-size: 22rpx;
+    color: #fff;
+    background: transparent;
+    transform: translate(-50%, -50%) scale(1);
+    -webkit-transform: translate(-50%, -50%) scale(1);
+}
+/*END: Design the checkbox's style*/
+.share-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    right: 60rpx;
+    bottom: 160rpx;
+    width: 100rpx;
+    height: 100rpx;
+    background:rgba(53,62,232,1);
+    box-shadow:0px 2px 4px 0px rgba(41,71,180,0.48);
+    border-radius: 50%;
+    font-size: 28rpx;
+    color: white;
+}
+.share-wrapper > image{
+    width: 100rpx;
+    height: 100rpx;
+}
+.share-button-wrapper{
+    width: 100%;
 }

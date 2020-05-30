@@ -23,32 +23,39 @@
     </view>
 
     <view wx:if="{{ checkedItem === '0' }}" class="evaluation-reports">
-        <view class="report-child" wx:for="{{ evaluationList }}" data-id="{{ item.id }}" data-name="{{ item.evaluation.name }}" bindtap="toReport">
-            <view class="time-wrapper">
-                <view class="date">
-                    {{ util.getMonthAndDayByFrag(item.createdTime) }}
+        <checkbox-group bindchange="checkboxChange">
+            <label for="" wx:for="{{ evaluationList }}">
+                <view class="report-child" style="{{ shareTrigger ? 'padding: 40rpx 80rpx 40rpx 40rpx;': ''}}" data-id="{{ item.id }}" data-name="{{ item.evaluation.name }}" bindtap="toReport">
+                    <view wx:if="{{ shareTrigger }}" class="check-wrapper">
+                        <checkbox value="{{ item.id }}" checked="{{  }}"></checkbox>
+                    </view>
+                    <view class="time-wrapper">
+                        <view class="date">
+                            {{ util.getMonthAndDayByFrag(item.createdTime) }}
+                        </view>
+                        <view class="clock">
+                            {{ util.getHourAndMinByFrag(item.createdTime) }}
+                        </view>
+                    </view>
+                    <view class="user-wrapper">
+                        <view>
+                            {{ item.answerUser.name }}
+                        </view>
+                        <view class="name" style="font-size: 28rpx;color: #070922;">
+                            {{ item.evaluation.name }}
+                        </view>
+                    </view>
+                    <view class="info-wrapper">
+                        <view>
+                            {{ item.total1 }}分
+                        </view>
+                        <view>
+                            {{ item.reportType }}
+                        </view>
+                    </view>
                 </view>
-                <view class="clock">
-                    {{ util.getHourAndMinByFrag(item.createdTime) }}
-                </view>
-            </view>
-            <view class="user-wrapper">
-                <view>
-                    {{ item.answerUser.name }}
-                </view>
-                <view class="name" style="font-size: 28rpx;color: #070922;">
-                    {{ item.evaluation.name }}
-                </view>
-            </view>
-            <view class="info-wrapper">
-                <view>
-                    {{ item.total1 }}分
-                </view>
-                <view>
-                    {{ item.reportType }}
-                </view>
-            </view>
-        </view>
+            </label>
+        </checkbox-group>
     </view>
 
     <view wx:if="{{ checkedItem === '1' }}" class="user-history" >
@@ -64,5 +71,16 @@
             </view>
         </view>
     </view>
+<!--开始：批量转发需求变更，后期上线可取消注释    -->
+<!--    <view class="share-button-wrapper">-->
+<!--        <press title="转发给微信好友"></press>-->
+<!--    </view>-->
+<!--结束：批量转发需求变更，后期上线可取消注释    -->
 </view>
+<!--开始：批量转发需求变更，后期上线可取消注释    -->
+<!--<view class="share-wrapper" bindtap="changeShareTrigger">-->
+<!--    {{ shareTrigger ? "取消" : "" }}-->
+<!--    <image wx:if="{{ !shareTrigger }}" src="../img/manager/share-icon@2x.png"></image>-->
+<!--</view>-->
+<!--结束：批量转发需求变更，后期上线可取消注释    -->
 <wxs src="../common/util.wxs" module="util"></wxs>

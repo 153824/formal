@@ -8,7 +8,11 @@ Page({
     showTopGift: false,
     showGiftDlg: false,
     id: '',
-    boxScrollTop: 0
+    boxScrollTop: 0,
+    navHeight: app.globalData.navHeight,
+    navTop: app.globalData.navTop,
+    windowHeight: app.globalData.windowHeight,
+    menuBtnHeight: app.globalData.menuBtnHeight,
   },
   onLoad: function() {
     firstLoad = true;

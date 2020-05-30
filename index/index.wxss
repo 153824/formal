@@ -1,7 +1,6 @@
 /**index.wxss**/
 
 /* 首页 */
-
 .topTestView {
   height: 80rpx;
   line-height: 80rpx;
@@ -57,7 +56,7 @@
 
 .banner {
   height: 294rpx;
-  margin: 40rpx 32rpx 50rpx 32rpx;
+  margin: 40rpx 20rpx 50rpx 20rpx;
   border-radius: 16rpx;
   overflow: hidden;
 }
@@ -113,6 +112,63 @@
   letter-spacing: 1px;
   line-height: 40rpx;
   color: #333541;
+}
+
+/* function-set */
+.function-set{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 66rpx 40rpx 0 40rpx;
+  font-size: 28rpx;
+  color: #070922;
+  font-weight: 400;
+}
+
+.function-set-child{
+  width: 112rpx;
+  height: 150rpx;
+}
+
+.function-set-child > image{
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+  width: 88rpx;
+  height: 90rpx;
+}
+
+.function-set-child > text{
+  display: block;
+  width: 112rpx;
+  margin-top: 20rpx;
+}
+
+.card-wrapper,.free-base-and-classic-table{
+  margin: 36rpx 0 40rpx 40rpx;
+}
+
+.card-wrapper > .header{
+  font-weight: 600;
+  font-size: 40rpx;
+  margin-bottom: 40rpx;
+}
+
+.card-wrapper .header > text{
+  width: 160rpx;
+  height: 40rpx;
+  line-height: 56rpx;
+}
+
+.card-set{
+  display: flex;
+  justify-content: space-between;
+  width: 710rpx;
+  height: 264rpx;
+  font-size: 34rpx;
+  line-height: 48rpx;
+  margin-bottom: 50rpx;
+  overflow: auto;
 }
 
 /* choiceness */
@@ -252,6 +308,51 @@
   color: #5c6171;
 }
 
+/* recomend-reading */
+.recomend-set{
+  display: flex;
+  margin: 0rpx 40rpx;
+}
+
+.recomend-child{
+  display: flex;
+  margin: 40rpx 0 0 0;
+}
+
+.cover-wrapper > .cover{
+  flex-shrink: 0;
+  width: 240rpx;
+  height: 160rpx;
+  background-color: rgba(0, 0, 0, 0.69);
+  border-radius: 20rpx;
+}
+
+.recomend-info{
+  margin-left: 20rpx;
+  font-size: 28rpx;
+  font-weight: 550;
+  color: #070922FF;
+}
+
+.recomend-info > .title{
+  display: block;
+  min-height: 80rpx;
+}
+
+.recomend-info > .date{
+  display: block;
+  margin-top: 42rpx;
+  font-size: 24rpx;
+  height: 34rpx;
+  line-height: 34rpx;
+  font-weight: 400;
+  color: #07092299;
+}
+
+.recomend-reading:last-child{
+  margin-bottom: 80rpx;
+}
+
 /* recommend */
 
 .recommend {
@@ -375,4 +476,23 @@
   left: 0;
   right: 0;
   width: auto;
+}
+/* commont-style */
+.header{
+  font-size: 40rpx;
+  font-weight: 600;
+  margin: 50rpx 0 0 40rpx;
+}
+
+.view-more{
+  width: 340rpx;
+  height: 80rpx;
+  margin: 38rpx auto;
+  color: #070922FF;
+  font-size: 28rpx;
+  font-weight: 400;
+  line-height: 80rpx;
+  border-radius: 20rpx;
+  border: 2rpx solid rgba(7, 9, 34, 0.2);
+  background-color: rgba(255, 255, 255, 1);
 }

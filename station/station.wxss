@@ -1,0 +1,105 @@
+/* station/station.wxss */
+/* store catalog */
+.store-wrapper{
+  display:flex;
+  flex-direction: row;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.left-catalog{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 204rpx;
+  background-color: #F2F2F4FF;
+}
+
+.left-catalog-wrapper{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.catalog-child{
+  width: 204rpx;
+  height: 100rpx;
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #070922CC;
+  transition: all .1s;
+}
+
+.catalog-child > .title{
+  height: 96rpx;
+  line-height: 96rpx;
+  margin-left: 28rpx;
+}
+
+.active {
+  color: #070922CC;
+  background-color: #FFFFFFFF;
+  font-size: 32rpx;
+  font-weight: 500;
+  transition: all .1s;
+}
+
+.right-content{
+  display: flex;
+}
+
+.right-content-wrapper{
+  margin-top: 26rpx;
+  margin-left: 32rpx;
+  margin-right: 32rpx;
+}
+
+.none-some-style{
+  padding-top: 0 !important;
+  box-shadow: none !important;
+}
+
+.skill-set{
+  padding-top: 20rpx;
+  box-shadow: 0px -1px 0px 0px rgba(7,9,34,0.05);
+}
+
+.skill-info{
+  display: flex;
+  justify-content: space-between;
+  line-height: 44rpx;
+}
+
+.skill-info > .title{
+  position: relative;
+  height: 44rpx;
+  line-height: 44rpx;
+  color: #070922CC;
+  font-size: 32rpx;
+  font-weight: 500;
+  z-index: 99;
+}
+
+.skill-info > .title:after{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  content: "";
+  width: 100%;
+  height: 14rpx;
+  border-bottom: 14rpx solid rgba(53, 62, 232, .2);
+}
+
+.skill-info > .more{
+  font-size: 24rpx;
+  font-weight: 500;
+  color: #353EE8FF;
+}
+
+.child{
+  display: flex;
+  flex-shrink: 1;
+}

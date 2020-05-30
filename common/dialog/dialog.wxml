@@ -1,0 +1,20 @@
+<!--common/dialog/dialog.wxml-->
+<view class-="dialog">
+    <view class="dialog-wrapper">
+        <view class="title">{{title}}</view>
+        <view class="dialog-cover-wrapper">
+            <image class="dialog-cover" src="../../img/dialog/send_several_test.png"></image>
+            <view class="actual-price">
+                ¥498
+            </view>
+            <view class="origin-price">
+                ¥1000
+            </view>
+        </view>
+        <view class="dialog-btn-group">
+            <press title="立即解锁"></press>
+            <press title="暂不解锁" bgColor="#fff" color="#9C9DA7FF"></press>
+        </view>
+    </view>
+    <view class="mask" bindtap="back"></view>
+</view>

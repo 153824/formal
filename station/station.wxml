@@ -1,0 +1,27 @@
+<block>
+  <title></title>
+</block>
+<view class="store-wrapper" style="margin-top:{{ (statusbarHeight + titleHeight) }}px;">
+  <scroll-view class="left-catalog" scroll-y="true" scroll-x="false" scroll-with-animation="true" bindtap="tabMenu">
+    <view class="left-catalog-wrapper">
+      <view id="{{item.objectId}}" wx:for="{{menu}}" wx:key="objectId" data-id="{{item.objectId}}" class="{{ checkedId === item.objectId ? 'catalog-child active' : 'catalog-child' }}" bindtap="changeTab">
+        <text class="title" id="{{item.objectId}}">{{item.name}}</text>
+      </view>
+    </view>
+  </scroll-view>
+  <scroll-view class="right-content" scroll-y="true" scroll-x="false" >
+    <view class="right-content-wrapper">
+       <view class="skill-set" wx:for="{{ childs }}" wx:for-item="child">
+        <view class="skill-test-child">
+          <view class="skill-info">
+            <text class="title">{{ child.name }}</text>
+            <text class="more">更多</text>
+          </view>
+          <block wx:for="{{ child.evaluations }}" wx:for-item="evaluation">
+            <skill title="{{ evaluation.name }}" width="80" marginLeft="0" marginRight="0"></skill>
+          </block>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

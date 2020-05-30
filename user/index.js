@@ -12,6 +12,8 @@ Page({
     vip3: false,
     vip4: false,
     showAddNewTeam: false,
+    statusbarHeight: app.globalData.statusbarHeight,
+    titleHeight: app.globalData.titleHeight,
   },
   onLoad: function(options) {
     this.setData({

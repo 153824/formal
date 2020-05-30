@@ -1,0 +1,49 @@
+<!--common/invite/invite.wxml-->
+<view class="invite">
+    <view class="invite-wrapper">
+        <view class="invite-content">
+            <view class="company-name">
+                厦门东向西网络科技有限公司
+            </view>
+            <view class="invite-info-wrapper">
+                <view class="invite-time">
+                    2019年9月4日邀请您进行测评，
+                </view>
+                <view class="invite-alert">
+                    请尽快作答。
+                </view>
+            </view>
+            <view class="invite-detail-wrapper">
+                <view class="invite-detail-child">
+                    <view class="invite-detail-title">
+                        <image class="invite-detail-icon" src="../../img/logo.png"></image>
+                        <text>测评内容</text>
+                    </view>
+                    <view class="invite-detail-info">
+                        任职风险测评
+                    </view>
+                </view>
+                <view class="invite-detail-child">
+                    <view class="invite-detail-title">
+                        <image class="invite-detail-icon" src="../../img/logo.png"></image>
+                        <text>预计用时</text>
+                    </view>
+                    <view class="invite-detail-info">
+                        15题，预计用时15分钟
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="copyright">
+
+        </view>
+    </view>
+    <view class="invite-share">
+        <view class="save-or-share">
+            长按图片保存或发送给微信好友
+        </view>
+        <view>
+            <press title="批量发送测评" borderRadius="20" height="76"></press>
+        </view>
+    </view>
+</view>

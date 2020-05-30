@@ -1,0 +1,115 @@
+<!--common/checkout/checkout.wxml-->
+<view class="{{ type === 'introduction' ? 'introduction' : 'none' }}">
+  <view class="head">
+    <text class="title">{{title}}</text>
+    <text class="line"></text>
+    <text class="title-bg">Introduction</text>
+  </view>
+  <view class="introduction-content">
+    基层管理特质测评旨在通过对
+    <text class="bold">管理素质优势</text>和<text class="bold">基层管理特质</text>测评旨在通过对管理素质优势和基层管理特质测评旨在通过对管理素质优势和基层管理特质测评旨在通过对管理素质优势和基层管理特质测评旨在通过对管理素质优势和
+  </view>
+</view>
+
+<view class="{{ type === 'dimension' ? 'dimension' : 'none' }}">
+  <view class="head">
+    <text class="title">{{title}}</text>
+    <text class="line"></text>
+    <text class="title-bg">Dimension</text>
+  </view>
+  <view class="dimension-content">
+    <view class="dimension-content-wrapper">
+       <view class="dimension-child">
+          <text>专业驱动力</text>
+          <text>积极主动</text>
+          <text>思维能力</text>
+       </view>
+       <view class="dimension-child">
+          <text>理解能力</text>
+          <text>管理意愿</text>
+          <text>逻辑分析能力</text>
+       </view>
+       <view class="dimension-child">
+          <text>专业驱动力</text>
+          <text>积极主动</text>
+          <text>思维能力</text>
+       </view>
+    </view>
+  </view>
+</view>
+
+<view class="{{ type === 'scenarios' ? 'scenarios' : 'none' }}">
+  <view class="head">
+    <text class="title">{{title}}</text>
+    <text class="line"></text>
+    <text class="title-bg">Scenarios</text>
+  </view>
+  <view class="scenarios-area">
+      <view class="scenarios-content">
+          <view class="scenarios-child">
+              <image class="scenarios-icon" src="../../img/logo.png"></image>
+              <text class="scenarios-title">新人录用</text>
+          </view>
+          <view class="scenarios-info">
+              在招聘中快速淘汰高风险因素过多的候选人，或者在后续面试考察中重点关注候选人的高风险因素。
+          </view>
+      </view>
+      <view class="scenarios-content">
+          <view class="scenarios-child">
+              <image class="scenarios-icon" src="../../img/logo.png"></image>
+              <text class="scenarios-title">新人录用</text>
+          </view>
+          <view class="scenarios-info">
+              在招聘中快速淘汰高风险因素过多的候选人，或者在后续面试考察中重点关注候选人的高风险因素。
+          </view>
+      </view>
+  </view>
+</view>
+
+<view class="{{ type === 'example' ? 'example' : 'none' }}">
+  <view class="head">
+    <text class="title">{{title}}</text>
+    <text class="line"></text>
+    <text class="title-bg">Scenarios</text>
+  </view>
+  <view class="example-content">
+      <view class="example-child">
+          <text class="bold">1、请结合周围朋友对你的评价进行选择。</text>
+          <view class="subject-wrapper">
+              <view class="subject-child">
+                  <view>
+                      A:
+                  </view>
+                  <view>
+                      在团队碰到困难的时候，我总是坚持到最后的
+                  </view>
+              </view>
+              <view class="subject-child">
+                  <view>
+                      B:
+                  </view>
+                  <view>
+                      在团队碰到困难的时候，我总是坚持到最后的
+                  </view>
+              </view>
+              <view class="subject-child">
+                  <view>
+                      C:
+                  </view>
+                  <view>
+                      在团队碰到困难的时候，我总是坚持到最后的
+                  </view>
+              </view>
+              <view class="subject-child">
+                  <view>
+                      D:
+                  </view>
+                  <view>
+                      在团队碰到困难的时候，我总是坚持到最后的
+                  </view>
+              </view>
+          </view>
+      </view>
+  </view>
+</view>
+

@@ -1,0 +1,68 @@
+<!--manager/manager.wxml-->
+<view>
+    <title></title>
+</view>
+<view class="manager" style="margin-top: {{ statusbarHeight + titleHeight }}px;">
+<!--    <view class="toContact">关注好啦测评公众号，接收测评完成通知-->
+<!--        <button open-type="contact" show-message-card="true">立即关注</button>-->
+<!--    </view>-->
+    <view class="manager-head">
+        <view class="{{ checkedItem === '0' ? 'test-report active':'test-report' }}" bindtap="changeTab" data-item="0" >
+            <text>测评报告</text>
+        </view>
+        <view class="{{ checkedItem === '1' ? 'use-history active':'use-history' }}" bindtap="changeTab" data-item="1">
+            <text>使用记录</text>
+        </view>
+    </view>
+    <view>
+        <catalog range="{{ catalog }}"></catalog>
+    </view>
+<!--    wx:if="{{ checkedItem === '1' }}"-->
+    <view class="time-controller">
+        <text wx:for="{{ timer }}" wx:key="id" data-id="{{ item.id }}" class="{{ item.active ? 'timer-active' : '' }}" bindtap="changeTimer">{{ item.name }}</text>
+    </view>
+
+    <view wx:if="{{ checkedItem === '0' }}" class="evaluation-reports">
+        <view class="report-child" wx:for="{{ evaluationList }}" data-id="{{ item.id }}" data-name="{{ item.evaluation.name }}" bindtap="toReport">
+            <view class="time-wrapper">
+                <view class="date">
+                    {{ util.getMonthAndDayByFrag(item.createdTime) }}
+                </view>
+                <view class="clock">
+                    {{ util.getHourAndMinByFrag(item.createdTime) }}
+                </view>
+            </view>
+            <view class="user-wrapper">
+                <view>
+                    {{ item.answerUser.name }}
+                </view>
+                <view class="name" style="font-size: 28rpx;color: #070922;">
+                    {{ item.evaluation.name }}
+                </view>
+            </view>
+            <view class="info-wrapper">
+                <view>
+                    {{ item.total1 }}分
+                </view>
+                <view>
+                    {{ item.reportType }}
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <view wx:if="{{ checkedItem === '1' }}" class="user-history" >
+        <view class="user-history-child" wx:for="{{ useList }}" bindtap="changePage" data-dispatchId="{{ item.id }}">
+            <view class="title">
+                <text>{{ item.evaluation.name }}</text>
+                <image class="title-icon" src="../img/user/index/icon3.png"></image>
+            </view>
+            <view class="info">
+                <view>发放数量：5份</view>
+                <view>已完成数量：{{ item.count }}份</view>
+                <view>发放时间：{{ item.createdTime }}</view>
+            </view>
+        </view>
+    </view>
+</view>
+<wxs src="../common/util.wxs" module="util"></wxs>

@@ -7,6 +7,8 @@
     "test/index",
     "test/guide",
     "test/finish",
+    "station/station",
+    "station/detail",
     "store/store",
     "store/sendlog",
     "store/category",
@@ -37,7 +39,13 @@
     "report/shareReport",
     "index/getFreeTicket",
     "index/pcGetTickSuccess",
-    "store/sharePaper"
+    "store/sharePaper",
+    "station/send",
+    "common/dialog/dialog",
+    "user/useHistory",
+    "manager/manager",
+    "manager/useHistoryDetail",
+    "manager/evaluationReport"
   ],
   "plugins": {
     "contactPlugin": {
@@ -52,10 +60,22 @@
     "selectedColor": "#5960ED",
     "list": [
       {
-        "pagePath": "store/store",
-        "text": "测评商城",
-        "iconPath": "img/index/store.png",
-        "selectedIconPath": "img/index/store1.png"
+        "pagePath": "index/index",
+        "text": "主页",
+        "iconPath": "img/index/index_no_active.png",
+        "selectedIconPath": "img/index/index_active.png"
+      },
+      {
+        "pagePath": "station/station",
+        "text": "人岗匹配",
+        "iconPath": "img/index/person_job_no_active@2x.png",
+        "selectedIconPath": "img/index/person_job_active@2x.png"
+      },
+      {
+        "pagePath": "manager/manager",
+        "text": "人岗匹配",
+        "iconPath": "img/index/person_job_no_active@2x.png",
+        "selectedIconPath": "img/index/person_job_active@2x.png"
       },
       {
         "pagePath": "index/manage",
@@ -66,8 +86,8 @@
       {
         "pagePath": "user/index",
         "text": "我的",
-        "iconPath": "img/index/mine.png",
-        "selectedIconPath": "img/index/mine1.png"
+        "iconPath": "img/index/my_no_active@2x.png",
+        "selectedIconPath": "img/index/my_active@2x.png"
       }
     ]
   },

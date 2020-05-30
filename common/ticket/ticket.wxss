@@ -1,0 +1,10 @@
+/* common/ticket/ticket.wxss */
+.ticket{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.share-take{
+    width: 670rpx;
+    height: 154rpx;
+}

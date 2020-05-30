@@ -1,0 +1,122 @@
+/* manager/manager.wxss */
+.manager-head{
+    display: flex;
+    align-items: center;
+    height: 64rpx;
+    padding: 60rpx 40rpx 30rpx 40rpx;
+    font-size: 28rpx;
+    font-weight: 400;
+    letter-spacing: 2rpx;
+    line-height: 40rpx;
+    border-bottom: 2rpx solid #0709221A;
+}
+.test-report{
+    margin-right: 60rpx;
+    color: #07092299;
+    transition: all 0.1s;
+}
+.use-history{
+    color: #07092299;
+    transition: all 0.1s;
+}
+.active{
+    line-height: 50rpx;
+    font-size: 36rpx;
+    font-weight: 500;
+    color: #070922FF;
+    border-bottom: 4rpx solid #353EE8FF;
+    padding-bottom: 12rpx;
+    transition: all 0.1s;
+}
+.time-controller{
+    margin: 50rpx 40rpx 40rpx 40rpx;
+}
+.time-controller > text{
+    padding: 16rpx 20rpx;
+    border-width: 2rpx;
+    border-style: solid;
+    border-color: #09072233;
+    border-radius: 20rpx;
+    color: #09072299;
+}
+.time-controller > text:nth-child(2){
+    margin: 0 20rpx;
+}
+.timer-active{
+    color: #353EE8FF !important;
+    border-color: #353EE8FF !important;
+    transition: all .1s;
+}
+.user-history{
+    padding: 0 40rpx;
+}
+.user-history-wrapper{
+    padding: 40rpx 40rpx 0rpx 40rpx;
+    font-size: 28rpx;
+    font-weight: 400;
+    line-height: 40rpx;
+    letter-spacing: 2rpx;
+    color: #070922CC;
+}
+.user-history-child{
+    padding: 40rpx 0 40rpx 0;
+    /*border: 2rpx solid #0709221A;*/
+}
+.title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10rpx;
+    font-size: 32rpx;
+    font-weight: 600;
+    line-height: 44rpx;
+    color: #070922FF;
+}
+.title-icon{
+    width: 12rpx;
+    height: 20rpx;
+}
+.info > view{
+    margin: 10rpx 0;
+    font-size: 28rpx;
+    color: #070922CC;
+}
+.evaluation-reports{
+    margin-top: 40rpx;
+}
+.report-child{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    height: 110rpx;
+    padding: 40rpx 80rpx;
+    font-size: 32rpx;
+    border-bottom: 1px solid rgba(7,9,34,0.1);
+}
+.report-child view {
+    height: 44rpx;
+    line-height: 44rpx;
+}
+.user-wrapper,.time-wrapper{
+    position: relative;
+}
+.time-wrapper{
+    margin-right: 70rpx;
+    font-size: 24rpx;
+    color: #070922;
+}
+.time-wrapper > view:first-child,.user-wrapper > view:first-child,.info-wrapper > view:first-child{
+    margin-bottom: 20rpx;
+}
+.user-wrapper{
+    color: #070922;
+}
+.info-wrapper{
+    position: absolute;
+    right: 80rpx;
+    color: #4AAA1A;
+    font-weight: 500;
+}
+.info-wrapper > view{
+    text-align: right;
+}

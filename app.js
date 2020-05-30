@@ -1,15 +1,19 @@
-//app.js 
+//app.js
 const ald = require('./utils/ald-stat.js')
 var qiniuUpload = require("./utils/qiniuUpload");
 qiniuUpload.init({
-  region: 'SCN', // 是你注册bucket的时候选择的区域的代码 
+  region: 'SCN', // 是你注册bucket的时候选择的区域的代码
   domain: 'ihola.luoke101.com',
-  uptokenURL: 'https://admin.luoke101.com/hola/getQiNiuToken', //  
+  uptokenURL: 'https://admin.luoke101.com/hola/getQiNiuToken', //
   shouldUseQiniuFileName: false // 如果是 true，则文件 key 由 qiniu 服务器分配 (全局去重)。默认是 false: 即使用微信产生的 filename
 });
 App({
   defaultShareObj: {
     imageUrl: "http://ihola.luoke101.com/wxShareImg.png"
+  },
+  globalData: {
+    titleHeight: 0,
+    statusbarHeight: 0,
   },
   teamName: "",
   teamId: "",
@@ -23,11 +27,13 @@ App({
   isIos: false,
   qiniuUpload: qiniuUpload,
   isIphoneX: false,
-  host: "https://h5.luoke101.com/hola/", //请求host
+  // host: "https://luoke.ampmfit.net/hola/", //请求host
+  host: "https://h5.luoke101.com/hola/",
   host1: "https://admin.luoke101.com/hola/", //请求host——测试
   host2: "http://localhost:3000/hola/", //请求host——测试
   onLaunch: function(options) {
     var referrerInfo = options.referrerInfo;
+    var menuBtnObj = wx.getMenuButtonBoundingClientRect();
     if (referrerInfo && referrerInfo.appid) {
       this.fromAppId = referrerInfo.appid;
     }
@@ -76,7 +82,20 @@ App({
         }
       }
     });
+
+    wx.getSystemInfo({
+        success: (res) => {
+          let statusbarHeight = res.statusBarHeight,
+              titleHeight = menuBtnObj.height + (menuBtnObj.top - statusbarHeight)*2;
+              this.globalData.statusbarHeight = statusbarHeight;
+              this.globalData.titleHeight = titleHeight
+        },
+        fail(err){
+          console.log(err);
+        }
+      })
   },
+
   userLogin: function(code) {
     var that = this;
     that.doAjax({
@@ -416,5 +435,5 @@ App({
         that.getMyTeamList(cb);
       }
     })
-  }
-})
+  },
+});

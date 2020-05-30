@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "title": "../common/title/title",
+    "catalog": "../common/catalog/catalog"
+  },
+  "navigationStyle": "custom"
+}

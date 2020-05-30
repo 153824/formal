@@ -1,0 +1,34 @@
+<!--station/detail.wxml-->
+<scroll-view style="background-color: rgba(7,9,34,0.05);">
+  <view class="header">
+    <view class="header-wrapper">
+      <view class="cover-wrapper">
+        <image class="cover" src="../img/index/classic_test@2x.png"></image>
+      </view>
+      <view class="info-wrapper">
+        <text class="title">专业技术人员通用特质</text>
+        <view class="price-wrapper">
+          <text class="old">¥198</text>
+          <text class="new">¥100</text>
+        </view>
+        <text class="use-time">43题 / 预计用时20分钟</text>
+      </view>
+      <view class="leave-wrapper">
+        <text>剩余可用数量：1份</text><text class="buy-more">购买更多</text>
+      </view>
+    </view>
+  </view>
+  <view style="background-color: #fff;margin-top: 20rpx;">
+    <ticket></ticket>
+    <checkout title="测评简介" type="introduction" data=""></checkout>
+    <checkout title="测量维度" type="dimension" data=""></checkout>
+    <checkout title="适用场景" type="scenarios"></checkout>
+    <checkout title="测试例题" type="example"></checkout>
+  </view>
+  <view>
+    <meal></meal>
+  </view>
+  <view>
+    <press color="" title="购买" subtitle="100元/份"></press>
+  </view>
+</scroll-view>

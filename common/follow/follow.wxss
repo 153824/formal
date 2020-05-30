@@ -1,0 +1,12 @@
+/* common/follow/follow.wxss */
+.follow{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 76rpx;
+    font-size: 28rpx;
+    font-weight: 500;
+    line-height: 40rpx;
+    background-color: #353EE8FF;
+    color: #FFFFFFFF;
+}

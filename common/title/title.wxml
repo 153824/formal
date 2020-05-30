@@ -1,0 +1,10 @@
+<!--common/title/title.wxml-->
+<view class="bar-wrapper" style="height: {{ statusbarHeight + titleHeight }}px;">
+    <view class="statusbar" style="height: {{ statusbarHeight }}px;"></view>
+    <view class="title-bar" style="height: {{ titleHeight }}px;top: {{ statusbarHeight }}px;">
+        {{userInfo.isBind?(nowTeam.name||userInfo.userCompany.name):'登录以使用更多功能'}}
+        <picker class="company-picker" bindchange="changeTeam" value="{{ selTeam }}" range="{{ teamNames }}" class="company-child">
+            <image class="company-picker-image" src="../../img/user/icon4.png"></image>
+        </picker>
+    </view>
+</view>

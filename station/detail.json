@@ -1,0 +1,9 @@
+{
+  "component": true,
+  "usingComponents": {
+    "checkout": "../common/checkout/checkout",
+    "meal": "../common/meal/meal",
+    "press": "../common/press/press",
+    "ticket": "../common/ticket/ticket"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "press": "../press/press"
+  },
+  "navigationBarTitleText": "发放记录"
+}

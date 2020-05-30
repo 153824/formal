@@ -1,0 +1,8 @@
+<!--common/Card/Card.wxml-->
+      <view class="card-child" data-feature="{{ feature }}">
+        <image src="{{ image }}"></image>
+        <view class="card-child-info">
+          <text class="title">{{ title }}</text>
+          <text class="detail">{{ subtitle }}</text>
+        </view>
+      </view>

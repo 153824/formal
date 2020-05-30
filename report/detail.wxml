@@ -135,7 +135,7 @@
         <view class="flex total" wx:if="{{item.showTotal||item.rankOrg||item.rankAll}}">
           <view class="flex-main" wx:if="{{item.showTotal}}">
             <view class="name">得分</view>
-            <view class="lv">{{ utils.saveDouble(item.total1) }}</view>
+            <view class="lv">{{ utils.saveDouble(item.total2) }}</view>
           </view>
           <view class="flex-main" wx:if="{{item.rankOrg}}">
             <view class="name">组织排名</view>

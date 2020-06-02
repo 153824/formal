@@ -11,6 +11,14 @@ Component({
     type: {
       type: String,
       value: "introduction"
+    },
+    info: {
+      type: String,
+      value: ""
+    },
+    list: {
+      type: Array,
+      value: []
     }
   },
 
@@ -18,7 +26,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-    
+
   },
 
   /**

@@ -41,23 +41,20 @@
 }
 
 .dimension-content-wrapper{
-  display: grid;
-  grid-template-rows: 56rpx;
-  grid-row-gap: 20rpx;
+
 }
 .dimension-child{
-  display: grid;
-  grid-template-columns: repeat(3,212rpx);
-  grid-template-rows: 56rpx;
-  grid-column-gap: 36rpx;
+  display: flex;
 }
 .dimension-child > text{
-  width: 212rpx;
   height: 56rpx;
   line-height: 56rpx;
+  padding: 0 10rpx;
   background-color: #F6F6F6FF;
   border-radius: 54rpx;
   text-align: center;
+  margin-top: 20rpx;
+  margin-right: 36rpx;
 }
 .bold{
   font-size: 28rpx;

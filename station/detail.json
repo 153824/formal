@@ -4,6 +4,7 @@
     "checkout": "../common/checkout/checkout",
     "meal": "../common/meal/meal",
     "press": "../common/press/press",
-    "ticket": "../common/ticket/ticket"
+    "ticket": "../common/ticket/ticket",
+    "free": "../common/free/free"
   }
 }

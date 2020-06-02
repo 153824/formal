@@ -32,7 +32,7 @@
   margin-top: 22rpx;
   margin-bottom: 20rpx;
 }
-.price-wrapper > .old{
+.price-wrapper  .old{
   display: inline-block;
   height: 40rpx;
   line-height: 40rpx;
@@ -40,7 +40,7 @@
   font-size: 24rpx;
   text-decoration: line-through;
 }
-.price-wrapper > .new{
+.price-wrapper  .new{
   display: inline-block;
   height: 40rpx;
   line-height: 40rpx;

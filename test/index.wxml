@@ -15,7 +15,14 @@
       <view class="picker">
         <text>选择学历</text>{{array[education] || ''}}</view>
     </picker>
-
+    <picker name="sex" mode="selector" bindchange="sexInput" value="{{ checkedSex }}" range="{{ sex }}" >
+      <view class="picker">
+        <text>选择性别</text>{{ sex[checkedSex] }}</view>
+    </picker>
+    <view class="get-user-phone-wrapper">
+      <text>联系电话</text>
+      <button class="get-user-phone" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">微信一键授权</button>
+    </view>
     <!-- <view class="photobox" bindtap="takePhoto">
       <image class="photobtn" wx:if="{{!selImg}}" src="../img/guide/takephoto.png"></image>
       <view wx:if="{{!selImg}}">点击拍照认证</view>
@@ -36,7 +43,7 @@
   </form>
 </view>
 <!-- 答题前说明 -->
-<view class="container2 font" wx:if="{{pathIndex==2}}">
+<view class="container2 font" wx:if="{{ pathIndex==2 }}">
   <view class="bigtitle">测评即将开始</view>
   <block wx:for="{{paperList.setting.reminds}}" wx:key="">
     <text class="smalltitle">{{index + 1}}、{{item}}</text>

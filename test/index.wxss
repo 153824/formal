@@ -522,3 +522,26 @@
   height: 28rpx;
   margin-right: 16rpx;
 }
+
+.get-user-phone-wrapper{
+  display: flex;
+  justify-content: space-between;
+  height: 44rpx;
+  margin-top: 40rpx;
+  padding: 14rpx 0;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.get-user-phone{
+  display: inline-block;
+  height: 100% !important;
+  margin: 0 0 !important;
+  line-height: 100% !important;
+  color: rgba(89, 96, 237, 1) !important;
+  background-color: white !important;
+  padding: unset !important;
+}
+
+.get-user-phone-wrapper > text{
+
+}

@@ -22,6 +22,8 @@ Page({
       'MBA',
       '博士研究生'
     ],
+    sex: ["男", "女"],
+    checkedSex: 0,
     birthday: '1995-01',
     education: -1,
     imgUrl: '',
@@ -170,6 +172,7 @@ Page({
         saveTimeOut = setTimeout(that.saveDraftAnswer, 30000);
       }
     });
+    wx.cloud.init();
   },
   pageTouch: function () {
 
@@ -192,6 +195,13 @@ Page({
     var obj = {};
     obj[name] = value;
     this.setData(obj);
+  },
+  sexInput: function (e) {
+    const { value } = e.detail;
+    // const checkedSex = value === 0 ? ;
+    this.setData({
+      checkedSex: value,
+    })
   },
   takePhoto: function () {
     var that = this;
@@ -256,7 +266,7 @@ Page({
       //   app.toast("请先拍照上传！");
       //   return;
       // }
-      that.gotoallready();
+      that.gototest();
     }
     if (!that.data.getphoneNum) {
       var detail = e.detail;
@@ -288,10 +298,11 @@ Page({
     var that = this;
     that.setData({
       count: 5,
-      pathIndex: 2
+      pathIndex: 3
     });
     that.saveAnswerStorageSync();
     that.toTimeDown();
+    that.gototest();
   },
   /**
    * 倒计时
@@ -343,7 +354,7 @@ Page({
   },
   //答题前信息展示部分
   gototest: function () {
-    if (!this.data.isok) return;
+    // if (!this.data.isok) return;
     var pathIndex = 3;
     if (this.data.chapter && this.data.chapter.length > 1) {
       pathIndex = 4;
@@ -783,5 +794,30 @@ Page({
         saveTimeOut = setTimeout(that.saveDraftAnswer, 30000);
       }
     });
+  },
+  getPhoneNumber: function (e) {
+    var that = this;
+    if (!that.data.getphoneNum) {
+      var detail = e.detail;
+      var iv = detail.iv;
+      var encryptedData = detail.encryptedData;
+      if (encryptedData) {
+        //用户授权手机号
+        var userMsg = app.globalData.userMsg || {};
+        userMsg["iv"] = iv;
+        userMsg["encryptedData"] = encryptedData;
+        app.doAjax({
+          url: "updatedUserMobile",
+          data: userMsg,
+          success: function (ret) {
+            console.log("getPhoneNumber", ret);
+            that.setData({
+              getphoneNum: true
+            });
+          }
+        });
+      }
+      return;
+    }
   }
-})
+});

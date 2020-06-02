@@ -1,7 +1,6 @@
 // test/guide.js
 var app = getApp();
 Page({
-
   data: {
     isok: false
   },
@@ -49,7 +48,7 @@ Page({
     var that = this;
     var sKey = "oldAnswer" + this.data.id;
     var draftAnswer = this.data.draftAnswer;
-    if (draftAnswer) {
+    if (draftAnswer || !draftAnswer) {
       wx.setStorageSync(sKey, draftAnswer);
       wx.redirectTo({
         url: '../test/index?pid=' + that.data.paperId + '&id=' + that.data.id

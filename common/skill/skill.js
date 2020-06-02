@@ -39,6 +39,10 @@ Component({
     subTitleFontSize: {
       type: Number,
       value: 24
+    },
+    objectId: {
+      type: String,
+      value: ""
     }
   },
 
@@ -53,10 +57,17 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    directTo: function(){
+    changePage: function (e) {
+      const { id } = e.currentTarget.dataset;
+      console.log("changePage", e);
       wx.navigateTo({
-        url: './detail',
-      })
+          url: `../station/detail?id=${ id }`
+      });
+    }
+  },
+  lifetimes: {
+    attached() {
+      console.log()
     }
   }
-})
+});

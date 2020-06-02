@@ -99,5 +99,8 @@ Page({
     this.setData({
       checkedId,
     })
+  },
+  changePage: function () {
+    console.log("I click a block!")
   }
 });

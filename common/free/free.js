@@ -4,7 +4,14 @@ Component({
    * 组件的属性列表
    */
   properties: {
-
+    isShow: {
+      type: Boolean,
+      value: true
+    },
+    price: {
+      type: String,
+      value: "10"
+    }
   },
 
   /**
@@ -20,4 +27,4 @@ Component({
   methods: {
 
   }
-})
+});

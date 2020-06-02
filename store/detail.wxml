@@ -162,7 +162,7 @@
           <view class="blueline"></view>
           <text>适用场景</text>
         </view>
-        <view class="introbody" wx:for="{{paperDetail.setting.apply}}" wx:for-item="applyitem" wx:for-index="applyindex" wx:key="unique">
+        <view class="introbody" wx:for="{{ paperDetail.setting.apply }}" wx:for-item="applyitem" wx:for-index="applyindex" wx:key="unique">
           <view class="imagetitle imgmargintop">
             <image class="imgpaper" src="{{applyitem.icon||'../img/store/detail/icon3.png'}}"></image>
             <text>{{applyitem.name}}</text>

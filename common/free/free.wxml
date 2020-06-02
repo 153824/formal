@@ -1,5 +1,5 @@
 <!--common/free/free.wxml-->
 <view class="price">
-    <text class="origin-price" text>￥100</text>
+    <text class="origin-price" text>￥{{ price }}</text>
     <text class="actual-price free">限时免费</text>
 </view>

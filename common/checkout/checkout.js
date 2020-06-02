@@ -8,6 +8,10 @@ Component({
       type: String,
       value: "测评简介"
     },
+    subtitle: {
+      type: String,
+      value: ""
+    },
     type: {
       type: String,
       value: "introduction"
@@ -33,6 +37,14 @@ Component({
    * 组件的方法列表
    */
   methods: {
-
+    changePage: function (e) {
+      const { url } = e.currentTarget.dataset;
+      console.log(url)
+      var targetURL = url.split("https://h5.luoke101.com")[1];
+      console.log(targetURL);
+      wx.navigateTo({
+        url: targetURL
+      })
+    }
   }
-})
+});

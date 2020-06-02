@@ -1,5 +1,5 @@
 <!--common/checkout/checkout.wxml-->
-<view class="{{ type === 'introduction' ? 'introduction' : 'none' }}">
+<view class="introduction" wx:if="{{ type === 'introduction' }}">
   <view class="head">
     <text class="title">{{title}}</text>
     <text class="line"></text>
@@ -10,7 +10,7 @@
   </view>
 </view>
 
-<view class="{{ type === 'dimension' ? 'dimension' : 'none' }}">
+<view class="dimension" wx:if="{{ type === 'dimension' }}">
   <view class="head">
     <text class="title">{{ title }}</text>
     <text class="line"></text>
@@ -25,7 +25,7 @@
   </view>
 </view>
 
-<view class="{{ type === 'scenarios' ? 'scenarios' : 'none' }}">
+<view class="scenarios" wx:if="{{ type === 'scenarios' }}">
   <view class="head">
     <text class="title">{{ title }}</text>
     <text class="line"></text>
@@ -44,7 +44,7 @@
   </view>
 </view>
 
-<view class="{{ type === 'example' ? 'example' : 'none' }}">
+<view class="example" wx:if="{{ type === 'example' }}">
   <view class="head">
     <text class="title">{{ title }}</text>
     <text class="line"></text>
@@ -67,3 +67,16 @@
   </view>
 </view>
 
+<view class="report" wx:if="{{ type === 'report' }}">
+    <view class="head">
+        <text class="title">报告示例</text>
+        <text class="line"></text>
+        <text class="title-bg">Report</text>
+    </view>
+    <view class="report-content">
+        <view class="report-child" bindtap="changePage" data-url="https://h5.luoke101.com/hola/getReport?id=5ed5c0ea79f62b000610cd9d&shareKey=&userMsg=%7B%22id%22%3A%225eb21d15eb4b2d000892d14e%22%2C%22avatar%22%3A%22https%3A%2F%2Fwx.qlogo.cn%2Fmmopen%2Fvi_32%2FW1fhuGzWzkcLiauGWxSeYGhCCyOX7M16bKyxesULibReOY5fWcibxAnyJfW5724nicyvsyQ7Nia0aItQcPRCiaDgDX1w%2F132%22%2C%22nickname%22%3A%22WE!D%22%2C%22realName%22%3A%22%22%7D&userId=5eb21d15eb4b2d000892d14e&teamId=5e1985617d5774006ac4533e&teamRole=2">
+            <text>{{ subtitle }}报告模板</text>
+            <image src="../../img/report/icon1.png"></image>
+        </view>
+    </view>
+</view>

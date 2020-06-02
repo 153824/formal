@@ -30,11 +30,12 @@
   <view class="container font {{phoneModel ? 'iscontainer':''}}">
     <view class="headbox">
       <view class="picture">
-        <image src="{{paperDetail.setting.img}}"></image>
+        <image src="{{paperDetail.setting.img}}" ></image>
         <view class="paperDate" bindtap="showDlg">测评有效期：{{paperDetail.setting.dateNum}}个月
           <image src="../img/store/detail/icon14.png"></image>
         </view>
       </view>
+
       <view class="toBuyVip flex" wx:if="{{teamRole!=1&&!isAllFree&&!isvip0&&!isvip1&&!isvip2&&paperDetail.userPapersNum.hasOld&&!isIos}}" bindtap="changePage" data-url="./becomevip">
         <image class="bgImg" src="../img/store/detail/icon27.png"></image>
         <view class="flex-main"></view>

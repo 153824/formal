@@ -28,6 +28,7 @@
     <checkout title="测评简介" type="introduction" info="{{ paperDetail.setting.info }}"></checkout>
     <checkout title="测量维度" type="dimension" list="{{ paperDetail.setting.measureDimension }}"></checkout>
     <checkout title="适用场景" type="scenarios" list="{{ paperDetail.setting.apply }}"></checkout>
+    <checkout title="报告示例" type="report" info="" subtitle="{{ paperDetail.name }}"></checkout>
     <checkout title="测试例题" type="example" list="{{ paperDetail.setting.quesType }}"></checkout>
   </view>
   <view>

@@ -151,6 +151,7 @@ Page({
   },
   onLoad: function(options) {
     wx.hideShareMenu();
+    console.log(options);
     var that = this;
     ctx = wx.createCanvasContext('canvasArcCir');
     var id = that.data.id || options.id;
@@ -450,7 +451,7 @@ Page({
         path: 'store/store',
         title: "我发现了一个不错的测评工具，快来试试吧",
         imageUrl: "http://ihola.luoke101.com/wxShareImg.png"
-      };  
+      };
   },
   /**
    * 进入分享报告页面

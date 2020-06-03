@@ -1,7 +1,7 @@
 <!--common/press/press.wxml-->
-<view class="press-btn" style="height: {{height}}rpx;background-color: {{bgColor}};border-radius: {{borderRadius}}rpx" bindtap="eventListener">
+<view class="press-btn" style="height: {{height}}rpx;background-color: {{bgColor}};border-radius: {{borderRadius}}rpx">
     <view>
-        <text style="color: {{color}};">{{title}}</text>
+        <text style="color: {{color}};">{{ title }}</text>
         <text class="{{ subtitle === '' ? 'none': 'press-subtitle' }}">{{subtitle}}</text>
     </view>
 </view>

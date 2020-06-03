@@ -33,6 +33,10 @@ Page({
     showDlg1: false,
   },
   onLoad: function(options) {
+    // wx.showShareMenu({
+    //   // 要求小程序返回分享目标信息
+    //   withShareTicket: true
+    // });
     var that = this;
     isFirstLoad = true;
     var userData = app.globalData.userInfo || wx.getStorageSync("userInfo");
@@ -320,7 +324,6 @@ Page({
     })
   },
   inputprice: function(e) {
-    console.log(e.detail.value)
     this.setData({
       count: e.detail.value * 1
     })
@@ -695,36 +698,37 @@ Page({
     wx.aldstat.sendEvent('点击了分享再领3张券', {
       '触发点击': '点击数'
     });
-    var that = this;
-    var data = that.data;
-    if (data.freeTick && e) {
-      that.setData({
-        showDlg1: true
-      });
-      return;
-    }
-    var paperDetail = data.paperDetail;
-    var userInfo = app.globalData.userInfo;
-    app.doAjax({
-      url: "shareQrcode",
-      method: "get",
-      noLoading: noShowDlg,
-      data: {
-        paperId: paperDetail.id,
-        uid: wx.getStorageSync("unionId"),
-        avatar: userInfo.avatar,
-        username: userInfo.nickname,
-        papername: paperDetail.name
-      },
-      success: function(ret) {
-        that.setData({
-          shareImg: ret.url,
-          ispopup: noShowDlg ? false : true,
-          isok: noShowDlg ? false : true
-        });
-      },
-      error: function() {}
-    });
+
+    // var that = this;
+    // var data = that.data;
+    // if (data.freeTick && e) {
+    //   that.setData({
+    //     showDlg1: true
+    //   });
+    //   return;
+    // }
+    // var paperDetail = data.paperDetail;
+    // var userInfo = app.globalData.userInfo;
+    // app.doAjax({
+    //   url: "shareQrcode",
+    //   method: "get",
+    //   noLoading: noShowDlg,
+    //   data: {
+    //     paperId: paperDetail.id,
+    //     uid: wx.getStorageSync("unionId"),
+    //     avatar: userInfo.avatar,
+    //     username: userInfo.nickname,
+    //     papername: paperDetail.name
+    //   },
+    //   success: function(ret) {
+    //     that.setData({
+    //       shareImg: ret.url,
+    //       ispopup: noShowDlg ? false : true,
+    //       isok: noShowDlg ? false : true
+    //     });
+    //   },
+    //   error: function() {}
+    // });
   },
   changePage: function(e) {
 
@@ -933,7 +937,20 @@ Page({
     this.hidenDlg();
   },
   onShareAppMessage(options) {
-    return app.defaultShareObj;
+    const { teamId } = app,
+          paperId = options.target.dataset.id,
+          userId = app.globalData.userInfo.id;
+    console.log("teamId,paperId,userId",teamId,paperId,userId);
+    setTimeout(()=>{
+      app.doAjax({
+        url: `../hola/drawVoucher?userId=${userId}&paperId=${paperId}&teamId=${teamId}`
+      })
+    },1000);
+    return {
+      title: "分享小程序~",
+      path: "/index/index",
+      imageUrl: "http://ihola.luoke101.com/wxShareImg.png",
+    }
   },
   /**继续体验 */
   continueTest: function(e) {
@@ -950,4 +967,4 @@ Page({
       url: '../test/guide?id=' + id
     });
   }
-})
+});

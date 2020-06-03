@@ -91,7 +91,7 @@ Component({
     },
     attached: function () {
       var that = this;
-      app.getUserInfo(that.loadUserMsg.call(that));
+      // app.getUserInfo(that.loadUserMsg.call(that));
       console.log("app.getUserInfo(that.loadUserMsg.call(that))");
     }
   }

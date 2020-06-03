@@ -50,6 +50,9 @@ Page({
     quesIdsOrder = [];
     sKey = "oldAnswer" + options.id;
     var oldData = wx.getStorageSync(sKey);
+    if( oldData.pathIndex == "2" ){
+      oldData.pathIndex = 3
+    }
     var storages = wx.getStorageInfoSync().keys;
     storages.forEach(function (n) {
       if (n.indexOf("oldAnswer") == 0 && n != sKey) {

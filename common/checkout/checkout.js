@@ -38,12 +38,10 @@ Component({
    */
   methods: {
     changePage: function (e) {
-      const { url } = e.currentTarget.dataset;
-      console.log(url)
-      var targetURL = url.split("https://h5.luoke101.com")[1];
-      console.log(targetURL);
+      const { id } = e.currentTarget.dataset;
+      console.log(id)
       wx.navigateTo({
-        url: targetURL
+        url: `../report/detail?id=${ "5ec6475bb9759800064519a6" }`
       })
     }
   }

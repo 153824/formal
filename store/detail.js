@@ -637,7 +637,7 @@ Page({
     })
   },
 
-  gotodati: function() {
+  gotodatigotodati: function() {
     wx.aldstat.sendEvent('详情页点击测别人', {
       '触发点击': '点击数'
     });
@@ -674,7 +674,7 @@ Page({
     })
   },
 
-  gototailed: function() { //发放记录  
+  gototailed: function() { //发放记录
     // app.getUserInfo();
     // this.checkUserMobile(e, function() {
     //   wx.setStorageSync("paperDetail", this.data.paperDetail);
@@ -726,7 +726,7 @@ Page({
     });
   },
   changePage: function(e) {
-    
+
     var that = this;
     var d = e.currentTarget.dataset;
     if (d.url) {
@@ -838,7 +838,7 @@ Page({
   },
   /**
    * 显示过期时间说明弹窗
-   * 
+   *
    */
   showDlg: function(e) {
     this.setData({

@@ -3,7 +3,7 @@
   <view class="header">
     <view class="header-wrapper">
       <view class="cover-wrapper">
-        <image class="cover" src="{{ paperDetail.setting.smallImg }}"></image>
+        <image class="head-cover" src="{{ paperDetail.setting.smallImg }}"></image>
       </view>
       <view class="info-wrapper">
         <text class="title">{{ paperDetail.name }}</text>
@@ -18,23 +18,192 @@
         </view>
         <text class="use-time">{{ paperDetail.quesCount }}题 / 预计用时{{ paperDetail.setting.time }}分钟</text>
       </view>
-      <view class="leave-wrapper">
+      <view class="leave-wrapper" bindtap="paymore">
         <text>剩余可用数量：{{paperDetail.userPapersNum.total}}份</text><text class="buy-more">购买更多</text>
       </view>
     </view>
   </view>
   <view style="background-color: #fff;margin-top: 20rpx;">
-    <ticket></ticket>
+    <block wx:if="{{hasFreeTick&&!freeTickId&&teamRole!=1&&((paperDetail.setting.price&&!isfree && paperDetail.setting.testRule.maxInvite != 0)&&dataLoaded&&couponGet0)||(isfree&&paperDetail.userPapersNum.hasOld&&paperDetail.setting.price)}}">
+      <button open-type="share" data-id="{{ paperDetail.id }}" wx:if="{{!freeTick}}">
+        <ticket></ticket>
+      </button>
+    </block>
     <checkout title="测评简介" type="introduction" info="{{ paperDetail.setting.info }}"></checkout>
     <checkout title="测量维度" type="dimension" list="{{ paperDetail.setting.measureDimension }}"></checkout>
     <checkout title="适用场景" type="scenarios" list="{{ paperDetail.setting.apply }}"></checkout>
-    <checkout title="报告示例" type="report" info="" subtitle="{{ paperDetail.name }}"></checkout>
+    <checkout title="报告示例" type="report" info="{{ paperDetail.setting.reportExample }}" subtitle="{{ paperDetail.name }}"></checkout>
     <checkout title="测试例题" type="example" list="{{ paperDetail.setting.quesType }}"></checkout>
   </view>
   <view>
     <meal></meal>
   </view>
-  <view>
-    <press color="" title="购买" subtitle="100元/份"></press>
+<!--  <view>-->
+<!--    <press color="" title="购买" subtitle="100元/份"></press>-->
+<!--  </view>-->
+  <view wx:if="{{ paperDetail.setting.isFree }}" class="button-group">
+    <view bindtap="gotodati">
+      <press title="发放测评" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
+    </view>
+    <view bindtap="gotoguide">
+      <press title="自己体验"></press>
+    </view>
+  </view>
+  <view wx:else bindtap="paymore">
+    <press color="" title="购买" subtitle="{{ paperDetail.setting.price }}元/份"></press>
   </view>
 </scroll-view>
+<!--支付-->
+<view class="paypage" wx:if="{{ispay && !isIos}}" catchtouchmove="true">
+  <view class="closebox" bindtap="closepaypage"></view>
+  <view class="paybox">
+    <view class="toBuyVip flex" style="margin:40rpx 26rpx 0;" wx:if="{{teamRole!=1&&!isAllFree&&!isvip1&&!isvip2&&paperDetail.userPapersNum.hasOld&&!isIos}}" bindtap="changePage" data-url="./becomevip">
+      <image class="bgImg" src="../img/store/detail/icon27.png"></image>
+      <view class="flex-main"></view>
+      <view>
+        <image class="img1" src="../img/store/detail/icon15.png"></image>
+        <text>升级成为会员，优惠购买测评</text>
+        <image class="img2" src="../img/store/detail/icon16.png"></image>
+        <!-- <view class="animationView"></view> -->
+      </view>
+      <view class="flex-main"></view>
+    </view>
+    <view class="paypagehead">
+      <view class="payheadleft">
+        <view>{{paperDetail.name}}</view>
+        <text>单价：¥{{paperDetail.setting.price||0}}</text>
+      </view>
+      <view class="payheadright">
+        <image src="{{paperDetail.setting.smallImg}}"></image>
+      </view>
+    </view>
+    <view class="paypagebody">
+      <wxs module="filters" src="../store/filters.wxs"></wxs>
+      <view class="paybodyleft">合计：￥{{filters.toFix((paperDetail.setting.price||0) * count)}}</view>
+      <view class="paybodyright">
+        <button bindtap="jiancount">-</button>
+        <!-- <view>{{count}}</view> -->
+        <input type="number" bindinput="inputprice" value="{{count}}"></input>
+        <button bindtap="addcount">+</button>
+      </view>
+    </view>
+    <view style="height:14rpx;background:rgba(248, 248, 248, 1);"></view>
+    <view class="wechatpay">
+      <view>支付方式</view>
+      <view class="wechatpaybox" bindtap="changePaymentmoney">
+        <view>
+          <image class="wechatpayimg" src="../img/store/icon31.png"></image>
+          <text class="allpaytext">微信支付</text>
+        </view>
+        <view>
+          <image class="checkicon" src="{{isticket ? '../img/store/icon33.png':'../img/store/icon34.png'}}"></image>
+        </view>
+      </view>
+    </view>
+    <view class="ticketpay" bindtap="changePaymentticket">
+      <view class="ticketpaybox">
+        <view>
+          <image class="ticketpayimg" src="../img/store/icon32.png"></image>
+          <text class="allpaytext">用券兑换</text>
+        </view>
+        <view>
+          <text class="allpaygraytext">{{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)}}张券可用于本测评</text>
+          <image class="checkicon" src="{{!isticket ? '../img/store/icon33.png':'../img/store/icon34.png'}}"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+    <view class="paytabbox {{phoneModel ? 'isiphoneX':''}}">
+      <view wx:if="{{isticket}}" class="checkusebtn {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)<count?'disabledBtn':''}}" bindtap="useticket">
+        {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0) < count? '券数量不足': '用券兑换'+count+ '份'}}
+      </view>
+      <view wx:if="{{!isticket}}" class="checkusebtn" bindtap="payfished">
+        微信支付￥{{filters.toFix((paperDetail.setting.price||0) * count)}}
+      </view>
+    </view>
+</view>
+<!-- 支付IOS -->
+  <view class="paypage paypageIos" wx:if="{{ispay&&isIos}}" catchtouchmove="true">
+    <view class="closebox" bindtap="closepaypage"></view>
+    <view class="paybox">
+      <view class="paypagehead">
+        <view class="payheadleft">
+          <view>{{paperDetail.name}}</view>
+          <view class="allpaygraytext">{{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)}}张券可用于本测评</view>
+        </view>
+        <view class="payheadright">
+          <image src="{{paperDetail.setting.smallImg}}"></image>
+        </view>
+      </view>
+      <view class="paybodyright">
+        <button bindtap="jiancount">-</button>
+        <!-- <view>{{count}}</view> -->
+        <input type="number" bindinput="inputprice" value="{{count}}"></input>
+        <button bindtap="addcount">+</button>
+      </view>
+    </view>
+    <view class="lineView"></view>
+    <view class="paytabbox {{phoneModel ? 'isiphoneX':''}}">
+      <view wx:if="{{isticket}}" class="checkusebtn {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)<count?'disabledBtn':''}}" bindtap="useticket">
+        {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)
+        <count? '券数量不足': '用券兑换'+count+ '份'}} </view>
+      </view>
+  </view>
+    <view class="cover" wx:if="{{dlgShow||showDlg1}}" bindtap="hidenDlg"></view>
+    <view class="dlg" wx:if="{{dlgShow}}">
+      <image src="../img/store/detail/icon12.png"></image>
+      <view class="txtView">{{paperDetail.setting.dateDesc}}</view>
+    </view>
+    <view class="coverView" wx:if="{{showMindDlg}}" bindtap="hidenDlg"></view>
+    <view wx:if="{{showDlg1}}" class="dlg1">
+      <view class="title">客服微信号</view>
+      <view class="flex content">
+        <view class="flex-main"></view>
+        <image src='../img/store/icon39.png'></image>
+        <text>LIN_7890</text>
+        <view class="flex-main"></view>
+      </view>
+      <view bindtap="copyIt" class="copyBtn">复制</view>
+      <view class="mind">添加时，请备注公司所属行业和规模</view>
+    </view>
+    <!-- <view class="pointerView flex" wx:if="{{showMindDlg&&!isFreeTickId}}" style="padding-bottom:{{phoneModel?80:0}}rpx;">
+      <text class="flex-main"></text>
+      <view class="{{activePointer==0?'active':''}}"></view>
+      <view class="{{activePointer==1?'active':''}}"></view>
+      <view class="{{activePointer==2?'active':''}}"></view>
+      <text class="flex-main"></text>
+    </view> -->
+    <view wx:if="{{showMindDlg&&!isFreeTickId}}" current="{{activePointer}}" bindchange="changeActivePointer" class="dlgMsg" style="padding-bottom:{{phoneModel?80:0}}rpx;" >
+      <view class="item1">
+        <view class="btnView" bindtap="hidenDlg">我知道了</view>
+        <view class="mindMsg"><text>测别人点这里</text><text style="margin-left:80rpx">自测点这里</text></view>
+        <image class="btnImg3" src="../img/store/detail/icon31.png"></image>
+        <image class="btnImg4" src="../img/store/detail/icon31.png"></image>
+        <image class="btnImg1" bindtap="gotodati" src="../img/store/detail/icon21.png"></image>
+        <image class="btnImg2" bindtap="gotoguide" src="../img/store/detail/icon23.png"></image>
+      </view>
+      <!-- <swiper-item class="item2">
+        <view class="title">测别人</view>
+        <view class="mindMsg">测别人点这里</view>
+        <image src="../img/store/detail/icon22.png" class="pointerImg"></image>
+        <image class="btnImg" bindtap="gotodati" src="../img/store/detail/icon21.png"></image>
+        <view class="btnView" bindtap="showMindDlgFn">我知道了</view>
+      </swiper-item> -->
+      <!-- <view class="item3">
+      <view class="g">
+        <view class="mindMsg">测别人点这里</view>
+        <view class="mindMsg">自测点这里</view>
+        <image class="btnImg" bindtap="gotoguide" src="../img/store/detail/icon23.png"></image>
+        <view class="btnView" bindtap="hidenDlg">我知道了</view>
+      </view> -->
+    </view>
+    <view wx:if="{{showMindDlg&&isFreeTickId}}" class="dlgMsg" style="margin-bottom:{{phoneModel?80:0}}rpx;">
+      <view class="item3">
+        <view class="title">立即体验</view>
+        <view class="mindMsg">点击可体验本测评，完成后，系统将生成对应的报告。</view>
+        <image src="../img/store/detail/icon24.png" class="pointerImg"></image>
+        <image class="btnImg" bindtap="gotoguide" src="../img/store/detail/icon23.png"></image>
+        <!-- <view class="btnView" bindtap="showMindDlgFn">我知道了</view> -->
+      </view>
+    </view>
+

@@ -9,7 +9,7 @@ qiniuUpload.init({
 });
 App({
   defaultShareObj: {
-    imageUrl: "http://ihola.luoke101.com/wxShareImg.png"
+    imageUrl: "http://ihola.luoke101.com/wxShareImg.png",
   },
   globalData: {
     titleHeight: 0,

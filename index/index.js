@@ -233,7 +233,8 @@ Page({
           }
         }
         // that.setData(res.resultObject);
-        that.setData(testData.resultObject);
+        console.log("res.resultObject", res.resultObject)
+        that.setData(res.resultObject);
       }
     });
 
@@ -323,4 +324,10 @@ Page({
       url: '../test/guide?id=' + id
     });
   },
+  gotoDetail: function (e) {
+    const { id } = e.currentTarget.dataset;
+    wx.navigateTo({
+      url: `../station/detail?id=${id}`
+    })
+  }
 });

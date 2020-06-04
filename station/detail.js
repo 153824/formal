@@ -40,7 +40,6 @@ Page({
     var that = this;
     isFirstLoad = true;
     var userData = app.globalData.userInfo || wx.getStorageSync("userInfo");
-    console.log("option", options);
     this.setData({
       isIos: app.isIos,
       teamRole: app.teamRole,
@@ -93,6 +92,7 @@ Page({
             couponGet: hasOldFreeTicks ? true : couponGet,
             couponGet1: hasOldFreeTicks ? true : couponGet1,
             isTodayTeam: isTodayTeam,
+            // hasFreeTick
           });
         }
       });

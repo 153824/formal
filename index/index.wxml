@@ -23,11 +23,11 @@
 </view>
 <view class="container font" style="margin-top:{{ oldShareInfo&&oldShareInfo.id ? 0 : (statusbarHeight + titleHeight) }}px;">
   <view class="banner">
-    <swiper wx:if="{{ navigation.isShow }}" autoplay="true" indicator-dots="{{banner.data.length>1?true:false}}"
+    <swiper wx:if="{{ banner.isShow }}" autoplay="true" indicator-dots="{{banner.data.length>1?true:false}}"
             circular="true" indicator-color="rgba(255,255,255,0.3)" indicator-active-color="#fff">
-      <block wx:for="{{banner.data}}" wx:key="index">
-        <swiper-item bindtap="changePage" data-url="{{item.url||''}}">
-          <image src="{{item.picture||'http://img01.luoke101.com/banner09201.png'}}" class="slide-image" width="355" height="160" />
+      <block wx:for="{{banner.data}}" wx:key="unique">
+        <swiper-item bindtap="gotoDetail" data-id="{{ item.id }}">
+          <image src="{{item.picture}}" class="slide-image" width="355" height="160" />
         </swiper-item>
       </block>
 <!--      <block wx:for="{{imgs}}" wx:key="index">-->
@@ -37,19 +37,19 @@
 <!--      </block>-->
     </swiper>
   </view>
-  <view class="threebtn" wx:if="{{navigation&&navigation.length}}">
-    <block wx:for="{{ navigation }}" wx:key="unique">
-      <view class="threebox" bindtap="changePage" data-url="{{item.url}}" data-name="navigation">
-        <view>
-          <image src="{{item.img||''}}"></image>
-        </view>
-        <text>{{item.title}}</text>
-      </view>
-    </block>
-  </view>
+<!--  <view class="threebtn" wx:if="{{navigation&&navigation.length}}">-->
+<!--    <block wx:for="{{ navigation }}" wx:key="unique">-->
+<!--      <view class="threebox" bindtap="changePage" data-url="{{item.url}}" data-name="navigation">-->
+<!--        <view>-->
+<!--          <image src="{{item.img||''}}"></image>-->
+<!--        </view>-->
+<!--        <text>{{item.title}}</text>-->
+<!--      </view>-->
+<!--    </block>-->
+<!--  </view>-->
 
-  <view class="function-set">
-    <view wx:for="{{ navigation.data }}" wx:key="unique" class="function-set-child" wx:if="{{ item.picture.length > 0 }}">
+  <view class="function-set" wx:if="{{ navigation.isShow }}">
+    <view wx:for="{{ navigation.data }}" wx:key="unique" class="function-set-child">
       <image src="{{item.picture}}"></image>
       <text>{{item.name}}</text>
     </view>
@@ -59,51 +59,60 @@
 <!--    </view>-->
   </view>
 
-  <view wx:if="{{ new.isShow }}">
+  <view wx:for="{{ column }}">
     <view class="header">
-      <text>最新上架</text>
+      <text>{{ item.column_name }}</text>
     </view>
-    <view class="card-wrapper">
-      <view class="card-set">
-        <block wx:for="{{ new.data }}" wx:key="unique">
-          <view bindtap="changePage" data-url='../store/detail?id=5e6ee5e3546eaad5ca38cc34'>
-            <card image="{{ item.picture }}"  title="{{ item.title }}" subtitle="{{ item.subtitle }}" feature="{{ item.price > 0 ? item.price : '免费' }}"></card>
-          </view>
-        </block>
-      </view>
+    <view >
+
     </view>
   </view>
 
-  <view wx:if="{{ hot.isShow }}">
-    <view class="header">
-      <text>本周热门</text>
-    </view>
-    <view class="card-wrapper">
-      <view class="card-set">
-        <block wx:for="{{ hot.data }}" wx:key="unique" bindtap="changePage">
-          <card  title="{{ item.title }}" subtitle="{{ item.subtitle }}" feature="{{ item.price > 0 ? item.price : '免费' }}"></card>
-        </block>
-      </view>
-    </view>
-  </view>
+<!--  <view wx:if="{{ new.isShow }}">-->
+<!--    <view class="header">-->
+<!--      <text>最新上架</text>-->
+<!--    </view>-->
+<!--    <view class="card-wrapper">-->
+<!--      <view class="card-set">-->
+<!--        <block wx:for="{{ new.data }}" wx:key="unique">-->
+<!--          <view bindtap="changePage" data-url='../store/detail?id=5e6ee5e3546eaad5ca38cc34'>-->
+<!--            <card image="{{ item.picture }}"  title="{{ item.title }}" subtitle="{{ item.subtitle }}" feature="{{ item.price > 0 ? item.price : '免费' }}"></card>-->
+<!--          </view>-->
+<!--        </block>-->
+<!--      </view>-->
+<!--    </view>-->
+<!--  </view>-->
 
-  <view wx:if="{{ new.isShow }}">
-    <view class="header">
-      <text>免费专区</text>
-    </view>
-    <skill></skill>
-    <skill></skill>
-    <button class="view-more">查看更多</button>
-  </view>
+<!--  <view wx:if="{{ hot.isShow }}">-->
+<!--    <view class="header">-->
+<!--      <text>本周热门</text>-->
+<!--    </view>-->
+<!--    <view class="card-wrapper">-->
+<!--      <view class="card-set">-->
+<!--        <block wx:for="{{ hot.data }}" wx:key="unique" bindtap="changePage">-->
+<!--          <card  title="{{ item.title }}" subtitle="{{ item.subtitle }}" feature="{{ item.price > 0 ? item.price : '免费' }}"></card>-->
+<!--        </block>-->
+<!--      </view>-->
+<!--    </view>-->
+<!--  </view>-->
 
-  <view>
-    <view class="header">
-      <text>经典量表</text>
-    </view>
-    <skill></skill>
-    <skill></skill>
-    <button class="view-more">查看更多</button>
-  </view>
+<!--  <view wx:if="{{ new.isShow }}">-->
+<!--    <view class="header">-->
+<!--      <text>免费专区</text>-->
+<!--    </view>-->
+<!--    <skill></skill>-->
+<!--    <skill></skill>-->
+<!--    <button class="view-more">查看更多</button>-->
+<!--  </view>-->
+
+<!--  <view>-->
+<!--    <view class="header">-->
+<!--      <text>经典量表</text>-->
+<!--    </view>-->
+<!--    <skill></skill>-->
+<!--    <skill></skill>-->
+<!--    <button class="view-more">查看更多</button>-->
+<!--  </view>-->
 
   <!-- <view class="choiceness" wx:if="{{papers&&papers.length}}">
     <view class="choiceheader">
@@ -161,18 +170,18 @@
     </block>
   </view> -->
 
-<view class="recomend-reading">
+<view class="recomend-reading" wx:if="{{ new.isShow }}">
   <view class="header">
     <text>推荐阅读</text>
   </view>
-  <view class="recomend-set" wx:for="{{recommend.data}}" wx:key="unique">
-    <view class="recomend-child" bindtap="navWebView" data-url="{{item.url}}">
-    <view class="cover-wrapper" wx:if="{{item.img}}">
-      <image src="{{item.img}}" class="cover"></image>
+  <view class="recomend-set" wx:for="{{new.data}}" wx:key="unique">
+    <view class="recomend-child" bindtap="navWebView" data-url="{{item.linkUrl}}">
+    <view class="cover-wrapper">
+      <image src="{{item.img||'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132'}}" class="cover"></image>
     </view>
       <view class="recomend-info">
         <text class="title">{{item.name}}</text>
-        <text class="date">{{item.publishDate}}</text>
+        <text class="date">{{'2019-09-09'}}</text>
       </view>
     </view>
   </view>

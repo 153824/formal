@@ -1008,4 +1008,9 @@
   font-weight:500;
   color: #353EE8FF;
 }
-
+.get-free-ticket{
+  background: transparent;
+}
+.get-free-ticket::after{
+  border: none;
+}

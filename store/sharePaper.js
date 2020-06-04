@@ -14,7 +14,9 @@ Page({
     count: 1,
     reportMeet: 1,
     startTime: "",
-    endTime: ""
+    endTime: "",
+    statusbarHeight: app.globalData.statusbarHeight,
+    titleHeight: app.globalData.titleHeight,
   },
 
   /**
@@ -92,10 +94,12 @@ Page({
     var that = this;
     var d = that.data;
     var costNum = d.count;
-    let startTime = d.startTime + " 00:00:00";
-    let endTime = d.endTime + " 23:59:59";
-    let startTimeStamp = Date.parse(startTime);
-    let endTimeStamp = Date.parse(endTime);
+
+    // let startTime = d.startTime + " 00:00:00";
+    // let endTime = d.endTime + " 23:59:59";
+    // let startTimeStamp = Date.parse(startTime);
+    // let endTimeStamp = Date.parse(endTime);
+
     if (!costNum) {
       return;
     }
@@ -104,13 +108,17 @@ Page({
       app.toast("测评可用数量不足");
       return;
     }
-    if (startTimeStamp-endTimeStamp>=0){
-      app.toast("结束时间不得早于开始时间");
-      return;
-    }
+
+    // if (startTimeStamp-endTimeStamp>=0){
+    //   app.toast("结束时间不得早于开始时间");
+    //   return;
+    // }
+
     var shareMsg = {
-      startTime: startTime,
-      endTime: endTime,
+
+      // startTime: startTime,
+      // endTime: endTime,
+
       shareType: costNum > 1 ? 2 : 1,
       reportMeet: d.reportMeet,
       count: costNum,

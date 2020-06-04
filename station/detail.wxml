@@ -45,7 +45,8 @@
 <!--  <view>-->
 <!--    <press color="" title="购买" subtitle="100元/份"></press>-->
 <!--  </view>-->
-  <view wx:if="{{ paperDetail.setting.isFree }}" class="button-group">
+<!--  wx:if="{{ paperDetail.setting.isFree }}"-->
+  <view class="button-group">
     <view bindtap="gotodati">
       <press title="发放测评" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
     </view>
@@ -53,7 +54,7 @@
       <press title="自己体验"></press>
     </view>
   </view>
-  <view wx:else bindtap="paymore">
+  <view bindtap="paymore">
     <press color="" title="购买" subtitle="{{ paperDetail.setting.price }}元/份"></press>
   </view>
 </scroll-view>
@@ -62,12 +63,18 @@
   <view class="closebox" bindtap="closepaypage"></view>
   <view class="paybox">
     <view class="toBuyVip flex" style="margin:40rpx 26rpx 0;" wx:if="{{teamRole!=1&&!isAllFree&&!isvip1&&!isvip2&&paperDetail.userPapersNum.hasOld&&!isIos}}" bindtap="changePage" data-url="./becomevip">
-      <image class="bgImg" src="../img/store/detail/icon27.png"></image>
+
+<!--      <image class="bgImg" src="../img/store/detail/icon27.png"></image>-->
+
       <view class="flex-main"></view>
       <view>
-        <image class="img1" src="../img/store/detail/icon15.png"></image>
-        <text>升级成为会员，优惠购买测评</text>
-        <image class="img2" src="../img/store/detail/icon16.png"></image>
+
+<!--        <image class="img1" src="../img/store/detail/icon15.png"></image>-->
+
+<!--        <text>升级成为会员，优惠购买测评</text>-->
+
+<!--        <image class="img2" src="../img/store/detail/icon16.png"></image>-->
+
         <!-- <view class="animationView"></view> -->
       </view>
       <view class="flex-main"></view>

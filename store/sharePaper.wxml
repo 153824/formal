@@ -1,43 +1,51 @@
 <!--store/sharePaper.wxml-->
-<view class="pageView">
+<view class="pageView" style="">
   <view>
-    <view class="top_title_main">使用二维码方式发放测评</view>
+    <view class="top_title_main">批量发放测评</view>
     <view class="top_title">支持多人扫同一个二维码进行作答</view>
   </view>
   <view class="content">
-    <view class="title"><view class="block"></view>二维码作答人数上限</view>
+    <view class="title">
+      您想让几个人来参与测评
+    </view>
     <view class="flex box1">
       <view class="reduceBtn" bindtap="changeCount" data-t="1">-</view>
       <input type="number" value="{{count}}" bindinput="changeCount"></input>
       <view class="plusBtn" bindtap="changeCount" data-t="2">+</view>
     </view>
-    <view class="title"><view class="block"></view>二维码有效期</view>
-    <view class="flex box2">
-      <picker mode="date" value="{{startTime}}" start="{{minTime}}" bindchange="bindDateChange" data-k="startTime">
-        <view class="picker">
-          {{startTime}}
-        </view>
-      </picker>
-      <view>至</view>
-      <picker mode="date" value="{{endTime}}" start="{{minTime}}" bindchange="bindDateChange" data-k="endTime">
-        <view class="picker">
-          {{endTime}}
-        </view>
-      </picker>
+<!--    <view class="title"><view class="block"></view>二维码有效期</view>-->
+<!--    <view class="flex box2">-->
+<!--      <picker mode="date" value="{{startTime}}" start="{{minTime}}" bindchange="bindDateChange" data-k="startTime">-->
+<!--        <view class="picker">-->
+<!--          {{startTime}}-->
+<!--        </view>-->
+<!--      </picker>-->
+<!--      <view>至</view>-->
+<!--      <picker mode="date" value="{{endTime}}" start="{{minTime}}" bindchange="bindDateChange" data-k="endTime">-->
+<!--        <view class="picker">-->
+<!--          {{endTime}}-->
+<!--        </view>-->
+<!--      </picker>-->
+<!--    </view>-->
+    <view class="title">
+      是否允许受测者直接查看报告
     </view>
-    <view class="title"><view class="block"></view>是否允许受测者直接查看报告</view>
     <view class="flex box3">
-     <view class="flex-main {{reportMeet==1?'active':''}}" bindtap="changeReportMeet" data-k="1">
-        <span></span>
-        允许
-      </view>
       <view class="flex-main {{reportMeet==2?'active':''}}" bindtap="changeReportMeet" data-k="2">
-        <span></span>
-        不允许
+        <view class="circle-wrapper">
+          <span></span>
+        </view>
+        <text>不允许</text>
+      </view>
+      <view class="flex-main {{reportMeet==1?'active':''}}" bindtap="changeReportMeet" data-k="1">
+        <view class="circle-wrapper">
+          <span></span>
+        </view>
+        <text>允许</text>
       </view>
     </view>
   </view>
-  <view class="inviteBtn" bindtap="toSharePaper">生成测评邀请二维码</view>
+  <view class="inviteBtn" bindtap="toSharePaper">生成测评邀请函</view>
 </view>
 <view class="datibox" wx:if="{{retData.img}}" catchtouchmove="true">
   <view class="daticenterbox">

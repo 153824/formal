@@ -657,7 +657,7 @@ Page({
       return;
     }
     wx.navigateTo({
-      url: './sharePaper?id=' + paperDetail.id + "&count=" + userPapersNum.total,
+      url: '../store/sharePaper?id=' + paperDetail.id + "&count=" + userPapersNum.total,
     });
     return;
     app.doAjax({

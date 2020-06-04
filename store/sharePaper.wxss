@@ -11,21 +11,24 @@
 .top_title_main {
   font-size: 36rpx;
   font-weight: 600;
+  color: #070922FF;
+  text-align: center;
 }
 
 .top_title {
   margin-top: 14rpx;
-  color: rgba(113, 113, 130, 1);
+  margin-bottom: 80rpx;
+  text-align: center;
   font-size: 28rpx;
   font-weight: 400;
-  margin-bottom: 80rpx;
+  color: #07092299;
 }
 
 .content {
-  height: 600rpx;
+  height: 395rpx;
   margin: auto;
-  padding: 60rpx 40rpx;
-  background:rgba(7,9,34,0.03);
+  padding: 96rpx 40rpx;
+  background: #07092208;
   border-radius: 20rpx;
 }
 
@@ -36,7 +39,7 @@
   color: rgba(7, 9, 34, 0.8);
   line-height: 44rpx;
   display: flex;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
 }
 .content .title .block{
@@ -56,7 +59,8 @@
 }
 
 .content .box1 {
-  margin-top: 40rpx;
+  justify-content: center;
+  margin-top: 50rpx;
   margin-bottom: 80rpx;
   height: 88rpx;
 }
@@ -103,22 +107,29 @@
 
 .content .box3 {
   margin-top: 40rpx;
+  margin-bottom: 50rpx;
   font-size: 32rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: rgba(113, 113, 130, 1);
   line-height: 44rpx;
 }
-
+.content .box3 > view{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .content .box3 span {
   display: inline-block;
   border-radius: 50%;
-  margin-right: 28rpx;
   width: 24rpx;
   height: 24rpx;
   border: 1px solid rgba(113, 113, 130, 1);
 }
-
+.content .box3 text {
+  /*width: 100rpx;*/
+  /*height: 60rpx;*/
+}
 .content .box3 .active {
   color: rgba(18, 19, 47, 1);
 }
@@ -131,7 +142,7 @@
 .inviteBtn {
   width: 686rpx;
   height: 96rpx;
-  margin: 80rpx auto 0;
+  margin: 60rpx auto 0;
   text-align: center;
   background: rgba(53, 62, 232, 1);
   border-radius: 10rpx;
@@ -183,4 +194,11 @@
   color: rgba(255, 255, 255, 1);
   line-height: 40rpx;
   margin-top: 32rpx;
+}
+.circle-wrapper{
+  display: flex;
+  width: 60rpx;
+  height: 60rpx;
+  justify-content: center;
+  align-items: center;
 }

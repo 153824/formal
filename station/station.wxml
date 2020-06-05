@@ -25,5 +25,6 @@
         </view>
       </view>
     </view>
+    <network isShow="{{ !isConnected }}" title="网络飘了~" width="332" height="218"></network>
   </scroll-view>
 </view>

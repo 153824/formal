@@ -13,7 +13,7 @@ App({
   },
   globalData: {
     titleHeight: 0,
-    statusbarHeight: 0,
+    statusbarHeight: 0
   },
   teamName: "",
   teamId: "",
@@ -93,7 +93,7 @@ App({
         fail(err){
           console.log(err);
         }
-      })
+      });
   },
 
   userLogin: function(code) {

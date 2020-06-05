@@ -157,7 +157,7 @@ Page({
           });
         }
       });
-    }
+    };
   },
   closeGiftDlg: function() {
     this.setData({

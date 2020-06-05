@@ -62,7 +62,8 @@ Page({
     ],
     childs: [],
     statusbarHeight: app.globalData.statusbarHeight,
-    titleHeight: app.globalData.titleHeight
+    titleHeight: app.globalData.titleHeight,
+    isConnected: true
   },
   onLoad: function(){
 
@@ -76,8 +77,15 @@ Page({
         console.log(ret.data[0].childs);
         that.setData({
           menu: ret.data,
-          childs: ret.data[0].childs
+          childs: ret.data[0].childs,
+          isConnected: true
         });
+      },
+      fail: function (ret) {
+        console.log("../haola/positionTags",ret);
+        that.setData({
+          isConnected: false
+        })
       }
     });
   },

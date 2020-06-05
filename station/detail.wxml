@@ -47,7 +47,7 @@
 <!--  wx:if="{{ paperDetail.setting.isFree }}"-->
 </scroll-view>
 
-<view class="button-group" wx:if="{{ paperDetail.setting.isFree }}">
+<view class="button-group" wx:if="{{ isvip1||paperDetail.userPapersNum.type==-1||paperDetail.userPapersNum.hasOld||showFullBtn }}">
   <view class="meal">
     <meal></meal>
   </view>
@@ -55,11 +55,11 @@
     <press title="发放测评" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
   </view>
   <view bindtap="gotoguide">
-    <press title="自己体验"></press>
+    <press title="{{oldShareId?'继续体验':'自己体验'}}"></press>
   </view>
 </view>
 
-<view class="buy-group" bindtap="paymore" wx:else>
+<view class="buy-group" bindtap="paymore" wx:elif="{{!isAllFree &&!freeCount&&!paperDetail.userPapersNum.hasOld}}">
   <view class="meal">
     <meal></meal>
   </view>

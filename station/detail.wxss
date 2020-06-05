@@ -76,15 +76,21 @@
 }
 .button-group{
   display: grid;
+  grid-template-rows: 80rpx 108rpx;
   grid-template-columns: 50% 50%;
   position: fixed;
   bottom: 0;
   right: 0;
   left: 0;
   z-index: 9999999;
-  /*grid-template-rows: ;*/
-  /*justify-content: space-between;*/
 }
+.meal{
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
 /*.button-group > view{*/
 /*  flex-grow: 1;*/
 /*}*/
@@ -1019,3 +1025,14 @@
 .get-free-ticket::after{
   border: none;
 }
+.buy-group{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999999999;
+}
+/*.meal{*/
+/*  position: fixed;*/
+/*  bottom: ;*/
+/*}*/

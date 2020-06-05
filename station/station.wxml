@@ -11,11 +11,13 @@
   </scroll-view>
   <scroll-view class="right-content" scroll-y="true" scroll-x="false" >
     <view class="right-content-wrapper">
-       <view class="skill-set" wx:for="{{ childs }}" wx:for-item="child">
+       <view class="skill-set" wx:for="{{ childs }}" wx:for-item="child" wx:if="{{ child.evaluations.length > 0 }}"
+             style="{{ child.evaluations.length > 0 ? 'border-bottom: 1px solid rgba(7,9,34,0.05);':'' }}"
+       >
         <view class="skill-test-child">
           <view class="skill-info">
             <text class="title">{{ child.name }}</text>
-            <text class="more">更多</text>
+            <text class="more" wx:if="{{ child.evaluations.length > 2 }}">更多</text>
           </view>
           <view wx:for="{{ child.evaluations }}" wx:for-item="evaluation">
             <skill title="{{ evaluation.name }}" width="80" marginLeft="0" marginRight="0" objectId="{{ evaluation.id }}"></skill>

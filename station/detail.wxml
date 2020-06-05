@@ -55,11 +55,11 @@
     <press title="发放测评" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
   </view>
   <view bindtap="gotoguide">
-    <press title="{{oldShareId?'继续体验':'自己体验'}}"></press>
+    <press title="{{ oldShareId ? '继续体验' : '自己体验'}}"></press>
   </view>
 </view>
 
-<view class="buy-group" bindtap="paymore" wx:elif="{{!isAllFree &&!freeCount&&!paperDetail.userPapersNum.hasOld}}">
+<view class="buy-group" bindtap="paymore" wx:elif="{{ !isAllFree&&!freeCount&&!paperDetail.userPapersNum.hasOld }}">
   <view class="meal">
     <meal></meal>
   </view>
@@ -170,7 +170,7 @@
     <view class="paytabbox {{phoneModel ? 'isiphoneX':''}}">
       <view wx:if="{{isticket}}" class="checkusebtn {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)<count?'disabledBtn':''}}" bindtap="useticket">
         {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)
-        <count? '券数量不足': '用券兑换'+count+ '份'}} </view>
+        < count? '券数量不足': '用券兑换'+count+ '份'}} </view>
       </view>
   </view>
     <view class="cover" wx:if="{{dlgShow||showDlg1}}" bindtap="hidenDlg"></view>

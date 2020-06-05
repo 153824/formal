@@ -45,7 +45,8 @@
     "user/useHistory",
     "manager/manager",
     "manager/useHistoryDetail",
-    "manager/evaluationReport"
+    "manager/evaluationReport",
+    "station/more"
   ],
   "plugins": {
     "contactPlugin": {

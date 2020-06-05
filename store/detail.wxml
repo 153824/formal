@@ -280,7 +280,7 @@
           <text>立即购买</text>
         </view>
         <view class="tabbtn" wx:if="{{isIos}}" style="background:#fff;color:#90919C;font-size:28rpx;text-align:left;justify-content:left;">
-          由于相关规范ios暂不支持购买
+          由于相关规范IOS暂不支持购买
         </view>
         <view wx:if="{{isIos}}" class="payforIos" bindtap="paymoney">用券兑换</view>
         <view class="tabbtn" wx:else bindtap="changePage" data-url="./becomevip">
@@ -400,7 +400,7 @@
     <view class="paytabbox {{phoneModel ? 'isiphoneX':''}}">
       <view wx:if="{{isticket}}" class="checkusebtn {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)<count?'disabledBtn':''}}" bindtap="useticket">
         {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)
-        <count? '券数量不足': '用券兑换'+count+ '份'}} </view>
+        < count ? '券数量不足': '用券兑换'+count+ '份'}} </view>
       </view>
   </view>
     <view class="cover" wx:if="{{dlgShow||showDlg1}}" bindtap="hidenDlg"></view>

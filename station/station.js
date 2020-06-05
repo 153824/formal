@@ -109,6 +109,8 @@ Page({
     })
   },
   changePage: function () {
-    console.log("I click a block!")
+    wx.navigateTo({
+      url: `./more?id=${ 620412 }`
+    })
   }
 });

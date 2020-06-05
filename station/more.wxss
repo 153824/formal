@@ -1,0 +1,4 @@
+/* station/more.wxss */
+.more-evaluation{
+    padding: 20rpx 20rpx;
+}

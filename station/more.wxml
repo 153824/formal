@@ -1,0 +1,9 @@
+<!--station/more.wxml-->
+<view class="more-evaluation">
+    <view class="evaluation-list">
+        <skill></skill>
+        <skill></skill>
+        <skill></skill>
+        <skill></skill>
+    </view>
+</view>

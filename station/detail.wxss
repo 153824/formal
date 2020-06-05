@@ -68,6 +68,7 @@
   border: 1px solid rgba(53,62,232,0.2);
 }
 .leave-wrapper > text{
+  display: inline-block;
   line-height: 40rpx;
 }
 .buy-more{

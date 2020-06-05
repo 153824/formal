@@ -800,7 +800,7 @@ Page({
   },
   getPhoneNumber: function (e) {
     var that = this;
-    if (!that.data.getphoneNum) {
+    if (!that.data.getphoneNum || that.data.getphoneNum) {
       var detail = e.detail;
       var iv = detail.iv;
       var encryptedData = detail.encryptedData;
@@ -809,11 +809,11 @@ Page({
         var userMsg = app.globalData.userMsg || {};
         userMsg["iv"] = iv;
         userMsg["encryptedData"] = encryptedData;
+        console.log(userMsg);
         app.doAjax({
           url: "updatedUserMobile",
           data: userMsg,
           success: function (ret) {
-            console.log("getPhoneNumber", ret);
             that.setData({
               getphoneNum: true
             });

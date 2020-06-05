@@ -27,8 +27,8 @@ App({
   isIos: false,
   qiniuUpload: qiniuUpload,
   isIphoneX: false,
-  host: "https://luoke.ampmfit.net/hola/", //请求host
-  // host: "https://h5.luoke101.com/hola/",
+  // host: "https://luoke.ampmfit.net/hola/", //请求host
+  host: "https://h5.luoke101.com/hola/",
   host1: "https://admin.luoke101.com/hola/", //请求host——测试
   host2: "http://localhost:3000/hola/", //请求host——测试
   onLaunch: function(options) {

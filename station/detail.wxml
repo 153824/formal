@@ -18,8 +18,10 @@
         </view>
         <text class="use-time">{{ paperDetail.quesCount }}题 / 预计用时{{ paperDetail.setting.time }}分钟</text>
       </view>
-      <view class="leave-wrapper" bindtap="paymore">
-        <text>剩余可用数量：{{paperDetail.userPapersNum.total}}份</text><text class="buy-more">购买更多</text>
+      <view class="leave-wrapper" bindtap="paymore" wx:if="{{paperDetail.userPapersNum.hasOld&&dataLoaded}}">
+        <text>剩余可用数量：{{paperDetail.userPapersNum.total}}份</text>
+        <text class="buy-more" wx:if="{{teamRole!=1&&!isAllFree&&!paperDetail.userPapersNum.freeTicket&&!paperDetail.userPapersNum.vipTicket&&isIos}}">{{isIos?'用券兑换':'购买更多'}}</text>
+        <text class="buy-more" wx:elif="{{!isAllFree&&teamRole!=1}}">{{isIos?'用券兑换':'购买更多'}}</text>
       </view>
     </view>
   </view>
@@ -45,7 +47,7 @@
 <!--  wx:if="{{ paperDetail.setting.isFree }}"-->
 </scroll-view>
 
-<view class="button-group" wx:if="{{ paperDetail.setting.isFree }}">
+<view class="button-group" wx:if="{{ isvip1||paperDetail.userPapersNum.type==-1||paperDetail.userPapersNum.hasOld||showFullBtn }}">
   <view class="meal">
     <meal></meal>
   </view>
@@ -53,15 +55,20 @@
     <press title="发放测评" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
   </view>
   <view bindtap="gotoguide">
-    <press title="自己体验"></press>
+    <press title="{{oldShareId?'继续体验':'自己体验'}}"></press>
   </view>
 </view>
 
-<view class="buy-group" bindtap="paymore" wx:else>
+<view class="buy-group" bindtap="paymore" wx:elif="{{!isAllFree &&!freeCount&&!paperDetail.userPapersNum.hasOld}}">
   <view class="meal">
     <meal></meal>
   </view>
-  <press color="" title="购买" subtitle="{{ paperDetail.setting.price }}元/份"></press>
+  <view wx:if="{{ isIos }}">
+    <press color="" title="由于相关规范ios暂不支持购买"></press>
+  </view>
+  <view wx:else>
+    <press color="" title="购买" subtitle="{{ paperDetail.setting.price }}元/份"></press>
+  </view>
 </view>
 
 <!--支付-->

@@ -74,8 +74,8 @@
       {
         "pagePath": "manager/manager",
         "text": "测评管理",
-        "iconPath": "img/index/person_job_no_active@2x.png",
-        "selectedIconPath": "img/index/person_job_active@2x.png"
+        "iconPath": "img/index/evaluation-manager-no-active@2x.png",
+        "selectedIconPath": "img/index/evaluation-manager-active@2x.png"
       },
       {
         "pagePath": "index/manage",

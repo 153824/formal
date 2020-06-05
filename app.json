@@ -73,13 +73,13 @@
       },
       {
         "pagePath": "manager/manager",
-        "text": "人岗匹配",
+        "text": "测评管理",
         "iconPath": "img/index/person_job_no_active@2x.png",
         "selectedIconPath": "img/index/person_job_active@2x.png"
       },
       {
         "pagePath": "index/manage",
-        "text": "测评管理",
+        "text": "测评管理（旧）",
         "iconPath": "img/index/manage.png",
         "selectedIconPath": "img/index/manage1.png"
       },

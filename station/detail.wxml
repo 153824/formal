@@ -227,4 +227,4 @@
 <!--        &lt;!&ndash; <view class="btnView" bindtap="showMindDlgFn">我知道了</view> &ndash;&gt;-->
 <!--      </view>-->
 <!--    </view>-->
-
+<view wx:if="{{ loading }}" class="loading"></view>

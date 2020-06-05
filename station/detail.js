@@ -31,6 +31,7 @@ Page({
     getphoneNum: true,
     istext: true,
     showDlg1: false,
+    loading: true
   },
   onLoad: function(options) {
     // wx.showShareMenu({
@@ -157,7 +158,7 @@ Page({
           });
         }
       });
-    }
+    };
   },
   closeGiftDlg: function() {
     this.setData({
@@ -283,7 +284,8 @@ Page({
           isticket: app.isIos || isticket,
           freeCount: freeCount,
           showFullBtn: showFullBtn,
-          ispay: ispay
+          ispay: ispay,
+          loading: false
         });
         // if (userData.isBind) {
         //   that.openpopup(null, true);

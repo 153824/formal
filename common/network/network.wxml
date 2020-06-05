@@ -1,0 +1,9 @@
+<!--common/network/network.wxml-->
+<view class="network" wx:if="{{ isShow }}">
+    <image src="{{ img }}" style="width: {{ width }}rpx;height: {{ height }}rpx;"></image>
+    <view class="network-title">
+        <text style="color: #07092299;">
+            {{ title }}
+        </text>
+    </view>
+</view>

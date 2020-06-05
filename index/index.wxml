@@ -59,7 +59,7 @@
 <!--    </view>-->
   </view>
 
-  <view wx:for="{{ column }}">
+  <view wx:for="{{ column }}" wx:key="unique">
     <view class="header">
       <text>{{ item.column_name }}</text>
     </view>

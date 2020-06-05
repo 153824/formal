@@ -1,5 +1,5 @@
 <!--station/detail.wxml-->
-<scroll-view style="background-color: rgba(7,9,34,0.05);">
+<scroll-view style="background-color: rgba(7,9,34,0.05);margin-bottom: 188rpx;">
   <view class="header">
     <view class="header-wrapper">
       <view class="cover-wrapper">
@@ -39,25 +39,31 @@
     <checkout title="报告示例" type="report" info="{{ paperDetail.setting.reportExample }}" subtitle="{{ paperDetail.name }}"></checkout>
     <checkout title="测试例题" type="example" list="{{ paperDetail.setting.quesType }}"></checkout>
   </view>
-  <view>
-    <meal></meal>
-  </view>
 <!--  <view>-->
 <!--    <press color="" title="购买" subtitle="100元/份"></press>-->
 <!--  </view>-->
 <!--  wx:if="{{ paperDetail.setting.isFree }}"-->
-  <view class="button-group">
-    <view bindtap="gotodati">
-      <press title="发放测评" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
-    </view>
-    <view bindtap="gotoguide">
-      <press title="自己体验"></press>
-    </view>
-  </view>
-  <view bindtap="paymore">
-    <press color="" title="购买" subtitle="{{ paperDetail.setting.price }}元/份"></press>
-  </view>
 </scroll-view>
+
+<view class="button-group" wx:if="{{ paperDetail.setting.isFree }}">
+  <view class="meal">
+    <meal></meal>
+  </view>
+  <view bindtap="gotodati">
+    <press title="发放测评" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
+  </view>
+  <view bindtap="gotoguide">
+    <press title="自己体验"></press>
+  </view>
+</view>
+
+<view class="buy-group" bindtap="paymore" wx:else>
+  <view class="meal">
+    <meal></meal>
+  </view>
+  <press color="" title="购买" subtitle="{{ paperDetail.setting.price }}元/份"></press>
+</view>
+
 <!--支付-->
 <view class="paypage" wx:if="{{ispay && !isIos}}" catchtouchmove="true">
   <view class="closebox" bindtap="closepaypage"></view>
@@ -221,4 +227,4 @@
 <!--        &lt;!&ndash; <view class="btnView" bindtap="showMindDlgFn">我知道了</view> &ndash;&gt;-->
 <!--      </view>-->
 <!--    </view>-->
-
+<view wx:if="{{ loading }}" class="loading"></view>

@@ -3,7 +3,8 @@
   "usingComponents": {
     "skill": "../common/skill/skill",
     "title": "../common/title/title",
-    "free": "../common/free/free"
+    "free": "../common/free/free",
+    "network": "../common/network/network"
   },
   "navigationStyle": "custom"
 }

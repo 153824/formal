@@ -184,15 +184,17 @@
       <view class="{{activePointer==2?'active':''}}"></view>
       <text class="flex-main"></text>
     </view> -->
-    <view wx:if="{{showMindDlg&&!isFreeTickId}}" current="{{activePointer}}" bindchange="changeActivePointer" class="dlgMsg" style="padding-bottom:{{phoneModel?80:0}}rpx;" >
-      <view class="item1">
-        <view class="btnView" bindtap="hidenDlg">我知道了</view>
-        <view class="mindMsg"><text>测别人点这里</text><text style="margin-left:80rpx">自测点这里</text></view>
-        <image class="btnImg3" src="../img/store/detail/icon31.png"></image>
-        <image class="btnImg4" src="../img/store/detail/icon31.png"></image>
-        <image class="btnImg1" bindtap="gotodati" src="../img/store/detail/icon21.png"></image>
-        <image class="btnImg2" bindtap="gotoguide" src="../img/store/detail/icon23.png"></image>
-      </view>
+
+<!--    <view wx:if="{{showMindDlg&&!isFreeTickId}}" current="{{activePointer}}" bindchange="changeActivePointer" class="dlgMsg" style="padding-bottom:{{phoneModel?80:0}}rpx;" >-->
+<!--      <view class="item1">-->
+<!--        <view class="btnView" bindtap="hidenDlg">我知道了</view>-->
+<!--        <view class="mindMsg"><text>测别人点这里</text><text style="margin-left:80rpx">自测点这里</text></view>-->
+<!--        <image class="btnImg3" src="../img/store/detail/icon31.png"></image>-->
+<!--        <image class="btnImg4" src="../img/store/detail/icon31.png"></image>-->
+<!--        <image class="btnImg1" bindtap="gotodati" src="../img/store/detail/icon21.png"></image>-->
+<!--        <image class="btnImg2" bindtap="gotoguide" src="../img/store/detail/icon23.png"></image>-->
+<!--      </view>-->
+
       <!-- <swiper-item class="item2">
         <view class="title">测别人</view>
         <view class="mindMsg">测别人点这里</view>
@@ -207,7 +209,9 @@
         <image class="btnImg" bindtap="gotoguide" src="../img/store/detail/icon23.png"></image>
         <view class="btnView" bindtap="hidenDlg">我知道了</view>
       </view> -->
-    </view>
+
+<!--    </view>-->
+
     <view wx:if="{{showMindDlg&&isFreeTickId}}" class="dlgMsg" style="margin-bottom:{{phoneModel?80:0}}rpx;">
       <view class="item3">
         <view class="title">立即体验</view>

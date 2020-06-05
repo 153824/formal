@@ -77,6 +77,11 @@
 .button-group{
   display: grid;
   grid-template-columns: 50% 50%;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 9999999;
   /*grid-template-rows: ;*/
   /*justify-content: space-between;*/
 }

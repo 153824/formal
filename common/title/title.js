@@ -12,13 +12,29 @@ Component({
   data: {
     statusbarHeight: app.globalData.statusbarHeight,
     titleHeight: app.globalData.titleHeight,
+    showDlg: false,
+    isIos: false,
+    showLogin: false,
+    vip0: false,
+    vip1: false,
+    vip2: false,
+    vip3: false,
+    vip4: false,
+    showAddNewTeam: false,
+    userInfo: app.globalData.userInfo,
+    teamNames: app.globalData.teamNames,
+    selTeam: app.globalData.selTeam || 0,
+    teamName: app.teamName,
+    teamId: app.teamId,
+    teamRole: app.teamRole,
+    nowTeam: app.globalData.team,
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
-    loadUserMsg: function () {
+    loadUserMsg: function() {
       var userData = app.globalData.userInfo || wx.getStorageSync("userInfo");
       var teamData = app.globalData.team || userData;
       this.setData({
@@ -41,7 +57,7 @@ Component({
           selTeam: app.globalData.selTeam || 0,
           teamNames: teamNames
         });
-        console.log(app.globalData.teamName)
+
       });
     },
     changeTeam: function(e) {
@@ -68,6 +84,7 @@ Component({
       app.globalData.selTeam = val;
 
       wx.setStorageSync("myTeamId", app.teamId);
+
       this.setData({
         nowTeam: nowTeam,
         selTeam: val,
@@ -75,6 +92,33 @@ Component({
         teamRole: app.teamRole,
       });
       this.loadUserMsg();
+    },
+    getUserInfo: function(e) {
+      var that = this;
+      var userInfo = e.detail.userInfo;
+      if (!userInfo) {
+        console.error("获取用户资料失败", e);
+        return;
+      }
+      userInfo["openid"] = wx.getStorageSync("openId") || app.globalData.userMsg.openid;
+      userInfo["unionid"] = wx.getStorageSync("unionId") || app.globalData.userMsg.unionid;
+      app.doAjax({
+        url: "updateUserMsg",
+        method: "post",
+        data: {
+          data: JSON.stringify({
+            wxUserInfo: userInfo,
+            userCompany: {
+              name: userInfo.nickName + "的团队"
+            }
+          }),
+        },
+        success: function(res) {
+          that.hideLoginDlg();
+          app.globalData.userInfo.nickname = userInfo.nickName;
+          app.addNewTeam(that.onShow);
+        }
+      });
     },
   },
 
@@ -85,14 +129,13 @@ Component({
             this.setData({
               statusbarHeight: res.statusBarHeight
             });
-            console.log(res.statusBarHeight)
           }
       });
+
     },
-    attached: function () {
+    attached() {
       var that = this;
-      // app.getUserInfo(that.loadUserMsg.call(that));
-      console.log("app.getUserInfo(that.loadUserMsg.call(that))");
+      app.getUserInfo(that.loadUserMsg.call(that));
     }
   }
 });

@@ -1,6 +1,5 @@
 /* common/free/free.wxss */
 .price{
-    font-size: 28rpx;
     line-height: 40rpx;
     color: #fff;
     font-size: 24rpx;
@@ -9,12 +8,13 @@
 .origin-price{
     margin-right: 16rpx;
     text-decoration: line-through;
-    color: #B1B1B1CC;
     font-size: 24rpx;
+    color: #B1B1B1CC;
 }
 
 .actual-price{
     display: inline-block;
+    color: #E31A46FF;
 }
 
 .free{
@@ -24,4 +24,5 @@
     border-radius: 30rpx 0rpx 30rpx 0rpx;
     text-align: center;
     font-size: 28rpx;
+    color: white;
 }

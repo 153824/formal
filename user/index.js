@@ -237,4 +237,4 @@ Page({
       showDlg: false
     });
   }
-})
+});

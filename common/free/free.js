@@ -10,7 +10,15 @@ Component({
     },
     price: {
       type: String,
-      value: "10"
+      value: "100"
+    },
+    actual: {
+      type: String,
+      value: "39.9"
+    },
+    ios: {
+      type: Boolean,
+      value: true
     }
   },
 

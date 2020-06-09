@@ -34,7 +34,8 @@ Page({
     swiperCurrent: 0,
     paperList: "",
     phoneModel: app.isIphoneX,
-    answers: {}
+    answers: {},
+    phoneNumber: "微信一键授权"
   },
 
   onLoad: function (options) {
@@ -44,14 +45,15 @@ Page({
     });
     if (app.isTest) {
       that.setData({
-        pathIndex: 2
+        // pathIndex: 2
+        pathIndex: 3
       });
     }
     quesIdsOrder = [];
     sKey = "oldAnswer" + options.id;
     var oldData = wx.getStorageSync(sKey);
     if( oldData.pathIndex == "2" ){
-      oldData.pathIndex = 3
+      oldData.pathIndex = 1
     }
     var storages = wx.getStorageInfoSync().keys;
     storages.forEach(function (n) {
@@ -138,9 +140,9 @@ Page({
             username: "AA",
             birthday: "2019",
             education: "1",
-            pathIndex: 2
+            pathIndex: 3
           });
-          that.toTimeDown();
+          // that.toTimeDown();
         }
         if (oldData) {
           wx.showToast({
@@ -181,6 +183,7 @@ Page({
 
   },
   onShow: function () {
+    const that = this;
     app.doAjax({
       url: "/userDetail",
       method: "get",
@@ -188,7 +191,10 @@ Page({
         openid: wx.getStorageSync("openId"),
       },
       success: function (res) {
-        console.log(res);
+        that.setData({
+          getphoneNum: true,
+          phoneNumber: res.data.phone
+        })
       }
     })
   },

@@ -21,7 +21,7 @@
     </picker>
     <view class="get-user-phone-wrapper">
       <text>联系电话</text>
-      <button class="get-user-phone" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">微信一键授权</button>
+      <button class="get-user-phone" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">{{ util.hidePartPhoneNumber(phoneNumber) }}</button>
     </view>
     <!-- <view class="photobox" bindtap="takePhoto">
       <image class="photobtn" wx:if="{{!selImg}}" src="../img/guide/takephoto.png"></image>
@@ -34,11 +34,10 @@
       <image class="rebtn" src="../img/guide/takephoto.png"></image>
       <text>重新拍摄</text>
     </view> -->
-    <view wx:if="{{!username||!birthday||(!education&&education!=0)}}" class="graybtn">下一步</view>
+    <view wx:if="{{!getphoneNum||!username||!birthday||(!education&&education!=0)}}" class="graybtn">下一步</view>
     <!-- getphoneNum -->
     <block wx:else>
-      <button wx:if="{{!getphoneNum}}" form-type="submit" open-type="getPhoneNumber" bindgetphonenumber="submit">下一步</button>
-      <button wx:if="{{getphoneNum}}" form-type="submit">下一步</button>
+      <button form-type="submit">下一步</button>
     </block>
   </form>
 </view>
@@ -120,3 +119,4 @@
   </form>
 
 </view>
+<wxs src="../common/util.wxs" module="util"></wxs>

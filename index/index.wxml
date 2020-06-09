@@ -59,13 +59,24 @@
 <!--    </view>-->
   </view>
 
-  <view wx:for="{{ column }}" wx:key="unique">
+  <view wx:for="{{ column }}" wx:key="unique" wx:for-item="columnItem">
     <view class="header">
-      <text>{{ item.column_name }}</text>
+      <text>{{ columnItem.column_name }}</text>
     </view>
-    <view >
-
+    <view wx:if="{{ columnItem.showType == 1 }}" class="card-wrapper">
+      <view class="card-set">
+        <block wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem">
+          <view bindtap="changePage" data-url='../store/detail?id=5e6ee5e3546eaad5ca38cc34'>
+            <card image="{{ dataItem.picture }}"  title="{{ dataItem.name }}" subtitle="{{ dataItem.subtitle }}" feature="{{ item.price > 0 ? item.price : '免费' }}"></card>
+          </view>
+        </block>
+      </view>
     </view>
+    <block wx:elif="{{ columnItem.showType == 2 }}">
+      <skill></skill>
+      <skill></skill>
+      <button class="view-more">查看更多</button>
+    </block>
   </view>
 
 <!--  <view wx:if="{{ new.isShow }}">-->

@@ -117,127 +117,52 @@ Page({
         });
       }
     });
-    app.doAjax({
-      url: "../haola/homePages",
-      method: "get",
-      success: function(res){
-        const testData = {
-          "code": 0,
-          "msg": "success",
-          "resultObject": {
-            "navigation": {
-              "name": "导航",
-              "type": 1,
-              "isShow": 1,
-              "data": [
-                {
-                  "id": "5ec631a9d5529d0009410139",
-                  "name": "经典测试",
-                  "picture": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132",
-                  "columnId": "5ec63174d5529d0009410132",
-                  "columnName": "经典测试",
-                  "order": 1
-                },
-                {
-                  "id": "5ec63174d5529d0009410132",
-                  "name": "测程序员",
-                  "picture": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132",
-                  "columnId": "5ec6313fd5529d000941012e",
-                  "columnName": "测程序员",
-                  "order": 1
-                },
-                {
-                  "id": "5ec6313fd5529d000941012e",
-                  "name": "销售技能",
-                  "picture": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132",
-                  "columnId": "5ec630f0d5529d0009410127",
-                  "columnName": "销售技能",
-                  "order": 1
-                },
-                {
-                  "id": "5ec630f0d5529d0009410127",
-                  "name": "免费专区",
-                  "picture": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132",
-                  "columnId": "5e8fdee05c385800081a09f0",
-                  "columnName": "免费专区",
-                  "order": 1
-                }
-              ]
+    var promiseList = [];
+    const homePagesPromise = new Promise(function (resolve,reject) {
+      app.doAjax({
+        url: "../haola/homePages",
+        method: "get",
+        success: function(res){
+          resolve( res.resultObject );
+        },
+        fail: function (err) {
+          reject( err )
+        }
+      });
+    });
+    homePagesPromise.then(res=>{
+      that.setData(res);
+      promiseList = res.column.map((v,k)=>{
+        return new Promise((resolve, reject) => {
+          app.doAjax({
+            url: `../haola/homePages/columns/${ v.column_id }/evaluations`,
+            method: "get",
+            success: function (res) {
+              resolve({ columnId: v.column_id, data: res.data});
             },
-            "recommend": {
-              "name": "推荐阅读",
-              "type": 2,
-              "isShow": 0,
-              "data": []
-            },
-            "new": {
-              "name": "最新上架",
-              "type": 3,
-              "isShow": 1,
-              "data": [
-                {
-                  "is_show": 0,
-                  "column_id": "5e709a187796d90076273f46",
-                  "name": "收费专区",
-                  "type": 3,
-                  "picture": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132",
-                  "order": 1,
-                  "column_name": "程序员技能",
-                  "enabled": 1,
-                  "objectId": "5e8fedd3158a7a0006be18cf",
-                  "createdAt": "2020-04-10T03:53:55.858Z",
-                  "updatedAt": "2020-05-23T03:31:52.716Z"
-                },
-                {
-                  "is_show": 0,
-                  "column_id": "5e709a187796d90076273f46",
-                  "name": "收费专区",
-                  "type": 3,
-                  "picture": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132",
-                  "order": 1,
-                  "column_name": "程序员技能",
-                  "enabled": 1,
-                  "objectId": "5e8fedd3158a7a0006be18cf",
-                  "createdAt": "2020-04-10T03:53:55.858Z",
-                  "updatedAt": "2020-05-23T03:31:52.716Z"
-                },
-              ]
-            },
-            "hot": {
-              "name": "本周热门",
-              "type": 4,
-              "isShow": 1,
-              "data": []
-            },
-            "banner": {
-              "name": "轮播图",
-              "type": 0,
-              "isShow": 1,
-              "data": [
-                {
-                  "id": "5e9424346b3a57000970cc6e",
-                  "picture": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132",
-                  "order": 1,
-                  "type": 1,
-                  "linkId": "5e8fdee05c385800081a09f0"
-                },
-                {
-                  "id": "5e9424816b3a57000970cd15",
-                  "picture": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132",
-                  "order": 1,
-                  "type": 1,
-                  "linkId": "5e8fdee05c385800081a09f0"
-                }
-              ]
+            fail: function (err) {
+              reject(err);
             }
+          });
+        })
+      });
+      return Promise.all(promiseList)
+    }).then(res=>{
+      const { column } = that.data;
+      var targetColumn = column;
+      for( let i = 0; i < res.length;i++ ){
+        for( let j = 0; j < column.length;j++ ){
+          if( res[i].columnId === targetColumn[j].column_id ){
+            targetColumn[j]["data"] = res[i].data || [];
+            break;
           }
         }
-        // that.setData(res.resultObject);
-        console.log("res.resultObject", res.resultObject)
-        that.setData(res.resultObject);
       }
-    });
-
+      that.setData({
+        column: targetColumn
+      });
+      console.log(that.data)
+    })
   },
   onShareAppMessage(options) {
     return app.defaultShareObj;

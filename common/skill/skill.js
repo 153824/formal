@@ -12,6 +12,10 @@ Component({
       type: String,
       value: ""
     },
+    image: {
+      type: String,
+      value: "../../img/index/classic_test@2x.png"
+    },
     width: {
       type: Number,
       value: 120

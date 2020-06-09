@@ -1,9 +1,8 @@
 <!--station/more.wxml-->
 <view class="more-evaluation">
     <view class="evaluation-list">
-        <skill></skill>
-        <skill></skill>
-        <skill></skill>
-        <skill></skill>
+        <block wx:for="{{ list }}" wx:key="unique" wx:for-item="dataItem">
+            <skill title="{{ dataItem.name }}" image="{{ dataItem.picture }}"></skill>
+        </block>
     </view>
 </view>

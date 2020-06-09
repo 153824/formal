@@ -3,7 +3,7 @@
     <view class="skill-set">
       <view class="skill-child" bindtap="changePage" data-id="{{ objectId }}">
         <view class="test-introduce">
-          <image class="cover" src="../../img/index/classic_test@2x.png" style="width: {{width}}rpx;height: {{width}}rpx;"></image>
+          <image class="cover" src="{{ image }}" style="width: {{width}}rpx;height: {{width}}rpx;"></image>
           <view class="introduce">
             <text class="title" style="font-size: {{titleFontSize}}rpx;">{{ title }}</text>
             <text class="word" style="font-size: {{subTitleFontSize}}rpx;">{{ subtitle }}</text>

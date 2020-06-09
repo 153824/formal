@@ -1,6 +1,5 @@
 {
   "usingComponents": {
     "skill": "../common/skill/skill"
-  },
-  "navigationBarTitleText": "测评列表"
+  }
 }

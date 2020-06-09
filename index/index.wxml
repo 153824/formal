@@ -49,7 +49,8 @@
 <!--  </view>-->
 
   <view class="function-set" wx:if="{{ navigation.isShow }}">
-    <view wx:for="{{ navigation.data }}" wx:key="unique" class="function-set-child">
+    <view wx:for="{{ navigation.data }}" wx:key="unique" class="function-set-child" data-id="{{ item.columnId }}"
+          data-name="{{ item.name }}" bindtap="gotoMore">
       <image src="{{item.picture}}"></image>
       <text>{{item.name}}</text>
     </view>
@@ -66,7 +67,7 @@
     <view wx:if="{{ columnItem.showType == 1 }}" class="card-wrapper">
       <view class="card-set">
         <block wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem">
-          <view bindtap="changePage" data-url='../store/detail?id=5e6ee5e3546eaad5ca38cc34'>
+          <view bindtap="changePage" data-url='../store/detail?id={{ dataItem.id }}'>
             <card image="{{ dataItem.picture }}"  title="{{ dataItem.name }}" subtitle="{{ dataItem.subtitle }}" feature="{{ item.price > 0 ? item.price : '免费' }}"></card>
           </view>
         </block>
@@ -74,7 +75,7 @@
     </view>
     <block wx:elif="{{ columnItem.showType == 2 }}">
       <block wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem">
-        <skill title="{{ dataItem.name }}"></skill>
+        <skill title="{{ dataItem.name }}" image="{{ dataItem.picture }}"></skill>
       </block>
 <!--      <skill title="{{  }}"></skill>-->
 <!--      <skill></skill>-->

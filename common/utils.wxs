@@ -1,6 +1,0 @@
-
-var saveDouble = function(number){
-  return number.toFixed(2);
-}
-
-module.exports.saveDouble = saveDouble;

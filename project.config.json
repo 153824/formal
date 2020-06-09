@@ -244,6 +244,13 @@
 					"pathName": "user/teamInvite",
 					"query": "reportId=5e82f09b7d5774006aa69d6a&key=teamMsg_5e1985617d5774006ac4533e_1",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "test/index",
+					"pathName": "test/index",
+					"query": "id=5daaa765a673f50072176475",
+					"scene": null
 				}
 			]
 		}

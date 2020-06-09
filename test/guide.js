@@ -56,7 +56,7 @@ Page({
       return;
     }
     this.setData({
-      isok: !this.data.isok
+      // isok: !this.data.isok
     })
   },
   gototakephoto: function() {

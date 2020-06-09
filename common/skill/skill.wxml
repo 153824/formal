@@ -10,7 +10,8 @@
           </view>
         </view>
         <view class="test-use-info">
-          <text class="use-count">15家企业在用</text>
+          <text wx:if="{{ companyUseNum > 0 }}" class="use-count">{{ companyUseNum }}家企业在用</text>
+          <text wx:else class="use-count">{{ companyUseName }}在用</text>
           <free></free>
         </view>
       </view>

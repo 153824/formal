@@ -73,9 +73,12 @@
       </view>
     </view>
     <block wx:elif="{{ columnItem.showType == 2 }}">
-      <skill></skill>
-      <skill></skill>
-      <button class="view-more">查看更多</button>
+      <block wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem">
+        <skill title="{{ dataItem.name }}"></skill>
+      </block>
+<!--      <skill title="{{  }}"></skill>-->
+<!--      <skill></skill>-->
+      <button wx:if="{{ dataItem.length > 2 }}" class="view-more">查看更多</button>
     </block>
   </view>
 

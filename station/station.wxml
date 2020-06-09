@@ -1,5 +1,5 @@
 <block>
-  <title id="title"></title>
+  <title></title>
 </block>
 <view class="store-wrapper" style="margin-top:{{ (statusbarHeight + titleHeight) }}px;">
   <scroll-view class="left-catalog" scroll-y="true" scroll-x="false" scroll-with-animation="true" bindtap="tabMenu">
@@ -17,7 +17,8 @@
         <view class="skill-test-child">
           <view class="skill-info">
             <text class="title">{{ child.name }}</text>
-            <text wx:if="{{ child.evaluations.length > 2 }}" class="more" bindtap="changePage">更多</text>
+<!--            wx:if="{{ child.evaluations.length > 2 }}"-->
+            <text class="more" bindtap="changePage">更多</text>
           </view>
           <view wx:for="{{ child.evaluations }}" wx:for-item="evaluation" wx:key="unique">
             <skill title="{{ evaluation.name }}" width="80" marginLeft="0" marginRight="0" objectId="{{ evaluation.id }}"></skill>

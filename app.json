@@ -81,8 +81,8 @@
       {
         "pagePath": "index/manage",
         "text": "测评管理（旧）",
-        "iconPath": "img/index/manage.png",
-        "selectedIconPath": "img/index/manage1.png"
+        "iconPath": "img/index/evaluation-manager-no-active@2x.png",
+        "selectedIconPath": "img/index/evaluation-manager-no-active@2x.png"
       },
       {
         "pagePath": "user/index",

@@ -11,6 +11,10 @@ App({
   defaultShareObj: {
     imageUrl: "http://ihola.luoke101.com/wxShareImg.png",
   },
+  globalData: {
+    titleHeight: 0,
+    statusbarHeight: 0
+  },
   teamName: "",
   teamId: "",
   teamRole: "",
@@ -23,8 +27,8 @@ App({
   isIos: false,
   qiniuUpload: qiniuUpload,
   isIphoneX: false,
-  // host: "https://luoke.ampmfit.net/hola/", //请求host
-  host: "https://h5.luoke101.com/hola/",
+  host: "https://luoke.ampmfit.net/hola/", //请求host
+  // host: "https://h5.luoke101.com/hola/",
   host1: "https://admin.luoke101.com/hola/", //请求host——测试
   host2: "http://localhost:3000/hola/", //请求host——测试
   onLaunch: function(options) {
@@ -57,7 +61,7 @@ App({
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         this.userLogin(res.code);
       }
-    });
+    })
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -90,8 +94,6 @@ App({
           console.log(err);
         }
       });
-
-
   },
 
   userLogin: function(code) {
@@ -243,10 +245,7 @@ App({
     appid: "wx85cde7d3e8f3d949",
     userInfo: null,
     userMsg: {},
-    team: null,
-    titleHeight: 0,
-    statusbarHeight: 0,
-    teamNames: []
+    team: null
   },
 
   changeDate2: function(time, dateType) {
@@ -397,17 +396,10 @@ App({
         });
         if (list.length) {
           var obj = list[0];
-          var teamNames = [];
           that.teamId = obj.objectId;
           that.teamName = obj.name;
           that.teamRole = obj.role;
           that.globalData.team = obj;
-          console.log("teamName",list);
-          list.forEach(function(node) {
-            teamNames.push(node.name);
-          });
-          that.globalData.teamNames = teamNames;
-          console.log("that.globalData.teamNames", teamNames);
           that.checkUserVip(obj);
           cb && cb(list);
         }

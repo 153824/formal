@@ -70,6 +70,7 @@ Page({
   },
   onShow: function(){
     let that = this;
+    let comp = this.selectComponent('#title');
     app.doAjax({
       url: "../haola/positionTags",
       method: "GET",
@@ -88,6 +89,7 @@ Page({
         })
       }
     });
+    app.getUserInfo(comp.loadUserMsg);
   },
   changeTab: function (e) {
     const checkedId = e.currentTarget.id,

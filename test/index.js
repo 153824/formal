@@ -181,7 +181,16 @@ Page({
 
   },
   onShow: function () {
-
+    app.doAjax({
+      url: "/userDetail",
+      method: "get",
+      data: {
+        openid: wx.getStorageSync("openId"),
+      },
+      success: function (res) {
+        console.log(res);
+      }
+    })
   },
   onHide: function () {
     saveTimeOut && clearTimeout(saveTimeOut);

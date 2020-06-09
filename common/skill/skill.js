@@ -43,6 +43,14 @@ Component({
     objectId: {
       type: String,
       value: ""
+    },
+    companyUseName: {
+      type: String,
+      value: ""
+    },
+    companyUseNum: {
+      type: String,
+      value: "15"
     }
   },
 

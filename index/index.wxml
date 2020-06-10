@@ -26,7 +26,7 @@
     <swiper wx:if="{{ banner.isShow }}" autoplay="true" indicator-dots="{{banner.data.length>1?true:false}}"
             circular="true" indicator-color="rgba(255,255,255,0.3)" indicator-active-color="#fff">
       <block wx:for="{{banner.data}}" wx:key="unique">
-        <swiper-item bindtap="gotoDetail" data-id="{{ item.id }}">
+        <swiper-item bindtap="gotoDetail" data-id="{{ item.linkId }}">
           <image src="{{item.picture}}" class="slide-image" width="355" height="160" />
         </swiper-item>
       </block>

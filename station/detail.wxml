@@ -64,7 +64,7 @@
     <meal></meal>
   </view>
   <view wx:if="{{ isIos }}">
-    <press color="" title="由于相关规范ios暂不支持购买"></press>
+    <press color="" title="iOS暂不支持购买，请用券兑换或联系客服"></press>
   </view>
   <view wx:else>
     <press color="" title="购买" subtitle="{{ paperDetail.setting.price }}元/份"></press>

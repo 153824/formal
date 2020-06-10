@@ -40,6 +40,7 @@ Page({
     // });
     var that = this;
     isFirstLoad = true;
+    console.log(options);
     var userData = app.globalData.userInfo || wx.getStorageSync("userInfo");
     this.setData({
       isIos: app.isIos,

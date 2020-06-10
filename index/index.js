@@ -291,9 +291,16 @@ Page({
   },
   gotoDetail: function (e) {
     const { id } = e.currentTarget.dataset;
+    if( id.startsWith("http") ){
+      wx.setStorageSync("webView_Url", id);
+      wx.navigateTo({
+        url: '../common/webView',
+      });
+      return;
+    }
     wx.navigateTo({
-      url: `../station/detail?id=${id}`
-    })
+      url: `../station/detail?id=${ id }`
+    });
   },
   gotoMore: function (e) {
     const { id,name } = e.currentTarget.dataset;

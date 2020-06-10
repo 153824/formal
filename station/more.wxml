@@ -2,7 +2,10 @@
 <view class="more-evaluation">
     <view class="evaluation-list">
         <view wx:if="{{ list.length > 0 }}" wx:for="{{ list }}" wx:key="unique" wx:for-item="dataItem">
-            <skill title="{{ dataItem.name }}" image="{{ dataItem.picture }}"></skill>
+            <skill ios="{{ isIos }}" free="{{ dataItem.isFree }}" price="{{ dataItem.price }}"
+                   actual="{{ dataItem.defaultPrice }}" title="{{ dataItem.name }}" subtitle="{{ dataItem.infoPc }}"
+                   image="{{ dataItem.smallImg }}" objectId="{{ dataItem.id }}">
+            </skill>
         </view>
         <empty isShow="{{ list.length <= 0 }}" type="default" title="暂无测评"></empty>
     </view>

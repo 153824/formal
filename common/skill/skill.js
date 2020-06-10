@@ -16,6 +16,26 @@ Component({
       type: String,
       value: "../../img/index/classic_test@2x.png"
     },
+    isShow: {
+      type: Boolean,
+      value: true
+    },
+    price: {
+      type: String,
+      value: "100"
+    },
+    actual: {
+      type: String,
+      value: "39.9"
+    },
+    free: {
+      type: Boolean,
+      value: true
+    },
+    ios: {
+      type: Boolean,
+      value: true
+    },
     width: {
       type: Number,
       value: 120
@@ -43,10 +63,6 @@ Component({
     subTitleFontSize: {
       type: Number,
       value: 24
-    },
-    objectId: {
-      type: String,
-      value: ""
     },
     companyUseName: {
       type: String,

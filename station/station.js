@@ -63,7 +63,8 @@ Page({
     childs: [],
     statusbarHeight: app.globalData.statusbarHeight,
     titleHeight: app.globalData.titleHeight,
-    isConnected: true
+    isConnected: true,
+    isIos: app.isIos,
   },
   onLoad: function(){
 

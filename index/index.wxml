@@ -72,7 +72,7 @@
         <block wx:for="{{ teamEvaluation }}" wx:key="unique" wx:for-item="evaluationItem">
           <view bindtap="changePage" data-url='../station/detail?id={{ evaluationItem.id }}'>
             <card image="{{ evaluationItem.setting.img }}"  title="{{ evaluationItem.name }}" subtitle="{{ evaluationItem.setting.infoPc }}"
-                  feature="{{ item.price > 0 ? item.price : '免费' }}"></card>
+                  feature="{{ dataItem.isFree ? '免费' : '限时免费' }}"></card>
           </view>
         </block>
       </view>
@@ -87,17 +87,20 @@
       <view class="card-set">
         <block wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem">
           <view bindtap="changePage" data-url='../station/detail?id={{ dataItem.id }}'>
-            <card image="{{ dataItem.picture }}"  title="{{ dataItem.name }}" subtitle="{{ dataItem.subtitle }}"
-                  feature="{{ item.price > 0 ? item.price : '免费' }}">
+            <card image="{{ dataItem.img }}"  title="{{ dataItem.name }}" subtitle="{{ dataItem.infoPc }}"
+                  feature="{{ dataItem.isFree ? '免费' : '限时免费' }}">
             </card>
           </view>
         </block>
       </view>
     </view>
     <view wx:elif="{{ columnItem.showType == 2 }}">
-      <block wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem" wx:for-index="dataIndex" wx:if="{{ dataIndex < 2 }}">
-        <skill title="{{ dataItem.name }}"></skill>
-      </block>
+      <view wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem" wx:for-index="dataIndex"
+            wx:if="{{ dataIndex < 2 }}" bindtap="changePage" data-url='../station/detail?id={{ dataItem.id }}'>
+        <skill ios="{{ isIos }}" free="{{ dataItem.isFree }}" price="{{ dataItem.price }}" actual="{{ dataItem.defaultPrice }}"
+               title="{{ dataItem.name }}" subtitle="{{ dataItem.infoPc }}" image="{{ dataItem.smallImg }}" >
+        </skill>
+      </view>
 <!--      <skill title="{{  }}"></skill>-->
 <!--      <skill></skill>-->
       <button wx:if="{{ columnItem.data.length > 2 }}" class="view-more" data-id="{{ columnItem.column_id }}"

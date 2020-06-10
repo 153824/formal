@@ -1,7 +1,7 @@
 <!--common/skill/skill.wxml-->
   <view class="skill-wrapper" style="margin-left:{{ marginLeft }}rpx;margin-right:{{ marginRight }}rpx;">
     <view class="skill-set">
-      <view class="skill-child" bindtap="changePage" data-id="{{ objectId }}">
+      <view class="skill-child">
         <view class="test-introduce">
           <image class="cover" src="{{ image }}" style="width: {{width}}rpx;height: {{width}}rpx;"></image>
           <view class="introduce">
@@ -12,7 +12,7 @@
         <view class="test-use-info">
           <text wx:if="{{ companyUseNum > 0 }}" class="use-count">{{ companyUseNum }}家企业在用</text>
           <text wx:else class="use-count">{{ companyUseName }}在用</text>
-          <free></free>
+          <free ios="{{ ios }}" free="{{ free }}" price="{{ price }}" actual="{{ actual }}"></free>
         </view>
       </view>
     </view>

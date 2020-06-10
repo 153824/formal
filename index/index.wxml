@@ -63,6 +63,12 @@
     </view>
   </view>
 
+  <view>
+    <view class="header">
+      <text>专属测评</text>
+    </view>
+  </view>
+
   <view wx:for="{{ column }}" wx:key="unique" wx:for-item="columnItem">
     <view class="header">
       <text>{{ columnItem.column_name }}</text>

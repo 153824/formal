@@ -11,6 +11,10 @@ Component({
     type: {
       type: String,
       value: "default"
+    },
+    isShow: {
+      type: Boolean,
+      value: true
     }
   },
 

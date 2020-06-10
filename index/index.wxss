@@ -164,7 +164,6 @@
   display: flex;
   justify-content: space-between;
   width: 710rpx;
-  height: 264rpx;
   font-size: 34rpx;
   line-height: 48rpx;
   margin-bottom: 50rpx;

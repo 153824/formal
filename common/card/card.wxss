@@ -19,7 +19,6 @@
   display: flex;
   justify-content: space-between;
   width: 710rpx;
-  height: 264rpx;
   font-size: 34rpx;
   line-height: 48rpx;
   margin-bottom: 50rpx;
@@ -40,7 +39,7 @@
 .card-child:after{
   content: attr(data-feature);
   position: absolute;
-  bottom: 130rpx;
+  bottom: 170rpx;
   right: 20rpx;
   width: 160rpx;
   height: 40rpx;
@@ -58,7 +57,7 @@
 
 .card-child-info > .detail{
   display: block;
-  font-size: 32rpx;
+  font-size: 24rpx;
   font-weight: 500;
   color: #5c6171;
 }

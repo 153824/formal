@@ -1,10 +1,10 @@
 <!--common/empty/empty.wxml-->
-<view wx:if="{{ type === 'default' }}" class="empty-wrapper">
+<view wx:if="{{ type === 'default' && isShow }}" class="empty-wrapper">
     <image src="../../img/user/use_history_empty.png"></image>
     <view>{{ title }}</view>
 </view>
 
-<view wx:if="{{ type === 'scan' }}" class="empty-wrapper">
+<view wx:if="{{ type === 'scan' && isShow }}" class="empty-wrapper">
     <image src="../../img/empty/no_one_scan_code.png" style="height:230rpx;width:230rpx;margin-bottom: 20rpx;"></image>
     <view style="margin-bottom: 46rpx;">
         {{ title }}

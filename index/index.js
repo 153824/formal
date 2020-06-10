@@ -254,5 +254,11 @@ Page({
     wx.navigateTo({
       url: `../station/detail?id=${id}`
     })
+  },
+  gotoMore: function (e) {
+    const { id,name } = e.currentTarget.dataset;
+    wx.navigateTo({
+      url: `../station/more?id=${ id }&title=${name}`,
+    });
   }
 });

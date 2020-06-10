@@ -1,18 +1,33 @@
 // station/more.js
+const app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    list: [],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    const that = this;
+    const { id,title } = options;
+    wx.setNavigationBarTitle({
+      title: title
+    });
+    console.log(options);
+    app.doAjax({
+      url: `../haola/homePages/columns/${ id }/evaluations`,
+      method: "get",
+      success: function (res) {
+        that.setData({
+          list: res.data
+        })
+      }
+    })
   },
 
   /**

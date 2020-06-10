@@ -48,15 +48,19 @@
 <!--    </block>-->
 <!--  </view>-->
 
+<!--  <view class="function-set" wx:if="{{ navigation.isShow }}">-->
+<!--    <view wx:for="{{ navigation.data }}" wx:key="unique" class="function-set-child">-->
+<!--      <image src="{{item.picture}}"></image>-->
+<!--      <text>{{item.name}}</text>-->
+<!--    </view>-->
+<!--  </view>-->
+
   <view class="function-set" wx:if="{{ navigation.isShow }}">
-    <view wx:for="{{ navigation.data }}" wx:key="unique" class="function-set-child">
+    <view wx:for="{{ navigation.data }}" wx:key="unique" class="function-set-child" data-id="{{ item.columnId }}"
+          data-name="{{ item.name }}" bindtap="gotoMore">
       <image src="{{item.picture}}"></image>
       <text>{{item.name}}</text>
     </view>
-<!--    <view wx:for="{{functionSet}}" wx:for-item="item" class="function-set-child" wx:key="unique">-->
-<!--      <image src="{{item.src}}"></image>-->
-<!--      <text>{{item.text}}</text>-->
-<!--    </view>-->
   </view>
 
   <view wx:for="{{ column }}" wx:key="unique" wx:for-item="columnItem">

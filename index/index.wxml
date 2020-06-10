@@ -222,7 +222,7 @@
     </view>
       <view class="recomend-info">
         <text class="title">{{item.name}}</text>
-        <text class="date">{{'2019-09-09'}}</text>
+        <text class="date">{{item.recommendTime}}</text>
       </view>
     </view>
   </view>

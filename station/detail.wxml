@@ -27,7 +27,7 @@
   </view>
   <view style="background-color: #fff;margin-top: 20rpx;">
 <!--    wx:if="{{hasFreeTick&&!freeTickId&&teamRole!=1&&((paperDetail.setting.price&&!isfree && paperDetail.setting.testRule.maxInvite != 0)&&dataLoaded&&couponGet0)||(isfree&&paperDetail.userPapersNum.hasOld&&paperDetail.setting.price)}}"-->
-    <block>
+    <block wx:if="{{hasFreeTick&&!freeTickId&&teamRole!=1&&((paperDetail.setting.price&&!isfree && paperDetail.setting.testRule.maxInvite != 0)&&dataLoaded&&couponGet0)||(isfree&&paperDetail.userPapersNum.hasOld&&paperDetail.setting.price)}}">
       <button class="get-free-ticket" open-type="share" style="background: transparent;border: none !important;" data-id="{{ paperDetail.id }}" wx:if="{{!freeTick}}">
         <ticket></ticket>
       </button>
@@ -168,7 +168,7 @@
     </view>
     <view class="lineView"></view>
     <view class="paytabbox {{phoneModel ? 'isiphoneX':''}}">
-      <view wx:if="{{isticket}}" class="checkusebtn {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)<count?'disabledBtn':''}}" bindtap="useticket">
+      <view wx:if="{{isticket}}" class="checkusebtn {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0) < count ? 'disabledBtn' : '' }}" bindtap="useticket">
         {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)
         < count? '券数量不足': '用券兑换'+count+ '份'}} </view>
       </view>

@@ -1,5 +1,5 @@
 <!--common/checkout/checkout.wxml-->
-<view class="introduction" wx:if="{{ type === 'introduction' }}">
+<view class="introduction" wx:if="{{ type === 'introduction' && isShow }}">
   <view class="head">
     <text class="title">{{title}}</text>
     <text class="line"></text>
@@ -10,7 +10,7 @@
   </view>
 </view>
 
-<view class="dimension" wx:if="{{ type === 'dimension' }}">
+<view class="dimension" wx:if="{{ type === 'dimension' && isShow }}">
   <view class="head">
     <text class="title">{{ title }}</text>
     <text class="line"></text>
@@ -25,7 +25,7 @@
   </view>
 </view>
 
-<view class="scenarios" wx:if="{{ type === 'scenarios' }}">
+<view class="scenarios" wx:if="{{ type === 'scenarios' && isShow }}">
   <view class="head">
     <text class="title">{{ title }}</text>
     <text class="line"></text>
@@ -44,7 +44,7 @@
   </view>
 </view>
 
-<view class="example" wx:if="{{ type === 'example' }}">
+<view class="example" wx:if="{{ type === 'example' && isShow }}">
   <view class="head">
     <text class="title">{{ title }}</text>
     <text class="line"></text>
@@ -67,7 +67,7 @@
   </view>
 </view>
 
-<view class="report" wx:if="{{ type === 'report' }}">
+<view class="report" wx:if="{{ type === 'report' && isShow }}">
     <view class="head">
         <text class="title">报告示例</text>
         <text class="line"></text>

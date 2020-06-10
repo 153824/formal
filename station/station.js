@@ -67,7 +67,7 @@ Page({
     isIos: app.isIos,
   },
   onLoad: function(){
-
+    
   },
   onShow: function(){
     let that = this;

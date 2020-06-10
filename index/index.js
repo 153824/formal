@@ -156,12 +156,14 @@ Page({
         for( let j = 0; j < column.length;j++ ){
           if( res[i].columnId === targetColumn[j].column_id ){
             targetColumn[j]["data"] = res[i].data || [];
-            break;
+            // break;
           }
         }
       };
       that.setData({
         column: targetColumn
+      },()=>{
+        console.log(this.data);
       });
     });
     const teamEvaluationPromise = new Promise(function (resolve,reject) {

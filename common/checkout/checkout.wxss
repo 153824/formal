@@ -56,7 +56,7 @@
   border-radius: 54rpx;
   text-align: center;
   margin-top: 20rpx;
-  margin-right: 36rpx;
+  margin-right: 10rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

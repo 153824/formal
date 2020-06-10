@@ -495,3 +495,13 @@
   border: 2rpx solid rgba(7, 9, 34, 0.2);
   background-color: rgba(255, 255, 255, 1);
 }
+
+.mask{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  z-index: 999999999;
+}

@@ -30,6 +30,8 @@ Page({
     navigationSet: [],
     teamEvaluation: [],
     isIos: app.isIos,
+    loading1: true,
+    loading2: true
   },
   onLoad: function(options) {
     wx.switchTab({
@@ -163,9 +165,11 @@ Page({
       };
       that.setData({
         column: targetColumn
-      },()=>{
-        console.log(this.data);
       });
+    }).finally(()=>{
+      that.setData({
+        loading1: false
+      })
     });
     const teamEvaluationPromise = new Promise(function (resolve,reject) {
       app.doAjax({
@@ -200,8 +204,10 @@ Page({
       that.setData({
         teamEvaluation: res
       })
-    }).catch(err=>{
-
+    }).finally(()=>{
+      that.setData({
+        loading2: false
+      })
     })
   },
   onShareAppMessage(options) {

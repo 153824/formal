@@ -70,7 +70,7 @@
     <view class="card-wrapper">
       <view class="card-set">
         <block wx:for="{{ teamEvaluation }}" wx:key="unique" wx:for-item="evaluationItem">
-          <view bindtap="changePage" data-url='../store/detail?id=5e6ee5e3546eaad5ca38cc34'>
+          <view bindtap="changePage" data-url='../station/detail?id={{ evaluationItem.id }}'>
             <card image="{{ evaluationItem.setting.img }}"  title="{{ evaluationItem.name }}" subtitle="{{ evaluationItem.setting.infoPc }}"
                   feature="{{ item.price > 0 ? item.price : '免费' }}"></card>
           </view>
@@ -86,7 +86,7 @@
     <view wx:if="{{ columnItem.showType == 1 }}" class="card-wrapper">
       <view class="card-set">
         <block wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem">
-          <view bindtap="changePage" data-url='../store/detail?id=5e6ee5e3546eaad5ca38cc34'>
+          <view bindtap="changePage" data-url='../station/detail?id={{ dataItem.id }}'>
             <card image="{{ dataItem.picture }}"  title="{{ dataItem.name }}" subtitle="{{ dataItem.subtitle }}"
                   feature="{{ item.price > 0 ? item.price : '免费' }}">
             </card>

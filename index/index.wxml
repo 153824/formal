@@ -79,27 +79,32 @@
     </view>
   </view>
 
-  <view wx:for="{{ column }}" wx:key="unique" wx:for-item="columnItem">
+  <view wx:for="{{ column }}" wx:key="unique" wx:for-item="columnItem" wx:if="{{ columnItem.data.length > 0 }}">
     <view class="header">
       <text>{{ columnItem.column_name }}</text>
     </view>
     <view wx:if="{{ columnItem.showType == 1 }}" class="card-wrapper">
       <view class="card-set">
         <block wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem">
-          <view bindtap="changePage" data-url='../store/detail?id={{ dataItem.id }}'>
-            <card image="{{ dataItem.picture }}"  title="{{ dataItem.name }}" subtitle="{{ dataItem.subtitle }}" feature="{{ item.price > 0 ? item.price : '免费' }}"></card>
+          <view bindtap="changePage" data-url='../store/detail?id=5e6ee5e3546eaad5ca38cc34'>
+            <card image="{{ dataItem.picture }}"  title="{{ dataItem.name }}" subtitle="{{ dataItem.subtitle }}"
+                  feature="{{ item.price > 0 ? item.price : '免费' }}">
+            </card>
           </view>
         </block>
       </view>
     </view>
-    <block wx:elif="{{ columnItem.showType == 2 }}">
-      <block wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem">
-        <skill title="{{ dataItem.name }}" image="{{ dataItem.picture }}"></skill>
+    <view wx:elif="{{ columnItem.showType == 2 }}">
+      <block wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem" wx:for-index="dataIndex" wx:if="{{ dataIndex < 2 }}">
+        <skill title="{{ dataItem.name }}"></skill>
       </block>
 <!--      <skill title="{{  }}"></skill>-->
 <!--      <skill></skill>-->
-      <button wx:if="{{ dataItem.length > 2 }}" class="view-more">查看更多</button>
-    </block>
+      <button wx:if="{{ columnItem.data.length > 2 }}" class="view-more" data-id="{{ columnItem.column_id }}"
+              data-name="{{ columnItem.column_name }}" bindtap="gotoMore">
+        查看更多
+      </button>
+    </view>
   </view>
 
 <!--  <view wx:if="{{ new.isShow }}">-->

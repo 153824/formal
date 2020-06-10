@@ -27,7 +27,8 @@ Page({
     ],
     statusbarHeight: app.globalData.statusbarHeight,
     titleHeight: app.globalData.titleHeight,
-    navigationSet: []
+    navigationSet: [],
+    teamEvaluation: []
   },
   onLoad: function(options) {
     wx.switchTab({
@@ -48,7 +49,7 @@ Page({
         app.checkUser = null;
       };
       return;
-    }
+    };
     app.doAjax({
       url: "getMyticket",
       method: "get",
@@ -117,7 +118,8 @@ Page({
         });
       }
     });
-    var promiseList = [];
+    var homePagesPromiseList = [],
+        teamEvaluationPromiseList = [];
     const homePagesPromise = new Promise(function (resolve,reject) {
       app.doAjax({
         url: "../haola/homePages",
@@ -132,7 +134,7 @@ Page({
     });
     homePagesPromise.then(res=>{
       that.setData(res);
-      promiseList = res.column.map((v,k)=>{
+      homePagesPromiseList = res.column.map((v,k)=>{
         return new Promise((resolve, reject) => {
           app.doAjax({
             url: `../haola/homePages/columns/${ v.column_id }/evaluations`,
@@ -146,7 +148,7 @@ Page({
           });
         })
       });
-      return Promise.all(promiseList)
+      return Promise.all(homePagesPromiseList)
     }).then(res=>{
       const { column } = that.data;
       var targetColumn = column;
@@ -157,11 +159,46 @@ Page({
             break;
           }
         }
-      }
+      };
       that.setData({
         column: targetColumn
       });
-      console.log(that.data)
+    });
+    const teamEvaluationPromise = new Promise(function (resolve,reject) {
+      app.doAjax({
+        url: `../haola/homePages/userPagers?teamId=${app.teamId}`,
+        method: "get",
+        success: function (res) {
+          resolve(res.data);
+        },
+        fail: function (err) {
+          reject(err);
+        }
+      })
+    });
+    teamEvaluationPromise.then(res=>{
+      teamEvaluationPromiseList = res.map((v,k)=>{
+        return(new Promise((resolve, reject) => {
+          app.doAjax({
+            url: `../hola/paperDetail?id=${v.paper.objectId}&userId=${app.userId}`,
+            method: "get",
+            success: function (res) {
+              resolve( res );
+            },
+            fail: function (err) {
+              reject(err);
+            }
+          })
+        }))
+      });
+      return Promise.all(teamEvaluationPromiseList);
+    }).then(res=>{
+      console.log(res);
+      that.setData({
+        teamEvaluation: res
+      })
+    }).catch(err=>{
+
     })
   },
   onShareAppMessage(options) {

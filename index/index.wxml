@@ -64,8 +64,18 @@
   </view>
 
   <view>
-    <view class="header">
+    <view wx:if="{{ teamEvaluation.length > 0 }}" class="header">
       <text>专属测评</text>
+    </view>
+    <view class="card-wrapper">
+      <view class="card-set">
+        <block wx:for="{{ teamEvaluation }}" wx:key="unique" wx:for-item="evaluationItem">
+          <view bindtap="changePage" data-url='../store/detail?id=5e6ee5e3546eaad5ca38cc34'>
+            <card image="{{ evaluationItem.setting.img }}"  title="{{ evaluationItem.name }}" subtitle="{{ evaluationItem.setting.infoPc }}"
+                  feature="{{ item.price > 0 ? item.price : '免费' }}"></card>
+          </view>
+        </block>
+      </view>
     </view>
   </view>
 

@@ -21,11 +21,13 @@
             <text wx:if="{{ child.evaluations.length > 2 }}" class="more" bindtap="changePage">更多</text>
           </view>
           <view wx:for="{{ child.evaluations }}" wx:for-item="evaluation" wx:key="unique">
-            <skill ios="{{ isIos }}" free="{{ evaluation.isFree }}" price="{{ evaluation.defaultPrice }}" actual="{{ evaluation.price }}"
-                   title="{{ evaluation.name }}" subtitle="{{ evaluation.infoPc }}" image="{{ evaluation.smallImg }}"
-                   companyUseName="{{ evaluation.companyUseName }}" companyUseNum="{{ companyUseNum }}" width="80"
-                   marginLeft="0" marginRight="0">
-            </skill>
+            <view >
+              <skill objectId="{{ evaluation.id }}" ios="{{ isIos }}" free="{{ evaluation.isFree }}" price="{{ evaluation.defaultPrice }}"
+                     actual="{{ evaluation.price }}" title="{{ evaluation.name }}" subtitle="{{ evaluation.infoPc }}"
+                     image="{{ evaluation.smallImg }}" companyUseName="{{ evaluation.companyUseName }}"
+                     companyUseNum="{{ companyUseNum }}" width="80" marginLeft="0" marginRight="0">
+              </skill>
+            </view>
           </view>
         </view>
       </view>

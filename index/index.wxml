@@ -96,13 +96,12 @@
     </view>
     <view wx:elif="{{ columnItem.showType == 2 }}">
       <view wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem" wx:for-index="dataIndex"
-            wx:if="{{ dataIndex < 2 }}" bindtap="changePage" data-url='../station/detail?id={{ dataItem.id }}'>
-        <skill ios="{{ isIos }}" free="{{ dataItem.isFree }}" price="{{ dataItem.price }}" actual="{{ dataItem.defaultPrice }}"
-               title="{{ dataItem.name }}" subtitle="{{ dataItem.infoPc }}" image="{{ dataItem.smallImg }}" >
+            wx:if="{{ dataIndex < 2 }}" bindtap="changePage">
+        <skill ios="{{ isIos }}" free="{{ dataItem.isFree }}" price="{{ dataItem.price }}"
+               actual="{{ dataItem.defaultPrice }}" title="{{ dataItem.name }}" subtitle="{{ dataItem.infoPc }}"
+               image="{{ dataItem.smallImg }}" objectId="{{ dataItem.id }}">
         </skill>
       </view>
-<!--      <skill title="{{  }}"></skill>-->
-<!--      <skill></skill>-->
       <button wx:if="{{ columnItem.data.length > 2 }}" class="view-more" data-id="{{ columnItem.column_id }}"
               data-name="{{ columnItem.column_name }}" bindtap="gotoMore">
         查看更多

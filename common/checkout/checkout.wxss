@@ -41,12 +41,14 @@
 }
 
 .dimension-content-wrapper{
-
+  display: grid;
+  grid-template-columns: repeat(3,33.333%);
 }
 .dimension-child{
   display: flex;
 }
 .dimension-child > text{
+  width: 212rpx;
   height: 56rpx;
   line-height: 56rpx;
   padding: 0 10rpx;

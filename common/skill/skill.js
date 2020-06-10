@@ -20,6 +20,10 @@ Component({
       type: Boolean,
       value: true
     },
+    objectId: {
+      type: String,
+      value: ""
+    },
     price: {
       type: String,
       value: "100"
@@ -71,7 +75,7 @@ Component({
     companyUseNum: {
       type: String,
       value: "15"
-    }
+    },
   },
 
   /**

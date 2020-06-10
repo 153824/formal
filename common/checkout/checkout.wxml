@@ -17,8 +17,8 @@
     <text class="title-bg">Dimension</text>
   </view>
   <view class="dimension-content">
-    <view class="dimension-content-wrapper" wx:for="{{ list }}">
-       <view class="dimension-child">
+    <view class="dimension-content-wrapper">
+       <view class="dimension-child" wx:for="{{ list }}">
           <text>{{ item }}</text>
        </view>
     </view>
@@ -34,7 +34,7 @@
   <view class="scenarios-area" wx:for="{{ list }}" wx:for-item="applyitem" wx:for-index="applyindex" wx:key="unique">
       <view class="scenarios-content">
           <view class="scenarios-child">
-              <image class="scenarios-icon" src="{{ applyitem.icon||'../img/store/detail/icon3.png' }}"></image>
+              <image class="scenarios-icon" src="{{ applyitem.icon||'../../img/store/detail/icon5.png' }}"></image>
               <text class="scenarios-title">{{ applyitem.name }}</text>
           </view>
           <view class="scenarios-info">

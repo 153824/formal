@@ -1,7 +1,7 @@
 <!--common/skill/skill.wxml-->
   <view class="skill-wrapper" style="margin-left:{{ marginLeft }}rpx;margin-right:{{ marginRight }}rpx;">
     <view class="skill-set">
-      <view class="skill-child">
+      <view class="skill-child" bindtap="changePage" data-id="{{ objectId }}">
         <view class="test-introduce">
           <image class="cover" src="{{ image }}" style="width: {{width}}rpx;height: {{width}}rpx;"></image>
           <view class="introduce">

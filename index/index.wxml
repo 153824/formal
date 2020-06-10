@@ -63,8 +63,8 @@
     </view>
   </view>
 
-  <view>
-    <view wx:if="{{ teamEvaluation.length > 0 }}" class="header">
+  <view wx:if="{{ teamEvaluation.length > 0 }}">
+    <view class="header">
       <text>专属测评</text>
     </view>
     <view class="card-wrapper">

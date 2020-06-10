@@ -33,52 +33,52 @@
     </view>
   </view>
   <button wx:if="{{!userInfo.isBind}}" class="userInfoBtn1" open-type="getUserInfo" bindgetuserinfo="getUserInfo"></button>
-  <block wx:if="{{teamRole!=1}}">
-    <view class="centerbox isVip" wx:if="{{vip1}}">
-      <image class="bgImg" src="../img/user/vip/icon1.png"></image>
-      <view class="contentView">
-        <view class="flex">
-          <view class="name flex-main">体验版会员</view>
-          <!-- <view class="toVipDetail" bindtap="changePage" data-url="../store/vipdetail?type=1">查看权益</view> -->
-        </view>
-        <view class="vipTime flex">
-          <view>{{userInfo.vipEndTime}}到期</view>
-          <view class="toPay" wx:if="{{!isIos}}" bindtap="changePage" data-url="../store/becomevip">升级</view>
-        </view>
-      </view>
-    </view>
-    <view class="centerbox isVip" wx:elif="{{vip2||vip3||vip4}}">
-      <image class="bgImg" src="../img/user/vip/icon1.png"></image>
-      <view class="contentView">
-        <view class="flex">
-          <view class="name flex-main" wx:if="{{vip4}}">旗舰版会员</view>
-          <view class="name flex-main" wx:elif="{{vip3}}">专业版会员</view>
-          <view class="name flex-main" wx:elif="{{vip2}}">标准版会员</view>
-          <!-- <view class="toVipDetail" bindtap="changePage" data-url="../store/vipdetail?type=2">查看权益</view> -->
-        </view>
-        <view class="vipTime flex">
-          <view wx:if="{{vip4}}">{{userInfo.vip4EndTime}}到期</view>
-          <view wx:elif="{{vip3}}">{{userInfo.vip3EndTime}}到期</view>
-          <view wx:elif="{{vip2}}">{{userInfo.vip2EndTime}}到期</view>
-          <view class="toPay" wx:if="{{!isIos&&teamRole==3}}" bindtap="changePage" data-url="../store/becomevip">续费</view>
-          <view class="toPay1" wx:if="{{isIos&&teamRole==3}}">iOS暂不支持续费</view>
-        </view>
-      </view>
-    </view>
-    <view class="centerbox" wx:elif="{{!isIos}}" bindtap="changePage" data-url="../store/becomevip">
-      <image src="../img/user/index/bg.png"></image>
-      <view class="centertext">
-        <image src="../img/user/index/icon1.png"></image>
-        <text>开通会员,预计可省1700元/年</text>
-      </view>
-    </view>
-    <view class="centerbox" wx:else>
-      <image src="../img/user/index/bg.png"></image>
-      <view class="centertext1">
-        <text>iOS暂不支持购买会员</text>
-      </view>
-    </view>
-  </block>
+<!--  <block wx:if="{{teamRole!=1}}">-->
+<!--    <view class="centerbox isVip" wx:if="{{vip1}}">-->
+<!--      <image class="bgImg" src="../img/user/vip/icon1.png"></image>-->
+<!--      <view class="contentView">-->
+<!--        <view class="flex">-->
+<!--          <view class="name flex-main">体验版会员</view>-->
+<!--          &lt;!&ndash; <view class="toVipDetail" bindtap="changePage" data-url="../store/vipdetail?type=1">查看权益</view> &ndash;&gt;-->
+<!--        </view>-->
+<!--        <view class="vipTime flex">-->
+<!--          <view>{{userInfo.vipEndTime}}到期</view>-->
+<!--          <view class="toPay" wx:if="{{!isIos}}" bindtap="changePage" data-url="../store/becomevip">升级</view>-->
+<!--        </view>-->
+<!--      </view>-->
+<!--    </view>-->
+<!--    <view class="centerbox isVip" wx:elif="{{vip2||vip3||vip4}}">-->
+<!--      <image class="bgImg" src="../img/user/vip/icon1.png"></image>-->
+<!--      <view class="contentView">-->
+<!--        <view class="flex">-->
+<!--          <view class="name flex-main" wx:if="{{vip4}}">旗舰版会员</view>-->
+<!--          <view class="name flex-main" wx:elif="{{vip3}}">专业版会员</view>-->
+<!--          <view class="name flex-main" wx:elif="{{vip2}}">标准版会员</view>-->
+<!--          &lt;!&ndash; <view class="toVipDetail" bindtap="changePage" data-url="../store/vipdetail?type=2">查看权益</view> &ndash;&gt;-->
+<!--        </view>-->
+<!--        <view class="vipTime flex">-->
+<!--          <view wx:if="{{vip4}}">{{userInfo.vip4EndTime}}到期</view>-->
+<!--          <view wx:elif="{{vip3}}">{{userInfo.vip3EndTime}}到期</view>-->
+<!--          <view wx:elif="{{vip2}}">{{userInfo.vip2EndTime}}到期</view>-->
+<!--          <view class="toPay" wx:if="{{!isIos&&teamRole==3}}" bindtap="changePage" data-url="../store/becomevip">续费</view>-->
+<!--          <view class="toPay1" wx:if="{{isIos&&teamRole==3}}">iOS暂不支持续费</view>-->
+<!--        </view>-->
+<!--      </view>-->
+<!--    </view>-->
+<!--&lt;!&ndash;    <view class="centerbox" wx:elif="{{!isIos}}" bindtap="changePage" data-url="../store/becomevip">&ndash;&gt;-->
+<!--&lt;!&ndash;      <image src="../img/user/index/bg.png"></image>&ndash;&gt;-->
+<!--&lt;!&ndash;      <view class="centertext">&ndash;&gt;-->
+<!--&lt;!&ndash;        <image src="../img/user/index/icon1.png"></image>&ndash;&gt;-->
+<!--&lt;!&ndash;        <text>开通会员,预计可省1700元/年</text>&ndash;&gt;-->
+<!--&lt;!&ndash;      </view>&ndash;&gt;-->
+<!--&lt;!&ndash;    </view>&ndash;&gt;-->
+<!--    <view class="centerbox" wx:else>-->
+<!--      <image src="../img/user/index/bg.png"></image>-->
+<!--      <view class="centertext1">-->
+<!--        <text>iOS暂不支持购买会员</text>-->
+<!--      </view>-->
+<!--    </view>-->
+<!--  </block>-->
   <view class="test-set-meal">
     <view class="set-meal-wrapper">
       <view class="meal-title">
@@ -123,15 +123,15 @@
       <view class="listright golden">
         <image wx:if="{{nowTeam.certConfig}}" style="height:28rpx;width:28rpx;margin-right:12rpx;" src="../img/report/icon9.png"></image>
         <text wx:if="{{nowTeam.certConfig}}" style="color:#323541;">已认证</text>
-        <text wx:else style="color: #979BA9FF">认证送专属封面</text>
+        <text wx:else style="color: #979BA9FF">认证送企业专属封面</text>
         <image src="../img/user/index/icon3.png"></image>
       </view>
     </view>
     <view class="boxlist" bindtap="changePage" data-url="./myTeam?id={{teamId}}" wx:if="{{userInfo.isBind&&teamRole==3}}">
       <view class="listleft">
-        <image src="../img/user/index/icon6.png"></image>协作者管理
+        <image src="../img/user/index/icon6.png"></image>子管理员设置
       </view>
-      <view class="listright">设置团队成员的访问权限
+      <view class="listright">与同事一起协同办公
         <image src="../img/user/index/icon3.png"></image>
       </view>
     </view>
@@ -167,15 +167,15 @@
         <image src="../img/user/index/icon3.png"></image>
       </view>
     </view>
-    <view class="boxlist flex">
-      <button class="kfBtn" open-type="feedback"></button>
-      <view class="listleft flex-main">
-        <image src="../img/user/index/icon9.png"></image>意见反馈
-      </view>
-      <view class="listright">和我们沟通你遇到的问题或建议
-        <image src="../img/user/index/icon3.png"></image>
-      </view>
-    </view>
+<!--    <view class="boxlist flex">-->
+<!--      <button class="kfBtn" open-type="feedback"></button>-->
+<!--      <view class="listleft flex-main">-->
+<!--        <image src="../img/user/index/icon9.png"></image>意见反馈-->
+<!--      </view>-->
+<!--      <view class="listright">和我们沟通你遇到的问题或建议-->
+<!--        <image src="../img/user/index/icon3.png"></image>-->
+<!--      </view>-->
+<!--    </view>-->
     <view class="boxlist flex" bindtap="changePage" data-url="./addGroup">
       <view class="listleft">
         <image src="../img/user/index/icon13.png"></image>成为共创用户

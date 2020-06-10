@@ -30,6 +30,7 @@ page{
   justify-content: left;
   align-items: center;
   padding: 40rpx 48rpx 0;
+  margin-bottom: 40rpx;
   z-index: 99;
 }
 

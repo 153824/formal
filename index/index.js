@@ -28,7 +28,8 @@ Page({
     statusbarHeight: app.globalData.statusbarHeight,
     titleHeight: app.globalData.titleHeight,
     navigationSet: [],
-    teamEvaluation: []
+    teamEvaluation: [],
+    isIos: app.isIos,
   },
   onLoad: function(options) {
     wx.switchTab({

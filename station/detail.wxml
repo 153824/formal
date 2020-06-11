@@ -49,7 +49,7 @@
 
 <view class="button-group" wx:if="{{ isvip1||paperDetail.userPapersNum.type==-1||paperDetail.userPapersNum.hasOld||showFullBtn }}">
   <view class="meal">
-    <meal></meal>
+    <meal isShow="{{ !paperDetail.userPapersNum.hasOld || !dataLoaded }}"></meal>
   </view>
   <view bindtap="gotodati">
     <press title="发放测评" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
@@ -59,14 +59,14 @@
   </view>
 </view>
 
-<view class="buy-group" bindtap="paymore" wx:elif="{{ !isAllFree&&!freeCount&&!paperDetail.userPapersNum.hasOld }}">
+<view class="buy-group" wx:elif="{{ !isAllFree&&!freeCount&&!paperDetail.userPapersNum.hasOld }}">
   <view class="meal">
-    <meal></meal>
+    <meal isShow="{{ !paperDetail.userPapersNum.hasOld || !dataLoaded }}"></meal>
   </view>
   <view wx:if="{{ isIos }}">
     <press color="" title="iOS暂不支持购买，请用券兑换或联系客服"></press>
   </view>
-  <view wx:else>
+  <view wx:else bindtap="paymore">
     <press color="" title="购买" subtitle="{{ paperDetail.setting.price }}元/份"></press>
   </view>
 </view>

@@ -93,7 +93,9 @@
   font-weight: 600;
 }
 .example-content{}
-.example-child{}
+.example-child{
+  margin-bottom: 40rpx;
+}
 .example-child > .bold{
   color: #2F3038FF;
   font-size: 32rpx;

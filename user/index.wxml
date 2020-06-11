@@ -1,7 +1,7 @@
 <!--user/index.wxml-->
 <!-- 我的 -->
 <block>
-  <title></title>
+  <title id="title"></title>
 </block>
 <view class="container font" style="background-color: #fff;margin-top:{{ (statusbarHeight + titleHeight) }}px;">
   <view class="usermsg" bindtap="changePage" data-url="">
@@ -151,6 +151,14 @@
         <image src="../img/user/index/icon3.png"></image>
       </view>
     </view>
+    <view class="boxlist flex" bindtap="changePage" data-url="./addGroup">
+      <view class="listleft">
+        <image src="../img/user/index/icon13.png"></image>成为共创用户
+      </view>
+      <view class="listright"><text class="golden">免费体验更多测评</text>
+        <image src="../img/user/index/icon3.png"></image>
+      </view>
+    </view>
     <view class="boxlist" bindtap="changePage" data-url="./invoice" wx:if="{{userInfo.isBind&&teamRole!=1}}">
       <view class="listleft">
         <image src="../img/user/index/icon8.png"></image>发票管理
@@ -167,23 +175,15 @@
         <image src="../img/user/index/icon3.png"></image>
       </view>
     </view>
-    <view class="boxlist flex">
-      <button class="kfBtn" open-type="feedback"></button>
-      <view class="listleft flex-main">
-        <image src="../img/user/index/icon9.png"></image>意见反馈
-      </view>
-      <view class="listright">和我们沟通你遇到的问题或建议
-        <image src="../img/user/index/icon3.png"></image>
-      </view>
-    </view>
-    <view class="boxlist flex" bindtap="changePage" data-url="./addGroup">
-      <view class="listleft">
-        <image src="../img/user/index/icon13.png"></image>成为共创用户
-      </view>
-      <view class="listright"><text class="golden">免费体验更多测评</text>
-        <image src="../img/user/index/icon3.png"></image>
-      </view>
-    </view>
+<!--    <view class="boxlist flex">-->
+<!--      <button class="kfBtn" open-type="feedback"></button>-->
+<!--      <view class="listleft flex-main">-->
+<!--        <image src="../img/user/index/icon9.png"></image>意见反馈-->
+<!--      </view>-->
+<!--      <view class="listright">和我们沟通你遇到的问题或建议-->
+<!--        <image src="../img/user/index/icon3.png"></image>-->
+<!--      </view>-->
+<!--    </view>-->
   </view>
 </view>
 <view class="coverView" wx:if="{{showLogin||showDlg}}" bindtap="hideDlg"></view>

@@ -32,6 +32,7 @@ App({
   // host: "https://h5.luoke101.com/hola/",
   host1: "https://admin.luoke101.com/hola/", //请求host——测试
   host2: "http://localhost:3000/hola/", //请求host——测试
+  host3: "https://api.dev.luoke101.com/hola/", //微信支付--测试
   onLaunch: function(options) {
     var referrerInfo = options.referrerInfo;
     var menuBtnObj = wx.getMenuButtonBoundingClientRect();
@@ -299,6 +300,10 @@ App({
   doAjax: function(params) {
     //request请求
     var that = this;
+    var url = that.host + params.url;
+    if( params.url.startsWith("buyPaper") ){
+      url = that.host3 +params.url ;
+    }
     if (!params.noLoading) {
       //默认显示加载中弹窗
       wx.showLoading({
@@ -311,7 +316,7 @@ App({
     params.data["teamRole"] = that.teamRole;
     // console.log("main= " + that.host2 + params.url);
     wx.request({
-      url: that.host + params.url,
+      url: url,
       method: params.method || "POST",
       data: params.data || {},
       success: function(ret) {

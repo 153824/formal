@@ -210,6 +210,12 @@ Page({
       })
     })
   },
+  onHide: function () {
+    this.setData({
+      loading1: true,
+      loading2: true
+    })
+  },
   onShareAppMessage(options) {
     return app.defaultShareObj;
   },

@@ -52,7 +52,7 @@
   </view>
   <view class="example-content">
       <view class="example-child" wx:for="{{ list }}" wx:for-item="quesTypeitem" wx:for-index="quesTypeindex" wx:key="unique" data-i="{{quesTypeindex}}">
-          <rich-text class="queStem bold" nodes="<p>{{quesTypeindex+1}}、{{quesTypeitem.stem}}</p>"></rich-text>
+          <rich-text class="queStem bold rich-text" nodes="<p>{{quesTypeindex+1}}、{{quesTypeitem.stem}}</p>"></rich-text>
           <view class="subject-wrapper" wx:for="{{quesTypeitem.options}}" wx:key="unique" wx:for-item="node">
               <view class="subject-child">
                   <view>

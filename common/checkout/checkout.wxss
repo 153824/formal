@@ -94,7 +94,7 @@
 }
 .example-content{}
 .example-child{
-  margin-bottom: 40rpx;
+  margin-bottom: 60rpx;
 }
 .example-child > .bold{
   color: #2F3038FF;
@@ -108,7 +108,7 @@
   display: flex;
   align-items: center;
   height: 92rpx;
-  padding: 34rpx 50rpx;
+  padding: 6rpx 50rpx;
   margin-top: 40rpx;
   box-shadow:0px 0px 7px 0px rgba(167,185,237,0.36);
   border-radius: 16rpx;

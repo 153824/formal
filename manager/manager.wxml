@@ -1,6 +1,6 @@
 <!--manager/manager.wxml-->
 <view>
-    <title></title>
+    <title id="title"></title>
 </view>
 <view class="manager" style="margin-top: {{ statusbarHeight + titleHeight }}px;">
 <!--    <view class="toContact">关注好啦测评公众号，接收测评完成通知-->

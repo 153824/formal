@@ -7,6 +7,9 @@
                    image="{{ dataItem.smallImg }}" objectId="{{ dataItem.id }}">
             </skill>
         </view>
-        <empty isShow="{{ list.length <= 0 }}" type="default" title="暂无测评"></empty>
+        <view>
+            <empty isShow="{{ list.length <= 0 }}" type="default" title="暂无测评"></empty>
+        </view>
     </view>
 </view>
+<mask isShow="{{ loading }}"></mask>

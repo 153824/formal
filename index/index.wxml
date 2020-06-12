@@ -230,3 +230,4 @@
 
 </view>
 <view wx:if="{{ loading1 || loading2 }}" class="mask"></view>
+<mask isShow="{{ loading1 || loading2 }}"></mask>

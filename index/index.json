@@ -2,7 +2,8 @@
   "usingComponents": {
     "card": "../common/card/card",
     "skill": "../common/skill/skill",
-    "title": "../common/title/title"
+    "title": "../common/title/title",
+    "mask": "../common/mask/mask"
   },
   "navigationStyle": "custom"
 }

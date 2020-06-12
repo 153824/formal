@@ -10,7 +10,7 @@
   </view>
 </view> -->
 <block>
-  <title></title>
+  <title id="title"></title>
 </block>
 <view class="topTestView flex" style="margin-top:{{ (statusbarHeight + titleHeight) }}px;" wx:if="{{oldShareInfo&&oldShareInfo.id}}" bindtap="continueTest">
   <image class="icon25" src="../img/index/icon25.png"></image>

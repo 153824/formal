@@ -2,7 +2,7 @@
 const app = getApp();
 Page({
   data:{
-    checkedId: "5ea91ca0c81f9b00066426b2",
+    checkedId: "",
     menu: [
       {
         id: "GLL",
@@ -67,19 +67,16 @@ Page({
     isIos: app.isIos,
   },
   onLoad: function(){
-    
-  },
-  onShow: function(){
     let that = this;
     app.doAjax({
       url: "../haola/positionTags",
       method: "GET",
       success: function(ret) {
-        console.log(ret.data[0].childs);
         that.setData({
           menu: ret.data,
           childs: ret.data[0].childs,
-          isConnected: true
+          isConnected: true,
+          checkedId: ret.data[0].objectId
         });
       },
       fail: function (ret) {
@@ -89,6 +86,10 @@ Page({
         })
       }
     });
+  },
+  onShow: function(){
+    this.title = this.selectComponent("#title");
+    app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
   },
   changeTab: function (e) {
     const checkedId = e.currentTarget.id,
@@ -113,5 +114,8 @@ Page({
     wx.navigateTo({
       url: `./more?id=${ 620412 }`
     })
+  },
+  onHide() {
+
   }
 });

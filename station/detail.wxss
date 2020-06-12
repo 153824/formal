@@ -970,8 +970,8 @@
 }
 .info-wrapper > .title{
   display: flex;
-  font-size: 44rpx;
-  font-weight: 500;
+  font-size: 36rpx;
+  font-weight: 600;
   color: #070922FF;
 }
 .price-wrapper{

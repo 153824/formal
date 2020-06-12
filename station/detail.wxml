@@ -27,12 +27,11 @@
   </view>
   <view style="background-color: #fff;margin-top: 20rpx;">
 <!--    wx:if="{{hasFreeTick&&!freeTickId&&teamRole!=1&&((paperDetail.setting.price&&!isfree && paperDetail.setting.testRule.maxInvite != 0)&&dataLoaded&&couponGet0)||(isfree&&paperDetail.userPapersNum.hasOld&&paperDetail.setting.price)}}"-->
-    <block wx:if="{{hasFreeTick&&!freeTickId&&teamRole!=1&&((paperDetail.setting.price&&!isfree && paperDetail.setting.testRule.maxInvite != 0)&&dataLoaded&&couponGet0)||(isfree&&paperDetail.userPapersNum.hasOld&&paperDetail.setting.price)}}">
+    <block wx:if="{{(!couponGet0)&&teamRole==3&&isTodayTeam}}">
       <button class="get-free-ticket" open-type="share" style="background: transparent;border: none !important;" data-id="{{ paperDetail.id }}" wx:if="{{!freeTick}}">
         <ticket></ticket>
       </button>
       <view>
-        {{ console.log(hasFreeTick,freeTickId,teamRole) }}
       </view>
     </block>
     <checkout title="测评简介" type="introduction" info="{{ paperDetail.setting.info }}"></checkout>

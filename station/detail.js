@@ -270,6 +270,7 @@ Page({
             node["options"] = options;
           });
         }
+        console.log("app.freeTickId", app.freeTickId);
         that.setData({
           freeTickId: !isAllFree ? app.freeTickId : '',
           teamRole: app.teamRole,

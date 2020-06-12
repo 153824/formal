@@ -10,6 +10,7 @@
 .title-bar{
     display: flex;
     align-items: center;
+    justify-content: left;
     margin-left: 20px;
     line-height: 22px;
     font-size: 16px;
@@ -25,4 +26,20 @@
     width: 8px;
     height: 6px;
     margin-left: 12px;
+}
+.register{
+    justify-self: left !important;
+    border: unset !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    color: #070922FF !important;
+    text-align: left !important;
+    background-color: transparent !important;
+    margin: unset !important;
+    padding: unset !important;
+    line-height: 22px !important;
+    text-decoration: unset !important;
+}
+.register::after{
+    border: unset !important;
 }

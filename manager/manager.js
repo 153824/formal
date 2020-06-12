@@ -37,20 +37,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
     var { checkedItem,checkedTime } = this.data;
     var that = this;
     if( checkedItem === "0" ){
@@ -99,6 +85,71 @@ Page({
         }
       })
     }
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    /*1.获取title组件 2.调用title组件的*/
+    this.title = this.selectComponent("#title");
+    app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
+    /**/
+    // var { checkedItem,checkedTime } = this.data;
+    // var that = this;
+    // if( checkedItem === "0" ){
+    //   app.doAjax({
+    //     url: "../haola/reports",
+    //     method: "get",
+    //     data: {
+    //       orgId: app.teamId,
+    //       userId: app.userId,
+    //       type: checkedTime,
+    //       page: 1,
+    //       pageSize: 10
+    //     },
+    //     success: function (res) {
+    //       var catalog = [];
+    //       res.data.forEach((item,key)=>{
+    //         catalog.push(item.evaluation.name)
+    //       });
+    //       catalog.unshift("全部测评");
+    //       /*数组去重*/
+    //       var catalogSet = new Set(catalog);
+    //
+    //       that.setData({
+    //         evaluationList: res.data,
+    //         catalog: Array.from(catalogSet)
+    //       });
+    //       console.log("../haola/reports",res)
+    //     }
+    //   })
+    // }
+    // if( checkedItem === "1" ){
+    //   app.doAjax({
+    //     url: "../haola/dispatchs",
+    //     method: "get",
+    //     data: {
+    //       orgId: app.teamId,
+    //       type: checkedTime,
+    //       page: 1,
+    //       pageSize: 10
+    //     },
+    //     success: function (res) {
+    //       that.setData({
+    //         useList: res.data
+    //       });
+    //       console.log("useList: res.data", res.data)
+    //     }
+    //   })
+    // }
   },
 
   /**

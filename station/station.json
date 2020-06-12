@@ -4,7 +4,8 @@
     "skill": "../common/skill/skill",
     "title": "../common/title/title",
     "free": "../common/free/free",
-    "network": "../common/network/network"
+    "network": "../common/network/network",
+    "mask": "../common/mask/mask"
   },
   "navigationStyle": "custom"
 }

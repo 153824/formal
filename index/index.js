@@ -34,9 +34,10 @@ Page({
     loading2: true,
   },
   onLoad: function(options) {
-    // wx.switchTab({
-    //   url: '/store/store',
-    // });
+    this.setData({
+      loading1: true,
+      loading2: true,
+    });
     var that = this;
     var skipFreeTicket = wx.getStorageSync("skipFreeTicket");
     firstLoad = true;
@@ -154,9 +155,9 @@ Page({
         column: targetColumn
       });
     }).finally(()=>{
-      // that.setData({
-      //   loading1: false
-      // })
+      that.setData({
+        loading1: false
+      })
     });
     const teamEvaluationPromise = new Promise(function (resolve,reject) {
       app.doAjax({
@@ -187,21 +188,19 @@ Page({
       });
       return Promise.all(teamEvaluationPromiseList);
     }).then(res=>{
-      console.log(res);
       that.setData({
         teamEvaluation: res
       })
     }).finally(()=>{
-      // that.setData({
-      //   loading2: false
-      // })
+      that.setData({
+        loading2: false
+      })
     })
   },
   onShow: function() {
     this.title = this.selectComponent("#title");
     app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
     var that = this;
-    // var skipFreeTicket = wx.getStorageSync("skipFreeTicket");
     app.freeTickId = "";
     if (!app.isLogin) {
       app.checkUser = function() {
@@ -210,10 +209,14 @@ Page({
       };
       return;
     };
-    that.setData({
+    this.setData({
       loading1: false,
       loading2: false,
-    })
+    });
+    // that.setData({
+    //   loading1: false,
+    //   loading2: false,
+    // })
     // app.doAjax({
     //   url: "getMyticket",
     //   method: "get",
@@ -372,10 +375,7 @@ Page({
     // })
   },
   onHide: function () {
-    // this.setData({
-    //   loading1: true,
-    //   loading2: true
-    // })
+
   },
   onShareAppMessage(options) {
     return app.defaultShareObj;

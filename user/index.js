@@ -16,16 +16,16 @@ Page({
     titleHeight: app.globalData.titleHeight,
   },
   onLoad: function(options) {
+    var that = this;
+    // that.loadUserMsg();
+    app.getUserInfo(that.loadUserMsg);
     this.setData({
       isIos: app.isIos
     });
   },
   onShow: function() {
-    var that = this;
-    // that.loadUserMsg();
-    app.getUserInfo(that.loadUserMsg);
     this.title = this.selectComponent("#title");
-    app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
+    app.getUserInfo(this.title.loadUserMsg.call(this.title._this(),["user/index"]));
   },
   loadUserMsg: function() {
     var userData = app.globalData.userInfo || wx.getStorageSync("userInfo");
@@ -239,4 +239,4 @@ Page({
       showDlg: false
     });
   }
-})
+});

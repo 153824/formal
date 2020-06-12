@@ -5,7 +5,10 @@ Component({
    * 组件的属性列表
    */
   properties: {
-
+    url: {
+      type: String,
+      value: "index/index"
+    }
   },
 
   /**
@@ -179,6 +182,7 @@ Component({
      * 切换团队
      */
     changeTeam: function(e) {
+      var that = this;
       var val = e.detail.value;
       var data = this.data;
       var teamList = data.teamList;
@@ -203,6 +207,16 @@ Component({
         teamRole: app.teamRole,
       });
       this.loadUserMsg();
+      wx.switchTab({
+        url: `../${that.properties.url}`,
+        success: function (e) {
+          var page = getCurrentPages().pop();
+          if( page === "undefined" || page === "null" ){
+            return;
+          }
+          page.onLoad();
+        }
+      })
     },
     /**
      * 退出团队

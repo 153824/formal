@@ -397,7 +397,6 @@ App({
         pageSize: 12
       },
       success: function(list) {
-        console.log(list);
         if (that.checkUser && !that.isLogin) {
           that.isLogin = true;
         }

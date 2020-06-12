@@ -1,5 +1,5 @@
 <block>
-  <title id="title"></title>
+  <title id="title" url="station/station"></title>
 </block>
 <view class="store-wrapper" style="margin-top:{{ (statusbarHeight + titleHeight) }}px;">
   <scroll-view class="left-catalog" scroll-y="true" scroll-x="false" scroll-with-animation="true" bindtap="tabMenu">
@@ -36,3 +36,4 @@
     <network isShow="{{ !isConnected }}" title="网络飘了~" width="332" height="218"></network>
   </scroll-view>
 </view>
+<mask isShow="{{ loading }}"></mask>

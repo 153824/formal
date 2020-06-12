@@ -8,6 +8,7 @@ Page({
   data: {
     list: [],
     isIos: app.isIos,
+    loading: true
   },
 
   /**
@@ -25,9 +26,8 @@ Page({
       method: "get",
       success: function (res) {
         that.setData({
-          list: res.data
-        },()=>{
-          console.log(this.data)
+          list: res.data,
+          loading: false
         })
       }
     })

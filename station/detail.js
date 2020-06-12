@@ -34,10 +34,6 @@ Page({
     loading: true
   },
   onLoad: function(options) {
-    // wx.showShareMenu({
-    //   // 要求小程序返回分享目标信息
-    //   withShareTicket: true
-    // });
     var that = this;
     isFirstLoad = true;
     console.log(options);
@@ -159,7 +155,7 @@ Page({
           });
         }
       });
-    };
+    }
   },
   closeGiftDlg: function() {
     this.setData({

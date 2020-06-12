@@ -65,22 +65,23 @@ Page({
     titleHeight: app.globalData.titleHeight,
     isConnected: true,
     isIos: app.isIos,
+    loading: true
   },
   onLoad: function(){
     let that = this;
     app.doAjax({
       url: "../haola/positionTags",
       method: "GET",
-      success: function(ret) {
+      success: function(res) {
         that.setData({
-          menu: ret.data,
-          childs: ret.data[0].childs,
+          menu: res.data,
+          childs: res.data[0].childs,
           isConnected: true,
-          checkedId: ret.data[0].objectId
+          checkedId: res.data[0].objectId,
+          loading: false
         });
       },
       fail: function (ret) {
-        console.log("../haola/positionTags",ret);
         that.setData({
           isConnected: false
         })

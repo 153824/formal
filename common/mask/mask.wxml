@@ -1,0 +1,2 @@
+<!--common/mask/mask.wxml-->
+<view wx:if="{{ isShow }}" class="mask"></view>

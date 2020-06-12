@@ -1,7 +1,7 @@
 <!--user/index.wxml-->
 <!-- 我的 -->
 <block>
-  <title id="title"></title>
+  <title id="title" url="user/index"></title>
 </block>
 <view class="container font" style="background-color: #fff;margin-top:{{ (statusbarHeight + titleHeight) }}px;">
   <view class="usermsg" bindtap="changePage" data-url="">

@@ -1,5 +1,5 @@
 <block>
-  <title id="title"></title>
+  <title id="title" url="station/station"></title>
 </block>
 <view class="store-wrapper" style="margin-top:{{ (statusbarHeight + titleHeight) }}px;">
   <scroll-view class="left-catalog" scroll-y="true" scroll-x="false" scroll-with-animation="true" bindtap="tabMenu">

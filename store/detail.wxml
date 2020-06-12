@@ -77,7 +77,7 @@
         <view class="moreright {{!isAllFree&&!paperDetail.userPapersNum.freeTicket&&!paperDetail.userPapersNum.vipTicket&&isIos?'':''}}" wx:if="{{teamRole!=1&&!isAllFree&&!paperDetail.userPapersNum.freeTicket&&!paperDetail.userPapersNum.vipTicket&&isIos}}"  bindtap="paymore">{{isIos?'用券兑换':'购买更多'}}</view>
         <view class="moreright" wx:elif="{{!isAllFree&&teamRole!=1}}" bindtap="paymore">{{isIos?'用券兑换':'购买更多'}}</view>
       </view>
-      <view class="freeget" wx:if="{{hasFreeTick&&!freeTickId&&teamRole!=1&&((paperDetail.setting.price&&!isfree && paperDetail.setting.testRule.maxInvite != 0)&&dataLoaded&&couponGet0)||(isfree&&paperDetail.userPapersNum.hasOld&&paperDetail.setting.price)}}" bindtap="openpopup"bindtap="openpopup">
+      <view class="freeget" wx:if="{{hasFreeTick&&!freeTickId&&teamRole!=1&&((paperDetail.setting.price&&!isfree && paperDetail.setting.testRule.maxInvite != 0)&&dataLoaded&&couponGet0)||(isfree&&paperDetail.userPapersNum.hasOld&&paperDetail.setting.price)}}" bindtap="openpopup">
         <image class="freegetbg" src="../img/store/detail/bg.png"></image>
         <text class="freegettext"></text>
         <text class="freegetredfont" wx:if="{{!freeTick}}">免费再领3份测评</text>

@@ -272,6 +272,20 @@
 					"pathName": "index/index",
 					"query": "id= 5ee0762890962500088b5343&title=",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "station/station",
+					"pathName": "station/station",
+					"query": "userId=5ee1c3825291d70009685874",
+					"scene": null
+				},
+				{
+					"id": 31,
+					"name": "store/detail",
+					"pathName": "store/detail",
+					"query": "id = 5db1624aa673f5007249c9ee",
+					"scene": null
 				}
 			]
 		}

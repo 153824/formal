@@ -10,7 +10,7 @@
   </view>
 </view> -->
 <block>
-  <title></title>
+  <title id="title"></title>
 </block>
 <view class="topTestView flex" style="margin-top:{{ (statusbarHeight + titleHeight) }}px;" wx:if="{{oldShareInfo&&oldShareInfo.id}}" bindtap="continueTest">
   <image class="icon25" src="../img/index/icon25.png"></image>
@@ -63,8 +63,8 @@
     </view>
   </view>
 
-  <view>
-    <view wx:if="{{ teamEvaluation.length > 0 }}" class="header">
+  <view wx:if="{{ teamEvaluation.length > 0 }}">
+    <view class="header">
       <text>专属测评</text>
     </view>
     <view class="card-wrapper">
@@ -229,4 +229,4 @@
 </view>
 
 </view>
-<view wx:if="{{ loading1 && loading2 }}" class="mask"></view>
+<view wx:if="{{ loading1 || loading2 }}" class="mask"></view>

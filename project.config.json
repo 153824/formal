@@ -300,6 +300,13 @@
 					"pathName": "user/index",
 					"query": "id=5db1624aa673f5007249c9ee",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "user/myTeam",
+					"pathName": "user/myTeam",
+					"query": "id=5ed185aa7ce4740006746bbd",
+					"scene": null
 				}
 			]
 		}

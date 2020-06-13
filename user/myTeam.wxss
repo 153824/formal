@@ -151,3 +151,17 @@ page {
 .shareBtn:after {
   border: 0;
 }
+.shareBtn{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 252rpx;
+  height: 64rpx;
+  padding: 0 44rpx;
+  margin: 40rpx 0 0 32rpx;
+  background: rgba(53,62,232,1);
+  border-radius: 30rpx;
+  font-size: 32rpx;
+  color: white;
+  box-sizing: content-box;
+}

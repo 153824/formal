@@ -5,7 +5,8 @@
     "title": "../common/title/title",
     "free": "../common/free/free",
     "network": "../common/network/network",
-    "mask": "../common/mask/mask"
+    "mask": "../common/mask/mask",
+    "serving": "../common/serving/serving"
   },
   "navigationStyle": "custom"
 }

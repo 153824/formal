@@ -2,6 +2,5 @@
   "navigationBarTitleText": "个人中心",
   "usingComponents": {
     "title": "../common/title/title"
-  },
-  "navigationStyle": "custom"
+  }
 }

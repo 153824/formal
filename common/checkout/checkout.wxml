@@ -34,7 +34,7 @@
   <view class="scenarios-area" wx:for="{{ list }}" wx:for-item="applyitem" wx:for-index="applyindex" wx:key="unique">
       <view class="scenarios-content">
           <view class="scenarios-child">
-              <image class="scenarios-icon" src="{{ applyitem.icon||'../../img/store/detail/icon5.png' }}"></image>
+              <image class="scenarios-icon" src="{{ applyitem.icon.length <= 0 ? '../../img/report/icon23.png' : applyitem.icon }}"></image>
               <text class="scenarios-title">{{ applyitem.name }}</text>
           </view>
           <view class="scenarios-info">

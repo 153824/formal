@@ -107,7 +107,7 @@
 .subject-child{
   display: flex;
   align-items: center;
-  height: 92rpx;
+  min-height: 92rpx;
   padding: 6rpx 50rpx;
   margin-top: 40rpx;
   box-shadow:0px 0px 7px 0px rgba(167,185,237,0.36);

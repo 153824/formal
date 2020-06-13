@@ -1,17 +1,18 @@
 <!--user/index.wxml-->
 <!-- 我的 -->
-<block>
-  <title id="title" url="user/index"></title>
-</block>
-<view class="container font" style="background-color: #fff;margin-top:{{ (statusbarHeight + titleHeight) }}px;">
+<!--<block>-->
+<!--  <title id="title" url="user/index"></title>-->
+<!--</block>-->
+<!--margin-top:{{ (statusbarHeight + titleHeight) }}px;-->
+<view class="container font" style="background-color: #fff;">
   <view class="usermsg" bindtap="changePage" data-url="">
     <!-- 跳转个人信息查看界面 -->
     <button wx:if="{{!userInfo.isBind}}" class="userInfoBtn" bindtap="showLoginDlg"></button>
     <span style="position: relative;">
       <image class="headerImage" src="{{userInfo.isBind?(userInfo.avatar||'../img/user/useravatar.png'):'../img/user/useravatar.png'}}"></image>
-      <view wx:if="{{teamRole==1&&userInfo.isBind}}" class="roleTxt" bindtap="toShowDlg">普通成员</view>
-      <view wx:if="{{teamRole==2&&userInfo.isBind}}" class="roleTxt" bindtap="toShowDlg">子管理员</view>
-      <view wx:if="{{teamRole==3&&userInfo.isBind}}" class="roleTxt" bindtap="toShowDlg">超级管理员</view>
+      <view wx:if="{{teamRole==1&&userInfo.isBind}}" class="roleTxt" >普通成员</view>
+      <view wx:if="{{teamRole==2&&userInfo.isBind}}" class="roleTxt" >子管理员</view>
+      <view wx:if="{{teamRole==3&&userInfo.isBind}}" class="roleTxt" >超级管理员</view>
     </span>
     <view class="usernanme">
       <view class="fontbig" style="margin-left: -8rpx;">
@@ -33,74 +34,67 @@
     </view>
   </view>
   <button wx:if="{{!userInfo.isBind}}" class="userInfoBtn1" open-type="getUserInfo" bindgetuserinfo="getUserInfo"></button>
-<!--  <block wx:if="{{teamRole!=1}}">-->
-<!--    <view class="centerbox isVip" wx:if="{{vip1}}">-->
+
+  <block wx:if="{{teamRole!=1}}">
+    <view class="centerbox isVip" wx:if="{{vip1}}">
 <!--      <image class="bgImg" src="../img/user/vip/icon1.png"></image>-->
-<!--      <view class="contentView">-->
-<!--        <view class="flex">-->
-<!--          <view class="name flex-main">体验版会员</view>-->
-<!--          &lt;!&ndash; <view class="toVipDetail" bindtap="changePage" data-url="../store/vipdetail?type=1">查看权益</view> &ndash;&gt;-->
-<!--        </view>-->
-<!--        <view class="vipTime flex">-->
-<!--          <view>{{userInfo.vipEndTime}}到期</view>-->
-<!--          <view class="toPay" wx:if="{{!isIos}}" bindtap="changePage" data-url="../store/becomevip">升级</view>-->
-<!--        </view>-->
-<!--      </view>-->
-<!--    </view>-->
-<!--    <view class="centerbox isVip" wx:elif="{{vip2||vip3||vip4}}">-->
+      <view class="contentView">
+        <view class="flex">
+          <view class="name flex-main">体验版会员</view>
+          <!-- <view class="toVipDetail" bindtap="changePage" data-url="../store/vipdetail?type=1">查看权益</view> -->
+        </view>
+        <view class="vipTime flex">
+          <view>{{userInfo.vipEndTime}}到期</view>
+          <view class="toPay" wx:if="{{!isIos}}" bindtap="changePage" data-url="../store/becomevip">升级</view>
+        </view>
+      </view>
+    </view>
+    <view class="centerbox isVip" wx:elif="{{vip2||vip3||vip4}}">
 <!--      <image class="bgImg" src="../img/user/vip/icon1.png"></image>-->
-<!--      <view class="contentView">-->
-<!--        <view class="flex">-->
-<!--          <view class="name flex-main" wx:if="{{vip4}}">旗舰版会员</view>-->
-<!--          <view class="name flex-main" wx:elif="{{vip3}}">专业版会员</view>-->
-<!--          <view class="name flex-main" wx:elif="{{vip2}}">标准版会员</view>-->
-<!--          &lt;!&ndash; <view class="toVipDetail" bindtap="changePage" data-url="../store/vipdetail?type=2">查看权益</view> &ndash;&gt;-->
-<!--        </view>-->
-<!--        <view class="vipTime flex">-->
-<!--          <view wx:if="{{vip4}}">{{userInfo.vip4EndTime}}到期</view>-->
-<!--          <view wx:elif="{{vip3}}">{{userInfo.vip3EndTime}}到期</view>-->
-<!--          <view wx:elif="{{vip2}}">{{userInfo.vip2EndTime}}到期</view>-->
-<!--          <view class="toPay" wx:if="{{!isIos&&teamRole==3}}" bindtap="changePage" data-url="../store/becomevip">续费</view>-->
-<!--          <view class="toPay1" wx:if="{{isIos&&teamRole==3}}">iOS暂不支持续费</view>-->
-<!--        </view>-->
-<!--      </view>-->
-<!--    </view>-->
-<!--&lt;!&ndash;    <view class="centerbox" wx:elif="{{!isIos}}" bindtap="changePage" data-url="../store/becomevip">&ndash;&gt;-->
-<!--&lt;!&ndash;      <image src="../img/user/index/bg.png"></image>&ndash;&gt;-->
-<!--&lt;!&ndash;      <view class="centertext">&ndash;&gt;-->
-<!--&lt;!&ndash;        <image src="../img/user/index/icon1.png"></image>&ndash;&gt;-->
-<!--&lt;!&ndash;        <text>开通会员,预计可省1700元/年</text>&ndash;&gt;-->
-<!--&lt;!&ndash;      </view>&ndash;&gt;-->
-<!--&lt;!&ndash;    </view>&ndash;&gt;-->
-<!--    <view class="centerbox" wx:else>-->
-<!--      <image src="../img/user/index/bg.png"></image>-->
-<!--      <view class="centertext1">-->
-<!--        <text>iOS暂不支持购买会员</text>-->
-<!--      </view>-->
-<!--    </view>-->
-<!--  </block>-->
+      <view class="contentView">
+        <view class="flex">
+          <view class="name flex-main" wx:if="{{vip4}}">旗舰版会员</view>
+          <view class="name flex-main" wx:elif="{{vip3}}">专业版会员</view>
+          <view class="name flex-main" wx:elif="{{vip2}}">标准版会员</view>
+          <!-- <view class="toVipDetail" bindtap="changePage" data-url="../store/vipdetail?type=2">查看权益</view> -->
+        </view>
+        <view class="vipTime flex">
+          <view wx:if="{{vip4}}">{{userInfo.vip4EndTime}}到期</view>
+          <view wx:elif="{{vip3}}">{{userInfo.vip3EndTime}}到期</view>
+          <view wx:elif="{{vip2}}">{{userInfo.vip2EndTime}}到期</view>
+          <view class="toPay" wx:if="{{!isIos&&teamRole==3}}" bindtap="changePage" data-url="../store/becomevip">续费</view>
+          <view class="toPay1" wx:if="{{isIos&&teamRole==3}}">iOS暂不支持续费</view>
+        </view>
+      </view>
+    </view>
+    <view class="centerbox" wx:elif="{{!isIos}}" bindtap="changePage" data-url="../store/becomevip">
+      <image src="../img/user/index/bg.png"></image>
+      <view class="centertext">
+        <image src="../img/user/index/icon1.png"></image>
+        <text>开通会员,预计可省1700元/年</text>
+      </view>
+    </view>
+    <view class="centerbox" wx:else>
+      <image src="../img/user/index/bg.png"></image>
+      <view class="centertext1">
+        <text>iOS暂不支持购买会员</text>
+      </view>
+    </view>
+  </block>
   <view class="test-set-meal">
     <view class="set-meal-wrapper">
       <view class="meal-title">
-        <text>测评管理</text>
-        <text class="meal-rule">兑换券使用规则</text>
+        <text>测评券套餐</text>
+        <text class="meal-rule">券可用于兑换平台任意测评</text>
       </view>
       <scroll-view scroll-x="true">
         <view class="set-meal-group">
-          <view class="set-meal-child">
+          <view class="set-meal-child" wx:for="{{ meal }}" wx:for-item="mealItem" data-type="{{ mealItem.type }}"
+                bindtap="buyTicket">
             <view class="title">测评兑换券</view>
-            <view class="count">50<text>张</text></view>
-            <view class="price">￥2480</view>
-          </view>
-          <view class="set-meal-child">
-            <view class="title">测评兑换券</view>
-            <view class="count">50<text>张</text></view>
-            <view class="price">￥2480</view>
-          </view>
-          <view class="set-meal-child">
-            <view class="title">测评兑换券</view>
-            <view class="count">50<text>张</text></view>
-            <view class="price">￥2480</view>
+            <view class="count">{{ mealItem.number }}<text>张</text></view>
+            <view class="price">￥{{ mealItem.price }}</view>
+            <image class="ticket-bg" src="../img/user/index/ticket.png" style="height: 100.44px;width: 53.46px;"></image>
           </view>
         </view>
       </scroll-view>
@@ -167,32 +161,16 @@
         <image src="../img/user/index/icon3.png"></image>
       </view>
     </view>
-<!--    <view class="boxlist flex">-->
-<!--      <button class="kfBtn" open-type="feedback"></button>-->
-<!--      <view class="listleft flex-main">-->
-<!--        <image src="../img/user/index/icon9.png"></image>意见反馈-->
+
+<!--    <view class="boxlist" bindtap="changePage" data-url="./useHistory" wx:if="{{userInfo.isBind&&teamRole!=1}}">-->
+<!--      <view class="listleft">-->
+<!--        <image src="../img/user/index/icon8.png"></image>使用记录-->
 <!--      </view>-->
-<!--      <view class="listright">和我们沟通你遇到的问题或建议-->
+<!--      <view class="listright">-->
 <!--        <image src="../img/user/index/icon3.png"></image>-->
 <!--      </view>-->
 <!--    </view>-->
-    <view class="boxlist flex" bindtap="changePage" data-url="./addGroup">
-      <view class="listleft">
-        <image src="../img/user/index/icon8.png"></image>使用记录
-      </view>
-      <view class="listright">
-        <image src="../img/user/index/icon3.png"></image>
-      </view>
-    </view>
-<!--    <view class="boxlist flex">-->
-<!--      <button class="kfBtn" open-type="feedback"></button>-->
-<!--      <view class="listleft flex-main">-->
-<!--        <image src="../img/user/index/icon9.png"></image>意见反馈-->
-<!--      </view>-->
-<!--      <view class="listright">和我们沟通你遇到的问题或建议-->
-<!--        <image src="../img/user/index/icon3.png"></image>-->
-<!--      </view>-->
-<!--    </view>-->
+
   </view>
 </view>
 <view class="coverView" wx:if="{{showLogin||showDlg}}" bindtap="hideDlg"></view>
@@ -200,7 +178,7 @@
   <view class="title">您还未登录</view>
   <view class="dlgContent">
     <text>请先登录再进行操作</text>
-    <image src="../img/user/icon1.png"></image>
+<!--    <image src="../img/user/icon1.png"></image>-->
   </view>
   <view class="dlgBottom flex">
     <view class="noLogin btn" bindtap="hideLoginDlg">暂不登录</view>

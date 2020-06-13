@@ -60,7 +60,7 @@
 }
 .user-history-child{
     padding: 40rpx 0 40rpx 0;
-    /*border: 2rpx solid #0709221A;*/
+    border: 2rpx solid #0709221A;
 }
 .title{
     display: flex;

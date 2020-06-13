@@ -10,15 +10,15 @@
 <view class="list">
   <view class="listInfo flex">
     <view class="flex-main">
-      <view class="title">子管理员</view>
-      <view class="info">购买、发放、体验测评/查看报告</view>
+      <view class="title">子管理员 ({{ adminMember.length }}/{{ adminNum }})</view>
+      <view class="info">可与您一同发放测评，查看报告</view>
     </view>
-    <button wx:if="{{adminMember.length<adminNum}}" open-type="share" class="shareBtn" bindtap="inviteMember" data-role="2">
-      <image src="../img/user/teams/icon6.png"></image>
-    </button>
-    <button wx:else class="shareBtn" bindtap="inviteMember" data-num="{{adminNum}}" data-n="子管理员">
-      <image src="../img/user/teams/icon6.png"></image>
-    </button>
+<!--    <button wx:if="{{adminMember.length<adminNum}}" open-type="share" class="shareBtn" bindtap="inviteMember" data-role="2">-->
+<!--      <image src="../img/user/teams/icon6.png"></image>-->
+<!--    </button>-->
+<!--    <button wx:else class="shareBtn" bindtap="inviteMember" data-num="{{adminNum}}" data-n="子管理员">-->
+<!--      <image src="../img/user/teams/icon6.png"></image>-->
+<!--    </button>-->
   </view>
   <block wx:for="{{adminMember}}" wx:key="unique">
     <view class="item flex">
@@ -33,15 +33,29 @@
       </view> -->
     </view>
   </block>
+
+<!--  <view class="add-child-admin">-->
+<!--    <image src="../img/user/index/icon14.png" style="height: 16px;width: 16px;margin-right: 14rpx;"></image>-->
+<!--    <text>添加子管理员</text>-->
+<!--  </view>-->
+
+  <button wx:if="{{adminMember.length<adminNum}}" open-type="share" class="shareBtn" bindtap="inviteMember" data-role="2">
+    <image src="../img/user/index/icon14.png" style="height: 16px;width: 16px;margin-right: 14rpx;"></image>
+    添加子管理员
+  </button>
+  <button wx:else class="shareBtn" bindtap="inviteMember" data-num="{{adminNum}}" data-n="子管理员">
+    <image src="../img/user/index/icon14.png" style="height: 16px;width: 16px;margin-right: 14rpx;"></image>
+    添加子管理员
+  </button>
 </view>
 <view style="height:60rpx;"></view>
 <view class="list">
   <view class="listInfo flex">
-    <view class="flex-main">
-      <view class="title">普通成员</view>
-      <view class="info">查看他人分享给自己的报告</view>
-      <view class="info">请通过报告详情页分享报告来邀请</view>
-    </view>
+<!--    <view class="flex-main">-->
+<!--      <view class="title">普通成员</view>-->
+<!--      <view class="info">查看他人分享给自己的报告</view>-->
+<!--      <view class="info">请通过报告详情页分享报告来邀请</view>-->
+<!--    </view>-->
     <!-- <button wx:if="{{member.length<5}}" open-type="share" class="shareBtn" bindtap="inviteMember" data-role="1">
       <image src="../img/user/teams/icon6.png"></image>
     </button>

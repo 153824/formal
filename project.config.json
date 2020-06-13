@@ -148,7 +148,7 @@
 					"id": 12,
 					"name": "报告详情",
 					"pathName": "report/detail",
-					"query": "id=5daaa765a673f50072176475",
+					"query": "id=5ed185aa7ce4740006746bbd",
 					"scene": null
 				},
 				{
@@ -292,6 +292,20 @@
 					"name": "manager/manager",
 					"pathName": "manager/manager",
 					"query": "id = 5db1624aa673f5007249c9ee",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "user/index",
+					"pathName": "user/index",
+					"query": "id=5db1624aa673f5007249c9ee",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "user/myTeam",
+					"pathName": "user/myTeam",
+					"query": "id=5ed185aa7ce4740006746bbd",
 					"scene": null
 				}
 			]

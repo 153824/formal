@@ -9,9 +9,9 @@
     <button wx:if="{{!userInfo.isBind}}" class="userInfoBtn" bindtap="showLoginDlg"></button>
     <span style="position: relative;">
       <image class="headerImage" src="{{userInfo.isBind?(userInfo.avatar||'../img/user/useravatar.png'):'../img/user/useravatar.png'}}"></image>
-      <view wx:if="{{teamRole==1&&userInfo.isBind}}" class="roleTxt" bindtap="toShowDlg">普通成员</view>
-      <view wx:if="{{teamRole==2&&userInfo.isBind}}" class="roleTxt" bindtap="toShowDlg">子管理员</view>
-      <view wx:if="{{teamRole==3&&userInfo.isBind}}" class="roleTxt" bindtap="toShowDlg">超级管理员</view>
+      <view wx:if="{{teamRole==1&&userInfo.isBind}}" class="roleTxt" >普通成员</view>
+      <view wx:if="{{teamRole==2&&userInfo.isBind}}" class="roleTxt" >子管理员</view>
+      <view wx:if="{{teamRole==3&&userInfo.isBind}}" class="roleTxt" >超级管理员</view>
     </span>
     <view class="usernanme">
       <view class="fontbig" style="margin-left: -8rpx;">

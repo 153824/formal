@@ -118,6 +118,7 @@ Page({
             },
             success: function(ret) {
               var freeTick = "";
+              console.log("ret.forEach",ret);
               ret.forEach(function(n) {
                 if (n.type == 2) { //有领取过3张免费测评券
                   freeTick = n.id;

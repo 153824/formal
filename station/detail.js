@@ -190,6 +190,7 @@ Page({
       },
       noLoading: noLoading,
       success: function(ret) {
+        console.log(ret);
         isFirstLoad = false;
         if (!ret || !ret.id) {
           wx.showModal({
@@ -943,7 +944,12 @@ Page({
     console.log("teamId,paperId,userId",teamId,paperId,userId);
     setTimeout(()=>{
       app.doAjax({
-        url: `../hola/drawVoucher?userId=${userId}&paperId=${paperId}&teamId=${teamId}`
+        url: `../hola/drawVoucher?userId=${userId}&paperId=${paperId}&teamId=${teamId}`,
+        success: function (res) {
+          wx.showModal({
+            title: res.msg
+          })
+        }
       })
     },1000);
     return {
@@ -965,6 +971,41 @@ Page({
     var id = this.data.oldShareInfo.id;
     wx.navigateTo({
       url: '../test/guide?id=' + id
+    });
+  },
+  getNewerTicket: function (e) {
+    app.doAjax({
+      url: "couponGet",
+      method: "post",
+      data: {},
+      error: function(ret) {
+        app.toast(ret.msg);
+        // setTimeout(function() {
+        //   wx.navigateBack();
+        // }, 1500);
+      },
+      success: function(ret) {
+        app.getUserInfo(); //更新用户信息
+        console.log(ret);
+        ret.forEach(function(node) {
+          var column = node.column;
+          var paper = node.paper;
+          node.endTime = node.endTime ? app.changeDate(node.endTime, "yyyy-MM-dd") : "";
+          if (paper) {
+            node.name = paper.name;
+            node.name1 = "仅限于" + node.name;
+          } else if (column) {
+            node.name = column.name;
+            node.name1 = "仅限于" + node.name + "的测评";
+          } else {
+            node.name = "通用";
+            node.name1 = "可用于兑换平台上任意测评";
+          }
+        });
+        that.setData({
+          list: ret
+        });
+      }
     });
   }
 });

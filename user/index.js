@@ -22,10 +22,13 @@ Page({
     this.setData({
       isIos: app.isIos
     });
+    wx.setNavigationBarTitle({
+      title: ""
+    })
   },
   onShow: function() {
-    this.title = this.selectComponent("#title");
-    app.getUserInfo(this.title.loadUserMsg.call(this.title._this(),["user/index"]));
+    // this.title = this.selectComponent("#title");
+    // app.getUserInfo(this.title.loadUserMsg.call(this.title._this(),["user/index"]));
   },
   loadUserMsg: function() {
     var userData = app.globalData.userInfo || wx.getStorageSync("userInfo");

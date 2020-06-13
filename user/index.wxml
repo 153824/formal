@@ -1,9 +1,10 @@
 <!--user/index.wxml-->
 <!-- 我的 -->
-<block>
-  <title id="title" url="user/index"></title>
-</block>
-<view class="container font" style="background-color: #fff;margin-top:{{ (statusbarHeight + titleHeight) }}px;">
+<!--<block>-->
+<!--  <title id="title" url="user/index"></title>-->
+<!--</block>-->
+<!--margin-top:{{ (statusbarHeight + titleHeight) }}px;-->
+<view class="container font" style="background-color: #fff;">
   <view class="usermsg" bindtap="changePage" data-url="">
     <!-- 跳转个人信息查看界面 -->
     <button wx:if="{{!userInfo.isBind}}" class="userInfoBtn" bindtap="showLoginDlg"></button>
@@ -35,7 +36,7 @@
   <button wx:if="{{!userInfo.isBind}}" class="userInfoBtn1" open-type="getUserInfo" bindgetuserinfo="getUserInfo"></button>
   <block wx:if="{{teamRole!=1}}">
     <view class="centerbox isVip" wx:if="{{vip1}}">
-      <image class="bgImg" src="../img/user/vip/icon1.png"></image>
+<!--      <image class="bgImg" src="../img/user/vip/icon1.png"></image>-->
       <view class="contentView">
         <view class="flex">
           <view class="name flex-main">体验版会员</view>
@@ -48,7 +49,7 @@
       </view>
     </view>
     <view class="centerbox isVip" wx:elif="{{vip2||vip3||vip4}}">
-      <image class="bgImg" src="../img/user/vip/icon1.png"></image>
+<!--      <image class="bgImg" src="../img/user/vip/icon1.png"></image>-->
       <view class="contentView">
         <view class="flex">
           <view class="name flex-main" wx:if="{{vip4}}">旗舰版会员</view>
@@ -194,7 +195,7 @@
   <view class="title">您还未登录</view>
   <view class="dlgContent">
     <text>请先登录再进行操作</text>
-    <image src="../img/user/icon1.png"></image>
+<!--    <image src="../img/user/icon1.png"></image>-->
   </view>
   <view class="dlgBottom flex">
     <view class="noLogin btn" bindtap="hideLoginDlg">暂不登录</view>

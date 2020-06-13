@@ -1,5 +1,5 @@
 <!--manager/useHistoryDetail.wxml-->
-<follow></follow>
+<!--<follow></follow>-->
 <view class="use-history-detail">
     <view class="use-history-head-wrapper">
         <view class="cover">

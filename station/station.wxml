@@ -19,7 +19,7 @@
         <view class="skill-test-child">
           <view class="skill-info">
             <text class="title">{{ child.name }}</text>
-            <text wx:if="{{ child.evaluations.length > 2 }}" class="more" bindtap="changePage">更多</text>
+<!--            <text wx:if="{{ child.evaluations.length > 2 }}" class="more" bindtap="changePage">更多</text>-->
           </view>
           <view wx:for="{{ child.evaluations }}" wx:for-item="evaluation" wx:key="unique">
             <view >

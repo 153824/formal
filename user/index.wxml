@@ -171,14 +171,14 @@
         <image src="../img/user/index/icon3.png"></image>
       </view>
     </view>
-    <view class="boxlist" bindtap="changePage" data-url="./useHistory" wx:if="{{userInfo.isBind&&teamRole!=1}}">
-      <view class="listleft">
-        <image src="../img/user/index/icon8.png"></image>使用记录
-      </view>
-      <view class="listright">
-        <image src="../img/user/index/icon3.png"></image>
-      </view>
-    </view>
+<!--    <view class="boxlist" bindtap="changePage" data-url="./useHistory" wx:if="{{userInfo.isBind&&teamRole!=1}}">-->
+<!--      <view class="listleft">-->
+<!--        <image src="../img/user/index/icon8.png"></image>使用记录-->
+<!--      </view>-->
+<!--      <view class="listright">-->
+<!--        <image src="../img/user/index/icon3.png"></image>-->
+<!--      </view>-->
+<!--    </view>-->
 <!--    <view class="boxlist flex">-->
 <!--      <button class="kfBtn" open-type="feedback"></button>-->
 <!--      <view class="listleft flex-main">-->

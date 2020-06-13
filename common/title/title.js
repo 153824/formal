@@ -140,6 +140,15 @@ Component({
           app.addNewTeam(that.onShow);
         }
       });
+      wx.switchTab({
+        url: "../index/index",
+        success: function (res) {
+          console.log(res);
+          let page = getCurrentPages().pop();
+          if (page == undefined || page == null) return;
+          page.onLoad();
+        }
+      })
     },
     /**
      * 显示登陆弹窗

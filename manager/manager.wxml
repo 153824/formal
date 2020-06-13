@@ -15,13 +15,24 @@
         </view>
     </view>
     <view>
-        <catalog range="{{ catalog }}"></catalog>
+<!--        <catalog range="{{ catalog }}"></catalog>-->
+        <view class="catalog">
+            <picker wx:if="{{ checkedItem === '0' }}" class="evaluation-picker" range="{{ catalog }}" value="{{ checkedEvaluation }}" bindchange="changeEvaluation">
+                <view class="catalog-title">
+                    {{catalog[checkedEvaluation]}}
+                </view>
+            </picker>
+            <picker class="time-picker" range="{{ timer }}" value="{{ checkedTime }}" bindchange="changeTimer">
+                <view class="catalog-title">
+                    {{timer[checkedTime]}}
+                </view>
+            </picker>
+        </view>
     </view>
 <!--    wx:if="{{ checkedItem === '1' }}"-->
-    <view class="time-controller">
-        <text wx:for="{{ timer }}" wx:key="id" data-id="{{ item.id }}" class="{{ item.active ? 'timer-active' : '' }}" bindtap="changeTimer">{{ item.name }}</text>
-    </view>
-
+<!--    <view class="time-controller">-->
+<!--        <text wx:for="{{ timer }}" wx:key="id" data-id="{{ item.id }}" class="{{ item.active ? 'timer-active' : '' }}" bindtap="changeTimer">{{ item.name }}</text>-->
+<!--    </view>-->
     <view wx:if="{{ checkedItem === '0' }}" class="evaluation-reports">
         <checkbox-group bindchange="checkboxChange">
             <label for="" wx:for="{{ evaluationList }}">
@@ -59,14 +70,15 @@
     </view>
 
     <view wx:if="{{ checkedItem === '1' }}" class="user-history" >
-        <view class="user-history-child" wx:for="{{ useList }}" bindtap="changePage" data-dispatchId="{{ item.id }}">
+        <view class="user-history-child" wx:for="{{ useList }}" bindtap="changePage"
+              data-sharePaperId="{{ item.sharePaperId }}" data-status="{{ item.status }}">
             <view class="title">
-                <text>{{ item.evaluation.name }}</text>
+                <text>{{ item.name }}</text>
                 <image class="title-icon" src="../img/user/index/icon3.png"></image>
             </view>
             <view class="info">
-                <view>发放数量：5份</view>
-                <view>已完成数量：{{ item.count }}份</view>
+                <view>发放数量：{{ item.totalCount }}份</view>
+                <view>已完成数量：{{ item.usedCount }}份</view>
                 <view>发放时间：{{ item.createdTime }}</view>
             </view>
         </view>

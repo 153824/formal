@@ -9,7 +9,10 @@
     <view style="margin-bottom: 46rpx;">
         {{ title }}
     </view>
-    <view style="color: #353EE8FF;font-size: 32rpx;">
+    <view wx:if="{{ isCancel }}" style="color: rgba(0,0,0,.5);font-size: 32rpx;">
+        已全部撤回
+    </view>
+    <view wx:else style="color: #353EE8FF;font-size: 32rpx;" data-id="{{ paperId }}" bindtap="revocation">
         撤回测评
     </view>
 </view>

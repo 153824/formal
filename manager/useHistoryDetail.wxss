@@ -94,6 +94,7 @@ page{
 .title > image{
     width: 12rpx;
     height: 20rpx;
+    border-radius: 10rpx;
 }
 .rate{
     display: flex;

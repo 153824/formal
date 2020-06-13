@@ -26,6 +26,12 @@
     </view>
   </view>
   <view style="background-color: #fff;margin-top: 20rpx;">
+    <view class="freeget" wx:if="{{(!couponGet0)&&teamRole==3&&isTodayTeam}}" bindtap="toShowGiftDlg">
+      <image class="freegetbg" src="../img/store/detail/bg.png"></image>
+      <text class="freegettext"></text>
+      <text class="freegetredfont" >免费领5张体验券</text>
+      <image class="freegeticon" src="../img/store/detail/icon9.png"></image>
+    </view>
 <!--    wx:if="{{hasFreeTick&&!freeTickId&&teamRole!=1&&((paperDetail.setting.price&&!isfree && paperDetail.setting.testRule.maxInvite != 0)&&dataLoaded&&couponGet0)||(isfree&&paperDetail.userPapersNum.hasOld&&paperDetail.setting.price)}}"-->
     <block wx:if="{{(!couponGet0)&&teamRole==3&&isTodayTeam}}">
       <button class="get-free-ticket" open-type="share" style="background: transparent;border: none !important;" data-id="{{ paperDetail.id }}" wx:if="{{!freeTick}}">
@@ -38,7 +44,7 @@
     <checkout title="测量维度" type="dimension" list="{{ paperDetail.setting.measureDimension }}"></checkout>
     <checkout title="适用场景" type="scenarios" list="{{ paperDetail.setting.apply }}"></checkout>
     <checkout isShow="{{ paperDetail.setting.reportExample }}" title="报告示例" type="report" info="{{ paperDetail.setting.reportExample }}" subtitle="{{ paperDetail.name }}"></checkout>
-    <checkout title="测试例题" type="example" list="{{ paperDetail.setting.quesType }}"></checkout>
+    <checkout title="例题" type="example" list="{{ paperDetail.setting.quesType }}"></checkout>
   </view>
 <!--  <view>-->
 <!--    <press color="" title="购买" subtitle="100元/份"></press>-->

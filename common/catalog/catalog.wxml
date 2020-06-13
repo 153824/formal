@@ -1,8 +1,13 @@
 <!--common/catalog/catalog.wxml-->
 <view class="catalog">
-    <picker range="{{ range }}" value="{{ index }}" bindchange="pickerChange">
-        <view class="title">
-            {{ range[index] }}
+    <picker wx:if="{{ showEvaluation }}" class="evaluation-picker" range="{{ evaluations }}" value="{{ checkedEvaluation }}" bindchange="evaluationChange">
+        <view class="catalog-title">
+            {{evaluations[checkedEvaluation]}}
+        </view>
+    </picker>
+    <picker wx:if="{{ showTime }}" class="time-picker" range="{{ times }}" value="{{ checkedTime }}" bindchange="timeChange">
+        <view class="catalog-title">
+            {{times[checkedTime]}}
         </view>
     </picker>
 </view>

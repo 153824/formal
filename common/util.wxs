@@ -5,7 +5,12 @@ var getMonthAndDayByFrag = function( fullTime,frag="/" ){
 
 var getHourAndMinByFrag = function( fullTime,frag=":" ){
   var date = getDate(fullTime);
-  return date.getHours() + frag + date.getMinutes()
+  var targetTime = date.getMinutes();
+  if( date.getMinutes() < 10 ){
+    targetTime = "0" + date.getMinutes();
+  }
+
+  return date.getHours() + frag + targetTime;
 };
 
 var getFullDateByFrag = function( fullTime,frag="/" ){

@@ -41,10 +41,10 @@
                         <checkbox value="{{ item.id }}" checked="{{  }}"></checkbox>
                     </view>
                     <view class="time-wrapper">
-                        <view class="date">
+                        <view class="date" style="text-align: center;">
                             {{ util.getMonthAndDayByFrag(item.createdTime) }}
                         </view>
-                        <view class="clock">
+                        <view class="clock" style="text-align: center;">
                             {{ util.getHourAndMinByFrag(item.createdTime) }}
                         </view>
                     </view>

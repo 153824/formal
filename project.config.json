@@ -286,6 +286,13 @@
 					"pathName": "store/detail",
 					"query": "id = 5db1624aa673f5007249c9ee",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "manager/manager",
+					"pathName": "manager/manager",
+					"query": "id = 5db1624aa673f5007249c9ee",
+					"scene": null
 				}
 			]
 		}

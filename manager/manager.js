@@ -6,30 +6,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-    timer: [
-      {
-        id: 0,
-        name: "近七天",
-        active: true
-      },
-      {
-        id: 1,
-        name: "近三十天",
-        active: false
-      },
-      {
-        id: 2,
-        name: "更早",
-        active: false
-      },
-    ],
     titleHeight: app.globalData.titleHeight,
     statusbarHeight: app.globalData.statusbarHeight,
     checkedItem: '0',
-    checkedTime: 0,
+    checkedTime: '0',
+    checkedEvaluation: '0',
     evaluationList: [],
     useList: [],
-    catalog: ["全部测评"],
+    timer: ["近七天", "近三十天", "更早"],
+    catalog: ["筛选测评"],
     shareTrigger: false
   },
 
@@ -68,20 +53,22 @@ Page({
       })
     }
     if( checkedItem === "1" ){
+      // sharePapers/batch?userId=5eb21d15eb4b2d000892d14e&teamId=5e1985617d5774006ac4533e&page=2&size=101
+      console.log("I checked it",checkedItem);
       app.doAjax({
-        url: "../haola/dispatchs",
+        url: "sharePapers/batch",
         method: "get",
         data: {
-          orgId: app.teamId,
+          userId: app.userId,
+          teamId: app.teamId,
           type: checkedTime,
           page: 1,
-          pageSize: 10
+          size: 10
         },
         success: function (res) {
           that.setData({
             useList: res.data
           });
-          console.log("useList: res.data", res.data)
         }
       })
     }
@@ -213,38 +200,33 @@ Page({
       })
     }
     if( targetValue === "1" ){
+      // sharePapers/batch?userId=5eb21d15eb4b2d000892d14e&teamId=5e1985617d5774006ac4533e&page=2&size=101
+      console.log("checkedItem === \"1\"");
       app.doAjax({
-        url: "../haola/dispatchs",
+        url: "sharePapers/batch",
         method: "get",
         data: {
-          orgId: app.teamId,
+          userId: app.userId,
+          teamId: app.teamId,
           type: checkedTime,
           page: 1,
-          pageSize: 10
+          size: 10
         },
         success: function (res) {
           that.setData({
             useList: res.data
           });
-          console.log("useList: res.data", res.data)
         }
       })
     }
   },
   changeTimer: function (e) {
-    const targetValue = e.currentTarget.dataset.id,
-          { timer,checkedItem } = this.data,
+    const targetValue = e.detail.value,
+          { checkedItem } = this.data,
           that = this;
-    var checkedTime = 0;
-    for( let i = 0;i < timer.length;i++ ){
-      timer[i].active = targetValue === timer[i].id;
-      if( timer[i].active ){
-        checkedTime = timer[i].id
-      }
-    }
+    console.log("targetValue: ",targetValue);
     this.setData({
-      timer,
-      checkedTime
+      checkedTime: targetValue
     });
     if( checkedItem === "0" ){
       app.doAjax({
@@ -253,7 +235,7 @@ Page({
         data: {
           orgId: app.teamId,
           userId: app.userId,
-          type: checkedTime,
+          type: targetValue,
           page: 1,
           pageSize: 10
         },
@@ -261,34 +243,39 @@ Page({
           that.setData({
             evaluationList: res.data
           });
-          console.log(res)
         }
       })
     }
     if( checkedItem === "1" ){
+      // sharePapers/batch?userId=5eb21d15eb4b2d000892d14e&teamId=5e1985617d5774006ac4533e&page=2&size=101
       app.doAjax({
-        url: "../haola/dispatchs",
+        url: "sharePapers/batch",
         method: "get",
         data: {
-          orgId: app.teamId,
-          type: checkedTime,
+          userId: app.userId,
+          teamId: app.teamId,
+          type: targetValue,
           page: 1,
-          pageSize: 10
+          size: 10
         },
         success: function (res) {
           that.setData({
             useList: res.data
           });
-          console.log("useList: res.data", res.data)
         }
       })
     }
   },
+  changeEvaluation: function (e) {
+    var checkedEvaluation = e.detail.value;
+    this.setData({
+      checkedEvaluation: checkedEvaluation
+    });
+  },
   changePage: function (e) {
-    const { dispatchid } = e.currentTarget.dataset;
-    console.log(dispatchid,e);
+    const { sharepaperid } = e.currentTarget.dataset;
     wx.navigateTo({
-      url: `useHistoryDetail?dispatchId=${ dispatchid }`
+      url: `useHistoryDetail?sharePaperId=${ sharepaperid }`
     })
   },
   toReport: function (e) {

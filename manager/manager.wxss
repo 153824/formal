@@ -171,3 +171,47 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
 .share-button-wrapper{
     width: 100%;
 }
+/* common/catalog/catalog.wxss */
+.catalog{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 40rpx 0 0;
+    height: 116rpx;
+    font-size: 24rpx;
+    font-weight: 400;
+    color: #070922FF;
+}
+.catalog-title{
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 48rpx;
+    width: 100%;
+    padding: 0 0 0 18rpx;
+    margin-right: 40rpx;
+    text-align: center;
+    /*overflow: hidden;*/
+    /*text-overflow: ellipsis;*/
+    /*white-space: nowrap;*/
+}
+.catalog-title::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 40rpx;
+    height: 42rpx;
+    border: 0;
+    border: 10rpx solid;
+    border-color: black transparent transparent transparent;
+}
+.evaluation-picker,.time-picker{
+    width: 160rpx;
+    height: 48rpx;
+    background: rgba(7,9,34,0.03);
+    border-radius: 10rpx;
+    font-size: 24rpx;
+}
+.evaluation-picker{
+    margin-right: 20rpx;
+}

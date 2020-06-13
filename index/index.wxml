@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <!-- <image class="getGift" wx:if="{{!couponGet&&showTopGift&&teamRole==3}}" src="../img/index/gitfImg.png" bindtap="toFetGift"></image> -->
-<!-- <view class="giftDlg" wx:if="{{showGiftDlg}}">
+<view class="giftDlg" wx:if="{{showGiftDlg}}">
   <view class="dlgContent">
     <image class="closeImg" bindtap="closeGiftDlg" src="../img/index/icon8.png"></image>
     <image class="msgImg" src="../img/index/icon9.png"></image>
@@ -8,7 +8,7 @@
     </button>
     <image class="btnImg" bindtap="changePage" data-url="./couponGet" src="../img/index/icon7.png"></image>
   </view>
-</view> -->
+</view>
 <block>
   <title id="title"></title>
 </block>

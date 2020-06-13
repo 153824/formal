@@ -6,8 +6,8 @@
             <image src="../img/index/sale_test@2x.png"></image>
         </view>
         <view class="info">
-            <view class="title">{{ baseInfo.evaluation.name }}</view>
-            <view class="count">发放数量：{{ baseInfo.count }}份</view>
+            <view class="title">{{ baseInfo.paper.name }}</view>
+            <view class="count">发放数量：{{ baseInfo.batchCount }}份</view>
             <view>
                 <text class="send-way">发放方式：二维码</text>
                 <text class="code" bindtap="loadQrcode">【查看二维码】</text>
@@ -21,31 +21,31 @@
                   class="{{ item.checked ? 'checked' : '' }}"
             >
                 <block wx:if="{{ item.id === 0 }}">
-                    {{ item.name }}({{ finished.length }})
+                    {{ item.name }}({{ baseInfo.finishedCount }})
                 </block>
                 <block wx:if="{{ item.id === 1 }}">
-                    {{ item.name }}({{ Answering.length }})
+                    {{ item.name }}({{ baseInfo.receivedCount }})
                 </block>
                 <block wx:if="{{ item.id === 2 }}">
-                    {{ item.name }}({{ waitingAnswer.length }})
+                    {{ item.name }}({{ baseInfo.remainCount }})
                 </block>
             </view>
         </view>
         <view class="content">
             <!--完成测评开始-->
             <block wx:if="{{ checkedItem === 0 }}">
-                <block wx:if="{{ finished.length > 0 }}">
-                    <view wx:for="{{ finished }}" wx:key="unique" class="content-child">
+                <block wx:if="{{ baseInfo.finishedCount > 0 }}">
+                    <view wx:for="{{ baseInfo.finishedUsers }}" wx:key="unique" class="content-child">
                         <view class="title">
-                            <text>{{ item.userName }}</text>
+                            <text>{{ item.nickname }}</text>
                             <image src="../img/user/index/icon3.png"></image>
                         </view>
                         <view class="rate">
                             <view class="rate-info">
                                 <text>中坚力量</text>
-                                <text>78.29分</text>
+                                <text>{{ item.report.total1 }}分</text>
                             </view>
-                            <text>{{ util.getFullDateByFrag(item.createdTime) }}-{{ util.getHourAndMinByFrag(item.createdTime) }}</text>
+                            <text>{{ util.getFullDateByFrag(item.report.createdTime) }}-{{ util.getHourAndMinByFrag(item.createdTime) }}</text>
                         </view>
                     </view>
                 </block>
@@ -108,7 +108,7 @@
 </view>
 <view class="qrcode-wrapper" wx:if="{{ imageTrigger }}">
     <view class="qrcode">
-        <image class="qrcode-img" src="{{ baseInfo.image }}" bindload="imageLoad" show-menu-by-longpress="true"></image>
+        <image class="qrcode-img" src="{{ baseInfo.img }}" bindload="imageLoad" show-menu-by-longpress="true"></image>
         <image class="close-icon" src="../img/manager/close-icon@2x.png" bindtap="closeQrcode"></image>
     </view>
     <view class="mask" bindtap="closeQrcode"></view>

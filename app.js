@@ -27,11 +27,12 @@ App({
   isIos: false,
   qiniuUpload: qiniuUpload,
   isIphoneX: false,
-  host: "https://luoke.ampmfit.net/hola/", //请求host
+  // host: "https://luoke.ampmfit.net/hola/", //请求host
   // host: "https://h5.luoke101.com/hola/",
+  host: "https://api.dev.luoke101.com/hola/",
   host1: "https://admin.luoke101.com/hola/", //请求host——测试
   host2: "http://localhost:3000/hola/", //请求host——测试
-  host3: "https://api.dev.luoke101.com/hola/", //微信支付——测试
+  // host3: "https://api.dev.luoke101.com/hola/", //请求(购券,使用记录)host——测试
   onLaunch: function(options) {
     var referrerInfo = options.referrerInfo;
     var menuBtnObj = wx.getMenuButtonBoundingClientRect();
@@ -302,8 +303,13 @@ App({
     //request请求
     var that = this;
     var url = that.host + params.url;
-    if( params.url.startsWith("buyPaper") ){
-      url = that.host3 +params.url ;
+    /*测试购券*/
+    // if( params.url.startsWith("buyPaper") ){
+    //   url = that.host3 +params.url ;
+    // }
+    /*测试发放记录*/
+    if( params.url.startsWith("sharePapers/batch") ){
+      url = that.host3 +params.url;
     }
     if (!params.noLoading) {
       //默认显示加载中弹窗

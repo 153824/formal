@@ -24,10 +24,6 @@ Page({
       },
     ],
     checkedItem: 0,
-    dispatchId: "",
-    finished: [],
-    Answering: [],
-    waitingAnswer: [],
     baseInfo: {},
     imageTrigger: false
   },
@@ -36,8 +32,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      dispatchId: options.dispatchId
+    var that = this;
+    app.doAjax({
+      url: `sharePapers/batchDetail`,
+      method: "get",
+      data: {
+        sharePaperId: options.sharePaperId
+      },
+      success: function (res) {
+        const baseInfo = res.data;
+        console.log(baseInfo);
+        that.setData({
+          baseInfo
+        });
+      }
     });
   },
 
@@ -52,28 +60,28 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    const { dispatchId } = this.data,
-          that = this;
-    app.doAjax({
-      url: `../haola/dispatchs/${ dispatchId }/detail`,
-      method: "get",
-      success: function (res) {
-        const { finished,Answering,waitingAnswer } = res.data.data,
-              { evaluation,image,count } = res.data;
-        /*层级太深 将数据进行拆分*/
-        const baseInfo = {
-          evaluation,
-          image,
-          count
-        };
-        that.setData({
-          finished,
-          Answering,
-          waitingAnswer,
-          baseInfo
-        });
-      }
-    });
+    // const { dispatchId } = this.data,
+    //       that = this;
+    // app.doAjax({
+    //   url: `../haola/dispatchs/${ dispatchId }/detail`,
+    //   method: "get",
+    //   success: function (res) {
+    //     const { finished,Answering,waitingAnswer } = res.data.data,
+    //           { evaluation,image,count } = res.data;
+    //     /*层级太深 将数据进行拆分*/
+    //     const baseInfo = {
+    //       evaluation,
+    //       image,
+    //       count
+    //     };
+    //     that.setData({
+    //       finished,
+    //       Answering,
+    //       waitingAnswer,
+    //       baseInfo
+    //     });
+    //   }
+    // });
 
   },
 

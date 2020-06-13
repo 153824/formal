@@ -82,8 +82,8 @@
   <view class="test-set-meal">
     <view class="set-meal-wrapper">
       <view class="meal-title">
-        <text>测评管理</text>
-        <text class="meal-rule">兑换券使用规则</text>
+        <text>测评券套餐</text>
+        <text class="meal-rule">券可用于兑换平台任意测评</text>
       </view>
       <scroll-view scroll-x="true">
         <view class="set-meal-group">
@@ -91,16 +91,19 @@
             <view class="title">测评兑换券</view>
             <view class="count">50<text>张</text></view>
             <view class="price">￥2480</view>
+            <image class="ticket-bg" src="../img/user/index/ticket.png" style="height: 100.44px;width: 53.46px;"></image>
           </view>
           <view class="set-meal-child">
             <view class="title">测评兑换券</view>
             <view class="count">50<text>张</text></view>
             <view class="price">￥2480</view>
+            <image class="ticket-bg" src="../img/user/index/ticket.png" style="height: 100.44px;width: 53.46px;"></image>
           </view>
           <view class="set-meal-child">
             <view class="title">测评兑换券</view>
             <view class="count">50<text>张</text></view>
             <view class="price">￥2480</view>
+            <image class="ticket-bg" src="../img/user/index/ticket.png" style="height: 100.44px;width: 53.46px;"></image>
           </view>
         </view>
       </scroll-view>

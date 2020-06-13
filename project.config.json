@@ -293,6 +293,13 @@
 					"pathName": "manager/manager",
 					"query": "id = 5db1624aa673f5007249c9ee",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "user/index",
+					"pathName": "user/index",
+					"query": "id=5db1624aa673f5007249c9ee",
+					"scene": null
 				}
 			]
 		}

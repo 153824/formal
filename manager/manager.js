@@ -273,9 +273,9 @@ Page({
     });
   },
   changePage: function (e) {
-    const { sharepaperid } = e.currentTarget.dataset;
+    const { sharepaperid,status } = e.currentTarget.dataset;
     wx.navigateTo({
-      url: `useHistoryDetail?sharePaperId=${ sharepaperid }`
+      url: `useHistoryDetail?sharePaperId=${ sharepaperid }&status=${ status }`
     })
   },
   toReport: function (e) {

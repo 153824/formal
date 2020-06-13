@@ -70,7 +70,8 @@
     </view>
 
     <view wx:if="{{ checkedItem === '1' }}" class="user-history" >
-        <view class="user-history-child" wx:for="{{ useList }}" bindtap="changePage" data-sharePaperId="{{ item.sharePaperId }}">
+        <view class="user-history-child" wx:for="{{ useList }}" bindtap="changePage"
+              data-sharePaperId="{{ item.sharePaperId }}" data-status="{{ item.status }}">
             <view class="title">
                 <text>{{ item.name }}</text>
                 <image class="title-icon" src="../img/user/index/icon3.png"></image>

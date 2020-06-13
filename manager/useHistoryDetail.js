@@ -33,17 +33,20 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
+    const { sharePaperId,status } = options;
+    console.log("{ sharePaperId,status } = options", status);
     app.doAjax({
       url: `sharePapers/batchDetail`,
       method: "get",
       data: {
-        sharePaperId: options.sharePaperId
+        sharePaperId
       },
       success: function (res) {
         const baseInfo = res.data;
         console.log(baseInfo);
         that.setData({
-          baseInfo
+          baseInfo,
+          status
         });
       }
     });
@@ -130,6 +133,12 @@ Page({
       checkedItem: targetValue
     })
   },
+  changePage: function (e) {
+    const { id } = e.currentTarget.dataset;
+    wx.navigateTo({
+      url: `../report/detail?id=${ id }`
+    })
+  },
   loadQrcode: function () {
     setTimeout(()=>{
       this.setData({
@@ -149,5 +158,5 @@ Page({
     this.setData({
       imageTrigger: false
     })
-  }
+  },
 });

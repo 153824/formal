@@ -3,11 +3,13 @@
 <view class="use-history-detail">
     <view class="use-history-head-wrapper">
         <view class="cover">
-            <image src="../img/index/sale_test@2x.png"></image>
+            <image src="{{ baseInfo.paper.smallImg }}"></image>
         </view>
         <view class="info">
             <view class="title">{{ baseInfo.paper.name }}</view>
-            <view class="count">发放数量：{{ baseInfo.batchCount }}份</view>
+            <view class="count">
+                <text>发放数量：{{ baseInfo.batchCount }}份</text><text wx:if="{{ status == '3' }}"> ( 已撤回{{ baseInfo.batchCount - baseInfo.finishedCount - baseInfo.receivedCount }}份 )</text>
+            </view>
             <view>
                 <text class="send-way">发放方式：二维码</text>
                 <text class="code" bindtap="loadQrcode">【查看二维码】</text>
@@ -27,7 +29,7 @@
                     {{ item.name }}({{ baseInfo.receivedCount }})
                 </block>
                 <block wx:if="{{ item.id === 2 }}">
-                    {{ item.name }}({{ baseInfo.remainCount }})
+                    {{ item.name }}({{ status == "3" ? '0' : baseInfo.remainCount }})
                 </block>
             </view>
         </view>
@@ -35,21 +37,22 @@
             <!--完成测评开始-->
             <block wx:if="{{ checkedItem === 0 }}">
                 <block wx:if="{{ baseInfo.finishedCount > 0 }}">
-                    <view wx:for="{{ baseInfo.finishedUsers }}" wx:key="unique" class="content-child">
+                    <view wx:for="{{ baseInfo.finishedUsers }}" wx:for-item="finishedItem" wx:key="unique"
+                          class="content-child" data-id="{{ baseInfo.id }}" bindtap="changePage">
                         <view class="title">
-                            <text>{{ item.nickname }}</text>
+                            <text>{{ finishedItem.nickname }}</text>
                             <image src="../img/user/index/icon3.png"></image>
                         </view>
                         <view class="rate">
                             <view class="rate-info">
-                                <text>中坚力量</text>
-                                <text>{{ item.report.total1 }}分</text>
+                                <text>{{ finishedItem.report.summary.title }}</text>
+                                <text>{{ finishedItem.report.total1 }}分</text>
                             </view>
-                            <text>{{ util.getFullDateByFrag(item.report.createdTime) }}-{{ util.getHourAndMinByFrag(item.createdTime) }}</text>
+                            <text>{{ util.getFullDateByFrag(finishedItem.time) }}-{{ util.getHourAndMinByFrag(finishedItem.time) }}</text>
                         </view>
                     </view>
                 </block>
-                <block wx:if="{{ finished.length <= 0 }}">
+                <block wx:if="{{ baseInfo.finishedCount <= 0 }}">
                     <empty type="default" title="暂时没有人完成测评"></empty>
                 </block>
             </block>
@@ -57,22 +60,22 @@
 
             <!--作答中开始-->
             <block wx:if="{{ checkedItem === 1 }}">
-                <block wx:if="{{ Answering.length > 0 }}">
-                    <view wx:for="{{ Answering }}" wx:key="unique" class="content-child">
+                <block wx:if="{{ baseInfo.receivedCount > 0 }}">
+                    <view wx:for="{{ baseInfo.receivedUsers }}" wx:for-item="receivedItem" wx:key="unique" class="content-child">
                         <view class="title">
-                            <text>{{ item.userName }}</text>
+                            <text>{{ receivedItem.nickname }}</text>
                             <image src="../img/user/index/icon3.png"></image>
                         </view>
                         <view class="rate">
                             <view class="rate-info">
-                                <text>中坚力量</text>
-                                <text>78.29分</text>
+                                <text>{{ receivedItem.report.summary.title }}</text>
+                                <text>{{ receivedItem.report.total1 }}分</text>
                             </view>
-                            <text>{{ util.getFullDateByFrag(item.createdTime) }}-{{ util.getHourAndMinByFrag(item.createdTime) }}</text>
+                            <text>{{ util.getFullDateByFrag(receivedItem.time) }}-{{ util.getHourAndMinByFrag(receivedItem.time) }}</text>
                         </view>
                     </view>
                 </block>
-                <block wx:if="{{ Answering.length <= 0 }}">
+                <block wx:if="{{ baseInfo.receivedCount <= 0 }}">
                     <empty type="default" title="暂时没有人在作答"></empty>
                 </block>
             </block>
@@ -80,22 +83,28 @@
 
             <!--未做答开始-->
             <block wx:if="{{ checkedItem === 2 }}">
-                <block wx:if="{{ waitingAnswer.length > 0 }}">
-                    <view wx:for="{{ waitingAnswer }}" wx:key="unique" class="content-child">
-                        <view class="title">
-                            <text>{{ item.userName }}</text>
-                            <image src="../img/user/index/icon3.png"></image>
-                        </view>
-                        <view class="rate">
-                            <view class="rate-info">
-                                <text>中坚力量</text>
-                                <text>78.29分</text>
-                            </view>
-                            <text>{{ util.getFullDateByFrag(item.createdTime) }}-{{ util.getHourAndMinByFrag(item.createdTime) }}</text>
-                        </view>
-                    </view>
+                <block wx:if="{{ baseInfo.remainCount > 0 && status != '3' }}">
+<!--                    <view wx:for="{{ waitingAnswer }}" wx:key="unique" class="content-child">-->
+<!--                        <view class="title">-->
+<!--                            <text>{{ item.userName }}</text>-->
+<!--                            <image src="../img/user/index/icon3.png"></image>-->
+<!--                        </view>-->
+<!--                        <view class="rate">-->
+<!--                            <view class="rate-info">-->
+<!--                                <text>中坚力量</text>-->
+<!--                                <text>78.29分</text>-->
+<!--                            </view>-->
+<!--                            <text>{{ util.getFullDateByFrag(item.createdTime) }}-{{ util.getHourAndMinByFrag(item.createdTime) }}</text>-->
+<!--                        </view>-->
+<!--                    </view>-->
+                    <empty type="scan" title="{{baseInfo.remainCount}}份测评暂未被人扫码作答" paperId="{{ baseInfo.id }}"
+                           subtitle="撤回测评"></empty>
                 </block>
-                <block wx:if="{{ waitingAnswer.length <= 0 }}">
+                <block wx:elif="{{ baseInfo.remainCount > 0 && status == '3' }}">
+                    <empty type="default" title="{{ baseInfo.remainCount }}份测评已全部被撤回" subtitle="测回测评"></empty>
+                </block>
+<!--                "{{ baseInfo.remainCount <= 0 }}"-->
+                <block wx:else>
                     <empty type="default" title="测评已全部被领取了" subtitle="测回测评"></empty>
                 </block>
             </block>

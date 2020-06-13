@@ -65,7 +65,9 @@ Page({
     titleHeight: app.globalData.titleHeight,
     isConnected: true,
     isIos: app.isIos,
-    loading: true
+    loading: true,
+    mobile: "18559297592",
+    wechat: "LIN_7890",
   },
   onLoad: function(){
     let that = this;

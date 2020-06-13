@@ -37,3 +37,4 @@
   </scroll-view>
 </view>
 <mask isShow="{{ loading }}"></mask>
+<serving mobile="{{ mobile }}" wechat="{{ wechat }}"></serving>

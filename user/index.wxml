@@ -88,22 +88,11 @@
       </view>
       <scroll-view scroll-x="true">
         <view class="set-meal-group">
-          <view class="set-meal-child">
+          <view class="set-meal-child" wx:for="{{ meal }}" wx:for-item="mealItem" data-type="{{ mealItem.type }}"
+                bindtap="buyTicket">
             <view class="title">测评兑换券</view>
-            <view class="count">50<text>张</text></view>
-            <view class="price">￥2480</view>
-            <image class="ticket-bg" src="../img/user/index/ticket.png" style="height: 100.44px;width: 53.46px;"></image>
-          </view>
-          <view class="set-meal-child">
-            <view class="title">测评兑换券</view>
-            <view class="count">50<text>张</text></view>
-            <view class="price">￥2480</view>
-            <image class="ticket-bg" src="../img/user/index/ticket.png" style="height: 100.44px;width: 53.46px;"></image>
-          </view>
-          <view class="set-meal-child">
-            <view class="title">测评兑换券</view>
-            <view class="count">50<text>张</text></view>
-            <view class="price">￥2480</view>
+            <view class="count">{{ mealItem.number }}<text>张</text></view>
+            <view class="price">￥{{ mealItem.price }}</view>
             <image class="ticket-bg" src="../img/user/index/ticket.png" style="height: 100.44px;width: 53.46px;"></image>
           </view>
         </view>

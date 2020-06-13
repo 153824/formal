@@ -14,6 +14,33 @@ Page({
     showAddNewTeam: false,
     statusbarHeight: app.globalData.statusbarHeight,
     titleHeight: app.globalData.titleHeight,
+    meal: [
+      {
+        type: "a",
+        number: 50,
+        price: 2500
+      },
+      {
+        type: "b",
+        number: 100,
+        price: 2980
+      },
+      {
+        type: "c",
+        number: 200,
+        price: 4800
+      },
+      {
+        type: "d",
+        number: 400,
+        price: 7800
+      },
+      {
+        type: "e",
+        number: 800,
+        price: 11800
+      }
+    ]
   },
   onLoad: function(options) {
     var that = this;
@@ -98,6 +125,7 @@ Page({
     });
     this.getMyTeamList();
   },
+
   changePage: function(e) { //页面跳转
     var d = e.currentTarget.dataset;
     if (d.n && d.n == "teams") {
@@ -241,5 +269,26 @@ Page({
     this.setData({
       showDlg: false
     });
+  },
+
+  buyTicket: function (e) {
+    console.log("buyTicket", e);
+    const { type } = e.currentTarget.dataset,
+          { userId,teamId } = app,
+          openid = wx.getStorageSync("openId") || app.globalData.userMsg.openid;
+    app.doAjax({
+      url: "../haola/buyTickets",
+      method: "post",
+      data: {
+        userId,
+        teamId,
+        type,
+        openid,
+        mp_openid: ""
+      },
+      success: function (res) {
+        wx.showModal(res);
+      }
+    })
   }
 });

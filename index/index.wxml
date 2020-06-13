@@ -27,7 +27,7 @@
             circular="true" indicator-color="rgba(255,255,255,0.3)" indicator-active-color="#fff">
       <block wx:for="{{banner.data}}" wx:key="unique">
         <swiper-item bindtap="gotoDetail" data-id="{{ item.linkId }}">
-          <image src="{{item.picture}}" class="slide-image" style="width: 335px;height: 160px;" />
+          <image src="{{item.picture}}" class="slide-image" style="width: 670rpx;height: 320rpx;" />
         </swiper-item>
       </block>
 <!--      <block wx:for="{{imgs}}" wx:key="index">-->

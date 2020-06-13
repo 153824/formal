@@ -7,6 +7,10 @@ Component({
     isShow: {
       type: Boolean,
       value: true
+    },
+    backgroundColor: {
+      type: String,
+      value: "white"
     }
   },
 

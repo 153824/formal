@@ -217,9 +217,9 @@
   </view>
   <view class="recomend-set" wx:for="{{new.data}}" wx:key="unique">
     <view class="recomend-child" bindtap="navWebView" data-url="{{item.linkUrl}}">
-    <view class="cover-wrapper">
-      <image src="{{item.img||'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132'}}" class="cover"></image>
-    </view>
+      <view class="cover-wrapper">
+        <image src="{{item.img||'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132'}}" class="cover"></image>
+      </view>
       <view class="recomend-info">
         <text class="title">{{item.name}}</text>
         <text class="date">{{item.recommendTime}}</text>
@@ -227,6 +227,6 @@
     </view>
   </view>
 </view>
-
 </view>
 <mask isShow="{{ loading1 || loading2 }}"></mask>
+<serving mobile="{{ mobile }}" wechat="{{ wechat }}"></serving>

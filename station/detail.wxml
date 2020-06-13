@@ -58,11 +58,11 @@
   <view class="meal">
     <meal isShow="{{ !paperDetail.userPapersNum.hasOld || !dataLoaded }}"></meal>
   </view>
-  <view bindtap="gotodati">
-    <press title="发放测评" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
-  </view>
   <view bindtap="gotoguide">
-    <press title="{{ oldShareId ? '继续体验' : '自己体验'}}"></press>
+    <press title="{{ oldShareId ? '继续体验' : '自己体验'}}" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
+  </view>
+  <view bindtap="gotodati">
+    <press title="发放测评(微信/智联/BOSS/51...)"></press>
   </view>
 </view>
 

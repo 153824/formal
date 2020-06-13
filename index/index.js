@@ -32,6 +32,8 @@ Page({
     isIos: app.isIos,
     loading1: true,
     loading2: true,
+    mobile: "18559297592",
+    wechat: "LIN_7890"
   },
   onLoad: function(options) {
     this.setData({
@@ -479,6 +481,30 @@ Page({
     const { id,name } = e.currentTarget.dataset;
     wx.navigateTo({
       url: `../station/more?id=${ id }&title=${name}`,
+    });
+  },
+  callServing: function (e) {
+    this.setData({
+      showServing: true
+    });
+  },
+  hideServing: function (e) {
+    this.setData({
+      showServing: false
+    });
+  },
+  copyIt: function() {
+    var { wechat } = this.data;
+    wx.setClipboardData({
+      data: wechat,
+      success(res) {
+
+      }
+    });
+  },
+  hideDlg: function() {
+    this.setData({
+      showServing: false
     });
   }
 });

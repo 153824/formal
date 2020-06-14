@@ -43,7 +43,6 @@ Page({
       },
       success: function (res) {
         const baseInfo = res.data;
-        console.log(baseInfo);
         that.setData({
           baseInfo,
           status
@@ -139,6 +138,12 @@ Page({
       url: `../report/detail?id=${ id }`
     })
   },
+  gotoDetail: function(e){
+    const { id } = e.currentTarget.dataset;
+    wx.navigateTo({
+      url: `../station/detail?id=${ id }`
+    });
+  },
   loadQrcode: function () {
     setTimeout(()=>{
       this.setData({
@@ -157,6 +162,42 @@ Page({
   closeQrcode: function (e) {
     this.setData({
       imageTrigger: false
+    })
+  },
+  gotodati: function() {
+    wx.aldstat.sendEvent('详情页点击测别人', {
+      '触发点击': '点击数'
+    });
+    //发放测评
+    var that = this;
+    var { baseInfo } = that.data;
+    var userPapersNum = baseInfo.userPapersNum || {};
+    if (userPapersNum.total == 0) {
+      app.toast("测评可用数量不足，请先购买或用券兑换测评");
+      wx.aldstat.sendEvent('详情页点击toast测评数量不足', {
+        '触发点击': '点击数'
+      });
+      return;
+    }
+    wx.navigateTo({
+      url: '../store/sharePaper?id=' + paperDetail.id + "&count=" + userPapersNum.total,
+    });
+    return;
+    app.doAjax({
+      url: 'toSharePaper',
+      method: 'post',
+      data: {
+        id: that.data.paperid,
+      },
+      success: function(res) {
+        that.setData({
+          pictureUrl: res.img,
+          shareId: res.id,
+          dati: true,
+          showMindDlg: false
+        });
+        that.onShow()
+      }
     })
   },
 });

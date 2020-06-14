@@ -64,14 +64,11 @@
                     <view wx:for="{{ baseInfo.receivedUsers }}" wx:for-item="receivedItem" wx:key="unique" class="content-child">
                         <view class="title">
                             <text>{{ receivedItem.nickname }}</text>
-                            <image src="../img/user/index/icon3.png"></image>
                         </view>
                         <view class="rate">
                             <view class="rate-info">
-                                <text>{{ receivedItem.report.summary.title }}</text>
-                                <text>{{ receivedItem.report.total1 }}分</text>
+                                <text>作答开始时间：</text><text>{{ util.getFullDateByFrag(receivedItem.time) }}-{{ util.getHourAndMinByFrag(receivedItem.time) }}</text>
                             </view>
-                            <text>{{ util.getFullDateByFrag(receivedItem.time) }}-{{ util.getHourAndMinByFrag(receivedItem.time) }}</text>
                         </view>
                     </view>
                 </block>
@@ -112,7 +109,7 @@
         </view>
     </view>
 </view>
-<view class="press-wrapper">
+<view class="press-wrapper" bindtap="gotoDetail" data-id="{{ baseInfo.paper.id }}">
     <press title="继续发放本测评"></press>
 </view>
 <view class="qrcode-wrapper" wx:if="{{ imageTrigger }}">

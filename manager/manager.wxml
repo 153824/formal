@@ -38,7 +38,7 @@
             <label for="" wx:for="{{ evaluationList }}">
                 <view class="report-child" style="{{ shareTrigger ? 'padding: 40rpx 80rpx 40rpx 40rpx;': ''}}" data-id="{{ item.id }}" data-name="{{ item.evaluation.name }}" bindtap="toReport">
                     <view wx:if="{{ shareTrigger }}" class="check-wrapper">
-                        <checkbox value="{{ item.id }}" checked="{{  }}"></checkbox>
+                        <checkbox value="{{ item.id }}"></checkbox>
                     </view>
                     <view class="time-wrapper">
                         <view class="date">

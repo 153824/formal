@@ -9,11 +9,11 @@ Page({
     titleHeight: app.globalData.titleHeight,
     statusbarHeight: app.globalData.statusbarHeight,
     checkedItem: '0',
-    checkedTime: '0',
+    checkedTime: '2',
     checkedEvaluation: '0',
     evaluationList: [],
     useList: [],
-    timer: ["近七天", "近三十天", "更早"],
+    timer: ["近七天","近三十天", "全部"],
     catalog: ["筛选测评"],
     shareTrigger: false
   },

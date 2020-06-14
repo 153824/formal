@@ -19,7 +19,7 @@ Page({
   toManage: function(e) {
     wx.setStorageSync("showDlg", true);
     wx.switchTab({
-      url: '../index/manage'
+      url: '../manager/manager'
     });
   }
 })

@@ -6,7 +6,6 @@
 }
 .dlg {
     width: 558rpx;
-    height: 570rpx;
     background: rgba(255, 255, 255, 1);
     border-radius: 16rpx;
     position: fixed;
@@ -83,6 +82,7 @@
 }
 
 .dlg .copyBtn {
+    margin: 48rpx 0;
     font-size: 24rpx;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;

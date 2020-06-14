@@ -106,6 +106,9 @@
     font-size: 24rpx;
     color: #070922;
 }
+.time-wrapper > view{
+    text-align: center;
+}
 .time-wrapper > view:first-child,.user-wrapper > view:first-child,.info-wrapper > view:first-child{
     margin-bottom: 20rpx;
 }

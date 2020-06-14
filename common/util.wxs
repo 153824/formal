@@ -1,16 +1,20 @@
 var getMonthAndDayByFrag = function( fullTime,frag="/" ){
-  var date = getDate(fullTime);
-  return date.getMonth() + frag + date.getDate()
+  var date = getDate(fullTime),
+      m = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1,
+      d = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+  return m + frag + d;
 };
 
 var getHourAndMinByFrag = function( fullTime,frag=":" ){
-  var date = getDate(fullTime);
-  return date.getHours() + frag + date.getMinutes()
+  var date = getDate(fullTime),
+      h = date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
+      m = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+  return h + frag + m;
 };
 
 var getFullDateByFrag = function( fullTime,frag="/" ){
   var date = getDate(fullTime);
-  return date.getFullYear()+frag+(date.getMonth()+1)+frag+date.getDate();
+  return date.getFullYear()+frag+getMonthAndDayByFrag(fullTime);
 };
 
 var saveDouble = function(number){

@@ -19,6 +19,10 @@ Component({
     ios: {
       type: Boolean,
       value: true
+    },
+    free: {
+      type: Boolean,
+      value: true
     }
   },
 

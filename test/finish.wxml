@@ -3,5 +3,5 @@
   <image src="../img/guide/icon1.png"></image>
   <view class="mindMsg">您的作答结果已提交</view>
   <view class="mindMsg">感谢您的参与</view>
-  <view class="reportBtn" bindtap="toManage">返回</view>
+  <view class="reportBtn" bindtap="toManage">查看报告详情</view>
 </view>

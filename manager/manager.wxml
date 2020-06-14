@@ -79,7 +79,7 @@
             <view class="info">
                 <view>发放数量：<text style="color: #353EE8FF;">{{ item.totalCount }}</text>份</view>
                 <view>已完成数量：<text style="color: #353EE8FF;">{{ item.usedCount }}</text>份</view>
-                <view>发放时间：{{ util.getFullDateByFrag(item.createdAt) }}</view>
+                <view>发放时间：{{ util.getFullDateByFrag(item.createdAt) }} {{ util.getHourAndMinByFrag(item.createdAt) }}</view>
             </view>
         </view>
     </view>

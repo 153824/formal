@@ -1,7 +1,7 @@
 <!--user/addGroup.wxml-->
 <view class="centerView">
   <view class="mind">
-    <view>意见反馈，HR经验交流</view>
+    <view>成为共创用户，交流人才测评经验</view>
     <view style="margin-top:20rpx;">请添加客服微信</view>
   </view>
   <view class="mind1">微信号：LIN_7890</view>

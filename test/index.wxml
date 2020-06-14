@@ -21,7 +21,7 @@
     </picker>
     <view class="get-user-phone-wrapper">
       <text>联系电话</text>
-      <button class="get-user-phone" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">{{ util.hidePartPhoneNumber(phoneNumber) }}</button>
+      <button class="get-user-phone" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">{{ phoneNumber }}</button>
     </view>
     <!-- <view class="photobox" bindtap="takePhoto">
       <image class="photobtn" wx:if="{{!selImg}}" src="../img/guide/takephoto.png"></image>

@@ -94,7 +94,7 @@
 <!--                            <text>{{ util.getFullDateByFrag(item.createdTime) }}-{{ util.getHourAndMinByFrag(item.createdTime) }}</text>-->
 <!--                        </view>-->
 <!--                    </view>-->
-                    <empty type="scan" title="{{baseInfo.remainCount}}份已撤回" paperId="{{ baseInfo.id }}"
+                    <empty type="scan" title="{{baseInfo.remainCount}}份测评暂未被人扫码作答" paperId="{{ baseInfo.id }}"
                            subtitle="撤回测评"></empty>
                 </block>
                 <block wx:elif="{{ baseInfo.remainCount > 0 && status == '3' }}">

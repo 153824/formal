@@ -154,7 +154,7 @@ Page({
       "retData.img": ""
     });
     wx.redirectTo({
-      url: './sendlog?id=' + this.data.paperId
+      url: `../manager/useHistoryDetail?sharePaperId=${this.data.retData.id}&status=`
     })
   }
 })

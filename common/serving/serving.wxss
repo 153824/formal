@@ -1,7 +1,7 @@
 /* common/serving/serving.wxss */
 .serving{
     position: fixed;
-    bottom: 50rpx;
+    bottom: 180rpx;
     right: 50rpx;
 }
 .dlg {
@@ -82,7 +82,7 @@
 }
 
 .dlg .copyBtn {
-    margin: 48rpx 0;
+    margin: 40rpx 0 48rpx 80rpx;
     font-size: 24rpx;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;

@@ -161,11 +161,120 @@ Page({
         loading1: false
       })
     });
+
+    // const teamEvaluationPromise = new Promise(function (resolve,reject) {
+    //   app.doAjax({
+    //     url: `../haola/homePages/userPagers?teamId=${app.teamId}`,
+    //     method: "get",
+    //     success: function (res) {
+    //       console.log("../haola/homePages/userPagers?teamId=${app.teamId}：",res);
+    //       resolve(res.data);
+    //     },
+    //     fail: function (err) {
+    //       reject(err);
+    //     }
+    //   })
+    // });
+    // teamEvaluationPromise.then(res=>{
+    //   teamEvaluationPromiseList = res.map((v,k)=>{
+    //     return(new Promise((resolve, reject) => {
+    //       app.doAjax({
+    //         url: `../hola/paperDetail?id=${v.paper.objectId}&userId=${app.userId}`,
+    //         method: "get",
+    //         success: function (res) {
+    //           resolve( res );
+    //         },
+    //         fail: function (err) {
+    //           reject(err);
+    //         }
+    //       })
+    //     }))
+    //   });
+    //   return Promise.all(teamEvaluationPromiseList);
+    // }).then(res=>{
+    //   that.setData({
+    //     teamEvaluation: res
+    //   })
+    // }).catch(err=>{
+    // }).finally(()=>{
+    //   that.setData({
+    //     loading2: false
+    //   })
+    // })
+  },
+  onShow: function() {
+    this.title = this.selectComponent("#title");
+    app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
+    var that = this;
+    app.freeTickId = "";
+    if (!app.isLogin) {
+      app.checkUser = function() {
+        that.onShow();
+        app.checkUser = null;
+      };
+      return;
+    };
+    this.setData({
+      loading1: false,
+      loading2: false,
+    });
+    var homePagesPromiseList = [],
+        teamEvaluationPromiseList = [];
+    const homePagesPromise = new Promise(function (resolve,reject) {
+      app.doAjax({
+        url: "../haola/homePages",
+        method: "get",
+        success: function(res){
+          resolve( res.resultObject );
+        },
+        fail: function (err) {
+          reject( err )
+        }
+      });
+    });
+    homePagesPromise.then(res=>{
+      that.setData(res);
+      homePagesPromiseList = res.column.map((v,k)=>{
+        return new Promise((resolve, reject) => {
+          app.doAjax({
+            url: `../haola/homePages/columns/${ v.column_id }/evaluations`,
+            method: "get",
+            success: function (res) {
+              resolve({ columnId: v.column_id, data: res.data});
+            },
+            fail: function (err) {
+              reject(err);
+            }
+          });
+        })
+      });
+      return Promise.all(homePagesPromiseList)
+    }).then(res=>{
+      const { column } = that.data;
+      var targetColumn = column;
+      for( let i = 0; i < res.length;i++ ){
+        for( let j = 0; j < column.length;j++ ){
+          if( res[i].columnId === targetColumn[j].column_id ){
+            targetColumn[j]["data"] = res[i].data || [];
+            // break;
+          }
+        }
+      };
+      that.setData({
+        column: targetColumn
+      });
+    }).finally(()=>{
+      that.setData({
+        loading1: false
+      })
+    });
+
     const teamEvaluationPromise = new Promise(function (resolve,reject) {
       app.doAjax({
         url: `../haola/homePages/userPagers?teamId=${app.teamId}`,
         method: "get",
         success: function (res) {
+          console.log("../haola/homePages/userPagers?teamId=${app.teamId}：",res);
           resolve(res.data);
         },
         fail: function (err) {
@@ -193,28 +302,12 @@ Page({
       that.setData({
         teamEvaluation: res
       })
+    }).catch(err=>{
     }).finally(()=>{
       that.setData({
         loading2: false
       })
     })
-  },
-  onShow: function() {
-    this.title = this.selectComponent("#title");
-    app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
-    var that = this;
-    app.freeTickId = "";
-    if (!app.isLogin) {
-      app.checkUser = function() {
-        that.onShow();
-        app.checkUser = null;
-      };
-      return;
-    };
-    this.setData({
-      loading1: false,
-      loading2: false,
-    });
     // that.setData({
     //   loading1: false,
     //   loading2: false,

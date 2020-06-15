@@ -150,6 +150,7 @@ Page({
    * 隐藏分享码
    */
   closedati: function(e) {
+    console.log(e);
     this.setData({
       "retData.img": ""
     });

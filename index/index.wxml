@@ -228,5 +228,5 @@
   </view>
 </view>
 </view>
-<mask isShow="{{ loading1 || loading2 }}"></mask>
+<!--<mask isShow="{{ loading1 || loading2 }}"></mask>-->
 <serving mobile="{{ mobile }}" wechat="{{ wechat }}"></serving>

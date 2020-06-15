@@ -34,7 +34,7 @@ Page({
   onLoad: function (options) {
     var that = this;
     const { sharePaperId,status } = options;
-    console.log("{ sharePaperId,status } = options", status);
+    console.log("{ sharePaperId,status } = options", options);
     app.doAjax({
       url: `sharePapers/batchDetail`,
       method: "get",

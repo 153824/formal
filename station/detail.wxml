@@ -57,7 +57,7 @@
 
 <view class="button-group" wx:if="{{ isvip1||paperDetail.userPapersNum.type==-1||paperDetail.userPapersNum.hasOld||showFullBtn }}">
   <view class="meal">
-    <meal isShow="{{ (!paperDetail.userPapersNum.hasOld || !dataLoaded) && !isIos }}"></meal>
+    <meal isShow="{{ (!paperDetail.userPapersNum.hasOld || !dataLoaded) && !isIos && !paperDetail.setting.isFree }}"></meal>
   </view>
   <view bindtap="gotoguide">
     <press title="{{ oldShareId ? '继续体验' : '自己体验'}}" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
@@ -69,7 +69,7 @@
 
 <view class="buy-group" wx:elif="{{ !isAllFree&&!freeCount&&!paperDetail.userPapersNum.hasOld }}">
   <view class="meal">
-    <meal isShow="{{ (!paperDetail.userPapersNum.hasOld || !dataLoaded) && !isIos }}"></meal>
+    <meal isShow="{{ (!paperDetail.userPapersNum.hasOld || !dataLoaded) && !isIos && !paperDetail.setting.isFree }}"></meal>
   </view>
   <view wx:if="{{ isIos }}">
     <press color="" title="iOS暂不支持购买，请用券兑换或联系客服"></press>
@@ -243,3 +243,4 @@
 <!--      </view>-->
 <!--    </view>-->
 <view wx:if="{{ loading }}" class="loading"></view>
+<serving mobile="{{ mobile }}" wechat="{{ wechat }}"></serving>

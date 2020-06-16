@@ -146,8 +146,8 @@ Component({
           console.log(res);
           let page = getCurrentPages().pop();
           if (page == undefined || page == null) return;
-          page.onLoad("sad");
-          page.onShow();
+          page.onLoad();
+          // page.onShow();
         }
       })
     },

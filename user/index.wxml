@@ -143,7 +143,7 @@
                 bindtap="buyTicket">
             <view class="title">测评兑换券</view>
             <view class="count">{{ mealItem.number }}<text>张</text></view>
-            <view class="price" style="z-index: 99999;">￥{{ mealItem.price }}</view>
+            <view class="price" style="z-index: 99;">￥{{ mealItem.price }}</view>
             <image class="ticket-bg" src="../img/user/index/ticket.png" style="height: 100.44px;width: 53.46px;"></image>
           </view>
         </view>
@@ -222,14 +222,14 @@
 <!--        <image src="../img/user/index/icon3.png"></image>-->
 <!--      </view>-->
 <!--    </view>-->
-    <view class="boxlist flex" bindtap="changePage" data-url="./addGroup">
-      <view class="listleft">
-        <image src="../img/user/index/icon8.png"></image>使用记录
-      </view>
-      <view class="listright">
-        <image src="../img/user/index/icon3.png"></image>
-      </view>
-    </view>
+<!--    <view class="boxlist flex" bindtap="changePage" data-url="./addGroup">-->
+<!--      <view class="listleft">-->
+<!--        <image src="../img/user/index/icon8.png"></image>使用记录-->
+<!--      </view>-->
+<!--      <view class="listright">-->
+<!--        <image src="../img/user/index/icon3.png"></image>-->
+<!--      </view>-->
+<!--    </view>-->
 
 
 <!--    <view class="boxlist" bindtap="changePage" data-url="./useHistory" wx:if="{{userInfo.isBind&&teamRole!=1}}">-->
@@ -251,7 +251,6 @@
 <!--        <image src="../img/user/index/icon3.png"></image>-->
 <!--      </view>-->
 <!--    </view>-->
->>>>>>> 1b18628dc3fd5d1a031f31cfdc21bd7da421d8b7
   </view>
 </view>
 <view class="coverView" wx:if="{{showLogin||showDlg}}" bindtap="hideDlg"></view>

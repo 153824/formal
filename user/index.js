@@ -287,7 +287,8 @@ Page({
         mp_openid: ""
       },
       success: function (res) {
-        wx.showModal(res);
+        console.log(res);
+        wx.requestPayment(res);
       }
     })
   }

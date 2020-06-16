@@ -15,6 +15,14 @@ Component({
     wechat: {
       type: String,
       value: ""
+    },
+    right: {
+      type: String,
+      value: "50rpx"
+    },
+    bottom: {
+      type: String,
+      value: "50rpx"
     }
   },
 

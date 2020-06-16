@@ -641,14 +641,15 @@ Page({
   },
 
   gotodati: function() {
-
     //发放测评
     var that = this;
     var paperDetail = that.data.paperDetail;
     var userPapersNum = paperDetail.userPapersNum || {};
+    wx.aldstat.sendEvent('生成测评邀请函', {
+      '测评名称': '名称：' + paperDetail.setting.name1
+    });
     if (userPapersNum.total == 0) {
       app.toast("测评可用数量不足，请先购买或用券兑换测评");
-
       return;
     }
     wx.navigateTo({
@@ -670,7 +671,7 @@ Page({
         });
         that.onShow()
       }
-    })
+    });
   },
 
   gototailed: function() { //发放记录

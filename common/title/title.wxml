@@ -11,7 +11,7 @@
 <!--        {{userInfo.isBind?(nowTeam.name||userInfo.userCompany.name):'登录以使用更多功能'}}-->
         <picker class="company-picker" bindchange="changeTeam" value="{{ selTeam }}" range="{{ teamNames }}" class="company-child">
             <view wx:if="{{ userInfo.isBind }}" style="display: flex;align-items: center;">
-                <text>{{(nowTeam.name||userInfo.userCompany.name)}}</text><image style="display: inline-block;" wx:if="{{ teamNames.length > 1 }}" class="company-picker-image" src="../../img/user/icon4.png"></image>
+                <text style="width: 406rpx;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{(nowTeam.name||userInfo.userCompany.name)}}</text><image style="display: inline-block;" wx:if="{{ teamNames.length > 1 }}" class="company-picker-image" src="../../img/user/icon4.png"></image>
             </view>
         </picker>
     </view>

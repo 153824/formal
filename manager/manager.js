@@ -13,7 +13,7 @@ Page({
     checkedEvaluation: '0',
     evaluationList: [],
     useList: [],
-    timer: ["近七天","近三十天", "全部"],
+    timer: ["近七天","近三十天", "全部时间"],
     catalog: ["筛选测评"],
     shareTrigger: false,
     evaluationId: "",
@@ -25,74 +25,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // var { checkedItem,checkedTime,evaluationId } = this.data;
-    // var that = this;
-    // if( checkedItem === "0" ){
-    //   app.doAjax({
-    //     url: "../haola/reports",
-    //     method: "get",
-    //     data: {
-    //       orgId: app.teamId,
-    //       userId: app.userId,
-    //       type: checkedTime,
-    //       page: 1,
-    //       pageSize: 10,
-    //       evaluationId: evaluationId
-    //     },
-    //     success: function (res) {
-    //       var catalog = [];
-    //       console.log("res.data.forEach: ",res);
-    //
-    //       (res.data || []).forEach((item,key)=>{
-    //         catalog.push(item.evaluation.name)
-    //       });
-    //       catalog.unshift("全部测评");
-    //       /*数组去重*/
-    //       var catalogSet = new Set(catalog);
-    //
-    //       that.setData({
-    //         evaluationList: res.data||[],
-    //         catalog: Array.from(catalogSet)
-    //       });
-    //     }
-    //   })
-    // }
-    // if( checkedItem === "1" ){
-    //   // sharePapers/batch?userId=5eb21d15eb4b2d000892d14e&teamId=5e1985617d5774006ac4533e&page=2&size=101
-    //   console.log("I checked it",checkedItem);
-    //   app.doAjax({
-    //     url: "sharePapers/batch",
-    //     method: "get",
-    //     data: {
-    //       userId: app.userId,
-    //       teamId: app.teamId,
-    //       type: checkedTime,
-    //       page: 1,
-    //       size: 10
-    //     },
-    //     success: function (res) {
-    //       that.setData({
-    //         useList: res.data
-    //       });
-    //     }
-    //   })
-    // }
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    /*1.获取title组件 2.调用title组件的*/
-    this.title = this.selectComponent("#title");
-    app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
     var { checkedItem,checkedTime,evaluationId } = this.data;
     var that = this;
     if( checkedItem === "0" ){
@@ -143,6 +75,72 @@ Page({
         }
       })
     }
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    /*1.获取title组件 2.调用title组件的*/
+    this.title = this.selectComponent("#title");
+    app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
+    // var { checkedItem,checkedTime,evaluationId } = this.data;
+    // var that = this;
+    // if( checkedItem === "0" ){
+    //   app.doAjax({
+    //     url: "../haola/reports",
+    //     method: "get",
+    //     data: {
+    //       orgId: app.teamId,
+    //       userId: app.userId,
+    //       type: checkedTime,
+    //       page: 1,
+    //       pageSize: 10,
+    //       evaluationId: evaluationId
+    //     },
+    //     success: function (res) {
+    //       var catalog = [];
+    //       res.data.forEach((item,key)=>{
+    //         catalog.push(item.evaluation.name)
+    //       });
+    //       catalog.unshift("全部测评");
+    //       /*数组去重*/
+    //       var catalogSet = new Set(catalog);
+    //
+    //       that.setData({
+    //         evaluationList: res.data,
+    //         catalog: Array.from(catalogSet)
+    //       });
+    //     }
+    //   })
+    // }
+    // if( checkedItem === "1" ){
+    //   // sharePapers/batch?userId=5eb21d15eb4b2d000892d14e&teamId=5e1985617d5774006ac4533e&page=2&size=101
+    //   console.log("I checked it",checkedItem);
+    //   app.doAjax({
+    //     url: "sharePapers/batch",
+    //     method: "get",
+    //     data: {
+    //       userId: app.userId,
+    //       teamId: app.teamId,
+    //       type: checkedTime,
+    //       page: 1,
+    //       size: 10
+    //     },
+    //     success: function (res) {
+    //       that.setData({
+    //         useList: res.data
+    //       });
+    //     }
+    //   })
+    // }
   },
 
   /**
@@ -331,16 +329,13 @@ Page({
           evaluationId: evaluationId
         },
         success: function (res) {
-          res.data = [] || res.data;
           res.data.forEach((item,key)=>{
-            catalog.push(item.evaluation.name)
+            catalog.push(item.evaluation.name);
+            evaluationList.push(item);
           });
           catalog.unshift("全部测评");
           /*数组去重*/
           var catalogSet = new Set(catalog);
-          res.data.forEach((item,key)=>{
-            evaluationList.push(item);
-          });
           that.setData({
             evaluationList,
             catalog: Array.from(catalogSet),
@@ -363,7 +358,6 @@ Page({
           size: 10
         },
         success: function (res) {
-          res.data = res.data || [];
           res.data.forEach((item,key)=>{
             useList.push(item)
           });

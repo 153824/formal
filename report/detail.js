@@ -443,7 +443,7 @@ Page({
    * 分享内容
    */
   onShareAppMessage: function(res) {
-    
+
       // 来自页面内转发按钮
       return {
         path: 'store/store',
@@ -457,6 +457,7 @@ Page({
   toShareReport: function() {
     var paper = this.data.paper;
     var userMsg = this.data.userMsg;
+
     wx.navigateTo({
       url: './shareReport?id=' + this.data.id + "&username=" + userMsg.username + "&paperName=" + paper.name
     });
@@ -581,4 +582,12 @@ Page({
       url: '../store/store'
     });
   },
-})
+  onShareAppMessage: function (options) {
+    const { id } = this.data;
+    return {
+      title: "分享小程序~",
+      path: `/report/detail?id=${id}`,
+      imageUrl: "http://ihola.luoke101.com/wxShareImg.png",
+    }
+  },
+});

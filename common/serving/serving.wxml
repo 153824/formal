@@ -1,5 +1,5 @@
 <!--common/serving/serving.wxml-->
-<view class="serving" bindtap="callServing">
+<view class="serving" bindtap="callServing" style="bottom:{{ bottom }};right: {{ right }}">
     <image src="{{ image }}" style="height: 50px;width: 50px;"></image>
 <!--    showDlg-->
 </view>

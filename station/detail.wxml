@@ -242,4 +242,4 @@
 <!--      </view>-->
 <!--    </view>-->
 <view wx:if="{{ loading }}" class="loading"></view>
-<serving mobile="{{ mobile }}" wechat="{{ wechat }}"></serving>
+<serving mobile="{{ mobile }}" wechat="{{ wechat }}" bottom="180rpx"></serving>

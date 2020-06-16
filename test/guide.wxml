@@ -3,7 +3,7 @@
   <view class="headbox flex">
     <image src="{{userInfo.avatar}}" wx:if="{{userInfo.avatar}}"></image>
     <view class="headtitle flex-main">
-      <view>{{userInfo.userCompany.name||''}}</view>
+      <view>{{userInfo.userCompany.name||'好啦君'}}</view>
       <view class="invitetext">邀您参加测评</view>
     </view>
   </view>

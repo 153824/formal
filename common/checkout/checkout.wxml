@@ -74,7 +74,7 @@
         <text class="title-bg">Report</text>
     </view>
     <view class="report-content">
-        <view class="report-child" bindtap="changePage" data-id="{{ info }}">
+        <view class="report-child" bindtap="changePage" data-name="{{ subtitle }}" data-id="{{ info }}">
             <text>{{ subtitle }}报告模板</text>
             <image src="../../img/report/icon1.png"></image>
         </view>

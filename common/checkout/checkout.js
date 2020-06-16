@@ -42,11 +42,13 @@ Component({
    */
   methods: {
     changePage: function (e) {
-      const { id } = e.currentTarget.dataset;
-      console.log(id)
+      const { id,subtitle } = e.currentTarget.dataset;
       wx.navigateTo({
-        url: `../report/detail?id=${ "5ec6475bb9759800064519a6" }`
-      })
+        url: `../report/detail?id=${ id }`
+      });
+      wx.aldstat.sendEvent('查看报告模板', {
+        '测评名称': `名称：${{subtitle}} id: ${{ id }}`,
+      });
     }
   }
 });

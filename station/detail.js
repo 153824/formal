@@ -37,8 +37,8 @@ Page({
   },
   onLoad: function(options) {
     var that = this;
+    var { id,name } = options;
     isFirstLoad = true;
-    console.log(options);
     var userData = app.globalData.userInfo || wx.getStorageSync("userInfo");
     this.setData({
       isIos: app.isIos,
@@ -46,6 +46,9 @@ Page({
       userData: userData,
       paperid: options.id,
       getphoneNum: true
+    });
+    wx.aldstat.sendEvent('访问测评详情', {
+      '测评名称': `名称: ${name} id：${id}`
     });
     if (app.isLogin) return;
     app.checkUser = function() {

@@ -70,7 +70,7 @@
     <view class="card-wrapper">
       <view class="card-set">
         <block wx:for="{{ teamEvaluation }}" wx:key="unique" wx:for-item="evaluationItem">
-          <view bindtap="changePage" data-url='../station/detail?id={{ evaluationItem.id }}' data-name="{{ evaluationItem.name }}">
+          <view bindtap="changePage" data-url='../station/detail?id={{ evaluationItem.id }}&name={{ evaluationItem.name }}' data-name="{{ evaluationItem.name }}">
             <card image="{{ evaluationItem.setting.img }}"  title="{{ evaluationItem.name }}" subtitle="{{ evaluationItem.setting.infoPc }}"
                   feature="{{ dataItem.isFree ? '免费' : '限时免费' }}"></card>
           </view>
@@ -86,7 +86,7 @@
     <view wx:if="{{ columnItem.showType == 1 }}" class="card-wrapper">
       <view class="card-set">
         <block wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem">
-          <view bindtap="changePage" data-name="{{ dataItem.name }}" data-url='../station/detail?id={{ dataItem.id }}'>
+          <view bindtap="changePage" data-name="{{ dataItem.name }}" data-url='../station/detail?id={{ dataItem.id }}&name={{dataItem.name}}'>
             <card image="{{ dataItem.img }}"  title="{{ dataItem.name }}" subtitle="{{ dataItem.infoPc }}"
                   feature="{{ dataItem.isFree ? '免费' : '限时免费' }}">
             </card>
@@ -97,7 +97,7 @@
     <view wx:elif="{{ columnItem.showType == 2 }}">
       <view wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem" wx:for-index="dataIndex"
             wx:if="{{ dataIndex < 2 }}" >
-            <view bindtap="changePage" data-url='../station/detail?id={{ dataItem.id }}' data-name="{{ dataItem.name }}">
+            <view bindtap="changePage" data-url='../station/detail?id={{ dataItem.id }}&name={{ dataItem.name }}' data-name="{{ dataItem.name }}">
                <skill ios="{{ isIos }}" free="{{ dataItem.isFree }}" price="{{ dataItem.price }}"
                actual="{{ dataItem.defaultPrice }}" title="{{ dataItem.name }}" subtitle="{{ dataItem.infoPc }}"
                image="{{ dataItem.smallImg }}" objectId="{{ dataItem.id }}" name="{{ dataItem.name }}">

@@ -3,7 +3,7 @@
 <view wx:if="{{isChangeQue}}" class="isChangeQue"></view>
 <view class="container1 font" wx:if="{{pathIndex==1}}">
   <view class="bigtitle">完善个人信息</view>
-  <text class="smalltitle">个人信息将作为报告的一部分呈现给用人企业，请如实填写</text>
+  <text class="smalltitle">个人信息将在报告中呈现给用人企业，请如实填写</text>
   <form bindsubmit="submit">
     <text class="inputtext">姓名</text>
     <input name="username" value="{{username}}" bindinput="userInput" data-n="username"></input>

@@ -26,8 +26,8 @@ image {
 .reportBtn {
   width: 468rpx;
   height: 88rpx;
-  background: rgba(89, 96, 237, 1);
-  border-radius: 10rpx;
+  background: rgba(53, 62, 232, 1);
+  border-radius: 0;
   margin: 80rpx auto 0;
   font-size: 32rpx;
   font-family: PingFangSC-Semibold, PingFangSC;

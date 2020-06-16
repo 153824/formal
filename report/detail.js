@@ -469,10 +469,10 @@ Page({
     var paperDetail = this.data.paper;
     var userPapersNum = this.data.userPapersNum;
     wx.navigateTo({
-      url: '../store/detail?id=' + paperDetail.id,
+      url: '../station/detail?id=' + paperDetail.id,
     })
     wx.aldstat.sendEvent('报告详情页测测别人', {
-      '触发点击': '点击数'
+       '测评名称': 'name' + paperDetail.name
     });
   },
   /**返回首页 */

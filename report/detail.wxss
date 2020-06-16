@@ -121,7 +121,7 @@ page, page>view {
 
 .box {
   position: relative;
-  padding: 40rpx 0 60rpx 66rpx;
+  padding: 40rpx 0 60rpx 50rpx;
   background-color: #fff;
 }
 
@@ -215,7 +215,7 @@ page, page>view {
   background: rgba(255, 255, 255, 1);
   box-shadow: 0px 4rpx 16rpx 0px rgba(207, 216, 240, 0.79);
   border-radius: 10rpx;
-  margin-right: 20rpx;
+  margin-right: 40rpx;
   box-sizing: border-box;
 }
 
@@ -289,7 +289,7 @@ page, page>view {
 /* box1 */
 
 .box1 {
-  padding: 80rpx 30rpx 40rpx;
+  padding: 50rpx 40rpx 70rpx;
   background-color: #f7f8fa;
 }
 
@@ -730,12 +730,12 @@ page, page>view {
 }
 
 .sharebtn {
-  margin-top:62rpx;
+  margin-top:30rpx;
   margin-left: 20rpx;
   height: 96rpx;
   border-radius: 14rpx;
   background:#FFFFFF;
-  border:1px solid rgba(7,9,34,0.2);
+  /* border:1px solid rgba(7,9,34,0.2); */
   font-size: 32rpx;
   font-family: PingFangSC-Semibold, PingFangSC;
   color:rgba(7,9,34,1);
@@ -743,10 +743,11 @@ page, page>view {
   text-align: center;
   padding:0 22rpx;
   margin-right: 0;
+  width: 42%;
 }
 
 .toTestOther {
-  margin: 62rpx 20rpx 0 0;
+  margin: 30rpx 20rpx 0 0;
   height: 96rpx;
   background: rgba(89, 96, 237, 1);
   border-radius: 14rpx;
@@ -756,6 +757,7 @@ page, page>view {
   line-height: 96rpx;
   text-align: center;
   padding:0 22rpx;
+  width: 42%;
 }
 .recommand{
   margin: 24rpx 40rpx 64rpx;
@@ -802,7 +804,7 @@ page, page>view {
 /* bottomMsg */
 
 .bottomMsg {
-  margin-top: 80rpx;
+  margin-top: 40rpx;
   font-size: 24rpx;
   font-family: PingFangSC-Semibold, PingFangSC;
   font-weight: 400;

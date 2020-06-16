@@ -213,13 +213,14 @@
       <image src="../img/report/icon_share.png"></image>
       <text>分享报告</text>
     </button>
-    <!-- <button class="toTestOther" id="TOT" bindtap="toTestOtherUser" wx:if="{{teamRole!=1}}">
-      <text>免费测测别人</text>
-    </button> -->
-    <button class="toTestOther" open-type="share" wx:if="{{teamRole!=1}}">
+    <button class="toTestOther" id="TOT" bindtap="toTestOtherUser" wx:if="{{teamRole!=1}}">
+      <image src="../img/report/icon_test.png"></image>
+      <text>测测别人</text>
+    </button>
+    <!-- <button class="toTestOther" open-type="share" wx:if="{{teamRole!=1}}">
       <image src="../img/report/icon_test.png"></image>
       <text>推荐好啦给有需要的人</text>
-    </button>
+    </button> -->
     <button class="toTestOther" bindtap="backToHome" wx:if="{{teamRole==1}}">
       <image src="../img/report/icon_test.png"></image>
       <text>体验更多测评</text>

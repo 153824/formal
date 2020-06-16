@@ -443,9 +443,7 @@ Page({
    * 分享内容
    */
   onShareAppMessage: function(res) {
-    wx.aldstat.sendEvent('报告详情页推荐好啦测评', {
-      '触发点击': '点击数'
-    });
+    
       // 来自页面内转发按钮
       return {
         path: 'store/store',

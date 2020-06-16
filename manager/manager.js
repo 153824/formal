@@ -16,65 +16,67 @@ Page({
     timer: ["近七天","近三十天", "全部"],
     catalog: ["筛选测评"],
     shareTrigger: false,
-    evaluationId: ""
+    evaluationId: "",
+    reportPage: 1,
+    historyPage: 1,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var { checkedItem,checkedTime,evaluationId } = this.data;
-    var that = this;
-    if( checkedItem === "0" ){
-      app.doAjax({
-        url: "../haola/reports",
-        method: "get",
-        data: {
-          orgId: app.teamId,
-          userId: app.userId,
-          type: checkedTime,
-          page: 1,
-          pageSize: 10,
-          evaluationId: evaluationId
-        },
-        success: function (res) {
-          var catalog = [];
-          console.log("res.data.forEach: ",res);
-
-          (res.data || []).forEach((item,key)=>{
-            catalog.push(item.evaluation.name)
-          });
-          catalog.unshift("全部测评");
-          /*数组去重*/
-          var catalogSet = new Set(catalog);
-
-          that.setData({
-            evaluationList: res.data||[],
-            catalog: Array.from(catalogSet)
-          });
-        }
-      })
-    }
-    if( checkedItem === "1" ){
-      // sharePapers/batch?userId=5eb21d15eb4b2d000892d14e&teamId=5e1985617d5774006ac4533e&page=2&size=101
-      console.log("I checked it",checkedItem);
-      app.doAjax({
-        url: "sharePapers/batch",
-        method: "get",
-        data: {
-          userId: app.userId,
-          teamId: app.teamId,
-          type: checkedTime,
-          page: 1,
-          size: 10
-        },
-        success: function (res) {
-          that.setData({
-            useList: res.data
-          });
-        }
-      })
-    }
+    // var { checkedItem,checkedTime,evaluationId } = this.data;
+    // var that = this;
+    // if( checkedItem === "0" ){
+    //   app.doAjax({
+    //     url: "../haola/reports",
+    //     method: "get",
+    //     data: {
+    //       orgId: app.teamId,
+    //       userId: app.userId,
+    //       type: checkedTime,
+    //       page: 1,
+    //       pageSize: 10,
+    //       evaluationId: evaluationId
+    //     },
+    //     success: function (res) {
+    //       var catalog = [];
+    //       console.log("res.data.forEach: ",res);
+    //
+    //       (res.data || []).forEach((item,key)=>{
+    //         catalog.push(item.evaluation.name)
+    //       });
+    //       catalog.unshift("全部测评");
+    //       /*数组去重*/
+    //       var catalogSet = new Set(catalog);
+    //
+    //       that.setData({
+    //         evaluationList: res.data||[],
+    //         catalog: Array.from(catalogSet)
+    //       });
+    //     }
+    //   })
+    // }
+    // if( checkedItem === "1" ){
+    //   // sharePapers/batch?userId=5eb21d15eb4b2d000892d14e&teamId=5e1985617d5774006ac4533e&page=2&size=101
+    //   console.log("I checked it",checkedItem);
+    //   app.doAjax({
+    //     url: "sharePapers/batch",
+    //     method: "get",
+    //     data: {
+    //       userId: app.userId,
+    //       teamId: app.teamId,
+    //       type: checkedTime,
+    //       page: 1,
+    //       size: 10
+    //     },
+    //     success: function (res) {
+    //       that.setData({
+    //         useList: res.data
+    //       });
+    //     }
+    //   })
+    // }
   },
 
   /**
@@ -303,5 +305,74 @@ Page({
   },
   checkboxChange: function (e) {
     console.log(e.detail.id)
+  },
+  nextPage: function (e) {
+    var { checkedItem,
+          checkedTime,
+          evaluationId,
+          reportPage,
+          evaluationList,
+          catalog,
+          historyPage,
+          useList
+        } = this.data;
+    var that = this;
+    if( checkedItem === "0" ){
+      reportPage = reportPage + 1;
+      app.doAjax({
+        url: "../haola/reports",
+        method: "get",
+        data: {
+          orgId: app.teamId,
+          userId: app.userId,
+          type: checkedTime,
+          page: reportPage,
+          pageSize: 10,
+          evaluationId: evaluationId
+        },
+        success: function (res) {
+          res.data = [] || res.data;
+          res.data.forEach((item,key)=>{
+            catalog.push(item.evaluation.name)
+          });
+          catalog.unshift("全部测评");
+          /*数组去重*/
+          var catalogSet = new Set(catalog);
+          res.data.forEach((item,key)=>{
+            evaluationList.push(item);
+          });
+          that.setData({
+            evaluationList,
+            catalog: Array.from(catalogSet),
+            reportPage
+          });
+        }
+      })
+    }
+    if( checkedItem === "1" ){
+      // sharePapers/batch?userId=5eb21d15eb4b2d000892d14e&teamId=5e1985617d5774006ac4533e&page=2&size=101
+      historyPage = historyPage + 1;
+      app.doAjax({
+        url: "sharePapers/batch",
+        method: "get",
+        data: {
+          userId: app.userId,
+          teamId: app.teamId,
+          type: checkedTime,
+          page: historyPage,
+          size: 10
+        },
+        success: function (res) {
+          res.data = res.data || [];
+          res.data.forEach((item,key)=>{
+            useList.push(item)
+          });
+          that.setData({
+            useList,
+            historyPage
+          });
+        }
+      })
+    }
   }
 });

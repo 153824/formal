@@ -33,8 +33,9 @@
 <!--    <view class="time-controller">-->
 <!--        <text wx:for="{{ timer }}" wx:key="id" data-id="{{ item.id }}" class="{{ item.active ? 'timer-active' : '' }}" bindtap="changeTimer">{{ item.name }}</text>-->
 <!--    </view>-->
-    <view wx:if="{{ checkedItem === '0' && evaluationList.length > 0 }}" class="evaluation-reports">
-        <checkbox-group bindchange="checkboxChange">
+    <view wx:if="{{ checkedItem === '0' && evaluationList.length > 0 }}">
+        <scroll-view scroll-y bindscrolltolower="nextPage"
+                     class="evaluation-reports" style="height: 100%;">
             <label for="" wx:for="{{ evaluationList }}">
                 <view class="report-child" style="{{ shareTrigger ? 'padding: 40rpx 80rpx 40rpx 40rpx;': ''}}" data-id="{{ item.id }}" data-name="{{ item.evaluation.name }}" bindtap="toReport">
                     <view wx:if="{{ shareTrigger }}" class="check-wrapper">
@@ -66,12 +67,13 @@
                     </view>
                 </view>
             </label>
-        </checkbox-group>
+        </scroll-view>
     </view>
     <view wx:elif="{{ checkedItem === '0' && evaluationList.length <= 0 }}">
         <empty type="default" title="暂时还没有报告"></empty>
     </view>
-    <view wx:if="{{ checkedItem === '1' && useList.length > 0 }}" class="user-history" >
+    <scroll-view wx:if="{{ checkedItem === '1' && useList.length > 0 }}" class="user-history"
+                 scroll-y bindscrolltolower="nextPage" style="height: 100%;">
         <view class="user-history-child" wx:for="{{ useList }}" bindtap="changePage"
               data-sharePaperId="{{ item.sharePaperId }}" data-status="{{ item.status }}">
             <view class="title">
@@ -84,7 +86,7 @@
                 <view>发放时间：{{ util.getFullDateByFrag(item.createdAt) }} {{ util.getHourAndMinByFrag(item.createdAt) }}</view>
             </view>
         </view>
-    </view>
+    </scroll-view>
     <view wx:elif="{{ checkedItem === '1' && useList.length <= 0 }}">
         <empty type="default" title="还没有发放记录"></empty>
     </view>

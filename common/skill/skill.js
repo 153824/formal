@@ -76,6 +76,10 @@ Component({
       type: String,
       value: "15"
     },
+    name: {
+      type: String,
+      value: ""
+    }
   },
 
   /**
@@ -89,13 +93,12 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    changePage: function (e) {
-      const { id } = e.currentTarget.dataset;
-      console.log("changePage", e);
-      wx.navigateTo({
-          url: `../station/detail?id=${ id }`
-      });
-    }
+    // changePage: function (e) {
+    //   const { id,name } = e.currentTarget.dataset;
+    //   wx.navigateTo({
+    //       url: `../station/detail?id=${ id }`
+    //   });
+    // }
   },
   lifetimes: {
     attached() {

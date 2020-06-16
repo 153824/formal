@@ -161,11 +161,120 @@ Page({
         loading1: false
       })
     });
+
+    // const teamEvaluationPromise = new Promise(function (resolve,reject) {
+    //   app.doAjax({
+    //     url: `../haola/homePages/userPagers?teamId=${app.teamId}`,
+    //     method: "get",
+    //     success: function (res) {
+    //       console.log("../haola/homePages/userPagers?teamId=${app.teamId}：",res);
+    //       resolve(res.data);
+    //     },
+    //     fail: function (err) {
+    //       reject(err);
+    //     }
+    //   })
+    // });
+    // teamEvaluationPromise.then(res=>{
+    //   teamEvaluationPromiseList = res.map((v,k)=>{
+    //     return(new Promise((resolve, reject) => {
+    //       app.doAjax({
+    //         url: `../hola/paperDetail?id=${v.paper.objectId}&userId=${app.userId}`,
+    //         method: "get",
+    //         success: function (res) {
+    //           resolve( res );
+    //         },
+    //         fail: function (err) {
+    //           reject(err);
+    //         }
+    //       })
+    //     }))
+    //   });
+    //   return Promise.all(teamEvaluationPromiseList);
+    // }).then(res=>{
+    //   that.setData({
+    //     teamEvaluation: res
+    //   })
+    // }).catch(err=>{
+    // }).finally(()=>{
+    //   that.setData({
+    //     loading2: false
+    //   })
+    // })
+  },
+  onShow: function() {
+    this.title = this.selectComponent("#title");
+    app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
+    var that = this;
+    app.freeTickId = "";
+    if (!app.isLogin) {
+      app.checkUser = function() {
+        that.onShow();
+        app.checkUser = null;
+      };
+      return;
+    };
+    this.setData({
+      loading1: false,
+      loading2: false,
+    });
+    var homePagesPromiseList = [],
+        teamEvaluationPromiseList = [];
+    const homePagesPromise = new Promise(function (resolve,reject) {
+      app.doAjax({
+        url: "../haola/homePages",
+        method: "get",
+        success: function(res){
+          resolve( res.resultObject );
+        },
+        fail: function (err) {
+          reject( err )
+        }
+      });
+    });
+    homePagesPromise.then(res=>{
+      that.setData(res);
+      homePagesPromiseList = res.column.map((v,k)=>{
+        return new Promise((resolve, reject) => {
+          app.doAjax({
+            url: `../haola/homePages/columns/${ v.column_id }/evaluations`,
+            method: "get",
+            success: function (res) {
+              resolve({ columnId: v.column_id, data: res.data});
+            },
+            fail: function (err) {
+              reject(err);
+            }
+          });
+        })
+      });
+      return Promise.all(homePagesPromiseList)
+    }).then(res=>{
+      const { column } = that.data;
+      var targetColumn = column;
+      for( let i = 0; i < res.length;i++ ){
+        for( let j = 0; j < column.length;j++ ){
+          if( res[i].columnId === targetColumn[j].column_id ){
+            targetColumn[j]["data"] = res[i].data || [];
+            // break;
+          }
+        }
+      };
+      that.setData({
+        column: targetColumn
+      });
+    }).finally(()=>{
+      that.setData({
+        loading1: false
+      })
+    });
+
     const teamEvaluationPromise = new Promise(function (resolve,reject) {
       app.doAjax({
         url: `../haola/homePages/userPagers?teamId=${app.teamId}`,
         method: "get",
         success: function (res) {
+          console.log("../haola/homePages/userPagers?teamId=${app.teamId}：",res);
           resolve(res.data);
         },
         fail: function (err) {
@@ -193,28 +302,12 @@ Page({
       that.setData({
         teamEvaluation: res
       })
+    }).catch(err=>{
     }).finally(()=>{
       that.setData({
         loading2: false
       })
     })
-  },
-  onShow: function() {
-    this.title = this.selectComponent("#title");
-    app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
-    var that = this;
-    app.freeTickId = "";
-    if (!app.isLogin) {
-      app.checkUser = function() {
-        that.onShow();
-        app.checkUser = null;
-      };
-      return;
-    };
-    this.setData({
-      loading1: false,
-      loading2: false,
-    });
     // that.setData({
     //   loading1: false,
     //   loading2: false,
@@ -388,10 +481,14 @@ Page({
     wx.navigateTo({
       url: '../common/webView',
     })
+    wx.aldstat.sendEvent('首页点击推荐阅读', {
+            '文章名称': '名称：' + url
+    });
   },
   changePage: function(e) {
     //页面跳转
     var d = e.currentTarget.dataset;
+    var { name } = e.currentTarget.dataset;
     var url = d.url;
     var tab = d.tab;
     var n = d.n;
@@ -424,6 +521,9 @@ Page({
         wx.navigateTo({
           url: url
         });
+        wx.aldstat.sendEvent('首页进入测评详情', {
+                '测评名称': '名称：' + name
+              });
       }
     }
     if (tab) {
@@ -466,21 +566,36 @@ Page({
   },
   gotoDetail: function (e) {
     const { id } = e.currentTarget.dataset;
+   
     if( id.startsWith("http") ){
       wx.setStorageSync("webView_Url", id);
       wx.navigateTo({
         url: '../common/webView',
       });
+      wx.aldstat.sendEvent('查看Banner详情', {
+              'Banner名称': 'id' + id
+            });
       return;
     }
     wx.navigateTo({
-      url: `../station/detail?id=${ id }`
+      url: `../station/detail?id=${ id }`,
+      success: function(){
+        wx.aldstat.sendEvent('查看Banner详情', {
+                'Banner名称': 'id' + id
+              });
+      }
     });
+ 
   },
   gotoMore: function (e) {
     const { id,name } = e.currentTarget.dataset;
     wx.navigateTo({
       url: `../station/more?id=${ id }&title=${name}`,
+      success: ()=>{
+        wx.aldstat.sendEvent('导航点击', {
+                '导航名称': '名称：' + name
+              });
+      }
     });
   },
   callServing: function (e) {

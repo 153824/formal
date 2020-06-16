@@ -96,7 +96,9 @@ Page({
   },
   changeTab: function (e) {
     const checkedId = e.currentTarget.id,
+          { name } = e.currentTarget.dataset,
           { menu } = this.data;
+          console.log(e);
     for( let i = 0;i < menu.length;i++ ){
       if( checkedId === menu[i].objectId ){
         this.setData({
@@ -111,12 +113,24 @@ Page({
     };
     this.setData({
       checkedId,
-    })
+    });
+    wx.aldstat.sendEvent('从人岗匹配侧边栏进入查看测评列表', {
+            '侧边栏名称': '名称：' + name
+    });
   },
   changePage: function () {
     wx.navigateTo({
       url: `./more?id=${ 620412 }`
     })
+  },
+  gotoDetail: function(e){
+    var { id,name } = e.currentTarget.dataset;
+    wx.navigateTo({
+      url: `./detail?id=${ id }`,
+    });
+    wx.aldstat.sendEvent('从人岗匹配进入测评详情', {
+            '测评名称': '名称：' + name + ' id：' + id
+    });
   },
   onHide() {
 

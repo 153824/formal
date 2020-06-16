@@ -99,6 +99,7 @@ Page({
           });
         }
       });
+
       app.doAjax({
         url: "getMyticket",
         method: "get",
@@ -129,13 +130,12 @@ Page({
               ret.forEach(function(n) {
                 if (n.type == 2) { //有领取过3张免费测评券
                   freeTick = n.id;
+                  console.log("ret.forEach(function(n)",freeTick);
                 }
               });
               that.setData({
                 hasFreeTick: true,
-                freeTick: freeTick
-              });
-              that.setData({
+                freeTick: freeTick,
                 oldShareInfo: ""
               });
               if (!wx.getStorageSync("hideLastTestMind")) {
@@ -925,14 +925,19 @@ Page({
   onShareAppMessage(options) {
     const { teamId } = app,
           paperId = options.target.dataset.id,
-          userId = app.globalData.userInfo.id;
-    console.log("teamId,paperId,userId",teamId,paperId,userId);
+          userId = app.globalData.userInfo.id,
+          that = this;
     setTimeout(()=>{
       app.doAjax({
         url: `../hola/drawVoucher?userId=${userId}&paperId=${paperId}&teamId=${teamId}`,
         success: function (res) {
           console.log("url: `../hola/drawVoucher?userId=${userId}&paperId=${paperId}&teamId=${teamId}`: ",res);
           app.toast(res);
+          if( res.code == "0" ){
+            that.setData({
+              freeTick: true
+            })
+          }
         }
       })
     },1000);
@@ -958,15 +963,13 @@ Page({
     });
   },
   getNewerTicket: function (e) {
+    var that = this;
     app.doAjax({
       url: "couponGet",
       method: "post",
       data: {},
       error: function(ret) {
         app.toast(ret.msg);
-        // setTimeout(function() {
-        //   wx.navigateBack();
-        // }, 1500);
       },
       success: function(ret) {
         app.getUserInfo(); //更新用户信息

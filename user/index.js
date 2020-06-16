@@ -54,8 +54,9 @@ Page({
     })
   },
   onShow: function() {
-    // this.title = this.selectComponent("#title");
-    // app.getUserInfo(this.title.loadUserMsg.call(this.title._this(),["user/index"]));
+    var that = this;
+    // that.loadUserMsg();
+    app.getUserInfo(that.loadUserMsg);
   },
   loadUserMsg: function() {
     var userData = app.globalData.userInfo || wx.getStorageSync("userInfo");

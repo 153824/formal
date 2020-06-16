@@ -32,12 +32,12 @@ Page({
       });
       app.globalData.redirectReportId = null;
     }
-    if( redirectToIndex ){
-      wx.switchTab({
-        url: `../index/index`,
-      });
-      app.globalData.redirectToIndex = false;
-    }
+    // if( redirectToIndex ){
+    //   wx.switchTab({
+    //     url: `../index/index`,
+    //   });
+    //   app.globalData.redirectToIndex = false;
+    // }
     var { checkedItem,checkedTime,evaluationId } = this.data;
     var that = this;
     if( checkedItem === "0" ){

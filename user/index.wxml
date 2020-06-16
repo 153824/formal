@@ -135,7 +135,7 @@
     <view class="set-meal-wrapper">
       <view class="meal-title">
         <text>测评券套餐</text>
-        <text class="meal-rule">券可用于兑换平台任意测评</text>
+        <text class="meal-rule">{{ isIos ? 'IOS暂不支持在线购买' : '券可用于兑换平台任意测评' }}</text>
       </view>
       <scroll-view scroll-x="true">
         <view class="set-meal-group">

@@ -44,7 +44,8 @@ Page({
   onShow: function() {
 
   },
-  closemask: function() {
+  closemask: function(e) {
+    const { id,name } = e.currentTarget.dataset;
     var that = this;
     var sKey = "oldAnswer" + this.data.id;
     var draftAnswer = this.data.draftAnswer;
@@ -52,6 +53,9 @@ Page({
       wx.setStorageSync(sKey, draftAnswer);
       wx.redirectTo({
         url: '../test/index?pid=' + that.data.paperId + '&id=' + that.data.id
+      });
+      wx.aldstat.sendEvent('点击开始作答', {
+        '测评名称': `名称：${ name } id：${ id }`
       });
       return;
     }

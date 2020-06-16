@@ -100,7 +100,8 @@
             <view bindtap="changePage" data-url='../station/detail?id={{ dataItem.id }}&name={{ dataItem.name }}' data-name="{{ dataItem.name }}">
                <skill ios="{{ isIos }}" free="{{ dataItem.isFree }}" price="{{ dataItem.price }}"
                actual="{{ dataItem.defaultPrice }}" title="{{ dataItem.name }}" subtitle="{{ dataItem.infoPc }}"
-               image="{{ dataItem.smallImg }}" objectId="{{ dataItem.id }}" name="{{ dataItem.name }}">
+               image="{{ dataItem.smallImg }}" objectId="{{ dataItem.id }}" name="{{ dataItem.name }}" companyUseName="{{ dataItem.companyUseName }}"
+               companyUseNum="{{ dataItem.companyUseNum }}">
                 </skill>
             </view>
       </view>

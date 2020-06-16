@@ -194,7 +194,7 @@ Page({
         that.setData({
           getphoneNum: true,
           phoneNumber: res.data.phone
-        })
+        });
       }
     })
   },
@@ -814,8 +814,10 @@ Page({
     });
   },
   getPhoneNumber: function (e) {
+    const { name } = e.currentTarget.dataset;
     var that = this;
-    if (!that.data.getphoneNum || that.data.getphoneNum) {
+    // !that.data.getphoneNum || that.data.getphoneNum
+    if (!that.data.getphoneNum) {
       var detail = e.detail;
       var iv = detail.iv;
       var encryptedData = detail.encryptedData;
@@ -835,6 +837,9 @@ Page({
           }
         });
       }
+      wx.aldstat.sendEvent('授权手机号', {
+        '测评名称': `名称：${ name }`
+      });
       return;
     }
   }

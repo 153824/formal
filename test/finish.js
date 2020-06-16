@@ -5,9 +5,10 @@ Page({
 
   },
   onLoad: function(options) {
-    var id = options.id;
+    var { id,name } = options;
     this.setData({
-      id: id
+      id: id,
+      name: name
     });
   },
   onShow: function() {
@@ -17,10 +18,13 @@ Page({
    * 进入测评管理页面
    */
   toReportDetail: function(e) {
-    const { id } = this.data;
+    const { id,name } = this.data;
     wx.setStorageSync("showDlg", true);
     wx.navigateTo({
       url: `../report/detail?id=${ id }`,
+    });
+    wx.aldstat.sendEvent('查看自己的报告', {
+      '测评名称': `名称：${ name }`
     });
   }
 })

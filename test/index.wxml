@@ -37,10 +37,10 @@
       <image class="rebtn" src="../img/guide/takephoto.png"></image>
       <text>重新拍摄</text>
     </view> -->
-    <view wx:if="{{!getphoneNum||!username||!birthday||(!education&&education!=0)}}" class="graybtn">下一步</view>
+    <view wx:if="{{!getphoneNum||!username||!birthday||(!education&&education!=0)}}" class="graybtn">确认无误，开始作答</view>
     <!-- getphoneNum -->
     <block wx:else>
-      <button form-type="submit">下一步</button>
+      <button form-type="submit" data-name="{{ paperList.setting.name1 }}">确认无误，开始作答</button>
     </block>
   </form>
 </view>
@@ -83,7 +83,7 @@
 <view class="coverView" style="background-color:transparent;" wx:if="{{isChangeQue}}"></view>
 <view class="container font {{pathIndex==3?'':'pageHide'}}">
   <view class="timebox" wx:if="{{chapterTimeDownFull}}">剩余时间：{{chapterTimeDownFull}}</view>
-  <form bindsubmit="formSubmit">
+  <form bindsubmit="formSubmit" data-name="{{ paperList.setting.name1 }}">
     <view class="paper {{phoneModel ? 'isiphoneXpaper':'notiphoneXpaper'}}" style="top:{{chapterTimeDownFull?84:32}}rpx;">
       <swiper current="{{swiperCurrent1}}">
         <block wx:for="{{showQues}}" wx:for-index="quesindex" wx:for-item="quesitem" wx:key="unique">

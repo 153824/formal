@@ -33,7 +33,8 @@ Page({
     showDlg1: false,
     loading: true,
     mobile: "18559297592",
-    wechat: "LIN_7890"
+    wechat: "LIN_7890",
+    trigger: false,
   },
   onLoad: function(options) {
     var that = this;
@@ -991,9 +992,10 @@ Page({
         });
         that.setData({
           list: ret,
-          couponGet0: true
+          couponGet0: true,
         });
       }
     });
+    that.onShow();
   }
 });

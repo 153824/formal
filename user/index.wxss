@@ -464,3 +464,116 @@ page{
   background:linear-gradient(303deg,rgba(209,154,103,1) 0%,rgba(244,218,182,1) 100%);
 }
 
+/* common/serving/serving.wxss */
+.serving{
+  position: fixed;
+  bottom: 180rpx;
+  right: 50rpx;
+}
+.dlg {
+  width: 558rpx;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 16rpx;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  padding: 48rpx 52rpx;
+  box-sizing: border-box;
+}
+
+.dlg .title {
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: rgba(50, 53, 65, 1);
+  line-height: 44rpx;
+}
+
+.dlg .callMobile {
+  margin-top: 50rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(50, 53, 65, 1);
+  line-height: 40rpx;
+}
+
+.dlg .kefuMobile {
+  margin-top: 12rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(50, 53, 65, 1);
+  line-height: 40rpx;
+  text-decoration: underline;
+  padding-left: 52rpx;
+}
+
+.dlg .callMobile image {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 16rpx;
+}
+
+.dlg .borderView {
+  margin: 48rpx 0;
+  height: 1px;
+  background: rgba(231, 231, 231, 1);
+  width: 100%;
+}
+
+.dlg .callWX {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(50, 53, 65, 1);
+  line-height: 40rpx;
+}
+
+.dlg .callWX image {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 16rpx;
+}
+
+.dlg .kefuWX {
+  margin-top: 10rpx;
+  padding-left: 52rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(50, 53, 65, 1);
+  line-height: 40rpx;
+}
+
+.dlg .copyBtn {
+  margin: 40rpx 0 48rpx 80rpx;
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(89, 96, 237, 1);
+  line-height: 34rpx;
+  padding: 20rpx 24rpx;
+  border-radius: 16rpx;
+  border: 1px solid rgba(89, 96, 237, 1);
+}
+
+.dlg .mind {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(92, 97, 113, 1);
+  line-height: 40rpx;
+  text-align: center;
+}
+.coverView {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}

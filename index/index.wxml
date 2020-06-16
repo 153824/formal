@@ -63,21 +63,21 @@
     </view>
   </view>
 
-  <view wx:if="{{ teamEvaluation.length > 0 }}">
-    <view class="header">
-      <text>专属测评</text>
-    </view>
-    <view class="card-wrapper">
-      <view class="card-set">
-        <block wx:for="{{ teamEvaluation }}" wx:key="unique" wx:for-item="evaluationItem">
-          <view bindtap="changePage" data-url='../station/detail?id={{ evaluationItem.id }}&name={{ evaluationItem.name }}' data-name="{{ evaluationItem.name }}">
-            <card image="{{ evaluationItem.setting.img }}"  title="{{ evaluationItem.name }}" subtitle="{{ evaluationItem.setting.infoPc }}"
-                  feature="{{ dataItem.isFree ? '免费' : '限时免费' }}"></card>
-          </view>
-        </block>
-      </view>
-    </view>
-  </view>
+<!--  <view wx:if="{{ teamEvaluation.length > 0 }}">-->
+<!--    <view class="header">-->
+<!--      <text>专属测评</text>-->
+<!--    </view>-->
+<!--    <view class="card-wrapper">-->
+<!--      <view class="card-set">-->
+<!--        <block wx:for="{{ teamEvaluation }}" wx:key="unique" wx:for-item="evaluationItem">-->
+<!--          <view bindtap="changePage" data-url='../station/detail?id={{ evaluationItem.id }}&name={{ evaluationItem.name }}' data-name="{{ evaluationItem.name }}">-->
+<!--            <card image="{{ evaluationItem.setting.img }}"  title="{{ evaluationItem.name }}" subtitle="{{ evaluationItem.setting.infoPc }}"-->
+<!--                  feature="{{ dataItem.isFree ? '免费' : '限时免费' }}"></card>-->
+<!--          </view>-->
+<!--        </block>-->
+<!--      </view>-->
+<!--    </view>-->
+<!--  </view>-->
 
   <view wx:for="{{ column }}" wx:key="unique" wx:for-item="columnItem" wx:if="{{ columnItem.data.length > 0 }}">
     <view class="header">

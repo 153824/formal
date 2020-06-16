@@ -829,7 +829,7 @@ Page({
     const { name } = e.currentTarget.dataset;
     var that = this;
     // !that.data.getphoneNum || that.data.getphoneNum
-    if (!that.data.getphoneNum) {
+    if (!that.data.getphoneNum || that.data.getphoneNum) {
       var detail = e.detail;
       var iv = detail.iv;
       var encryptedData = detail.encryptedData;
@@ -838,7 +838,6 @@ Page({
         var userMsg = app.globalData.userMsg || {};
         userMsg["iv"] = iv;
         userMsg["encryptedData"] = encryptedData;
-        console.log(userMsg);
         app.doAjax({
           url: "updatedUserMobile",
           data: userMsg,

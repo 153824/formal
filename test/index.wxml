@@ -37,7 +37,8 @@
       <image class="rebtn" src="../img/guide/takephoto.png"></image>
       <text>重新拍摄</text>
     </view> -->
-    <view wx:if="{{!getphoneNum||!username||!birthday||(!education&&education!=0)}}" class="graybtn">确认无误，开始作答</view>
+<!--    &&education!=0-->
+    <view wx:if="{{!getphoneNum||!username||!birthday||(!education)}}" class="graybtn">确认无误，开始作答</view>
     <!-- getphoneNum -->
     <block wx:else>
       <button form-type="submit" data-name="{{ paperList.setting.name1 }}">确认无误，开始作答</button>

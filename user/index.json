@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "个人中心",
   "usingComponents": {
-    "title": "../common/title/title"
+    "title": "../common/title/title",
+    "serving": "../common/serving/serving"
   }
 }

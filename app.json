@@ -79,12 +79,6 @@
         "selectedIconPath": "img/index/evaluation-manager-active@2x.png"
       },
       {
-        "pagePath": "index/manage",
-        "text": "测评管理（旧）",
-        "iconPath": "img/index/evaluation-manager-no-active@2x.png",
-        "selectedIconPath": "img/index/evaluation-manager-no-active@2x.png"
-      },
-      {
         "pagePath": "user/index",
         "text": "我的",
         "iconPath": "img/index/my_no_active@2x.png",

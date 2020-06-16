@@ -40,7 +40,11 @@ Page({
         number: 800,
         price: 11800
       }
-    ]
+    ],
+    showDlg2: false,
+    showServing: false,
+    mobile: "18559297592",
+    wechat: "LIN_7890"
   },
   onLoad: function(options) {
     var that = this;
@@ -260,7 +264,7 @@ Page({
    */
   toShowDlg: function() {
     this.setData({
-      showDlg: true
+      showDlg2: true
     });
   },
   /**
@@ -268,7 +272,7 @@ Page({
    */
   hideDlg: function() {
     this.setData({
-      showDlg: false
+      showDlg2: false
     });
   },
 
@@ -292,5 +296,36 @@ Page({
         wx.requestPayment(res);
       }
     })
+  },
+
+  callServing: function (e) {
+    this.setData({
+      showServing: true
+    });
+  },
+  hideServing: function (e) {
+    this.setData({
+      showServing: false
+    });
+  },
+  copyIt: function() {
+    var wechat = this.properties.wechat;
+    wx.setClipboardData({
+      data: wechat,
+      success(res) {
+
+      }
+    });
+  },
+  callIt: function() {
+    var phoneNumber = this.properties.mobile;
+    wx.makePhoneCall({
+      phoneNumber: phoneNumber //仅为示例，并非真实的电话号码
+    })
+  },
+  hideDlg: function() {
+    this.setData({
+      showServing: false
+    });
   }
 });

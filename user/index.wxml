@@ -139,11 +139,18 @@
       </view>
       <scroll-view scroll-x="true">
         <view class="set-meal-group">
-          <view class="set-meal-child" wx:for="{{ meal }}" wx:for-item="mealItem" data-type="{{ mealItem.type }}"
+          <view wx:if="{{ isIos }}" class="set-meal-child" wx:for="{{ meal }}" wx:for-item="mealItem" data-type="{{ mealItem.type }}"
+                bindtap="callServing">
+            <view class="title">测评兑换券</view>
+            <view class="count">{{ mealItem.number }}<text>张</text></view>
+            <view class="price" style="z-index: 99;" bindtap="callServing">联系客服</view>
+            <image class="ticket-bg" src="../img/user/index/ticket.png" style="height: 100.44px;width: 53.46px;"></image>
+          </view>
+          <view wx:if="{{ !isIos }}" class="set-meal-child" wx:for="{{ meal }}" wx:for-item="mealItem" data-type="{{ mealItem.type }}"
                 bindtap="buyTicket">
             <view class="title">测评兑换券</view>
             <view class="count">{{ mealItem.number }}<text>张</text></view>
-            <view class="price" style="z-index: 99;">￥{{ mealItem.price }}</view>
+            <view class="price" style="z-index: 99;" bindtap="callServing">￥{{ mealItem.price }}</view>
             <image class="ticket-bg" src="../img/user/index/ticket.png" style="height: 100.44px;width: 53.46px;"></image>
           </view>
         </view>
@@ -258,7 +265,7 @@
   <view class="title">您还未登录</view>
   <view class="dlgContent">
     <text>请先登录再进行操作</text>
-<!--    <image src="../img/user/icon1.png"></image>-->
+    <image src="../img/user/icon1.png"></image>
   </view>
   <view class="dlgBottom flex">
     <view class="noLogin btn" bindtap="hideLoginDlg">暂不登录</view>
@@ -274,4 +281,31 @@
   <view class="mind">购买、发放、体验测评、查看报告</view>
   <view class="title1">普通成员</view>
   <view class="mind">查看分享给自己的报告</view>
+</view>
+
+
+<view class="coverView" wx:if="{{ showServing }}" bindtap="hideServing"></view>
+<view class="dlg" wx:if="{{ showServing }}">
+  <view class="title">客服联系方式</view>
+  <view class="flex" style="text-align: left !important;">
+    <view class="flex-main">
+      <view class="callMobile">
+        <image src="../img/user/vip/icon16.png"></image>
+        点击拨打电话
+      </view>
+      <view class="kefuMobile" bindtap="callIt">{{ mobile }}</view>
+    </view>
+  </view>
+  <view class="borderView"></view>
+  <view class="flex" style="display: flex;">
+    <view class="flex-main">
+      <view class="callWX">
+        <image src="../img/user/vip/icon17.png"></image>
+        客服微信
+      </view>
+      <view class="kefuWX">{{ wechat }}</view>
+    </view>
+    <view class="copyBtn" bindtap="copyIt" style="display: inline-block;">复制微信号</view>
+  </view>
+  <view class="mind">添加时，请备注公司所属行业和规模</view>
 </view>

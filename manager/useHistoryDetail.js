@@ -165,18 +165,14 @@ Page({
     })
   },
   gotodati: function() {
-    wx.aldstat.sendEvent('详情页点击测别人', {
-      '触发点击': '点击数'
-    });
+    
     //发放测评
     var that = this;
     var { baseInfo } = that.data;
     var userPapersNum = baseInfo.userPapersNum || {};
     if (userPapersNum.total == 0) {
       app.toast("测评可用数量不足，请先购买或用券兑换测评");
-      wx.aldstat.sendEvent('详情页点击toast测评数量不足', {
-        '触发点击': '点击数'
-      });
+     
       return;
     }
     wx.navigateTo({

@@ -481,10 +481,14 @@ Page({
     wx.navigateTo({
       url: '../common/webView',
     })
+    wx.aldstat.sendEvent('首页点击推荐阅读', {
+            '文章名称': '名称：' + url
+    });
   },
   changePage: function(e) {
     //页面跳转
     var d = e.currentTarget.dataset;
+    var { name } = e.currentTarget.dataset;
     var url = d.url;
     var tab = d.tab;
     var n = d.n;
@@ -517,6 +521,9 @@ Page({
         wx.navigateTo({
           url: url
         });
+        wx.aldstat.sendEvent('首页进入测评详情', {
+                '测评名称': '名称：' + name
+              });
       }
     }
     if (tab) {
@@ -559,21 +566,36 @@ Page({
   },
   gotoDetail: function (e) {
     const { id } = e.currentTarget.dataset;
+   
     if( id.startsWith("http") ){
       wx.setStorageSync("webView_Url", id);
       wx.navigateTo({
         url: '../common/webView',
       });
+      wx.aldstat.sendEvent('查看Banner详情', {
+              'Banner名称': 'id' + id
+            });
       return;
     }
     wx.navigateTo({
-      url: `../station/detail?id=${ id }`
+      url: `../station/detail?id=${ id }`,
+      success: function(){
+        wx.aldstat.sendEvent('查看Banner详情', {
+                'Banner名称': 'id' + id
+              });
+      }
     });
+ 
   },
   gotoMore: function (e) {
     const { id,name } = e.currentTarget.dataset;
     wx.navigateTo({
       url: `../station/more?id=${ id }&title=${name}`,
+      success: ()=>{
+        wx.aldstat.sendEvent('导航点击', {
+                '导航名称': '名称：' + name
+              });
+      }
     });
   },
   callServing: function (e) {

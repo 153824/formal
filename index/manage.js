@@ -130,9 +130,7 @@ Page({
     //     that.onShow()
     //   }
     // })
-    wx.aldstat.sendEvent('测评管理页点击发测评', {
-      '触发点击': '点击数'
-    });
+   
     var d = e.currentTarget.dataset;
     var url = d.url;
     wx.navigateTo({

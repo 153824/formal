@@ -204,9 +204,7 @@ Page({
     wx.navigateTo({
       url: "./detail?id=" + id
     });
-    wx.aldstat.sendEvent('从商城进入测评详情', {
-      '测评名称': 'id' + id
-    });
+    
   },
 
   changepage: function(e) {
@@ -216,9 +214,7 @@ Page({
     var i = d.i;
     var fullUrl = d.fullurl;
     if (fullUrl) {
-      wx.aldstat.sendEvent('首页点击免费领取新人券', {
-        '触发点击': '点击数'
-      });
+      
       var detail = e.detail;
       if (detail && detail.errMsg && !detail.encryptedData) return;
       if (detail && detail.encryptedData) {
@@ -226,9 +222,7 @@ Page({
         var encryptedData = detail.encryptedData;
         if (encryptedData) {
           //用户授权手机号      
-          wx.aldstat.sendEvent('首页就授权了手机', {
-            '触发点击': '点击数'
-          });
+          
           var userMsg = app.globalData.userMsg || {};
           userMsg["iv"] = iv;
           userMsg["encryptedData"] = encryptedData;
@@ -249,9 +243,7 @@ Page({
     var url = "./category?id=" + listid;
     if (i != null) {
       url = url + "&i=" + i;
-      wx.aldstat.sendEvent('商城进入销售类技能测评', {
-        '触发点击': '点击数'
-      });
+      
     }
     wx.navigateTo({
       url: url
@@ -289,9 +281,7 @@ Page({
   },
   //显示领券弹窗
   toFetGift: function(e) {
-    wx.aldstat.sendEvent('首页点击了顶部领券', {
-      '触发点击': '点击数'
-    });
+   
     this.setData({
       showGiftDlg: true
     });
@@ -304,9 +294,7 @@ Page({
     });
   },
   realCloseGiftDlg: function (e) {
-    wx.aldstat.sendEvent('首页关闭了领券弹窗', {
-      '触发点击': '点击数'
-    });
+    
     this.setData({
       showTopGift: true,
       showGiftDlg: false

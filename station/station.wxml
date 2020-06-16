@@ -6,7 +6,7 @@
     <view class="left-catalog-wrapper">
       <view id="{{item.objectId}}" wx:for="{{menu}}" wx:key="unique" data-id="{{item.objectId}}"
             class="{{ checkedId === item.objectId ? 'catalog-child active' : 'catalog-child' }}"
-            bindtap="changeTab">
+            bindtap="changeTab" data-name="{{ item.name }}">
         <text class="title" id="{{item.objectId}}">{{item.name}}</text>
       </view>
     </view>
@@ -22,7 +22,7 @@
 <!--            <text wx:if="{{ child.evaluations.length > 2 }}" class="more" bindtap="changePage">更多</text>-->
           </view>
           <view wx:for="{{ child.evaluations }}" wx:for-item="evaluation" wx:key="unique">
-            <view >
+            <view data-id="{{ evaluation.id }}" data-name="{{ evaluation.name }}" bindtap="gotoDetail">
               <skill objectId="{{ evaluation.id }}" ios="{{ isIos }}" free="{{ evaluation.isFree }}" price="{{ evaluation.defaultPrice }}"
                      actual="{{ evaluation.price }}" title="{{ evaluation.name }}" subtitle="{{ evaluation.infoPc }}"
                      image="{{ evaluation.smallImg }}" companyUseName="{{ evaluation.companyUseName }}"

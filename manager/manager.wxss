@@ -60,7 +60,7 @@
 }
 .user-history-child{
     padding: 40rpx 0 40rpx 0;
-    border: 2rpx solid #0709221A;
+    border-bottom: 2rpx solid #0709221A;
 }
 .title{
     display: flex;
@@ -105,6 +105,9 @@
     margin-right: 70rpx;
     font-size: 24rpx;
     color: #070922;
+}
+.time-wrapper > view{
+    text-align: center;
 }
 .time-wrapper > view:first-child,.user-wrapper > view:first-child,.info-wrapper > view:first-child{
     margin-bottom: 20rpx;

@@ -8,7 +8,7 @@
         <view class="info">
             <view class="title">{{ baseInfo.paper.name }}</view>
             <view class="count">
-                <text>发放数量：{{ baseInfo.batchCount }}份</text><text wx:if="{{ status == '3' }}"> ( 已撤回{{ baseInfo.batchCount - baseInfo.finishedCount - baseInfo.receivedCount }}份 )</text>
+                <text>发放数量：{{ baseInfo.batchCount }}份</text><text wx:if="{{ status == '3' }}" style="color: red;"> ( 已撤回{{ baseInfo.batchCount - baseInfo.finishedCount - baseInfo.receivedCount }}份 )</text>
             </view>
             <view>
                 <text class="send-way">发放方式：二维码</text>
@@ -64,14 +64,11 @@
                     <view wx:for="{{ baseInfo.receivedUsers }}" wx:for-item="receivedItem" wx:key="unique" class="content-child">
                         <view class="title">
                             <text>{{ receivedItem.nickname }}</text>
-                            <image src="../img/user/index/icon3.png"></image>
                         </view>
                         <view class="rate">
                             <view class="rate-info">
-                                <text>{{ receivedItem.report.summary.title }}</text>
-                                <text>{{ receivedItem.report.total1 }}分</text>
+                                <text>作答开始时间：</text><text>{{ util.getFullDateByFrag(receivedItem.time) }}-{{ util.getHourAndMinByFrag(receivedItem.time) }}</text>
                             </view>
-                            <text>{{ util.getFullDateByFrag(receivedItem.time) }}-{{ util.getHourAndMinByFrag(receivedItem.time) }}</text>
                         </view>
                     </view>
                 </block>
@@ -101,18 +98,18 @@
                            subtitle="撤回测评"></empty>
                 </block>
                 <block wx:elif="{{ baseInfo.remainCount > 0 && status == '3' }}">
-                    <empty type="default" title="{{ baseInfo.remainCount }}份测评已全部被撤回" subtitle="测回测评"></empty>
+                    <empty type="default" title="{{ baseInfo.remainCount }}份测评已全部被撤回" subtitle="撤回测评"></empty>
                 </block>
 <!--                "{{ baseInfo.remainCount <= 0 }}"-->
                 <block wx:else>
-                    <empty type="default" title="测评已全部被领取了" subtitle="测回测评"></empty>
+                    <empty type="default" title="测评已全部被领取了" subtitle="撤回测评"></empty>
                 </block>
             </block>
             <!--未做答结束-->
         </view>
     </view>
 </view>
-<view class="press-wrapper">
+<view class="press-wrapper" bindtap="gotoDetail" data-id="{{ baseInfo.paper.id }}">
     <press title="继续发放本测评"></press>
 </view>
 <view class="qrcode-wrapper" wx:if="{{ imageTrigger }}">

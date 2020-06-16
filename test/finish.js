@@ -16,10 +16,11 @@ Page({
   /**
    * 进入测评管理页面
    */
-  toManage: function(e) {
+  toReportDetail: function(e) {
+    const { id } = this.data;
     wx.setStorageSync("showDlg", true);
-    wx.switchTab({
-      url: '../index/manage'
+    wx.navigateTo({
+      url: `../report/detail?id=${ id }`,
     });
   }
 })

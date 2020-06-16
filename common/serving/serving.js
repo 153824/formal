@@ -48,6 +48,12 @@ Component({
         }
       });
     },
+    callIt: function() {
+      var phoneNumber = this.properties.mobile;
+      wx.makePhoneCall({
+        phoneNumber: phoneNumber //仅为示例，并非真实的电话号码
+      })
+    },
     hideDlg: function() {
       this.setData({
         showServing: false

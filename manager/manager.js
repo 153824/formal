@@ -9,20 +9,21 @@ Page({
     titleHeight: app.globalData.titleHeight,
     statusbarHeight: app.globalData.statusbarHeight,
     checkedItem: '0',
-    checkedTime: '0',
+    checkedTime: '2',
     checkedEvaluation: '0',
     evaluationList: [],
     useList: [],
-    timer: ["近七天", "近三十天", "更早"],
+    timer: ["近七天","近三十天", "全部"],
     catalog: ["筛选测评"],
-    shareTrigger: false
+    shareTrigger: false,
+    evaluationId: ""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var { checkedItem,checkedTime } = this.data;
+    var { checkedItem,checkedTime,evaluationId } = this.data;
     var that = this;
     if( checkedItem === "0" ){
       app.doAjax({
@@ -33,11 +34,14 @@ Page({
           userId: app.userId,
           type: checkedTime,
           page: 1,
-          pageSize: 10
+          pageSize: 10,
+          evaluationId: evaluationId
         },
         success: function (res) {
           var catalog = [];
-          res.data.forEach((item,key)=>{
+          console.log("res.data.forEach: ",res);
+
+          (res.data || []).forEach((item,key)=>{
             catalog.push(item.evaluation.name)
           });
           catalog.unshift("全部测评");
@@ -45,10 +49,9 @@ Page({
           var catalogSet = new Set(catalog);
 
           that.setData({
-            evaluationList: res.data,
+            evaluationList: res.data||[],
             catalog: Array.from(catalogSet)
           });
-          console.log("../haola/reports",res)
         }
       })
     }
@@ -88,55 +91,56 @@ Page({
     /*1.获取title组件 2.调用title组件的*/
     this.title = this.selectComponent("#title");
     app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
-    /**/
-    // var { checkedItem,checkedTime } = this.data;
-    // var that = this;
-    // if( checkedItem === "0" ){
-    //   app.doAjax({
-    //     url: "../haola/reports",
-    //     method: "get",
-    //     data: {
-    //       orgId: app.teamId,
-    //       userId: app.userId,
-    //       type: checkedTime,
-    //       page: 1,
-    //       pageSize: 10
-    //     },
-    //     success: function (res) {
-    //       var catalog = [];
-    //       res.data.forEach((item,key)=>{
-    //         catalog.push(item.evaluation.name)
-    //       });
-    //       catalog.unshift("全部测评");
-    //       /*数组去重*/
-    //       var catalogSet = new Set(catalog);
-    //
-    //       that.setData({
-    //         evaluationList: res.data,
-    //         catalog: Array.from(catalogSet)
-    //       });
-    //       console.log("../haola/reports",res)
-    //     }
-    //   })
-    // }
-    // if( checkedItem === "1" ){
-    //   app.doAjax({
-    //     url: "../haola/dispatchs",
-    //     method: "get",
-    //     data: {
-    //       orgId: app.teamId,
-    //       type: checkedTime,
-    //       page: 1,
-    //       pageSize: 10
-    //     },
-    //     success: function (res) {
-    //       that.setData({
-    //         useList: res.data
-    //       });
-    //       console.log("useList: res.data", res.data)
-    //     }
-    //   })
-    // }
+    var { checkedItem,checkedTime,evaluationId } = this.data;
+    var that = this;
+    if( checkedItem === "0" ){
+      app.doAjax({
+        url: "../haola/reports",
+        method: "get",
+        data: {
+          orgId: app.teamId,
+          userId: app.userId,
+          type: checkedTime,
+          page: 1,
+          pageSize: 10,
+          evaluationId: evaluationId
+        },
+        success: function (res) {
+          var catalog = [];
+          res.data.forEach((item,key)=>{
+            catalog.push(item.evaluation.name)
+          });
+          catalog.unshift("全部测评");
+          /*数组去重*/
+          var catalogSet = new Set(catalog);
+
+          that.setData({
+            evaluationList: res.data,
+            catalog: Array.from(catalogSet)
+          });
+        }
+      })
+    }
+    if( checkedItem === "1" ){
+      // sharePapers/batch?userId=5eb21d15eb4b2d000892d14e&teamId=5e1985617d5774006ac4533e&page=2&size=101
+      console.log("I checked it",checkedItem);
+      app.doAjax({
+        url: "sharePapers/batch",
+        method: "get",
+        data: {
+          userId: app.userId,
+          teamId: app.teamId,
+          type: checkedTime,
+          page: 1,
+          size: 10
+        },
+        success: function (res) {
+          that.setData({
+            useList: res.data
+          });
+        }
+      })
+    }
   },
 
   /**
@@ -175,7 +179,7 @@ Page({
   },
   changeTab: function (e) {
     const targetValue = e.currentTarget.dataset.item,
-          { checkedTime } = this.data,
+          { checkedTime,evaluationId } = this.data,
           that = this;
     this.setData({
       checkedItem: targetValue
@@ -189,7 +193,8 @@ Page({
           userId: app.userId,
           type: checkedTime,
           page: 1,
-          pageSize: 10
+          pageSize: 10,
+          evaluationId: evaluationId
         },
         success: function (res) {
           that.setData({

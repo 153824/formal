@@ -5,26 +5,26 @@
 </view>
 <view class="coverView" wx:if="{{ showServing }}" bindtap="hideServing"></view>
 <view class="dlg" wx:if="{{ showServing }}">
-    <view class="title">联系方式</view>
+    <view class="title">客服联系方式</view>
     <view class="flex">
         <view class="flex-main">
             <view class="callMobile">
-                <image src="../img/user/vip/icon16.png"></image>
+                <image src="../../img/user/vip/icon16.png"></image>
                 点击拨打电话
             </view>
             <view class="kefuMobile" bindtap="callIt">{{ mobile }}</view>
         </view>
     </view>
     <view class="borderView"></view>
-    <view class="flex">
+    <view class="flex" style="display: flex;">
         <view class="flex-main">
             <view class="callWX">
-                <image src="../img/user/vip/icon17.png"></image>
+                <image src="../../img/user/vip/icon17.png"></image>
                 客服微信
             </view>
             <view class="kefuWX">{{ wechat }}</view>
         </view>
-        <view class="copyBtn" bindtap="copyIt">复制微信号</view>
+        <view class="copyBtn" bindtap="copyIt" style="display: inline-block;">复制微信号</view>
     </view>
     <view class="mind">添加时，请备注公司所属行业和规模</view>
 </view>

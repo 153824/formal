@@ -31,7 +31,9 @@ Page({
     getphoneNum: true,
     istext: true,
     showDlg1: false,
-    loading: true
+    loading: true,
+    mobile: "18559297592",
+    wechat: "LIN_7890"
   },
   onLoad: function(options) {
     var that = this;
@@ -190,7 +192,7 @@ Page({
       },
       noLoading: noLoading,
       success: function(ret) {
-        console.log(ret);
+        console.log("paperDetail: ", ret);
         isFirstLoad = false;
         if (!ret || !ret.id) {
           wx.showModal({

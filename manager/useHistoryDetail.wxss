@@ -88,8 +88,8 @@ page{
 .title > text{
     color: #070922FF;
 }
-.rate-info > text:first-child{
-    margin-right: 40rpx;
+.rate-info {
+    color: #070922;
 }
 .title > image{
     width: 12rpx;

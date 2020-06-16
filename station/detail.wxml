@@ -8,12 +8,13 @@
       <view class="info-wrapper">
         <text class="title">{{ paperDetail.name }}</text>
         <view class="price-wrapper">
-          <view wx:if="{{ !paperDetail.setting.isFree }}">
-            <text class="old">¥198</text>
+          <view wx:if="{{ !paperDetail.setting.isFree&&!isIos }}" style="display: flex;align-items: center;">
+            <text class="old">¥{{ paperDetail.setting.defaultPrice }}</text>
             <text class="new">¥{{ paperDetail.setting.price }}</text>
           </view>
           <view wx:else>
-            <free price="{{ paperDetail.setting.price }}"></free>
+            <free ios="{{ isIos }}" free="{{ paperDetail.setting.isFree }}" price="{{ paperDetail.setting.defaultPrice }}"
+                  actual="{{ paperDetail.setting.price }}"></free>
           </view>
         </view>
         <text class="use-time">{{ paperDetail.quesCount }}题 / 预计用时{{ paperDetail.setting.time }}分钟</text>
@@ -30,7 +31,7 @@
     <block wx:if="{{(!couponGet0)&&teamRole==3&&isTodayTeam}}">
       <button class="get-free-ticket" style="background: transparent;border: none !important;"
               data-id="{{ paperDetail.id }}" bindtap="getNewerTicket">
-        <ticket image="../img/user/vip/icon15.png"></ticket>
+        <ticket image="../img/user/vip/icon18.png"></ticket>
       </button>
     </block>
     <block wx:if="{{hasFreeTick&&!freeTickId&&teamRole!=1&&((paperDetail.setting.price&&!isfree && paperDetail.setting.testRule.maxInvite != 0)&&dataLoaded&&couponGet0)||(isfree&&paperDetail.userPapersNum.hasOld&&paperDetail.setting.price)}}">
@@ -56,7 +57,7 @@
 
 <view class="button-group" wx:if="{{ isvip1||paperDetail.userPapersNum.type==-1||paperDetail.userPapersNum.hasOld||showFullBtn }}">
   <view class="meal">
-    <meal isShow="{{ (!paperDetail.userPapersNum.hasOld || !dataLoaded) && !isIos }}"></meal>
+    <meal isShow="{{ (!paperDetail.userPapersNum.hasOld || !dataLoaded) && !isIos && !paperDetail.setting.isFree }}"></meal>
   </view>
   <view bindtap="gotoguide">
     <press title="{{ oldShareId ? '继续体验' : '自己体验'}}" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
@@ -68,7 +69,7 @@
 
 <view class="buy-group" wx:elif="{{ !isAllFree&&!freeCount&&!paperDetail.userPapersNum.hasOld }}">
   <view class="meal">
-    <meal isShow="{{ (!paperDetail.userPapersNum.hasOld || !dataLoaded) && !isIos }}"></meal>
+    <meal isShow="{{ (!paperDetail.userPapersNum.hasOld || !dataLoaded) && !isIos && !paperDetail.setting.isFree }}"></meal>
   </view>
   <view wx:if="{{ isIos }}">
     <press color="" title="iOS暂不支持购买，请用券兑换或联系客服"></press>
@@ -242,3 +243,4 @@
 <!--      </view>-->
 <!--    </view>-->
 <view wx:if="{{ loading }}" class="loading"></view>
+<serving mobile="{{ mobile }}" wechat="{{ wechat }}"></serving>

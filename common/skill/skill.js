@@ -74,7 +74,7 @@ Component({
     },
     companyUseNum: {
       type: String,
-      value: "15"
+      value: ""
     },
     name: {
       type: String,

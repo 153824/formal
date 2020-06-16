@@ -22,7 +22,7 @@
       <view class="smalltext">平均用时{{paperList.setting.time}}分钟</view>
     </view>
   </view>
-  <view class="begin" bindtap="closemask">{{draftAnswer?'继续体验':'开始作答'}}</view>
+  <view class="begin" bindtap="closemask" data-id="{{ paperList.id }}" data-name="{{ paperList.setting.name1 }}">{{draftAnswer?'继续体验':'开始作答'}}</view>
   <text class="infotext">好啦测评提供技术支持</text>
   <view class="mask" wx:if="{{isok}}">
     <view class="commitment">

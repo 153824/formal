@@ -26,7 +26,7 @@
               <skill objectId="{{ evaluation.id }}" ios="{{ isIos }}" free="{{ evaluation.isFree }}" price="{{ evaluation.defaultPrice }}"
                      actual="{{ evaluation.price }}" title="{{ evaluation.name }}" subtitle="{{ evaluation.infoPc }}"
                      image="{{ evaluation.smallImg }}" companyUseName="{{ evaluation.companyUseName }}"
-                     companyUseNum="{{ companyUseNum }}" width="80" marginLeft="0" marginRight="0">
+                     companyUseNum="{{ evaluation.companyUseNum }}" width="80" marginLeft="0" marginRight="0">
               </skill>
             </view>
           </view>

@@ -59,7 +59,7 @@
   <view class="meal">
     <meal isShow="{{ (!paperDetail.userPapersNum.hasOld || !dataLoaded) && !isIos && !paperDetail.setting.isFree }}"></meal>
   </view>
-  <view bindtap="gotoguide">
+  <view bindtap="gotoguide" data-name="{{ paperDetail.name }}">
     <press title="{{ oldShareId ? '继续体验' : '自己体验'}}" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
   </view>
   <view bindtap="gotodati">
@@ -186,7 +186,6 @@
       <image src="../img/store/detail/icon12.png"></image>
       <view class="txtView">{{paperDetail.setting.dateDesc}}</view>
     </view>
-    <view class="coverView" wx:if="{{showMindDlg}}" bindtap="hidenDlg"></view>
     <view wx:if="{{showDlg1}}" class="dlg1">
       <view class="title">客服微信号</view>
       <view class="flex content">

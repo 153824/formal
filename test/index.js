@@ -194,7 +194,7 @@ Page({
         that.setData({
           getphoneNum: true,
           phoneNumber: res.data.phone
-        })
+        });
       }
     })
   },
@@ -260,8 +260,8 @@ Page({
     })
   },
   submit: function (e) {
+    const { name } = e.target.dataset;
     var that = this;
-
     function doNext() {
       var data = that.data;
       var imgUrl = data.imgUrl;
@@ -285,6 +285,9 @@ Page({
       //   return;
       // }
       that.gototest();
+      wx.aldstat.sendEvent('进入答题页面', {
+        '测评名称': '名称：' + name
+      });
     }
     if (!that.data.getphoneNum) {
       var detail = e.detail;
@@ -559,6 +562,8 @@ Page({
    * 答题提交
    */
   formSubmit: function (e) {
+    const { name } = e.target.dataset;
+    console.log("formSubmit", e);
     var that = this;
     var chapter = that.data.chapter;
     var hasNextChapter = false;
@@ -593,6 +598,9 @@ Page({
       wx.redirectTo({
         url: './finish?type=' + that.data.applyStatus
       });
+      // wx.aldstat.sendEvent('点击提交测评作答', {
+      //   '测评名称': '名称：' + name
+      // });
       return;
     }
     var now = new Date().getTime();
@@ -621,8 +629,12 @@ Page({
         answer: JSON.stringify(answer)
       },
       success: function (ret) {
+        console.log(that.data);
         wx.redirectTo({
-          url: './finish?id=' + data.id + "&type=" + that.data.applyStatus
+          url: './finish?id=' + data.id + "&type=" + that.data.applyStatus + "&name=" + that.data.paperList.setting.name1
+        });
+        wx.aldstat.sendEvent('点击提交测评作答', {
+          '测评名称': '名称：' + name
         });
         wx.removeStorageSync(sKey);
         that.setData(ret);
@@ -814,8 +826,10 @@ Page({
     });
   },
   getPhoneNumber: function (e) {
+    const { name } = e.currentTarget.dataset;
     var that = this;
-    if (!that.data.getphoneNum || that.data.getphoneNum) {
+    // !that.data.getphoneNum || that.data.getphoneNum
+    if (!that.data.getphoneNum) {
       var detail = e.detail;
       var iv = detail.iv;
       var encryptedData = detail.encryptedData;
@@ -829,12 +843,28 @@ Page({
           url: "updatedUserMobile",
           data: userMsg,
           success: function (ret) {
-            that.setData({
-              getphoneNum: true
+            app.doAjax({
+              url: "/userDetail",
+              method: "get",
+              data: {
+                openid: wx.getStorageSync("openId"),
+              },
+              success: function (res) {
+                that.setData({
+                  getphoneNum: true,
+                  phoneNumber: res.data.phone
+                });
+                wx.aldstat.sendEvent('授权手机号成功', {
+                  '测评名称': `名称：${ name }`
+                });
+              }
             });
           }
         });
       }
+      wx.aldstat.sendEvent('授权手机号', {
+        '测评名称': `名称：${ name }`
+      });
       return;
     }
   }

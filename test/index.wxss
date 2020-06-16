@@ -134,8 +134,8 @@
 .container1 button {
   margin-top: 40rpx;
   height: 94rpx;
-  background: rgba(89, 96, 237, 1);
-  border-radius: 8rpx;
+  background: rgba(53, 62, 232, 1);
+  border-radius: 0;
   color: #fff;
   font-size: 32rpx;
   line-height: 94rpx;
@@ -537,7 +537,7 @@
   height: 100% !important;
   margin: 0 0 !important;
   line-height: 100% !important;
-  color: rgba(89, 96, 237, 1) !important;
+  color: rgba(53, 62, 232, 1) !important;
   background-color: white !important;
   padding: unset !important;
 }

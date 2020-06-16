@@ -931,9 +931,8 @@ Page({
       app.doAjax({
         url: `../hola/drawVoucher?userId=${userId}&paperId=${paperId}&teamId=${teamId}`,
         success: function (res) {
-          wx.showModal({
-            title: res.msg
-          })
+          console.log("url: `../hola/drawVoucher?userId=${userId}&paperId=${paperId}&teamId=${teamId}`: ",res);
+          app.toast(res);
         }
       })
     },1000);
@@ -971,7 +970,7 @@ Page({
       },
       success: function(ret) {
         app.getUserInfo(); //更新用户信息
-        console.log(ret);
+        app.toast("领取成功，快去购买兑换测评吧");
         ret.forEach(function(node) {
           var column = node.column;
           var paper = node.paper;
@@ -988,7 +987,8 @@ Page({
           }
         });
         that.setData({
-          list: ret
+          list: ret,
+          couponGet0: true
         });
       }
     });

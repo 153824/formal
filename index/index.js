@@ -43,6 +43,7 @@ Page({
     var that = this;
     var skipFreeTicket = wx.getStorageSync("skipFreeTicket");
     firstLoad = true;
+    console.log("app.globalData: ",app.globalData);
     app.doAjax({
       url: "getMyticket",
       method: "get",
@@ -59,6 +60,98 @@ Page({
             hasFreeTick = true;
           }
         });
+
+        var homePagesPromiseList = [],
+            teamEvaluationPromiseList = [];
+        const homePagesPromise = new Promise(function (resolve,reject) {
+          app.doAjax({
+            url: "../haola/homePages",
+            method: "get",
+            success: function(res){
+              resolve( res.resultObject );
+            },
+            fail: function (err) {
+              reject( err )
+            }
+          });
+        });
+        homePagesPromise.then(res=>{
+          that.setData(res);
+          homePagesPromiseList = res.column.map((v,k)=>{
+            return new Promise((resolve, reject) => {
+              app.doAjax({
+                url: `../haola/homePages/columns/${ v.column_id }/evaluations`,
+                method: "get",
+                success: function (res) {
+                  resolve({ columnId: v.column_id, data: res.data});
+                },
+                fail: function (err) {
+                  reject(err);
+                }
+              });
+            })
+          });
+          return Promise.all(homePagesPromiseList)
+        }).then(res=>{
+          const { column } = that.data;
+          var targetColumn = column;
+          for( let i = 0; i < res.length;i++ ){
+            for( let j = 0; j < column.length;j++ ){
+              if( res[i].columnId === targetColumn[j].column_id ){
+                targetColumn[j]["data"] = res[i].data || [];
+                // break;
+              }
+            }
+          };
+          that.setData({
+            column: targetColumn
+          });
+        }).finally(()=>{
+          that.setData({
+            loading1: false
+          })
+        });
+
+        const teamEvaluationPromise = new Promise(function (resolve,reject) {
+          app.doAjax({
+            url: `../haola/homePages/userPagers?teamId=${app.teamId}`,
+            method: "get",
+            success: function (res) {
+              resolve(res.data);
+            },
+            fail: function (err) {
+              reject(err);
+            }
+          });
+        });
+        teamEvaluationPromise.then(res=>{
+          teamEvaluationPromiseList = res.map((v,k)=>{
+            return(new Promise((resolve, reject) => {
+              app.doAjax({
+                url: `../hola/paperDetail?id=${v.paper.objectId}&userId=${app.globalData.userInfo.userId}`,
+                method: "get",
+                success: function (res) {
+                  resolve( res );
+                },
+                fail: function (err) {
+                  reject(err);
+                }
+              });
+            }))
+          });
+          return Promise.all(teamEvaluationPromiseList);
+        }).then(res=>{
+          console.log(res);
+          that.setData({
+            teamEvaluation: res
+          })
+        }).catch(err=>{
+        }).finally(()=>{
+          that.setData({
+            loading2: false
+          })
+        });
+
         if (!hasFreeTick && app.teamRole == 3) {
           if (!skipFreeTicket) {
             // wx.navigateTo({
@@ -111,98 +204,9 @@ Page({
         });
       }
     });
-    var homePagesPromiseList = [],
-        teamEvaluationPromiseList = [];
-    const homePagesPromise = new Promise(function (resolve,reject) {
-      app.doAjax({
-        url: "../haola/homePages",
-        method: "get",
-        success: function(res){
-          resolve( res.resultObject );
-        },
-        fail: function (err) {
-          reject( err )
-        }
-      });
-    });
-    homePagesPromise.then(res=>{
-      that.setData(res);
-      homePagesPromiseList = res.column.map((v,k)=>{
-        return new Promise((resolve, reject) => {
-          app.doAjax({
-            url: `../haola/homePages/columns/${ v.column_id }/evaluations`,
-            method: "get",
-            success: function (res) {
-              resolve({ columnId: v.column_id, data: res.data});
-            },
-            fail: function (err) {
-              reject(err);
-            }
-          });
-        })
-      });
-      return Promise.all(homePagesPromiseList)
-    }).then(res=>{
-      const { column } = that.data;
-      var targetColumn = column;
-      for( let i = 0; i < res.length;i++ ){
-        for( let j = 0; j < column.length;j++ ){
-          if( res[i].columnId === targetColumn[j].column_id ){
-            targetColumn[j]["data"] = res[i].data || [];
-            // break;
-          }
-        }
-      };
-      that.setData({
-        column: targetColumn
-      });
-    }).finally(()=>{
-      that.setData({
-        loading1: false
-      })
-    });
-
-    // const teamEvaluationPromise = new Promise(function (resolve,reject) {
-    //   app.doAjax({
-    //     url: `../haola/homePages/userPagers?teamId=${app.teamId}`,
-    //     method: "get",
-    //     success: function (res) {
-    //       console.log("../haola/homePages/userPagers?teamId=${app.teamId}：",res);
-    //       resolve(res.data);
-    //     },
-    //     fail: function (err) {
-    //       reject(err);
-    //     }
-    //   })
-    // });
-    // teamEvaluationPromise.then(res=>{
-    //   teamEvaluationPromiseList = res.map((v,k)=>{
-    //     return(new Promise((resolve, reject) => {
-    //       app.doAjax({
-    //         url: `../hola/paperDetail?id=${v.paper.objectId}&userId=${app.userId}`,
-    //         method: "get",
-    //         success: function (res) {
-    //           resolve( res );
-    //         },
-    //         fail: function (err) {
-    //           reject(err);
-    //         }
-    //       })
-    //     }))
-    //   });
-    //   return Promise.all(teamEvaluationPromiseList);
-    // }).then(res=>{
-    //   that.setData({
-    //     teamEvaluation: res
-    //   })
-    // }).catch(err=>{
-    // }).finally(()=>{
-    //   that.setData({
-    //     loading2: false
-    //   })
-    // })
   },
   onShow: function() {
+    console.log("app.globalData: ",app.globalData);
     this.title = this.selectComponent("#title");
     app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
     var that = this;
@@ -214,10 +218,6 @@ Page({
       };
       return;
     };
-    this.setData({
-      loading1: false,
-      loading2: false,
-    });
     var homePagesPromiseList = [],
         teamEvaluationPromiseList = [];
     const homePagesPromise = new Promise(function (resolve,reject) {
@@ -274,19 +274,18 @@ Page({
         url: `../haola/homePages/userPagers?teamId=${app.teamId}`,
         method: "get",
         success: function (res) {
-          console.log("../haola/homePages/userPagers?teamId=${app.teamId}：",res);
           resolve(res.data);
         },
         fail: function (err) {
           reject(err);
         }
-      })
+      });
     });
     teamEvaluationPromise.then(res=>{
       teamEvaluationPromiseList = res.map((v,k)=>{
         return(new Promise((resolve, reject) => {
           app.doAjax({
-            url: `../hola/paperDetail?id=${v.paper.objectId}&userId=${app.userId}`,
+            url: `../hola/paperDetail?id=${v.paper.objectId}&userId=${app.globalData.userInfo.userId}`,
             method: "get",
             success: function (res) {
               resolve( res );
@@ -294,11 +293,12 @@ Page({
             fail: function (err) {
               reject(err);
             }
-          })
+          });
         }))
       });
       return Promise.all(teamEvaluationPromiseList);
     }).then(res=>{
+      console.log(res);
       that.setData({
         teamEvaluation: res
       })
@@ -307,167 +307,7 @@ Page({
       that.setData({
         loading2: false
       })
-    })
-    // that.setData({
-    //   loading1: false,
-    //   loading2: false,
-    // })
-    // app.doAjax({
-    //   url: "getMyticket",
-    //   method: "get",
-    //   noLoading: true,
-    //   data: {
-    //     page: 1,
-    //     pageSize: 12,
-    //     type: 2
-    //   },
-    //   success: function(ret) {
-    //     var hasFreeTick = false;
-    //     ret.forEach(function(n) {
-    //       if (n.type == 1) {
-    //         hasFreeTick = true;
-    //       }
-    //     });
-    //     if (!hasFreeTick && app.teamRole == 3) {
-    //       if (!skipFreeTicket) {
-    //         // wx.navigateTo({
-    //         //   url: './getFreeTicket'
-    //         // });
-    //       }
-    //     }
-    //     that.setData({
-    //       skipFreeTicket: skipFreeTicket,
-    //       hasFreeTick: hasFreeTick,
-    //       teamRole: app.teamRole
-    //     });
-    //     var couponGet = (app.globalData.userInfo || {}).couponGet || false;
-    //     var hideLastTestMind = wx.getStorageSync("hideLastTestMind");
-    //     app.doAjax({
-    //       url: "getHomeSetting",
-    //       method: "GET",
-    //       success: function(ret) {
-    //         ret["couponGet"] = couponGet;
-    //         // that.setData(ret);
-    //         that.setData({
-    //           oldShareInfo: ""
-    //         });
-    //         if (!hideLastTestMind) {
-    //           app.doAjax({
-    //             url: 'toSharePaper',
-    //             method: 'post',
-    //             data: {
-    //               type: "self",
-    //               isCheckOld: true
-    //             },
-    //             success: function(res) {
-    //               if (res && res.isOld && res.id) {
-    //                 that.setData({
-    //                   oldShareInfo: res
-    //                 });
-    //               }
-    //             }
-    //           });
-    //         }
-    //         if (!couponGet && firstLoad && app.teamRole == 3) {
-    //           firstLoad = false;
-    //           setTimeout(function() {
-    //             that.setData({
-    //               showGiftDlg: true
-    //             });
-    //           }, 2000);
-    //         }
-    //       }
-    //     });
-    //   }
-    // });
-    // var homePagesPromiseList = [],
-    //     teamEvaluationPromiseList = [];
-    // const homePagesPromise = new Promise(function (resolve,reject) {
-    //   app.doAjax({
-    //     url: "../haola/homePages",
-    //     method: "get",
-    //     success: function(res){
-    //       resolve( res.resultObject );
-    //     },
-    //     fail: function (err) {
-    //       reject( err )
-    //     }
-    //   });
-    // });
-    // homePagesPromise.then(res=>{
-    //   that.setData(res);
-    //   homePagesPromiseList = res.column.map((v,k)=>{
-    //     return new Promise((resolve, reject) => {
-    //       app.doAjax({
-    //         url: `../haola/homePages/columns/${ v.column_id }/evaluations`,
-    //         method: "get",
-    //         success: function (res) {
-    //           resolve({ columnId: v.column_id, data: res.data});
-    //         },
-    //         fail: function (err) {
-    //           reject(err);
-    //         }
-    //       });
-    //     })
-    //   });
-    //   return Promise.all(homePagesPromiseList)
-    // }).then(res=>{
-    //   const { column } = that.data;
-    //   var targetColumn = column;
-    //   for( let i = 0; i < res.length;i++ ){
-    //     for( let j = 0; j < column.length;j++ ){
-    //       if( res[i].columnId === targetColumn[j].column_id ){
-    //         targetColumn[j]["data"] = res[i].data || [];
-    //         // break;
-    //       }
-    //     }
-    //   };
-    //   that.setData({
-    //     column: targetColumn
-    //   });
-    // }).finally(()=>{
-    //   that.setData({
-    //     loading1: false
-    //   })
-    // });
-    // const teamEvaluationPromise = new Promise(function (resolve,reject) {
-    //   app.doAjax({
-    //     url: `../haola/homePages/userPagers?teamId=${app.teamId}`,
-    //     method: "get",
-    //     success: function (res) {
-    //       resolve(res.data);
-    //     },
-    //     fail: function (err) {
-    //       reject(err);
-    //     }
-    //   })
-    // });
-    // teamEvaluationPromise.then(res=>{
-    //   teamEvaluationPromiseList = res.map((v,k)=>{
-    //     return(new Promise((resolve, reject) => {
-    //       app.doAjax({
-    //         url: `../hola/paperDetail?id=${v.paper.objectId}&userId=${app.userId}`,
-    //         method: "get",
-    //         success: function (res) {
-    //           resolve( res );
-    //         },
-    //         fail: function (err) {
-    //           reject(err);
-    //         }
-    //       })
-    //     }))
-    //   });
-    //   return Promise.all(teamEvaluationPromiseList);
-    // }).then(res=>{
-    //   console.log(res);
-    //   that.setData({
-    //     teamEvaluation: res
-    //   })
-    // }).finally(()=>{
-    //   that.setData({
-    //     loading2: false
-    //   })
-    // })
+    });
   },
   onHide: function () {
 
@@ -566,7 +406,7 @@ Page({
   },
   gotoDetail: function (e) {
     const { id } = e.currentTarget.dataset;
-   
+
     if( id.startsWith("http") ){
       wx.setStorageSync("webView_Url", id);
       wx.navigateTo({
@@ -585,7 +425,7 @@ Page({
               });
       }
     });
- 
+
   },
   gotoMore: function (e) {
     const { id,name } = e.currentTarget.dataset;

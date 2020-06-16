@@ -27,9 +27,9 @@ App({
   isIos: false,
   qiniuUpload: qiniuUpload,
   isIphoneX: false,
-  host: "https://api.dev.luoke101.com/hola/",
+  // host: "https://api.dev.luoke101.com/hola/",
   // host: "https://luoke.ampmfit.net/hola/", //请求host
-  // host: "https://h5.luoke101.com/hola/",
+  host: "https://h5.luoke101.com/hola/",
   host1: "https://admin.luoke101.com/hola/", //请求host——测试
   host2: "http://localhost:3000/hola/", //请求host——测试
   host3: "https://api.dev.luoke101.com/hola/", //微信支付——测试
@@ -335,7 +335,11 @@ App({
           return;
         }
         if (params.success) {
-          return params.success(retData);
+          try{
+            return params.success(retData);
+          }catch (e) {
+
+          }
         }
       },
       error: function() {

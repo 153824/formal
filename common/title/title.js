@@ -138,16 +138,26 @@ Component({
           that.hideLoginDlg();
           app.globalData.userInfo.nickname = userInfo.nickName;
           app.addNewTeam(that.onShow);
+          app.globalData.redirectToIndex = true;
+          wx.switchTab({
+            url: "../manager/manager",
+            success: function (res) {
+              let page = getCurrentPages().pop();
+              console.log(page);
+              if (page == undefined || page == null) return;
+              page.onLoad();
+            }
+          })
         }
       });
       wx.switchTab({
         url: "../index/index",
         success: function (res) {
-          console.log(res);
+          console.log("wx.switchTab");
           let page = getCurrentPages().pop();
+          console.log(page);
           if (page == undefined || page == null) return;
           page.onLoad();
-          // page.onShow();
         }
       })
     },

@@ -19,9 +19,9 @@ Page({
    */
   toReportDetail: function(e) {
     const { id,name } = this.data;
-    wx.setStorageSync("showDlg", true);
-    wx.navigateTo({
-      url: `../report/detail?id=${ id }`,
+    app.globalData.redirectReportId = id;
+    wx.switchTab({
+      url: `../manager/manager`
     });
     wx.aldstat.sendEvent('查看自己的报告', {
       '测评名称': `名称：${ name }`

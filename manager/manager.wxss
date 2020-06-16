@@ -202,14 +202,13 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
     content: "";
     position: absolute;
     top: 50%;
-    right: 40rpx;
+    right: 25rpx;
     height: 42rpx;
     border: 0;
     border: 10rpx solid;
     border-color: black transparent transparent transparent;
 }
 .evaluation-picker,.time-picker{
-    width: 160rpx;
     height: 48rpx;
     background: rgba(7,9,34,0.03);
     border-radius: 10rpx;

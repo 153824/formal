@@ -25,6 +25,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const { redirectToIndex,redirectReportId } = app.globalData;
+    if( redirectReportId ){
+      wx.navigateTo({
+        url: `../report/detail?id=${ app.globalData.redirectReportId }`,
+      });
+      app.globalData.redirectReportId = null;
+    }
+    if( redirectToIndex ){
+      wx.switchTab({
+        url: `../index/index`,
+      });
+      app.globalData.redirectToIndex = false;
+    }
     var { checkedItem,checkedTime,evaluationId } = this.data;
     var that = this;
     if( checkedItem === "0" ){

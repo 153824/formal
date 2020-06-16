@@ -7,6 +7,14 @@ Component({
     image: {
       type: String,
       value: "../img/ticket/ticket-take.png@2x.png"
+    },
+    width: {
+      type: String,
+      value: "670rpx"
+    },
+    height: {
+      type: String,
+      value: "154rpx"
     }
   },
 

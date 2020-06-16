@@ -27,7 +27,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.8.0",
-	"appid": "wxdb1dcb4a9e212d32",
+	"appid": "wx85cde7d3e8f3d949",
 	"projectname": "hola-new",
 	"debugOptions": {
 		"hidedInDevtools": []
@@ -310,6 +310,13 @@
 					"name": "user/myTeam",
 					"pathName": "user/myTeam",
 					"query": "id=5ed185aa7ce4740006746bbd",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "test/finish",
+					"pathName": "test/finish",
+					"query": "id=5ee89aacec674d0009e5d919",
 					"scene": null
 				}
 			]

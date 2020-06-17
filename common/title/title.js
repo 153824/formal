@@ -138,7 +138,7 @@ Component({
           var that = this;
           that.hideLoginDlg();
           app.globalData.userInfo.nickname = userInfo.nickName;
-          app.addNewTeam(app.getUserInfo(that.loadUserMsg));
+          app.addNewTeam(that.onShow);
         }
       });
       wx.switchTab({

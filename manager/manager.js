@@ -133,7 +133,13 @@ Page({
             catalog: Array.from(catalogSet),
             loading: false,
           });
+        },
+        error: function(err){
+          that.setData({
+            loading: false,
+          });
         }
+        
       })
     }
     if( checkedItem === "1" ){
@@ -152,6 +158,11 @@ Page({
         success: function (res) {
           that.setData({
             useList: res.data,
+            loading: false,
+          });
+        },
+        error: function(err){
+          that.setData({
             loading: false,
           });
         }
@@ -218,6 +229,11 @@ Page({
             evaluationList: res.data,
             loading: false,
           });
+        },
+        error: function(err){
+          that.setData({
+            loading: false,
+          });
         }
       })
     }
@@ -237,6 +253,11 @@ Page({
         success: function (res) {
           that.setData({
             useList: res.data,
+            loading: false,
+          });
+        },
+        error: function(err){
+          that.setData({
             loading: false,
           });
         }
@@ -268,6 +289,11 @@ Page({
             evaluationList: res.data,
             loading: false
           });
+        },
+        error: function(err){
+          that.setData({
+            loading: false,
+          });
         }
       })
     }
@@ -287,6 +313,11 @@ Page({
           that.setData({
             useList: res.data,
             loading: false
+          });
+        },
+        error: function(err){
+          that.setData({
+            loading: false,
           });
         }
       })
@@ -362,6 +393,11 @@ Page({
             catalog: Array.from(catalogSet),
             reportPage
           });
+        },
+        error: function(err){
+          that.setData({
+            loading: false,
+          });
         }
       })
     }
@@ -385,6 +421,11 @@ Page({
           that.setData({
             useList,
             historyPage
+          });
+        },
+        error: function(err){
+          that.setData({
+            loading: false,
           });
         }
       })

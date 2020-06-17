@@ -33,7 +33,7 @@ Page({
     loading1: true,
     loading2: true,
     mobile: "18559297592",
-    wechat: "LIN_7890"
+    wechat: "haola72"
   },
   onLoad: function(options) {
   },

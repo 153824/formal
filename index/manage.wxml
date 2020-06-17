@@ -16,7 +16,7 @@
       </view>
       <view wx:if="{{!list.length}}" class="listNoData">
         <image src="../img/index/icon6.png"></image>
-        <view>暂无可查看的报告~</view>
+        <view>体验或发放测评后，可在此查看报告~</view>
       </view>
       <view class="list" wx:else>
         <block wx:for="{{list}}" wx:key="unique">

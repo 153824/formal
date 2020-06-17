@@ -33,7 +33,7 @@ Page({
     showDlg1: false,
     loading: true,
     mobile: "18559297592",
-    wechat: "LIN_7890",
+    wechat: "haola72",
     trigger: false,
   },
   onLoad: function(options) {
@@ -904,7 +904,7 @@ Page({
    */
   copyIt: function(e) {
     var that = this;
-    var txt = "LIN_7890";
+    var txt = "haola72";
     wx.setClipboardData({
       data: txt,
       success(res) {

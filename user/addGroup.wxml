@@ -4,6 +4,6 @@
     <view>成为共创用户，交流人才测评经验</view>
     <view style="margin-top:20rpx;">请添加客服微信</view>
   </view>
-  <view class="mind1">微信号：LIN_7890</view>
+  <view class="mind1">微信号：haola72</view>
   <view class="toCopy" bindtap="copyIt">复制微信号</view>
 </view>

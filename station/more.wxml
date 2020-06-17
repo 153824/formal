@@ -4,7 +4,8 @@
         <view wx:if="{{ list.length > 0 }}" wx:for="{{ list }}" wx:key="unique" wx:for-item="dataItem">
             <skill ios="{{ isIos }}" free="{{ dataItem.isFree }}" actual="{{ dataItem.price }}"
                    price="{{ dataItem.defaultPrice }}" title="{{ dataItem.name }}" subtitle="{{ dataItem.infoPc }}"
-                   image="{{ dataItem.smallImg }}" objectId="{{ dataItem.id }}">
+                   image="{{ dataItem.smallImg }}" objectId="{{ dataItem.id }}" companyUseName="{{ dataItem.companyUseName }}"
+                   companyUseNum="{{ dataItem.companyUseNum }}">
             </skill>
         </view>
         <view>

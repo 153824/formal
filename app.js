@@ -440,17 +440,17 @@ App({
   addNewTeam: function(cb) {
     var that = this;
     var userInfo = that.globalData.userInfo;
-    // if (!userInfo || !userInfo.nickname || !userInfo.isBind) {
-    //   cb && cb([]);
-    //   return;
-    // }
+    if (!userInfo || !userInfo.nickname || !userInfo.isBind) {
+      cb && cb([]);
+      return;
+    }
     that.doAjax({
       url: "updateTeamMember",
       method: "post",
       noLoading: true,
       data: {
         type: 6,
-        name: userInfo.nickname + "的团队",
+        name: (userInfo.nickname) + "的团队",
         remark: "自动生成的团队"
       },
       success: function() {

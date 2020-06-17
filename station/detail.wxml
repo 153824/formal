@@ -36,7 +36,7 @@
     </block>
 <!--    && paperDetail.setting.testRule.maxInvite != 0-->
     <block wx:if="{{hasFreeTick&&!freeTickId&&teamRole!=1&&((paperDetail.setting.price&&!isfree)&&dataLoaded&&couponGet0)||(isfree&&paperDetail.userPapersNum.hasOld&&paperDetail.setting.price)}}">
-      <button wx:if="{{!freeTick}}"
+      <button wx:if="{{ !freeTick }}"
               class="get-free-ticket"
               open-type="share"
               data-id="{{ paperDetail.id }}"

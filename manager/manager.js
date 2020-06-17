@@ -31,6 +31,9 @@ Page({
       wx.navigateTo({
         url: `../report/detail?id=${ app.globalData.redirectReportId }`,
       });
+      this.setData({
+        loading: false;
+      })
       app.globalData.redirectReportId = null;
     }
     // if( redirectToIndex ){
@@ -121,17 +124,23 @@ Page({
         },
         success: function (res) {
           var catalog = [];
+          var compareArr = [];
           res.data.forEach((item,key)=>{
-            catalog.push(item.evaluation.name)
+            const { id,name } = item.evaluation;
+            if( !compareArr.includes(id) ){
+              var catalogChild = {};
+              catalogChild.id = id;
+              catalogChild.name = name;
+              catalog.push(catalogChild);
+              compareArr.push(id);
+            }
           });
-          catalog.unshift("全部测评");
-          /*数组去重*/
-          var catalogSet = new Set(catalog);
-
+          catalog.unshift({ id: "",name: "全部测评" });
           that.setData({
             evaluationList: res.data,
-            catalog: Array.from(catalogSet),
+            catalog: catalog,
             loading: false,
+            compareArr
           });
         },
         error: function(err){
@@ -143,8 +152,6 @@ Page({
       })
     }
     if( checkedItem === "1" ){
-      // sharePapers/batch?userId=5eb21d15eb4b2d000892d14e&teamId=5e1985617d5774006ac4533e&page=2&size=101
-      console.log("I checked it",checkedItem);
       app.doAjax({
         url: "sharePapers/batch",
         method: "get",
@@ -159,6 +166,7 @@ Page({
           that.setData({
             useList: res.data,
             loading: false,
+            reportPage: 0,
           });
         },
         error: function(err){
@@ -228,6 +236,7 @@ Page({
           that.setData({
             evaluationList: res.data,
             loading: false,
+            historyPage: 0
           });
         },
         error: function(err){
@@ -238,8 +247,6 @@ Page({
       })
     }
     if( targetValue === "1" ){
-      // sharePapers/batch?userId=5eb21d15eb4b2d000892d14e&teamId=5e1985617d5774006ac4533e&page=2&size=101
-      console.log("checkedItem === \"1\"");
       app.doAjax({
         url: "sharePapers/batch",
         method: "get",
@@ -254,6 +261,7 @@ Page({
           that.setData({
             useList: res.data,
             loading: false,
+            reportPage: 0
           });
         },
         error: function(err){
@@ -266,12 +274,15 @@ Page({
   },
   changeTimer: function (e) {
     const targetValue = e.detail.value,
-          { checkedItem } = this.data,
+          { checkedItem,
+            evaluationId,
+            reportPage
+          } = this.data,
           that = this;
-    console.log("targetValue: ",targetValue);
     this.setData({
       checkedTime: targetValue,
-      loading: true
+      reportPage: 0,
+      loading: true,
     });
     if( checkedItem === "0" ){
       app.doAjax({
@@ -282,7 +293,8 @@ Page({
           userId: app.userId,
           type: targetValue,
           page: 1,
-          pageSize: 10
+          pageSize: 10,
+          evaluationId: evaluationId
         },
         success: function (res) {
           that.setData({
@@ -298,7 +310,6 @@ Page({
       })
     }
     if( checkedItem === "1" ){
-      // sharePapers/batch?userId=5eb21d15eb4b2d000892d14e&teamId=5e1985617d5774006ac4533e&page=2&size=101
       app.doAjax({
         url: "sharePapers/batch",
         method: "get",
@@ -324,10 +335,33 @@ Page({
     }
   },
   changeEvaluation: function (e) {
-    var checkedEvaluation = e.detail.value;
+    const that = this;
+    const { checkedTime,catalog } = this.data;
+    const checkedEvaluation = e.detail.value;
     this.setData({
-      checkedEvaluation: checkedEvaluation
+      checkedEvaluation: checkedEvaluation,
+      evaluationId: catalog[checkedEvaluation].id,
+      reportPage: 0
     });
+    app.doAjax({
+      url: "../haola/reports",
+      method: "get",
+      data: {
+        orgId: app.teamId,
+        userId: app.userId,
+        type: checkedTime,
+        page: 1,
+        pageSize: 10,
+        evaluationId: catalog[checkedEvaluation].id
+      },
+      success: function (res) {
+        console.log(res);
+        that.setData({
+          evaluationList: res.data,
+          loading: false
+        });
+      }
+    })
   },
   changePage: function (e) {
     const { sharepaperid,status } = e.currentTarget.dataset;

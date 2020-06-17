@@ -35,6 +35,7 @@ Page({
     mobile: "18559297592",
     wechat: "haola72",
     trigger: false,
+    isGetInCount: app.globalData.isGetInAgainst
   },
   onLoad: function(options) {
     var that = this;
@@ -90,6 +91,9 @@ Page({
           var couponGet = app.couponGet || false;
           var couponGet1 = app.couponGet1 || false;
           var isTodayTeam = app.isTodayTeam || false;
+          if( couponGet0 ){
+            app.globalData.isGetInAgainst = true;
+          }
           that.setData({
             teamRole: app.teamRole,
             couponGet0: couponGet0,
@@ -161,6 +165,10 @@ Page({
           });
         }
       });
+
+      that.setData({
+        isGetInCount: app.globalData.isGetInCount
+      })
     }
   },
   closeGiftDlg: function() {
@@ -192,7 +200,6 @@ Page({
       },
       noLoading: noLoading,
       success: function(ret) {
-        console.log("paperDetail: ", ret);
         isFirstLoad = false;
         if (!ret || !ret.id) {
           wx.showModal({
@@ -802,7 +809,6 @@ Page({
    * 用户授权
    */
   getUserInfo: function(e) {
-
     console.log("统计1", e);
     var that = this;
     var userInfo = e.detail.userInfo;
@@ -990,10 +996,18 @@ Page({
             node.name1 = "可用于兑换平台上任意测评";
           }
         });
+        /**
+         * @Description: isGetInAgainst 领完5张券，再次进入测评详情页才会显示领取3张券的广告
+         * @author: WE!D
+         * @args:
+         * @return:
+         * @date: 2020/6/17
+         */
         that.setData({
           list: ret,
-          couponGet0: true,
+          couponGet0: true
         });
+        app.globalData.isGetInAgainst = true;
       }
     });
     that.onShow();

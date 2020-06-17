@@ -243,13 +243,21 @@ App({
       wx.setStorageSync("isvip4", false)
     }
   },
+  /**
+   * @Description: isGetInAgainst 领完5张券，再次进入测评详情页才会显示领取3张券的广告
+   * @author: WE!D
+   * @args:
+   * @return:
+   * @date: 2020/6/17
+  */
   globalData: {
     appid: "wx85cde7d3e8f3d949",
     userInfo: null,
     userMsg: {},
     team: null,
     teams: [],
-    checked: 0
+    checked: 0,
+    isGetInAgainst: false
   },
 
   changeDate2: function(time, dateType) {

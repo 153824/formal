@@ -212,6 +212,8 @@ Page({
     var name = e.currentTarget.dataset.n;
     var obj = {};
     obj[name] = value;
+    console.log("obj[name] = value: ", obj);
+    console.log(this.data);
     this.setData(obj);
   },
   sexInput: function (e) {
@@ -828,7 +830,6 @@ Page({
   getPhoneNumber: function (e) {
     const { name } = e.currentTarget.dataset;
     var that = this;
-    // !that.data.getphoneNum || that.data.getphoneNum
     if (!that.data.getphoneNum || that.data.getphoneNum) {
       var detail = e.detail;
       var iv = detail.iv;

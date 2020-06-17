@@ -70,6 +70,12 @@ Page({
     wechat: "LIN_7890",
   },
   onLoad: function(){
+
+  },
+  onShow: function(){
+    this.title = this.selectComponent("#title");
+    app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
+
     let that = this;
     app.doAjax({
       url: "../haola/positionTags",
@@ -89,10 +95,6 @@ Page({
         })
       }
     });
-  },
-  onShow: function(){
-    this.title = this.selectComponent("#title");
-    app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
   },
   changeTab: function (e) {
     const checkedId = e.currentTarget.id,

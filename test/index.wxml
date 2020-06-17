@@ -38,11 +38,12 @@
       <text>重新拍摄</text>
     </view> -->
 <!--    &&education!=0-->
-    <view wx:if="{{!getphoneNum||!username||!birthday||(!education)}}" class="graybtn">确认无误，开始作答</view>
+
     <!-- getphoneNum -->
-    <block wx:else>
+    <block wx:if="{{ username && (education != -1) && getphoneNum }}">
       <button form-type="submit" data-name="{{ paperList.setting.name1 }}">确认无误，开始作答</button>
     </block>
+    <view wx:else class="graybtn">确认无误，开始作答</view>
   </form>
 </view>
 <!-- 答题前说明 -->

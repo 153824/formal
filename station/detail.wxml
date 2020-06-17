@@ -72,10 +72,13 @@
   <view class="meal">
     <meal isShow="{{ (!paperDetail.userPapersNum.hasOld || !dataLoaded) && !isIos && !paperDetail.setting.isFree }}"></meal>
   </view>
-  <view wx:if="{{ isIos }}">
+  <view wx:if="{{ isIos && ((paperDetail.userPapersNum.freeTicket || 0) + (paperDetail.userPapersNum.vipTicket || 0)) <= 0 }}">
     <press color="" title="iOS暂不支持购买，请用券兑换或联系客服"></press>
   </view>
-  <view wx:else bindtap="paymore">
+  <view wx:if="{{ isIos && ((paperDetail.userPapersNum.freeTicket || 0) + (paperDetail.userPapersNum.vipTicket || 0)) > 0 }}" bindtap="paymoney">
+    <press color="" title="用券兑换"></press>
+  </view>
+  <view wx:if="{{ !isIos }}" bindtap="paymore">
     <press color="" title="购买" subtitle="{{ paperDetail.setting.price }}元/份"></press>
   </view>
 </view>

@@ -32,7 +32,7 @@
       </view> -->
     </view>
     <view class="people flex">
-      <image src="{{userMsg.avatar}}" class="avatar"></image>
+      <image src="{{userMsg.avatar||'../img/user/useravatar.png'}}" class="avatar"></image>
       <view class="flex-main">
         <view class="name">{{userMsg.username}}</view>
         <view class="otherMsg">

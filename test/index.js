@@ -63,6 +63,7 @@ Page({
     });
     var getphoneNum = false;
     var userPhone = (app.globalData.userInfo || {}).phone;
+    
     if (userPhone) {
       getphoneNum = true;
     }
@@ -124,6 +125,7 @@ Page({
         }
 
         res.ques = ques;
+        console.log(getphoneNum);
         that.setData({
           quesAll: ques1,
           chapter: res.chapter || [],
@@ -184,6 +186,7 @@ Page({
   },
   onShow: function () {
     const that = this;
+    console.log(wx.getStorageSync("openId"));
     app.doAjax({
       url: "/userDetail",
       method: "get",

@@ -97,50 +97,58 @@ Page({
         loading1: false
       })
     });
-
-    const teamEvaluationPromise = new Promise(function (resolve,reject) {
-      app.doAjax({
-        url: `../haola/homePages/userPagers?teamId=${app.teamId}`,
-        method: "get",
-        success: function (res) {
-          resolve(res.data);
-        },
-        fail: function (err) {
-          reject(err);
-        }
-      });
-    });
-    teamEvaluationPromise.then(res=>{
-      teamEvaluationPromiseList = res.map((v,k)=>{
-        return(new Promise((resolve, reject) => {
-          app.doAjax({
-            url: `../hola/paperDetail?id=${v.paper.objectId}&userId=${app.globalData.userInfo.userId}`,
-            method: "get",
-            success: function (res) {
-              resolve( res );
-            },
-            fail: function (err) {
-              reject(err);
-            }
-          });
-        }))
-      });
-      return Promise.all(teamEvaluationPromiseList);
-    }).then(res=>{
-      that.setData({
-        teamEvaluation: res
-      })
-    }).catch(err=>{
-    }).finally(()=>{
-      that.setData({
-        loading2: false
-      })
-    });
+    /**
+     * @Description: 专属测评
+     * @author: WE!D
+     * @args:                                                                     
+     * @return: Promise Array
+     * @date: 2020/6/17
+    */
+    // const teamEvaluationPromise = new Promise(function (resolve,reject) {
+    //   app.doAjax({
+    //     url: `../haola/homePages/userPagers?teamId=${app.teamId}`,
+    //     method: "get",
+    //     success: function (res) {
+    //       resolve(res.data);
+    //     },
+    //     fail: function (err) {
+    //       reject(err);
+    //     }
+    //   });
+    // });
+    // teamEvaluationPromise.then(res=>{
+    //   teamEvaluationPromiseList = res.map((v,k)=>{
+    //     return(new Promise((resolve, reject) => {
+    //       app.doAjax({
+    //         url: `../hola/paperDetail?id=${v.paper.objectId}&userId=${app.globalData.userInfo.userId}`,
+    //         method: "get",
+    //         success: function (res) {
+    //           resolve( res );
+    //         },
+    //         fail: function (err) {
+    //           reject(err);
+    //         }
+    //       });
+    //     }))
+    //   });
+    //   return Promise.all(teamEvaluationPromiseList);
+    // }).then(res=>{
+    //   that.setData({
+    //     teamEvaluation: res
+    //   })
+    // }).catch(err=>{
+    // }).finally(()=>{
+    //   that.setData({
+    //     loading2: false
+    //   })
+    // });
     this.title = this.selectComponent("#title");
     app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
   },
   onHide: function () {
-
+    this.setData({
+      loading1: true
+    })
   },
   onShareAppMessage(options) {
     return app.defaultShareObj;

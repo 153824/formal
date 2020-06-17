@@ -19,6 +19,7 @@ Page({
     evaluationId: "",
     reportPage: 1,
     historyPage: 1,
+    loading: true
   },
 
   /**
@@ -129,7 +130,8 @@ Page({
 
           that.setData({
             evaluationList: res.data,
-            catalog: Array.from(catalogSet)
+            catalog: Array.from(catalogSet),
+            loading: false,
           });
         }
       })
@@ -149,7 +151,8 @@ Page({
         },
         success: function (res) {
           that.setData({
-            useList: res.data
+            useList: res.data,
+            loading: false,
           });
         }
       })
@@ -195,7 +198,8 @@ Page({
           { checkedTime,evaluationId } = this.data,
           that = this;
     this.setData({
-      checkedItem: targetValue
+      checkedItem: targetValue,
+      loading: true
     });
     if( targetValue === "0" ){
       app.doAjax({
@@ -211,9 +215,9 @@ Page({
         },
         success: function (res) {
           that.setData({
-            evaluationList: res.data
+            evaluationList: res.data,
+            loading: false,
           });
-          console.log(res);
         }
       })
     }
@@ -232,7 +236,8 @@ Page({
         },
         success: function (res) {
           that.setData({
-            useList: res.data
+            useList: res.data,
+            loading: false,
           });
         }
       })
@@ -244,7 +249,8 @@ Page({
           that = this;
     console.log("targetValue: ",targetValue);
     this.setData({
-      checkedTime: targetValue
+      checkedTime: targetValue,
+      loading: true
     });
     if( checkedItem === "0" ){
       app.doAjax({
@@ -259,7 +265,8 @@ Page({
         },
         success: function (res) {
           that.setData({
-            evaluationList: res.data
+            evaluationList: res.data,
+            loading: false
           });
         }
       })
@@ -278,7 +285,8 @@ Page({
         },
         success: function (res) {
           that.setData({
-            useList: res.data
+            useList: res.data,
+            loading: false
           });
         }
       })

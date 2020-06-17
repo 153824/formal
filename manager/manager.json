@@ -3,7 +3,8 @@
     "title": "../common/title/title",
     "catalog": "../common/catalog/catalog",
     "press": "../common/press/press",
-    "empty": "../common/empty/empty"
+    "empty": "../common/empty/empty",
+    "mask": "../common/mask/mask"
   },
   "navigationStyle": "custom"
 }

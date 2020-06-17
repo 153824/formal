@@ -55,6 +55,7 @@
 .card-child-info > .title{
   display: block;
   font-weight: 700;
+  font-size: 34rpx;
 }
 
 .card-child-info > .detail{

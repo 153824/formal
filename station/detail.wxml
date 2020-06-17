@@ -36,7 +36,7 @@
     </block>
 <!--    && paperDetail.setting.testRule.maxInvite != 0-->
     <block wx:if="{{hasFreeTick&&!freeTickId&&teamRole!=1&&((paperDetail.setting.price&&!isfree)&&dataLoaded&&couponGet0)||(isfree&&paperDetail.userPapersNum.hasOld&&paperDetail.setting.price)}}">
-      <button wx:if="{{!freeTick}}"
+      <button wx:if="{{ !freeTick && isGetInAgainst }}"
               class="get-free-ticket"
               open-type="share"
               data-id="{{ paperDetail.id }}"
@@ -195,7 +195,7 @@
       <view class="flex content">
         <view class="flex-main"></view>
         <image src='../img/store/icon39.png'></image>
-        <text>LIN_7890</text>
+        <text>haola72</text>
         <view class="flex-main"></view>
       </view>
       <view bindtap="copyIt" class="copyBtn">复制</view>

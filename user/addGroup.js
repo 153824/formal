@@ -61,7 +61,7 @@ Page({
    * 文字复制
    */
   copyIt: function (e) {
-    var txt = "LIN_7890";
+    var txt = "haola72";
     wx.setClipboardData({
       data: txt,
       success(res) {

@@ -67,7 +67,7 @@ Page({
     isIos: app.isIos,
     loading: true,
     mobile: "18559297592",
-    wechat: "LIN_7890",
+    wechat: "haola72",
   },
   onLoad: function(){
 

@@ -2,7 +2,7 @@
 var app = getApp();
 Page({
   data: {
-    kefuWX: "LIN_7890",
+    kefuWX: "haola72",
     kefuMobile: "18559297592",
     buyVipType: 1,
     isIos: false,
@@ -32,7 +32,7 @@ Page({
       success: function(ret) {
         var otherSetting = ret.otherSetting || {};
         that.setData({
-          kefuWX: otherSetting.kefuWX || "LIN_7890",
+          kefuWX: otherSetting.kefuWX || "haola72",
           kefuMobile: otherSetting.kefuMobile || "18559297592",
         });
       }

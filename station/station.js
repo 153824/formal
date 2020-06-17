@@ -78,7 +78,7 @@ Page({
 
     let that = this;
     app.doAjax({
-      url: "../haola/positionTags",
+      url: "positionTags",
       method: "GET",
       success: function(res) {
         that.setData({
@@ -91,7 +91,8 @@ Page({
       },
       fail: function (ret) {
         that.setData({
-          isConnected: false
+          isConnected: false,
+          loading: false
         })
       }
     });

@@ -282,7 +282,7 @@ Page({
           { userId,teamId } = app,
           openid = wx.getStorageSync("openId") || app.globalData.userMsg.openid;
     app.doAjax({
-      url: "../haola/buyTickets",
+      url: "buyTickets",
       method: "post",
       data: {
         userId,

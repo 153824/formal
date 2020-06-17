@@ -22,11 +22,16 @@ Page({
     });
     console.log(options);
     app.doAjax({
-      url: `../haola/homePages/columns/${ id }/evaluations`,
+      url: `homePages/columns/${ id }/evaluations`,
       method: "get",
       success: function (res) {
         that.setData({
           list: res.data,
+          loading: false
+        })
+      },
+      success: function (err) {
+        that.setData({
           loading: false
         })
       }

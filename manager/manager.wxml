@@ -71,7 +71,7 @@
         </scroll-view>
     </view>
     <view wx:elif="{{ checkedItem === '0' && evaluationList.length <= 0 }}">
-        <empty type="default" title="暂时还没有报告"></empty>
+        <empty type="default" title="您还没有报告，请先体验或发放测评~"></empty>
     </view>
     <scroll-view wx:if="{{ checkedItem === '1' && useList.length > 0 }}" class="user-history"
                  scroll-y bindscrolltolower="nextPage" style="height: 1001rpx;">

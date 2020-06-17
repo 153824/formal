@@ -14,12 +14,13 @@ Page({
     evaluationList: [],
     useList: [],
     timer: ["近七天","近三十天", "全部时间"],
-    catalog: ["筛选测评"],
+    catalog: ["全部测评"],
     shareTrigger: false,
     evaluationId: "",
     reportPage: 1,
     historyPage: 1,
-    loading: true
+    loading: true,
+    compareArr: []
   },
 
   /**
@@ -32,7 +33,7 @@ Page({
         url: `../report/detail?id=${ app.globalData.redirectReportId }`,
       });
       this.setData({
-        loading: false;
+        loading: false,
       })
       app.globalData.redirectReportId = null;
     }
@@ -148,7 +149,7 @@ Page({
             loading: false,
           });
         }
-        
+
       })
     }
     if( checkedItem === "1" ){
@@ -398,7 +399,8 @@ Page({
           evaluationList,
           catalog,
           historyPage,
-          useList
+          useList,
+          compareArr
         } = this.data;
     var that = this;
     if( checkedItem === "0" ){
@@ -416,15 +418,20 @@ Page({
         },
         success: function (res) {
           res.data.forEach((item,key)=>{
-            catalog.push(item.evaluation.name);
+            const { id,name } = item.evaluation;
+            if( compareArr.indexOf(id) <= -1 ){
+              console.log("item.evaluation222222222: ",id);
+              var catalogChild = {};
+              catalogChild.id = id;
+              catalogChild.name = name;
+              catalog.push(catalogChild);
+              compareArr.push(id);
+            }
             evaluationList.push(item);
           });
-          catalog.unshift("全部测评");
-          /*数组去重*/
-          var catalogSet = new Set(catalog);
           that.setData({
             evaluationList,
-            catalog: Array.from(catalogSet),
+            catalog: catalog,
             reportPage
           });
         },

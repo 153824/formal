@@ -1,19 +1,41 @@
+/**
+ * @Description: 统一后端时间的返回格式，兼容IOS时间显示问题
+ * @author: WE!D
+ * @name: formatTime
+ * @args: fullTime
+ * @return: yyyy/mm/dd/ h:m:s
+ * @date: 2020/6/18
+*/
+function formatTime(fullTime) {
+  var timeStamp = Date.parse(fullTime);
+  var date = getDate(timeStamp);
+  var targetTime = "";
+  var yyyy = date.getFullYear(),
+      mm = date.getMonth() + 1,
+      dd = date.getDate(),
+      h = date.getHours(),
+      m = date.getMinutes(),
+      s = date.getSeconds();
+  targetTime = yyyy + '/' + mm + '/' + dd +' '+ h +':'+ m+':'+ s;
+  return targetTime;
+};
+
 var getMonthAndDayByFrag = function( fullTime,frag="/" ){
-  var date = getDate(fullTime),
-      m = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1,
+  var date = getDate(formatTime(fullTime));
+  var m = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1,
       d = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
   return m + frag + d;
 };
 
 var getHourAndMinByFrag = function( fullTime,frag=":" ){
-  var date = getDate(fullTime),
-      h = date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
+  var date = getDate(formatTime(fullTime));
+  var h = date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
       m = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
   return h + frag + m;
 };
 
 var getFullDateByFrag = function( fullTime,frag="/" ){
-  var date = getDate(fullTime);
+  var date = getDate(formatTime(fullTime));
   return date.getFullYear()+frag+getMonthAndDayByFrag(fullTime);
 };
 

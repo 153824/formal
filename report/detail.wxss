@@ -219,8 +219,11 @@ page, page>view {
   box-sizing: border-box;
 }
 
-.box .list .item:last-child {
-  /* margin-right:0; */
+
+.box .list rich-text{
+  font-size: 30rpx;
+  text-align: justify;
+  line-height: 150%;
 }
 
 .box .list .item .topView {
@@ -245,7 +248,7 @@ page, page>view {
 
 .box .list .item .msg {
   margin-top: 10rpx;
-  font-size: 28rpx;
+  font-size: 30rpx;
   padding: 0 12rpx;
   font-family: PingFangSC-Regular, PingFangSC;
   font-weight: 400;
@@ -266,13 +269,14 @@ page, page>view {
 .box .content {
   position: relative;
   margin-top: 50rpx;
-  padding-right: 66rpx;
+  padding-right: 60rpx;
   padding-left: 28rpx;
-  font-size: 28rpx;
+  font-size: 30rpx;
   font-family: PingFangSC-Semibold, PingFangSC;
   font-weight: 600;
   color: rgba(50, 53, 65, 1);
   line-height: 40rpx;
+  text-align: justify;
 }
 
 .box .content:before {
@@ -437,11 +441,12 @@ page, page>view {
   background: rgba(255, 255, 255, 1);
   box-shadow: 0px 4rpx 16rpx 0px rgba(207, 216, 240, 0.79);
   border-radius: 16rpx;
-  font-size: 28rpx;
+  font-size: 30rpx;
   font-family: PingFangSC-Semibold, PingFangSC;
   font-weight: 400;
   color: rgba(50, 53, 65, 1);
-  line-height: 40rpx;
+  line-height: 150%;
+  text-align: justify;
 }
 
 /* box2 */
@@ -550,11 +555,12 @@ page, page>view {
   margin: 40rpx 40rpx;
   background: rgba(245, 246, 251, 1);
   border-radius: 16rpx;
-  font-size: 28rpx;
+  font-size: 30rpx;
   font-family: PingFangSC-Semibold, PingFangSC;
   font-weight: 400;
   color: rgba(50, 53, 65, 1);
-  line-height: 40rpx;
+  line-height: 150%;
+  text-align: justify;
 }
 
 .box3 .chartImg {
@@ -579,12 +585,11 @@ page, page>view {
   position: relative;
 }
 
-.box3 .list .item {
-}
+
 
 .box3 .list .item .title {
   padding: 28rpx 50rpx 26rpx 50rpx;
-  font-size: 28rpx;
+  font-size: 30rpx;
   font-family: PingFangSC-Semibold, PingFangSC;
   font-weight: 600;
   color: rgba(50, 53, 65, 1);
@@ -623,7 +628,7 @@ page, page>view {
 }
 
 .box3 .list .item .contentMsg .title1 {
-  font-size: 28rpx;
+  font-size: 30rpx;
   font-family: PingFangSC-Semibold, PingFangSC;
   font-weight: 600;
   color: rgba(50, 53, 65, 1);
@@ -638,14 +643,15 @@ page, page>view {
 
 .box3 .list .item .contentMsg .msg {
   margin-top: 10rpx;
-  font-size: 28rpx;
+  font-size: 30rpx;
   font-family: PingFangSC-Regular, PingFangSC;
   font-weight: 400;
   color: rgba(92, 97, 113, 1);
-  line-height: 48rpx;
+  line-height: 150%;
   letter-spacing: 1px;
   padding-bottom: 40rpx;
   display: block;
+  text-align: justify;
 }
 
 /* box4 */
@@ -669,7 +675,7 @@ page, page>view {
   display: inline-block;
   padding: 24rpx 30rpx 24rpx 50rpx;
   text-align: center;
-  font-size: 28rpx;
+  font-size: 30rpx;
   font-family: PingFangSC-Semibold, PingFangSC;
   font-weight: 600;
   color: rgba(144, 145, 156, 1);
@@ -700,12 +706,13 @@ page, page>view {
 
 .box4 .content {
   padding: 34rpx 50rpx;
-  font-size: 28rpx;
+  font-size: 30rpx;
   font-family: PingFangSC-Regular, PingFangSC;
   font-weight: 400;
   color: rgba(50, 53, 65, 1);
-  line-height: 40rpx;
+  line-height: 150%;
   overflow-y: auto;
+  text-align: justify;
 }
 
 .box4 .content .stars image {
@@ -809,8 +816,9 @@ page, page>view {
   font-family: PingFangSC-Semibold, PingFangSC;
   font-weight: 400;
   color: rgba(144, 145, 156, 1);
-  line-height: 34rpx;
+  line-height: 150%;
   padding: 0 28rpx;
+
 }
 
 .bottomMsg text {

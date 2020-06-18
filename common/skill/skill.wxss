@@ -29,6 +29,7 @@
 .introduce > .title{
   display: block;
   line-height: 44rpx;
+  text-align: justify;
 }
 
 .introduce > .word{
@@ -37,9 +38,11 @@
   color: #070922CC;
   margin: 10rpx 0 0 0;
   line-height: 40rpx;
+  text-align: justify;
 }
 
 .cover{
+  margin-top: 10rpx;
   width: 120rpx;
   height: 120rpx;
   border-radius: 20rpx;
@@ -54,6 +57,6 @@
 
 .use-count{
   color: #BEBEBEFF;
-  font-size: 24rpx;
+  font-size: 26rpx;
   line-height: 40rpx;
 }

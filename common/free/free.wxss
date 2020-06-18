@@ -2,7 +2,7 @@
 .price{
     line-height: 40rpx;
     color: #fff;
-    font-size: 24rpx;
+    font-size: 28rpx;
 }
 
 .origin-price{
@@ -15,6 +15,7 @@
 .actual-price{
     display: inline-block;
     color: #E31A46FF;
+    font-weight: 600;
 }
 
 .free{

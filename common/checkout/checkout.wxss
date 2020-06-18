@@ -15,6 +15,7 @@
   font-size: 40rpx;
   color: #070922FF;
   z-index: 100;
+  font-weight: 600;
 }
 .head > .line{
   position: absolute;
@@ -36,7 +37,7 @@
 .introduction-content,.dimension-content,.scenarios-content,.example-content,.report-content{
   letter-spacing: 2rpx;
   line-height: 48rpx;
-  font-size: 28rpx;
+  font-size: 30rpx;
   margin-top: 60rpx;
 }
 
@@ -81,6 +82,7 @@
   color: #5C6171FF;
   letter-spacing: 4rpx;
   line-height: 48rpx;
+  font-size: 30rpx;
 }
 .scenarios-icon{
   margin-right: 12rpx;
@@ -88,7 +90,7 @@
   height: 60rpx;
 }
 .scenarios-title{
-  font-size: 28rpx;
+  font-size: 32rpx;
   color: #323541FF;
   font-weight: 600;
 }
@@ -99,7 +101,7 @@
 .example-child > .bold{
   color: #2F3038FF;
   font-size: 30rpx;
-  font-weight:500;
+  font-weight:600;
   letter-spacing: 1.2rpx;
   line-height: 44rpx;
 }
@@ -113,6 +115,7 @@
   box-shadow:0px 0px 7px 0px rgba(167,185,237,0.36);
   border-radius: 16rpx;
   background:rgba(254,255,254,1);
+  font-size: 30rpx;
 }
 .report-child{
   display: flex;

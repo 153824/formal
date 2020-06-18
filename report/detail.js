@@ -583,9 +583,9 @@ Page({
     });
   },
   onShareAppMessage: function (options) {
-    const { id } = this.data;
+    const { id,userMsg,paper } = this.data;
     return {
-      title: "分享小程序~",
+      title: `${ userMsg.username }邀请查看《${ paper.name }》报告`,
       path: `/report/detail?id=${id}`,
       imageUrl: "http://ihola.luoke101.com/wxShareImg.png",
     }

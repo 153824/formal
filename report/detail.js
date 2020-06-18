@@ -480,7 +480,7 @@ Page({
   backToHome: function() {
     this.getMyTeamList()
     wx.switchTab({
-      url: '../store/store'
+      url: '../index/index'
     });
     this.loadUserMsg();
     return;

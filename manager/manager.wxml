@@ -17,11 +17,11 @@
     <view>
 <!--        <catalog range="{{ catalog }}"></catalog>-->
         <view class="catalog">
-            <picker wx:if="{{ checkedItem === '0' }}" class="evaluation-picker" range="{{ catalog }}" value="{{ checkedEvaluation }}" bindchange="changeEvaluation">
+            <!-- <picker wx:if="{{ checkedItem === '0' }}" class="evaluation-picker" range="{{ catalog }}" value="{{ checkedEvaluation }}" bindchange="changeEvaluation">
                 <view class="catalog-title">
                     {{catalog[checkedEvaluation]}}
                 </view>
-            </picker>
+            </picker> -->
             <picker class="time-picker" range="{{ timer }}" value="{{ checkedTime }}" bindchange="changeTimer">
                 <view class="catalog-title">
                     {{timer[checkedTime]}}

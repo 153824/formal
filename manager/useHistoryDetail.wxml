@@ -48,7 +48,7 @@
                                 <text>{{ finishedItem.report.summary.title }}</text>
                                 <text>{{ finishedItem.report.total1 }}分</text>
                             </view>
-                            <text>{{ util.getFullDateByFrag(finishedItem.time) }}-{{ util.getHourAndMinByFrag(finishedItem.time) }}</text>
+                            <text>{{ util.getFullDateByFrag(finishedItem.time,"/",true) }}-{{ util.getHourAndMinByFrag(finishedItem.time,":",true) }}</text>
                         </view>
                     </view>
                 </block>

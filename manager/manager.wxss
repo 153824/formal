@@ -115,6 +115,9 @@
 .user-wrapper{
     color: #070922;
 }
+.user-wrapper .username{
+    font-weight: 600;
+}
 .info-wrapper{
     position: absolute;
     right: 80rpx;

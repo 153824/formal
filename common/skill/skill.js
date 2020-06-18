@@ -62,11 +62,11 @@ Component({
     },
     titleFontSize: {
       type: Number,
-      value: 28
+      value: 30
     },
     subTitleFontSize: {
       type: Number,
-      value: 24
+      value: 26
     },
     companyUseName: {
       type: String,

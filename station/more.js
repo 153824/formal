@@ -30,7 +30,7 @@ Page({
           loading: false
         })
       },
-      success: function (err) {
+      fail: function (err) {
         that.setData({
           loading: false
         })

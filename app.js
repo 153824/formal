@@ -305,7 +305,6 @@ App({
     var that = this;
     var url = that.host + params.url;
     var urlArr = ["homePages","positionTags","reports","buyTickets"];
-    params.url.split("/")[0]
     if( urlArr.includes(params.url.split("/")[0]) ){
       url = that.host4 +params.url;
     }

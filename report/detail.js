@@ -585,7 +585,7 @@ Page({
   onShareAppMessage: function (options) {
     const { id,userMsg,paper } = this.data;
     return {
-      title: `${ userMsg.username }邀请查看《${ paper.name }》报告`,
+      title: `邀您看${ userMsg.username }的《${ paper.name }》报告`,
       path: `/report/detail?id=${id}`,
       imageUrl: "http://ihola.luoke101.com/wxShareImg.png",
     }

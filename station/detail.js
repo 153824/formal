@@ -930,9 +930,8 @@ Page({
           that = this;
     setTimeout(()=>{
       app.doAjax({
-        url: `../hola/drawVoucher?userId=${userId}&paperId=${paperId}&teamId=${teamId}`,
+        url: `drawVoucher?userId=${userId}&paperId=${paperId}&teamId=${teamId}`,
         success: function (res) {
-          console.log("url: `../hola/drawVoucher?userId=${userId}&paperId=${paperId}&teamId=${teamId}`: ",res);
           app.toast(res);
           if( res.code == "0" ){
             that.setData({
@@ -943,7 +942,7 @@ Page({
       })
     },1000);
     return {
-      title: "分享小程序~",
+      title: "我发现一个不错的人才测评软件，快来看看吧~",
       path: "/index/index",
       imageUrl: "http://ihola.luoke101.com/wxShareImg.png",
     }

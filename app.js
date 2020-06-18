@@ -350,11 +350,11 @@ App({
     });
   },
   //toast信息显示
-  toast: function(txt) {
+  toast: function(txt,duration=2000) {
     wx.showToast({
       title: txt,
       icon: "none",
-      duration: 2000
+      duration
     });
   },
   //数组去除空值

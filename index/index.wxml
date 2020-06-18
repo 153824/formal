@@ -21,7 +21,7 @@
 <view class="topCouponGetView" wx:if="{{!hasFreeTick&&skipFreeTicket}}">
   <image bindtap="changePage" data-url="../index/getFreeTicket" src="../img/store/detail/icon29.png"></image>
 </view>
-<view class="container font" style="margin-top:{{ oldShareInfo&&oldShareInfo.id ? 0 : (statusbarHeight + titleHeight) }}px;">
+<view class="container font" style="padding-top:{{ oldShareInfo&&oldShareInfo.id ? 0 : (statusbarHeight + titleHeight) }}px;">
   <view class="banner">
     <swiper wx:if="{{ banner.isShow }}" autoplay="true" indicator-dots="{{banner.data.length>1?true:false}}"
             circular="true" indicator-color="rgba(255,255,255,0.3)" indicator-active-color="#fff">

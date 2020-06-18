@@ -480,7 +480,7 @@
 }
 /* commont-style */
 .header{
-  font-size: 36rpx;
+  font-size: 38rpx;
   font-weight: 600;
   margin: 50rpx 0 0 40rpx;
 }

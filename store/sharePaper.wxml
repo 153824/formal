@@ -1,5 +1,5 @@
 <!--store/sharePaper.wxml-->
-<view class="pageView" style="">
+<view class="pageView" style="z-index: -1;">
   <view>
     <view class="top_title_main">批量发放测评</view>
     <view class="top_title">支持多人扫同一个二维码进行作答</view>
@@ -47,10 +47,17 @@
   </view>
   <view class="inviteBtn" bindtap="toSharePaper">生成测评邀请函</view>
 </view>
-<view class="datibox" wx:if="{{retData.img}}" catchtouchmove="true">
+<view class="datibox" wx:if="{{retData.img}}" catchtouchmove="true" style="z-index: 999;">
+  <view style="color:#FFFFFFFF;font-size: 32rpx;font-weight: 600;margin-top: 68rpx;">长按下图保存，可发放至以下招聘渠道</view>
+  <image src="../img/store/icon41.png" style="width: 484rpx;height: 56rpx;margin: 24rpx 0 68rpx 0;"></image>
   <view class="daticenterbox">
     <image class="daticenterboximg" src="{{retData.img}}" show-menu-by-longpress="true"></image>
     <image class="daticlosebtn" bindtap="closedati" src="../img/store/icon1.png"></image>
   </view>
-  <view class="datiboxfoottext">长按图片保存或发送给微信好友</view>
+  <button class="share-paper" style="">
+    我要批量发放测评
+  </button>
 </view>
+<!--<view>-->
+<!--  <button>我要批量发放测评</button>-->
+<!--</view>-->

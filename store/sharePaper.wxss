@@ -156,22 +156,18 @@
 /* 二维码 */
 
 .datibox {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  background: rgba(0, 0, 0, 0.7);
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 999999;
 }
 
 .daticenterbox {
   width: 556rpx;
-  height: 990rpx;
   position: relative;
 }
 
@@ -201,4 +197,15 @@
   height: 60rpx;
   justify-content: center;
   align-items: center;
+}
+.share-paper{
+  width: 382rpx;
+  height: 76rpx;
+  margin: 64rpx 0 60rpx 0;
+  line-height: 76rpx;
+  background: linear-gradient(135deg,rgba(101,114,245,1) 0%,rgba(53,62,232,1) 100%);
+  box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(0,0,0,0.27);
+  border-radius: 10rpx;
+  font-size: 32rpx;
+  color: white;
 }

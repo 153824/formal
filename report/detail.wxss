@@ -219,9 +219,7 @@ page, page>view {
   box-sizing: border-box;
 }
 
-.box .list .item:last-child {
-  /* margin-right:0; */
-}
+
 .box .list rich-text{
   font-size: 30rpx;
   text-align: justify;
@@ -587,8 +585,7 @@ page, page>view {
   position: relative;
 }
 
-.box3 .list .item {
-}
+
 
 .box3 .list .item .title {
   padding: 28rpx 50rpx 26rpx 50rpx;

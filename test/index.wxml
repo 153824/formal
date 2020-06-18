@@ -122,6 +122,5 @@
       <button class="btnnext btnnextUp" wx:if="{{(swiperCurrent + 1) == quesAll.length&&isFillAll}}" form-type="submit">提交</button>
     </view>
   </form>
-
 </view>
 <wxs src="../common/util.wxs" module="util"></wxs>

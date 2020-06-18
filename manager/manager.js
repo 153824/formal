@@ -113,7 +113,7 @@ Page({
     var that = this;
     if( checkedItem === "0" ){
       app.doAjax({
-        url: "../haola/reports",
+        url: "reports",
         method: "get",
         data: {
           orgId: app.teamId,
@@ -223,7 +223,7 @@ Page({
     });
     if( targetValue === "0" ){
       app.doAjax({
-        url: "../haola/reports",
+        url: "reports",
         method: "get",
         data: {
           orgId: app.teamId,
@@ -287,7 +287,7 @@ Page({
     });
     if( checkedItem === "0" ){
       app.doAjax({
-        url: "../haola/reports",
+        url: "reports",
         method: "get",
         data: {
           orgId: app.teamId,
@@ -406,7 +406,7 @@ Page({
     if( checkedItem === "0" ){
       reportPage = reportPage + 1;
       app.doAjax({
-        url: "../haola/reports",
+        url: "reports",
         method: "get",
         data: {
           orgId: app.teamId,

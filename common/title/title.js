@@ -139,17 +139,19 @@ Component({
           that.hideLoginDlg();
           app.globalData.userInfo.nickname = userInfo.nickName;
           app.addNewTeam(that.onShow);
+          // app.addNewTeam(app.getUserInfo(that.loadUserMsg));
+          // app.getUserInfo(that.loadUserMsg);
         }
       });
-      wx.switchTab({
-        url: "../index/index",
-        success: function (res) {
-          console.log("wx.switchTab");
-          let page = getCurrentPages().pop();
-          if (page == undefined || page == null) return;
-          page.onShow();
-        }
-      })
+      // wx.switchTab({
+      //   url: "../index/index",
+      //   success: function (res) {
+      //     console.log("wx.switchTab");
+      //     let page = getCurrentPages().pop();
+      //     if (page == undefined || page == null) return;
+      //     page.onShow();
+      //   }
+      // })
     },
     /**
      * 显示登陆弹窗

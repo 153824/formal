@@ -51,7 +51,7 @@ Page({
         teamEvaluationPromiseList = [];
     const homePagesPromise = new Promise(function (resolve,reject) {
       app.doAjax({
-        url: "../haola/homePages",
+        url: "homePages",
         method: "get",
         success: function(res){
           resolve( res.resultObject );
@@ -66,7 +66,7 @@ Page({
       homePagesPromiseList = res.column.map((v,k)=>{
         return new Promise((resolve, reject) => {
           app.doAjax({
-            url: `../haola/homePages/columns/${ v.column_id }/evaluations`,
+            url: `homePages/columns/${ v.column_id }/evaluations`,
             method: "get",
             success: function (res) {
               resolve({ columnId: v.column_id, data: res.data});
@@ -90,13 +90,19 @@ Page({
         }
       };
       that.setData({
-        column: targetColumn
+        column: targetColumn,
+        loading1: false
       });
-    }).finally(()=>{
+    }).catch(err=>{
       that.setData({
         loading1: false
       })
-    });
+    })
+    // .finally(()=>{
+    //   that.setData({
+    //     loading1: false
+    //   })
+    // });
     /**
      * @Description: 专属测评
      * @author: WE!D

@@ -1,4 +1,5 @@
 // common/mask/mask.js
+const app = getApp();
 Component({
   /**
    * 组件的属性列表
@@ -11,6 +12,10 @@ Component({
     backgroundColor: {
       type: String,
       value: "white"
+    },
+    top: {
+      type: Number,
+      value: 270
     }
   },
 
@@ -18,7 +23,8 @@ Component({
    * 组件的初始数据
    */
   data: {
-
+    titleHeight: app.globalData.titleHeight,
+    statusbarHeight: app.globalData.statusbarHeight,
   },
 
   /**

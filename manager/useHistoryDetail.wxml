@@ -67,7 +67,7 @@
                         </view>
                         <view class="rate">
                             <view class="rate-info">
-                                <text>作答开始时间：</text><text>{{ util.getFullDateByFrag(receivedItem.time) }}-{{ util.getHourAndMinByFrag(receivedItem.time) }}</text>
+                                <text>作答开始时间：</text><text>{{ util.getFullDateByFrag(receivedItem.time,"/",true) }}-{{ util.getHourAndMinByFrag(receivedItem.time,":",true) }}</text>
                             </view>
                         </view>
                     </view>

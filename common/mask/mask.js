@@ -15,7 +15,7 @@ Component({
     },
     top: {
       type: Number,
-      value: 270
+      value: 0
     }
   },
 

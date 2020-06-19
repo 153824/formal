@@ -14,12 +14,13 @@ Page({
     evaluationList: [],
     useList: [],
     timer: ["近七天","近三十天", "全部时间"],
-    catalog: ["筛选测评"],
+    catalog: ["全部测评"],
     shareTrigger: false,
     evaluationId: "",
     reportPage: 1,
     historyPage: 1,
-    loading: true
+    loading: true,
+    compareArr: []
   },
 
   /**
@@ -29,13 +30,16 @@ Page({
     const { redirectToIndex,redirectReportId } = app.globalData;
     if( redirectReportId ){
       wx.navigateTo({
-        url: `../report/detail?id=${ app.globalData.redirectReportId }`,
+        url: `report/detail?id=${ app.globalData.redirectReportId }`,
       });
+      this.setData({
+        loading: false,
+      })
       app.globalData.redirectReportId = null;
     }
     // if( redirectToIndex ){
     //   wx.switchTab({
-    //     url: `../index/index`,
+    //     url: `index/index`,
     //   });
     //   app.globalData.redirectToIndex = false;
     // }
@@ -43,7 +47,7 @@ Page({
     // var that = this;
     // if( checkedItem === "0" ){
     //   app.doAjax({
-    //     url: "../haola/reports",
+    //     url: "reports",
     //     method: "get",
     //     data: {
     //       orgId: app.teamId,
@@ -121,17 +125,23 @@ Page({
         },
         success: function (res) {
           var catalog = [];
+          var compareArr = [];
           res.data.forEach((item,key)=>{
-            catalog.push(item.evaluation.name)
+            const { id,name } = item.evaluation;
+            if( !compareArr.includes(id) ){
+              var catalogChild = {};
+              catalogChild.id = id;
+              catalogChild.name = name;
+              catalog.push(catalogChild);
+              compareArr.push(id);
+            }
           });
-          catalog.unshift("全部测评");
-          /*数组去重*/
-          var catalogSet = new Set(catalog);
-
+          catalog.unshift({ id: "",name: "全部测评" });
           that.setData({
             evaluationList: res.data,
-            catalog: Array.from(catalogSet),
+            catalog: catalog,
             loading: false,
+            compareArr
           });
         },
         error: function(err){
@@ -139,12 +149,10 @@ Page({
             loading: false,
           });
         }
-        
+
       })
     }
     if( checkedItem === "1" ){
-      // sharePapers/batch?userId=5eb21d15eb4b2d000892d14e&teamId=5e1985617d5774006ac4533e&page=2&size=101
-      console.log("I checked it",checkedItem);
       app.doAjax({
         url: "sharePapers/batch",
         method: "get",
@@ -159,6 +167,7 @@ Page({
           that.setData({
             useList: res.data,
             loading: false,
+            reportPage: 0,
           });
         },
         error: function(err){
@@ -206,8 +215,8 @@ Page({
   },
   changeTab: function (e) {
     const targetValue = e.currentTarget.dataset.item,
-          { checkedTime,evaluationId } = this.data,
-          that = this;
+        { checkedTime,evaluationId } = this.data,
+        that = this;
     this.setData({
       checkedItem: targetValue,
       loading: true
@@ -228,6 +237,7 @@ Page({
           that.setData({
             evaluationList: res.data,
             loading: false,
+            historyPage: 0
           });
         },
         error: function(err){
@@ -238,8 +248,6 @@ Page({
       })
     }
     if( targetValue === "1" ){
-      // sharePapers/batch?userId=5eb21d15eb4b2d000892d14e&teamId=5e1985617d5774006ac4533e&page=2&size=101
-      console.log("checkedItem === \"1\"");
       app.doAjax({
         url: "sharePapers/batch",
         method: "get",
@@ -254,6 +262,7 @@ Page({
           that.setData({
             useList: res.data,
             loading: false,
+            reportPage: 0
           });
         },
         error: function(err){
@@ -266,12 +275,15 @@ Page({
   },
   changeTimer: function (e) {
     const targetValue = e.detail.value,
-          { checkedItem } = this.data,
-          that = this;
-    console.log("targetValue: ",targetValue);
+        { checkedItem,
+          evaluationId,
+          reportPage
+        } = this.data,
+        that = this;
     this.setData({
       checkedTime: targetValue,
-      loading: true
+      reportPage: 0,
+      loading: true,
     });
     if( checkedItem === "0" ){
       app.doAjax({
@@ -282,7 +294,8 @@ Page({
           userId: app.userId,
           type: targetValue,
           page: 1,
-          pageSize: 10
+          pageSize: 10,
+          evaluationId: evaluationId
         },
         success: function (res) {
           that.setData({
@@ -298,7 +311,6 @@ Page({
       })
     }
     if( checkedItem === "1" ){
-      // sharePapers/batch?userId=5eb21d15eb4b2d000892d14e&teamId=5e1985617d5774006ac4533e&page=2&size=101
       app.doAjax({
         url: "sharePapers/batch",
         method: "get",
@@ -324,10 +336,33 @@ Page({
     }
   },
   changeEvaluation: function (e) {
-    var checkedEvaluation = e.detail.value;
+    const that = this;
+    const { checkedTime,catalog } = this.data;
+    const checkedEvaluation = e.detail.value;
     this.setData({
-      checkedEvaluation: checkedEvaluation
+      checkedEvaluation: checkedEvaluation,
+      evaluationId: catalog[checkedEvaluation].id,
+      reportPage: 0
     });
+    app.doAjax({
+      url: "reports",
+      method: "get",
+      data: {
+        orgId: app.teamId,
+        userId: app.userId,
+        type: checkedTime,
+        page: 1,
+        pageSize: 10,
+        evaluationId: catalog[checkedEvaluation].id
+      },
+      success: function (res) {
+        console.log(res);
+        that.setData({
+          evaluationList: res.data,
+          loading: false
+        });
+      }
+    })
   },
   changePage: function (e) {
     const { sharepaperid,status } = e.currentTarget.dataset;
@@ -358,14 +393,15 @@ Page({
   },
   nextPage: function (e) {
     var { checkedItem,
-          checkedTime,
-          evaluationId,
-          reportPage,
-          evaluationList,
-          catalog,
-          historyPage,
-          useList
-        } = this.data;
+      checkedTime,
+      evaluationId,
+      reportPage,
+      evaluationList,
+      catalog,
+      historyPage,
+      useList,
+      compareArr
+    } = this.data;
     var that = this;
     if( checkedItem === "0" ){
       reportPage = reportPage + 1;
@@ -382,15 +418,20 @@ Page({
         },
         success: function (res) {
           res.data.forEach((item,key)=>{
-            catalog.push(item.evaluation.name);
+            const { id,name } = item.evaluation;
+            if( compareArr.indexOf(id) <= -1 ){
+              console.log("item.evaluation222222222: ",id);
+              var catalogChild = {};
+              catalogChild.id = id;
+              catalogChild.name = name;
+              catalog.push(catalogChild);
+              compareArr.push(id);
+            }
             evaluationList.push(item);
           });
-          catalog.unshift("全部测评");
-          /*数组去重*/
-          var catalogSet = new Set(catalog);
           that.setData({
             evaluationList,
-            catalog: Array.from(catalogSet),
+            catalog: catalog,
             reportPage
           });
         },

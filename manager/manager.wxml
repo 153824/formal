@@ -1,101 +1,97 @@
 <!--manager/manager.wxml-->
 <view>
-    <title id="title" url="manager/manager"></title>
+	<title id="title" url="manager/manager"></title>
 </view>
 <view class="manager" style="margin-top: {{ statusbarHeight + titleHeight }}px;">
-<!--    <view class="toContact">关注好啦测评公众号，接收测评完成通知-->
-<!--        <button open-type="contact" show-message-card="true">立即关注</button>-->
-<!--    </view>-->
-    <view class="manager-head">
-        <view class="{{ checkedItem === '0' ? 'test-report active':'test-report' }}" bindtap="changeTab" data-item="0" >
-            <text>测评报告</text>
-        </view>
-        <view class="{{ checkedItem === '1' ? 'use-history active':'use-history' }}" bindtap="changeTab" data-item="1">
-            <text>使用记录</text>
-        </view>
-    </view>
-    <view>
-<!--        <catalog range="{{ catalog }}"></catalog>-->
-        <view class="catalog">
-<!--            <picker wx:if="{{ checkedItem === '0' }}" class="evaluation-picker" range="{{ catalog }}" range-key="{{ 'name' }}"-->
-<!--                    value="{{ checkedEvaluation }}" bindchange="changeEvaluation">-->
-<!--                <view class="catalog-title">-->
-<!--                    {{catalog[checkedEvaluation].name}}-->
-<!--                </view>-->
-<!--            </picker>-->
-            <picker class="time-picker" range="{{ timer }}" value="{{ checkedTime }}" bindchange="changeTimer">
-                <view class="catalog-title">
-                    {{timer[checkedTime]}}
-                </view>
-            </picker>
-        </view>
-    </view>
-<!--    wx:if="{{ checkedItem === '1' }}"-->
-<!--    <view class="time-controller">-->
-<!--        <text wx:for="{{ timer }}" wx:key="id" data-id="{{ item.id }}" class="{{ item.active ? 'timer-active' : '' }}" bindtap="changeTimer">{{ item.name }}</text>-->
-<!--    </view>-->
-    <view wx:if="{{ checkedItem === '0' && evaluationList.length > 0 }}">
-        <scroll-view scroll-y bindscrolltolower="nextPage"
-                     class="evaluation-reports" style="height: 1001rpx;">
-            <label for="" wx:for="{{ evaluationList }}">
-                <view class="report-child" style="{{ shareTrigger ? 'padding: 40rpx 80rpx 40rpx 40rpx;': ''}}" data-id="{{ item.id }}" data-name="{{ item.evaluation.name }}" bindtap="toReport">
-                    <view wx:if="{{ shareTrigger }}" class="check-wrapper">
-                        <checkbox value="{{ item.id }}"></checkbox>
-                    </view>
-                    <view class="time-wrapper">
-                        <view class="date" style="text-align: center;">
-                            {{ util.getMonthAndDayByFrag(item.createdTime,'/',false) }}
-                        </view>
-                        <view class="clock" style="text-align: center;">
-                            {{ util.getHourAndMinByFrag(item.createdTime,':',false) }}
-                        </view>
-                    </view>
-                    <view class="user-wrapper">
-                        <view>
-                            {{ item.answerUser.name }}
-                        </view>
-                        <view class="name" style="font-size: 28rpx;color: #070922;">
-                            {{ item.evaluation.name }}
-                        </view>
-                    </view>
-                    <view class="info-wrapper">
-                        <view>
-                            {{ item.total1 }}分
-                        </view>
-                        <view>
-                            {{ item.reportType }}
-                        </view>
-                    </view>
-                </view>
-            </label>
-        </scroll-view>
-    </view>
-    <view wx:elif="{{ checkedItem === '0' && evaluationList.length <= 0 }}">
-        <empty type="default" title="您还没有报告，请先体验或发放测评~"></empty>
-    </view>
-    <scroll-view wx:if="{{ checkedItem === '1' && useList.length > 0 }}" class="user-history"
-                 scroll-y bindscrolltolower="nextPage" style="height: 1001rpx;">
-        <view class="user-history-child" wx:for="{{ useList }}" bindtap="changePage"
-              data-sharePaperId="{{ item.sharePaperId }}" data-status="{{ item.status }}">
-            <view class="title">
-                <text>{{ item.name }}</text>
-                <image class="title-icon" src="../img/user/index/icon3.png"></image>
-            </view>
-            <view class="info">
-                <view>发放数量：<text style="color: #353EE8FF;">{{ item.totalCount }}</text>份</view>
-                <view>已完成数量：<text style="color: #353EE8FF;">{{ item.usedCount }}</text>份</view>
-                <view>发放时间：{{ util.getFullDateByFrag(item.createdAt,'/',true) }} {{ util.getHourAndMinByFrag(item.createdAt,':',true) }}</view>
-            </view>
-        </view>
-    </scroll-view>
-    <view wx:elif="{{ checkedItem === '1' && useList.length <= 0 }}">
-        <empty type="default" title="还没有发放记录"></empty>
-    </view>
-<!--开始：批量转发需求变更，后期上线可取消注释    -->
-<!--    <view class="share-button-wrapper">-->
-<!--        <press title="转发给微信好友"></press>-->
-<!--    </view>-->
-<!--结束：批量转发需求变更，后期上线可取消注释    -->
+	<!--    <view class="toContact">关注好啦测评公众号，接收测评完成通知-->
+	<!--        <button open-type="contact" show-message-card="true">立即关注</button>-->
+	<!--    </view>-->
+	<view class="manager-head">
+		<view class="{{ checkedItem === '0' ? 'test-report active':'test-report' }}" bindtap="changeTab" data-item="0">
+			<text>测评报告</text>
+		</view>
+		<view class="{{ checkedItem === '1' ? 'use-history active':'use-history' }}" bindtap="changeTab" data-item="1">
+			<text>使用记录</text>
+		</view>
+	</view>
+	<view>
+		<!--        <catalog range="{{ catalog }}"></catalog>-->
+		<view class="catalog">
+			<!-- <picker wx:if="{{ checkedItem === '0' }}" class="evaluation-picker" range="{{ catalog }}" range-key="{{ 'name' }}" value="{{ checkedEvaluation }}" bindchange="changeEvaluation">
+				<view class="catalog-title">
+					{{catalog[checkedEvaluation].name}}
+				</view>
+			</picker> -->
+			<picker class="time-picker" range="{{ timer }}" value="{{ checkedTime }}" bindchange="changeTimer">
+				<view class="catalog-title">
+					{{timer[checkedTime]}}
+				</view>
+			</picker>
+		</view>
+	</view>
+	<!--    wx:if="{{ checkedItem === '1' }}"-->
+	<!--    <view class="time-controller">-->
+	<!--        <text wx:for="{{ timer }}" wx:key="id" data-id="{{ item.id }}" class="{{ item.active ? 'timer-active' : '' }}" bindtap="changeTimer">{{ item.name }}</text>-->
+	<!--    </view>-->
+	<view wx:if="{{ checkedItem === '0' && evaluationList.length > 0 }}">
+		<scroll-view scroll-y bindscrolltolower="nextPage" class="evaluation-reports" style="height: 1001rpx;">
+			<label for="" wx:for="{{ evaluationList }}">
+				<view class="report-child" style="{{ shareTrigger ? 'padding: 40rpx 80rpx 40rpx 40rpx;': ''}}" data-id="{{ item.id }}" data-name="{{ item.evaluation.name }}" bindtap="toReport">
+					<view wx:if="{{ shareTrigger }}" class="check-wrapper">
+						<checkbox value="{{ item.id }}"></checkbox>
+					</view>
+					<view class="time-wrapper">
+						<view class="date" style="text-align: center;">
+							{{ util.getMonthAndDayByFrag(item.createdTime,'/',false) }}
+						</view>
+						<view class="clock" style="text-align: center;">
+							{{ util.getHourAndMinByFrag(item.createdTime,':',false) }}
+						</view>
+					</view>
+					<view class="user-wrapper">
+						<view>
+							{{ item.answerUser.name }}
+						</view>
+						<view class="name" style="font-size: 28rpx;color: #070922;">
+							{{ item.evaluation.name }}
+						</view>
+					</view>
+					<view class="info-wrapper">
+						<view>
+							{{ item.total1 }}分
+						</view>
+						<view>
+							{{ item.reportType }}
+						</view>
+					</view>
+				</view>
+			</label>
+		</scroll-view>
+	</view>
+	<view wx:elif="{{ checkedItem === '0' && evaluationList.length <= 0 }}">
+		<empty type="default" title="您还没有报告，请先体验或发放测评~"></empty>
+	</view>
+	<scroll-view wx:if="{{ checkedItem === '1' && useList.length > 0 }}" class="user-history" scroll-y bindscrolltolower="nextPage" style="height: 1001rpx;">
+		<view class="user-history-child" wx:for="{{ useList }}" bindtap="changePage" data-sharePaperId="{{ item.sharePaperId }}" data-status="{{ item.status }}">
+			<view class="title">
+				<text>{{ item.name }}</text>
+				<image class="title-icon" src="../img/user/index/icon3.png"></image>
+			</view>
+			<view class="info">
+				<view>发放数量：<text style="color: #353EE8FF;">{{ item.totalCount }}</text>份</view>
+				<view>已完成数量：<text style="color: #353EE8FF;">{{ item.usedCount }}</text>份</view>
+				<view>发放时间：{{ util.getFullDateByFrag(item.createdAt,'/',true) }} {{ util.getHourAndMinByFrag(item.createdAt,':',true) }}</view>
+			</view>
+		</view>
+	</scroll-view>
+	<view wx:elif="{{ checkedItem === '1' && useList.length <= 0 }}">
+		<empty type="default" title="还没有发放记录"></empty>
+	</view>
+	<!--开始：批量转发需求变更，后期上线可取消注释    -->
+	<!--    <view class="share-button-wrapper">-->
+	<!--        <press title="转发给微信好友"></press>-->
+	<!--    </view>-->
+	<!--结束：批量转发需求变更，后期上线可取消注释    -->
 </view>
 <!--开始：批量转发需求变更，后期上线可取消注释    -->
 <!--<view class="share-wrapper" bindtap="changeShareTrigger">-->

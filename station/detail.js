@@ -972,7 +972,7 @@ Page({
   },
   onUnload: function(){
     const { couponGet0,teamRole,isTodayTeam,isfree } = this.data;
-    if( !((!couponGet0)&&teamRole==3&&isTodayTeam&&!isfree) ){
+    if( !((!couponGet0)&&teamRole==3&&isTodayTeam) ){
       this.setData({
         getInOnceAgainst: true
       });
@@ -988,16 +988,34 @@ Page({
           paperId = options.target.dataset.id,
           userId = app.globalData.userInfo.id,
           that = this;
+    const { name } = this.data.paperDetail;
     setTimeout(()=>{
       app.doAjax({
         url: `drawVoucher?userId=${userId}&paperId=${paperId}&teamId=${teamId}`,
         success: function (res) {
           app.toast(res);
+          wx.showModal({
+            title: '',
+            content: '领券成功，快去兑换测评吧',
+            confirmText:'立即兑换',
+            success(res){
+              if(res.confirm){
+                // 用户点击了确定属性的按钮，对应选择了'男'
+                that.setData({
+                  isticket: app.isIos || false,
+                  ispay: true
+                })
+              }
+            }
+          })
           if( res.code == "0" ){
             that.setData({
               freeTick: true
             })
           }
+          wx.aldstat.sendEvent('分享得3张券成功', {
+            '测评名称': `名称: ${name}`
+          });
         }
       })
     },1000);
@@ -1024,12 +1042,16 @@ Page({
   },
   getNewerTicket: function (e) {
     var that = this;
+    var { name } = e.currentTarget.dataset;
     app.doAjax({
       url: "couponGet",
       method: "post",
       data: {},
       error: function(ret) {
         app.toast(ret.msg);
+        wx.aldstat.sendEvent('领新人5张券失败', {
+          '测评名称': `名称: ${name}`
+        });
       },
       success: function(ret) {
         app.getUserInfo(); //更新用户信息
@@ -1060,7 +1082,9 @@ Page({
           list: ret,
           couponGet0: true
         });
-        app.globalData.isGetInAgainst = true;
+        wx.aldstat.sendEvent('领新人5张券成功', {
+          '测评名称': `名称: ${name}`
+        });
       }
     });
     that.onShow(false);

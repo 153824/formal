@@ -18,8 +18,7 @@
     </view>
     <view class="use-history-content-wrapper">
         <view class="nav">
-            <view bindtap="changeTab" data-id="{{ item.id }}"
-                  wx:for="{{ nav }}" wx:key="id"
+            <view bindtap="changeTab" wx:for="{{ nav }}" wx:key="id" data-id="{{ item.id }}"
                   class="{{ item.checked ? 'checked' : '' }}"
             >
                 <block wx:if="{{ item.id === 0 }}">
@@ -38,7 +37,7 @@
             <block wx:if="{{ checkedItem === 0 }}">
                 <block wx:if="{{ baseInfo.finishedCount > 0 }}">
                     <view wx:for="{{ baseInfo.finishedUsers }}" wx:for-item="finishedItem" wx:key="unique"
-                          class="content-child" data-id="{{ baseInfo.id }}" bindtap="changePage">
+                          class="content-child" data-id="{{ baseInfo.sharePaperId }}" bindtap="changePage">
                         <view class="title">
                             <text>{{ finishedItem.nickname }}</text>
                             <image src="../img/user/index/icon3.png"></image>

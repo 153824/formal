@@ -11,32 +11,47 @@ function formatTime(fullTime) {
   var date = getDate(timeStamp);
   var targetTime = "";
   var yyyy = date.getFullYear(),
-      mm = date.getMonth() + 1,
-      dd = date.getDate(),
-      h = date.getHours(),
-      m = date.getMinutes(),
-      s = date.getSeconds();
+      mm = date.getMonth() + 1 < 10 ? "0" + (date.getMonth()+1) : date.getMonth() + 1,
+      dd = date.getDate() < 10 ? "0" + date.getDate() : date.getDate(),
+      h = date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
+      m = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
+      s = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
   targetTime = yyyy + '/' + mm + '/' + dd +' '+ h +':'+ m+':'+ s;
   return targetTime;
 };
 
-var getMonthAndDayByFrag = function( fullTime,frag="/" ){
-  var date = getDate(formatTime(fullTime));
+var getMonthAndDayByFrag = function( fullTime,frag="/",transform=false){
+  var date = getDate(fullTime);
+  if( transform ){
+    date = getDate(formatTime(fullTime));
+  }else{
+    date = getDate(fullTime.replace(getRegExp('-','g'),'/'));
+  }
   var m = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1,
       d = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
   return m + frag + d;
 };
 
-var getHourAndMinByFrag = function( fullTime,frag=":" ){
-  var date = getDate(formatTime(fullTime));
+var getHourAndMinByFrag = function( fullTime,frag=":",transform=false ){
+  var date = getDate(fullTime);
+  if( transform ){
+    date = getDate(formatTime(fullTime));
+  }else{
+    date = getDate(fullTime.replace(getRegExp('-','g'),'/'));
+  }
   var h = date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
       m = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
   return h + frag + m;
 };
 
-var getFullDateByFrag = function( fullTime,frag="/" ){
-  var date = getDate(formatTime(fullTime));
-  return date.getFullYear()+frag+getMonthAndDayByFrag(fullTime);
+var getFullDateByFrag = function( fullTime,frag="/",transform=false ){
+  var date = getDate(fullTime);
+  if( transform ){
+    date = getDate(formatTime(fullTime));
+  }else{
+    date = getDate(fullTime.replace(getRegExp('-','g'),'/'));
+  }
+  return date.getFullYear()+frag+getMonthAndDayByFrag(fullTime,frag,transform);
 };
 
 var saveDouble = function(number){

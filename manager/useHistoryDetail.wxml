@@ -18,8 +18,7 @@
     </view>
     <view class="use-history-content-wrapper">
         <view class="nav">
-            <view bindtap="changeTab" data-id="{{ item.id }}"
-                  wx:for="{{ nav }}" wx:key="id"
+            <view bindtap="changeTab" wx:for="{{ nav }}" wx:key="id" data-id="{{ item.id }}"
                   class="{{ item.checked ? 'checked' : '' }}"
             >
                 <block wx:if="{{ item.id === 0 }}">
@@ -38,7 +37,7 @@
             <block wx:if="{{ checkedItem === 0 }}">
                 <block wx:if="{{ baseInfo.finishedCount > 0 }}">
                     <view wx:for="{{ baseInfo.finishedUsers }}" wx:for-item="finishedItem" wx:key="unique"
-                          class="content-child" data-id="{{ baseInfo.id }}" bindtap="changePage">
+                          class="content-child" data-id="{{ finishedItem.sharePaperId }}" bindtap="changePage">
                         <view class="title">
                             <text>{{ finishedItem.nickname }}</text>
                             <image src="../img/user/index/icon3.png"></image>
@@ -48,7 +47,7 @@
                                 <text>{{ finishedItem.report.summary.title }}</text>
                                 <text>{{ finishedItem.report.total1 }}分</text>
                             </view>
-                            <text>{{ util.getFullDateByFrag(finishedItem.time) }}-{{ util.getHourAndMinByFrag(finishedItem.time) }}</text>
+                            <text>{{ util.getFullDateByFrag(finishedItem.time,"/",true) }}-{{ util.getHourAndMinByFrag(finishedItem.time,":",true) }}</text>
                         </view>
                     </view>
                 </block>
@@ -67,7 +66,7 @@
                         </view>
                         <view class="rate">
                             <view class="rate-info">
-                                <text>作答开始时间：</text><text>{{ util.getFullDateByFrag(receivedItem.time) }}-{{ util.getHourAndMinByFrag(receivedItem.time) }}</text>
+                                <text>作答开始时间：</text><text>{{ util.getFullDateByFrag(receivedItem.time,"/",true) }}-{{ util.getHourAndMinByFrag(receivedItem.time,":",true) }}</text>
                             </view>
                         </view>
                     </view>

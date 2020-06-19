@@ -34,8 +34,7 @@ Page({
     loading: true,
     mobile: "18559297592",
     wechat: "haola72",
-    trigger: false,
-    isGetInCount: app.globalData.isGetInAgainst
+    getInOnceAgainst: false,
   },
   onLoad: function(options) {
     var that = this;
@@ -58,7 +57,12 @@ Page({
       app.checkUser = null;
     };
   },
-  onShow: function() {
+  onShow: function(isFresh) {
+    if( isFresh ){
+      isFresh = true;
+    }else{
+      isFresh = false;
+    }
     var that = this;
     if (app.isLogin) {
       app.doAjax({
@@ -116,6 +120,7 @@ Page({
         },
         success: function(ret) {
           var hasFreeTick = false;
+          console.log("hasFreeTick");
           ret.forEach(function(n) {
             if (n.type == 1) {
               hasFreeTick = true;
@@ -132,16 +137,34 @@ Page({
             },
             success: function(ret) {
               var freeTick = "";
+              var getInOnceAgainst = wx.getStorageSync("getInOnceAgainst") || false;
+              console.log("wx.getStorageSync(\"getInOnceAgainst\") || false",wx.getStorageSync("getInOnceAgainst") || false);
+              console.log("ret",ret);
+              if( ret.length <= 0 ) ret = [{ type: -1}]
               ret.forEach(function(n) {
                 if (n.type == 2) { //有领取过3张免费测评券
                   freeTick = n.id;
-                  console.log("ret.forEach(function(n)",freeTick);
+                  getInOnceAgainst = false;
+                  console.log("if ret.forEach(function(n) {: ");
+                }else{
+                  console.log("else ret.forEach(function(n) {: ");
+                  if( !isFresh ){
+                    return;
+                  }else{
+                    getInOnceAgainst = true;
+                    app.globalData.getInOnceAgainst = true;
+                    wx.setStorage({
+                      key: "getInOnceAgainst",
+                      data: true,
+                    });
+                  }
                 }
               });
               that.setData({
                 hasFreeTick: true,
                 freeTick: freeTick,
-                oldShareInfo: ""
+                oldShareInfo: "",
+                getInOnceAgainst: getInOnceAgainst
               });
               if (!wx.getStorageSync("hideLastTestMind")) {
                 app.doAjax({
@@ -170,6 +193,10 @@ Page({
         isGetInCount: app.globalData.isGetInCount
       })
     }
+    // const getInOnceAgainst = wx.getStorageSync("getInOnceAgainst") || false;
+    // that.setData({
+    //   getInOnceAgainst: getInOnceAgainst
+    // })
   },
   closeGiftDlg: function() {
     this.setData({
@@ -653,7 +680,7 @@ Page({
     var that = this;
     var paperDetail = that.data.paperDetail;
     var userPapersNum = paperDetail.userPapersNum || {};
-    wx.aldstat.sendEvent('生成测评邀请函', {
+    wx.aldstat.sendEvent('点击发放测评', {
       '测评名称': '名称：' + paperDetail.setting.name1
     });
     if (userPapersNum.total == 0) {
@@ -661,7 +688,7 @@ Page({
       return;
     }
     wx.navigateTo({
-      url: '../store/sharePaper?id=' + paperDetail.id + "&count=" + userPapersNum.total,
+      url: '../store/sharePaper?id=' + paperDetail.id + "&count=" + userPapersNum.total + "&name=" + paperDetail.setting.name1,
     });
     return;
     app.doAjax({
@@ -925,9 +952,22 @@ Page({
    */
   onHide: function() {
     this.setData({
-      isFreeTickId: false
+      isFreeTickId: false,
     });
     this.hidenDlg();
+  },
+  onUnload: function(){
+    const { couponGet0,teamRole,isTodayTeam,isfree } = this.data;
+    if( !((!couponGet0)&&teamRole==3&&isTodayTeam&&!isfree) ){
+      this.setData({
+        getInOnceAgainst: true
+      });
+      app.globalData.getInOnceAgainst = true;
+      wx.setStorage({
+        key: "getInOnceAgainst",
+        data: true,
+      })
+    }
   },
   onShareAppMessage(options) {
     const { teamId } = app,
@@ -936,9 +976,8 @@ Page({
           that = this;
     setTimeout(()=>{
       app.doAjax({
-        url: `../hola/drawVoucher?userId=${userId}&paperId=${paperId}&teamId=${teamId}`,
+        url: `drawVoucher?userId=${userId}&paperId=${paperId}&teamId=${teamId}`,
         success: function (res) {
-          console.log("url: `../hola/drawVoucher?userId=${userId}&paperId=${paperId}&teamId=${teamId}`: ",res);
           app.toast(res);
           if( res.code == "0" ){
             that.setData({
@@ -949,7 +988,7 @@ Page({
       })
     },1000);
     return {
-      title: "分享小程序~",
+      title: "我发现一个不错的人才测评软件，快来看看吧~",
       path: "/index/index",
       imageUrl: "http://ihola.luoke101.com/wxShareImg.png",
     }
@@ -1010,6 +1049,6 @@ Page({
         app.globalData.isGetInAgainst = true;
       }
     });
-    that.onShow();
+    that.onShow(false);
   }
 });

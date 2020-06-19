@@ -23,9 +23,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    console.log(options);
     this.setData({
       maxCount: options.count,
-      paperId: options.id
+      paperId: options.id,
+      paperName: options.name,
     });
   },
 
@@ -92,12 +94,15 @@ Page({
     var that = this;
     var d = that.data;
     var costNum = d.count;
+    var paperName = d.paperName;
 
     // let startTime = d.startTime + " 00:00:00";
     // let endTime = d.endTime + " 23:59:59";
     // let startTimeStamp = Date.parse(startTime);
     // let endTimeStamp = Date.parse(endTime);
-
+    wx.aldstat.sendEvent('点击生成测评邀请函', {
+        '测评名称': '名称：' + paperName
+     });
     if (!costNum) {
       return;
     }
@@ -134,6 +139,9 @@ Page({
         that.setData({
           retData: ret
         });
+        wx.aldstat.sendEvent('成功生成测评邀请函', {
+                '测评名称': '名称：' + paperName
+             });
       }
     })
   },

@@ -30,7 +30,7 @@ Page({
     const { redirectToIndex,redirectReportId } = app.globalData;
     if( redirectReportId ){
       wx.navigateTo({
-        url: `../report/detail?id=${ app.globalData.redirectReportId }`,
+        url: `report/detail?id=${ app.globalData.redirectReportId }`,
       });
       this.setData({
         loading: false,
@@ -39,7 +39,7 @@ Page({
     }
     // if( redirectToIndex ){
     //   wx.switchTab({
-    //     url: `../index/index`,
+    //     url: `index/index`,
     //   });
     //   app.globalData.redirectToIndex = false;
     // }
@@ -47,7 +47,7 @@ Page({
     // var that = this;
     // if( checkedItem === "0" ){
     //   app.doAjax({
-    //     url: "../haola/reports",
+    //     url: "reports",
     //     method: "get",
     //     data: {
     //       orgId: app.teamId,
@@ -215,8 +215,8 @@ Page({
   },
   changeTab: function (e) {
     const targetValue = e.currentTarget.dataset.item,
-          { checkedTime,evaluationId } = this.data,
-          that = this;
+        { checkedTime,evaluationId } = this.data,
+        that = this;
     this.setData({
       checkedItem: targetValue,
       loading: true
@@ -275,11 +275,11 @@ Page({
   },
   changeTimer: function (e) {
     const targetValue = e.detail.value,
-          { checkedItem,
-            evaluationId,
-            reportPage
-          } = this.data,
-          that = this;
+        { checkedItem,
+          evaluationId,
+          reportPage
+        } = this.data,
+        that = this;
     this.setData({
       checkedTime: targetValue,
       reportPage: 0,
@@ -345,7 +345,7 @@ Page({
       reportPage: 0
     });
     app.doAjax({
-      url: "../haola/reports",
+      url: "reports",
       method: "get",
       data: {
         orgId: app.teamId,
@@ -393,15 +393,15 @@ Page({
   },
   nextPage: function (e) {
     var { checkedItem,
-          checkedTime,
-          evaluationId,
-          reportPage,
-          evaluationList,
-          catalog,
-          historyPage,
-          useList,
-          compareArr
-        } = this.data;
+      checkedTime,
+      evaluationId,
+      reportPage,
+      evaluationList,
+      catalog,
+      historyPage,
+      useList,
+      compareArr
+    } = this.data;
     var that = this;
     if( checkedItem === "0" ){
       reportPage = reportPage + 1;

@@ -143,7 +143,7 @@
                 bindtap="callServing">
             <view class="title">测评兑换券</view>
             <view class="count">{{ mealItem.number }}<text>张</text></view>
-            <view class="price" style="z-index: 99;" bindtap="callServing">联系客服</view>
+            <view class="price" style="z-index: 99;" >暂不支持</view>
             <image class="ticket-bg" src="../img/user/index/ticket.png" style="height: 100.44px;width: 53.46px;"></image>
           </view>
           <view wx:if="{{ !isIos }}" class="set-meal-child" wx:for="{{ meal }}" wx:for-item="mealItem" data-type="{{ mealItem.type }}"

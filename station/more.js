@@ -85,5 +85,11 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  toEvaluationDetail: function(e){
+    const { id } = e.currentTarget.dataset;
+    wx.navigateTo({
+      url: `../station/detail?id=${id}`,
+    })
   }
 })

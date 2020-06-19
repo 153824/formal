@@ -674,7 +674,7 @@ Page({
     var that = this;
     var paperDetail = that.data.paperDetail;
     var userPapersNum = paperDetail.userPapersNum || {};
-    wx.aldstat.sendEvent('生成测评邀请函', {
+    wx.aldstat.sendEvent('点击发放测评', {
       '测评名称': '名称：' + paperDetail.setting.name1
     });
     if (userPapersNum.total == 0) {
@@ -682,7 +682,7 @@ Page({
       return;
     }
     wx.navigateTo({
-      url: '../store/sharePaper?id=' + paperDetail.id + "&count=" + userPapersNum.total,
+      url: '../store/sharePaper?id=' + paperDetail.id + "&count=" + userPapersNum.total + "&name=" + paperDetail.setting.name1,
     });
     return;
     app.doAjax({

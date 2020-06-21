@@ -11,10 +11,6 @@ App({
   defaultShareObj: {
     imageUrl: "http://ihola.luoke101.com/wxShareImg.png",
   },
-  globalData: {
-    titleHeight: 0,
-    statusbarHeight: 0
-  },
   teamName: "",
   teamId: "",
   teamRole: "",
@@ -253,7 +249,9 @@ App({
     team: null,
     teams: [],
     checked: 0,
-    getInOnceAgainst: false
+    getInOnceAgainst: false,
+    titleHeight: 0,
+    statusbarHeight: 0
   },
 
   changeDate2: function(time, dateType) {

@@ -86,9 +86,14 @@
     <view wx:if="{{ columnItem.showType == 1 }}" class="card-wrapper">
       <view class="card-set">
         <block wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem">
-          <view bindtap="changePage" data-name="{{ dataItem.name }}" data-url='../station/detail?id={{ dataItem.id }}&name={{dataItem.name}}'>
+          <view wx:if="{{ isIos }}" bindtap="changePage" data-name="{{ dataItem.name }}" data-url='../station/detail?id={{ dataItem.id }}&name={{dataItem.name}}'>
             <card image="{{ dataItem.img }}"  title="{{ dataItem.name }}" subtitle="{{ dataItem.infoPc }}"
-                  feature="{{ dataItem.isFree ? '免费' : '限时免费' }}">
+                  feature="{{ dataItem.isFree ? '免费' : '' }}">
+            </card>
+          </view>
+          <view wx:else bindtap="changePage" data-name="{{ dataItem.name }}" data-url='../station/detail?id={{ dataItem.id }}&name={{dataItem.name}}'>
+            <card image="{{ dataItem.img }}"  title="{{ dataItem.name }}" subtitle="{{ dataItem.infoPc }}"
+                  feature="{{ dataItem.isFree ? '免费' : dataItem.price || dataItem.defaultPrice }}">
             </card>
           </view>
         </block>

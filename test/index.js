@@ -63,7 +63,7 @@ Page({
     });
     var getphoneNum = false;
     var userPhone = (app.globalData.userInfo || {}).phone;
-    
+    console.log("userPhone: ", app.globalData.userInfo);
     if (userPhone) {
       getphoneNum = true;
     }
@@ -186,12 +186,12 @@ Page({
   },
   onShow: function () {
     const that = this;
-    console.log(wx.getStorageSync("openId"));
+    console.log("wx.getStorageSync(\"openId\")",wx.getStorageSync("openId"));
     app.doAjax({
       url: "/userDetail",
       method: "get",
       data: {
-        openid: wx.getStorageSync("openId"),
+        openid: wx.getStorageSync("openId") || app.globalData.userInfo.openId,
       },
       success: function (res) {
         that.setData({

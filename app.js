@@ -243,7 +243,7 @@ App({
    * @date: 2020/6/17
   */
   globalData: {
-    appid: "wx85cde7d3e8f3d949",
+    appid: wx.getAccountInfoSync().miniProgram.appId,
     userInfo: null,
     userMsg: {},
     team: null,

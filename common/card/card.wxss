@@ -36,10 +36,23 @@
   margin-right: 40rpx;
 }
 
-.card-child:after{
-  content: attr(data-feature);
+/*.card-child:after{*/
+/*  content: attr(data-feature);*/
+/*  position: absolute;*/
+/*  top: 100rpx;*/
+/*  right: 20rpx;*/
+/*  width: 160rpx;*/
+/*  height: 40rpx;*/
+/*  line-height: 40rpx;*/
+/*  font-size: 28rpx;*/
+/*  background-color: rgba(255,255,255,0.9);*/
+/*  border-radius: 10rpx;*/
+/*  text-align: center;*/
+/*}*/
+
+.feature{
   position: absolute;
-  top: 100rpx;
+  top:  100rpx;
   right: 20rpx;
   width: 160rpx;
   height: 40rpx;
@@ -49,6 +62,7 @@
   border-radius: 10rpx;
   text-align: center;
 }
+
 .card-child-info {
   max-width: 350rpx;
 }

@@ -93,7 +93,7 @@
           </view>
           <view wx:else bindtap="changePage" data-name="{{ dataItem.name }}" data-url='../station/detail?id={{ dataItem.id }}&name={{dataItem.name}}'>
             <card image="{{ dataItem.img }}"  title="{{ dataItem.name }}" subtitle="{{ dataItem.infoPc }}"
-                  feature="{{ dataItem.isFree ? '免费' : dataItem.price || dataItem.defaultPrice }}">
+                  feature="{{ dataItem.isFree ? '免费' : '￥' + (dataItem.price || dataItem.defaultPrice) }}">
             </card>
           </view>
         </block>

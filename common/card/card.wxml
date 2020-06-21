@@ -5,4 +5,5 @@
         <text class="title">{{ title }}</text>
         <text class="detail">{{ subtitle }}</text>
     </view>
+    <view wx:if="{{ feature }}" class="feature">{{ feature }}</view>
 </view>

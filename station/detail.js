@@ -48,9 +48,11 @@ Page({
       paperid: options.id,
       getphoneNum: true
     });
-    wx.aldstat.sendEvent('访问测评详情', {
-      '测评名称': `名称: ${name} id：${id}`
-    });
+    if( name ){
+      wx.aldstat.sendEvent('访问测评详情', {
+        '测评名称': `名称: ${name} id：${id}`
+      });
+    }
     if (app.isLogin) return;
     app.checkUser = function() {
       that.onShow();

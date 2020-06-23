@@ -135,23 +135,23 @@ Component({
           }),
         },
         success: function(res) {
-          var that = this;
+          let info = that.data.userInfo;
           that.hideLoginDlg();
           app.globalData.userInfo.nickname = userInfo.nickName;
-          app.addNewTeam(that.onShow);
-          // app.addNewTeam(app.getUserInfo(that.loadUserMsg));
-          // app.getUserInfo(that.loadUserMsg);
+          const isBindPromise = new Promise(function (resolve,reject) {
+            resolve(app.addNewTeam(app.getUserInfo(that.loadUserMsg)));
+          });
+          isBindPromise.then(()=>{
+            info.isBind = true;
+            that.setData({
+              userInfo: info
+            });
+            that.getMyTeamList();
+          }).catch((err)=>{
+            console.log(err);
+          })
         }
       });
-      // wx.switchTab({
-      //   url: "../index/index",
-      //   success: function (res) {
-      //     console.log("wx.switchTab");
-      //     let page = getCurrentPages().pop();
-      //     if (page == undefined || page == null) return;
-      //     page.onShow();
-      //   }
-      // })
     },
     /**
      * 显示登陆弹窗
@@ -179,7 +179,6 @@ Component({
         list.forEach(function(node) {
           teamNames.push(node.name);
         });
-        // teamNames.push("创建新团队");
         that.setData({
           teamId: app.teamId,
           teamRole: app.teamRole,
@@ -282,18 +281,9 @@ Component({
           success:res=>{
             this.setData({
               statusbarHeight: res.statusBarHeight,
-              // nowTeam: app.globalData.team,
-              // selTeam: app.globalData.selTeam,
-              // teamId: app.teamId,
-              // teamRole: app.teamRole,
             });
           }
       });
-    },
-    attached: function () {
-      var that = this;
-      // console.log("Get in lifetimes?");
-      app.getUserInfo(that.loadUserMsg.call(that));
     }
   }
 });

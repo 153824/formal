@@ -2,13 +2,9 @@
 <view class="bar-wrapper" style="height: {{ statusbarHeight + titleHeight }}px;">
     <view class="statusbar" style="height: {{ statusbarHeight }}px;"></view>
     <view class="title-bar" style="height: {{ titleHeight }}px;top: {{ statusbarHeight }}px;">
-        <!--<block wx:if="{{ userInfo.isBind }}">-->
-            <!--<view>{{(nowTeam.name||userInfo.userCompany.name)}}</view>-->
-        <!--</block>-->
         <block wx:if="{{ !userInfo.isBind }}">
             <button class="register" open-type="getUserInfo" bindgetuserinfo="getUserInfo">授权登录，创建团队</button>
         </block>
-<!--        {{userInfo.isBind?(nowTeam.name||userInfo.userCompany.name):'登录以使用更多功能'}}-->
         <picker class="company-picker" bindchange="changeTeam" value="{{ selTeam }}" range="{{ teamNames }}" class="company-child">
             <view wx:if="{{ userInfo.isBind }}" style="display: flex;align-items: center;">
                 <text style="max-width: 406rpx;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{(nowTeam.name||userInfo.userCompany.name)}}</text><image style="display: inline-block;" wx:if="{{ teamNames.length > 1 }}" class="company-picker-image" src="../../img/user/icon4.png"></image>

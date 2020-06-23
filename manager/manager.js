@@ -30,7 +30,7 @@ Page({
     const { redirectToIndex,redirectReportId } = app.globalData;
     if( redirectReportId ){
       wx.navigateTo({
-        url: `report/detail?id=${ app.globalData.redirectReportId }`,
+        url: `../report/detail?id=${ app.globalData.redirectReportId }`,
       });
       this.setData({
         loading: false,

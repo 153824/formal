@@ -236,7 +236,7 @@ App({
     }
   },
   /**
-   * @Description: isGetInAgainst 领完5张券，再次进入测评详情页才会显示领取3张券的广告
+   * @Description: getInOnceAgainst 领完5张券，再次进入测评详情页才会显示领取3张券的广告
    * @author: WE!D
    * @args:
    * @return:

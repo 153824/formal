@@ -54,9 +54,9 @@
     <image class="daticenterboximg" src="{{retData.img}}" show-menu-by-longpress="true"></image>
     <image class="daticlosebtn" bindtap="closedati" src="../img/store/icon1.png"></image>
   </view>
-  <button class="share-paper" style="">
-    我要批量发放测评
-  </button>
+<!--  <button class="share-paper" style="">-->
+<!--    我要批量发放测评-->
+<!--  </button>-->
 </view>
 <!--<view>-->
 <!--  <button>我要批量发放测评</button>-->

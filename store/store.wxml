@@ -70,7 +70,7 @@
             <view bindtap="toDetail" class="list flex" data-id="{{paperitem.id}}" data-notick="{{columnId_ticket==item.id?'':true}}">
               <view class="orgbox">
                 <image src="{{paperitem.img || ''}}"></image>
-                <view class="cover" wx:if="{{paperitem.isFree&&!isIos}}">限时免费</view>
+                <view class="cover" wx:if="{{paperitem.isFree&&!isIos}}">免费</view>
               </view>
               <view class="listtext flex-main">
                 <text class="bigtitle">{{paperitem.name}}</text>

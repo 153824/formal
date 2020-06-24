@@ -72,7 +72,7 @@
 <!--        <block wx:for="{{ teamEvaluation }}" wx:key="unique" wx:for-item="evaluationItem">-->
 <!--          <view bindtap="changePage" data-url='../station/detail?id={{ evaluationItem.id }}&name={{ evaluationItem.name }}' data-name="{{ evaluationItem.name }}">-->
 <!--            <card image="{{ evaluationItem.setting.img }}"  title="{{ evaluationItem.name }}" subtitle="{{ evaluationItem.setting.infoPc }}"-->
-<!--                  feature="{{ dataItem.isFree ? '免费' : '限时免费' }}"></card>-->
+<!--                  feature="{{ dataItem.isFree ? '免费' : '免费' }}"></card>-->
 <!--          </view>-->
 <!--        </block>-->
 <!--      </view>-->
@@ -179,7 +179,7 @@
         <view class="cardbox" bindtap="changePage" data-url='../store/detail?id={{item.id}}'>
           <view class="boxhead">
             <image src="{{item.img}}"></image>
-            <view class="bluebox" wx:if="{{!item.price}}">限时免费</view>
+            <view class="bluebox" wx:if="{{!item.price}}">免费</view>
           </view>
           <view class="boxbody">
             <view class="bodyfirst">{{item.name}}</view>

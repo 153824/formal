@@ -1,12 +1,12 @@
 <!--common/free/free.wxml-->
 <view class="price">
     <block wx:if="{{ ios }}">
-        <text wx:if="{{ free }}" class="actual-price free">限时免费</text>
+        <text wx:if="{{ free }}" class="actual-price free">免费</text>
         <text wx:else></text>
     </block>
     <block wx:else>
         <text class="origin-price">￥{{ price }}</text>
-        <text wx:if="{{ free }}" class="actual-price free">限时免费</text>
+        <text wx:if="{{ free }}" class="actual-price free">免费</text>
         <text wx:else class="actual-price">￥{{ actual }}</text>
     </block>
 </view>

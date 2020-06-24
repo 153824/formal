@@ -58,7 +58,7 @@
           <view class="flex">
             <text class="freetext" wx:if="{{isAllFree}}">免费</text>
             <text class="paperPrice" wx:elif="{{(!isfree||(isfree&&paperDetail.setting.price&&paperDetail.userPapersNum.freeCount>=paperDetail.setting.testRule.count))&&!isIos}}">￥{{paperDetail.setting.price||0}}</text>
-            <text class="freetext" wx:elif="{{isfree && paperDetail.setting.testRule.count != 0}}">{{isIos?'免费':'限时免费'}}</text>
+            <text class="freetext" wx:elif="{{isfree && paperDetail.setting.testRule.count != 0}}">{{isIos?'免费':'免费'}}</text>
             <text class="defaultPrice" wx:if="{{paperDetail.setting.defaultPrice&&!isIos}}">￥{{paperDetail.setting.defaultPrice||0}}</text>
           </view>
           <!-- <view>{{paperDetail.setting.useCount}}次测评</view> -->

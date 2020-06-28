@@ -64,7 +64,7 @@ Page({
     });
     var getphoneNum = false;
     var userPhone = (app.globalData.userInfo || {}).phone;
-
+    console.log("userPhone: ", app.globalData.userInfo);
     if (userPhone) {
       getphoneNum = true;
     }
@@ -96,6 +96,16 @@ Page({
           if (!oldData || !oldData.quesIdsOrder) {
             quesIdsOrder.push(node.id);
             ques.push(node);
+            if(node.type==3){
+              node.slider=new Array(node.options.length).fill(0);
+              node.totalScore = 6;
+              node.step = Math.floor(node.totalScore/5);
+              node.stepArr = [];
+              for(let i =0;i<5;i++)
+              {
+                node.stepArr.push(Math.floor(i*node.step));
+              }
+            }
             ques1.push(node);
             if (showQues.length < 5) {
               showQues.push(node);
@@ -103,6 +113,16 @@ Page({
           } else {
             var i = quesIdsOrder.indexOf(node.id);
             ques[i] = node;
+            if(node.type==3){
+              node.slider=new Array(node.options.length).fill(0);
+              node.totalScore = 6;
+              node.step = Math.floor(node.totalScore/5);
+              node.stepArr = [];
+              for(let i =0;i<5;i++)
+              {
+                node.stepArr.push(Math.floor(i*node.step));
+              }
+            }
             ques1[i] = node;
             var oldswiperCurrent = oldData.swiperCurrent;
             var i1 = oldswiperCurrent - i;
@@ -187,12 +207,12 @@ Page({
   },
   onShow: function () {
     const that = this;
-    console.log(wx.getStorageSync("openId"));
+    console.log("wx.getStorageSync(\"openId\")",wx.getStorageSync("openId"));
     app.doAjax({
       url: "/userDetail",
       method: "get",
       data: {
-        openid: wx.getStorageSync("openId"),
+        openid: wx.getStorageSync("openId") || app.globalData.userInfo.openId,
       },
       success: function (res) {
         that.setData({
@@ -451,11 +471,24 @@ Page({
     var minChoose = que.minChoose || 1;
     var maxChoose = que.maxChoose || 1;
     var answer = app.trimSpace(JSON.parse(JSON.stringify(answers[que.id] || [])));
-    if (answer.length < minChoose) {
-      that.setData({
-        isChangeQue: false
-      });
-      return app.toast("至少选中" + minChoose + "个选项");
+    if(que.type==3){
+      var tmpsum = 0;
+      answer.forEach(score=>{
+        tmpsum+=score;
+      })
+      if(tmpsum!=que.totalScore){
+        that.setData({
+          isChangeQue: false
+        });
+        return app.toast("各项分数之和必须等于"+que.totalScore+"分");
+      }
+    } else{
+      if (answer.length < minChoose) {
+        that.setData({
+          isChangeQue: false
+        });
+        return app.toast("至少选中" + minChoose + "个选项");
+      }
     }
     var isLastQue = false;
     swiperCurrent += 1;
@@ -870,6 +903,45 @@ Page({
         '测评名称': `名称：${ name }`
       });
       return;
+    }
+  },
+  changeslider(e){
+    var d = e.currentTarget.dataset;
+    var index = d.index;
+    var i = d.i;
+    var list = this.data.quesAll;
+    var obj = list[index];
+    var answers = this.data.answers;
+    answers[obj.id] = answers[obj.id] || [];
+    var answer = app.trimSpace(JSON.parse(JSON.stringify(answers[obj.id])));
+    answers[obj.id][i]=e.detail.value;
+    var t = "showQues["+index+"].slider["+i+"]";
+    var a = "answers."+obj.id+"["+i+"]";
+    this.setData({
+      [t]:e.detail.value,
+      [a]:e.detail.value
+    })
+    if(obj.options.length>=2&&(i==(obj.options.length-2))){
+      var tmp = obj.totalScore;
+      for(let ti=0;ti<obj.slider.length-1;ti++){
+        tmp -= obj.slider[ti];
+      }
+      if(tmp>=0){
+        var t1="showQues["+index+"].slider["+(obj.options.length-1)+"]";
+        var a1 = "answers."+obj.id+"["+(obj.options.length-1)+"]";
+        this.setData({
+          [t1]:tmp,
+          [a1]:tmp
+        })
+      }
+      else{
+        var t1="showQues["+index+"].slider["+(obj.options.length-1)+"]";
+        var a1 = "answers."+obj.id+"["+(obj.options.length-1)+"]";
+        this.setData({
+          [t1]:0,
+          [a1]:0
+        })
+      }
     }
   }
 });

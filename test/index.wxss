@@ -545,3 +545,62 @@
 .get-user-phone-wrapper > text{
 
 }
+.container .selectItem.notborderview,
+.container .selectItem.active.notborderview{
+  border:0px;
+  color:#333;
+}
+.container .selectItem.notborderview{
+  flex-direction: column;
+}
+.container .selectItem.notborderview view{
+  display: flex;
+  justify-content: flex-start;
+  width:100%;
+  align-items: center;
+}
+.container .selectItem.notborderview view .langoption{
+  position: relative;
+  top:inherit;
+  height:40rpx;
+  line-height:40rpx;
+}
+.container .selectItem.notborderview view .optiontext{
+  margin-left: 0;
+}
+.number_input{
+  border:1px solid rgba(153, 153, 153, 1) ;
+  width:80rpx;
+  text-align: center;
+}
+.number_slider_wrap{
+  flex:1;
+  display: flex;
+  flex-direction: column;
+}
+.number_slider{
+  width:calc(100% - 36px);
+  z-index:10;
+}
+.container .selectItem.notborderview view  .number_slider_tip{
+  width:calc(100% - 36px);
+  display: flex;
+  justify-content: space-between;
+}
+.number_slider_tip_item_1{
+  width:20rpx;
+}
+.number_slider_tip_item_center{
+  display: flex;
+  justify-content: space-between;
+  flex:1;
+}
+.number_slider_tip_number_label{
+  position:relative;
+}
+.number_slider_tip_number_label:before{
+  position: absolute;
+  content:"|";
+  color:rgba(153, 153, 153, 1);
+  transform:translate(50%,-90%);
+}

@@ -318,6 +318,20 @@
 					"pathName": "test/finish",
 					"query": "id=5ee89aacec674d0009e5d919",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "test/guide",
+					"pathName": "test/guide",
+					"query": "id=5ef872264b6b6b000782e07c",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "test/index",
+					"pathName": "test/index",
+					"query": "id=5ef872264b6b6b000782e07c",
+					"scene": null
 				}
 			]
 		}

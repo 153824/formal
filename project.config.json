@@ -321,16 +321,16 @@
 				},
 				{
 					"id": -1,
-					"name": "station/detail",
-					"pathName": "station/detail",
-					"query": "id=5e8ed7ac158a7a0006bc4ff8",
+					"name": "test/guide",
+					"pathName": "test/guide",
+					"query": "id=5ef872264b6b6b000782e07c",
 					"scene": null
 				},
 				{
-					"id": 37,
-					"name": "station/detail",
-					"pathName": "station/detail",
-					"query": "id=5e89d08521b47e006f5004d8",
+					"id": -1,
+					"name": "test/index",
+					"pathName": "test/index",
+					"query": "id=5ef872264b6b6b000782e07c",
 					"scene": null
 				}
 			]

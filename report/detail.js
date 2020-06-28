@@ -156,9 +156,11 @@ Page({
     ctx = wx.createCanvasContext('canvasArcCir');
     var id = that.data.id || options.id;
     var shareKey = options.key || "";
+    var command = options.command || "";
     this.setData({
       id: id,
-      shareKey: shareKey
+      shareKey: shareKey,
+      command
     });
     app.checkUser = function() {
       that.getReport(id);

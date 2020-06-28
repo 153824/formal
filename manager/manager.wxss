@@ -1,4 +1,8 @@
 /* manager/manager.wxss */
+.manager{
+    position: fixed;
+    width: 100%;
+}
 .manager-head{
     display: flex;
     align-items: center;

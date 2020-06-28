@@ -318,6 +318,20 @@
 					"pathName": "test/finish",
 					"query": "id=5ee89aacec674d0009e5d919",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "station/detail",
+					"pathName": "station/detail",
+					"query": "id=5e8ed7ac158a7a0006bc4ff8",
+					"scene": null
+				},
+				{
+					"id": 37,
+					"name": "station/detail",
+					"pathName": "station/detail",
+					"query": "id=5e89d08521b47e006f5004d8",
+					"scene": null
 				}
 			]
 		}

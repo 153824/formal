@@ -25,7 +25,7 @@ Page({
     sex: ["男", "女"],
     checkedSex: 0,
     birthday: '1995-01',
-    education: -1,
+    education: 5,
     imgUrl: '',
     selImg: "",
     getphoneNum: false,
@@ -35,7 +35,8 @@ Page({
     paperList: "",
     phoneModel: app.isIphoneX,
     answers: {},
-    phoneNumber: "微信一键授权"
+    phoneNumber: "微信一键授权",
+    username: app.globalData.userMsg.nickname || "好啦访客"
   },
 
   onLoad: function (options) {
@@ -43,7 +44,7 @@ Page({
     that.setData({
       applyStatus: options.type
     });
-    if (app.isTest) {
+    if (app.isTest || !app.isTest ) {
       that.setData({
         // pathIndex: 2
         pathIndex: 3
@@ -52,8 +53,8 @@ Page({
     quesIdsOrder = [];
     sKey = "oldAnswer" + options.id;
     var oldData = wx.getStorageSync(sKey);
-    if( oldData.pathIndex == "2" ){
-      oldData.pathIndex = 1
+    if( oldData.pathIndex == "2" || oldData.pathIndex == "1" ){
+      oldData.pathIndex = 3
     }
     var storages = wx.getStorageInfoSync().keys;
     storages.forEach(function (n) {
@@ -63,7 +64,7 @@ Page({
     });
     var getphoneNum = false;
     var userPhone = (app.globalData.userInfo || {}).phone;
-    
+
     if (userPhone) {
       getphoneNum = true;
     }

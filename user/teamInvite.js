@@ -153,7 +153,6 @@ Page({
     });
   },
   join: function() {
-    console.log("jion...")
     // //加入团队
     var that = this;
     var id = that.data.id;
@@ -178,13 +177,13 @@ Page({
             });
             return;
           }
-          // wx.switchTab({
-          //   url: '../index/index'
-          // });
           wx.switchTab({
-            url: '../store/store'
+            url: '../index/index'
           });
-        }, 1000);
+          // wx.switchTab({
+          //   url: '../store/store'
+          // });
+        }, 500);
       }
     });
   },

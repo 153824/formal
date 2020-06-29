@@ -332,6 +332,13 @@
 					"pathName": "test/index",
 					"query": "id=5ef872264b6b6b000782e07c",
 					"scene": null
+				},
+				{
+					"id": 38,
+					"name": "user/teamInvite",
+					"pathName": "user/teamInvite",
+					"query": "userId=5eeb5372372a690009f6a806&teamId=5e1985617d5774006ac4533e",
+					"scene": null
 				}
 			]
 		}

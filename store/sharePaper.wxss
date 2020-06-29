@@ -156,6 +156,8 @@
 /* 二维码 */
 
 .datibox {
+  position: fixed;
+  top: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;

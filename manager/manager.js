@@ -44,6 +44,14 @@ Page({
       });
       app.globalData.redirectReportId = null;
     }
+    this.setData({
+      statusbarHeight: app.globalData.statusbarHeight,
+      titleHeight: app.globalData.titleHeight,
+      tarBarHeight: app.globalData.tarBarHeight,
+      pixelRatio: app.globalData.pixelRatio,
+      windowHeight: app.globalData.windowHeight,
+      screenHeight: app.globalData.screenHeight
+    });
     // if( redirectToIndex ){
     //   wx.switchTab({
     //     url: `index/index`,
@@ -187,6 +195,11 @@ Page({
         }
       })
     }
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res);
+      }
+    });
   },
 
   /**

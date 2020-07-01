@@ -219,11 +219,11 @@
     </block>
   </view> -->
 
-<view class="recomend-reading" wx:if="{{ new.isShow }}">
+<view class="recomend-reading" wx:if="{{ news.isShow }}">
   <view class="header">
     <text>推荐阅读</text>
   </view>
-  <view class="recomend-set" wx:for="{{new.data}}" wx:key="unique">
+  <view class="recomend-set" wx:for="{{news.data}}" wx:key="unique">
     <view class="recomend-child" bindtap="navWebView" data-url="{{item.linkUrl}}">
       <view class="cover-wrapper">
         <image src="{{item.picture||'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132'}}" class="cover"></image>

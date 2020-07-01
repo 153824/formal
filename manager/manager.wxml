@@ -2,7 +2,7 @@
 <view>
 	<title id="title" url="manager/manager"></title>
 </view>
-<view class="manager" style="margin-top: {{ (statusbarHeight + titleHeight) * pixelRatio }}rpx;height: {{ windowHeight*pixelRatio }}rpx;">
+<view class="manager" style="margin-top: {{ (statusbarHeight + titleHeight) * pixelRatio }}rpx;">
 	<!--    <view class="toContact">关注好啦测评公众号，接收测评完成通知-->
 	<!--        <button open-type="contact" show-message-card="true">立即关注</button>-->
 	<!--    </view>-->
@@ -33,7 +33,7 @@
 	<!--    <view class="time-controller">-->
 	<!--        <text wx:for="{{ timer }}" wx:key="id" data-id="{{ item.id }}" class="{{ item.active ? 'timer-active' : '' }}" bindtap="changeTimer">{{ item.name }}</text>-->
 	<!--    </view>-->
-	<view wx:if="{{ checkedItem === '0' && evaluationList.length > 0 }}" style="height: {{ windowHeight*pixelRatio - 116 - 154 - pixelRatio*tarBarHeight }}rpx;">
+	<view wx:if="{{ checkedItem === '0' && evaluationList.length > 0 }}" style="height: {{ 5*150 }}rpx;">
 		<scroll-view scroll-y bindscrolltolower="nextPage" class="evaluation-reports" style="height: 100%;margin-top: 0;">
 			<label for="" wx:for="{{ evaluationList }}">
 				<view class="report-child" style="{{ shareTrigger ? 'padding: 40rpx 80rpx 40rpx 40rpx;': ''}}" data-id="{{ item.id }}" data-name="{{ item.evaluation.name }}" bindtap="toReport">
@@ -71,7 +71,7 @@
 	<view wx:elif="{{ checkedItem === '0' && evaluationList.length <= 0 }}">
 		<empty type="default" title="您还没有报告，请先体验或发放测评~"></empty>
 	</view>
-	<view wx:if="{{ checkedItem === '1' && useList.length > 0 }}" style="height: {{ windowHeight*pixelRatio - 116 - 154 - pixelRatio*tarBarHeight }}rpx;" class="user-history" >
+	<view wx:if="{{ checkedItem === '1' && useList.length > 0 }}" style="height: {{ 3*280 }}rpx;" class="user-history" >
 		<scroll-view scroll-y bindscrolltolower="nextPage" style="height: 100%;">
 			<view class="user-history-child" wx:for="{{ useList }}" bindtap="changePage" data-sharePaperId="{{ item.sharePaperId }}" data-status="{{ item.status }}">
 				<view class="title">

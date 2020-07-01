@@ -204,7 +204,8 @@ Page({
           that.setData({
             teamAdminNickname: ret.teamAdminUserName || "",
             showPage: true,
-            noTeamMember: true
+            noTeamMember: true,
+            paperId: ret.paper.id
           });
           return;
         }
@@ -318,6 +319,18 @@ Page({
             that.setData(r);
           }
         });
+        app.doAjax({
+          url: 'paperDetail',
+          method: 'get',
+          data: {
+            id: ret.paper.id
+          },
+          success: function (res) {
+            that.setData({
+              sharePic: res.setting.smallImg
+            })
+          }
+        })
       }
     });
   },
@@ -585,11 +598,11 @@ Page({
     });
   },
   onShareAppMessage: function (options) {
-    const { id,userMsg,paper } = this.data;
+    const { id,userMsg,paper,sharePic } = this.data;
     return {
       title: `邀您看${ userMsg.username }的《${ paper.name }》报告`,
       path: `/report/detail?id=${id}`,
-      imageUrl: "http://ihola.luoke101.com/wxShareImg.png",
+      imageUrl: sharePic,
     }
   },
 });

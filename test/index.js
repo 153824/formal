@@ -98,10 +98,10 @@ Page({
             ques.push(node);
             if(node.type==3){
               node.slider=new Array(node.options.length).fill(0);
-              node.totalScore = 6;
-              node.step = Math.floor(node.totalScore/5);
+              node.totalScore = node.totalScore;
+              node.step = Math.floor(node.totalScore/( node.totalScore - 1 ));
               node.stepArr = [];
-              for(let i =0;i<5;i++)
+              for(let i =0;i<node.totalScore;i++)
               {
                 node.stepArr.push(Math.floor(i*node.step));
               }
@@ -115,10 +115,10 @@ Page({
             ques[i] = node;
             if(node.type==3){
               node.slider=new Array(node.options.length).fill(0);
-              node.totalScore = 6;
-              node.step = Math.floor(node.totalScore/5);
+              node.totalScore = node.totalScore;
+              node.step = Math.floor(node.totalScore/(node.totalScore - 1));
               node.stepArr = [];
-              for(let i =0;i<5;i++)
+              for(let i =0;i<node.totalScore;i++)
               {
                 node.stepArr.push(Math.floor(i*node.step));
               }
@@ -493,6 +493,7 @@ Page({
     var isLastQue = false;
     swiperCurrent += 1;
     if (swiperCurrent == that.data.quesAll.length) {
+      console.log(that.data.quesAll.length);
       d["isFillAll"] = true;
     }
     if (swiperCurrent == data.quesAll.length) {
@@ -548,6 +549,7 @@ Page({
     this.setData({
       isChangeQue: true
     });
+    console.log("You click change!");
     var d = e.currentTarget.dataset;
     var index = d.index;
     var i = d.i;
@@ -912,15 +914,30 @@ Page({
     var list = this.data.quesAll;
     var obj = list[index];
     var answers = this.data.answers;
+    console.log(e);
+    console.log("answers: ",answers);
+    var score = 0;
+    var isFillAll = false;
+    console.log("obj: ",obj);
     answers[obj.id] = answers[obj.id] || [];
+    console.log(answers[obj.id]);
+    if( answers[obj.id].length > 0 ){
+      answers[obj.id].forEach((v,k)=>{
+        score += v;
+      });
+      if( score == obj.totalScore ){
+        isFillAll = true;
+      }
+    }
     var answer = app.trimSpace(JSON.parse(JSON.stringify(answers[obj.id])));
     answers[obj.id][i]=e.detail.value;
     var t = "showQues["+index+"].slider["+i+"]";
     var a = "answers."+obj.id+"["+i+"]";
     this.setData({
       [t]:e.detail.value,
-      [a]:e.detail.value
-    })
+      [a]:e.detail.value,
+      isFillAll: e.detail.value > 0
+    });
     if(obj.options.length>=2&&(i==(obj.options.length-2))){
       var tmp = obj.totalScore;
       for(let ti=0;ti<obj.slider.length-1;ti++){
@@ -931,15 +948,16 @@ Page({
         var a1 = "answers."+obj.id+"["+(obj.options.length-1)+"]";
         this.setData({
           [t1]:tmp,
-          [a1]:tmp
+          [a1]:tmp,
+          isFillAll: tmp === obj.totalScore || tmp > 0
         })
-      }
-      else{
+      } else{
         var t1="showQues["+index+"].slider["+(obj.options.length-1)+"]";
         var a1 = "answers."+obj.id+"["+(obj.options.length-1)+"]";
         this.setData({
           [t1]:0,
-          [a1]:0
+          [a1]:0,
+          isFillAll: false
         })
       }
     }

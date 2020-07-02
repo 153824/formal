@@ -138,7 +138,7 @@
         <text>{{swiperCurrent + 1}} / {{quesAll.length}}</text>
       </view>
       <view class="btnnext" data-index="{{swiperCurrent}}" wx:if="{{(swiperCurrent + 1) != quesAll.length}}" bindtap="next">下一题</view>
-      <button class="btnnext" bindtap="next" data-n="finish" wx:if="{{(swiperCurrent + 1) == quesAll.length&&!isFillAll}}">提交</button>
+      <button class="btnnext" data-n="finish" wx:if="{{(swiperCurrent + 1) == quesAll.length&&!isFillAll}}">提交</button>
       <button class="btnnext btnnextUp" wx:if="{{(swiperCurrent + 1) == quesAll.length&&isFillAll}}" form-type="submit">提交</button>
     </view>
   </form>

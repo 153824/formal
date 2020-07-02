@@ -599,8 +599,9 @@ Page({
   },
   onShareAppMessage: function (options) {
     const { id,userMsg,paper,sharePic } = this.data;
+    const { globalData } = app;
     return {
-      title: `邀您看${ userMsg.username }的《${ paper.name }》报告`,
+      title: `${ globalData.team.name }邀您看${ userMsg.username }的《${ paper.name }》报告`,
       path: `/report/detail?id=${id}`,
       imageUrl: sharePic,
     }

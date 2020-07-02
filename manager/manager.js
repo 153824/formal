@@ -50,7 +50,8 @@ Page({
       tarBarHeight: app.globalData.tarBarHeight,
       pixelRatio: app.globalData.pixelRatio,
       windowHeight: app.globalData.windowHeight,
-      screenHeight: app.globalData.screenHeight
+      screenHeight: app.globalData.screenHeight,
+      pixelRate: app.globalData.pixelRate
     });
     // if( redirectToIndex ){
     //   wx.switchTab({

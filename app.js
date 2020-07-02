@@ -23,8 +23,8 @@ App({
   isIos: false,
   qiniuUpload: qiniuUpload,
   isIphoneX: false,
-  // host: "https://api.dev.luoke101.com",
-  host: "https://h5.luoke101.com",
+  host: "https://api.dev.luoke101.com",
+  // host: "https://h5.luoke101.com",
   onLaunch: function(options) {
     var referrerInfo = options.referrerInfo;
     var menuBtnObj = wx.getMenuButtonBoundingClientRect();
@@ -79,15 +79,14 @@ App({
 
     wx.getSystemInfo({
         success: (res) => {
-          let { pixelRatio,statusBarHeight,windowHeight,screenHeight } = res;
+          let { statusBarHeight,windowHeight,screenHeight,windowWidth } = res;
           let statusbarHeight = res.statusBarHeight,
               titleHeight = menuBtnObj.height + (menuBtnObj.top - statusbarHeight)*2;
           this.globalData.statusbarHeight = statusbarHeight;
           this.globalData.titleHeight = titleHeight;
-          this.globalData.tarBarHeight = ( screenHeight - windowHeight - statusBarHeight ) * pixelRatio;
-          this.globalData.pixelRatio = pixelRatio;
           this.globalData.windowHeight = windowHeight;
           this.globalData.screenHeight = screenHeight;
+          this.globalData.pixelRate = 750 / windowWidth;
         },
         fail(err){
           console.log(err);

@@ -79,10 +79,15 @@ App({
 
     wx.getSystemInfo({
         success: (res) => {
+          let { pixelRatio,statusBarHeight,windowHeight,screenHeight } = res;
           let statusbarHeight = res.statusBarHeight,
               titleHeight = menuBtnObj.height + (menuBtnObj.top - statusbarHeight)*2;
-              this.globalData.statusbarHeight = statusbarHeight;
-              this.globalData.titleHeight = titleHeight
+          this.globalData.statusbarHeight = statusbarHeight;
+          this.globalData.titleHeight = titleHeight;
+          this.globalData.tarBarHeight = ( screenHeight - windowHeight - statusBarHeight ) * pixelRatio;
+          this.globalData.pixelRatio = pixelRatio;
+          this.globalData.windowHeight = windowHeight;
+          this.globalData.screenHeight = screenHeight;
         },
         fail(err){
           console.log(err);
@@ -251,7 +256,7 @@ App({
     checked: 0,
     getInOnceAgainst: false,
     titleHeight: 0,
-    statusbarHeight: 0
+    statusbarHeight: 0,
   },
 
   changeDate2: function(time, dateType) {

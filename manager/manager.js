@@ -20,7 +20,14 @@ Page({
     reportPage: 1,
     historyPage: 1,
     loading: true,
-    compareArr: []
+    compareArr: [],
+    /**
+     * @Description: maxReportPage初始化为-1，指无最大页数限制
+     * @author: WE!D
+     * @name: maxReportPage
+     * @date: 2020/6/29
+    */
+    maxReportPage: -1
   },
 
   /**
@@ -34,9 +41,17 @@ Page({
       });
       this.setData({
         loading: false,
-      })
+      });
       app.globalData.redirectReportId = null;
     }
+    this.setData({
+      statusbarHeight: app.globalData.statusbarHeight,
+      titleHeight: app.globalData.titleHeight,
+      tarBarHeight: app.globalData.tarBarHeight,
+      pixelRatio: app.globalData.pixelRatio,
+      windowHeight: app.globalData.windowHeight,
+      screenHeight: app.globalData.screenHeight
+    });
     // if( redirectToIndex ){
     //   wx.switchTab({
     //     url: `index/index`,
@@ -121,7 +136,7 @@ Page({
           type: checkedTime,
           page: 1,
           pageSize: 10,
-          evaluationId: evaluationId
+          evaluationId: ""
         },
         success: function (res) {
           var catalog = [];
@@ -141,7 +156,9 @@ Page({
             evaluationList: res.data,
             catalog: catalog,
             loading: false,
-            compareArr
+            compareArr,
+            reportPage: 1,
+            historyPage: 1
           });
         },
         error: function(err){
@@ -167,7 +184,8 @@ Page({
           that.setData({
             useList: res.data,
             loading: false,
-            reportPage: 0,
+            reportPage: 1,
+            historyPage: 1
           });
         },
         error: function(err){
@@ -177,6 +195,11 @@ Page({
         }
       })
     }
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res);
+      }
+    });
   },
 
   /**
@@ -231,13 +254,13 @@ Page({
           type: checkedTime,
           page: 1,
           pageSize: 10,
-          evaluationId: evaluationId
+          evaluationId: ""
         },
         success: function (res) {
           that.setData({
             evaluationList: res.data,
             loading: false,
-            historyPage: 0
+            historyPage: 1
           });
         },
         error: function(err){
@@ -262,7 +285,7 @@ Page({
           that.setData({
             useList: res.data,
             loading: false,
-            reportPage: 0
+            reportPage: 1
           });
         },
         error: function(err){
@@ -282,7 +305,7 @@ Page({
         that = this;
     this.setData({
       checkedTime: targetValue,
-      reportPage: 0,
+      reportPage: 1,
       loading: true,
     });
     if( checkedItem === "0" ){
@@ -400,10 +423,11 @@ Page({
       catalog,
       historyPage,
       useList,
-      compareArr
+      compareArr,
+      maxReportPage
     } = this.data;
     var that = this;
-    if( checkedItem === "0" ){
+    if( checkedItem === "0" && (maxReportPage === -1 || reportPage + 1 < maxReportPage) ){
       reportPage = reportPage + 1;
       app.doAjax({
         url: "reports",
@@ -417,6 +441,12 @@ Page({
           evaluationId: evaluationId
         },
         success: function (res) {
+          if( res.data.length <=  0) {
+            var maxReportPage = reportPage - 1;
+            that.setData({
+              maxReportPage
+            })
+          };
           res.data.forEach((item,key)=>{
             const { id,name } = item.evaluation;
             if( compareArr.indexOf(id) <= -1 ){
@@ -443,7 +473,6 @@ Page({
       })
     }
     if( checkedItem === "1" ){
-      // sharePapers/batch?userId=5eb21d15eb4b2d000892d14e&teamId=5e1985617d5774006ac4533e&page=2&size=101
       historyPage = historyPage + 1;
       app.doAjax({
         url: "sharePapers/batch",

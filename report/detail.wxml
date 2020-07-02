@@ -140,8 +140,40 @@
         </view>
         <view class="flex total" wx:if="{{item.showTotal||item.rankOrg||item.rankAll}}">
           <view class="flex-main" wx:if="{{item.showTotal}}">
-            <view class="name">得分</view>
-            <view class="lv">{{ util.saveDouble(item.total2) }}</view>
+            <block wx:if="{{ item.showScore === 'total' }}">
+              <block wx:if="{{ item.scale === 'origin' }}">
+                <view class="name">得分</view>
+                <view class="lv">{{ util.saveDouble(item.originTotal) }}</view>
+              </block>
+              <block wx:if="{{ item.scale === 'decimal' }}">
+                <view class="name">得分</view>
+                <view class="lv">{{ util.saveDouble(item.decimalTotal) }}</view>
+              </block>
+              <block wx:elif="{{ item.scale === 'centesimal' }}">
+                <view class="name">得分</view>
+                <view class="lv">{{ util.saveDouble(item.centesimalTotal) }}</view>
+              </block>
+            </block>
+            <block wx:if="{{ item.showScore === 'average' }}">
+              <block wx:if="{{ item.scale === 'origin' }}">
+                <view class="name">得分</view>
+                <view class="lv">{{ util.saveDouble(item.sumOfAverage) }}</view>
+              </block>
+              <block wx:if="{{ item.scale === 'decimal' }}">
+                <view class="name">得分</view>
+                <view class="lv">{{ util.saveDouble(item.sumOfAverage10) }}</view>
+              </block>
+              <block wx:elif="{{ item.scale === 'centesimal' }}">
+                <view class="name">得分</view>
+                <view class="lv">{{ util.saveDouble(item.sumOfAverage100) }}</view>
+              </block>
+            </block>
+          </view>
+          <view class="flex-main" wx:if="{{ item.showLevel }}">
+            <block>
+              <view class="name">等级</view>
+              <view class="lv">{{ item.lvName }}</view>
+            </block>
           </view>
           <view class="flex-main" wx:if="{{item.rankOrg}}">
             <view class="name">组织排名</view>
@@ -168,11 +200,41 @@
         <view style="height:50rpx;" wx:if="{{!item.lvDesc&&!item.showTotal&&!item.rankOrg&&!item.rankAll&&item.chartType==1}}"></view>
         <!-- 维度 -->
         <view class="list" wx:if="{{show}}">
-          <block wx:for="{{item.child}}" wx:key="unique" wx:for-item="node" wx:for-index="i">
+          <block wx:if="{{ item.showSubScore !== 'none' }}" wx:for="{{item.child}}" wx:key="unique" wx:for-item="node" wx:for-index="i">
             <view class="item">
               <view class="title {{node.active}}" bindtap="activeItem" data-index="{{index}}" data-i="{{i}}">{{node.name}}：
-                <text style="color:{{node.color}};">{{node.lvName}}  {{util.saveDouble(node.av10)}}分</text>
-                <image src="../img/report/icon2.png"></image>
+                <block wx:if="{{ item.showSubScore === 'total' }}">
+                  <block wx:if="{{ item.subScale === 'origin' }}">
+                    <text style="color:{{node.color}};">{{node.lvName}} {{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.total)}}分</text>
+                    <image src="../img/report/icon2.png"></image>
+                  </block>
+                  <block wx:elif="{{ item.subScale === 'decimal' }}">
+                    <text style="color:{{node.color}};">{{node.lvName}} {{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.total10)}}分</text>
+                    <image src="../img/report/icon2.png"></image>
+                  </block>
+                  <block wx:elif="{{ item.subScale === 'centesimal' }}">
+                    <text style="color:{{node.color}};">{{node.lvName}} {{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.total100)}}分</text>
+                    <image src="../img/report/icon2.png"></image>
+                  </block>
+                </block>
+                <block wx:elif="{{ item.showSubScore === 'average' }}">
+                  <block wx:if="{{ item.subScale === 'origin' }}">
+                    <text style="color:{{node.color}};">{{node.lvName}} {{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.average)}}分</text>
+                    <image src="../img/report/icon2.png"></image>
+                  </block>
+                  <block wx:elif="{{ item.subScale === 'decimal' }}">
+                    <text style="color:{{node.color}};">{{node.lvName}} {{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.av10)}}分</text>
+                    <image src="../img/report/icon2.png"></image>
+                  </block>
+                  <block wx:elif="{{ item.subScale === 'centesimal' }}">
+                    <text style="color:{{node.color}};">{{node.lvName}} {{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.av100)}}分</text>
+                    <image src="../img/report/icon2.png"></image>
+                  </block>
+                </block>
+<!--                <block wx:elif="{{ item.showSubScore === 'none' }}">-->
+<!--                  <text style="color:{{node.color}};">{{node.lvName}}  {{util.saveDouble(node.av10)}}分</text>-->
+<!--                  <image src="../img/report/icon2.png"></image>-->
+<!--                </block>-->
               </view>
               <view class="contentMsg" wx:if="{{node.active}}">
                 <block wx:for="{{node.lvTexts}}" wx:key="unique" wx:for-item="n" wx:for-index="j">

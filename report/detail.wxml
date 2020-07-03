@@ -139,7 +139,7 @@
           <text class="underLineBg">{{item.name}}</text>
         </view>
         <view class="flex total" wx:if="{{item.showTotal || item.rankOrg || item.rankAll}}">
-          <view class="flex-main" wx:if="{{item.showTotal || item.showLevel }}">
+          <view class="flex-main" wx:if="{{item.showTotal || item.showScore !='none'}}">
             <block wx:if="{{ item.showScore === 'total' }}">
               <block wx:if="{{ item.scale === 'origin' }}">
                 <view class="name">得分</view>
@@ -169,7 +169,7 @@
               </block>
             </block>
           </view>
-          <view class="flex-main" wx:if="{{item.showLevel || item.showTotal}}">
+          <view class="flex-main" wx:if="{{item.showLevel}}">
             <block>
               <view class="name">等级</view>
               <view class="lv">{{ item.lvName }}</view>

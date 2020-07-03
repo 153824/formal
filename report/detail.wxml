@@ -138,54 +138,74 @@
         <view class="title">
           <text class="underLineBg">{{item.name}}</text>
         </view>
-        <view class="flex total" wx:if="{{item.showTotal || item.rankOrg || item.rankAll || item.showScore !='none'}}">
-          <view class="flex-main" wx:if="{{item.showTotal || item.showScore !='none'}}">
-            <block wx:if="{{ item.showScore === 'total' }}">
-              <block wx:if="{{ item.scale === 'origin' }}">
-                <view class="name">得分</view>
-                <view class="lv">{{ util.saveDouble(item.originTotal) }}</view>
+        <block wx:if="{{ item.showScore }}">
+          <view class="flex total" wx:if="{{item.showTotal || item.rankOrg || item.rankAll || item.showScore !='none'}}">
+            <view class="flex-main" wx:if="{{item.showTotal || item.showScore !='none'}}">
+              <block wx:if="{{ item.showScore === 'total' }}">
+                <block wx:if="{{ item.scale === 'origin' }}">
+                  <view class="name">得分</view>
+                  <view class="lv">{{ util.saveDouble(item.originTotal) }}</view>
+                </block>
+                <block wx:if="{{ item.scale === 'decimal' }}">
+                  <view class="name">得分</view>
+                  <view class="lv">{{ util.saveDouble(item.decimalTotal) }}</view>
+                </block>
+                <block wx:elif="{{ item.scale === 'centesimal' }}">
+                  <view class="name">得分</view>
+                  <view class="lv">{{ util.saveDouble(item.centesimalTotal) }}</view>
+                </block>
               </block>
-              <block wx:if="{{ item.scale === 'decimal' }}">
-                <view class="name">得分</view>
-                <view class="lv">{{ util.saveDouble(item.decimalTotal) }}</view>
+              <block wx:if="{{ item.showScore === 'average' }}">
+                <block wx:if="{{ item.scale === 'origin' }}">
+                  <view class="name">得分</view>
+                  <view class="lv">{{ util.saveDouble(item.sumOfAverage) }}</view>
+                </block>
+                <block wx:if="{{ item.scale === 'decimal' }}">
+                  <view class="name">得分</view>
+                  <view class="lv">{{ util.saveDouble(item.sumOfAverage10) }}</view>
+                </block>
+                <block wx:elif="{{ item.scale === 'centesimal' }}">
+                  <view class="name">得分</view>
+                  <view class="lv">{{ util.saveDouble(item.sumOfAverage100) }}</view>
+                </block>
               </block>
-              <block wx:elif="{{ item.scale === 'centesimal' }}">
-                <view class="name">得分</view>
-                <view class="lv">{{ util.saveDouble(item.centesimalTotal) }}</view>
+            </view>
+            <view class="flex-main" wx:if="{{item.showLevel}}">
+              <block>
+                <view class="name">等级</view>
+                <view class="lv">{{ item.lvName }}</view>
               </block>
-            </block>
-            <block wx:if="{{ item.showScore === 'average' }}">
-              <block wx:if="{{ item.scale === 'origin' }}">
-                <view class="name">得分</view>
-                <view class="lv">{{ util.saveDouble(item.sumOfAverage) }}</view>
-              </block>
-              <block wx:if="{{ item.scale === 'decimal' }}">
-                <view class="name">得分</view>
-                <view class="lv">{{ util.saveDouble(item.sumOfAverage10) }}</view>
-              </block>
-              <block wx:elif="{{ item.scale === 'centesimal' }}">
-                <view class="name">得分</view>
-                <view class="lv">{{ util.saveDouble(item.sumOfAverage100) }}</view>
-              </block>
-            </block>
+            </view>
+            <view class="flex-main" wx:if="{{item.rankOrg}}">
+              <view class="name">组织排名</view>
+              <view class="lv" wx:if="{{index==0}}">{{d1.order||0}}%</view>
+              <view class="lv" wx:if="{{index==1}}">{{d2.order||0}}%</view>
+            </view>
+            <view class="flex-main" wx:if="{{item.rankAll}}">
+              <view class="name">全国排名</view>
+              <view class="lv" wx:if="{{index==0}}">{{d1.orderAll||0}}%</view>
+              <view class="lv" wx:if="{{index==1}}">{{d2.orderAll||0}}%</view>
+            </view>
           </view>
-          <view class="flex-main" wx:if="{{item.showLevel}}">
-            <block>
-              <view class="name">等级</view>
-              <view class="lv">{{ item.lvName }}</view>
-            </block>
+        </block>
+        <block wx:else>
+          <view class="flex total" wx:if="{{item.showTotal||item.rankOrg||item.rankAll}}">
+            <view class="flex-main" wx:if="{{item.showTotal}}">
+              <view class="name">得分</view>
+              <view class="lv">{{ utils.saveDouble(item.total2) }}</view>
+            </view>
+            <view class="flex-main" wx:if="{{item.rankOrg}}">
+              <view class="name">组织排名</view>
+              <view class="lv" wx:if="{{index==0}}">{{d1.order||0}}%</view>
+              <view class="lv" wx:if="{{index==1}}">{{d2.order||0}}%</view>
+            </view>
+            <view class="flex-main" wx:if="{{item.rankAll}}">
+              <view class="name">全国排名</view>
+              <view class="lv" wx:if="{{index==0}}">{{d1.orderAll||0}}%</view>
+              <view class="lv" wx:if="{{index==1}}">{{d2.orderAll||0}}%</view>
+            </view>
           </view>
-          <view class="flex-main" wx:if="{{item.rankOrg}}">
-            <view class="name">组织排名</view>
-            <view class="lv" wx:if="{{index==0}}">{{d1.order||0}}%</view>
-            <view class="lv" wx:if="{{index==1}}">{{d2.order||0}}%</view>
-          </view>
-          <view class="flex-main" wx:if="{{item.rankAll}}">
-            <view class="name">全国排名</view>
-            <view class="lv" wx:if="{{index==0}}">{{d1.orderAll||0}}%</view>
-            <view class="lv" wx:if="{{index==1}}">{{d2.orderAll||0}}%</view>
-          </view>
-        </view>
+        </block>
         <view class="content" wx:if="{{item.lvDesc}}">
           <rich-text nodes="<p>{{item.lvDesc||''}}</p>"></rich-text>
         </view>

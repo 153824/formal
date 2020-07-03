@@ -36,7 +36,8 @@ Page({
     phoneModel: app.isIphoneX,
     answers: {},
     phoneNumber: "微信一键授权",
-    username: app.globalData.userMsg.nickname || "好啦访客"
+    username: app.globalData.userMsg.nickname || "好啦访客",
+    lastAnswer: []
   },
 
   onLoad: function (options) {
@@ -146,7 +147,6 @@ Page({
         }
 
         res.ques = ques;
-        console.log(getphoneNum);
         that.setData({
           quesAll: ques1,
           chapter: res.chapter || [],
@@ -453,6 +453,8 @@ Page({
   },
 
   next: function (e, oldIndex, newD) {
+    console.log("First in,data: ", this.data.isFillAll);
+    // console.log("First in,newD: ", newD.isFillAll);
     //下一题
     var that = this;
     that.setData({
@@ -493,7 +495,7 @@ Page({
     var isLastQue = false;
     swiperCurrent += 1;
     if (swiperCurrent == that.data.quesAll.length) {
-      console.log(that.data.quesAll.length);
+      console.log("that.data.quesAll.length: ",that.data.quesAll.length);
       d["isFillAll"] = true;
     }
     if (swiperCurrent == data.quesAll.length) {
@@ -534,6 +536,8 @@ Page({
           d["showQues"] = showQues;
           d["isChangeQue"] = false;
           that.setData(d);
+          console.log("that.setData(d): " ,d);
+          console.log("that.data.isFillAll: ",that.data.isFillAll)
           that.saveAnswerStorageSync();
           if (e && e.currentTarget.dataset.n == "finish") {
             that.formSubmit();
@@ -541,6 +545,9 @@ Page({
         }, 500);
       });
     }, 350);
+    that.setData({
+      isFillAll: false
+    })
   },
   change: function (e) {
     //选项点击选中
@@ -603,6 +610,32 @@ Page({
    * 答题提交
    */
   formSubmit: function (e) {
+    var that = this;
+    var data = this.data;
+    var swiperCurrent = +data.swiperCurrent;
+    var que = data.quesAll[swiperCurrent];
+    var answers = data.answers;
+    var answer = app.trimSpace(JSON.parse(JSON.stringify(answers[que.id] || [])));
+    if(que.type==3){
+      var tmpsum = 0;
+      answer.forEach(score=>{
+        tmpsum+=score;
+      });
+      console.log("tmpsum,que.totalScore: ",tmpsum,que.totalScore);
+      if(tmpsum!=que.totalScore){
+        that.setData({
+          isChangeQue: false
+        });
+        return app.toast("各项分数之和必须等于"+que.totalScore+"分");
+      }
+    } else{
+      if (answer.length < minChoose) {
+        that.setData({
+          isChangeQue: false
+        });
+        return app.toast("至少选中" + minChoose + "个选项");
+      }
+    }
     const { name } = e.target.dataset;
     console.log("formSubmit", e);
     var that = this;
@@ -908,35 +941,30 @@ Page({
     }
   },
   changeslider(e){
+    console.log("You get in here!");
     var d = e.currentTarget.dataset;
     var index = d.index;
     var i = d.i;
     var list = this.data.quesAll;
     var obj = list[index];
-    var answers = this.data.answers;
-    console.log(e);
-    console.log("answers: ",answers);
-    var score = 0;
-    var isFillAll = false;
-    console.log("obj: ",obj);
+    var { answers,swiperCurrent,quesAll,lastAnswer } = this.data;
     answers[obj.id] = answers[obj.id] || [];
-    console.log(answers[obj.id]);
-    if( answers[obj.id].length > 0 ){
-      answers[obj.id].forEach((v,k)=>{
-        score += v;
-      });
-      if( score == obj.totalScore ){
-        isFillAll = true;
-      }
-    }
     var answer = app.trimSpace(JSON.parse(JSON.stringify(answers[obj.id])));
     answers[obj.id][i]=e.detail.value;
     var t = "showQues["+index+"].slider["+i+"]";
     var a = "answers."+obj.id+"["+i+"]";
+    var score = 0;
+    // if( (swiperCurrent + 1) == quesAll.length ){
+    //   answers[obj.id].forEach((v,k)=>{
+    //     score = score + v;
+    //   });
+    //   if(  ){
+    //
+    //   }
+    // }
     this.setData({
       [t]:e.detail.value,
       [a]:e.detail.value,
-      isFillAll: e.detail.value > 0
     });
     if(obj.options.length>=2&&(i==(obj.options.length-2))){
       var tmp = obj.totalScore;
@@ -949,17 +977,18 @@ Page({
         this.setData({
           [t1]:tmp,
           [a1]:tmp,
-          isFillAll: tmp === obj.totalScore || tmp > 0
+          isFillAll: true
         })
-      } else{
+      }
+      else{
         var t1="showQues["+index+"].slider["+(obj.options.length-1)+"]";
         var a1 = "answers."+obj.id+"["+(obj.options.length-1)+"]";
         this.setData({
           [t1]:0,
           [a1]:0,
-          isFillAll: false
+          isFillAll: true
         })
       }
     }
-  }
+  },
 });

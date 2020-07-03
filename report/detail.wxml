@@ -192,7 +192,7 @@
           <view class="flex total" wx:if="{{item.showTotal||item.rankOrg||item.rankAll}}">
             <view class="flex-main" wx:if="{{item.showTotal}}">
               <view class="name">得分</view>
-              <view class="lv">{{ utils.saveDouble(item.total2) }}</view>
+              <view class="lv">{{ util.saveDouble(item.total2) }}</view>
             </view>
             <view class="flex-main" wx:if="{{item.rankOrg}}">
               <view class="name">组织排名</view>
@@ -251,10 +251,28 @@
                     <image src="../img/report/icon2.png"></image>
                   </block>
                 </block>
-<!--                <block wx:elif="{{ item.showSubScore === 'none' }}">-->
-<!--                  <text style="color:{{node.color}};">{{node.lvName}}  {{util.saveDouble(node.av10)}}分</text>-->
-<!--                  <image src="../img/report/icon2.png"></image>-->
-<!--                </block>-->
+                <!--                <block wx:elif="{{ item.showSubScore === 'none' }}">-->
+                <!--                  <text style="color:{{node.color}};">{{node.lvName}}  {{util.saveDouble(node.av10)}}分</text>-->
+                <!--                  <image src="../img/report/icon2.png"></image>-->
+                <!--                </block>-->
+              </view>
+              <view class="contentMsg" wx:if="{{node.active}}">
+                <block wx:for="{{node.lvTexts}}" wx:key="unique" wx:for-item="n" wx:for-index="j">
+                  <view class="title1">
+                    <text class="underLineBg">{{n.title}}：</text>
+                  </view>
+                  <rich-text class="msg" nodes="<p>{{n.content}}</p>"></rich-text>
+                </block>
+              </view>
+            </view>
+          </block>
+        </view>
+        <view class="list" wx:if="{{show&&item.showScore}}">
+          <block wx:for="{{item.child}}" wx:key="unique" wx:for-item="node" wx:for-index="i">
+            <view class="item">
+              <view class="title {{node.active}}" bindtap="activeItem" data-index="{{index}}" data-i="{{i}}">{{node.name}}：
+                <text style="color:{{node.color}};">{{node.lvName}}  {{util.saveDouble(node.av10)}}分</text>
+                <image src="../img/report/icon2.png"></image>
               </view>
               <view class="contentMsg" wx:if="{{node.active}}">
                 <block wx:for="{{node.lvTexts}}" wx:key="unique" wx:for-item="n" wx:for-index="j">
@@ -291,7 +309,7 @@
   </view>
   <!-- 分享报告按钮--普通团队成员无法使用该按钮 -->
   <view class="botbox flex" wx:if="{{ command !== 'close' }}">
-<!--    bindtap="toShareReport"-->
+    <!--    bindtap="toShareReport"-->
     <button class="sharebtn" open-type="share" bindtap="" wx:if="{{teamRole!=1}}">
       <image src="../img/report/icon_share.png"></image>
       <text>分享报告</text>

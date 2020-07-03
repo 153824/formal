@@ -55,6 +55,7 @@ var getFullDateByFrag = function( fullTime,frag="/",transform=false ){
 };
 
 var saveDouble = function(number){
+  number = +number;
   return number.toFixed(2);
 };
 

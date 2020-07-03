@@ -138,7 +138,7 @@
         <view class="title">
           <text class="underLineBg">{{item.name}}</text>
         </view>
-        <view class="flex total" wx:if="{{item.showTotal || item.rankOrg || item.rankAll}}">
+        <view class="flex total" wx:if="{{item.showTotal || item.rankOrg || item.rankAll || item.showScore !='none'}}">
           <view class="flex-main" wx:if="{{item.showTotal || item.showScore !='none'}}">
             <block wx:if="{{ item.showScore === 'total' }}">
               <block wx:if="{{ item.scale === 'origin' }}">

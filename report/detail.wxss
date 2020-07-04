@@ -497,7 +497,6 @@ page, page>view {
 
 .box3 {
   background: rgba(255, 255, 255, 1);
-  border: 1px solid rgba(231, 231, 231, 1);
 }
 
 .box3 .title {

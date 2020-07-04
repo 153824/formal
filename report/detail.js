@@ -67,6 +67,7 @@ var value_1 = {};
 var indicator_1 = {};
 
 function getChartMsg1(canvas, width, height) {
+  console.log(width,height);
   var canvasId = canvas.canvasId;
   var index = canvasId.replace("mychartcanvas", "");
   const chart = echarts.init(canvas, null, {
@@ -240,9 +241,16 @@ Page({
           value_2[n] = value_2[n] || [];
           indicator_2[n] = indicator_2[n] || [];
           console.log("max值=" + objs[n].max);
+          console.log("objs: ",objs)
+          var { showSubScore } = objs;
           for (var i in arr) {
             var node = arr[i];
-            value_1[n].push(node.average);
+            console.log("node: ",node.total);
+            if( showSubScore == 'average' ){
+              value_1[n].push(node.average);
+            }else{
+              value_1[n].push(node.total);
+            }
             indicator_1[n].push({
               text: node.name,
               color: "#323541",

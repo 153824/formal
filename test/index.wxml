@@ -109,7 +109,7 @@
                         <rich-text class="optiontext" nodes="<p>{{item}}</p>"></rich-text>
                       </view>
                       <view>
-                        <input class="number_input" type="number" value="{{answers[quesitem.id][i]!=null?answers[quesitem.id][i]:0}}" bindconfirm="changeslider" data-i="{{i}}" data-index="{{quesindex}}" />
+                        <input class="number_input" type="number" value="{{answers[quesitem.id][i]!=null?answers[quesitem.id][i]:0}}" bindinput="changeslider" bindconfirm="changeslider" data-i="{{i}}" data-index="{{quesindex}}" />
                         <view class="number_slider_wrap">
                           <slider bindchanging="changeslider" bindchange="changeslider" data-i="{{i}}" data-index="{{quesindex}}" class="number_slider" min="0" max="{{quesitem.totalScore}}" step="{{quesitem.step}}"  value="{{answers[quesitem.id][i]!=null?answers[quesitem.id][i]:0}}" activeColor="#2672ff" block-size="16" block-color="#2672ff"/>
                           <view class="number_slider_tip">
@@ -138,7 +138,7 @@
         <text>{{swiperCurrent + 1}} / {{quesAll.length}}</text>
       </view>
       <view class="btnnext" data-index="{{swiperCurrent}}" wx:if="{{(swiperCurrent + 1) != quesAll.length}}" bindtap="next">下一题</view>
-      <button class="btnnext" data-n="finish" wx:if="{{(swiperCurrent + 1) == quesAll.length&&!isFillAll}}">提交</button>
+      <button class="btnnext" data-n="finish" bindtap="notFillAll" wx:if="{{(swiperCurrent + 1) == quesAll.length&&!isFillAll}}">提交</button>
       <button class="btnnext btnnextUp" wx:if="{{(swiperCurrent + 1) == quesAll.length&&isFillAll}}" form-type="submit">提交</button>
     </view>
   </form>

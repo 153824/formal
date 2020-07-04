@@ -85,15 +85,15 @@ function getChartMsg1(canvas, width, height) {
         fontWeight: 400,
         // fontFamily: "PingFangSC-Regular",
         color: "#323541",
-        fontSize: +(18 * app.rate).toFixed(0),
-        formatter: function(text){
-          var reg = /\（([^)]*)\）/;
-          var res = text.split(reg);
-          if( res ){
-            text = res[0] + "\n" + res[1]
-          }
-          return text;
-        }
+        fontSize: +(24 * app.rate).toFixed(0),
+        // formatter: function(text){
+        //   var reg = /\（([^)]*)\）/;
+        //   var res = text.split(reg);
+        //   if( res ){
+        //     text = res[0] + "\n" + res[1]
+        //   }
+        //   return text;
+        // }
       },
       indicator: indicator_1[index],
       splitArea: {

@@ -628,13 +628,6 @@ Page({
         });
         return app.toast("各项分数之和必须等于"+que.totalScore+"分");
       }
-    } else{
-      if (answer.length < minChoose) {
-        that.setData({
-          isChangeQue: false
-        });
-        return app.toast("至少选中" + minChoose + "个选项");
-      }
     }
     const { name } = e.target.dataset;
     console.log("formSubmit", e);

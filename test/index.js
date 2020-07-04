@@ -476,8 +476,9 @@ Page({
     if(que.type==3){
       var tmpsum = 0;
       answer.forEach(score=>{
+        score = +score;
         tmpsum+=score;
-      })
+      });
       if(tmpsum!=que.totalScore){
         that.setData({
           isChangeQue: false
@@ -984,4 +985,14 @@ Page({
       }
     }
   },
+  notFillAll: function (e) {
+    var that = this;
+    var data = that.data;
+    var swiperCurrent = +data.swiperCurrent;
+    var que = data.quesAll[swiperCurrent];
+    return app.toast("各项分数之和必须等于"+que.totalScore+"分");
+  },
+  input: function (e) {
+    console.log(e);
+  }
 });

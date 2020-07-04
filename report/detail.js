@@ -85,7 +85,7 @@ function getChartMsg1(canvas, width, height) {
         fontWeight: 400,
         // fontFamily: "PingFangSC-Regular",
         color: "#323541",
-        fontSize: +(24 * app.rate).toFixed(0),
+        fontSize: +(18 * app.rate).toFixed(0),
         formatter: function(text){
           var reg = /\（([^)]*)\）/;
           var res = text.split(reg);

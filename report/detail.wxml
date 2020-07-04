@@ -219,7 +219,7 @@
         </view>
         <view style="height:50rpx;" wx:if="{{!item.lvDesc&&!item.showTotal&&!item.rankOrg&&!item.rankAll&&item.chartType==1}}"></view>
         <!-- 维度 -->
-        <view class="list" wx:if="{{show}}">
+        <view class="list" wx:if="{{show&&item.showScore}}">
           <block wx:if="{{ item.showSubScore !== 'none' }}" wx:for="{{item.child}}" wx:key="unique" wx:for-item="node" wx:for-index="i">
             <view class="item">
               <view class="title {{node.active}}" bindtap="activeItem" data-index="{{index}}" data-i="{{i}}">{{node.name}}：
@@ -267,7 +267,7 @@
             </view>
           </block>
         </view>
-        <view class="list" wx:if="{{show&&item.showScore}}">
+        <view class="list" wx:if="{{show&&!item.showScore}}">
           <block wx:for="{{item.child}}" wx:key="unique" wx:for-item="node" wx:for-index="i">
             <view class="item">
               <view class="title {{node.active}}" bindtap="activeItem" data-index="{{index}}" data-i="{{i}}">{{node.name}}：

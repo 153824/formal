@@ -57,10 +57,10 @@
 						</view>
 					</view>
 					<view class="info-wrapper">
-						<view>
+						<view wx:if="{{ showSummaryTotal }}">
 							{{ item.total1 }}分
 						</view>
-						<view>
+						<view wx:if="{{ showSummaryDefinition }}">
 							{{ item.reportType }}
 						</view>
 					</view>

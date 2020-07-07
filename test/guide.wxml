@@ -10,7 +10,7 @@
 
   <view class="bodybox">
     <view class="topic">
-      <text class="bodytitle">测评题目</text>
+      <text class="bodytitle">测评名称</text>
       <view class="bigtext">{{paperList.setting.name1}}</view>
     </view>
     <view class="topicnum">

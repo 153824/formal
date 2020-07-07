@@ -1,6 +1,7 @@
 //app.js
 // const ald = require('./utils/ald-stat.js');
 var qiniuUpload = require("./utils/qiniuUpload");
+// var push = require('./utils/push_sdk.js');
 qiniuUpload.init({
   region: 'SCN', // 是你注册bucket的时候选择的区域的代码
   domain: 'ihola.luoke101.com',
@@ -49,13 +50,26 @@ App({
     if (sysMsg.system.indexOf("iOS") != -1) {
       that.isIos = true;
     }
+
     // 登录
     wx.login({
-      success: res => {
+      success:res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         this.userLogin(res.code);
       }
-    })
+    });
+
+    // var wxLoginPromise = new Promise(((resolve, reject) => {
+    //   wx.login({
+    //     success: res => {
+    //       // 发送 res.code 到后台换取 openId, sessionKey, unionId
+    //       this.userLogin(res.code).then(res=>{
+    //         console.log(res);
+    //       });
+    //     }
+    //   });
+    // }));
+
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -96,49 +110,55 @@ App({
 
   userLogin: function(code) {
     var that = this;
-    that.doAjax({
-      url: "userLogin",
-      method: "POST",
-      data: {
-        fromAppId: that.fromAppId,
-        appid: that.globalData.appid,
-        code: code
-      },
-      success: function(ret) {
-        that.globalData.userMsg = ret.userMsg || {};
-        // console.log(wx.getStorageSync("isvip"))
-        var userData = ret.data;
-        var now = new Date().getTime();
-        var createdAt = new Date(userData.createdAt).getTime();
-        var isTodayTeam = false;
-        if (now - createdAt < (24 * 60 * 60 * 1000)) {
-          //24小时内注册的团队--默认为新用户
-          isTodayTeam = true;
-        }
-        that.isTodayTeam = isTodayTeam;
-        if (0 == ret.code) {
-          var userMsg = that.globalData.userMsg;
+    var result = { openId: "" };
+    var userLoginPromise = new Promise((resolve, reject) => {
+      that.doAjax({
+        url: "userLogin",
+        method: "POST",
+        data: {
+          fromAppId: that.fromAppId,
+          appid: that.globalData.appid,
+          code: code
+        },
+        success: function(ret) {
+          that.globalData.userMsg = ret.userMsg || {};
+          var userData = ret.data;
+          var now = new Date().getTime();
+          var createdAt = new Date(userData.createdAt).getTime();
+          var isTodayTeam = false;
+          if (now - createdAt < (24 * 60 * 60 * 1000)) {
+            //24小时内注册的团队--默认为新用户
+            isTodayTeam = true;
+          }
+          that.isTodayTeam = isTodayTeam;
+          if (0 == ret.code) {
+            var userMsg = that.globalData.userMsg;
+            wx.hideLoading();
+            wx.setStorageSync("userInfo", userData);
+            wx.setStorageSync("openId", userData.openid || userMsg.openid);
+            wx.setStorageSync("unionId", userData.uid || userMsg.unionid);
+            that.globalData.userInfo = Object.assign(userData, that.globalData.userInfo || {});
+            that.getMyTeamList(that.checkUser);
+            that.isLogin = true;
+            resolve ({ openId: userData.openid || userMsg.openid })
+          } else {
+            wx.showModal({
+              title: "登入失败！",
+              content: "网络故障，请退出重新进入小程序。",
+              showCancel: !1,
+              confirmText: "确定",
+              confirmColor: "#0099ff",
+              success: function(e) {}}
+            );
+            reject({ openId: "" });
+          };
+        },
+        complete: function() {
           wx.hideLoading();
-          wx.setStorageSync("userInfo", userData);
-          wx.setStorageSync("openId", userData.openid || userMsg.openid);
-          wx.setStorageSync("unionId", userData.uid || userMsg.unionid);
-          that.globalData.userInfo = Object.assign(userData, that.globalData.userInfo || {});
-
-          that.getMyTeamList(that.checkUser);
-          that.isLogin = true;
-        } else wx.showModal({
-          title: "登入失败！",
-          content: "网络故障，请退出重新进入小程序。",
-          showCancel: !1,
-          confirmText: "确定",
-          confirmColor: "#0099ff",
-          success: function(e) {}
-        });
-      },
-      complete: function() {
-        wx.hideLoading();
-      }
+        }
+      });
     });
+    return userLoginPromise;
   },
   getUserInfo: function(callBack) {
     //刷新用户信息
@@ -328,6 +348,7 @@ App({
       // url: that.host + params.url,
       method: params.method || "POST",
       data: params.data || {},
+      header: params.header || {},
       success: function(ret) {
         wx.hideLoading();
         var retData = ret.data;

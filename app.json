@@ -46,7 +46,8 @@
     "manager/manager",
     "manager/useHistoryDetail",
     "manager/evaluationReport",
-    "station/more"
+    "station/more",
+    "ence_push/ence_push"
   ],
   "plugins": {
     "contactPlugin": {

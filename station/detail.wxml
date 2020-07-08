@@ -80,7 +80,7 @@
     <press title="{{ oldShareId ? '继续体验' : '自己体验'}}" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
   </view>
   <view bindtap="gotodati">
-    <press title="发放测评(微信/智联/BOSS/51...)"></press>
+    <press title="测别人(微信/智联/BOSS/51...)"></press>
   </view>
 </view>
 

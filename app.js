@@ -1,7 +1,7 @@
 //app.js
 // const ald = require('./utils/ald-stat.js');
 var qiniuUpload = require("./utils/qiniuUpload");
-// var push = require('./utils/push_sdk.js');
+var push = require('./utils/push_sdk.js');
 qiniuUpload.init({
   region: 'SCN', // 是你注册bucket的时候选择的区域的代码
   domain: 'ihola.luoke101.com',
@@ -24,8 +24,8 @@ App({
   isIos: false,
   qiniuUpload: qiniuUpload,
   isIphoneX: false,
-  host: "https://api.dev.luoke101.com",
-  // host: "https://h5.luoke101.com",
+  // host: "https://api.dev.luoke101.com",
+  host: "https://h5.luoke101.com",
   onLaunch: function(options) {
     var referrerInfo = options.referrerInfo;
     var menuBtnObj = wx.getMenuButtonBoundingClientRect();
@@ -53,22 +53,13 @@ App({
 
     // 登录
     wx.login({
-      success:res => {
+      success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        this.userLogin(res.code);
+        this.userLogin(res.code).then(res=>{
+          wx.aldPushSendOpenid(res.openId);
+        });
       }
     });
-
-    // var wxLoginPromise = new Promise(((resolve, reject) => {
-    //   wx.login({
-    //     success: res => {
-    //       // 发送 res.code 到后台换取 openId, sessionKey, unionId
-    //       this.userLogin(res.code).then(res=>{
-    //         console.log(res);
-    //       });
-    //     }
-    //   });
-    // }));
 
     // 获取用户信息
     wx.getSetting({

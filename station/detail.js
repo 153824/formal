@@ -35,6 +35,7 @@ Page({
     mobile: "18559297592",
     wechat: "haola72",
     getInOnceAgainst: false,
+    giftTrigger: true
   },
   onLoad: function(options) {
     var that = this;
@@ -184,35 +185,30 @@ Page({
             oldShareInfo: "",
             getInOnceAgainst: getInOnceAgainst
           });
-          if (!wx.getStorageSync("hideLastTestMind")) {
-            app.doAjax({
-              url: 'toSharePaper',
-              method: 'post',
-              data: {
-                type: "self",
-                isCheckOld: true
-              },
-              success: function(res) {
-                if (res && res.isOld && res.id) {
-                  that.setData({
-                    oldShareInfo: res
-                  });
-                }
-              }
-            });
-          }
+          // if (!wx.getStorageSync("hideLastTestMind")) {
+          //   app.doAjax({
+          //     url: 'toSharePaper',
+          //     method: 'post',
+          //     data: {
+          //       type: "self",
+          //       isCheckOld: true
+          //     },
+          //     success: function(res) {
+          //       if (res && res.isOld && res.id) {
+          //         that.setData({
+          //           oldShareInfo: res
+          //         });
+          //       }
+          //     }
+          //   });
+          // }
           app.getUserInfo(that.toGetPaperDetail);
         }
       });
-
       that.setData({
         isGetInCount: app.globalData.isGetInCount
       })
     }
-    // const getInOnceAgainst = wx.getStorageSync("getInOnceAgainst") || false;
-    // that.setData({
-    //   getInOnceAgainst: getInOnceAgainst
-    // })
   },
   closeGiftDlg: function() {
     this.setData({
@@ -344,22 +340,22 @@ Page({
         //     '触发点击': '点击数'
         //   });
         // }
-        app.doAjax({
-          url: 'toSharePaper',
-          method: 'post',
-          data: {
-            type: "self",
-            isCheckOld: true,
-            id: that.data.paperid,
-          },
-          success: function(res) {
-            if (res && res.isOld && res.id) {
-              that.setData({
-                oldShareId: res.id
-              });
-            }
-          }
-        });
+        // app.doAjax({
+        //   url: 'toSharePaper',
+        //   method: 'post',
+        //   data: {
+        //     type: "self",
+        //     isCheckOld: true,
+        //     id: that.data.paperid,
+        //   },
+        //   success: function(res) {
+        //     if (res && res.isOld && res.id) {
+        //       that.setData({
+        //         oldShareId: res.id
+        //       });
+        //     }
+        //   }
+        // });
       }
     });
   },
@@ -1090,5 +1086,20 @@ Page({
       }
     });
     that.onShow(false);
+  },
+  goToUserCenter: function () {
+    wx.switchTab({
+      url: "../user/index"
+    })
+  },
+  closeGift: function () {
+    this.setData({
+      giftTrigger: false
+    });
+  },
+  openGift: function () {
+    this.setData({
+      giftTrigger: true
+    })
   }
 });

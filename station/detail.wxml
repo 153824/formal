@@ -60,6 +60,7 @@
 <!--    <view>“hasFreeTick&&!freeTickId&&teamRole!=1”：{{ hasFreeTick&&!freeTickId&&teamRole!=1 }}</view>-->
 <!--    <view>“((paperDetail.setting.price&&!isfree)&&dataLoaded&&(couponGet0||!couponGet0&&!isTodayTeam))”：{{ ((paperDetail.setting.price&&!isfree)&&dataLoaded&&(couponGet0||!couponGet0&&!isTodayTeam)) }}</view>-->
 <!--    <view>“(isfree&&paperDetail.userPapersNum.hasOld&&paperDetail.setting.price)”：{{ (isfree&&paperDetail.userPapersNum.hasOld&&paperDetail.setting.price) }}</view>-->
+    <checkout title="报价方案" type="price"></checkout>
     <checkout title="测评简介" type="introduction" info="{{ paperDetail.setting.info }}"></checkout>
     <checkout title="测量维度" type="dimension" list="{{ paperDetail.setting.measureDimension }}"></checkout>
     <checkout title="适用场景" type="scenarios" list="{{ paperDetail.setting.apply }}"></checkout>
@@ -73,8 +74,11 @@
 </scroll-view>
 
 <view class="button-group" wx:if="{{ isvip1||paperDetail.userPapersNum.type==-1||paperDetail.userPapersNum.hasOld||showFullBtn }}">
-  <view class="meal">
+  <view class="meal" bindtap="goToUserCenter" style="visibility: {{ (!paperDetail.userPapersNum.hasOld || !dataLoaded) && !isIos && !paperDetail.setting.isFree ? 'visible':'hidden' }}">
     <meal isShow="{{ (!paperDetail.userPapersNum.hasOld || !dataLoaded) && !isIos && !paperDetail.setting.isFree }}"></meal>
+  </view>
+  <view class="meal" bindtap="openGift" style="visibility: {{ (!couponGet0)&&teamRole==3&&isTodayTeam&&!isfree ? 'visible':'hidden' }}">
+    <meal isShow="{{ (!couponGet0)&&teamRole==3&&isTodayTeam&&!isfree }}" title="新用户领券，免费体验测评" subtitle="立即领券 >" icon=""></meal>
   </view>
   <view bindtap="gotoguide" data-name="{{ paperDetail.name }}">
     <press title="{{ oldShareId ? '继续体验' : '自己体验'}}" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
@@ -85,8 +89,11 @@
 </view>
 
 <view class="buy-group" wx:elif="{{ !isAllFree&&!freeCount&&!paperDetail.userPapersNum.hasOld }}">
-  <view class="meal">
+  <view class="meal" bindtap="goToUserCenter" style="visibility: {{ (!paperDetail.userPapersNum.hasOld || !dataLoaded) && !isIos && !paperDetail.setting.isFree ? 'visible':'hidden' }}">
     <meal isShow="{{ (!paperDetail.userPapersNum.hasOld || !dataLoaded) && !isIos && !paperDetail.setting.isFree }}"></meal>
+  </view>
+  <view  class="meal" bindtap="getNewerTicket" style="visibility: {{ (!couponGet0)&&teamRole==3&&isTodayTeam&&!isfree ? 'visible':'hidden' }}">
+    <meal title="新用户领券，免费体验测评" subtitle="立即领券 >" icon=""></meal>
   </view>
   <view wx:if="{{ isIos && ((paperDetail.userPapersNum.freeTicket || 0) + (paperDetail.userPapersNum.vipTicket || 0)) <= 0 }}">
     <press color="" title="iOS暂不支持购买，请用券兑换或联系客服"></press>
@@ -261,5 +268,14 @@
 <!--        &lt;!&ndash; <view class="btnView" bindtap="showMindDlgFn">我知道了</view> &ndash;&gt;-->
 <!--      </view>-->
 <!--    </view>-->
+<view wx:if="{{ giftTrigger }}" class="gift-container">
+  <view class="image-container">
+    <image src="http://ihola.luoke101.com/20200709145310.png" style="width: 675rpx;height: 855rpx;margin-top: 160rpx;" bindtap="getNewerTicket"></image>
+    <view style="display: flex;justify-content: center;margin-top: -50px;">
+      <image src="../img/manager/close-icon@2x.png" style="width: 50rpx;height: 50rpx;justify-self: center;" bindtap="closeGift"></image>
+    </view>
+  </view>
+  <view class="mask"></view>
+</view>
 <view wx:if="{{ loading }}" class="loading"></view>
 <serving mobile="{{ mobile }}" wechat="{{ wechat }}" bottom="180rpx"></serving>

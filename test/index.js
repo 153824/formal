@@ -43,7 +43,8 @@ Page({
   onLoad: function (options) {
     var that = this;
     that.setData({
-      applyStatus: options.type
+      applyStatus: options.type,
+      startTime: new Date().getTime()
     });
     if (app.isTest || !app.isTest ) {
       that.setData({

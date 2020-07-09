@@ -7,6 +7,18 @@ Component({
     isShow: {
       type: Boolean,
       value: true
+    },
+    title: {
+      type: String,
+      value: "购买测评套餐，测评最低仅需15元/份"
+    },
+    subtitle: {
+      type: String,
+      value: "查看详情 >"
+    },
+    icon: {
+      type: String,
+      value: "../../img/station/meal/meal_icon.png@2x.png"
     }
   },
 
@@ -21,14 +33,5 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    changePage: function () {
-      console.log("../../user/index");
-      // wx.navigateTo({
-      //   url: "../user/index"
-      // })
-      wx.switchTab({
-        url: "../user/index"
-      })
-    }
   }
 })

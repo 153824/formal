@@ -65,9 +65,10 @@ function getChartMsg(canvas, width, height) {
 //雷达图数据
 var value_1 = {};
 var indicator_1 = {};
-
+console.log("value_1: ",value_1)
 function getChartMsg1(canvas, width, height) {
   console.log(width,height);
+  console.log("value_1: ",value_1);
   var canvasId = canvas.canvasId;
   var index = canvasId.replace("mychartcanvas", "");
   const chart = echarts.init(canvas, null, {
@@ -250,7 +251,7 @@ Page({
           indicator_2[n] = indicator_2[n] || [];
           console.log("max值=" + objs[n].max);
           console.log("objs: ",objs)
-          var { showSubScore } = objs;
+          var { showSubScore } = objs[n];
           for (var i in arr) {
             var node = arr[i];
             console.log("node: ",node.total);

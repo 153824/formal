@@ -79,7 +79,7 @@
   <view wx:if="{{ oldShareId }}" bindtap="gotoguide" data-oldShareId="{{ oldShareId }}" data-name="{{ paperDetail.name }}" data-id="{{ paperDetail.id }}">
     <press title="{{ '继续体验'}}" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
   </view>
-  <view wx:else bindtap="gotoguide">
+  <view wx:else bindtap="gotoguide" data-oldShareId="{{ oldShareId }}" data-name="{{ paperDetail.name }}" data-id="{{ paperDetail.id }}">
     <press title="{{ '自己体验'}}" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
   </view>
   <view bindtap="gotodati">

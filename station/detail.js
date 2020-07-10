@@ -528,11 +528,20 @@ Page({
   gotoguide: function(e) {
     var that = this;
     var { name,oldshareid,id } = e.currentTarget.dataset;
+    var isNotFirstExperience = wx.getStorageSync("isNotFirstExperience");
+    var isFirstExperience = false;
+    if( !isNotFirstExperience ){
+      isFirstExperience = true;
+      wx.setStorage({
+        key: "isNotFirstExperience",
+        data: true
+      })
+    }
     var subscribePromise = new Promise((resolve, reject) => {
       /*无体验过,开启小神推订阅*/
-      if( !oldshareid ){
+      if( !oldshareid && isFirstExperience ){
         wx.aldPushSubscribeMessage({
-          eventId: '5f07d5c97739104342928f48',
+          eventId: app.globalData.eventId,
           success(res) {
             resolve("订阅成功");
             wx.aldstat.sendEvent('用户成功订阅新测评', {
@@ -614,20 +623,7 @@ Page({
           });
           return;
         }
-        if (+that.data.paperDetail.setting.price && that.data.paperDetail.userPapersNum.total > 0) {
-          //完全免费测评无需提示
-          wx.showModal({
-            title: '体验确认',
-            content: '体验将消耗1份可用数量，是否确认体验？',
-            success: function(ret) {
-              if (ret.confirm) {
-                toNext(subscribePromise);
-              }
-            }
-          });
-        } else {
-          toNext(subscribePromise);
-        }
+        toNext(subscribePromise);
       }
     });
   },

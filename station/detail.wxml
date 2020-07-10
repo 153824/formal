@@ -76,8 +76,11 @@
   <view class="meal">
     <meal isShow="{{ (!paperDetail.userPapersNum.hasOld || !dataLoaded) && !isIos && !paperDetail.setting.isFree }}"></meal>
   </view>
-  <view bindtap="gotoguide" data-name="{{ paperDetail.name }}">
-    <press title="{{ oldShareId ? '继续体验' : '自己体验'}}" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
+  <view wx:if="{{ oldShareId }}" bindtap="gotoguide" data-oldShareId="{{ oldShareId }}" data-name="{{ paperDetail.name }}" data-id="{{ paperDetail.id }}">
+    <press title="{{ '继续体验'}}" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
+  </view>
+  <view wx:else bindtap="gotoguide">
+    <press title="{{ '自己体验'}}" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
   </view>
   <view bindtap="gotodati">
     <press title="测别人(微信/智联/BOSS/51...)"></press>

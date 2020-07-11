@@ -339,6 +339,13 @@
 					"pathName": "user/teamInvite",
 					"query": "userId=5eeb5372372a690009f6a806&teamId=5e1985617d5774006ac4533e",
 					"scene": null
+				},
+				{
+					"id": 39,
+					"name": "station/detail",
+					"pathName": "station/detail",
+					"query": "id=5d786ea66e9ba10069596a61",
+					"scene": null
 				}
 			]
 		}

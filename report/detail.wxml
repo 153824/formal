@@ -225,29 +225,29 @@
               <view class="title {{node.active}}" bindtap="activeItem" data-index="{{index}}" data-i="{{i}}">{{node.name}}：
                 <block wx:if="{{ item.showSubScore === 'total' }}">
                   <block wx:if="{{ item.subScale === 'origin' }}">
-                    <text style="color:{{node.color}};">{{node.lvName}} {{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.total)}}分</text>
+                    <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.total)}}分</text>
                     <image src="../img/report/icon2.png"></image>
                   </block>
                   <block wx:elif="{{ item.subScale === 'decimal' }}">
-                    <text style="color:{{node.color}};">{{node.lvName}} {{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.total10)}}分</text>
+                    <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.total10)}}分</text>
                     <image src="../img/report/icon2.png"></image>
                   </block>
                   <block wx:elif="{{ item.subScale === 'centesimal' }}">
-                    <text style="color:{{node.color}};">{{node.lvName}} {{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.total100)}}分</text>
+                    <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.total100)}}分</text>
                     <image src="../img/report/icon2.png"></image>
                   </block>
                 </block>
                 <block wx:elif="{{ item.showSubScore === 'average' }}">
                   <block wx:if="{{ item.subScale === 'origin' }}">
-                    <text style="color:{{node.color}};">{{node.lvName}} {{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.average)}}分</text>
+                    <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.average)}}分</text>
                     <image src="../img/report/icon2.png"></image>
                   </block>
                   <block wx:elif="{{ item.subScale === 'decimal' }}">
-                    <text style="color:{{node.color}};">{{node.lvName}} {{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.av10)}}分</text>
+                    <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.av10)}}分</text>
                     <image src="../img/report/icon2.png"></image>
                   </block>
                   <block wx:elif="{{ item.subScale === 'centesimal' }}">
-                    <text style="color:{{node.color}};">{{node.lvName}} {{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.av100)}}分</text>
+                    <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.av100)}}分</text>
                     <image src="../img/report/icon2.png"></image>
                   </block>
                 </block>

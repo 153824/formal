@@ -257,7 +257,10 @@ Page({
             console.log("node: ",node.total);
             if( showSubScore == 'average' ){
               value_1[n].push(node.average);
-            }else{
+            }else if(!showSubScore){
+              value_1[n].push(node.average);
+            }
+            else{
               value_1[n].push(node.total);
             }
             indicator_1[n].push({

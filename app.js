@@ -1,5 +1,5 @@
 //app.js
-// const ald = require('./utils/ald-stat.js');
+const ald = require('./utils/ald-stat.js');
 var qiniuUpload = require("./utils/qiniuUpload");
 var push = require('./utils/push_sdk.js');
 qiniuUpload.init({
@@ -267,6 +267,7 @@ App({
     getInOnceAgainst: false,
     titleHeight: 0,
     statusbarHeight: 0,
+    eventId: "5f07d5c97739104342928f48"
   },
 
   changeDate2: function(time, dateType) {

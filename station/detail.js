@@ -35,6 +35,7 @@ Page({
     mobile: "18559297592",
     wechat: "haola72",
     getInOnceAgainst: false,
+    subscribe: false
   },
   onLoad: function(options) {
     var that = this;
@@ -90,7 +91,6 @@ Page({
           type: 5
         },
         success: function(ret) {
-          console.log("First Ajax:",ret);
           var hasOldFreeTicks = false;
           if (ret && ret.length) {
             hasOldFreeTicks = true; //还有未使用完的礼包券--无法获取第二次的免费券
@@ -527,8 +527,41 @@ Page({
   /** 体验测评 */
   gotoguide: function(e) {
     var that = this;
-    var { name } = e.currentTarget.dataset;
-    function toNext() {
+    var { name,oldshareid,id } = e.currentTarget.dataset;
+    var isNotFirstExperience = wx.getStorageSync("isNotFirstExperience");
+    var isFirstExperience = false;
+    if( !isNotFirstExperience ){
+      isFirstExperience = true;
+      wx.setStorage({
+        key: "isNotFirstExperience",
+        data: true
+      })
+    }
+    var subscribePromise = new Promise((resolve, reject) => {
+      /*无体验过,开启小神推订阅*/
+      if( !oldshareid && isFirstExperience ){
+        wx.aldPushSubscribeMessage({
+          eventId: app.globalData.eventId,
+          success(res) {
+            resolve("订阅成功");
+            wx.aldstat.sendEvent('用户成功订阅新测评', {
+              '测评名称': `名称: ${name} id：${id}`
+            });
+          },
+          fail(res, e) {
+            reject("订阅失败");
+            console.log("小神推订阅失败");
+            console.error(e);
+            wx.aldstat.sendEvent('用户拒绝订阅新测评', {
+              '测评名称': `名称: ${name} id：${id}`
+            });
+          }
+        });
+      }else{
+        resolve("未触发订阅");
+      }
+    });
+    function toNext(promise) {
       app.doAjax({
         url: 'toSharePaper',
         method: 'post',
@@ -537,8 +570,15 @@ Page({
           id: that.data.paperid,
         },
         success: function(res) {
-          wx.navigateTo({
-            url: '../test/guide?id=' + res.id
+          console.log("toSharePaper-2");
+          promise.then(ret=>{
+            wx.navigateTo({
+              url: '../test/guide?id=' + res.id
+            })
+          }).catch((err)=>{
+            wx.navigateTo({
+              url: '../test/guide?id=' + res.id
+            })
           });
           wx.aldstat.sendEvent('点击体验测评', {
             '测评名称': `名称：${ name } id：${ that.data.paperid }`
@@ -558,6 +598,8 @@ Page({
         id: that.data.paperid,
       },
       success: function(res) {
+        console.log(res);
+        console.log("toSharePaper-1");
         if (res && res.isOld && res.id) {
           var sKey = "oldAnswer" + res.id;
           var oldData = wx.getStorageSync(sKey);
@@ -565,27 +607,23 @@ Page({
             wx.navigateTo({
               url: '../test/index?pid=' + that.data.paperid + '&id=' + res.id
             });
+            console.log("has oldData");
             return;
           }
-          wx.navigateTo({
-            url: '../test/guide?id=' + res.id
+          subscribePromise.then(ret=>{
+            console.log("subscribePromise");
+            console.log("res.id: ",res.id);
+            wx.navigateTo({
+              url: '../test/guide?id=' + res.id
+            });
+          }).catch(err=>{
+            wx.navigateTo({
+              url: '../test/guide?id=' + res.id
+            });
           });
           return;
         }
-        if (+that.data.paperDetail.setting.price && that.data.paperDetail.userPapersNum.total > 0) {
-          //完全免费测评无需提示
-          wx.showModal({
-            title: '体验确认',
-            content: '体验将消耗1份可用数量，是否确认体验？',
-            success: function(ret) {
-              if (ret.confirm) {
-                toNext();
-              }
-            }
-          });
-        } else {
-          toNext();
-        }
+        toNext(subscribePromise);
       }
     });
   },

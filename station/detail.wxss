@@ -1074,3 +1074,22 @@
   background-color: rgba(0,0,0,0.5);
   z-index: 9999;
 }
+.new-pay-page{
+  position: fixed;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 667rpx;
+  padding: 40rpx 40rpx;
+  border-top-left-radius: 20rpx;
+  border-top-right-radius: 20rpx;
+  background-color: white;
+  font-size: 32rpx;
+  z-index: 999999999999;
+}
+.pay-title{
+  display: flex;
+  justify-content: space-between;
+  font-size: 38rpx;
+  font-weight: bold;
+}

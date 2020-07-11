@@ -74,11 +74,11 @@
 </scroll-view>
 
 <view class="button-group" wx:if="{{ isvip1||paperDetail.userPapersNum.type==-1||paperDetail.userPapersNum.hasOld||showFullBtn }}">
-  <view class="meal" bindtap="goToUserCenter" style="visibility: {{ (!paperDetail.userPapersNum.hasOld || !dataLoaded) && !isIos && !paperDetail.setting.isFree ? 'visible':'hidden' }}">
-    <meal isShow="{{ (!paperDetail.userPapersNum.hasOld || !dataLoaded) && !isIos && !paperDetail.setting.isFree }}"></meal>
-  </view>
   <view class="meal" bindtap="openGift" style="visibility: {{ (!couponGet0)&&teamRole==3&&isTodayTeam&&!isfree ? 'visible':'hidden' }}">
-    <meal isShow="{{ (!couponGet0)&&teamRole==3&&isTodayTeam&&!isfree }}" title="新用户领券，免费体验测评" subtitle="立即领券 >" icon=""></meal>
+    <meal isShow="{{ (!couponGet0)&&teamRole==3&&!isfree }}" title="新用户领券，免费体验测评" subtitle="立即领券 >" icon=""></meal>
+  </view>
+  <view class="meal" style="visibility: {{ !couponGet0&&!isfree ? 'visible':'hidden' }}">
+    <meal isShow="{{ !couponGet0&&!isfree }}" title="您有5张体验券可用于本测评" subtitle="立即使用 >"></meal>
   </view>
   <view bindtap="gotoguide" data-name="{{ paperDetail.name }}">
     <press title="{{ oldShareId ? '继续体验' : '自己体验'}}" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
@@ -87,13 +87,12 @@
     <press title="测别人(微信/智联/BOSS/51...)"></press>
   </view>
 </view>
-
 <view class="buy-group" wx:elif="{{ !isAllFree&&!freeCount&&!paperDetail.userPapersNum.hasOld }}">
-  <view class="meal" bindtap="goToUserCenter" style="visibility: {{ (!paperDetail.userPapersNum.hasOld || !dataLoaded) && !isIos && !paperDetail.setting.isFree ? 'visible':'hidden' }}">
-    <meal isShow="{{ (!paperDetail.userPapersNum.hasOld || !dataLoaded) && !isIos && !paperDetail.setting.isFree }}"></meal>
-  </view>
   <view  class="meal" bindtap="getNewerTicket" style="visibility: {{ (!couponGet0)&&teamRole==3&&isTodayTeam&&!isfree ? 'visible':'hidden' }}">
-    <meal title="新用户领券，免费体验测评" subtitle="立即领券 >" icon=""></meal>
+    <meal isShow="{{ (!couponGet0)&&teamRole==3&&!isfree }}" title="新用户领券，免费体验测评" subtitle="立即领券 >" icon=""></meal>
+  </view>
+  <view class="meal" style="visibility: {{ !couponGet0&&!isfree ? 'visible':'hidden' }}">
+    <meal isShow="{{ !couponGet0&&!isfree }}" title="您有5张体验券可用于本测评" subtitle="立即使用 >"></meal>
   </view>
   <view wx:if="{{ isIos && ((paperDetail.userPapersNum.freeTicket || 0) + (paperDetail.userPapersNum.vipTicket || 0)) <= 0 }}">
     <press color="" title="iOS暂不支持购买，请用券兑换或联系客服"></press>
@@ -182,7 +181,7 @@
     </view>
 </view>
 <!-- 支付IOS -->
-  <view class="paypage paypageIos" wx:if="{{ispay&&isIos}}" catchtouchmove="true">
+<view class="paypage paypageIos" wx:if="{{ispay&&isIos}}" catchtouchmove="true">
     <view class="closebox" bindtap="closepaypage"></view>
     <view class="paybox">
       <view class="paypagehead">
@@ -208,66 +207,21 @@
         < count? '券数量不足': '用券兑换'+count+ '份'}} </view>
       </view>
   </view>
-    <view class="cover" wx:if="{{dlgShow||showDlg1}}" bindtap="hidenDlg"></view>
-    <view class="dlg" wx:if="{{dlgShow}}">
+<view class="new-pay-page">
+  <view class="pay-title">
+    <text>选择购买方式</text>
+    <view>
+      <image style="width: 30rpx;height: 30rpx;"></image>
+      <text style="font-weight: initial;font-size: 28rpx;">用券购买</text>
+    </view>
+  </view>
+</view>
+<view class="cover" wx:if="{{dlgShow||showDlg1}}" bindtap="hidenDlg"></view>
+<view class="dlg" wx:if="{{dlgShow}}">
       <image src="../img/store/detail/icon12.png"></image>
       <view class="txtView">{{paperDetail.setting.dateDesc}}</view>
     </view>
-    <view wx:if="{{showDlg1}}" class="dlg1">
-      <view class="title">客服微信号</view>
-      <view class="flex content">
-        <view class="flex-main"></view>
-        <image src='../img/store/icon39.png'></image>
-        <text>haola72</text>
-        <view class="flex-main"></view>
-      </view>
-      <view bindtap="copyIt" class="copyBtn">复制</view>
-      <view class="mind">添加时，请备注公司所属行业和规模</view>
-    </view>
-    <!-- <view class="pointerView flex" wx:if="{{showMindDlg&&!isFreeTickId}}" style="padding-bottom:{{phoneModel?80:0}}rpx;">
-      <text class="flex-main"></text>
-      <view class="{{activePointer==0?'active':''}}"></view>
-      <view class="{{activePointer==1?'active':''}}"></view>
-      <view class="{{activePointer==2?'active':''}}"></view>
-      <text class="flex-main"></text>
-    </view> -->
 
-<!--    <view wx:if="{{showMindDlg&&!isFreeTickId}}" current="{{activePointer}}" bindchange="changeActivePointer" class="dlgMsg" style="padding-bottom:{{phoneModel?80:0}}rpx;" >-->
-<!--      <view class="item1">-->
-<!--        <view class="btnView" bindtap="hidenDlg">我知道了</view>-->
-<!--        <view class="mindMsg"><text>测别人点这里</text><text style="margin-left:80rpx">自测点这里</text></view>-->
-<!--        <image class="btnImg3" src="../img/store/detail/icon31.png"></image>-->
-<!--        <image class="btnImg4" src="../img/store/detail/icon31.png"></image>-->
-<!--        <image class="btnImg1" bindtap="gotodati" src="../img/store/detail/icon21.png"></image>-->
-<!--        <image class="btnImg2" bindtap="gotoguide" src="../img/store/detail/icon23.png"></image>-->
-<!--      </view>-->
-
-      <!-- <swiper-item class="item2">
-        <view class="title">测别人</view>
-        <view class="mindMsg">测别人点这里</view>
-        <image src="../img/store/detail/icon22.png" class="pointerImg"></image>
-        <image class="btnImg" bindtap="gotodati" src="../img/store/detail/icon21.png"></image>
-        <view class="btnView" bindtap="showMindDlgFn">我知道了</view>
-      </swiper-item> -->
-      <!-- <view class="item3">
-      <view class="g">
-        <view class="mindMsg">测别人点这里</view>
-        <view class="mindMsg">自测点这里</view>
-        <image class="btnImg" bindtap="gotoguide" src="../img/store/detail/icon23.png"></image>
-        <view class="btnView" bindtap="hidenDlg">我知道了</view>
-      </view> -->
-
-<!--    </view>-->
-
-<!--    <view wx:if="{{showMindDlg&&isFreeTickId}}" class="dlgMsg" style="margin-bottom:{{phoneModel?80:0}}rpx;">-->
-<!--      <view class="item3">-->
-<!--        <view class="title">立即体验</view>-->
-<!--        <view class="mindMsg">点击可体验本测评，完成后，系统将生成对应的报告。</view>-->
-<!--        <image src="../img/store/detail/icon24.png" class="pointerImg"></image>-->
-<!--        <image class="btnImg" bindtap="gotoguide" src="../img/store/detail/icon23.png"></image>-->
-<!--        &lt;!&ndash; <view class="btnView" bindtap="showMindDlgFn">我知道了</view> &ndash;&gt;-->
-<!--      </view>-->
-<!--    </view>-->
 <view wx:if="{{ giftTrigger }}" class="gift-container">
   <view class="image-container">
     <image src="http://ihola.luoke101.com/20200709145310.png" style="width: 675rpx;height: 855rpx;margin-top: 160rpx;" bindtap="getNewerTicket"></image>

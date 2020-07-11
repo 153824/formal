@@ -215,6 +215,14 @@
       <text style="font-weight: initial;font-size: 28rpx;">用券购买</text>
     </view>
   </view>
+  <view class="pay-button-group">
+    <view style="width: 300rpx;">
+      <press title="按年买断" height="50" borderRadius-="10"></press>
+    </view>
+    <view style="width: 300rpx;">
+      <press title="按份购买" height="50" borderRadius="10" color="#353EE8FF" bgColor="#fff"></press>
+    </view>
+  </view>
 </view>
 <view class="cover" wx:if="{{dlgShow||showDlg1}}" bindtap="hidenDlg"></view>
 <view class="dlg" wx:if="{{dlgShow}}">

@@ -29,6 +29,10 @@ Component({
     borderRadius: {
       type: String,
       value: 0
+    },
+    border: {
+      type: String,
+      value: '1px solid #353EE8FF'
     }
   },
 

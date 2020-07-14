@@ -72,13 +72,13 @@
 <!--  </view>-->
 <!--  wx:if="{{ paperDetail.setting.isFree }}"-->
 </scroll-view>
-
-<view class="button-group" wx:if="{{ isvip1||paperDetail.userPapersNum.type==-1||paperDetail.userPapersNum.hasOld||showFullBtn }}">
+<!--isvip1||-->
+<view class="button-group" wx:if="{{ paperDetail.userPapersNum.type==-1||paperDetail.userPapersNum.hasOld||showFullBtn }}">
   <view class="meal" bindtap="openGift" style="visibility: {{ (!couponGet0)&&teamRole==3&&isTodayTeam&&!isfree ? 'visible':'hidden' }}">
     <meal isShow="{{ (!couponGet0)&&teamRole==3&&!isfree }}" title="新用户领券，免费体验测评" subtitle="立即领券 >" icon=""></meal>
   </view>
   <view class="meal" style="visibility: {{ !couponGet0&&!isfree ? 'visible':'hidden' }}">
-    <meal isShow="{{ !couponGet0&&!isfree }}" title="您有5张体验券可用于本测评" subtitle="立即使用 >"></meal>
+    <meal isShow="{{ !couponGet0&&!isfree&&!paperDetail.userPapersNum.hasOld }}" title="您有{{ 5 }}张体验券可用于本测评" subtitle="立即使用 >"></meal>
   </view>
   <view bindtap="gotoguide" data-name="{{ paperDetail.name }}">
     <press title="{{ oldShareId ? '继续体验' : '自己体验'}}" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
@@ -216,11 +216,38 @@
     </view>
   </view>
   <view class="pay-button-group">
-    <view style="width: 300rpx;">
-      <press title="按年买断" height="50" borderRadius-="10"></press>
+    <view style="width: 300rpx;" bindtap="buyByBuyout">
+      <press title="按年买断" height="50" borderRadius-="10" color="{{ buyByBuyout ? '#fff' : '#353EE8FF' }}" bgColor="{{ buyByBuyout ? '#353EE8FF' : '#fff' }}"></press>
     </view>
-    <view style="width: 300rpx;">
-      <press title="按份购买" height="50" borderRadius="10" color="#353EE8FF" bgColor="#fff"></press>
+    <view style="width: 300rpx;" bindtap="buyByCounts">
+      <press title="按份购买" height="50" borderRadius="10" color="{{ buyByCounts ? '#fff' : '#353EE8FF' }}" bgColor="{{ buyByCounts ? '#353EE8FF' : '#fff' }}"></press>
+    </view>
+  </view>
+  <view class="company-choice">
+    92%企业的选择
+  </view>
+  <view wx:if="{{ buyByBuyout }}" class="buy-by-buyout">
+    <view class="pay-way">￥980/年</view>
+    <view>不限量使用本测评</view>
+  </view>
+  <view wx:if="{{ buyByCounts }}" class="buy-by-counts">
+    <view class="total-counts">
+      <view>合计</view>
+      <view>￥{{ filters.toFix((paperDetail.setting.price||0) * count) }}</view>
+      <view style="color: #f8ba0f;font-size: 24rpx;">推荐按年买断更加划算</view>
+    </view>
+    <view class="total-operator">
+      <view bindtap="addcount" class="add">+</view>
+      <input type="number" class="total-display" bindinput="inputprice" value="{{count}}"/>
+      <view bindtap="jiancount" class="subtraction">-</view>
+    </view>
+  </view>
+  <view class="pay-group">
+    <view>
+      <press title="微信支付"></press>
+    </view>
+    <view bindtap="servingTrigger">
+      <press title="对公转账" color="#353EE8FF" bgColor="#fff" border="none"></press>
     </view>
   </view>
 </view>
@@ -240,4 +267,4 @@
   <view class="mask"></view>
 </view>
 <view wx:if="{{ loading }}" class="loading"></view>
-<serving mobile="{{ mobile }}" wechat="{{ wechat }}" bottom="180rpx"></serving>
+<serving id="serving" mobile="{{ mobile }}" wechat="{{ wechat }}" bottom="180rpx"></serving>

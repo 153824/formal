@@ -35,7 +35,9 @@ Page({
     mobile: "18559297592",
     wechat: "haola72",
     getInOnceAgainst: false,
-    giftTrigger: true
+    giftTrigger: true,
+    buyByBuyout: true,
+    buyByCounts: false,
   },
   onLoad: function(options) {
     var that = this;
@@ -429,7 +431,6 @@ Page({
    * 用券购买测评
    */
   useticket: function() {
-
     var that = this;
     var count = this.data.count;
     if (!count) return wx.showToast({
@@ -1092,14 +1093,32 @@ Page({
       url: "../user/index"
     })
   },
+  /**关闭测评体验券*/
   closeGift: function () {
     this.setData({
       giftTrigger: false
     });
   },
+  /**召唤测评体验券*/
   openGift: function () {
     this.setData({
       giftTrigger: true
     })
+  },
+  /**按年买断*/
+  buyByBuyout: function () {
+    this.setData({
+      buyByBuyout: true,
+      buyByCounts: false
+    })
+  },
+  buyByCounts: function () {
+    this.setData({
+      buyByCounts: true,
+      buyByBuyout: false
+    })
+  },
+  servingTrigger: function () {
+    this.selectComponent('#serving').callServing();
   }
 });

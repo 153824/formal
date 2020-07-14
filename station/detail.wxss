@@ -1079,8 +1079,7 @@
   right: 0;
   left: 0;
   bottom: 0;
-  height: 667rpx;
-  padding: 40rpx 40rpx;
+  padding: 40rpx 40rpx  0rpx 40rpx;
   border-top-left-radius: 20rpx;
   border-top-right-radius: 20rpx;
   background-color: white;
@@ -1096,4 +1095,77 @@
 .pay-button-group{
   display: flex;
   justify-content: space-between;
+  margin: 40rpx 0 20rpx 0;
+}
+.company-choice{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300rpx;
+  color: #f8ba0f;
+  font-size: 24rpx;
+}
+.company-choice > text{
+  text-align: center;
+}
+.buy-by-buyout{
+  display: flex;
+  flex-direction: column;
+  padding: 40rpx 0;
+  height: 200rpx;
+}
+.buy-by-buyout > view{
+  font-size: 38rpx;
+  font-weight: 600;
+  text-align: center;
+  color: #353EE8FF;
+}
+.pay-way{
+  margin-bottom: 40rpx;
+}
+.pay-group{
+  display: flex;
+  margin-top: 50rpx;
+  flex-direction: column;
+}
+.buy-by-counts{
+  display: flex;
+  justify-content: space-between;
+  padding: 40rpx 0;
+  height: 200rpx;
+}
+.total-counts{
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  font-size: 38rpx;
+  font-weight: 600;
+  text-align: center;
+  color: #353EE8FF;
+}
+.total-counts > view{
+  margin: 18rpx 0;
+  text-align: center;
+}
+.total-operator{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 50%;
+}
+.add,.subtraction{
+  align-self: center;
+  width: 50rpx;
+  height: 50rpx;
+  background-color: rgba(0,0,0,.1);
+  line-height: 50rpx;
+  text-align: center;
+  border-radius: 50%;
+}
+.total-display{
+  width: 140rpx;
+  height: 80rpx;
+  text-align: center;
+  background-color: rgba(0,0,0,0.1);
 }

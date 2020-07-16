@@ -44,12 +44,15 @@
     <press title="测别人(微信/智联/BOSS/51...)"></press>
   </view>
 </view>
-<!-- 未购买过测评的按钮组-->
-<view class="buy-group" wx:elif="{{ evaluation.availableCount <= 0 }}">
-    <view class="meal" bindtap="openGift">
+<!-- 未购买过测评的按钮组且未买断 -->
+<view class="buy-group" wx:elif="{{ evaluation.availableCount <= 0 && !evaluation.buyoutInfo.hadBuyout }}">
+    <button class="meal" style="background-color: #FFF3E0FF;outline: none;border: none;" open-type="getUserInfo" bindgetuserinfo="getUserInfo" >
       <meal isShow="{{ evaluation.isBeginner }}" title="新用户领券，免费体验测评" subtitle="立即领券 >" icon=""></meal>
-    </view>
-    <view class="meal">
+    </button>
+<!--    <view class="meal" bindtap="openGift">-->
+<!--      <meal isShow="{{ evaluation.isBeginner }}" title="新用户领券，免费体验测评" subtitle="立即领券 >" icon=""></meal>-->
+<!--    </view>-->
+    <view class="meal" bindtap="buyByTicket">
       <meal isShow="{{ hasVoucher }}" title="您有{{ experienceTicket + officialTicket + experienceTicket + shareTicket }}张体验券可用于本测评" subtitle="立即使用 >"></meal>
     </view>
     <view wx:if="{{ isIos }}">
@@ -59,9 +62,9 @@
       <press title="购买测评"></press>
     </view>
 </view>
-<!-- 购买过测评券的按钮组 -->
-<view class="button-group" wx:elif="{{ evaluation.availableCount > 0 }}">
-  <view class="meal">
+<!-- 购买过测评券的按钮组且未买断 -->
+<view class="button-group" wx:elif="{{ evaluation.availableCount > 0 && !evaluation.buyoutInfo.hadBuyout }}">
+  <view class="meal" bindtap="payForEvaluation">
     <meal isShow="{{ !evaluation.buyoutInfo.hadBuyout }}" title="剩余可用份数：{{ officialTicket + experienceTicket + shareTicket }}" subtitle="{{ isIos ? '用券兑换' : '购买更多' }}"></meal>
   </view>
   <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}">
@@ -71,9 +74,10 @@
     <press title="测别人(微信/智联/BOSS/51...)"></press>
   </view>
 </view>
+<!-- 买断 -->
 <view class="button-group" wx:elif="{{ evaluation.buyoutInfo.hadBuyout }}">
   <view class="meal">
-    <meal isShow="{{ !evaluation.buyoutInfo.hadBuyout }}" title="有效期至：2021.08.08" subtitle="{{ isIos ? '' : '续费' }}"></meal>
+    <meal isShow="{{ evaluation.buyoutInfo.hadBuyout }}" title="有效期至：{{ isIos ? util.getFullDateByFrag(evaluation.buyoutInfo.expiryDate,'.',true) : util.getFullDateByFrag(evaluation.buyoutInfo.expiryDate,'.',true) }}" subtitle="{{ isIos ? '' : '续费' }}"></meal>
   </view>
   <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}">
     <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
@@ -204,7 +208,6 @@
       </view>
       <view class="paybodyright">
         <button bindtap="jiancount">-</button>
-        <!-- <view>{{count}}</view> -->
         <input type="number" bindinput="inputprice" value="{{count}}"></input>
         <button bindtap="addcount">+</button>
       </view>
@@ -217,7 +220,7 @@
       </view>
   </view>
 <!--wx:if="{{ payTrigger }}"-->
-<view class="new-pay-page">
+<view wx:if="{{ payTrigger }}" class="new-pay-page">
   <view class="pay-title">
     <text>选择购买方式</text>
     <view style="background-color: #5c78f1;" bindtap="buyByTicket">
@@ -280,11 +283,11 @@
       <view class="ticket-add" bindtap="addTicket">+</view>
     </view>
   </view>
-  <view bindtap="">
+  <view bindtap="useticket">
     <press title="{{ ticketCount ? '用券兑换'+ticketCount+'份' : '用券兑换' }}" height="90" shadow="0 0 16rpx rgba(53,62,232,.5)"></press>
   </view>
 </view>
-<view class="mask" wx:if="{{ buyByTicket }}" style="background-color: rgba(0,0,0,.5);"></view>
+<view class="mask" wx:if="{{ buyByTicket }}" bindtap="cancelBuyByTicket" style="background-color: rgba(0,0,0,.5);"></view>
 <view class="cover" wx:if="{{dlgShow||showDlg1}}" bindtap="hidenDlg"></view>
 <view class="dlg" wx:if="{{dlgShow}}">
   <image src="../img/store/detail/icon12.png"></image>
@@ -292,7 +295,7 @@
 </view>
 <view wx:if="{{ giftTrigger }}" class="gift-container">
   <view class="image-container">
-    <image src="http://ihola.luoke101.com/20200709145310.png" style="width: 675rpx;height: 855rpx;margin-top: 160rpx;" bindtap="getNewerTicket"></image>
+    <image src="http://ihola.luoke101.com/20200709145310.png" style="width: 675rpx;height: 855rpx;margin-top: 160rpx;" bindtap="buyByTicket"></image>
     <view style="display: flex;justify-content: center;margin-top: -50px;">
       <image src="../img/manager/close-icon@2x.png" style="width: 50rpx;height: 50rpx;justify-self: center;" bindtap="closeGift"></image>
     </view>
@@ -301,3 +304,4 @@
 </view>
 <view wx:if="{{ loading }}" class="loading"></view>
 <serving id="serving" mobile="{{ mobile }}" wechat="{{ wechat }}" bottom="180rpx"></serving>
+<wxs src="../common/util.wxs" module="util"></wxs>

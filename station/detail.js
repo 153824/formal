@@ -39,7 +39,7 @@ Page({
     giftTrigger: false,
     buyByBuyout: true,
     buyByCounts: false,
-    buyByTicket: true,
+    buyByTicket: false,
     ticketCount: 0
   },
   onLoad: function(options) {
@@ -424,14 +424,14 @@ Page({
    */
   useticket: function() {
     var that = this;
-    var count = this.data.count;
-    if (!count) return wx.showToast({
+    var { ticketCount,voucher } = this.data;
+    if (!ticketCount) return wx.showToast({
       title: '购买数量不能为空',
       icon: 'none',
       duration: 1200
     });
-    var maxCount = (that.data.paperDetail.userPapersNum.freeTicket || 0) + (that.data.paperDetail.userPapersNum.vipTicket || 0);
-    if (count > maxCount) return wx.showToast({
+    var maxCount = voucher;
+    if (ticketCount > maxCount) return wx.showToast({
       title: '券数量不足，无法购买',
       icon: 'none',
       duration: 1200
@@ -458,7 +458,9 @@ Page({
         if (that.data.freeTickId) {
           o["isFreeTickId"] = true;
         }
-        that.setData(o);
+        that.setData({
+          buyByTicket: false
+        });
         setTimeout(function() {
           that.toGetPaperDetail(true);
         }, 500);
@@ -517,7 +519,8 @@ Page({
   gotoguide: function(e) {
     var that = this;
     var { name } = e.currentTarget.dataset;
-    var { evaluationInfo,availableCount } = that.data.evaluation;
+    var { evaluationInfo,availableCount,buyoutInfo } = that.data.evaluation;
+    console.log(buyoutInfo);
     function toNext() {
       app.doAjax({
         url: 'toSharePaper',
@@ -527,6 +530,7 @@ Page({
           id: that.data.paperid,
         },
         success: function(res) {
+          console.log(res);
           wx.navigateTo({
             url: '../test/guide?id=' + res.id
           });
@@ -548,31 +552,37 @@ Page({
         id: that.data.paperid,
       },
       success: function(res) {
+        console.log("First");
         if (res && res.isOld && res.id) {
           var sKey = "oldAnswer" + res.id;
           var oldData = wx.getStorageSync(sKey);
+          console.log("Second");
           if (oldData) {
             wx.navigateTo({
               url: '../test/index?pid=' + that.data.paperid + '&id=' + res.id
             });
+            console.log("Third");
             return;
           }
+          console.log("Fourth");
           wx.navigateTo({
             url: '../test/guide?id=' + res.id
           });
           return;
         }
-        if (+evaluationInfo.price && availableCount > 0) {
-          //完全免费测评无需提示
+        if ( +evaluationInfo.price && availableCount > 0 ) {
           wx.showModal({
             title: '体验确认',
             content: '体验将消耗1份可用数量，是否确认体验？',
             success: function(ret) {
               if (ret.confirm) {
+                console.log("Fifth");
                 toNext();
               }
             }
           });
+        } else if( buyoutInfo.hadBuyout ) {
+          toNext();
         } else {
           toNext();
         }
@@ -744,6 +754,7 @@ Page({
       method: 'post',
       data: {
         evaluationId: evaluationInfo.id,
+        evaluationName: evaluationInfo.name,
         dayOfPeriod: evaluationInfo.buyoutPlans[0].dayOfPeriod,
         openid: wx.getStorageSync("openId") || app.globalData.userMsg.openid,
       },
@@ -801,16 +812,17 @@ Page({
   gotodati: function() {
     //发放测评
     var that = this;
-    var { evaluationInfo,availableCount= 0,freeEvaluation } = that.data.evaluation;
+    var { evaluationInfo,availableCount= 0,freeEvaluation,buyoutInfo } = that.data.evaluation;
     // wx.aldstat.sendEvent('点击发放测评', {
     //   '测评名称': '名称：' + evaluationInfo.name
     // });
-    if ( availableCount === 0 && !freeEvaluation ) {
+    if ( ( (availableCount || 0 ) === 0 && !freeEvaluation ) && !buyoutInfo.hadBuyout ) {
       app.toast("测评可用数量不足，请先购买或用券兑换测评");
       return;
     }
     wx.navigateTo({
-      url: '../store/sharePaper?id=' + evaluationInfo.id + "&count=" + availableCount + "&name=" + evaluationInfo.name + "&isFree=" + freeEvaluation ,
+      url: '../store/sharePaper?id=' + evaluationInfo.id + "&count=" + availableCount + "&name="
+          + evaluationInfo.name + "&isFree=" + freeEvaluation + "&hadBuyout=" + buyoutInfo.hadBuyout,
     });
     return;
   },
@@ -818,7 +830,6 @@ Page({
    * 分享领取测评
    */
   openpopup: function(e, noShowDlg) {
-
 
     // var that = this;
     // var data = that.data;
@@ -932,10 +943,9 @@ Page({
       success: function(res) {
         app.globalData.userInfo.nickname = userInfo.nickName;
         app.addNewTeam(that.onShow);
-
-        console.log("统计2", e);
       }
     });
+    that.getNewerTicket();
   },
   /**
    * 显示过期时间说明弹窗
@@ -1088,20 +1098,17 @@ Page({
   },
   getNewerTicket: function (e) {
     var that = this;
-    var { name } = e.currentTarget.dataset;
+    var { evaluationInfo } = that.data.evaluation;
     app.doAjax({
-      url: "couponGet",
+      url: "drawNoviceVoucher",
       method: "post",
       data: {},
-      error: function(ret) {
-        app.toast(ret.msg);
-        wx.aldstat.sendEvent('领新人5张券失败', {
-          '测评名称': `名称: ${name}`
-        });
-      },
       success: function(ret) {
         app.getUserInfo(); //更新用户信息
         app.toast("领取成功，快去购买兑换测评吧");
+        that.setData({
+          giftTrigger: true,
+        });
         /**
          * @Description: isGetInAgainst 领完5张券，再次进入测评详情页才会显示领取3张券的广告
          * @author: WE!D
@@ -1109,12 +1116,14 @@ Page({
          * @return:
          * @date: 2020/6/17
          */
-        that.setData({
-          list: ret,
-          couponGet0: true
-        });
         wx.aldstat.sendEvent('领新人5张券成功', {
-          '测评名称': `名称: ${name}`
+          '测评名称': `名称: ${evaluationInfo.name}`
+        });
+      },
+      error: function(res) {
+        app.toast(res.msg);
+        wx.aldstat.sendEvent('领新人5张券失败', {
+          '测评名称': `名称: ${evaluationInfo.name}`
         });
       }
     });
@@ -1159,7 +1168,13 @@ Page({
   buyByTicket: function () {
     this.setData({
       buyByTicket: true,
-      payTrigger: false
+      payTrigger: false,
+      giftTrigger: false
+    })
+  },
+  cancelBuyByTicket: function(){
+    this.setData({
+      buyByTicket: false,
     })
   },
   subTicket: function () {
@@ -1183,5 +1198,5 @@ Page({
     this.setData({
       ticketCount
     })
-  }
+  },
 });

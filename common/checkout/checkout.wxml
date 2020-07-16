@@ -53,13 +53,13 @@
   <view class="example-content">
       <view class="example-child" wx:for="{{ list }}" wx:for-item="quesTypeitem" wx:for-index="quesTypeindex" wx:key="unique" data-i="{{quesTypeindex}}">
           <rich-text class="queStem bold rich-text" nodes="<p>{{quesTypeindex+1}}、{{quesTypeitem.stem}}</p>"></rich-text>
-          <view class="subject-wrapper" wx:for="{{quesTypeitem.options}}" wx:key="unique" wx:for-item="node">
+          <view class="subject-wrapper" wx:for="{{quesTypeitem.options}}" wx:key="unique" wx:for-item="node" wx:for-index="idx">
               <view class="subject-child">
                   <view>
-                      {{node.txt}}
+                      {{ util.ASCIIToChar(idx) }}:
                   </view>
                   <view>
-                      {{node.msg}}
+                      {{ node }}
                   </view>
               </view>
           </view>
@@ -98,3 +98,5 @@
         </view>
     </view>
 </view>
+
+<wxs src="../util.wxs" module="util"></wxs>

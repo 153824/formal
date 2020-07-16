@@ -33,6 +33,10 @@ Component({
     border: {
       type: String,
       value: '1px solid #353EE8FF'
+    },
+    shadow: {
+      type: String,
+      value: ''
     }
   },
 

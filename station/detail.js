@@ -17,6 +17,7 @@ Page({
     dataLoaded: false,
     showLogin: false,
     ispay: false,
+    payTrigger: false,
     dati: false,
     price: 60,
     count: 1,
@@ -31,13 +32,15 @@ Page({
     getphoneNum: true,
     istext: true,
     showDlg1: false,
-    loading: true,
+    loading: false,
     mobile: "18559297592",
     wechat: "haola72",
     getInOnceAgainst: false,
-    giftTrigger: true,
+    giftTrigger: false,
     buyByBuyout: true,
     buyByCounts: false,
+    buyByTicket: true,
+    ticketCount: 0
   },
   onLoad: function(options) {
     var that = this;
@@ -83,132 +86,165 @@ Page({
         }
       });
 
-      app.doAjax({
-        url: "getMyticket",
-        method: "get",
-        noLoading: true,
-        data: {
-          page: 1,
-          pageSize: 12,
-          type: 5
-        },
-        success: function(ret) {
-          console.log("First Ajax:",ret);
-          var hasOldFreeTicks = false;
-          if (ret && ret.length) {
-            hasOldFreeTicks = true; //还有未使用完的礼包券--无法获取第二次的免费券
-          }
-          var couponGet0 = app.couponGet0 || false;
-          var couponGet = app.couponGet || false;
-          var couponGet1 = app.couponGet1 || false;
-          var isTodayTeam = app.isTodayTeam || false;
-          if( couponGet0 ){
-            app.globalData.isGetInAgainst = true;
-          }
-          that.setData({
-            teamRole: app.teamRole,
-            couponGet0: couponGet0,
-            couponGet: hasOldFreeTicks ? true : couponGet,
-            couponGet1: hasOldFreeTicks ? true : couponGet1,
-            isTodayTeam: isTodayTeam
-          });
-          // if( !couponGet0&&!isTodayTeam ){
-          //   console.log("!couponGet0&&!isTodayTeam: ",!couponGet0&&!isTodayTeam);
-          //   that.setData({
-          //     getInOnceAgainst: true
-          //   });
-          //   app.globalData.getInOnceAgainst = true;
-          //   wx.setStorage({
-          //     key: "getInOnceAgainst",
-          //     data: true,
-          //   })
-          // }
-        }
-      });
+      // app.doAjax({
+      //   url: "getMyticket",
+      //   method: "get",
+      //   noLoading: true,
+      //   data: {
+      //     page: 1,
+      //     pageSize: 12,
+      //     type: 5
+      //   },
+      //   success: function(ret) {
+      //     console.log("First Ajax:",ret);
+      //     var hasOldFreeTicks = false;
+      //     if (ret && ret.length) {
+      //       hasOldFreeTicks = true; //还有未使用完的礼包券--无法获取第二次的免费券
+      //     }
+      //     var couponGet0 = app.couponGet0 || false;
+      //     var couponGet = app.couponGet || false;
+      //     var couponGet1 = app.couponGet1 || false;
+      //     var isTodayTeam = app.isTodayTeam || false;
+      //     if( couponGet0 ){
+      //       app.globalData.isGetInAgainst = true;
+      //     }
+      //     that.setData({
+      //       teamRole: app.teamRole,
+      //       couponGet0: couponGet0,
+      //       couponGet: hasOldFreeTicks ? true : couponGet,
+      //       couponGet1: hasOldFreeTicks ? true : couponGet1,
+      //       isTodayTeam: isTodayTeam
+      //     });
+      //   }
+      // });
+      //
+      // app.doAjax({
+      //   url: "getMyticket",
+      //   method: "get",
+      //   noLoading: true,
+      //   data: {
+      //     page: 1,
+      //     pageSize: 12,
+      //     type: 1
+      //   },
+      //   success: function(ret) {
+      //     var hasFreeTick = false;
+      //     ret.forEach(function(n) {
+      //       if (n.type == 1) {
+      //         hasFreeTick = true;
+      //       }
+      //     });
+      //     that.setData({
+      //       hasFreeTick: true,
+      //     });
+      //   }
+      // });
+      //
+      // app.doAjax({
+      //   url: "getMyticket",
+      //   method: "get",
+      //   noLoading: true,
+      //   data: {
+      //     page: 1,
+      //     pageSize: 12,
+      //     type: 2
+      //   },
+      //   success: function(ret) {
+      //     console.log("Third Ajax:",ret);
+      //     var freeTick = "";
+      //     var getInOnceAgainst = wx.getStorageSync("getInOnceAgainst") || false;
+      //     if( ret.length <= 0 ) ret = [{ type: -1}];
+      //     ret.forEach(function(n) {
+      //       console.log("n",n)
+      //       if (n.type == 2) { //有领取过3张免费测评券
+      //         freeTick = n.id;
+      //         getInOnceAgainst = false;
+      //         console.log("有领取过3张免费测评券");
+      //       }else{
+      //         if( !isFresh ){
+      //           return;
+      //         }else{
+      //           getInOnceAgainst = true;
+      //           app.globalData.getInOnceAgainst = true;
+      //           wx.setStorage({
+      //             key: "getInOnceAgainst",
+      //             data: true,
+      //           });
+      //         }
+      //       }
+      //     });
+      //     that.setData({
+      //       hasFreeTick: true,
+      //       freeTick: freeTick,
+      //       oldShareInfo: "",
+      //       getInOnceAgainst: getInOnceAgainst
+      //     });
+      //     // if (!wx.getStorageSync("hideLastTestMind")) {
+      //     //   app.doAjax({
+      //     //     url: 'toSharePaper',
+      //     //     method: 'post',
+      //     //     data: {
+      //     //       type: "self",
+      //     //       isCheckOld: true
+      //     //     },
+      //     //     success: function(res) {
+      //     //       if (res && res.isOld && res.id) {
+      //     //         that.setData({
+      //     //           oldShareInfo: res
+      //     //         });
+      //     //       }
+      //     //     }
+      //     //   });
+      //     // }
+      //     app.getUserInfo(that.toGetPaperDetail);
+      //   }
+      // });
+      // that.setData({
+      //   isGetInCount: app.globalData.isGetInCount
+      // });
 
       app.doAjax({
-        url: "getMyticket",
-        method: "get",
-        noLoading: true,
+        url: 'evaluationDetail',
+        method: 'get',
         data: {
-          page: 1,
-          pageSize: 12,
-          type: 1
+          evaluationId: that.data.paperid
         },
-        success: function(ret) {
-          var hasFreeTick = false;
-          ret.forEach(function(n) {
-            if (n.type == 1) {
-              hasFreeTick = true;
-            }
-          });
-          that.setData({
-            hasFreeTick: true,
-          });
-        }
-      });
-
-      app.doAjax({
-        url: "getMyticket",
-        method: "get",
-        noLoading: true,
-        data: {
-          page: 1,
-          pageSize: 12,
-          type: 2
-        },
-        success: function(ret) {
-          console.log("Third Ajax:",ret);
-          var freeTick = "";
-          var getInOnceAgainst = wx.getStorageSync("getInOnceAgainst") || false;
-          if( ret.length <= 0 ) ret = [{ type: -1}];
-          ret.forEach(function(n) {
-            console.log("n",n)
-            if (n.type == 2) { //有领取过3张免费测评券
-              freeTick = n.id;
-              getInOnceAgainst = false;
-              console.log("有领取过3张免费测评券");
-            }else{
-              if( !isFresh ){
-                return;
-              }else{
-                getInOnceAgainst = true;
-                app.globalData.getInOnceAgainst = true;
-                wx.setStorage({
-                  key: "getInOnceAgainst",
-                  data: true,
-                });
+        success: function (res) {
+          var hasVoucher = true,
+              voucher = 0,
+              { voucherInfo } = res,
+              evaluation = res,
+              isFreeTicket = false,
+              shareTicket = 0,
+              experienceTicket = 0,
+              officialTicket = 0;
+          if( Object.keys(voucherInfo).length <= 0 ){
+            hasVoucher = false;
+          }else{
+            for( let i in voucherInfo ){
+              voucher += voucherInfo[i];
+              if( i === '2' ){
+                officialTicket = voucherInfo[i];
+              }else if( i === '3' ){
+                shareTicket = voucherInfo[i];
+              }else if( i === '5' ){
+                experienceTicket = voucherInfo[i];
+              }
+              if( i === '5' || i === '3' ){
+                isFreeTicket = true;
               }
             }
-          });
+          }
           that.setData({
-            hasFreeTick: true,
-            freeTick: freeTick,
-            oldShareInfo: "",
-            getInOnceAgainst: getInOnceAgainst
+            evaluation,
+            hasVoucher,
+            voucher,
+            isFreeTicket,
+            officialTicket,
+            shareTicket,
+            experienceTicket
           });
-          // if (!wx.getStorageSync("hideLastTestMind")) {
-          //   app.doAjax({
-          //     url: 'toSharePaper',
-          //     method: 'post',
-          //     data: {
-          //       type: "self",
-          //       isCheckOld: true
-          //     },
-          //     success: function(res) {
-          //       if (res && res.isOld && res.id) {
-          //         that.setData({
-          //           oldShareInfo: res
-          //         });
-          //       }
-          //     }
-          //   });
-          // }
-          app.getUserInfo(that.toGetPaperDetail);
         }
-      });
-      that.setData({
-        isGetInCount: app.globalData.isGetInCount
       })
     }
   },
@@ -229,136 +265,81 @@ Page({
       showGiftDlg: true
     });
   },
-  toGetPaperDetail: function(noLoading) {
+  toGetPaperDetail: function() {
     var that = this;
-    noLoading = noLoading || false;
-    var showMindToast = false;
-    app.doAjax({
-      url: "paperDetail",
-      method: "get",
-      data: {
-        id: that.data.paperid,
-      },
-      noLoading: noLoading,
-      success: function(ret) {
-        isFirstLoad = false;
-        if (!ret || !ret.id) {
-          wx.showModal({
-            title: '提示',
-            content: '该测评已被下架',
-            success: function() {
-              wx.navigateBack();
+    var getEvaluationPromise = new Promise((resolve, reject) => {
+      app.doAjax({
+        url: "evaluationDetail",
+        method: "get",
+        data: {
+          evaluationId: that.data.paperid,
+        },
+        success: function (res) {
+          if ( !Object.keys(res).length ) {
+            wx.showModal({
+              title: '提示',
+              content: '该测评已被下架',
+              success: function() {
+                wx.navigateBack();
+              }
+            });
+            return;
+          }
+          var hasVoucher = true,
+              voucher = 0,
+              { voucherInfo } = res,
+              evaluation = res,
+              isFreeTicket = false,
+              shareTicket = 0,
+              experienceTicket = 0,
+              officialTicket = 0,
+              payTrigger = false;
+          if( Object.keys(voucherInfo).length <= 0 ){
+            hasVoucher = false;
+          }else{
+            for( let i in voucherInfo ){
+              voucher += voucherInfo[i];
+              if( i === '2' ){
+                officialTicket = voucherInfo[i];
+              }else if( i === '3' ){
+                shareTicket = voucherInfo[i];
+              }else if( i === '5' ){
+                experienceTicket = voucherInfo[i];
+              }
+              if( i === '5' || i === '3' ){
+                isFreeTicket = true;
+              }
             }
+          }
+          that.setData({
+            evaluation,
+            hasVoucher,
+            voucher,
+            isFreeTicket,
+            officialTicket,
+            shareTicket,
+            experienceTicket,
+            payTrigger
           });
-          return;
         }
-        var vip0 = wx.getStorageSync("isvip0");
-        var vip1 = wx.getStorageSync("isvip1");
-        var vip2 = wx.getStorageSync("isvip2");
-        wx.setNavigationBarTitle({
-          title: ret.name || "测评详情"
-        });
-        var isAllFree = false,
-            isfree = false,
-            freeCount = 0,
-            isticket = false,
-            showFullBtn = false,
-            ispay = false;
-        // wx.setStorageSync('apply', ret.setting.apply)
-        if (ret.userPapersNum.type == -1 || !(+(ret.setting || {}).price)) {
-          isAllFree = true
-        }
-        if ((ret.setting || {}).isFree == true) {
-          isfree = true;
-          freeCount = (((ret.setting || {}).testRule || {}).count || 0) - ((ret.userPapersNum || {}).freeCount || 0);
-        }
-        if (freeCount < 0) {
-          freeCount = 0;
-        }
-        if ((ret.userPapersNum || {}).freeTicket != 0) {
-          isticket = true;
-        }
-        var hasShowMindToast = wx.getStorageSync("hasShowMindToast");
-        if (app.teamRole == 3 && !app.freeTickId) { //超级管理员的团队
-          if (!isAllFree && !ret.userPapersNum.hasOld && !hasShowMindToast && (ret.userPapersNum.freeTicket || ret.userPapersNum.vipTicket)) {
-            showMindToast = true;
-            wx.setStorageSync("hasShowMindToast", true);
-            // setTimeout(function() {
-            //   that.setData({
-            //     showMindToast: false
-            //   });
-            // }, 3000);
+      })
+    }).then(res=>{
+      app.doAjax({
+        url: 'toSharePaper',
+        method: 'post',
+        data: {
+          type: "self",
+          isCheckOld: true,
+          id: that.data.paperid,
+        },
+        success: function(res) {
+          if (res && res.isOld && res.id) {
+            that.setData({
+              oldShareId: res.id
+            });
           }
         }
-        var userData = app.globalData.userInfo || wx.getStorageSync("userInfo");
-        ret.setting.price = +ret.setting.price || 0;
-        ret.setting.praiseCount = +ret.setting.praiseCount || 0;
-        if (ret.userPapersNum.hasOld) {
-          wx.removeStorageSync(that.data.paperid);
-        }
-        if (wx.getStorageSync(that.data.paperid)) {
-          ret.userPapersNum.hasOld = true;
-        }
-        if (ret.setting.quesType && ret.setting.quesType.length) {
-          ret.setting.quesType.forEach(function(node) {
-            var ques = node.ques;
-            ques.stem = ques.stem.replace(/<img/g, "<img style='max-width:100%;'");
-            ques.stem = ques.stem.replace(/\n/g, "<br>");
-            ques.options = ques.options.join("&&|").replace(/<img/g, "<img style='max-width:100%;'").split("&&|");
-            var options = ques.options;
-            options.forEach(function(node, i) {
-              var txt = String.fromCharCode(65 + i) + "：";
-              options[i] = {
-                txt: txt,
-                msg: node
-              };
-            });
-            node["stem"] = ques.stem;
-            node["options"] = options;
-          });
-        }
-        console.log("app.freeTickId", app.freeTickId);
-        that.setData({
-          freeTickId: !isAllFree ? app.freeTickId : '',
-          teamRole: app.teamRole,
-          showMindToast: showMindToast,
-          userData: userData,
-          dataLoaded: true,
-          paperDetail: ret,
-          isvip0: vip0,
-          isvip1: vip1,
-          isvip2: vip2,
-          isAllFree: isAllFree,
-          isfree: isfree,
-          isticket: app.isIos || isticket,
-          freeCount: freeCount,
-          showFullBtn: showFullBtn,
-          ispay: ispay,
-          loading: false
-        });
-        // if (userData.isBind) {
-        //   that.openpopup(null, true);
-        //   wx.aldstat.sendEvent('点击了分享再领3张券-1', {
-        //     '触发点击': '点击数'
-        //   });
-        // }
-        // app.doAjax({
-        //   url: 'toSharePaper',
-        //   method: 'post',
-        //   data: {
-        //     type: "self",
-        //     isCheckOld: true,
-        //     id: that.data.paperid,
-        //   },
-        //   success: function(res) {
-        //     if (res && res.isOld && res.id) {
-        //       that.setData({
-        //         oldShareId: res.id
-        //       });
-        //     }
-        //   }
-        // });
-      }
+      });
     });
   },
   /**
@@ -424,7 +405,18 @@ Page({
    */
   paymore: function() {
     this.setData({
-      ispay: true
+      ispay: true,
+      payTrigger: false
+    })
+  },
+  payForEvaluation: function(){
+    this.setData({
+      payTrigger: true
+    })
+  },
+  cancelPayForEvaluation: function(){
+    this.setData({
+      payTrigger: false
     })
   },
   /**
@@ -525,6 +517,7 @@ Page({
   gotoguide: function(e) {
     var that = this;
     var { name } = e.currentTarget.dataset;
+    var { evaluationInfo,availableCount } = that.data.evaluation;
     function toNext() {
       app.doAjax({
         url: 'toSharePaper',
@@ -569,7 +562,7 @@ Page({
           });
           return;
         }
-        if (+that.data.paperDetail.setting.price && that.data.paperDetail.userPapersNum.total > 0) {
+        if (+evaluationInfo.price && availableCount > 0) {
           //完全免费测评无需提示
           wx.showModal({
             title: '体验确认',
@@ -606,7 +599,6 @@ Page({
     }
   },
   paymoney: function(e) {
-
     console.log("统计1", e);
     this.setData({
       isticket: app.isIos || false,
@@ -629,7 +621,6 @@ Page({
           openid: wx.getStorageSync("openId") || app.globalData.userMsg.openid
         },
         success: function(res) {
-          console.log(res)
           wx.requestPayment({
             'appId': res.payObj.appId,
             'timeStamp': res.payObj.timeStamp,
@@ -681,7 +672,126 @@ Page({
       })
     }
   },
-
+  /**
+   * 按份购买测评
+   */
+  payByCounts: function () {
+    var that = this,
+        { count } = this.data;
+    if( count !== 0 ){
+      app.doAjax({
+        url: "buyPaper",
+        method: "post",
+        data: {
+          id: that.data.paperid,
+          count: that.data.count,
+          type: 1,
+          openid: wx.getStorageSync("openId") || app.globalData.userMsg.openid
+        },
+        success: function(res){
+          wx.requestPayment({
+            'appId': res.payObj.appId,
+            'timeStamp': res.payObj.timeStamp,
+            'nonceStr': res.payObj.nonceStr,
+            'package': res.payObj.package,
+            'signType': 'MD5',
+            'paySign': res.payObj.paySign,
+            'success': function(res) {
+              that.showMindDlgFn();
+              wx.showToast({
+                title: '购买成功',
+                duration: 2000
+              });
+              that.setData({
+                ispay: false,
+                pageScrollTop: 0
+              });
+              setTimeout(function() {
+                that.toGetPaperDetail();
+              }, 500);
+              //这里完成跳转
+            },
+            'fail': function(res) {
+              if (res.errMsg == "requestPayment:fail cancel") {
+                wx.showToast({
+                  title: '购买取消',
+                  icon: 'none',
+                  duration: 1200
+                })
+              } else {
+                wx.showToast({
+                  title: '购买失败',
+                  icon: 'none',
+                  duration: 1200
+                })
+              }
+              //支付失败
+              console.log(res);
+            },
+            'complete': function(res) {}
+          })
+        }
+      })
+    }
+  },
+  /**
+   * 按买断购买测评
+   */
+  payByBuyout: function() {
+    var { evaluationInfo } = this.data.evaluation;
+    app.doAjax({
+      url: 'buyout',
+      method: 'post',
+      data: {
+        evaluationId: evaluationInfo.id,
+        dayOfPeriod: evaluationInfo.buyoutPlans[0].dayOfPeriod,
+        openid: wx.getStorageSync("openId") || app.globalData.userMsg.openid,
+      },
+      success: function (res) {
+        console.log(res);
+        wx.requestPayment({
+          'appId': res.appId,
+          'timeStamp': res.timeStamp,
+          'nonceStr': res.nonceStr,
+          'package': res.package,
+          'signType': 'MD5',
+          'paySign': res.paySign,
+          'success': function(res) {
+            that.showMindDlgFn();
+            wx.showToast({
+              title: '购买成功',
+              duration: 2000
+            });
+            that.setData({
+              ispay: false
+            });
+            setTimeout(function() {
+              that.toGetPaperDetail();
+            }, 500);
+            //这里完成跳转
+          },
+          'fail': function(res) {
+            if (res.errMsg == "requestPayment:fail cancel") {
+              wx.showToast({
+                title: '购买取消',
+                icon: 'none',
+                duration: 1200
+              })
+            } else {
+              wx.showToast({
+                title: '购买失败',
+                icon: 'none',
+                duration: 1200
+              })
+            }
+            //支付失败
+            console.log(res);
+          },
+          'complete': function(res) {}
+        })
+      }
+    });
+  },
   closepaypage: function() {
     this.setData({
       ispay: false
@@ -691,49 +801,18 @@ Page({
   gotodati: function() {
     //发放测评
     var that = this;
-    var paperDetail = that.data.paperDetail;
-    var userPapersNum = paperDetail.userPapersNum || {};
-    wx.aldstat.sendEvent('点击发放测评', {
-      '测评名称': '名称：' + paperDetail.setting.name1
-    });
-    if (userPapersNum.total == 0) {
+    var { evaluationInfo,availableCount= 0,freeEvaluation } = that.data.evaluation;
+    // wx.aldstat.sendEvent('点击发放测评', {
+    //   '测评名称': '名称：' + evaluationInfo.name
+    // });
+    if ( availableCount === 0 && !freeEvaluation ) {
       app.toast("测评可用数量不足，请先购买或用券兑换测评");
       return;
     }
     wx.navigateTo({
-      url: '../store/sharePaper?id=' + paperDetail.id + "&count=" + userPapersNum.total + "&name=" + paperDetail.setting.name1,
+      url: '../store/sharePaper?id=' + evaluationInfo.id + "&count=" + availableCount + "&name=" + evaluationInfo.name + "&isFree=" + freeEvaluation ,
     });
     return;
-    app.doAjax({
-      url: 'toSharePaper',
-      method: 'post',
-      data: {
-        id: that.data.paperid,
-      },
-      success: function(res) {
-        that.setData({
-          pictureUrl: res.img,
-          shareId: res.id,
-          dati: true,
-          showMindDlg: false
-        });
-        that.onShow()
-      }
-    });
-  },
-
-  gototailed: function() { //发放记录
-    // app.getUserInfo();
-    // this.checkUserMobile(e, function() {
-    //   wx.setStorageSync("paperDetail", this.data.paperDetail);
-    //   wx.navigateTo({
-    //     url: './sendlog?id=' + this.data.paperid
-    //   });
-    // });
-    wx.setStorageSync("paperDetail", this.data.paperDetail);
-    wx.navigateTo({
-      url: './sendlog?id=' + this.data.paperid
-    })
   },
   /**
    * 分享领取测评
@@ -773,7 +852,6 @@ Page({
     // });
   },
   changePage: function(e) {
-
     var that = this;
     var d = e.currentTarget.dataset;
     if (d.url) {
@@ -787,7 +865,6 @@ Page({
         var encryptedData = detail.encryptedData;
         if (encryptedData) {
           //用户授权手机号
-
           var userMsg = app.globalData.userMsg || {};
           userMsg["iv"] = iv;
           userMsg["encryptedData"] = encryptedData;
@@ -823,19 +900,6 @@ Page({
     })
   },
   /**
-   * 进入例题查看
-   */
-  toQuesExample: function(e) {
-    var list = this.data.paperDetail.setting.quesType;
-    var index = e.currentTarget.dataset.i;
-    var obj = list[index];
-    if (!obj) return;
-    wx.setStorageSync("quesExample", obj);
-    wx.navigateTo({
-      url: './quesExample'
-    });
-  },
-  /**
    * 查看大图
    */
   showBigImg: function(e) {
@@ -849,7 +913,6 @@ Page({
    * 用户授权
    */
   getUserInfo: function(e) {
-    console.log("统计1", e);
     var that = this;
     var userInfo = e.detail.userInfo;
     if (!userInfo) return;
@@ -919,22 +982,6 @@ Page({
         }
       });
     }
-  },
-  /**
-   * 用户点赞、取消点赞
-   */
-  userPraise: function(e) {
-    var that = this;
-    app.doAjax({
-      url: "praisePaper",
-      data: {
-        paperId: that.data.paperid
-      },
-      success: function(ret) {
-        // app.toast(ret);
-        that.toGetPaperDetail();
-      }
-    });
   },
   /**
    * 滑动切换指示点
@@ -1055,21 +1102,6 @@ Page({
       success: function(ret) {
         app.getUserInfo(); //更新用户信息
         app.toast("领取成功，快去购买兑换测评吧");
-        ret.forEach(function(node) {
-          var column = node.column;
-          var paper = node.paper;
-          node.endTime = node.endTime ? app.changeDate(node.endTime, "yyyy-MM-dd") : "";
-          if (paper) {
-            node.name = paper.name;
-            node.name1 = "仅限于" + node.name;
-          } else if (column) {
-            node.name = column.name;
-            node.name1 = "仅限于" + node.name + "的测评";
-          } else {
-            node.name = "通用";
-            node.name1 = "可用于兑换平台上任意测评";
-          }
-        });
         /**
          * @Description: isGetInAgainst 领完5张券，再次进入测评详情页才会显示领取3张券的广告
          * @author: WE!D
@@ -1120,5 +1152,36 @@ Page({
   },
   servingTrigger: function () {
     this.selectComponent('#serving').callServing();
+    this.setData({
+      payTrigger: false
+    })
+  },
+  buyByTicket: function () {
+    this.setData({
+      buyByTicket: true,
+      payTrigger: false
+    })
+  },
+  subTicket: function () {
+    var { ticketCount } = this.data;
+    if( ticketCount <= 0 ){
+      ticketCount = 0;
+    }else{
+      ticketCount = ticketCount - 1;
+    }
+    this.setData({
+      ticketCount
+    })
+  },
+  addTicket: function () {
+    var { voucher,ticketCount } = this.data;
+    if(  ticketCount >= voucher ){
+      app.toast("最多只能兑换"+voucher+"份");
+    }else{
+      ticketCount = ticketCount + 1;
+    }
+    this.setData({
+      ticketCount
+    })
   }
 });

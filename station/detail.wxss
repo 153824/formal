@@ -91,7 +91,18 @@
   grid-column-start: 1;
   grid-column-end: 3;
 }
-
+.gotoguide-btn{
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+.gotodati-btn{
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
 /*.button-group > view{*/
 /*  flex-grow: 1;*/
 /*}*/
@@ -1084,7 +1095,7 @@
   border-top-right-radius: 20rpx;
   background-color: white;
   font-size: 32rpx;
-  z-index: 999999999999;
+  z-index: 9999999999999;
 }
 .pay-title{
   display: flex;
@@ -1168,4 +1179,55 @@
   height: 80rpx;
   text-align: center;
   background-color: rgba(0,0,0,0.1);
+}
+.pay-by-ticket-page{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 40rpx 40rpx;
+  height: 350rpx;
+  background-color: #fff;
+  border-radius: 20rpx;
+  z-index: 9999999999;
+}
+.head-wrapper{
+  display: flex;
+  justify-content: space-between;
+}
+.title-wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 32rpx;
+  font-weight: 600;
+  letter-spacing: 4rpx;
+}
+.operator-wrapper{
+  display: flex;
+  justify-content: flex-end;
+}
+.operator{
+  display: flex;
+}
+.ticket-sub,.ticket-add{
+  width: 80rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  background-color: rgba(0,0,0,.1);
+  font-size: 28rpx;
+}
+.ticket-display{
+  width: 90rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin: 0 4rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  text-align: center;
+  background-color: rgba(0,0,0,.1);
 }

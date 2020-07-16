@@ -101,9 +101,9 @@ Page({
             if(node.type==3){
               node.slider=new Array(node.options.length).fill(0);
               node.totalScore = node.totalScore;
-              node.step = Math.floor(node.totalScore/( node.totalScore - 1 ));
+              node.step = Math.floor(node.totalScore/( 5 ));
               node.stepArr = [];
-              for(let i =0;i<node.totalScore;i++)
+              for(let i =0;i<5;i++)
               {
                 node.stepArr.push(Math.floor(i*node.step));
               }
@@ -118,9 +118,9 @@ Page({
             if(node.type==3){
               node.slider=new Array(node.options.length).fill(0);
               node.totalScore = node.totalScore;
-              node.step = Math.floor(node.totalScore/(node.totalScore - 1));
+              node.step = Math.floor(node.totalScore/5);
               node.stepArr = [];
-              for(let i =0;i<node.totalScore;i++)
+              for(let i =0;i<5;i++)
               {
                 node.stepArr.push(Math.floor(i*node.step));
               }

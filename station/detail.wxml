@@ -19,15 +19,10 @@
         </view>
         <text class="use-time">{{ evaluation.evaluationInfo.quesCount }}题 / 预计用时{{ evaluation.evaluationInfo.estimatedTime }}分钟</text>
       </view>
-      <view class="leave-wrapper" bindtap="paymore" wx:if="{{ hasVoucher&&!evaluation.freeEvaluation}}">
-        <text>剩余可用数量：{{voucher}}份</text>
-        <text class="buy-more" wx:if="{{teamRole!=1&&!evaluation.freeEvaluation&&!isFreeTicket&&isIos}}">{{isIos?'用券兑换':'购买更多'}}</text>
-        <text class="buy-more" wx:elif="{{!isAllFree&&teamRole!=1}}">{{isIos?'用券兑换':'购买更多'}}</text>
-      </view>
     </view>
   </view>
   <view style="background-color: #fff;margin-top: 20rpx;">
-    <checkout title="报价方案" type="price"></checkout>
+    <checkout isShow="{{ !evaluation.freeEvaluation }}" title="报价方案" type="price"></checkout>
     <checkout title="测评简介" type="introduction" info="{{ evaluation.evaluationInfo.synopsis }}"></checkout>
     <checkout title="测量维度" type="dimension" list="{{ evaluation.evaluationInfo.measureDimension }}"></checkout>
     <checkout title="适用场景" type="scenarios" list="{{ evaluation.evaluationInfo.scenario }}"></checkout>
@@ -45,8 +40,8 @@
   </view>
 </view>
 <!-- 未购买过测评的按钮组且未买断 -->
-<view class="buy-group" wx:elif="{{ evaluation.availableCount <= 0 && !evaluation.buyoutInfo.hadBuyout }}">
-    <button class="meal" style="background-color: #FFF3E0FF;outline: none;border: none;" open-type="getUserInfo" bindgetuserinfo="getUserInfo" >
+<view class="buy-group" wx:elif="{{ !evaluation.hadConsumed && !evaluation.buyoutInfo.hadBuyout }}">
+    <button class="meal" style="background-color: #FFF3E0FF;outline: none;border: none;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" >
       <meal isShow="{{ evaluation.isBeginner }}" title="新用户领券，免费体验测评" subtitle="立即领券 >" icon=""></meal>
     </button>
 <!--    <view class="meal" bindtap="openGift">-->
@@ -59,11 +54,11 @@
       <press title="iOS暂不支持直接购买"></press>
     </view>
     <view wx:else bindtap="payForEvaluation">
-      <press title="购买测评"></press>
+      <press title="购买测评" fontSize="32"></press>
     </view>
 </view>
 <!-- 购买过测评券的按钮组且未买断 -->
-<view class="button-group" wx:elif="{{ evaluation.availableCount > 0 && !evaluation.buyoutInfo.hadBuyout }}">
+<view class="button-group" wx:elif="{{ evaluation.hadConsumed && !evaluation.buyoutInfo.hadBuyout }}">
   <view class="meal" bindtap="payForEvaluation">
     <meal isShow="{{ !evaluation.buyoutInfo.hadBuyout }}" title="剩余可用份数：{{ officialTicket + experienceTicket + shareTicket }}" subtitle="{{ isIos ? '用券兑换' : '购买更多' }}"></meal>
   </view>
@@ -219,21 +214,20 @@
         < count? '券数量不足': '用券兑换'+count+ '份'}} </view>
       </view>
   </view>
-<!--wx:if="{{ payTrigger }}"-->
 <view wx:if="{{ payTrigger }}" class="new-pay-page">
   <view class="pay-title">
     <text>选择购买方式</text>
-    <view style="background-color: #5c78f1;" bindtap="buyByTicket">
+    <view style="" bindtap="buyByTicket">
       <image style="width: 30rpx;height: 30rpx;"></image>
       <text style="font-weight: initial;font-size: 28rpx;">用券购买</text>
     </view>
   </view>
   <view class="pay-button-group">
     <view style="width: 300rpx;" bindtap="buyByBuyout">
-      <press title="按年买断" height="50" borderRadius-="10" color="{{ buyByBuyout ? '#fff' : '#353EE8FF' }}" bgColor="{{ buyByBuyout ? '#353EE8FF' : '#fff' }}"></press>
+      <press title="按年买断" height="50" borderRadius-="10" color="{{ buyByBuyout ? '#fff' : '#353EE8FF' }}" bgColor="{{ buyByBuyout ? '#353EE8FF' : '#fff' }}" border="{{ buyByBuyout ? '' : '1px solid #353EE8FF' }}"></press>
     </view>
     <view style="width: 300rpx;" bindtap="buyByCounts">
-      <press title="按份购买" height="50" borderRadius="10" color="{{ buyByCounts ? '#fff' : '#353EE8FF' }}" bgColor="{{ buyByCounts ? '#353EE8FF' : '#fff' }}"></press>
+      <press title="按份购买" height="50" borderRadius="10" color="{{ buyByCounts ? '#fff' : '#353EE8FF' }}" bgColor="{{ buyByCounts ? '#353EE8FF' : '#fff' }}" border="{{ buyByCounts ? '' : '1px solid #353EE8FF' }}"></press>
     </view>
   </view>
   <view class="company-choice">
@@ -257,13 +251,13 @@
   </view>
   <view class="pay-group">
     <view wx:if="{{ buyByCounts }}" bindtap="payByCounts">
-      <press title="微信支付"></press>
+      <press title="微信支付" fontSize="32" fontWeight="600" letterSpacing="2"></press>
     </view>
     <view wx:if="{{ buyByBuyout }}" bindtap="payByBuyout">
-      <press title="微信支付"></press>
+      <press title="微信支付" fontSize="32" fontWeight="600" letterSpacing="2"></press>
     </view>
     <view bindtap="servingTrigger">
-      <press title="对公转账" color="#353EE8FF" bgColor="#fff" border="none"></press>
+      <press title="对公转账" fontSize="32" color="#353EE8FF" bgColor="#fff" border="none" fontWeight="600" letterSpacing="2"></press>
     </view>
   </view>
 </view>
@@ -271,10 +265,10 @@
 <view wx:if="{{ buyByTicket }}" class="pay-by-ticket-page">
   <view class="head-wrapper">
     <view class="title-wrapper">
-      <text>任职风险测试——餐饮行业</text>
+      <text>{{ evaluation.evaluationInfo.name }}</text>
       <text style="font-size: 24rpx;font-weight: initial;margin: 10rpx;letter-spacing: 4rpx;color: rgba(0,0,0,.4)">{{ voucher }}张券可用于本测评</text>
     </view>
-    <image style="width: 100rpx;height: 100rpx;background-color: #2f3038;border-radius: 10rpx;"></image>
+    <image src="{{ evaluation.evaluationInfo.smallImg }}" style="width: 100rpx;height: 100rpx;background-color: #2f3038;border-radius: 10rpx;"></image>
   </view>
   <view class="operator-wrapper">
     <view class="operator">

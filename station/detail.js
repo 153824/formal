@@ -40,7 +40,7 @@ Page({
     buyByBuyout: true,
     buyByCounts: false,
     buyByTicket: false,
-    ticketCount: 0
+    ticketCount: 1
   },
   onLoad: function(options) {
     var that = this;
@@ -85,124 +85,6 @@ Page({
           });
         }
       });
-
-      // app.doAjax({
-      //   url: "getMyticket",
-      //   method: "get",
-      //   noLoading: true,
-      //   data: {
-      //     page: 1,
-      //     pageSize: 12,
-      //     type: 5
-      //   },
-      //   success: function(ret) {
-      //     console.log("First Ajax:",ret);
-      //     var hasOldFreeTicks = false;
-      //     if (ret && ret.length) {
-      //       hasOldFreeTicks = true; //还有未使用完的礼包券--无法获取第二次的免费券
-      //     }
-      //     var couponGet0 = app.couponGet0 || false;
-      //     var couponGet = app.couponGet || false;
-      //     var couponGet1 = app.couponGet1 || false;
-      //     var isTodayTeam = app.isTodayTeam || false;
-      //     if( couponGet0 ){
-      //       app.globalData.isGetInAgainst = true;
-      //     }
-      //     that.setData({
-      //       teamRole: app.teamRole,
-      //       couponGet0: couponGet0,
-      //       couponGet: hasOldFreeTicks ? true : couponGet,
-      //       couponGet1: hasOldFreeTicks ? true : couponGet1,
-      //       isTodayTeam: isTodayTeam
-      //     });
-      //   }
-      // });
-      //
-      // app.doAjax({
-      //   url: "getMyticket",
-      //   method: "get",
-      //   noLoading: true,
-      //   data: {
-      //     page: 1,
-      //     pageSize: 12,
-      //     type: 1
-      //   },
-      //   success: function(ret) {
-      //     var hasFreeTick = false;
-      //     ret.forEach(function(n) {
-      //       if (n.type == 1) {
-      //         hasFreeTick = true;
-      //       }
-      //     });
-      //     that.setData({
-      //       hasFreeTick: true,
-      //     });
-      //   }
-      // });
-      //
-      // app.doAjax({
-      //   url: "getMyticket",
-      //   method: "get",
-      //   noLoading: true,
-      //   data: {
-      //     page: 1,
-      //     pageSize: 12,
-      //     type: 2
-      //   },
-      //   success: function(ret) {
-      //     console.log("Third Ajax:",ret);
-      //     var freeTick = "";
-      //     var getInOnceAgainst = wx.getStorageSync("getInOnceAgainst") || false;
-      //     if( ret.length <= 0 ) ret = [{ type: -1}];
-      //     ret.forEach(function(n) {
-      //       console.log("n",n)
-      //       if (n.type == 2) { //有领取过3张免费测评券
-      //         freeTick = n.id;
-      //         getInOnceAgainst = false;
-      //         console.log("有领取过3张免费测评券");
-      //       }else{
-      //         if( !isFresh ){
-      //           return;
-      //         }else{
-      //           getInOnceAgainst = true;
-      //           app.globalData.getInOnceAgainst = true;
-      //           wx.setStorage({
-      //             key: "getInOnceAgainst",
-      //             data: true,
-      //           });
-      //         }
-      //       }
-      //     });
-      //     that.setData({
-      //       hasFreeTick: true,
-      //       freeTick: freeTick,
-      //       oldShareInfo: "",
-      //       getInOnceAgainst: getInOnceAgainst
-      //     });
-      //     // if (!wx.getStorageSync("hideLastTestMind")) {
-      //     //   app.doAjax({
-      //     //     url: 'toSharePaper',
-      //     //     method: 'post',
-      //     //     data: {
-      //     //       type: "self",
-      //     //       isCheckOld: true
-      //     //     },
-      //     //     success: function(res) {
-      //     //       if (res && res.isOld && res.id) {
-      //     //         that.setData({
-      //     //           oldShareInfo: res
-      //     //         });
-      //     //       }
-      //     //     }
-      //     //   });
-      //     // }
-      //     app.getUserInfo(that.toGetPaperDetail);
-      //   }
-      // });
-      // that.setData({
-      //   isGetInCount: app.globalData.isGetInCount
-      // });
-
       app.doAjax({
         url: 'evaluationDetail',
         method: 'get',
@@ -424,7 +306,7 @@ Page({
    */
   useticket: function() {
     var that = this;
-    var { ticketCount,voucher } = this.data;
+    var { ticketCount,voucher,evaluation } = this.data;
     if (!ticketCount) return wx.showToast({
       title: '购买数量不能为空',
       icon: 'none',
@@ -440,9 +322,9 @@ Page({
       url: "buyPaper",
       method: "post",
       data: {
-        voucherId: that.data.freeTickId,
-        id: that.data.paperid,
-        count: that.data.count,
+        voucherId: '5f1121175214bd0009edefe9',
+        id: evaluation.evaluationInfo.id,
+        count: ticketCount,
         type: 3,
         openid: wx.getStorageSync("openId") || app.globalData.userMsg.openid
       },
@@ -451,13 +333,6 @@ Page({
           title: '兑换成功',
         });
         that.showMindDlgFn();
-        var o = {
-          ispay: false,
-          pageScrollTop: 0
-        };
-        if (that.data.freeTickId) {
-          o["isFreeTickId"] = true;
-        }
         that.setData({
           buyByTicket: false
         });
@@ -1198,5 +1073,41 @@ Page({
     this.setData({
       ticketCount
     })
+  },
+  getPhoneNumber: function (e) {
+    var that = this;
+    var { iv,encryptedData } = e.detail;
+    if (encryptedData) {
+      //用户授权手机号
+      var userMsg = app.globalData.userMsg || {};
+      userMsg["iv"] = iv;
+      userMsg["encryptedData"] = encryptedData;
+      var updatedUserMobilePromise = new Promise(((resolve, reject) => {
+        app.doAjax({
+          url: "updatedUserMobile",
+          data: userMsg,
+          success: function (res) {
+            resolve(true);
+          },
+          fail: function (err) {
+            reject(err);
+          }
+        })
+      }));
+      updatedUserMobilePromise.then(()=>{
+        app.doAjax({
+          url: "/userDetail",
+          method: "get",
+          data: {
+            openid: wx.getStorageSync("openId"),
+          },
+          success: function (res) {
+            if( res.data.phone ){
+              that.getNewerTicket();
+            }
+          }
+        })
+      });
+    }
   },
 });

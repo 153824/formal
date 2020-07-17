@@ -37,6 +37,18 @@ Component({
     shadow: {
       type: String,
       value: ''
+    },
+    fontSize: {
+      type: String,
+      value: ''
+    },
+    fontWeight: {
+      type: String,
+      value: ''
+    },
+    letterSpacing: {
+      type: String,
+      value: ''
     }
   },
 

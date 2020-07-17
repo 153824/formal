@@ -137,30 +137,35 @@
   font-weight: 500;
 }
 .price-content{
+  position: relative;
   display: flex;
   justify-content: space-between;
   font-size: 24rpx;
   font-weight: 600;
+  width: 670rpx;
+  height: 181rpx;
   color: #f8ba0f;
+  background-image: url("http://ihola.luoke101.com/price-banner.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .price-child{
-  padding: 20rpx 30rpx;
-  background-color: #2f3038;
-  box-shadow:0px 0px 7px 0px rgba(167,185,237,0.36);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  transform: translate(0,-50%);
+  height: 181rpx;
 }
-.price-child:first-child{
-  width: 201rpx;
-  background-color: #ffffff;
-  border-top-left-radius: 15rpx;
-  border-bottom-left-radius: 15rpx;
+.price-child-by-count{
+  left: 50rpx;
 }
-.price-child:nth-child(2){
-  width: 300rpx;
-  background-color: #ffffff;
-  border-top-right-radius: 15rpx;
-  border-bottom-right-radius: 15rpx;
+.price-child-by-buyout{
+  right: 50rpx;
 }
-.price-child:nth-child(2) > view{
+.price-child > view{
   text-align: center;
 }
 .buy{

@@ -319,14 +319,12 @@ Page({
       duration: 1200
     });
     app.doAjax({
-      url: "buyPaper",
+      url: "exchangeByVoucher",
       method: "post",
       data: {
         voucherId: '5f1121175214bd0009edefe9',
-        id: evaluation.evaluationInfo.id,
+        evaluationId: evaluation.evaluationInfo.id,
         count: ticketCount,
-        type: 3,
-        openid: wx.getStorageSync("openId") || app.globalData.userMsg.openid
       },
       success: function(res) {
         wx.showToast({
@@ -562,13 +560,13 @@ Page({
    */
   payByCounts: function () {
     var that = this,
-        { count } = this.data;
+        { count,evaluation } = this.data;
     if( count !== 0 ){
       app.doAjax({
         url: "buyPaper",
         method: "post",
         data: {
-          id: that.data.paperid,
+          id: evaluation.evaluationInfo.id,
           count: that.data.count,
           type: 1,
           openid: wx.getStorageSync("openId") || app.globalData.userMsg.openid

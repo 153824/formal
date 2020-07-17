@@ -68,10 +68,19 @@ var hidePartPhoneNumber = function(phone){
   targetPhone = phone.replace(getRegExp("(\d{3})\d{4}(\d{4})"), '$1****$2');
   return targetPhone;
 };
+
+/**
+ * @return
+ */
+var ASCIIToChar = function(number){
+  var options = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+  return options[number];
+};
 module.exports = {
   getMonthAndDayByFrag: getMonthAndDayByFrag,
   getHourAndMinByFrag: getHourAndMinByFrag,
   getFullDateByFrag: getFullDateByFrag,
   saveDouble: saveDouble,
-  hidePartPhoneNumber: hidePartPhoneNumber
+  hidePartPhoneNumber: hidePartPhoneNumber,
+  ASCIIToChar: ASCIIToChar
 };

@@ -23,11 +23,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log(options);
+    var { id,count,name,hadBuyout,isFree  } = options;
     this.setData({
-      maxCount: options.count,
-      paperId: options.id,
-      paperName: options.name,
+      maxCount: count,
+      paperId: id,
+      paperName: name,
+      hadBuyout: hadBuyout,
+      isFree
     });
   },
 
@@ -53,9 +55,8 @@ Page({
   },
   changeCount: function(e) {
     var that = this;
-    var maxCount = that.data.maxCount || 0;
     var t = e.currentTarget.dataset.t;
-    var count = that.data.count;
+    var { maxCount=0,count,hadBuyout,isFree } = that.data;
     if (t == 1) {
       count -= 1;
     } else if (t == 2) {
@@ -63,11 +64,7 @@ Page({
     } else {
       count = e.detail.value;
     }
-    if (count > parseInt(maxCount)) {
-      // count = maxCount;
-      // that.setData({
-      //   count: maxCount
-      // });
+    if (count > parseInt(maxCount) && !hadBuyout && !isFree) {
       app.toast("最大可选择数量为" + maxCount);
       return;
     }
@@ -90,40 +87,22 @@ Page({
     });
   },
   toSharePaper: function() {
-    
     var that = this;
-    var d = that.data;
-    var costNum = d.count;
-    var paperName = d.paperName;
-
-    // let startTime = d.startTime + " 00:00:00";
-    // let endTime = d.endTime + " 23:59:59";
-    // let startTimeStamp = Date.parse(startTime);
-    // let endTimeStamp = Date.parse(endTime);
-    wx.aldstat.sendEvent('点击生成测评邀请函', {
-        '测评名称': '名称：' + paperName
-     });
-    if (!costNum) {
+    var { count,paperName,hadBuyout,isFree,maxCount,reportMeet } = that.data;
+    var costNum = count;
+//     wx.aldstat.sendEvent('点击生成测评邀请函', {
+//         '测评名称': '名称：' + paperName
+//      });
+    if (!costNum && !hadBuyout && !isFree ) {
       return;
     }
-    if (costNum > d.maxCount) {
-      console.log("toast=" + costNum + "   " + d.maxCount);
+    if (costNum > maxCount && !hadBuyout && !isFree) {
       app.toast("测评可用数量不足");
       return;
     }
-
-    // if (startTimeStamp-endTimeStamp>=0){
-    //   app.toast("结束时间不得早于开始时间");
-    //   return;
-    // }
-
     var shareMsg = {
-
-      // startTime: startTime,
-      // endTime: endTime,
-
       shareType: costNum > 1 ? 2 : 1,
-      reportMeet: d.reportMeet,
+      reportMeet: reportMeet,
       count: costNum,
       pcQrcode: "1"
     };
@@ -141,10 +120,11 @@ Page({
         });
         wx.aldstat.sendEvent('成功生成测评邀请函', {
                 '测评名称': '名称：' + paperName
-             });
+        });
       }
     })
   },
+
   bindDateChange: function(e) {
     var val = e.detail.value;
     var k = e.currentTarget.dataset.k;

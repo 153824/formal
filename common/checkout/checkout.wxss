@@ -2,7 +2,7 @@
 .none{
   display: none;
 }
-.introduction,.dimension,.scenarios,.example,.report{
+.introduction,.dimension,.scenarios,.example,.report,.price{
   padding: 80rpx 40rpx 40rpx 40rpx;
 }
 .head{
@@ -34,7 +34,7 @@
   color: rgb(241, 244, 255);
   z-index: -100;
 }
-.introduction-content,.dimension-content,.scenarios-content,.example-content,.report-content{
+.introduction-content,.dimension-content,.scenarios-content,.example-content,.report-content,.price-content{
   letter-spacing: 2rpx;
   line-height: 48rpx;
   font-size: 30rpx;
@@ -135,4 +135,42 @@
 .report-child > text{
   font-size: 32rpx;
   font-weight: 500;
+}
+.price-content{
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  font-size: 24rpx;
+  font-weight: 600;
+  width: 670rpx;
+  height: 181rpx;
+  color: #f8ba0f;
+  background-image: url("http://ihola.luoke101.com/price-banner.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.price-child{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  transform: translate(0,-50%);
+  height: 181rpx;
+}
+.price-child-by-count{
+  left: 50rpx;
+}
+.price-child-by-buyout{
+  right: 50rpx;
+}
+.price-child > view{
+  text-align: center;
+}
+.buy{
+  color: #353EE8FF;
+}
+.price-child > view{
+
 }

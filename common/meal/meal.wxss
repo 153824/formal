@@ -7,7 +7,7 @@
     padding: 22rpx 46rpx 22rpx 42rpx;
     background-color: #FFF3E0FF;
     color: #B8702BFF;
-    font-size: 24rpx;
+    font-size: 28rpx;
     line-height: 40rpx;
 }
 .meal-info{

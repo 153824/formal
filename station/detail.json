@@ -6,6 +6,7 @@
     "press": "../common/press/press",
     "ticket": "../common/ticket/ticket",
     "free": "../common/free/free",
-    "serving": "../common/serving/serving"
+    "serving": "../common/serving/serving",
+    "mask": "../common/mask/mask"
   }
 }

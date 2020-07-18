@@ -33,10 +33,10 @@
 <!-- 免费测评的按钮组 -->
 <view class="button-group" wx:if="{{ evaluation.freeEvaluation }}">
   <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}">
-    <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
+    <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF" fontSize="32" fontWeight="600"></press>
   </view>
   <view class="gotodati-btn" bindtap="gotodati">
-    <press title="测别人(微信/智联/BOSS/51...)"></press>
+    <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
   </view>
 </view>
 <!-- 未购买过测评的按钮组且未买断 -->
@@ -51,34 +51,34 @@
       <meal isShow="{{ hasVoucher }}" title="您有{{ experienceTicket + officialTicket + experienceTicket + shareTicket }}张体验券可用于本测评" subtitle="立即使用 >"></meal>
     </view>
     <view wx:if="{{ isIos }}">
-      <press title="iOS暂不支持直接购买"></press>
+      <press title="iOS暂不支持直接购买" fontSize="32" fontWeight="600"></press>
     </view>
     <view wx:else bindtap="payForEvaluation">
-      <press title="购买测评" fontSize="32"></press>
+      <press title="购买测评" fontSize="32" fontWeight="600"></press>
     </view>
 </view>
 <!-- 购买过测评券的按钮组且未买断 -->
 <view class="button-group" wx:elif="{{ evaluation.hadConsumed && !evaluation.buyoutInfo.hadBuyout }}">
   <view class="meal" bindtap="payForEvaluation">
-    <meal isShow="{{ !evaluation.buyoutInfo.hadBuyout }}" title="剩余可用份数：{{ officialTicket + experienceTicket + shareTicket }}" subtitle="{{ isIos ? '用券兑换' : '购买更多' }}"></meal>
+    <meal isShow="{{ !evaluation.buyoutInfo.hadBuyout }}" title="剩余可用份数：{{ evaluation.availableCount }}" subtitle="{{ isIos ? '用券兑换' : '购买更多' }}"></meal>
   </view>
   <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}">
-    <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
+    <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF" fontSize="32" fontWeight="600"></press>
   </view>
   <view class="gotodati-btn" bindtap="gotodati">
-    <press title="测别人(微信/智联/BOSS/51...)"></press>
+    <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
   </view>
 </view>
 <!-- 买断 -->
 <view class="button-group" wx:elif="{{ evaluation.buyoutInfo.hadBuyout }}">
-  <view class="meal">
+  <view class="meal" bindtap="payForEvaluation">
     <meal isShow="{{ evaluation.buyoutInfo.hadBuyout }}" title="有效期至：{{ isIos ? util.getFullDateByFrag(evaluation.buyoutInfo.expiryDate,'.',true) : util.getFullDateByFrag(evaluation.buyoutInfo.expiryDate,'.',true) }}" subtitle="{{ isIos ? '' : '续费' }}"></meal>
   </view>
   <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}">
-    <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
+    <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF" fontSize="32" fontWeight="600"></press>
   </view>
   <view class="gotodati-btn" bindtap="gotodati">
-    <press title="测别人(微信/智联/BOSS/51...)"></press>
+    <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
   </view>
 </view>
 <!--<view class="button-group" wx:if="{{ paperDetail.userPapersNum.hasOld }}">-->
@@ -217,20 +217,20 @@
 <view wx:if="{{ payTrigger }}" class="new-pay-page">
   <view class="pay-title">
     <text>选择购买方式</text>
-    <view style="" bindtap="buyByTicket">
-      <image style="width: 30rpx;height: 30rpx;"></image>
-      <text style="font-weight: initial;font-size: 28rpx;">用券购买</text>
+    <view style="display: flex;align-items: center;" bindtap="buyByTicket">
+      <image style="width: 30rpx;height: 30rpx;" src="../img/station/ticket.png"></image>
+      <text style="font-weight: initial;font-size: 26rpx;color: rgba(157,157,157,1);line-height:36rpx;">用券购买</text>
     </view>
   </view>
   <view class="pay-button-group">
     <view style="width: 300rpx;" bindtap="buyByBuyout">
-      <press title="按年买断" height="50" borderRadius-="10" color="{{ buyByBuyout ? '#fff' : '#353EE8FF' }}" bgColor="{{ buyByBuyout ? '#353EE8FF' : '#fff' }}" border="{{ buyByBuyout ? '' : '1px solid #353EE8FF' }}"></press>
+      <press title="按年买断" height="50" borderRadius-="10" color="{{ buyByBuyout ? '#fff' : '#353EE8FF' }}" bgColor="{{ buyByBuyout ? '#353EE8FF' : '#fff' }}" border="{{ buyByBuyout ? '' : '1px solid #353EE8FF' }}" fontSize="28" fontWeight="600" shadow="{{ buyByBuyout ? '0px 2px 4px 0px rgba(0,0,0,0.3)' : '' }}"></press>
     </view>
     <view style="width: 300rpx;" bindtap="buyByCounts">
-      <press title="按份购买" height="50" borderRadius="10" color="{{ buyByCounts ? '#fff' : '#353EE8FF' }}" bgColor="{{ buyByCounts ? '#353EE8FF' : '#fff' }}" border="{{ buyByCounts ? '' : '1px solid #353EE8FF' }}"></press>
+      <press title="按份购买" height="50" borderRadius="10" color="{{ buyByCounts ? '#fff' : '#353EE8FF' }}" bgColor="{{ buyByCounts ? '#353EE8FF' : '#fff' }}" border="{{ buyByCounts ? '' : '1px solid #353EE8FF' }}" fontSize="28" fontWeight="600" shadow="{{ buyByCounts ? '0px 2px 4px 0px rgba(0,0,0,0.3)' : '' }}"></press>
     </view>
   </view>
-  <view class="company-choice">
+  <view wx:if="{{ buyByBuyout }}" class="company-choice">
     92%企业的选择
   </view>
   <view wx:if="{{ buyByBuyout }}" class="buy-by-buyout">
@@ -241,7 +241,7 @@
     <view class="total-counts">
       <view>合计</view>
       <view>￥{{ filters.toFix((evaluation.evaluationInfo.price||0) * count) }}</view>
-      <view style="color: #f8ba0f;font-size: 24rpx;">推荐按年买断更加划算</view>
+      <view style="color: #F7B500FF;font-size: 26rpx;">推荐按年买断更加划算</view>
     </view>
     <view class="total-operator">
       <view bindtap="addcount" class="add">+</view>
@@ -251,10 +251,10 @@
   </view>
   <view class="pay-group">
     <view wx:if="{{ buyByCounts }}" bindtap="payByCounts">
-      <press title="微信支付" fontSize="32" fontWeight="600" letterSpacing="2"></press>
+      <press title="微信支付" fontSize="32" fontWeight="600" letterSpacing="2" shadow="0px 2px 4px 0px rgba(0,0,0,0.3)"></press>
     </view>
     <view wx:if="{{ buyByBuyout }}" bindtap="payByBuyout">
-      <press title="微信支付" fontSize="32" fontWeight="600" letterSpacing="2"></press>
+      <press title="微信支付" fontSize="32" fontWeight="600" letterSpacing="2" shadow="0px 2px 4px 0px rgba(0,0,0,0.3)"></press>
     </view>
     <view bindtap="servingTrigger">
       <press title="对公转账" fontSize="32" color="#353EE8FF" bgColor="#fff" border="none" fontWeight="600" letterSpacing="2"></press>

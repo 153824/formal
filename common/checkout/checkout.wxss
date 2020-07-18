@@ -140,14 +140,15 @@
   position: relative;
   display: flex;
   justify-content: space-between;
-  font-size: 24rpx;
-  font-weight: 600;
-  width: 670rpx;
-  height: 181rpx;
+  margin-left: -6px;
+  width: 710rpx;
+  height: 192rpx;
   color: #f8ba0f;
   background-image: url("http://ihola.luoke101.com/price-banner.png");
   background-repeat: no-repeat;
   background-size: cover;
+  font-size: 30rpx;
+  font-weight: 600;
 }
 .price-child{
   display: flex;

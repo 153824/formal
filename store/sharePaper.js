@@ -28,8 +28,8 @@ Page({
       maxCount: count,
       paperId: id,
       paperName: name,
-      hadBuyout: hadBuyout,
-      isFree
+      hadBuyout: hadBuyout === 'true' ? true : false ,
+      isFree: isFree === 'true' ? true : false ,
     });
   },
 
@@ -57,6 +57,7 @@ Page({
     var that = this;
     var t = e.currentTarget.dataset.t;
     var { maxCount=0,count,hadBuyout,isFree } = that.data;
+    console.log( maxCount,count,hadBuyout,isFree);
     if (t == 1) {
       count -= 1;
     } else if (t == 2) {

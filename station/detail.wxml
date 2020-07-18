@@ -22,7 +22,7 @@
 </scroll-view>
 <!-- 免费测评的按钮组 -->
 <view class="button-group" wx:if="{{ evaluation.freeEvaluation }}">
-  <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}">
+  <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}"  data-oldShareId="{{ oldShareId }}" data-id="{{ evaluation.evaluationInfo.id }}">
     <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF" fontSize="32" fontWeight="600"></press>
   </view>
   <view class="gotodati-btn" bindtap="gotodati">
@@ -52,7 +52,7 @@
   <view wx:else class="meal" bindtap="payForEvaluation">
     <meal isShow="{{ !evaluation.buyoutInfo.hadBuyout }}" icon="false" title="剩余可用份数：{{ evaluation.availableCount }}" subtitle="{{ isIos ? '用券继续兑换' : '购买更多 >' }}"></meal>
   </view>
-  <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}">
+  <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}" data-oldShareId="{{ oldShareId }}" data-id="{{ evaluation.evaluationInfo.id }}">
     <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF" fontSize="32" fontWeight="600"></press>
   </view>
   <view class="gotodati-btn" bindtap="gotodati">
@@ -64,7 +64,7 @@
   <view class="meal" bindtap="payForEvaluation">
     <meal isShow="{{ evaluation.buyoutInfo.hadBuyout }}" icon="false" title="有效期至：{{ isIos ? util.getFullDateByFrag(evaluation.buyoutInfo.expiryDate,'.',true) : util.getFullDateByFrag(evaluation.buyoutInfo.expiryDate,'.',true) }}" subtitle="{{ isIos ? '' : '续费' }}"></meal>
   </view>
-  <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}">
+  <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}"  data-oldShareId="{{ oldShareId }}" data-id="{{ evaluation.evaluationInfo.id }}">
     <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF" fontSize="32" fontWeight="600"></press>
   </view>
   <view class="gotodati-btn" bindtap="gotodati">

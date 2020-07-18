@@ -18,7 +18,7 @@ Component({
     },
     icon: {
       type: String,
-      value: "../../img/station/meal/meal_icon.png@2x.png"
+      value: ""
     }
   },
 

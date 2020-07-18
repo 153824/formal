@@ -921,17 +921,11 @@ Page({
                   getphoneNum: true,
                   phoneNumber: res.data.phone
                 });
-                wx.aldstat.sendEvent('授权手机号成功', {
-                  '测评名称': `名称：${ name }`
-                });
               }
             });
           }
         });
       }
-      wx.aldstat.sendEvent('授权手机号', {
-        '测评名称': `名称：${ name }`
-      });
       return;
     }
   },

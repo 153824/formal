@@ -3,7 +3,7 @@
   display: none;
 }
 .introduction,.dimension,.scenarios,.example,.report,.price{
-  padding: 80rpx 40rpx 40rpx 40rpx;
+  padding: 80rpx 40rpx 10rpx 40rpx;
 }
 .head{
   position: relative;

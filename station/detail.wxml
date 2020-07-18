@@ -7,16 +7,6 @@
       </view>
       <view class="info-wrapper">
         <text class="title">{{ evaluation.evaluationInfo.name }}</text>
-        <view class="price-wrapper">
-          <view wx:if="{{ !evaluation.freeEvaluation&&!isIos }}" style="display: flex;align-items: center;">
-            <text class="old">¥{{ evaluation.evaluationInfo.defaultPrice }}</text>
-            <text class="new">¥{{ evaluation.evaluationInfo.price }}</text>
-          </view>
-          <view wx:else>
-            <free ios="{{ isIos }}" free="{{ evaluation.freeEvaluation }}" price="{{ evaluation.evaluationInfo.defaultPrice }}"
-                  actual="{{ evaluation.evaluationInfo.price }}"></free>
-          </view>
-        </view>
         <text class="use-time">{{ evaluation.evaluationInfo.quesCount }}题 / 预计用时{{ evaluation.evaluationInfo.estimatedTime }}分钟</text>
       </view>
     </view>

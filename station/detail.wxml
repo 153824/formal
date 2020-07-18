@@ -290,11 +290,8 @@
 <view wx:if="{{ giftTrigger }}" class="gift-container">
   <view class="image-container">
     <image src="http://ihola.luoke101.com/20200709145310.png" style="width: 675rpx;height: 855rpx;margin-top: 160rpx;" bindtap="buyByTicket"></image>
-    <view style="display: flex;justify-content: center;margin-top: -50px;">
-      <image src="../img/manager/close-icon@2x.png" style="width: 50rpx;height: 50rpx;justify-self: center;" bindtap="closeGift"></image>
-    </view>
   </view>
-  <view class="mask"></view>
+  <view class="mask" bindtap="closeGift"></view>
 </view>
 <view wx:if="{{ loading }}" class="loading"></view>
 <serving id="serving" mobile="{{ mobile }}" wechat="{{ wechat }}" bottom="180rpx"></serving>

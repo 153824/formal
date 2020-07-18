@@ -305,30 +305,5 @@ Page({
     this.setData({
       showServing: false
     });
-  },
-
-  handleTest() {
-    const {appid, code} = app.globalData
-    console.time("wx login");
-    wx.login({
-      success: res => {
-        console.timeEnd("wx login");
-        console.time("request initialize");
-
-        app.doAjax({
-          url: "userLogin",
-          method: "POST",
-          data: {
-            fromAppId: '',
-            appid: appid,
-            code: res.code
-          },
-          success: function(res) {
-            console.log(res)
-            console.timeEnd("request initialize");
-          }
-        })
-      }
-    });
   }
 });

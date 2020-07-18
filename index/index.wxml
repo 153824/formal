@@ -136,4 +136,3 @@
 </view>
 <mask isShow="{{ loading1 }}"></mask>
 <serving mobile="{{ mobile }}" wechat="{{ wechat }}"></serving>
-<view id="test" class="test" bindtap="handleTest">test</view>

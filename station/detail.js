@@ -623,13 +623,19 @@ Page({
   payByBuyout: function() {
     var that = this;
     var { evaluationInfo } = this.data.evaluation;
+    var dayOfPeriod = 365;
+    try{
+      dayOfPeriod = evaluationInfo.buyoutPlans[0].dayOfPeriod
+    }catch (e) {
+
+    }
     app.doAjax({
       url: 'buyout',
       method: 'post',
       data: {
         evaluationId: evaluationInfo.id,
         evaluationName: evaluationInfo.name,
-        dayOfPeriod: evaluationInfo.buyoutPlans[0].dayOfPeriod,
+        dayOfPeriod: dayOfPeriod,
         openid: wx.getStorageSync("openId") || app.globalData.userMsg.openid,
       },
       success: function (res) {

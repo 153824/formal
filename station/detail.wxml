@@ -71,56 +71,14 @@
     <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
   </view>
 </view>
-<!--<view class="button-group" wx:if="{{ paperDetail.userPapersNum.hasOld }}">-->
-<!--  <view class="meal" bindtap="openGift" style="visibility: {{ (!couponGet0)&&teamRole==3&&isTodayTeam&&!isfree ? 'visible':'hidden' }}">-->
-<!--    <meal isShow="{{ (!couponGet0)&&teamRole==3&&!isfree }}" title="新用户领券，免费体验测评" subtitle="立即领券 >" icon=""></meal>-->
-<!--  </view>-->
-<!--  <view class="meal" style="visibility: {{ !couponGet0&&!isfree ? 'visible':'hidden' }}">-->
-<!--    <meal isShow="{{ !couponGet0&&!isfree&&!paperDetail.userPapersNum.hasOld }}" title="您有{{ 5 }}张体验券可用于本测评" subtitle="立即使用 >"></meal>-->
-<!--  </view>-->
-<!--  <view bindtap="gotoguide" data-name="{{ paperDetail.name }}">-->
-<!--    <press title="{{ oldShareId ? '继续体验' : '自己体验'}}" bgColor="#FFFFFFFF" color="#353EE8FF"></press>-->
-<!--  </view>-->
-<!--  <view bindtap="gotodati">-->
-<!--    <press title="测别人(微信/智联/BOSS/51...)"></press>-->
-<!--  </view>-->
-<!--</view>-->
-<!--<view class="buy-group" wx:elif="{{ !isAllFree&&!freeCount&&!paperDetail.userPapersNum.hasOld }}">-->
-<!--  <view  class="meal" bindtap="getNewerTicket" style="visibility: {{ (!couponGet0)&&teamRole==3&&isTodayTeam&&!isfree ? 'visible':'hidden' }}">-->
-<!--    <meal isShow="{{ (!couponGet0)&&teamRole==3&&!isfree }}" title="新用户领券，免费体验测评" subtitle="立即领券 >" icon=""></meal>-->
-<!--  </view>-->
-<!--  <view class="meal" style="visibility: {{ !couponGet0&&!isfree ? 'visible':'hidden' }}">-->
-<!--    <meal isShow="{{ !couponGet0&&!isfree }}" title="您有5张体验券可用于本测评" subtitle="立即使用 >"></meal>-->
-<!--  </view>-->
-<!--  <view wx:if="{{ isIos && ((paperDetail.userPapersNum.freeTicket || 0) + (paperDetail.userPapersNum.vipTicket || 0)) <= 0 }}">-->
-<!--    <press color="" title="iOS暂不支持购买，请用券兑换或联系客服"></press>-->
-<!--  </view>-->
-<!--  <view wx:if="{{ isIos && ((paperDetail.userPapersNum.freeTicket || 0) + (paperDetail.userPapersNum.vipTicket || 0)) > 0 }}" bindtap="paymoney">-->
-<!--    <press color="" title="用券兑换"></press>-->
-<!--  </view>-->
-<!--  <view wx:if="{{ !isIos }}" bindtap="paymore">-->
-<!--    <press color="" title="购买" subtitle="{{ paperDetail.setting.price }}元/份"></press>-->
-<!--  </view>-->
-<!--</view>-->
-
 <!--支付-->
 <view class="paypage" wx:if="{{ispay && !isIos}}" catchtouchmove="true">
   <view class="closebox" bindtap="closepaypage"></view>
   <view class="paybox">
     <view class="toBuyVip flex" style="margin:40rpx 26rpx 0;" wx:if="{{teamRole!=1&&!isAllFree&&!isvip1&&!isvip2&&paperDetail.userPapersNum.hasOld&&!isIos}}" bindtap="changePage" data-url="./becomevip">
 
-<!--      <image class="bgImg" src="../img/store/detail/icon27.png"></image>-->
-
       <view class="flex-main"></view>
       <view>
-
-<!--        <image class="img1" src="../img/store/detail/icon15.png"></image>-->
-
-<!--        <text>升级成为会员，优惠购买测评</text>-->
-
-<!--        <image class="img2" src="../img/store/detail/icon16.png"></image>-->
-
-        <!-- <view class="animationView"></view> -->
       </view>
       <view class="flex-main"></view>
     </view>
@@ -277,7 +235,7 @@
   <image src="../img/store/detail/icon12.png"></image>
   <view class="txtView">{{paperDetail.setting.dateDesc}}</view>
 </view>
-<view wx:if="{{ giftTrigger }}" class="gift-container">
+<view wx:if="{{ true }}" class="gift-container">
   <view class="image-container">
     <image src="http://ihola.luoke101.com/20200709145310.png" style="width: 675rpx;height: 855rpx;margin-top: 160rpx;" bindtap="buyByTicket"></image>
   </view>

@@ -60,7 +60,7 @@
 <!-- 购买过测评券的按钮组且未买断 -->
 <view class="button-group" wx:elif="{{ evaluation.hadConsumed && !evaluation.buyoutInfo.hadBuyout }}">
   <view class="meal" bindtap="payForEvaluation">
-    <meal isShow="{{ !evaluation.buyoutInfo.hadBuyout }}" title="剩余可用份数：{{ evaluation.availableCount }}" subtitle="{{ isIos ? '用券兑换' : '购买更多' }}"></meal>
+    <meal isShow="{{ !evaluation.buyoutInfo.hadBuyout }}" title="剩余可用份数：{{ evaluation.availableCount }}" subtitle="{{ isIos ? '用券兑换 >' : '购买更多 >' }}"></meal>
   </view>
   <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}">
     <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF" fontSize="32" fontWeight="600"></press>

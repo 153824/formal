@@ -1,7 +1,7 @@
 <!--common/meal/meal.wxml-->
 <view wx:if="{{ isShow }}" class="meal">
     <view class="meal-info">
-        <image wx:if="{{ icon }}" class="meal-icon" src="{{ icon }}"></image>
+        <image wx:if="{{ icon }}" class="meal-icon" src="{{ icon }}" style="{{ icon ? 'width:0;' : 'width:36rpx;' }}"></image>
         <text>{{ title }}</text>
     </view>
     <view class="meal-detail">

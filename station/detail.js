@@ -45,7 +45,7 @@ Page({
   },
   onLoad: function(options) {
     var that = this;
-    var { id,name } = options;
+    var { id,name,resubscribe='false' } = options;
     isFirstLoad = true;
     var userData = app.globalData.userInfo || wx.getStorageSync("userInfo");
     this.setData({
@@ -53,7 +53,8 @@ Page({
       teamRole: app.teamRole,
       userData: userData,
       paperid: options.id,
-      getphoneNum: true
+      getphoneNum: true,
+      resubscribe: resubscribe === 'true' ? true : false
     });
     if( name ){
       wx.aldstat.sendEvent('访问测评详情', {
@@ -150,12 +151,13 @@ Page({
   },
   toGetPaperDetail: function() {
     var that = this;
+    var { evaluationInfo } = this.data.evaluation;
     var getEvaluationPromise = new Promise((resolve, reject) => {
       app.doAjax({
         url: "evaluationDetail",
         method: "get",
         data: {
-          evaluationId: that.data.paperid,
+          evaluationId: evaluationInfo.id,
         },
         success: function (res) {
           if ( !Object.keys(res).length ) {
@@ -213,7 +215,7 @@ Page({
         data: {
           type: "self",
           isCheckOld: true,
-          id: that.data.paperid,
+          id: evaluationInfo.id,
         },
         success: function(res) {
           if (res && res.isOld && res.id) {
@@ -242,46 +244,6 @@ Page({
     this.setData({
       count: e.detail.value * 1
     })
-  },
-  //免费领取测评
-  changeStatus: function(e) {
-    var that = this;
-    that.checkUserMobile(e, function() {
-      var userMsg = app.globalData.userMsg;
-      app.doAjax({
-        url: "buyPaper",
-        method: "post",
-        data: {
-          id: that.data.paperid,
-          count: that.data.freeCount,
-          type: 4,
-          openid: userMsg.openid || wx.getStorageSync("openId")
-        },
-        success: function(res) {
-          app.toast("领取成功");
-          setTimeout(function() {
-            that.onShow();
-          }, 500);
-        }
-      });
-    });
-  },
-  changeStatus2: function(e) {
-    var that = this;
-    that.checkUserMobile(e, function() {
-      if (e.currentTarget.dataset.t) {
-        app.freeTickId = "";
-        that.useticket();
-        return;
-      }
-      app.toast("领取成功");
-      var key = that.data.paperid;
-      wx.setStorageSync(key, true);
-      that.setData({
-        showFullBtn: true
-      });
-    });
-
   },
   /**
    * 进入测评购买
@@ -391,10 +353,43 @@ Page({
   /** 体验测评 */
   gotoguide: function(e) {
     var that = this;
-    var { name } = e.currentTarget.dataset;
+    var { name,oldshareid,id } = e.currentTarget.dataset;
     var { evaluationInfo,availableCount,buyoutInfo } = that.data.evaluation;
-    console.log(buyoutInfo);
-    function toNext() {
+    var isNotFirstExperience = wx.getStorageSync("isNotFirstExperience");
+    var isFirstExperience = false;
+    if( !isNotFirstExperience ){
+      isFirstExperience = true;
+      wx.setStorage({
+        key: "isNotFirstExperience",
+        data: true
+      })
+    }
+    var subscribePromise = new Promise((resolve, reject) => {
+      /*无体验过,开启小神推订阅*/
+      if( ( !oldshareid && isFirstExperience ) || this.data.resubscribe ){
+        console.log("app.globalData.eventId",app.globalData.eventId);
+        wx.aldPushSubscribeMessage({
+          eventId: app.globalData.eventId,
+          success(res) {
+            resolve("订阅成功");
+            wx.aldstat.sendEvent('用户成功订阅新测评', {
+              '测评名称': `名称: ${name} id：${id}`
+            });
+          },
+          fail(res, e) {
+            reject("订阅失败");
+            console.log("小神推订阅失败");
+            console.error(e);
+            wx.aldstat.sendEvent('用户拒绝订阅新测评', {
+              '测评名称': `名称: ${name} id：${id}`
+            });
+          }
+        });
+      }else{
+        resolve("未触发订阅");
+      }
+    });
+    function toNext(promise) {
       app.doAjax({
         url: 'toSharePaper',
         method: 'post',
@@ -403,9 +398,14 @@ Page({
           id: that.data.paperid,
         },
         success: function(res) {
-          console.log(res);
-          wx.navigateTo({
-            url: '../test/guide?id=' + res.id
+          promise.then(ret=>{
+            wx.navigateTo({
+              url: '../test/guide?id=' + res.id
+            })
+          }).catch((err)=>{
+            wx.navigateTo({
+              url: '../test/guide?id=' + res.id
+            })
           });
           wx.aldstat.sendEvent('点击体验测评', {
             '测评名称': `名称：${ name } id：${ that.data.paperid }`
@@ -425,39 +425,42 @@ Page({
         id: that.data.paperid,
       },
       success: function(res) {
-        console.log("First");
         if (res && res.isOld && res.id) {
           var sKey = "oldAnswer" + res.id;
           var oldData = wx.getStorageSync(sKey);
-          console.log("Second");
           if (oldData) {
             wx.navigateTo({
               url: '../test/index?pid=' + that.data.paperid + '&id=' + res.id
             });
-            console.log("Third");
             return;
           }
-          console.log("Fourth");
-          wx.navigateTo({
-            url: '../test/guide?id=' + res.id
+          subscribePromise.then(ret=>{
+            wx.navigateTo({
+              url: '../test/guide?id=' + res.id
+            });
+          }).catch(err=>{
+            wx.navigateTo({
+              url: '../test/guide?id=' + res.id
+            });
           });
           return;
         }
         if ( +evaluationInfo.price && availableCount > 0 ) {
-          wx.showModal({
-            title: '体验确认',
-            content: '体验将消耗1份可用数量，是否确认体验？',
-            success: function(ret) {
-              if (ret.confirm) {
-                console.log("Fifth");
-                toNext();
-              }
-            }
-          });
+          // wx.showModal({
+          //   title: '体验确认',
+          //   content: '体验将消耗1份可用数量，是否确认体验？',
+          //   success: function(ret) {
+          //     if (ret.confirm) {
+          //       console.log("Fifth");
+          //       toNext();
+          //     }
+          //   }
+          // });
+          toNext(subscribePromise);
         } else if( buyoutInfo.hadBuyout ) {
-          toNext();
+          toNext(subscribePromise);
         } else {
-          toNext();
+          toNext(subscribePromise);
         }
       }
     });
@@ -623,13 +626,19 @@ Page({
   payByBuyout: function() {
     var that = this;
     var { evaluationInfo } = this.data.evaluation;
+    var dayOfPeriod = 365;
+    try{
+      dayOfPeriod = evaluationInfo.buyoutPlans[0].dayOfPeriod
+    }catch (e) {
+
+    }
     app.doAjax({
       url: 'buyout',
       method: 'post',
       data: {
         evaluationId: evaluationInfo.id,
         evaluationName: evaluationInfo.name,
-        dayOfPeriod: evaluationInfo.buyoutPlans[0].dayOfPeriod,
+        dayOfPeriod: dayOfPeriod,
         openid: wx.getStorageSync("openId") || app.globalData.userMsg.openid,
       },
       success: function (res) {
@@ -947,7 +956,6 @@ Page({
       data: {},
       success: function(ret) {
         app.getUserInfo(); //更新用户信息
-        app.toast("领取成功，快去购买兑换测评吧");
         that.setData({
           giftTrigger: true,
         });

@@ -12,11 +12,11 @@
     </view>
   </view>
   <view style="background-color: #fff;margin-top: 20rpx;">
-    <checkout isShow="{{ !evaluation.freeEvaluation }}" title="报价方案" type="price"></checkout>
+    <checkout title="报价方案" type="price" isShow="{{ !evaluation.freeEvaluation }}" data="{{ evaluation.evaluationInfo }}"></checkout>
     <checkout title="测评简介" type="introduction" info="{{ evaluation.evaluationInfo.synopsis }}"></checkout>
     <checkout title="测量维度" type="dimension" list="{{ evaluation.evaluationInfo.measureDimension }}"></checkout>
     <checkout title="适用场景" type="scenarios" list="{{ evaluation.evaluationInfo.scenario }}"></checkout>
-    <checkout isShow="{{ evaluation.evaluationInfo.reportExample }}" title="报告示例" type="report" info="{{ evaluation.evaluationInfo.reportExample }}" subtitle="{{ evaluation.evaluationInfo.name }}"></checkout>
+    <checkout title="报告示例" type="report" isShow="{{ evaluation.evaluationInfo.reportExample }}" info="{{ evaluation.evaluationInfo.reportExample }}" subtitle="{{ evaluation.evaluationInfo.name }}"></checkout>
     <checkout title="例题" type="example" list="{{ evaluation.evaluationInfo.quesExamples }}"></checkout>
   </view>
 </scroll-view>

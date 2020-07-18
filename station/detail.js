@@ -947,7 +947,6 @@ Page({
       data: {},
       success: function(ret) {
         app.getUserInfo(); //更新用户信息
-        app.toast("领取成功，快去购买兑换测评吧");
         that.setData({
           giftTrigger: true,
         });

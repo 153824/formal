@@ -24,8 +24,8 @@ App({
   isIos: false,
   qiniuUpload: qiniuUpload,
   isIphoneX: false,
-  // host: "https://api.dev.luoke101.com",
-  host: "https://h5.luoke101.com",
+  host: "https://api.dev.luoke101.com",
+  // host: "https://h5.luoke101.com",
   onLaunch: function(options) {
     var referrerInfo = options.referrerInfo;
     var menuBtnObj = wx.getMenuButtonBoundingClientRect();

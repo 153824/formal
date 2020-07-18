@@ -1090,7 +1090,8 @@
   right: 0;
   left: 0;
   bottom: 0;
-  padding: 40rpx 40rpx  0rpx 40rpx;
+  padding: 60rpx 50rpx  24rpx 50rpx;
+  height: 880rpx;
   border-top-left-radius: 20rpx;
   border-top-right-radius: 20rpx;
   background-color: white;
@@ -1113,8 +1114,9 @@
   justify-content: center;
   align-items: center;
   width: 300rpx;
-  color: #f8ba0f;
-  font-size: 24rpx;
+  height: 36rpx;
+  color: #F7B500FF;
+  font-size: 26rpx;
 }
 .company-choice > text{
   text-align: center;
@@ -1122,8 +1124,13 @@
 .buy-by-buyout{
   display: flex;
   flex-direction: column;
+  justify-content: center;
   padding: 40rpx 0;
-  height: 200rpx;
+  height: 382rpx;
+  line-height: 92rpx;
+  font-size: 44rpx;
+  font-weight: 600;
+  letter-spacing: 3.4rpx;
 }
 .buy-by-buyout > view{
   font-size: 38rpx;
@@ -1136,18 +1143,16 @@
 }
 .pay-group{
   display: flex;
-  margin-top: 50rpx;
   flex-direction: column;
 }
 .buy-by-counts{
   display: flex;
   justify-content: space-between;
+  height: 418rpx;
   padding: 40rpx 0;
-  height: 200rpx;
 }
 .total-counts{
   display: flex;
-  width: 50%;
   flex-direction: column;
   font-size: 38rpx;
   font-weight: 600;
@@ -1157,13 +1162,16 @@
 .total-counts > view{
   margin: 18rpx 0;
   text-align: center;
+  font-size: 44rpx;
+  font-weight:600;
+  line-height:46px;
+  letter-spacing:1px;
 }
 .total-operator{
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  width: 50%;
 }
 .add,.subtraction{
   align-self: center;

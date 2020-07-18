@@ -48,7 +48,7 @@ Component({
     },
     letterSpacing: {
       type: String,
-      value: ''
+      value: '2'
     }
   },
 

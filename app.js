@@ -2,6 +2,8 @@
 const ald = require('./utils/ald-stat.js');
 var qiniuUpload = require("./utils/qiniuUpload");
 var push = require('./utils/push_sdk.js');
+const debuggerQueue = []; // 用于判断请求时长
+
 qiniuUpload.init({
   region: 'SCN', // 是你注册bucket的时候选择的区域的代码
   domain: 'ihola.luoke101.com',
@@ -27,6 +29,8 @@ App({
   host: "https://api.dev.luoke101.com",
   // host: "https://h5.luoke101.com",
   onLaunch: function(options) {
+    this.output('App OnLaunch start')
+    
     var referrerInfo = options.referrerInfo;
     var menuBtnObj = wx.getMenuButtonBoundingClientRect();
     if ( referrerInfo && referrerInfo.appid ) {
@@ -51,11 +55,15 @@ App({
       that.isIos = true;
     }
 
+    this.output('wx.login start')
     // 登录
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        that.output('wx.login success, userLogin start')
+
         this.userLogin(res.code).then(res=>{
+          that.output('userLogin success')
           wx.aldPushSendOpenid(res.openId);
         });
       }
@@ -112,6 +120,8 @@ App({
           code: code
         },
         success: function(ret) {
+          that.output('userLogin promise success');
+
           that.globalData.userMsg = ret.userMsg || {};
           var userData = ret.data;
           var now = new Date().getTime();
@@ -477,4 +487,15 @@ App({
       }
     })
   },
+
+  output: function (text) {
+    let _text = text || '当前时间'
+    _text += ':' + (+Date.now())
+    if (debuggerQueue.length > 0) {
+      const diff = +Date.now() - debuggerQueue[debuggerQueue.length - 1]
+      _text += ',diff:' + diff
+    }
+    debuggerQueue.push(+Date.now())
+    console.log(_text)
+  }
 });

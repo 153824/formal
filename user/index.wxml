@@ -131,33 +131,33 @@
     <!--</view>-->
   </block>
 
-  <view class="test-set-meal">
-    <view class="set-meal-wrapper">
-      <view class="meal-title">
-        <text>测评券套餐</text>
-        <text class="meal-rule">{{ isIos ? 'IOS暂不支持在线购买' : '券可用于兑换平台任意测评' }}</text>
-      </view>
-      <scroll-view scroll-x="true">
-        <view class="set-meal-group">
-          <view wx:if="{{ isIos }}" class="set-meal-child" wx:for="{{ meal }}" wx:for-item="mealItem" data-type="{{ mealItem.type }}"
-                bindtap="callServing">
-            <view class="title">测评兑换券</view>
-            <view class="count">{{ mealItem.number }}<text>张</text></view>
-            <view class="price" style="z-index: 99;" >暂不支持</view>
-            <image class="ticket-bg" src="../img/user/index/ticket.png" style="height: 100.44px;width: 53.46px;"></image>
-          </view>
-          <view wx:if="{{ !isIos }}" class="set-meal-child" wx:for="{{ meal }}" wx:for-item="mealItem" data-type="{{ mealItem.type }}"
-                bindtap="buyTicket">
-            <view class="title">测评兑换券</view>
-            <view class="count">{{ mealItem.number }}<text>张</text></view>
-            <view class="price" style="z-index: 99;" bindtap="callServing">￥{{ mealItem.price }}</view>
-            <image class="ticket-bg" src="../img/user/index/ticket.png" style="height: 100.44px;width: 53.46px;"></image>
-          </view>
-        </view>
-      </scroll-view>
-    </view>
-  </view>
-  <view class="footerbox">
+<!--  <view class="test-set-meal">-->
+<!--    <view class="set-meal-wrapper">-->
+<!--      <view class="meal-title">-->
+<!--        <text>测评券套餐</text>-->
+<!--        <text class="meal-rule">{{ isIos ? 'IOS暂不支持在线购买' : '券可用于兑换平台任意测评' }}</text>-->
+<!--      </view>-->
+<!--      <scroll-view scroll-x="true">-->
+<!--        <view class="set-meal-group">-->
+<!--          <view wx:if="{{ isIos }}" class="set-meal-child" wx:for="{{ meal }}" wx:for-item="mealItem" data-type="{{ mealItem.type }}"-->
+<!--                bindtap="callServing">-->
+<!--            <view class="title">测评兑换券</view>-->
+<!--            <view class="count">{{ mealItem.number }}<text>张</text></view>-->
+<!--            <view class="price" style="z-index: 99;" >暂不支持</view>-->
+<!--            <image class="ticket-bg" src="../img/user/index/ticket.png" style="height: 100.44px;width: 53.46px;"></image>-->
+<!--          </view>-->
+<!--          <view wx:if="{{ !isIos }}" class="set-meal-child" wx:for="{{ meal }}" wx:for-item="mealItem" data-type="{{ mealItem.type }}"-->
+<!--                bindtap="buyTicket">-->
+<!--            <view class="title">测评兑换券</view>-->
+<!--            <view class="count">{{ mealItem.number }}<text>张</text></view>-->
+<!--            <view class="price" style="z-index: 99;" bindtap="callServing">￥{{ mealItem.price }}</view>-->
+<!--            <image class="ticket-bg" src="../img/user/index/ticket.png" style="height: 100.44px;width: 53.46px;"></image>-->
+<!--          </view>-->
+<!--        </view>-->
+<!--      </scroll-view>-->
+<!--    </view>-->
+<!--  </view>-->
+  <view class="footerbox" style="border-top: 10rpx solid rgb(242, 242, 242)">
 <!--    <view class="boxlist" bindtap="changePage" data-n="teams" data-url="./teams" style="padding: 12rpx 0;border-bottom: 12rpx solid #F2F2F2FF;">-->
 <!--      <view class="listleft" style="margin-left: 62rpx;">-->
 <!--        测评套餐-->

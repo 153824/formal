@@ -2,6 +2,7 @@
 const ald = require('./utils/ald-stat.js');
 var qiniuUpload = require("./utils/qiniuUpload");
 var push = require('./utils/push_sdk.js');
+const debuger = true
 const debuggerQueue = []; // 用于判断请求时长
 
 qiniuUpload.init({
@@ -489,6 +490,7 @@ App({
   },
 
   output: function (text) {
+    if (!debuger) return;
     let _text = text || '当前时间'
     _text += ':' + (+Date.now())
     if (debuggerQueue.length > 0) {

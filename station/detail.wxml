@@ -214,7 +214,7 @@
   <view class="head-wrapper">
     <view class="title-wrapper">
       <text>{{ evaluation.evaluationInfo.name }}</text>
-      <text style="font-size: 24rpx;font-weight: initial;margin: 10rpx;letter-spacing: 4rpx;color: rgba(0,0,0,.4)">{{ voucher }}张券可用于本测评</text>
+      <text style="font-size: 24rpx;font-weight: initial;margin: 10rpx 0 10rpx 0;letter-spacing: 4rpx;color: rgba(0,0,0,.4)">{{ voucher }}张券可用于本测评</text>
     </view>
     <image src="{{ evaluation.evaluationInfo.smallImg }}" style="width: 100rpx;height: 100rpx;background-color: #2f3038;border-radius: 10rpx;"></image>
   </view>
@@ -226,7 +226,7 @@
     </view>
   </view>
   <view bindtap="useticket">
-    <press title="{{ ticketCount ? '用券兑换'+ticketCount+'份' : '用券兑换' }}" height="90" shadow="0 0 16rpx rgba(53,62,232,.5)"></press>
+    <press title="{{ ticketCount ? '用券兑换'+ticketCount+'份' : '用券兑换' }}" height="90" shadow="0px 4px 8px 0px rgba(192,192,192,0.97);"></press>
   </view>
 </view>
 <view class="mask" wx:if="{{ buyByTicket }}" bindtap="cancelBuyByTicket" style="background-color: rgba(0,0,0,.5);"></view>

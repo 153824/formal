@@ -1052,11 +1052,15 @@ Page({
   getPhoneNumber: function (e) {
     var that = this;
     var { iv,encryptedData } = e.detail;
+    var { evaluationInfo } = this.data.evaluation
     if (encryptedData) {
       //用户授权手机号
       var userMsg = app.globalData.userMsg || {};
       userMsg["iv"] = iv;
       userMsg["encryptedData"] = encryptedData;
+      wx.aldstat.sendEvent('授权手机号', {
+        '测评名称': `名称：${ evaluationInfo.name }`
+      });
       var updatedUserMobilePromise = new Promise(((resolve, reject) => {
         app.doAjax({
           url: "updatedUserMobile",
@@ -1080,6 +1084,9 @@ Page({
             if( res.data.phone ){
               that.getNewerTicket();
             }
+            wx.aldstat.sendEvent('授权手机号成功', {
+              '测评名称': `名称：${ evaluationInfo.name }`
+            });
           }
         })
       });

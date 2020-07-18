@@ -167,7 +167,7 @@
     <text>选择购买方式</text>
     <view style="display: flex;align-items: center;" bindtap="buyByTicket">
       <image style="width: 30rpx;height: 30rpx;" src="../img/station/ticket.png"></image>
-      <text style="font-weight: initial;font-size: 26rpx;color: rgba(157,157,157,1);line-height:36rpx;font-weight: 600">用券购买</text>
+      <text style="font-weight: initial;font-size: 26rpx;color: rgba(157,157,157,1);line-height:36rpx;font-weight: 600">用券兑换</text>
     </view>
   </view>
   <view class="pay-button-group">

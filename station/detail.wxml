@@ -182,7 +182,7 @@
     92%企业的选择
   </view>
   <view wx:if="{{ buyByBuyout }}" class="buy-by-buyout">
-    <view wx:if="{{ evaluation.evaluationInfo.buyoutPlans.price }}" class="pay-way">￥{{ evaluation.evaluationInfo.buyoutPlans.price }}/年</view>
+    <view wx:if="{{ evaluation.evaluationInfo.buyoutPlans[0].price }}" class="pay-way">￥{{ evaluation.evaluationInfo.buyoutPlans[0].price }}/年</view>
     <view wx:else class="pay-way">即将推出，尽情期待</view>
     <view>不限量使用本测评</view>
   </view>

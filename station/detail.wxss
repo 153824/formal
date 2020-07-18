@@ -1144,7 +1144,7 @@
   color: #353EE8FF;
 }
 .pay-way{
-  
+
 }
 .pay-group{
   display: flex;
@@ -1249,4 +1249,10 @@
   font-weight: 500;
   text-align: center;
   background:rgba(245,245,245,1);
+}
+.meal-button:after{
+  border: unset !important;
+  box-shadow: unset !important;
+  outline: unset !important;
+  border-radius: 0 !important;
 }

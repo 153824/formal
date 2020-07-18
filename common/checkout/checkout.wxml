@@ -95,7 +95,7 @@
         <view class="price-child price-child-by-buyout">
             <view class="buy">按年买断</view>
             <view wx:if="{{ data.buyoutPlans[0].price }}">￥{{ data.buyoutPlans[0].price }}元/年/不限量使用</view>
-            <view>即将推出，敬请期待</view>
+            <view wx:else>即将推出，敬请期待</view>
         </view>
     </view>
 </view>

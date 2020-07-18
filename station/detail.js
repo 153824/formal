@@ -322,7 +322,6 @@ Page({
       url: "exchangeByVoucher",
       method: "post",
       data: {
-        voucherId: '5f1121175214bd0009edefe9',
         evaluationId: evaluation.evaluationInfo.id,
         count: ticketCount,
       },
@@ -621,6 +620,7 @@ Page({
    * 按买断购买测评
    */
   payByBuyout: function() {
+    var that = this;
     var { evaluationInfo } = this.data.evaluation;
     app.doAjax({
       url: 'buyout',
@@ -702,39 +702,7 @@ Page({
   /**
    * 分享领取测评
    */
-  openpopup: function(e, noShowDlg) {
-
-    // var that = this;
-    // var data = that.data;
-    // if (data.freeTick && e) {
-    //   that.setData({
-    //     showDlg1: true
-    //   });
-    //   return;
-    // }
-    // var paperDetail = data.paperDetail;
-    // var userInfo = app.globalData.userInfo;
-    // app.doAjax({
-    //   url: "shareQrcode",
-    //   method: "get",
-    //   noLoading: noShowDlg,
-    //   data: {
-    //     paperId: paperDetail.id,
-    //     uid: wx.getStorageSync("unionId"),
-    //     avatar: userInfo.avatar,
-    //     username: userInfo.nickname,
-    //     papername: paperDetail.name
-    //   },
-    //   success: function(ret) {
-    //     that.setData({
-    //       shareImg: ret.url,
-    //       ispopup: noShowDlg ? false : true,
-    //       isok: noShowDlg ? false : true
-    //     });
-    //   },
-    //   error: function() {}
-    // });
-  },
+  openpopup: function(e, noShowDlg) {},
   changePage: function(e) {
     var that = this;
     var d = e.currentTarget.dataset;

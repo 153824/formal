@@ -27,6 +27,10 @@ Component({
     isShow: {
       type: Boolean,
       value: true
+    },
+    data: {
+      type: Object,
+      value: {}
     }
   },
 

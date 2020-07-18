@@ -167,7 +167,7 @@
 <!--        <image src="../img/user/index/icon3.png"></image>-->
 <!--      </view>-->
 <!--    </view>-->
-    <view class="boxlist" bindtap="changePage" data-n="teams" data-url="./teams" wx:if="{{userInfo.isBind&&teamRole==3}}">
+    <view class="boxlist" bindtap="changePage" data-n="teams" data-url="./teams" wx:if="{{teamRole==3}}">
       <view class="listleft">
         <image src="../img/user/index/icon7.png"></image>企业认证
       </view>
@@ -178,7 +178,7 @@
         <image src="../img/user/index/icon3.png"></image>
       </view>
     </view>
-    <view class="boxlist" bindtap="changePage" data-url="./myTeam?id={{teamId}}" wx:if="{{userInfo.isBind&&teamRole==3}}">
+    <view class="boxlist" bindtap="changePage" data-url="./myTeam?id={{teamId}}" wx:if="{{teamRole==3}}">
       <view class="listleft">
         <image src="../img/user/index/icon6.png"></image>子管理员设置
       </view>
@@ -194,7 +194,7 @@
         <image src="../img/user/index/icon3.png"></image>
       </view>
     </view> -->
-    <view class="boxlist flex" bindtap="changePage" data-url="./ticket" wx:if="{{userInfo.isBind&&teamRole!=1}}">
+    <view class="boxlist flex" bindtap="changePage" data-url="./ticket" wx:if="{{teamRole!=1}}">
       <view class="listleft flex-main">
         <image src="../img/user/index/icon11.png"></image>团队卡券
       </view>
@@ -210,7 +210,7 @@
         <image src="../img/user/index/icon3.png"></image>
       </view>
     </view>
-    <view class="boxlist" bindtap="changePage" data-url="./invoice" wx:if="{{userInfo.isBind&&teamRole!=1}}">
+    <view class="boxlist" bindtap="changePage" data-url="./invoice" wx:if="{{teamRole!=1}}">
       <view class="listleft">
         <image src="../img/user/index/icon8.png"></image>发票管理
       </view>

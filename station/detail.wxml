@@ -226,7 +226,7 @@
     </view>
   </view>
   <view bindtap="useticket">
-    <press title="{{ ticketCount ? '用券兑换'+ticketCount+'份' : '用券兑换' }}" height="90" shadow="0px 4px 8px 0px rgba(192,192,192,0.97);"></press>
+    <press title="{{ ticketCount ? '用券兑换'+ticketCount+'份' : '用券兑换' }}" height="90" fontSize="32" shadow="0px 4px 8px 0px rgba(192,192,192,0.97);"></press>
   </view>
 </view>
 <view class="mask" wx:if="{{ buyByTicket }}" bindtap="cancelBuyByTicket" style="background-color: rgba(0,0,0,.5);"></view>

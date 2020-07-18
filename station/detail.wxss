@@ -1228,20 +1228,21 @@
   display: flex;
 }
 .ticket-sub,.ticket-add{
-  width: 80rpx;
-  height: 80rpx;
-  line-height: 80rpx;
+  width: 96rpx;
+  height: 88rpx;
+  line-height: 88rpx;
   text-align: center;
-  background-color: rgba(0,0,0,.1);
+  background-color: rgba(245,245,245,1);
   font-size: 28rpx;
+  border-radius:0px 3px 3px 0px;
 }
 .ticket-display{
-  width: 90rpx;
-  height: 80rpx;
+  width: 112rpx;
+  height: 88rpx;
   line-height: 80rpx;
   margin: 0 4rpx;
   font-size: 32rpx;
   font-weight: 500;
   text-align: center;
-  background-color: rgba(0,0,0,.1);
+  background:rgba(245,245,245,1);
 }

@@ -27,7 +27,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.8.0",
-	"appid": "wx85cde7d3e8f3d949",
+	"appid": "wxdb1dcb4a9e212d32",
 	"projectname": "hola-new",
 	"debugOptions": {
 		"hidedInDevtools": []
@@ -338,6 +338,13 @@
 					"name": "user/teamInvite",
 					"pathName": "user/teamInvite",
 					"query": "userId=5eeb5372372a690009f6a806&teamId=5e1985617d5774006ac4533e",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "station/detail",
+					"pathName": "station/detail",
+					"query": "id=5db1624aa673f5007249c9ee",
 					"scene": null
 				}
 			]

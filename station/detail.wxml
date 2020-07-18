@@ -32,13 +32,10 @@
 <!-- 未购买过测评的按钮组且未买断 -->
 <view class="buy-group" wx:elif="{{ !evaluation.hadConsumed && !evaluation.buyoutInfo.hadBuyout }}">
     <button class="meal" style="background-color: #FFF3E0FF;outline: none;border: none;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" >
-      <meal isShow="{{ evaluation.isBeginner }}" title="新用户领券，免费体验测评" subtitle="立即领券 >" icon=""></meal>
+      <meal isShow="{{ evaluation.isBeginner }}" title="新用户领券，免费体验测评" subtitle="立即领券 >" icon="false"></meal>
     </button>
-<!--    <view class="meal" bindtap="openGift">-->
-<!--      <meal isShow="{{ evaluation.isBeginner }}" title="新用户领券，免费体验测评" subtitle="立即领券 >" icon=""></meal>-->
-<!--    </view>-->
     <view class="meal" bindtap="buyByTicket">
-      <meal isShow="{{ hasVoucher }}" title="您有{{ experienceTicket + officialTicket + experienceTicket + shareTicket }}张体验券可用于本测评" subtitle="立即使用 >"></meal>
+      <meal isShow="{{ hasVoucher }}" icon="false" title="您有{{ experienceTicket + officialTicket + experienceTicket + shareTicket }}张体验券可用于本测评" subtitle="立即使用 >"></meal>
     </view>
     <view wx:if="{{ isIos }}">
       <press title="iOS暂不支持直接购买" fontSize="32" fontWeight="600"></press>
@@ -50,10 +47,10 @@
 <!-- 购买过测评券的按钮组且未买断 -->
 <view class="button-group" wx:elif="{{ evaluation.hadConsumed && !evaluation.buyoutInfo.hadBuyout }}">
   <view wx:if="{{ isIos }}" class="meal" bindtap="buyByTicket">
-    <meal isShow="{{ !evaluation.buyoutInfo.hadBuyout }}" title="剩余可用份数：{{ evaluation.availableCount }}" subtitle="{{ isIos ? '用券继续兑换' : '购买更多 >' }}"></meal>
+    <meal isShow="{{ !evaluation.buyoutInfo.hadBuyout }}" icon="false" title="剩余可用份数：{{ evaluation.availableCount }}" subtitle="{{ isIos ? '用券继续兑换' : '购买更多 >' }}"></meal>
   </view>
   <view wx:else class="meal" bindtap="payForEvaluation">
-    <meal isShow="{{ !evaluation.buyoutInfo.hadBuyout }}" title="剩余可用份数：{{ evaluation.availableCount }}" subtitle="{{ isIos ? '用券继续兑换' : '购买更多 >' }}"></meal>
+    <meal isShow="{{ !evaluation.buyoutInfo.hadBuyout }}" icon="false" title="剩余可用份数：{{ evaluation.availableCount }}" subtitle="{{ isIos ? '用券继续兑换' : '购买更多 >' }}"></meal>
   </view>
   <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}">
     <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF" fontSize="32" fontWeight="600"></press>
@@ -65,7 +62,7 @@
 <!-- 买断 -->
 <view class="button-group" wx:elif="{{ evaluation.buyoutInfo.hadBuyout }}">
   <view class="meal" bindtap="payForEvaluation">
-    <meal isShow="{{ evaluation.buyoutInfo.hadBuyout }}" title="有效期至：{{ isIos ? util.getFullDateByFrag(evaluation.buyoutInfo.expiryDate,'.',true) : util.getFullDateByFrag(evaluation.buyoutInfo.expiryDate,'.',true) }}" subtitle="{{ isIos ? '' : '续费' }}"></meal>
+    <meal isShow="{{ evaluation.buyoutInfo.hadBuyout }}" icon="false" title="有效期至：{{ isIos ? util.getFullDateByFrag(evaluation.buyoutInfo.expiryDate,'.',true) : util.getFullDateByFrag(evaluation.buyoutInfo.expiryDate,'.',true) }}" subtitle="{{ isIos ? '' : '续费' }}"></meal>
   </view>
   <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}">
     <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF" fontSize="32" fontWeight="600"></press>

@@ -243,5 +243,6 @@
   <view class="mask" bindtap="closeGift"></view>
 </view>
 <view wx:if="{{ loading }}" class="loading"></view>
-<serving id="serving" mobile="{{ mobile }}" wechat="{{ wechat }}" bottom="180rpx"></serving>
+<!-- 新用户 || 有券 || (未买断&&买过测评) || 买断 以上这种情况出现均会出现小黄条 -->
+<serving id="serving" mobile="{{ mobile }}" wechat="{{ wechat }}" bottom="180rpx" bottom="{{ evaluation.isBeginner || hasVoucher || (!evaluation.buyoutInfo.hadBuyout&&evaluation.hadConsumed) || evaluation.buyoutInfo.hadBuyout ? '240rpx' : '180rpx'}}"></serving>
 <wxs src="../common/util.wxs" module="util"></wxs>

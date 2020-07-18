@@ -2,7 +2,7 @@
 const ald = require('./utils/ald-stat.js');
 var qiniuUpload = require("./utils/qiniuUpload");
 var push = require('./utils/push_sdk.js');
-const debuger = true
+const debuger = false
 const debuggerQueue = []; // 用于判断请求时长
 
 qiniuUpload.init({

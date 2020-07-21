@@ -62,28 +62,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    // const { dispatchId } = this.data,
-    //       that = this;
-    // app.doAjax({
-    //   url: `../haola/dispatchs/${ dispatchId }/detail`,
-    //   method: "get",
-    //   success: function (res) {
-    //     const { finished,Answering,waitingAnswer } = res.data.data,
-    //           { evaluation,image,count } = res.data;
-    //     /*层级太深 将数据进行拆分*/
-    //     const baseInfo = {
-    //       evaluation,
-    //       image,
-    //       count
-    //     };
-    //     that.setData({
-    //       finished,
-    //       Answering,
-    //       waitingAnswer,
-    //       baseInfo
-    //     });
-    //   }
-    // });
 
   },
 
@@ -165,14 +143,14 @@ Page({
     })
   },
   gotodati: function() {
-    
+
     //发放测评
     var that = this;
     var { baseInfo } = that.data;
     var userPapersNum = baseInfo.userPapersNum || {};
     if (userPapersNum.total == 0) {
       app.toast("测评可用数量不足，请先购买或用券兑换测评");
-     
+
       return;
     }
     wx.navigateTo({

@@ -1,4 +1,4 @@
 <!--common/mask/mask.wxml-->
 <view wx:if="{{ isShow }}" class="mask"
-      style="background-color: {{ backgroundColor }};top: {{ top + (titleHeight + statusbarHeight)*2 }}rpx;">
+      style="background-color: {{ backgroundColor }};top: {{ top }}rpx;">
 </view>

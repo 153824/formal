@@ -10,7 +10,7 @@ Page({
     count: 1,
     name: "",
     getPhoneNum: true,
-    loading: false,
+    loading: true,
     mobile: "18559297592",
     wechat: "haola72",
     getInOnceAgainst: false,
@@ -23,16 +23,17 @@ Page({
   },
   onLoad: function(options) {
     var that = this;
-    var { id,name,resubscribe='false' } = options;
-    isFirstLoad = true;
+    var { resubscribe='false' } = options;
     var userData = app.globalData.userInfo || wx.getStorageSync("userInfo");
+    var isGetInAgainst = wx.getStorageSync('isGetInAgainst') || 'NO';
     this.setData({
       isIos: app.isIos,
       teamRole: app.teamRole,
       userData: userData,
       evaluationId: options.id,
       getPhoneNum: true,
-      resubscribe: resubscribe === 'true' ? true : false
+      resubscribe: resubscribe === 'true' ? true : false,
+      isGetInAgainst
     });
     if (app.isLogin) return;
     app.checkUser = function() {
@@ -40,84 +41,116 @@ Page({
       app.checkUser = null;
     };
   },
-  onShow: function(isFresh) {
-    if( isFresh ){
-      isFresh = true;
-    }else{
-      isFresh = false;
-    }
+  onShow: function() {
     var that = this;
     if (app.isLogin) {
-      app.doAjax({
-        url: "myTeamDetail",
-        method: "get",
-        data: {
-          id: app.teamId
-        },
-        success: function(ret) {
-          that.setData({
-            teamAdminUser: ret.adminUser.nickname
-          });
-        }
+      var teamDetailPromise = new Promise((resolve, reject) => {
+        app.doAjax({
+          url: "myTeamDetail",
+          method: "get",
+          data: {
+            id: app.teamId
+          },
+          success: function(ret) {
+            that.setData({
+              teamAdminUser: ret.adminUser.nickname
+            });
+            resolve('success');
+          },
+          fail: function (err) {
+            reject('fail');
+          }
+        });
       });
-      app.doAjax({
-        url: 'evaluationDetail',
-        method: 'get',
-        data: {
-          evaluationId: that.data.evaluationId
-        },
-        success: function (res) {
-          var hasVoucher = true,
-              voucher = 0,
-              { voucherInfo } = res,
-              evaluation = res,
-              isFreeTicket = false,
-              shareTicket = 0,
-              experienceTicket = 0,
-              officialTicket = 0;
-          var { freeEvaluation } = evaluation;
-          var { id,name } = evaluation.evaluationInfo;
-          if( Object.keys(voucherInfo).length <= 0 ){
-            hasVoucher = false;
-          }else{
-            for( let i in voucherInfo ){
-              voucher += voucherInfo[i];
-              if( i === '2' ){
-                officialTicket = voucherInfo[i];
-              }else if( i === '3' ){
-                shareTicket = voucherInfo[i];
-              }else if( i === '5' ){
-                experienceTicket = voucherInfo[i];
-              }
-              if( i === '5' || i === '3' ){
-                isFreeTicket = true;
+      var evaluationDetailPromise = new Promise((resolve, reject) => {
+        app.doAjax({
+          url: 'evaluationDetail',
+          method: 'get',
+          data: {
+            evaluationId: that.data.evaluationId
+          },
+          success: function (res) {
+            var hasVoucher = true,
+                voucher = 0,
+                { voucherInfo } = res,
+                evaluation = res,
+                isFreeTicket = false,
+                shareTicket = 0,
+                experienceTicket = 0,
+                officialTicket = 0;
+            var { freeEvaluation } = evaluation;
+            var { id,name } = evaluation.evaluationInfo;
+            if( Object.keys(voucherInfo).length <= 0 ){
+              hasVoucher = false;
+            }else{
+              for( let i in voucherInfo ){
+                voucher += voucherInfo[i];
+                if( i === '2' ){
+                  officialTicket = voucherInfo[i];
+                }else if( i === '3' ){
+                  shareTicket = voucherInfo[i];
+                }else if( i === '5' ){
+                  experienceTicket = voucherInfo[i];
+                }
+                if( i === '5' || i === '3' ){
+                  isFreeTicket = true;
+                }
               }
             }
-          }
-          that.setData({
-            evaluation,
-            hasVoucher,
-            voucher,
-            isFreeTicket,
-            officialTicket,
-            shareTicket,
-            experienceTicket
-          });
-          wx.aldstat.sendEvent('访问测评详情', {
-            '测评名称': `名称: ${name} id：${id}`
-          });
-          if( freeEvaluation ){
-            console.log("free")
-            wx.aldstat.sendEvent('访问免费测评详情', {
+            that.setData({
+              evaluation,
+              hasVoucher,
+              voucher,
+              isFreeTicket,
+              officialTicket,
+              shareTicket,
+              experienceTicket
+            });
+            wx.aldstat.sendEvent('访问测评详情', {
               '测评名称': `名称: ${name} id：${id}`
             });
-          }else{
-            wx.aldstat.sendEvent('访问付费测评详情', {
-              '测评名称': `名称: ${name} id：${id}`
-            });
-            console.log("!free")
+            if( freeEvaluation ){
+              wx.aldstat.sendEvent('访问免费测评详情', {
+                '测评名称': `名称: ${name} id：${id}`
+              });
+            }else{
+              wx.aldstat.sendEvent('访问付费测评详情', {
+                '测评名称': `名称: ${name} id：${id}`
+              });
+            }
+            resolve("success");
+          },
+          fail: function (err) {
+            reject("fail");
           }
-        }
+        });
+      });
+      wx.showLoading({
+        title: '正在请求...'
+      });
+      Promise.all([teamDetailPromise,evaluationDetailPromise]).then(values => {
+        console.log(values);
+        wx.hideLoading();
+        this.setData({
+          loading: false,
+        })
+      }).catch(err=>{
+        wx.hideLoading();
+        this.setData({
+          loading: false,
+        })
+      });
+    }
+  },
+  onUnload: function(){
+    const { isBeginner,hadShare } = this.data.evaluation;
+    if( !isBeginner && !hadShare ){
+      this.setData({
+        isGetInAgainst: 'NO'
+      });
+      wx.setStorage({
+        key: 'isGetInAgainst',
+        data: 'YES'
       })
     }
   },
@@ -301,8 +334,6 @@ Page({
           },
           fail(res, e) {
             reject("订阅失败");
-            console.log("小神推订阅失败");
-            console.error(e);
             wx.aldstat.sendEvent('用户拒绝订阅新测评', {
               '测评名称': `名称: ${name} id：${id}`
             });
@@ -528,46 +559,6 @@ Page({
     return;
   },
   /**
-   * 分享领取测评
-   */
-  openpopup: function(e, noShowDlg) {},
-  changePage: function(e) {
-    var that = this;
-    var d = e.currentTarget.dataset;
-    if (d.url) {
-      if (d.url =="../index/couponGet?type=2"){
-
-      }
-      var detail = e.detail;
-      if ((!detail || !detail.encryptedData) && d.n == "getPhoneNumber") return;
-      if (detail && detail.encryptedData) {
-        var iv = detail.iv;
-        var encryptedData = detail.encryptedData;
-        if (encryptedData) {
-          //用户授权手机号
-          var userMsg = app.globalData.userMsg || {};
-          userMsg["iv"] = iv;
-          userMsg["encryptedData"] = encryptedData;
-          app.doAjax({
-            url: "updatedUserMobile",
-            data: userMsg,
-            success: function(ret) {
-              app.getUserInfo();
-            }
-          });
-        }
-      }
-    }
-    that.closeGiftDlg();
-    app.changePage(d.url, d.tab);
-  },
-  closepopup: function() {
-    this.setData({
-      ispopup: false,
-      isok: false
-    });
-  },
-  /**
    * 查看大图
    */
   showBigImg: function(e) {
@@ -642,9 +633,6 @@ Page({
 
       }
     });
-  },
-  onUnload: function(){
-
   },
   onShareAppMessage(options) {
     const { teamId } = app,

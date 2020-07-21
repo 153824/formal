@@ -13,7 +13,7 @@
   </view>
   <view style="background-color: #fff;margin-top: 20rpx;">
     <block>
-      <button wx:if="{{ !evaluation.isBeginner && !evaluation.freeEvaluation  }}"
+      <button wx:if="{{ !evaluation.isBeginner && !evaluation.freeEvaluation && isGetInAgainst === 'YES' && !evaluation.hadShare }}"
               class="get-free-ticket"
               open-type="share"
               style="background: transparent;border: none !important;">
@@ -148,18 +148,13 @@
   </view>
 </view>
 <view class="mask" wx:if="{{ buyByTicket }}" bindtap="cancelBuyByTicket" style="background-color: rgba(0,0,0,.5);"></view>
-<!--<view class="cover" wx:if="{{dlgShow||showDlg1}}" bindtap="hidenDlg"></view>-->
-<!--<view class="dlg" wx:if="{{dlgShow}}">-->
-<!--  <image src="../img/store/detail/icon12.png"></image>-->
-<!--  <view class="txtView">{{paperDetail.setting.dateDesc}}</view>-->
-<!--</view>-->
 <view wx:if="{{ giftTrigger }}" class="gift-container">
   <view class="image-container">
     <image src="http://ihola.luoke101.com/20200709145310.png" style="width: 675rpx;height: 855rpx;margin-top: 52rpx;" bindtap="buyByTicket"></image>
   </view>
   <view class="mask" bindtap="closeGift"></view>
 </view>
-<view wx:if="{{ loading }}" class="loading"></view>
 <!-- 新用户 || 有券 || (未买断&&买过测评) || 买断 以上这种情况出现均会出现小黄条 -->
 <serving id="serving" mobile="{{ mobile }}" wechat="{{ wechat }}" bottom="180rpx" bottom="{{ evaluation.isBeginner || hasVoucher || (!evaluation.buyoutInfo.hadBuyout&&evaluation.hadConsumed) || evaluation.buyoutInfo.hadBuyout ? '240rpx' : '180rpx'}}"></serving>
+<mask isShow="{{ loading }}" bgColor="#fff" top="0"></mask>
 <wxs src="../common/util.wxs" module="util"></wxs>

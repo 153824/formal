@@ -48,19 +48,19 @@ Page({
     var { id,name,resubscribe='false' } = options;
     isFirstLoad = true;
     var userData = app.globalData.userInfo || wx.getStorageSync("userInfo");
+    if( name ){
+      wx.aldstat.sendEvent('访问测评详情', {
+        '测评名称': `名称: ${name} id：${id}`
+      });
+    }
     this.setData({
       isIos: app.isIos,
       teamRole: app.teamRole,
       userData: userData,
       paperid: options.id,
       getphoneNum: true,
-      resubscribe: resubscribe === 'true' ? true : false
+      resubscribe: resubscribe === 'true' ? true : false,
     });
-    if( name ){
-      wx.aldstat.sendEvent('访问测评详情', {
-        '测评名称': `名称: ${name} id：${id}`
-      });
-    }
     if (app.isLogin) return;
     app.checkUser = function() {
       that.onShow();
@@ -102,6 +102,8 @@ Page({
               shareTicket = 0,
               experienceTicket = 0,
               officialTicket = 0;
+          var { freeEvaluation } = evaluation;
+          var { id,name } = evaluation.evaluationInfo;
           if( Object.keys(voucherInfo).length <= 0 ){
             hasVoucher = false;
           }else{
@@ -128,6 +130,20 @@ Page({
             shareTicket,
             experienceTicket
           });
+          wx.aldstat.sendEvent('访问测评详情', {
+            '测评名称': `名称: ${name} id：${id}`
+          });
+          if( freeEvaluation ){
+            console.log("free")
+            wx.aldstat.sendEvent('访问免费测评详情', {
+              '测评名称': `名称: ${name} id：${id}`
+            });
+          }else{
+            wx.aldstat.sendEvent('访问付费测评详情', {
+              '测评名称': `名称: ${name} id：${id}`
+            });
+            console.log("!free")
+          }
         }
       })
     }

@@ -4,34 +4,12 @@ var app = getApp();
 var isFirstLoad = true;
 Page({
   data: {
-    showGiftDlg: false,
-    hasFreeTick: false,
-    isFreeTickId: false,
     teamRole: app.teamRole,
-    activePointer: 2,
-    pageScrollTop: 0,
-    showMindDlg: false,
     isIos: false,
-    showMindToast: false,
-    dlgShow: false,
-    dataLoaded: false,
-    showLogin: false,
-    ispay: false,
     payTrigger: false,
-    dati: false,
-    price: 60,
     count: 1,
-    paperid: "",
-    isvip1: "",
-    isticket: false,
     name: "",
-    isAllFree: false,
-    isfree: false,
-    saveImg: {},
-    phoneModel: app.isIphoneX,
-    getphoneNum: true,
-    istext: true,
-    showDlg1: false,
+    getPhoneNum: true,
     loading: false,
     mobile: "18559297592",
     wechat: "haola72",
@@ -48,18 +26,13 @@ Page({
     var { id,name,resubscribe='false' } = options;
     isFirstLoad = true;
     var userData = app.globalData.userInfo || wx.getStorageSync("userInfo");
-    if( name ){
-      wx.aldstat.sendEvent('访问测评详情', {
-        '测评名称': `名称: ${name} id：${id}`
-      });
-    }
     this.setData({
       isIos: app.isIos,
       teamRole: app.teamRole,
       userData: userData,
-      paperid: options.id,
-      getphoneNum: true,
-      resubscribe: resubscribe === 'true' ? true : false,
+      evaluationId: options.id,
+      getPhoneNum: true,
+      resubscribe: resubscribe === 'true' ? true : false
     });
     if (app.isLogin) return;
     app.checkUser = function() {
@@ -91,7 +64,7 @@ Page({
         url: 'evaluationDetail',
         method: 'get',
         data: {
-          evaluationId: that.data.paperid
+          evaluationId: that.data.evaluationId
         },
         success: function (res) {
           var hasVoucher = true,
@@ -147,23 +120,6 @@ Page({
         }
       })
     }
-  },
-  closeGiftDlg: function() {
-    this.setData({
-      showGiftDlg: false
-    });
-  },
-  realCloseGiftDlg: function () {
-
-    this.setData({
-      showGiftDlg: false
-    });
-  },
-  toShowGiftDlg: function() {
-
-    this.setData({
-      showGiftDlg: true
-    });
   },
   toGetPaperDetail: function() {
     var that = this;
@@ -243,31 +199,9 @@ Page({
       });
     });
   },
-  /**
-   * 隐藏底部弹窗提示
-   */
-  closeMindToast: function(e) {
-    this.setData({
-      showMindToast: false
-    });
-  },
-  texthidden: function() {
-    this.setData({
-      istext: true
-    })
-  },
   inputprice: function(e) {
     this.setData({
       count: e.detail.value * 1
-    })
-  },
-  /**
-   * 进入测评购买
-   */
-  paymore: function() {
-    this.setData({
-      ispay: true,
-      payTrigger: false
     })
   },
   payForEvaluation: function(){
@@ -318,33 +252,6 @@ Page({
       }
     });
   },
-  /**
-   * 提示窗口
-   */
-  showMindDlgFn: function(e) {
-    var showMindDlg = false;
-    var activePointer = this.data.activePointer;
-    if (!wx.getStorageSync("hasShowMindDlg") && !e) { //未显示过提示窗口
-      showMindDlg = true;
-      wx.setStorageSync("hasShowMindDlg", true);
-    }
-    if (e) {
-      showMindDlg = true;
-      activePointer -= 1;
-    }
-    this.setData({
-      showMindDlg: showMindDlg,
-      activePointer: activePointer,
-      dati: false,
-      isok: false
-    });
-  },
-  closedati: function(e) {
-    this.setData({
-      dati: false,
-      isok: false
-    });
-  },
   /**获取用户体验测评报告 */
   toReportDetail: function() {
     var that = this;
@@ -355,7 +262,7 @@ Page({
         type: "self",
         isCheckOld: true,
         status: 2,
-        id: that.data.paperid,
+        id: that.data.evaluationId,
       },
       success: function(res) {
         if (res && res.id) {
@@ -411,7 +318,7 @@ Page({
         method: 'post',
         data: {
           type: "self",
-          id: that.data.paperid,
+          id: that.data.evaluationId,
         },
         success: function(res) {
           promise.then(ret=>{
@@ -424,21 +331,18 @@ Page({
             })
           });
           wx.aldstat.sendEvent('点击体验测评', {
-            '测评名称': `名称：${ name } id：${ that.data.paperid }`
+            '测评名称': `名称：${ name } id：${ that.data.evaluationId }`
           });
         }
       });
     }
-    that.setData({
-      showMindDlg: false
-    });
     app.doAjax({
       url: 'toSharePaper',
       method: 'post',
       data: {
         type: "self",
         isCheckOld: true,
-        id: that.data.paperid,
+        id: that.data.evaluationId,
       },
       success: function(res) {
         if (res && res.isOld && res.id) {
@@ -446,7 +350,7 @@ Page({
           var oldData = wx.getStorageSync(sKey);
           if (oldData) {
             wx.navigateTo({
-              url: '../test/index?pid=' + that.data.paperid + '&id=' + res.id
+              url: '../test/index?pid=' + that.data.evaluationId + '&id=' + res.id
             });
             return;
           }
@@ -461,23 +365,7 @@ Page({
           });
           return;
         }
-        if ( +evaluationInfo.price && availableCount > 0 ) {
-          // wx.showModal({
-          //   title: '体验确认',
-          //   content: '体验将消耗1份可用数量，是否确认体验？',
-          //   success: function(ret) {
-          //     if (ret.confirm) {
-          //       console.log("Fifth");
-          //       toNext();
-          //     }
-          //   }
-          // });
-          toNext(subscribePromise);
-        } else if( buyoutInfo.hadBuyout ) {
-          toNext(subscribePromise);
-        } else {
-          toNext(subscribePromise);
-        }
+        toNext(subscribePromise);
       }
     });
   },
@@ -497,80 +385,6 @@ Page({
     } else {
       this.setData({
         count: this.data.count - 1
-      })
-    }
-  },
-  paymoney: function(e) {
-    console.log("统计1", e);
-    this.setData({
-      isticket: app.isIos || false,
-      ispay: true
-    })
-  },
-  /**
-   * 购买测评
-   */
-  payfished: function() {
-    var that = this;
-    if (this.data.count != 0) {
-      app.doAjax({
-        url: "buyPaper",
-        method: "post",
-        data: {
-          id: that.data.paperid,
-          count: that.data.count,
-          type: 1,
-          openid: wx.getStorageSync("openId") || app.globalData.userMsg.openid
-        },
-        success: function(res) {
-          wx.requestPayment({
-            'appId': res.payObj.appId,
-            'timeStamp': res.payObj.timeStamp,
-            'nonceStr': res.payObj.nonceStr,
-            'package': res.payObj.package,
-            'signType': 'MD5',
-            'paySign': res.payObj.paySign,
-            'success': function(res) {
-              that.showMindDlgFn();
-              wx.showToast({
-                title: '购买成功',
-                duration: 2000
-              });
-              that.setData({
-                ispay: false,
-                pageScrollTop: 0
-              });
-              setTimeout(function() {
-                that.toGetPaperDetail(true);
-              }, 500);
-              //这里完成跳转
-            },
-            'fail': function(res) {
-              if (res.errMsg == "requestPayment:fail cancel") {
-                wx.showToast({
-                  title: '购买取消',
-                  icon: 'none',
-                  duration: 1200
-                })
-              } else {
-                wx.showToast({
-                  title: '购买失败',
-                  icon: 'none',
-                  duration: 1200
-                })
-              }
-              //支付失败
-              console.log(res);
-            },
-            'complete': function(res) {}
-          })
-        }
-      });
-    } else {
-      wx.showToast({
-        title: '购买数量不能为空',
-        icon: 'none',
-        duration: 1200
       })
     }
   },
@@ -603,10 +417,6 @@ Page({
               wx.showToast({
                 title: '购买成功',
                 duration: 2000
-              });
-              that.setData({
-                ispay: false,
-                pageScrollTop: 0
               });
               setTimeout(function() {
                 that.toGetPaperDetail();
@@ -672,16 +482,13 @@ Page({
               title: '购买成功',
               duration: 2000
             });
-            that.setData({
-              ispay: false
-            });
             setTimeout(function() {
               that.toGetPaperDetail();
             }, 500);
             //这里完成跳转
           },
-          'fail': function(res) {
-            if (res.errMsg == "requestPayment:fail cancel") {
+          fail: function(res) {
+            if (res.errMsg === "requestPayment:fail cancel") {
               wx.showToast({
                 title: '购买取消',
                 icon: 'none',
@@ -697,15 +504,10 @@ Page({
             //支付失败
             console.log(res);
           },
-          'complete': function(res) {}
+          complete: function(res) {}
         })
       }
     });
-  },
-  closepaypage: function() {
-    this.setData({
-      ispay: false
-    })
   },
 
   gotodati: function() {
@@ -765,18 +567,6 @@ Page({
       isok: false
     });
   },
-
-  changePaymentmoney: function() {
-    this.setData({
-      isticket: app.isIos || false
-    })
-  },
-
-  changePaymentticket: function() {
-    this.setData({
-      isticket: true
-    })
-  },
   /**
    * 查看大图
    */
@@ -815,26 +605,6 @@ Page({
     that.getNewerTicket();
   },
   /**
-   * 显示过期时间说明弹窗
-   *
-   */
-  showDlg: function(e) {
-    this.setData({
-      dlgShow: true
-    });
-  },
-  /**
-   * 隐藏时间说明弹窗
-   */
-  hidenDlg: function(e) {
-    if (this.data.isFreeTickId) return;
-    this.setData({
-      showDlg1: false,
-      showMindDlg: false,
-      dlgShow: false
-    });
-  },
-  /**
    * 用户手机号授权
    */
   checkUserMobile: function(e, cb) {
@@ -861,15 +631,6 @@ Page({
     }
   },
   /**
-   * 滑动切换指示点
-   */
-  changeActivePointer: function(e) {
-    var current = e.detail.current;
-    this.setData({
-      activePointer: current
-    });
-  },
-  /**
    * 复制微客服信号
    */
   copyIt: function(e) {
@@ -878,67 +639,26 @@ Page({
     wx.setClipboardData({
       data: txt,
       success(res) {
-        that.setData({
-          showDlg1: false
-        });
+
       }
     });
   },
-  /**
-   * 页面隐藏
-   */
-  onHide: function() {
-    this.setData({
-      isFreeTickId: false,
-    });
-    this.hidenDlg();
-  },
   onUnload: function(){
-    const { couponGet0,teamRole,isTodayTeam,isfree } = this.data;
-    if( !((!couponGet0)&&teamRole==3&&isTodayTeam) ){
-      this.setData({
-        getInOnceAgainst: true
-      });
-      app.globalData.getInOnceAgainst = true;
-      wx.setStorage({
-        key: "getInOnceAgainst",
-        data: true,
-      })
-    }
+
   },
   onShareAppMessage(options) {
     const { teamId } = app,
-          paperId = options.target.dataset.id,
-          userId = app.globalData.userInfo.id,
-          that = this;
-    const { name } = this.data.paperDetail;
+        userId = app.globalData.userInfo.id,
+        that = this;
+    const { id,name } = this.data.evaluation.evaluationInfo;
     setTimeout(()=>{
       app.doAjax({
-        url: `drawVoucher?userId=${userId}&paperId=${paperId}&teamId=${teamId}`,
+        url: `drawVoucher?userId=${userId}&paperId=${id}&teamId=${teamId}`,
         success: function (res) {
           app.toast(res);
-          wx.showModal({
-            title: '',
-            content: '领券成功，快去兑换测评吧',
-            confirmText:'立即兑换',
-            success(res){
-              if(res.confirm){
-                // 用户点击了确定属性的按钮，对应选择了'男'
-                that.setData({
-                  isticket: app.isIos || false,
-                  ispay: true
-                })
-              }
-            }
-          })
           if( res.code == "0" ){
-            that.setData({
-              freeTick: true
-            })
+
           }
-          wx.aldstat.sendEvent('分享得3张券成功', {
-            '测评名称': `名称: ${name}`
-          });
         }
       })
     },1000);

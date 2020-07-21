@@ -12,6 +12,14 @@
     </view>
   </view>
   <view style="background-color: #fff;margin-top: 20rpx;">
+    <block>
+      <button wx:if="{{ !evaluation.isBeginner && !evaluation.freeEvaluation  }}"
+              class="get-free-ticket"
+              open-type="share"
+              style="background: transparent;border: none !important;">
+        <ticket></ticket>
+      </button>
+    </block>
     <checkout title="报价方案" type="price" isShow="{{ !evaluation.freeEvaluation }}" data="{{ evaluation.evaluationInfo }}"></checkout>
     <checkout title="测评简介" type="introduction" info="{{ evaluation.evaluationInfo.synopsis }}"></checkout>
     <checkout title="测量维度" type="dimension" list="{{ evaluation.evaluationInfo.measureDimension }}"></checkout>
@@ -71,97 +79,6 @@
     <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
   </view>
 </view>
-<!--支付-->
-<view class="paypage" wx:if="{{ispay && !isIos}}" catchtouchmove="true">
-  <view class="closebox" bindtap="closepaypage"></view>
-  <view class="paybox">
-    <view class="toBuyVip flex" style="margin:40rpx 26rpx 0;" wx:if="{{teamRole!=1&&!isAllFree&&!isvip1&&!isvip2&&paperDetail.userPapersNum.hasOld&&!isIos}}" bindtap="changePage" data-url="./becomevip">
-
-      <view class="flex-main"></view>
-      <view>
-      </view>
-      <view class="flex-main"></view>
-    </view>
-    <view class="paypagehead">
-      <view class="payheadleft">
-        <view>{{paperDetail.name}}</view>
-        <text>单价：¥{{paperDetail.setting.price||0}}</text>
-      </view>
-      <view class="payheadright">
-        <image src="{{paperDetail.setting.smallImg}}"></image>
-      </view>
-    </view>
-    <view class="paypagebody">
-      <wxs module="filters" src="../store/filters.wxs"></wxs>
-      <view class="paybodyleft">合计：￥{{filters.toFix((paperDetail.setting.price||0) * count)}}</view>
-      <view class="paybodyright">
-        <button bindtap="jiancount">-</button>
-        <!-- <view>{{count}}</view> -->
-        <input type="number" bindinput="inputprice" value="{{count}}"></input>
-        <button bindtap="addcount">+</button>
-      </view>
-    </view>
-    <view style="height:14rpx;background:rgba(248, 248, 248, 1);"></view>
-    <view class="wechatpay">
-      <view>支付方式</view>
-      <view class="wechatpaybox" bindtap="changePaymentmoney">
-        <view>
-          <image class="wechatpayimg" src="../img/store/icon31.png"></image>
-          <text class="allpaytext">微信支付</text>
-        </view>
-        <view>
-          <image class="checkicon" src="{{isticket ? '../img/store/icon33.png':'../img/store/icon34.png'}}"></image>
-        </view>
-      </view>
-    </view>
-    <view class="ticketpay" bindtap="changePaymentticket">
-      <view class="ticketpaybox">
-        <view>
-          <image class="ticketpayimg" src="../img/store/icon32.png"></image>
-          <text class="allpaytext">用券兑换</text>
-        </view>
-        <view>
-          <text class="allpaygraytext">{{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)}}张券可用于本测评</text>
-          <image class="checkicon" src="{{!isticket ? '../img/store/icon33.png':'../img/store/icon34.png'}}"></image>
-        </view>
-      </view>
-    </view>
-  </view>
-    <view class="paytabbox {{phoneModel ? 'isiphoneX':''}}">
-      <view wx:if="{{isticket}}" class="checkusebtn {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)<count?'disabledBtn':''}}" bindtap="useticket">
-        {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0) < count? '券数量不足': '用券兑换'+count+ '份'}}
-      </view>
-      <view wx:if="{{!isticket}}" class="checkusebtn" bindtap="payfished">
-        微信支付￥{{filters.toFix((paperDetail.setting.price||0) * count)}}
-      </view>
-    </view>
-</view>
-<!-- 支付IOS -->
-<view class="paypage paypageIos" wx:if="{{ispay&&isIos}}" catchtouchmove="true">
-    <view class="closebox" bindtap="closepaypage"></view>
-    <view class="paybox">
-      <view class="paypagehead">
-        <view class="payheadleft">
-          <view>{{paperDetail.name}}</view>
-          <view class="allpaygraytext">{{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)}}张券可用于本测评</view>
-        </view>
-        <view class="payheadright">
-          <image src="{{paperDetail.setting.smallImg}}"></image>
-        </view>
-      </view>
-      <view class="paybodyright">
-        <button bindtap="jiancount">-</button>
-        <input type="number" bindinput="inputprice" value="{{count}}"></input>
-        <button bindtap="addcount">+</button>
-      </view>
-    </view>
-    <view class="lineView"></view>
-    <view class="paytabbox {{phoneModel ? 'isiphoneX':''}}">
-      <view wx:if="{{isticket}}" class="checkusebtn {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0) < count ? 'disabledBtn' : '' }}" bindtap="useticket">
-        {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)
-        < count? '券数量不足': '用券兑换'+count+ '份'}} </view>
-      </view>
-  </view>
 <view wx:if="{{ payTrigger }}" class="new-pay-page">
   <view class="pay-title">
     <text>选择购买方式</text>
@@ -231,11 +148,11 @@
   </view>
 </view>
 <view class="mask" wx:if="{{ buyByTicket }}" bindtap="cancelBuyByTicket" style="background-color: rgba(0,0,0,.5);"></view>
-<view class="cover" wx:if="{{dlgShow||showDlg1}}" bindtap="hidenDlg"></view>
-<view class="dlg" wx:if="{{dlgShow}}">
-  <image src="../img/store/detail/icon12.png"></image>
-  <view class="txtView">{{paperDetail.setting.dateDesc}}</view>
-</view>
+<!--<view class="cover" wx:if="{{dlgShow||showDlg1}}" bindtap="hidenDlg"></view>-->
+<!--<view class="dlg" wx:if="{{dlgShow}}">-->
+<!--  <image src="../img/store/detail/icon12.png"></image>-->
+<!--  <view class="txtView">{{paperDetail.setting.dateDesc}}</view>-->
+<!--</view>-->
 <view wx:if="{{ giftTrigger }}" class="gift-container">
   <view class="image-container">
     <image src="http://ihola.luoke101.com/20200709145310.png" style="width: 675rpx;height: 855rpx;margin-top: 52rpx;" bindtap="buyByTicket"></image>

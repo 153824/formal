@@ -462,7 +462,7 @@ Page({
     width = width * n;
     w = w * n;
     r = r * n;
-    ctx.setStrokeStyle('#5960ED');
+    ctx.setStrokeStyle('#353EE8');
     ctx.setLineWidth(width);
     ctx.setLineCap('round');
     var endAngle = (num * 2 / 100) + 1.5;

@@ -24,7 +24,7 @@
   <!-- 用户信息 -->
   <view class="box">
     <view class="title">
-      <text class="underLineBg">测评者信息</text>
+      <text class="underLineBg assessor-info ">测评者信息</text>
       <!-- <view class="showImg flex" bindtap="showBigImg" data-url="{{userMsg.imgUrl}}">
         <image src="{{userMsg.imgUrl}}" class="userImg"></image>
         <text>查看照片</text>
@@ -78,7 +78,7 @@
   </view>
   <!-- 报告总述 -->
   <view class="box1" wx:if="{{showSummary}}">
-    <view class="title">
+    <view class="title report-summary">
       <text>{{summaryName}}</text>
     </view>
     <view class="flex temple" wx:if="{{showSummaryTotal||showSummaryDefinition||summaryRankOrg||summaryRankAll}}">

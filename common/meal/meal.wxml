@@ -4,7 +4,8 @@
         <image wx:if="{{ icon }}" class="meal-icon" style="{{ icon ? 'width:0;' : 'width:36rpx;' }}"></image>
         <text>{{ title }}</text>
     </view>
-    <view class="meal-detail">
+    <view class="meal-detail" style="display: flex;align-items: center;">
+        <image wx:if="{{ subIcon }}" src="{{ subIcon }}" class="sub-icon"></image>
         {{ subtitle }}
     </view>
 </view>

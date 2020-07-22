@@ -14,7 +14,6 @@
 .meal-info{
     display: flex;
     align-items: center;
-    margin-right: 92rpx;
 }
 .info{
 
@@ -27,4 +26,9 @@
 .meal-detail{
     display: inline-block;
     font-weight: 600;
+}
+.sub-icon{
+    margin-right: 10rpx;
+    width: 50rpx;
+    height: 50rpx;
 }

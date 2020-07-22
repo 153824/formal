@@ -19,6 +19,10 @@ Component({
     icon: {
       type: String,
       value: ""
+    },
+    subIcon: {
+      type: String,
+      value: ""
     }
   },
 

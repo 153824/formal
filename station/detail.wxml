@@ -40,7 +40,7 @@
 <!-- 未购买过测评的按钮组且未买断 -->
 <view class="buy-group" wx:elif="{{ !evaluation.hadConsumed && !evaluation.buyoutInfo.hadBuyout }}">
     <button class="meal meal-button" style="background-color: #FFF3E0FF;outline: none;border: none;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" >
-      <meal isShow="{{ evaluation.isBeginner }}" title="新用户领券，免费体验测评" subtitle="立即领券 >" icon="false"></meal>
+      <meal isShow="{{ evaluation.isBeginner }}" title="新用户领券，免费体验测评" subIcon="../../img/newer-ticket.gif" subtitle="立即领券 >" icon="false"></meal>
     </button>
     <view class="meal" bindtap="buyByTicket">
       <meal isShow="{{ hasVoucher }}" icon="false" title="您有{{ experienceTicket + officialTicket + experienceTicket + shareTicket }}张体验券可用于本测评" subtitle="立即使用 >"></meal>

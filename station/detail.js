@@ -275,7 +275,6 @@ Page({
         wx.showToast({
           title: '兑换成功',
         });
-        that.showMindDlgFn();
         that.setData({
           buyByTicket: false
         });
@@ -321,6 +320,13 @@ Page({
       })
     }
     var subscribePromise = new Promise((resolve, reject) => {
+      try{
+        wx.aldstat.sendEvent('用户触发订阅新测评', {
+          '测评名称': `名称: ${name} id：${id}`
+        });
+      }catch (e) {
+
+      }
       /*无体验过,开启小神推订阅*/
       if( ( !oldshareid && isFirstExperience ) || this.data.resubscribe ){
         console.log("app.globalData.eventId",app.globalData.eventId);
@@ -328,9 +334,13 @@ Page({
           eventId: app.globalData.eventId,
           success(res) {
             resolve("订阅成功");
-            wx.aldstat.sendEvent('用户成功订阅新测评', {
-              '测评名称': `名称: ${name} id：${id}`
-            });
+            try{
+              wx.aldstat.sendEvent('用户成功订阅新测评', {
+                '测评名称': `名称: ${name} id：${id}`
+              });
+            }catch (e) {
+
+            }
           },
           fail(res, e) {
             reject("订阅失败");
@@ -674,6 +684,13 @@ Page({
   getNewerTicket: function (e) {
     var that = this;
     var { evaluationInfo } = that.data.evaluation;
+    try{
+      wx.aldstat.sendEvent('用户点击领新人5张券', {
+        '测评名称': `名称: ${evaluationInfo.name}`
+      });
+    }catch (e) {
+
+    }
     app.doAjax({
       url: "drawNoviceVoucher",
       method: "post",
@@ -690,9 +707,15 @@ Page({
          * @return:
          * @date: 2020/6/17
          */
-        wx.aldstat.sendEvent('领新人5张券成功', {
-          '测评名称': `名称: ${evaluationInfo.name}`
-        });
+        if( ret.code === 0 ){
+          try{
+            wx.aldstat.sendEvent('领新人5张券成功', {
+              '测评名称': `名称: ${evaluationInfo.name}`
+            });
+          }catch (e) {
+
+          }
+        }
       },
       error: function(res) {
         app.toast(res.msg);

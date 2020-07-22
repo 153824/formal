@@ -1,30 +1,10 @@
 //index.js
-//获取应用实例
 var app = getApp();
-var firstLoad = true;
 Page({
   data: {
     teamRole: app.teamRole,
     showTopGift: false,
     showGiftDlg: false,
-    functionSet: [
-      {
-        text: "免费专区",
-        src: "../img/index/free_base@2x.png"
-      },
-      {
-        text: "销售技能",
-        src: "../img/index/sale_test@2x.png"
-      },
-      {
-        text: "测程序员",
-        src: "../img/index/test_developer@2x.png"
-      },
-      {
-        text: "经典测试",
-        src: "../img/index/classic_test@2x.png"
-      },
-    ],
     statusbarHeight: app.globalData.statusbarHeight,
     titleHeight: app.globalData.titleHeight,
     navigationSet: [],
@@ -97,12 +77,7 @@ Page({
       that.setData({
         loading1: false
       })
-    })
-    // .finally(()=>{
-    //   that.setData({
-    //     loading1: false
-    //   })
-    // });
+    });
     /**
      * @Description: 专属测评
      * @author: WE!D

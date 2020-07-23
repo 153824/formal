@@ -116,6 +116,51 @@
       <rich-text nodes="{{summary.txt}}"></rich-text>
     </view>
   </view>
+  <!--  作答分析-->
+  <view class="report-analyse">
+    <view class="title">
+      <text>作答分析</text>
+    </view>
+    <view class="question-scroll-box">
+      <swiper class="question-swiper" current="{{ questionNumber }}">
+        <swiper-item style="width: 620rpx !important;height: 956rpx !important;">
+          <view class="question-child">
+            <view class="question-stem">
+              8.您喜欢的领导方式或团队组织类型是
+            </view>
+            <view class="question-options">
+              <view class="question-options-child">
+                <title class="option-char">A</title>
+                <title class="option-word">所有权在领导手中，下属听从并执行所有权在领导手中，下属听从并执行所有权在领导手中，下属听从并执行</title>
+              </view>
+              <view class="question-options-child">
+                <title class="option-char">A</title>
+                <title class="option-word">所有权在领导手中，下属听从并执行</title>
+              </view>
+              <view class="question-options-child">
+                <title class="option-char">A</title>
+                <title class="option-word">所有权在领导手中，下属听从并执行</title>
+              </view>
+              <view class="question-options-child">
+                <title class="option-char">A</title>
+                <title class="option-word">所有权在领导手中，下属听从并执行</title>
+              </view>
+              <view class="question-options-child" bindtap="go">
+                <title class="option-char">A</title>
+                <title class="option-word">所有权在领导手中，下属听从并执行</title>
+              </view>
+            </view>
+          </view>
+        </swiper-item>
+        <swiper-item style="width: 620rpx !important;height: 956rpx !important;">
+          <view class="question-child">sd</view>
+        </swiper-item>
+        <swiper-item style="width: 620rpx !important;height: 956rpx !important;">
+          <view class="question-child">sd</view>
+        </swiper-item>
+      </swiper>
+    </view>
+  </view>
   <!-- 模型介绍 -->
   <view class="box2" wx:if="{{showModelIntroduce&&dimension['1']}}">
     <view class="title">

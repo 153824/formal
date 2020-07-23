@@ -649,17 +649,27 @@ Page({
         userId = app.globalData.userInfo.id,
         that = this;
     const { id,name } = this.data.evaluation.evaluationInfo;
-    setTimeout(()=>{
-      app.doAjax({
-        url: `drawVoucher?userId=${userId}&paperId=${id}&teamId=${teamId}`,
-        success: function (res) {
-          app.toast(res);
-          if( res.code == "0" ){
-
-          }
+    app.doAjax({
+      url: `drawVoucher?userId=${userId}&paperId=${id}&teamId=${teamId}`,
+      success: function (res) {
+        app.toast(res);
+      },
+      fail: function (err) {
+        console.log(err);
+      }
+    });
+    wx.showModal({
+      title: '',
+      content: '领券成功，快去兑换测评吧',
+      confirmText:'立即兑换',
+      success(res){
+        if(res.confirm){
+          that.setData({
+            buyByTicket: true
+          })
         }
-      })
-    },1000);
+      }
+    });
     return {
       title: "我发现一个不错的人才测评软件，快来看看吧~",
       path: "/index/index",

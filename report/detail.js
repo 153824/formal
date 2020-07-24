@@ -65,7 +65,7 @@ function getChartMsg(canvas, width, height) {
 //雷达图数据
 var value_1 = {};
 var indicator_1 = {};
-console.log("value_1: ",value_1)
+
 function getChartMsg1(canvas, width, height) {
   console.log(width,height);
   console.log("value_1: ",value_1);
@@ -143,7 +143,10 @@ function getChartMsg1(canvas, width, height) {
   chart.setOption(option);
   return chart;
 }
+
 Page({
+  startPageX: 0,
+  scrollViewWidth: 0,
   data: {
     getChartMsg: {
       onInit: getChartMsg
@@ -157,7 +160,12 @@ Page({
     proposalShow: false,
     noTeamMember: false,
     showPage: false,
-    dlgName: ""
+    dlgName: "",
+    cardCur: 0,
+    test: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    moveParams: {
+      scrollLeft: 0
+    }
   },
   onLoad: function(options) {
     wx.hideShareMenu();
@@ -180,6 +188,9 @@ Page({
     }
   },
   onShow: function() {
+
+  },
+  onReady() {
 
   },
   /**
@@ -475,18 +486,6 @@ Page({
     ctx.draw();
   },
   /**
-   * 分享内容
-   */
-  onShareAppMessage: function(res) {
-
-      // 来自页面内转发按钮
-      return {
-        path: 'store/store',
-        title: "我发现了一个不错的测评工具，快来试试吧",
-        imageUrl: "http://ihola.luoke101.com/wxShareImg.png"
-      };
-  },
-  /**
    * 进入分享报告页面
    */
   toShareReport: function() {
@@ -625,5 +624,90 @@ Page({
       path: `/report/detail?id=${id}`,
       imageUrl: sharePic,
     }
+  },
+  cardSwiper(e) {
+    this.setData({
+      cardCur: e.detail.current
+    })
+  },
+  scroll: function (e) {
+    console.log("scroll: ",e);
+    this.scrollLeft = e.detail.scrollLeft;
+  },
+  touchStart: function (e) {
+    this.startPageX = e.changedTouches[0].pageX;
+  },
+  touchEnd: function (e) {
+    console.log("touchEnd");
+    const QUESTION_NUMBER_WIDTH = 88;
+    const moveX = Math.abs(e.changedTouches[0].pageX - this.startPageX);
+    const rate = app.globalData.pixelRate;
+    console.log("moveX: ",moveX);
+    if( moveX < (QUESTION_NUMBER_WIDTH/rate) ){
+      return
+    }
+    let { cardCur,test } = this.data;
+    const direction = e.changedTouches[0].pageX - this.startPageX > 0 ? 'FINGER_TO_RIGHT' : 'FINGER_TO_LEFT';
+    const moveRPX = Math.abs(moveX*rate);
+    const multiple = Math.ceil(moveRPX/QUESTION_NUMBER_WIDTH);
+    const maxPage = test.length;
+    if( direction === 'FINGER_TO_RIGHT' ){
+      cardCur =  cardCur - multiple <= 0 ? 0 : cardCur - multiple;
+    }else{
+      cardCur =  cardCur + multiple >= maxPage ? maxPage : cardCur + multiple;
+    }
+    this.scrollSelectItem(cardCur);
+  },
+  switchClass: function (e) {
+    const offsetLeft = e.currentTarget.offsetLeft;
+    const cardCur = e.target.dataset.id;
+    this.setData({
+      scrollLeft: offsetLeft - this.data.scrollViewWidth/2,
+      cardCur
+    })
+  },
+  getRect: function (elementId) {
+      const that = this;
+      wx.createSelectorQuery().select(elementId).boundingClientRect((rect)=>{
+        let moveParams = that.data.moveParams;
+        moveParams.subLeft = rect.left;
+        moveParams.subHalfWidth = rect.width / 2;
+        moveParams.screenHalfWidth = app.globalData.windowWidth / 2;
+        console.log("moveParams",moveParams);
+        that.moveTo();
+      }).exec();
+  },
+  moveTo: function () {
+    let subLeft = this.data.moveParams.subLeft;
+    let screenHalfWidth = this.data.moveParams.screenHalfWidth;
+    let subHalfWidth = this.data.moveParams.subHalfWidth;
+    let scrollLeft = this.data.moveParams.scrollLeft;
+    let distance = subLeft - screenHalfWidth + subHalfWidth;
+    scrollLeft = scrollLeft + distance;
+    console.log("scrollLeft： ",scrollLeft);
+    this.setData({
+      scrollLeft: scrollLeft
+    });
+  },
+  scrollMove(e) {
+    let moveParams = this.data.moveParams;
+    moveParams.scrollLeft = e.detail.scrollLeft;
+    this.setData({
+      moveParams: moveParams
+    })
+  },
+  selectItem: function (e) {
+    let ele = 'scroll-item-' + e.target.dataset.id;
+    this.getRect('#' + ele);
+    this.setData({
+      cardCur: e.target.dataset.id
+    })
+  },
+  scrollSelectItem: function (id) {
+    let ele = 'scroll-item-' + id;
+    this.getRect('#' + ele);
+    this.setData({
+      cardCur: id
+    })
   },
 });

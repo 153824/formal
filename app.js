@@ -27,6 +27,7 @@
  * titleHeight: 系统状态栏高度
  * statusbarHeight: 小程序状态栏高度
  * windowHeight: 视口高度
+ * windowWidth: 视口宽度
  * screenHeight: 屏幕高度
  * pixelRate: dpi
  * eventId:  小神推模板ID

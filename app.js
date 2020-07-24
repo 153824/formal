@@ -151,6 +151,7 @@ App({
           this.globalData.statusbarHeight = statusbarHeight;
           this.globalData.titleHeight = titleHeight;
           this.globalData.windowHeight = windowHeight;
+          this.globalData.windowWidth = windowWidth;
           this.globalData.screenHeight = screenHeight;
           this.globalData.pixelRate = 750 / windowWidth;
         },

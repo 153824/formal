@@ -116,10 +116,10 @@
       <rich-text nodes="{{summary.txt}}"></rich-text>
     </view>
   </view>
-  <!--  作答分析-->
-  <view class="report-analyse">
+  <!--  回答结果-->
+  <view class="evaluation-result">
     <view class="title">
-      <text>作答分析</text>
+      <text>回答结果</text>
     </view>
     <view class="question-scroll-box">
       <swiper class="card-swiper question-swiper" bindchange="cardSwiper" current="{{ cardCur }}">
@@ -149,6 +149,74 @@
                 <title class="option-char">A</title>
                 <title class="option-word">所有权在领导手中，下属听从并执行</title>
               </view>
+            </view>
+          </view>
+        </swiper-item>
+      </swiper>
+    </view>
+    <scroll-view class="question-num-box" id="question-num-box" scroll-x bindscroll="scrollMove" bindtouchstart="touchStart" bindtouchend="touchEnd"
+                 scroll-left='{{scrollLeft}}' scroll-with-animation="true">
+      <view id="scroll-item-{{ index }}" wx:for="{{ test }}" data-id="{{ index }}" class="question-number {{ cardCur === index ? 'question-checked' : '' }}" id="scroll-item-{{index}}"  bindtap="selectItem">
+        {{ index }}
+      </view>
+    </scroll-view>
+  </view>
+  <!--  作答分析-->
+  <view class="report-analyse">
+    <view class="title">
+      <text>作答分析</text>
+    </view>
+    <view class="question-scroll-box">
+      <swiper class="card-swiper question-swiper" bindchange="cardSwiper" current="{{ cardCur }}">
+        <swiper-item wx:for="{{ test }}" class="{{ cardCur === index ? 'cur':'' }}">
+          <view class="question-child swiper-item question-item">
+            <view class="question-stem">
+              {{ index }}.您喜欢的领导方式或团队组织类型是
+            </view>
+            <view class="question-options">
+              <view class="question-options-child">
+                <title class="option-char">A</title>
+                <title class="option-word">所有权在领导手中，下属听从并执行所有权在领导手中，下属听从并执行所有权在领导手中，下属听从并执行</title>
+              </view>
+              <view class="question-options-child">
+                <title class="option-char">B</title>
+                <title class="option-word">所有权在领导手中，下属听从并执行</title>
+              </view>
+              <view class="question-options-child">
+                <image src="../img/right.png" class="option-char right">C</image>
+                <title class="option-word">所有权在领导手中，下属听从并执行</title>
+              </view>
+              <view class="question-options-child">
+                <image src="../img/fault.png" class="option-char fault">C</image>
+                <title class="option-word">所有权在领导手中，下属听从并执行</title>
+              </view>
+              <view class="question-options-child">
+                <title class="option-char">E</title>
+                <title class="option-word">所有权在领导手中，下属听从并执行</title>
+              </view>
+              <title class="compare">
+                正确答案：B 用户选择：C
+              </title>
+              <view class="hr question-options-child"></view>
+              <view class="question-options-child knowledge-point advise-to-ques">
+                <view class="knowledge">
+                  <title>知识点</title>
+                  <view class="tag-wrapper">
+                    <title class="tag">新媒体工具</title>
+                  </view>
+                </view>
+                <view class="advise">
+                  <title>建议追问</title>
+                  <view class="ques-wrapper">
+                    <title class="advise-question">
+                      之前工作中，你用过哪些新媒体工具？
+                    </title>
+                  </view>
+                </view>
+              </view>
+            </view>
+            <view class="situation">
+              40%的人做错
             </view>
           </view>
         </swiper-item>

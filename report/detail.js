@@ -629,7 +629,14 @@ Page({
     this.setData({
       cardCur: e.detail.current
     });
-    this.scrollSelectItem(e.detail.current);
+    this.scrollSelectItem(e.detail.current,false);
+    if( !this.data.isScroll ){
+      wx.vibrateShort({
+        success: function (res) {
+          console.log(res);
+        }
+      })
+    }
   },
   scroll: function (e) {
     this.scrollLeft = e.detail.scrollLeft;
@@ -655,7 +662,9 @@ Page({
     }else{
       cardCur =  cardCur + multiple >= maxPage ? maxPage : cardCur + multiple;
     }
-    console.log("touchEnd");
+    this.setData({
+      isScroll: true
+    });
     this.scrollSelectItem(cardCur);
   },
   switchClass: function (e) {
@@ -696,11 +705,11 @@ Page({
     console.log("moveTo")
   },
   scrollMove(e) {
-      let moveParams = this.data.moveParams;
-      moveParams.scrollLeft = e.detail.scrollLeft;
-      this.setData({
-        moveParams: moveParams
-      });
+    let moveParams = this.data.moveParams;
+    moveParams.scrollLeft = e.detail.scrollLeft;
+    this.setData({
+      moveParams: moveParams
+    });
   },
   selectItem: function (e) {
     let ele = 'scroll-item-' + e.target.dataset.id;
@@ -709,21 +718,24 @@ Page({
       cardCur: e.target.dataset.id
     })
   },
-  scrollSelectItem: function (id) {
+  scrollSelectItem: function (id,vibrate=true) {
     console.log("scrollSelectItem");
     let ele = 'scroll-item-' + id;
     this.getRect('#' + ele);
     this.setData({
       cardCur: id
     });
-    wx.vibrateShort({
-      success: function (res) {
-        console.log(res);
-      }
-    })
+    if( vibrate ){
+      wx.vibrateShort({
+        success: function (res) {
+          console.log(res);
+        }
+      })
+    }
   },
   debounce: function (fn,delay=500) {
     let timeout = null;
+    console.log("debounce");
     return function () {
       if( !timeout ){
         clearTimeout(timeout);

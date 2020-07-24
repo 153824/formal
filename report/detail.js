@@ -628,21 +628,20 @@ Page({
   cardSwiper(e) {
     this.setData({
       cardCur: e.detail.current
-    })
+    });
+    this.scrollSelectItem(e.detail.current);
   },
   scroll: function (e) {
-    console.log("scroll: ",e);
     this.scrollLeft = e.detail.scrollLeft;
+    console.log("scroll: ", e);
   },
   touchStart: function (e) {
     this.startPageX = e.changedTouches[0].pageX;
   },
   touchEnd: function (e) {
-    console.log("touchEnd");
     const QUESTION_NUMBER_WIDTH = 88;
     const moveX = Math.abs(e.changedTouches[0].pageX - this.startPageX);
     const rate = app.globalData.pixelRate;
-    console.log("moveX: ",moveX);
     if( moveX < (QUESTION_NUMBER_WIDTH/rate) ){
       return
     }
@@ -650,12 +649,13 @@ Page({
     const direction = e.changedTouches[0].pageX - this.startPageX > 0 ? 'FINGER_TO_RIGHT' : 'FINGER_TO_LEFT';
     const moveRPX = Math.abs(moveX*rate);
     const multiple = Math.ceil(moveRPX/QUESTION_NUMBER_WIDTH);
-    const maxPage = test.length;
+    const maxPage = test.length - 1;
     if( direction === 'FINGER_TO_RIGHT' ){
       cardCur =  cardCur - multiple <= 0 ? 0 : cardCur - multiple;
     }else{
       cardCur =  cardCur + multiple >= maxPage ? maxPage : cardCur + multiple;
     }
+    console.log("touchEnd");
     this.scrollSelectItem(cardCur);
   },
   switchClass: function (e) {
@@ -670,12 +670,18 @@ Page({
       const that = this;
       wx.createSelectorQuery().select(elementId).boundingClientRect((rect)=>{
         let moveParams = that.data.moveParams;
+        try{
+          moveParams.subLeft = rect.left;
+        }catch(e){
+          moveParams.subLeft = 0;
+          return;
+        }
         moveParams.subLeft = rect.left;
         moveParams.subHalfWidth = rect.width / 2;
         moveParams.screenHalfWidth = app.globalData.windowWidth / 2;
-        console.log("moveParams",moveParams);
         that.moveTo();
       }).exec();
+      console.log("getRect")
   },
   moveTo: function () {
     let subLeft = this.data.moveParams.subLeft;
@@ -684,17 +690,17 @@ Page({
     let scrollLeft = this.data.moveParams.scrollLeft;
     let distance = subLeft - screenHalfWidth + subHalfWidth;
     scrollLeft = scrollLeft + distance;
-    console.log("scrollLeft： ",scrollLeft);
     this.setData({
       scrollLeft: scrollLeft
     });
+    console.log("moveTo")
   },
   scrollMove(e) {
-    let moveParams = this.data.moveParams;
-    moveParams.scrollLeft = e.detail.scrollLeft;
-    this.setData({
-      moveParams: moveParams
-    })
+      let moveParams = this.data.moveParams;
+      moveParams.scrollLeft = e.detail.scrollLeft;
+      this.setData({
+        moveParams: moveParams
+      });
   },
   selectItem: function (e) {
     let ele = 'scroll-item-' + e.target.dataset.id;
@@ -704,10 +710,26 @@ Page({
     })
   },
   scrollSelectItem: function (id) {
+    console.log("scrollSelectItem");
     let ele = 'scroll-item-' + id;
     this.getRect('#' + ele);
     this.setData({
       cardCur: id
+    });
+    wx.vibrateShort({
+      success: function (res) {
+        console.log(res);
+      }
     })
   },
+  debounce: function (fn,delay=500) {
+    let timeout = null;
+    return function () {
+      if( !timeout ){
+        clearTimeout(timeout);
+      }else{
+        timeout = setTimeout(fn,delay);
+      }
+    }
+  }
 });

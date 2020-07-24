@@ -9,7 +9,7 @@
 </view>
 <view wx:elif="{{showPage}}">
   <!-- 头部信息 -->
-  <view class="box0">
+  <view class="box0" style='height: 284rpx;padding: 36rpx  60rpx 48rpx 60rpx;background: #fff;'>
     <view class="paperName">
       <text class="underLineBg">{{paper.name}}</text>
     </view>
@@ -160,9 +160,6 @@
         {{ index }}
       </view>
     </scroll-view>
-    <view style="display: flex;justify-content: center">
-      <title>·</title>
-    </view>
   </view>
   <!-- 模型介绍 -->
   <view class="box2" wx:if="{{showModelIntroduce&&dimension['1']}}">

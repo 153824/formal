@@ -54,8 +54,9 @@ assessor-info
 /* box0 */
 
 .box0 {
+  height: 200rpx !important;
   background-color: #fff;
-  padding-bottom: 40rpx;
+  padding: 36rpx  60rpx 48rpx 60rpx;
 }
 
 .box0 .paperName {
@@ -86,7 +87,7 @@ assessor-info
 }
 
 .box0 .time {
-  margin-top: 48rpx;
+  margin-top: 40rpx;
   position: relative;
   text-align: center;
   font-size: 24rpx;

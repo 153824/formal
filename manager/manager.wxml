@@ -102,4 +102,4 @@
 <!--</view>-->
 <!--结束：批量转发需求变更，后期上线可取消注释    -->
 <wxs src="../common/util.wxs" module="util"></wxs>
-<mask isShow="{{ loading }}" top="270"></mask>
+<mask isShow="{{ loading }}" top="{{ 270 + ( ( statusbarHeight + titleHeight )/pixelRate ) }}"></mask>

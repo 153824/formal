@@ -645,6 +645,14 @@ Page({
     });
   },
   onShareAppMessage(options) {
+    const { evaluationInfo } = this.data.evaluation;
+    try{
+      wx.aldstat.sendEvent('点击分享领3张券', {
+        '测评名称': `名称: ${evaluationInfo.name}`
+      });
+    }catch (e) {
+
+    }
     const { teamId } = app,
         userId = app.globalData.userInfo.id,
         that = this;
@@ -653,23 +661,32 @@ Page({
       url: `drawVoucher?userId=${userId}&paperId=${id}&teamId=${teamId}`,
       success: function (res) {
         app.toast(res);
+        try{
+          wx.aldstat.sendEvent('成功分享领3张券', {
+            '测评名称': `名称: ${evaluationInfo.name}`
+          });
+        }catch (e) {
+    
+        }
       },
       fail: function (err) {
         console.log(err);
       }
     });
-    wx.showModal({
-      title: '',
-      content: '领券成功，快去兑换测评吧',
-      confirmText:'立即兑换',
-      success(res){
-        if(res.confirm){
-          that.setData({
-            buyByTicket: true
-          })
+    setTimeout(()=>{
+      wx.showModal({
+        title: '',
+        content: '领券成功，快去兑换测评吧',
+        confirmText:'立即兑换',
+        success(res){
+          if(res.confirm){
+            that.setData({
+              buyByTicket: true
+            })
+          }
         }
-      }
-    });
+      });
+    },2000)
     return {
       title: "我发现一个不错的人才测评软件，快来看看吧~",
       path: "/index/index",

@@ -9,7 +9,8 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 }  */
-
+@import "colorui/main.wxss";
+@import "colorui/icon.wxss";
 .font {
   /* font-family: 微软雅黑; */
   font-family: 苹方-简;

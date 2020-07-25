@@ -198,173 +198,297 @@ Page({
    * 获取报告详情
    */
   getReport: function(id) {
-    var that = this;
+    let that = this;
     id = id || that.data.id;
-    var userInfo = app.globalData.userInfo;
-    var shareKey = that.data.shareKey || "";
-    app.doAjax({
-      url: "getReport",
-      method: "get",
-      data: {
-        id: id,
-        shareKey: shareKey,
-        userMsg: JSON.stringify({
-          id: userInfo.id,
-          avatar: userInfo.avatar || "",
-          nickname: userInfo.nickname || "",
-          realName: userInfo.realName || ""
-        })
-      },
-      success: function(ret) {
-        if (ret && ret.type == "noTeamMember") {
-          if (shareKey) {
-            wx.redirectTo({
-              url: '../user/teamInvite?key=' + shareKey + "&reportId=" + id
-            });
-            return;
-          }
-          that.setData({
-            teamAdminNickname: ret.teamAdminUserName || "",
-            showPage: true,
-            noTeamMember: true,
-            paperId: ret.paper.id
-          });
-          return;
-        }
-        var now = new Date().getFullYear();
-        var userMsg = ret.userMsg;
-        var t = new Date(userMsg.birthday).getFullYear();
-        ret.userMsg.age = now - t + 1;
-        ret.finishTime = app.changeDate(ret.finishTime, "yyyy/MM/dd hh:mm");
-        var timeNormal = 1; //作答时长正常
-        var answeTimeSatr = +ret.answeTimeSatr;
-        var answeTimeEnd = +ret.answeTimeEnd;
-        var time = +ret.timeTotal;
-        if (time <= answeTimeSatr) {
-          //作答时长偏短
-          timeNormal = 2;
-        }
-        if (time >= answeTimeEnd) {
-          //作答时长偏长
-          timeNormal = 3;
-        }
-        ret["timeNormal"] = timeNormal;
-        value_1 = {};
-        indicator_1 = {};
-        value_2 = {};
-        indicator_2 = {};
-        var objs = ret.dimension;
-        for (var n in objs) {
-          var arr = objs[n].child;
-          var newChild = [];
-          value_1[n] = value_1[n] || [];
-          indicator_1[n] = indicator_1[n] || [];
-          value_2[n] = value_2[n] || [];
-          indicator_2[n] = indicator_2[n] || [];
-          console.log("max值=" + objs[n].max);
-          console.log("objs: ",objs)
-          var { showSubScore } = objs[n];
-          for (var i in arr) {
-            var node = arr[i];
-            console.log("node: ",node.total);
-            if( showSubScore == 'average' ){
-              value_1[n].push(node.average);
-            }else if(!showSubScore){
-              value_1[n].push(node.average);
+    let { shareKey='' } = this.data;
+    let { userInfo } = app.globalData;
+    let getReportPromise = new Promise((resolve, reject) => {
+          app.doAjax({
+            url: "getReport",
+            method: "get",
+            data: {
+              id: id,
+              shareKey: shareKey,
+              userMsg: JSON.stringify({
+                id: userInfo.id,
+                avatar: userInfo.avatar || "",
+                nickname: userInfo.nickname || "",
+                realName: userInfo.realName || ""
+              })
+            },
+            success: function (res) {
+              resolve(res);
+            },
+            fail: function (err) {
+              reject(err);
             }
-            else{
-              value_1[n].push(node.total);
-            }
-            indicator_1[n].push({
-              text: node.name,
-              color: "#323541",
-              max: objs[n].max || 5
-            });
-            indicator_2[n].push({
-              value: node.name,
-              textStyle: {
-                fontWeight: 400,
-                fontFamily: "PingFangSC-Regular",
-                color: "#323541",
-                fontSize: 14
-              }
-            });
-            value_2[n].push({
-              value: node.average,
-              itemStyle: {
-                color: "#5186FF"
-              }
-            });
-            newChild.push(node);
-          }
-          newChild.sort(function(it1, it2) {
-            return it2.average - it1.average;
-          });
-          objs[n].child = newChild;
-          var keys = Object.keys(newChild);
-          objs[n].child[keys[0]]["active"] = "active";
-        }
-        ret["id"] = id;
-        var total1Full = ret.total1;
-        ret.total1 = +ret.total1.toFixed(0);
-        var proposal = ret.proposal || [];
-        var dimensions = ret.dimension || {};
-        ret["proposalShow"] = false;
-        ret["showDimension"] = false;
-        for (var i in dimensions) {
-          if (dimensions[i].show) {
-            ret["showDimension"] = true;
-          }
-        }
-        proposal.forEach(function(n) {
-          if (n.show) {
-            ret["proposalShow"] = true;
-          }
-        });
-        // changeS(0)
-        that.drawCircle(ret.total1);
-        // function changeS(num) {
-        //   that.drawCircle(num);
-        //   if(num==100)return;
-        //   setTimeout(function() {
-        //     changeS(num);
-        //   }, 500);
-        // }
-        ret["statement"] = ret["statement"].replace(/\n/g, "<br>").replace("<bold", "<span style='font-weight: 600;'").replace("</bold", "</span");
-        ret["noTeamMember"] = false;
-        // console.log("teamId ="+ret.teamId+"   "+app.teamId)
-        ret["teamRole"] = (app.teamId == ret.teamId) ? app.teamRole : 1;
-        // console.log("teamRole=" + ret.teamRole + "   " + app.teamRole)
-        ret["showPage"] = true;
-        that.setData(ret);
-        app.doAjax({
-          url: "userOrderMsg",
-          method: "get",
-          data: {
-            id: ret.id,
-            paperId: ret.paper.id,
-            total: total1Full || 0,
-            totalD1: ret.dimension1Total || 0,
-            totalD2: ret.dimension2Total || 0
-          },
-          success: function(r) {
-            that.setData(r);
-          }
-        });
-        app.doAjax({
-          url: 'paperDetail',
-          method: 'get',
-          data: {
-            id: ret.paper.id
-          },
-          success: function (res) {
-            that.setData({
-              sharePic: res.setting.smallImg
-            })
-          }
-        })
-      }
+          })
     });
+    getReportPromise.then(res=>{
+      if( res.reportVersion ){
+        const reportVersionPromise = new Promise((resolve, reject) => {
+          resolve(res);
+        });
+        return reportVersionPromise;
+      }
+      if( this.isInTeams(res) ){
+        return;
+      }
+      let now = new Date().getFullYear();
+      let { userMsg } = res;
+      let t = new Date(userMsg.birthday).getFullYear();
+      res.userMsg.age = now - t + 1;
+      res.finishTime = app.changeDate(res.finishTime, "yyyy/MM/dd hh:mm");
+      let timeNormal = 1; //作答时长正常
+      let answeTimeSatr = +res.answeTimeSatr;
+      let answeTimeEnd = +res.answeTimeEnd;
+      let time = +res.timeTotal;
+      if (time <= answeTimeSatr) {
+        //作答时长偏短
+        timeNormal = 2;
+      }
+      if (time >= answeTimeEnd) {
+        //作答时长偏长
+        timeNormal = 3;
+      }
+      res["timeNormal"] = timeNormal;
+      value_1 = {};
+      indicator_1 = {};
+      value_2 = {};
+      indicator_2 = {};
+      var objs = res.dimension;
+      for (var n in objs) {
+        var arr = objs[n].child;
+        var newChild = [];
+        value_1[n] = value_1[n] || [];
+        indicator_1[n] = indicator_1[n] || [];
+        value_2[n] = value_2[n] || [];
+        indicator_2[n] = indicator_2[n] || [];
+        console.log("max值=" + objs[n].max);
+        console.log("objs: ",objs)
+        var { showSubScore } = objs[n];
+        for (var i in arr) {
+          var node = arr[i];
+          console.log("arr: ",node);
+          if( showSubScore == 'average' ){
+            value_1[n].push(node.average);
+          }else if(!showSubScore){
+            value_1[n].push(node.average);
+          }
+          else{
+            value_1[n].push(node.total);
+          }
+          indicator_1[n].push({
+            text: node.name,
+            color: "#323541",
+            max: objs[n].max || 5
+          });
+          indicator_2[n].push({
+            value: node.name,
+            textStyle: {
+              fontWeight: 400,
+              fontFamily: "PingFangSC-Regular",
+              color: "#323541",
+              fontSize: 14
+            }
+          });
+          value_2[n].push({
+            value: node.average,
+            itemStyle: {
+              color: "#5186FF"
+            }
+          });
+          newChild.push(node);
+        }
+        newChild.sort(function(it1, it2) {
+          return it2.average - it1.average;
+        });
+        objs[n].child = newChild;
+        var keys = Object.keys(newChild);
+        objs[n].child[keys[0]]["active"] = "active";
+      }
+      res["id"] = id;
+      var total1Full = res.total1;
+      res.total1 = +res.total1.toFixed(0);
+      var proposal = res.proposal || [];
+      var dimensions = res.dimension || {};
+      res["proposalShow"] = false;
+      res["showDimension"] = false;
+      for (var i in dimensions) {
+        if (dimensions[i].show) {
+          res["showDimension"] = true;
+        }
+      }
+      proposal.forEach(function(n) {
+        if (n.show) {
+          res["proposalShow"] = true;
+        }
+      });
+      that.drawCircle(res.total1);
+      res["statement"] = res["statement"].replace(/\n/g, "<br>").replace("<bold", "<span style='font-weight: 600;'").replace("</bold", "</span");
+      res["noTeamMember"] = false;
+      res["teamRole"] = (app.teamId == res.teamId) ? app.teamRole : 1;
+      res["showPage"] = true;
+      that.setData(res);
+
+      app.doAjax({
+        url: "userOrderMsg",
+        method: "get",
+        data: {
+          id: res.id,
+          paperId: res.paper.id,
+          total: total1Full || 0,
+          totalD1: res.dimension1Total || 0,
+          totalD2: res.dimension2Total || 0
+        },
+        success: function(r) {
+          that.setData(r);
+        }
+      });
+
+      app.doAjax({
+        url: 'paperDetail',
+        method: 'get',
+        data: {
+          id: res.paper.id
+        },
+        success: function (res) {
+          that.setData({
+            sharePic: res.setting.smallImg
+          })
+        }
+      });
+    }).then(res=>{
+      if( this.isInTeams(res) ){
+        return;
+      }
+      let now = new Date().getFullYear();
+      let { userMsg } = res;
+      let t = new Date(userMsg.birthday).getFullYear();
+      res.userMsg.age = now - t + 1;
+      res.finishTime = app.changeDate(res.finishTime, "yyyy/MM/dd hh:mm");
+      let timeNormal = 1; //作答时长正常
+      let answeTimeSatr = +res.answeTimeSatr;
+      let answeTimeEnd = +res.answeTimeEnd;
+      let time = +res.timeTotal;
+      if (time <= answeTimeSatr) {
+        //作答时长偏短
+        timeNormal = 2;
+      }
+      if (time >= answeTimeEnd) {
+        //作答时长偏长
+        timeNormal = 3;
+      }
+      res["timeNormal"] = timeNormal;
+      value_1 = {};
+      indicator_1 = {};
+      value_2 = {};
+      indicator_2 = {};
+      console.log("res:",res);
+      var objs = res.dimension;
+      console.log("res.dimension：",objs);
+      for (var n in objs) {
+        console.log("n： ",n);
+        var arr = objs[n].subclass;
+        console.log("arr：",arr);
+        var newChild = [];
+        value_1[n] = value_1[n] || [];
+        indicator_1[n] = indicator_1[n] || [];
+        value_2[n] = value_2[n] || [];
+        indicator_2[n] = indicator_2[n] || [];
+        console.log("max值=" + objs[n].max);
+        console.log("objs: ",objs);
+        var { showSubScore } = objs[n];
+        for (var i in arr) {
+          console.log("arr[i]",arr[i]);
+          var node = arr[i];
+          console.log("node: ",node.subTotal);
+          if( showSubScore == 'average' ){
+            value_1[n].push(node.average);
+          }else if(!showSubScore){
+            value_1[n].push(node.average);
+          }
+          else{
+            value_1[n].push(node.subTotal);
+          }
+          indicator_1[n].push({
+            text: node.name,
+            color: "#323541",
+            max: objs[n].max || 5
+          });
+          indicator_2[n].push({
+            value: node.name,
+            textStyle: {
+              fontWeight: 400,
+              fontFamily: "PingFangSC-Regular",
+              color: "#323541",
+              fontSize: 14
+            }
+          });
+          value_2[n].push({
+            value: node.average,
+            itemStyle: {
+              color: "#5186FF"
+            }
+          });
+          newChild.push(node);
+        }
+        newChild.sort(function(it1, it2) {
+          return it2.average - it1.average;
+        });
+        objs[n].child = newChild;
+        var keys = Object.keys(newChild);
+        try{objs[n].child[keys[0]]["active"] = "active"}catch(e){
+          console.error("objs[n].child[keys[0]][\"active\"] = \"active\": ", e);
+        };
+      }
+      res["id"] = id;
+      var total1Full = res.generalTotal100;
+      try{
+        res.total100 = +res.generalTotal100.toFixed(0);
+      }catch (e) {
+        console.log("res.total100：",e);
+      }
+      var proposal = res.proposal || [];
+      var dimensions = res.dimension || {};
+      res["proposalShow"] = false;
+      res["showDimension"] = false;
+      for (var i in dimensions) {
+        if (dimensions[i].show) {
+          res["showDimension"] = true;
+        }
+      }
+      proposal.forEach(function(n) {
+        if (n.show) {
+          res["proposalShow"] = true;
+        }
+      });
+      that.drawCircle(res.total100);
+      res["statement"] = res["statement"].replace(/\n/g, "<br>").replace("<bold", "<span style='font-weight: 600;'").replace("</bold", "</span");
+      res["noTeamMember"] = false;
+      res["teamRole"] = (app.teamId == res.teamId) ? app.teamRole : 1;
+      res["showPage"] = true;
+      that.setData(res);
+      console.log("setData: ", res);
+    });
+  },
+  isInTeams: function(teamInfo){
+    let { shareKey='' } = this.data;
+    if (teamInfo && teamInfo.type == "noTeamMember") {
+      if (shareKey) {
+        wx.redirectTo({
+          url: '../user/teamInvite?key=' + shareKey + "&reportId=" + id
+        });
+        return true;
+      }
+      this.setData({
+        teamAdminNickname: teamInfo.teamAdminUserName || "",
+        showPage: true,
+        noTeamMember: true,
+        paperId: teamInfo.paper.id
+      });
+      return false;
+    }
   },
   /**
    * 图片大图查看

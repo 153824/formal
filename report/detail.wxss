@@ -1,5 +1,6 @@
 /* admins/report.wxss */
-
+@import "../colorui/main.wxss";
+@import "../colorui/icon.wxss";
 page, page>view {
   overflow-x: hidden;
 }
@@ -999,7 +1000,6 @@ swiper, swiper-item {
   line-height: 36rpx;
 }
 .option-char{
-  margin-right: 20rpx;
   min-width: 42rpx;
   height: 42rpx;
   line-height: 42rpx;
@@ -1009,7 +1009,7 @@ swiper, swiper-item {
   text-align: center;
 }
 .option-word{
-
+  margin-left: 20rpx;
 }
 .question-scroll-controller{
   height: 68rpx;
@@ -1088,8 +1088,13 @@ swiper, swiper-item {
   color: #ffffff;
 }
 .right,.fault{
-  width: 40rpx !important;
-  height: 40rpx !important;
+  width: 42rpx !important;
+  height: 42rpx !important;
+  margin-right: 20rpx;
+  min-width: 42rpx;
+  line-height: 42rpx;
+  box-shadow:0rpx 0rpx 8rpx 0rpx rgba(0,0,0,0.1);
+  border-radius: 50%;
 }
 .compare{
   display: inline-block;

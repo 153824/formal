@@ -183,11 +183,11 @@
                 <title class="option-word">所有权在领导手中，下属听从并执行</title>
               </view>
               <view class="question-options-child">
-                <image src="../img/right.png" class="option-char right">C</image>
+                <image src="../img/right.png" class="right">C</image>
                 <title class="option-word">所有权在领导手中，下属听从并执行</title>
               </view>
               <view class="question-options-child">
-                <image src="../img/fault.png" class="option-char fault">C</image>
+                <image src="../img/fault.png" class="fault"></image>
                 <title class="option-word">所有权在领导手中，下属听从并执行</title>
               </view>
               <view class="question-options-child">

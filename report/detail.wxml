@@ -117,7 +117,7 @@
     </view>
   </view>
   <!--  回答结果-->
-  <view class="evaluation-result">
+  <!-- <view class="evaluation-result">
     <view class="title">
       <text>回答结果</text>
     </view>
@@ -160,7 +160,7 @@
         {{ index }}
       </view>
     </scroll-view>
-  </view>
+  </view> -->
   <!--  作答分析-->
   <view class="report-analyse">
     <view class="title">

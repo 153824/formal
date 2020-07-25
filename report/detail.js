@@ -1,5 +1,6 @@
-// admins/report.js
+import debounce from '../utils/lodash/debounce';
 import * as echarts from '../utils/ec-canvas/echarts';
+
 var app = getApp();
 var ctx;
 //柱状图数据
@@ -625,19 +626,16 @@ Page({
       imageUrl: sharePic,
     }
   },
-  cardSwiper(e) {
+  cardSwiper: debounce(function(e){
     this.setData({
       cardCur: e.detail.current
     });
-    this.scrollSelectItem(e.detail.current,false);
-    if( !this.data.isScroll ){
-      wx.vibrateShort({
-        success: function (res) {
-          console.log(res);
-        }
-      })
-    }
-  },
+    console.log("I Scroll It");
+    this.scrollSelectItem(e.detail.current);
+  },10,{
+    leading: true,
+    trailing: false
+  }),
   scroll: function (e) {
     this.scrollLeft = e.detail.scrollLeft;
     console.log("scroll: ", e);
@@ -733,15 +731,4 @@ Page({
       })
     }
   },
-  debounce: function (fn,delay=500) {
-    let timeout = null;
-    console.log("debounce");
-    return function () {
-      if( !timeout ){
-        clearTimeout(timeout);
-      }else{
-        timeout = setTimeout(fn,delay);
-      }
-    }
-  }
 });

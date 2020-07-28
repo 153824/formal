@@ -19,7 +19,8 @@ Page({
     buyByBuyout: true,
     buyByCounts: false,
     buyByTicket: false,
-    ticketCount: 1
+    ticketCount: 1,
+    assistant: app.globalData.assistant
   },
   onLoad: function(options) {
     var that = this;

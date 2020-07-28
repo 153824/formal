@@ -76,11 +76,20 @@ var ASCIIToChar = function(number){
   var options = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
   return options[number];
 };
+
+var isIncludes = function(array=[],item){
+  if( array.indexOf(item) > -1 ){
+    return true;
+  }else{
+    return false;
+  }
+};
 module.exports = {
   getMonthAndDayByFrag: getMonthAndDayByFrag,
   getHourAndMinByFrag: getHourAndMinByFrag,
   getFullDateByFrag: getFullDateByFrag,
   saveDouble: saveDouble,
   hidePartPhoneNumber: hidePartPhoneNumber,
-  ASCIIToChar: ASCIIToChar
+  ASCIIToChar: ASCIIToChar,
+  isIncludes: isIncludes
 };

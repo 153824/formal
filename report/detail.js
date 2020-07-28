@@ -163,7 +163,6 @@ Page({
     showPage: false,
     dlgName: "",
     cardCur: 0,
-    test: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     moveParams: {
       scrollLeft: 0
     }
@@ -226,16 +225,17 @@ Page({
     });
     getReportPromise.then(res=>{
       if( res.reportVersion ){
-        const reportVersionPromise = new Promise((resolve, reject) => {
+        console.log("I Get in!");
+        return new Promise((resolve, reject) => {
           resolve(res);
         });
-        return reportVersionPromise;
       }
       if( this.isInTeams(res) ){
         return;
       }
+
       let now = new Date().getFullYear();
-      let { userMsg } = res;
+      let userMsg = res.userMsg;
       let t = new Date(userMsg.birthday).getFullYear();
       res.userMsg.age = now - t + 1;
       res.finishTime = app.changeDate(res.finishTime, "yyyy/MM/dd hh:mm");
@@ -359,11 +359,14 @@ Page({
         }
       });
     }).then(res=>{
+      if( !res ){
+        return;
+      }
       if( this.isInTeams(res) ){
         return;
       }
       let now = new Date().getFullYear();
-      let { userMsg } = res;
+      let userMsg = res.userMsg;
       let t = new Date(userMsg.birthday).getFullYear();
       res.userMsg.age = now - t + 1;
       res.finishTime = app.changeDate(res.finishTime, "yyyy/MM/dd hh:mm");
@@ -384,25 +387,17 @@ Page({
       indicator_1 = {};
       value_2 = {};
       indicator_2 = {};
-      console.log("res:",res);
       var objs = res.dimension;
-      console.log("res.dimension：",objs);
       for (var n in objs) {
-        console.log("n： ",n);
         var arr = objs[n].subclass;
-        console.log("arr：",arr);
         var newChild = [];
         value_1[n] = value_1[n] || [];
         indicator_1[n] = indicator_1[n] || [];
         value_2[n] = value_2[n] || [];
         indicator_2[n] = indicator_2[n] || [];
-        console.log("max值=" + objs[n].max);
-        console.log("objs: ",objs);
         var { showSubScore } = objs[n];
         for (var i in arr) {
-          console.log("arr[i]",arr[i]);
           var node = arr[i];
-          console.log("node: ",node.subTotal);
           if( showSubScore == 'average' ){
             value_1[n].push(node.average);
           }else if(!showSubScore){
@@ -447,7 +442,6 @@ Page({
       try{
         res.total100 = +res.generalTotal100.toFixed(0);
       }catch (e) {
-        console.log("res.total100：",e);
       }
       var proposal = res.proposal || [];
       var dimensions = res.dimension || {};
@@ -469,7 +463,6 @@ Page({
       res["teamRole"] = (app.teamId == res.teamId) ? app.teamRole : 1;
       res["showPage"] = true;
       that.setData(res);
-      console.log("setData: ", res);
     });
   },
   isInTeams: function(teamInfo){
@@ -774,11 +767,11 @@ Page({
     if( moveX < (QUESTION_NUMBER_WIDTH/rate) ){
       return
     }
-    let { cardCur,test } = this.data;
+    let { cardCur,responseRecord } = this.data;
     const direction = e.changedTouches[0].pageX - this.startPageX > 0 ? 'FINGER_TO_RIGHT' : 'FINGER_TO_LEFT';
     const moveRPX = Math.abs(moveX*rate);
     const multiple = Math.ceil(moveRPX/QUESTION_NUMBER_WIDTH);
-    const maxPage = test.length - 1;
+    const maxPage = responseRecord.length - 1;
     if( direction === 'FINGER_TO_RIGHT' ){
       cardCur =  cardCur - multiple <= 0 ? 0 : cardCur - multiple;
     }else{

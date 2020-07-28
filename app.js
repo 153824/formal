@@ -27,6 +27,7 @@
  * titleHeight: 系统状态栏高度
  * statusbarHeight: 小程序状态栏高度
  * windowHeight: 视口高度
+ * windowWidth: 视口宽度
  * screenHeight: 屏幕高度
  * pixelRate: dpi
  * eventId:  小神推模板ID
@@ -68,7 +69,8 @@ App({
     windowHeight: 0,
     screenHeight: 0,
     pixelRate: 0,
-    eventId: "5ea6b2b26df4251c4a09a4cc"
+    eventId: "5ea6b2b26df4251c4a09a4cc",
+    assistant: ["5edefe43b9e2430008a3f99a","5d786ea66e9ba10069596a61"]
   },
   onLaunch: function(options) {
     var that = this;
@@ -151,6 +153,7 @@ App({
           this.globalData.statusbarHeight = statusbarHeight;
           this.globalData.titleHeight = titleHeight;
           this.globalData.windowHeight = windowHeight;
+          this.globalData.windowWidth = windowWidth;
           this.globalData.screenHeight = screenHeight;
           this.globalData.pixelRate = 750 / windowWidth;
         },
@@ -179,6 +182,7 @@ App({
           appid: that.globalData.appid,
           code: code
         },
+        noLoading: true,
         success: function(res) {
           that.globalData.userMsg = res.userMsg || {};
           var userData = res.data;

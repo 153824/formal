@@ -22,7 +22,7 @@
   bottom: -25rpx;
   left: 0;
   width: 84rpx;
-  border: 12rpx solid rgba(53, 62, 232, 1);
+  border: 8rpx solid rgba(53, 62, 232, 1);
   font-weight: 500;
 }
 .title-bg{
@@ -116,6 +116,9 @@
   border-radius: 16rpx;
   background:rgba(254,255,254,1);
   font-size: 30rpx;
+}
+.subject-child view:first-child{
+  margin-right: 20rpx;
 }
 .report-child{
   display: flex;

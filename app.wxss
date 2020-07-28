@@ -9,7 +9,6 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 }  */
-
 .font {
   /* font-family: 微软雅黑; */
   font-family: 苹方-简;

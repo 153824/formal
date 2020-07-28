@@ -1,138 +1,92 @@
 <!--index.wxml-->
-<!-- <image class="getGift" wx:if="{{!couponGet&&showTopGift&&teamRole==3}}" src="../img/index/gitfImg.png" bindtap="toFetGift"></image> -->
-<!-- <view class="giftDlg" wx:if="{{showGiftDlg}}">
-  <view class="dlgContent">
-    <image class="closeImg" bindtap="closeGiftDlg" src="../img/index/icon8.png"></image>
-    <image class="msgImg" src="../img/index/icon9.png"></image>
-    <button class="btnImg btnImgBtn" open-type="getPhoneNumber" bindgetphonenumber="changePage" data-url="./couponGet" src="../img/index/icon7.png" data-n="getPhoneNumber">
-    </button>
-    <image class="btnImg" bindtap="changePage" data-url="./couponGet" src="../img/index/icon7.png"></image>
-  </view>
-</view> -->
 <block>
   <title id="title"></title>
 </block>
-<view class="topTestView flex" style="margin-top:{{ (statusbarHeight + titleHeight) }}px;" wx:if="{{oldShareInfo&&oldShareInfo.id}}" bindtap="continueTest">
-  <image class="icon25" src="../img/index/icon25.png"></image>
-  <view class="flex-main">您有一份《
-    <span>{{oldShareInfo.paperName}}</span>》测试未完成，戳我继续</view>
-  <image class="icon24" src="../img/index/icon24.png" data-t="2"></image>
-</view>
-<view class="topCouponGetView" wx:if="{{!hasFreeTick&&skipFreeTicket}}">
-  <image bindtap="changePage" data-url="../index/getFreeTicket" src="../img/store/detail/icon29.png"></image>
-</view>
-<view class="container font" style="padding-top:{{ oldShareInfo&&oldShareInfo.id ? 0 : (statusbarHeight + titleHeight) }}px;">
-  <view class="banner">
-    <swiper wx:if="{{ banner.isShow }}" autoplay="true" indicator-dots="{{banner.data.length>1?true:false}}"
-            circular="true" indicator-color="rgba(255,255,255,0.3)" indicator-active-color="#fff">
-      <block wx:for="{{banner.data}}" wx:key="unique">
-        <swiper-item bindtap="gotoDetail" data-id="{{ item.linkId }}">
-          <image src="{{item.picture}}" class="slide-image" style="width: 670rpx;height: 320rpx;" />
-        </swiper-item>
-      </block>
-<!--      <block wx:for="{{imgs}}" wx:key="index">-->
-<!--        <swiper-item bindtap="changePage" data-url="{{item.url||''}}">-->
-<!--          <image src="{{item.img||'http://img01.luoke101.com/banner09201.png'}}" class="slide-image" width="355" height="160" />-->
-<!--        </swiper-item>-->
-<!--      </block>-->
-    </swiper>
+<van-skeleton title="asdsalk" row="17" row-width="{{ skeletonConfig }}" loading="{{ loading }}">
+  <view class="topTestView flex" style="margin-top:{{ (statusbarHeight + titleHeight) }}px;" wx:if="{{oldShareInfo&&oldShareInfo.id}}" bindtap="continueTest">
+    <image class="icon25" src="../img/index/icon25.png"></image>
+    <view class="flex-main">您有一份《
+      <span>{{oldShareInfo.paperName}}</span>》测试未完成，戳我继续</view>
+    <image class="icon24" src="../img/index/icon24.png" data-t="2"></image>
   </view>
-<!--  <view class="threebtn" wx:if="{{navigation&&navigation.length}}">-->
-<!--    <block wx:for="{{ navigation }}" wx:key="unique">-->
-<!--      <view class="threebox" bindtap="changePage" data-url="{{item.url}}" data-name="navigation">-->
-<!--        <view>-->
-<!--          <image src="{{item.img||''}}"></image>-->
-<!--        </view>-->
-<!--        <text>{{item.title}}</text>-->
-<!--      </view>-->
-<!--    </block>-->
-<!--  </view>-->
-
-<!--  <view class="function-set" wx:if="{{ navigation.isShow }}">-->
-<!--    <view wx:for="{{ navigation.data }}" wx:key="unique" class="function-set-child">-->
-<!--      <image src="{{item.picture}}"></image>-->
-<!--      <text>{{item.name}}</text>-->
-<!--    </view>-->
-<!--  </view>-->
-
-  <view class="function-set" wx:if="{{ navigation.isShow }}">
-    <view wx:for="{{ navigation.data }}" wx:key="unique" class="function-set-child" data-id="{{ item.columnId }}"
-          data-name="{{ item.name }}" bindtap="gotoMore">
-      <image src="{{item.picture}}"></image>
-      <text>{{item.name}}</text>
-    </view>
+  <view class="topCouponGetView" wx:if="{{!hasFreeTick&&skipFreeTicket}}">
+    <image bindtap="changePage" data-url="../index/getFreeTicket" src="../img/store/detail/icon29.png"></image>
   </view>
-
-<!--  <view wx:if="{{ teamEvaluation.length > 0 }}">-->
-<!--    <view class="header">-->
-<!--      <text>专属测评</text>-->
-<!--    </view>-->
-<!--    <view class="card-wrapper">-->
-<!--      <view class="card-set">-->
-<!--        <block wx:for="{{ teamEvaluation }}" wx:key="unique" wx:for-item="evaluationItem">-->
-<!--          <view bindtap="changePage" data-url='../station/detail?id={{ evaluationItem.id }}&name={{ evaluationItem.name }}' data-name="{{ evaluationItem.name }}">-->
-<!--            <card image="{{ evaluationItem.setting.img }}"  title="{{ evaluationItem.name }}" subtitle="{{ evaluationItem.setting.infoPc }}"-->
-<!--                  feature="{{ dataItem.isFree ? '免费' : '免费' }}"></card>-->
-<!--          </view>-->
-<!--        </block>-->
-<!--      </view>-->
-<!--    </view>-->
-<!--  </view>-->
-
-  <view wx:for="{{ column }}" wx:key="unique" wx:for-item="columnItem" wx:if="{{ columnItem.data.length > 0 }}">
-    <view class="header">
-      <text>{{ columnItem.column_name }}</text>
-    </view>
-    <view wx:if="{{ columnItem.showType == 1 }}" class="card-wrapper">
-      <view class="card-set">
-        <block wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem">
-          <view wx:if="{{ isIos }}" bindtap="changePage" data-name="{{ dataItem.name }}" data-url='../station/detail?id={{ dataItem.id }}&name={{dataItem.name}}'>
-            <card image="{{ dataItem.img }}"  title="{{ dataItem.name }}" subtitle="{{ dataItem.infoPc }}"
-                  feature="{{ dataItem.isFree ? '免费' : '' }}">
-            </card>
-          </view>
-          <view wx:else bindtap="changePage" data-name="{{ dataItem.name }}" data-url='../station/detail?id={{ dataItem.id }}&name={{dataItem.name}}'>
-            <card image="{{ dataItem.img }}"  title="{{ dataItem.name }}" subtitle="{{ dataItem.infoPc }}"
-                  feature="{{ dataItem.isFree ? '免费' : '￥' + (dataItem.price || dataItem.defaultPrice) }}">
-            </card>
-          </view>
-        </block>
+  <view class="container font" style="padding-top:{{ oldShareInfo&&oldShareInfo.id ? 0 : (statusbarHeight + titleHeight) }}px;">
+    <view class="header-wrapper">
+      <view class="banner">
+        <swiper wx:if="{{ banner.isShow }}" autoplay="true" indicator-dots="{{banner.data.length>1?true:false}}"
+                circular="true" indicator-color="rgba(255,255,255,0.3)" indicator-active-color="#fff">
+          <block wx:for="{{banner.data}}" wx:key="unique">
+            <swiper-item bindtap="gotoDetail" data-id="{{ item.linkId }}">
+              <image src="{{item.picture}}" class="slide-image" style="width: 670rpx;height: 320rpx;" />
+            </swiper-item>
+          </block>
+        </swiper>
+      </view>
+      <view class="function-set" wx:if="{{ navigation.isShow }}">
+        <view wx:for="{{ navigation.data }}" wx:key="unique" class="function-set-child" data-id="{{ item.columnId }}"
+              data-name="{{ item.name }}" bindtap="gotoMore">
+          <image src="{{item.picture}}"></image>
+          <text>{{item.name}}</text>
+        </view>
       </view>
     </view>
-    <view wx:elif="{{ columnItem.showType == 2 }}">
-      <view wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem" wx:for-index="dataIndex"
-            wx:if="{{ dataIndex < 2 }}" >
-            <view bindtap="changePage" data-url='../station/detail?id={{ dataItem.id }}&name={{ dataItem.name }}' data-name="{{ dataItem.name }}">
-               <skill ios="{{ isIos }}" free="{{ dataItem.isFree }}" price="{{ dataItem.price }}"
-               actual="{{ dataItem.defaultPrice }}" title="{{ dataItem.name }}" subtitle="{{ dataItem.infoPc }}"
-               image="{{ dataItem.smallImg }}" objectId="{{ dataItem.id }}" name="{{ dataItem.name }}" companyUseName="{{ dataItem.companyUseName }}"
-               companyUseNum="{{ dataItem.companyUseNum }}">
-                </skill>
+    <view wx:for="{{ column }}" wx:key="unique" wx:for-item="columnItem" wx:if="{{ columnItem.data.length > 0 }}">
+      <view class="header">
+        <text>{{ columnItem.column_name }}</text>
+      </view>
+      <view wx:if="{{ columnItem.showType == 1 }}" class="card-wrapper">
+        <view class="card-set">
+          <block wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem">
+            <view wx:if="{{ isIos }}" bindtap="changePage" data-name="{{ dataItem.name }}" data-url='../station/detail?id={{ dataItem.id }}&name={{dataItem.name}}'>
+              <card image="{{ dataItem.img }}"  title="{{ dataItem.name }}" subtitle="{{ dataItem.infoPc }}"
+                    feature="{{ dataItem.isFree ? '免费' : '' }}">
+              </card>
             </view>
+            <view wx:else bindtap="changePage" data-name="{{ dataItem.name }}" data-url='../station/detail?id={{ dataItem.id }}&name={{dataItem.name}}'>
+              <card image="{{ dataItem.img }}"  title="{{ dataItem.name }}" subtitle="{{ dataItem.infoPc }}"
+                    feature="{{ dataItem.isFree ? '免费' : '￥' + (dataItem.price || dataItem.defaultPrice) }}">
+              </card>
+            </view>
+          </block>
+        </view>
       </view>
-      <button wx:if="{{ columnItem.data.length > 2 }}" class="view-more" data-id="{{ columnItem.column_id }}"
-              data-name="{{ columnItem.column_name }}" bindtap="gotoMore">
-        查看更多
-      </button>
+      <view wx:elif="{{ columnItem.showType == 2 }}">
+        <view wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem" wx:for-index="dataIndex"
+              wx:if="{{ dataIndex < 2 }}" >
+              <view bindtap="changePage" data-url='../station/detail?id={{ dataItem.id }}&name={{ dataItem.name }}' data-name="{{ dataItem.name }}">
+                 <skill ios="{{ isIos }}" free="{{ dataItem.isFree }}" price="{{ dataItem.price }}"
+                 actual="{{ dataItem.defaultPrice }}" title="{{ dataItem.name }}" subtitle="{{ dataItem.infoPc }}"
+                 image="{{ dataItem.smallImg }}" objectId="{{ dataItem.id }}" name="{{ dataItem.name }}" companyUseName="{{ dataItem.companyUseName }}"
+                 companyUseNum="{{ dataItem.companyUseNum }}">
+                  </skill>
+              </view>
+        </view>
+        <button wx:if="{{ columnItem.data.length > 2 }}" class="view-more" data-id="{{ columnItem.column_id }}"
+                data-name="{{ columnItem.column_name }}" bindtap="gotoMore">
+          查看更多
+        </button>
+      </view>
     </view>
-  </view>
 
-<view class="recomend-reading" wx:if="{{ news.isShow }}">
-  <view class="header">
-    <text>推荐阅读</text>
-  </view>
-  <view class="recomend-set" wx:for="{{news.data}}" wx:key="unique">
-    <view class="recomend-child" bindtap="navWebView" data-url="{{item.linkUrl}}">
-      <view class="cover-wrapper">
-        <image src="{{item.picture||'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132'}}" class="cover"></image>
-      </view>
-      <view class="recomend-info">
-        <text class="title">{{item.name}}</text>
-        <text class="date">{{item.recommendTime}}</text>
+  <view class="recomend-reading" wx:if="{{ news.isShow }}">
+    <view class="header">
+      <text>推荐阅读</text>
+    </view>
+    <view class="recomend-set" wx:for="{{news.data}}" wx:key="unique">
+      <view class="recomend-child" bindtap="navWebView" data-url="{{item.linkUrl}}">
+        <view class="cover-wrapper">
+          <image src="{{item.picture||'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132'}}" class="cover"></image>
+        </view>
+        <view class="recomend-info">
+          <text class="title">{{item.name}}</text>
+          <text class="date">{{item.recommendTime}}</text>
+        </view>
       </view>
     </view>
   </view>
-</view>
-</view>
-<mask isShow="{{ loading1 }}"></mask>
-<serving mobile="{{ mobile }}" wechat="{{ wechat }}"></serving>
+  </view>
+<!--  <mask isShow="{{ loading1 }}"></mask>-->
+  <serving mobile="{{ mobile }}" wechat="{{ wechat }}"></serving>
+</van-skeleton>

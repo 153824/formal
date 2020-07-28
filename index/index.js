@@ -10,8 +10,10 @@ Page({
     navigationSet: [],
     teamEvaluation: [],
     isIos: app.isIos,
-    loading1: true,
+    loading: true,
     loading2: true,
+    skeletonConfig: ["100%","100%","40%","100%","100%","100%","100%","100","100%","100%","100%","100%","100%","100%","100%",
+      "100%","60%"],
     mobile: "18559297592",
     wechat: "haola72"
   },
@@ -33,6 +35,7 @@ Page({
       app.doAjax({
         url: "homePages",
         method: "get",
+        noLoading: true,
         success: function(res){
           resolve( res.resultObject );
         },
@@ -48,6 +51,7 @@ Page({
           app.doAjax({
             url: `homePages/columns/${ v.column_id }/evaluations`,
             method: "get",
+            noLoading: true,
             success: function (res) {
               resolve({ columnId: v.column_id, data: res.data});
             },
@@ -71,11 +75,11 @@ Page({
       };
       that.setData({
         column: targetColumn,
-        loading1: false
+        loading: false
       });
     }).catch(err=>{
       that.setData({
-        loading1: false
+        loading: false
       })
     });
     /**
@@ -128,7 +132,7 @@ Page({
   },
   onHide: function () {
     this.setData({
-      loading1: true
+      loading: true
     })
   },
   onShareAppMessage(options) {
@@ -171,6 +175,7 @@ Page({
             app.doAjax({
               url: "updatedUserMobile",
               data: userMsg,
+              noLoading: true,
               success: function(ret) {
                 app.getUserInfo();
               }

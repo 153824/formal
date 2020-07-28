@@ -347,14 +347,15 @@ Page({
       });
 
       app.doAjax({
-        url: 'paperDetail',
+        url: 'evaluationDetail',
         method: 'get',
         data: {
-          id: res.paper.id
+          evaluationId: res.paper.id
         },
         success: function (res) {
           that.setData({
-            sharePic: res.setting.smallImg
+            sharePic: res.evaluationInfo.smallImg,
+
           })
         }
       });
@@ -463,6 +464,20 @@ Page({
       res["teamRole"] = (app.teamId == res.teamId) ? app.teamRole : 1;
       res["showPage"] = true;
       that.setData(res);
+      console.log("res: ",res);
+      app.doAjax({
+        url: 'evaluationDetail',
+        method: 'get',
+        data: {
+          evaluationId: res.paper.id
+        },
+        success: function (response) {
+          that.setData({
+            sharePic: response.evaluationInfo.smallImg,
+            knowledgePoints: response.evaluationInfo.knowledgePoints
+          })
+        }
+      });
     });
   },
   isInTeams: function(teamInfo){

@@ -1,6 +1,6 @@
 /* admins/report.wxss */
-@import "../colorui/main.wxss";
-@import "../colorui/icon.wxss";
+@import "../common/colorui/main.wxss";
+@import "../common/colorui/icon.wxss";
 page, page>view {
   overflow-x: hidden;
 }

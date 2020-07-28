@@ -1188,3 +1188,9 @@ swiper, swiper-item {
 .percent-person-fault{
   background-color: #FA6400;
 }
+.option-word-right-color{
+  color:  #6DD400;
+}
+.option-word-fault-color{
+  color:  #FA6400;
+}

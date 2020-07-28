@@ -648,7 +648,7 @@
     </scroll-view>
   </view> -->
     <!--  作答分析-->
-    <view wx:if="{{ showRespRecord }}" class="report-analyse">
+    <view wx:if="{{ !showRespRecord }}" class="report-analyse">
       <view class="title">
         <text>{{ respRecordName }}</text>
       </view>
@@ -718,7 +718,15 @@
                   <image wx:if="{{ util.isIncludes(recordItem.correctIdx,optionIndex) }}" src="../img/right.png" class="right-answer-checked"/>
                   <image wx:elif="{{ util.isIncludes(recordItem.analysis.wrong,optionIndex) }}" src="../img/fault.png" class="fault-answer-checked"/>
                   <title wx:else class="option-char">{{ util.ASCIIToChar(optionIndex) }}</title>
-                  <title class="option-word">{{ optionItem }}</title>
+                  <title wx:if="{{ util.isIncludes(recordItem.correctIdx,optionIndex) }}" class="option-word option-word-right-color">
+                    {{ optionItem }}
+                  </title>
+                  <title wx:elif="{{ util.isIncludes(recordItem.analysis.wrong,optionIndex) }}" class="option-word option-word-fault-color">
+                    {{ optionItem }}
+                  </title>
+                  <title wx:else class="option-word">
+                    {{ optionItem }}
+                  </title>
                 </view>
                 <title class="compare">
                   正确答案：
@@ -757,7 +765,18 @@
                   <image wx:elif="{{ util.isIncludes(recordItem.analysis.wrong,optionIndex) }}" src="../img/rectangle-fault.png" class="fault-answer-checked"/>
                   <image wx:elif="{{ util.isIncludes(recordItem.analysis.omit,optionIndex) }}" src="../img/rectangle-omit.png" class="fault-answer-checked"/>
                   <title wx:else class="option-char">{{ util.ASCIIToChar(optionIndex) }}</title>
-                  <title class="option-word">{{ optionItem }}</title>
+                  <title wx:if="{{ util.isIncludes(recordItem.correctIdx,optionIndex) && !util.isIncludes(recordItem.analysis.omit,optionIndex) }}" class="option-word option-word-right-color">
+                    {{ optionItem }}
+                  </title>
+                  <title wx:elif="{{ util.isIncludes(recordItem.analysis.wrong,optionIndex) }}" class="option-word option-word-fault-color">
+                    {{ optionItem }}
+                  </title>
+                  <title wx:elif="{{ util.isIncludes(recordItem.analysis.omit,optionIndex) }}" class="option-word option-word-fault-color">
+                    {{ optionItem }}
+                  </title>
+                  <title wx:else class="option-word">
+                    {{ optionItem }}
+                  </title>
                 </view>
                 <title class="compare">
                   正确答案：

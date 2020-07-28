@@ -57,12 +57,22 @@
   width: 160rpx;
   height: 40rpx;
   line-height: 40rpx;
-  font-size: 28rpx;
-  background-color: rgba(255,255,255,0.9);
+  font-size: 26rpx;
+  font-weight: 600;
+  box-shadow:0px 0px 6px 0px rgba(0,0,0,0.6);
   border-radius: 10rpx;
   text-align: center;
 }
-
+.need-stone-feature{
+  border-radius:15px 0px 15px 0px;
+  background:linear-gradient(136deg,rgba(226,50,23,1) 0%,rgba(248,169,76,1) 100%);
+  color: #fff;
+}
+.free-pay-feature{
+  border-radius:15px 0px 15px 0px;
+  background:linear-gradient(136deg,rgba(226,23,61,1) 0%,rgba(240,55,199,1) 100%);
+  color: #fff;
+}
 .card-child-info {
   max-width: 350rpx;
 }

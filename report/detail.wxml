@@ -730,35 +730,18 @@
                     {{util.ASCIIToChar(respondItem)}}
                   </block>
                 </title>
-                <block wx:if="{{  }}">
+                <block wx:if="{{ knowledgePoints.length > 0 }}">
                   <view class="hr question-options-child"></view>
                   <view class="question-options-child knowledge-point advise-to-ques">
                     <view class="knowledge">
                       <title>知识点</title>
                       <view class="tag-wrapper">
-                        <title class="tag">新媒体工具</title>
-                        <title class="tag">新媒体</title>
-                        <title class="tag">新媒</title>
-                        <title class="tag">新媒体工具</title>
-                        <title class="tag">新媒体工具</title>
-                        <title class="tag">新媒体工具</title>
+                        <title class="tag" wx:for="{{ knowledgePoints }}" wx:for-item="pointItem">{{ pointItem }}</title>
                       </view>
                     </view>
                     <view class="advise">
                       <title>建议追问</title>
                       <view class="ques-wrapper">
-                        <title class="advise-question">
-                          之前工作中，你用过哪些新媒体工具？
-                        </title>
-                        <title class="advise-question">
-                          之前工作中，你用过哪些新媒体工具？
-                        </title>
-                        <title class="advise-question">
-                          之前工作中，你用过哪些新媒体工具？
-                        </title>
-                        <title class="advise-question">
-                          之前工作中，你用过哪些新媒体工具？
-                        </title>
                         <title class="advise-question">
                           之前工作中，你用过哪些新媒体工具？
                         </title>
@@ -786,18 +769,13 @@
                     {{util.ASCIIToChar(respondItem)}}
                   </block>
                 </title>
-                <block wx:if="{{ false }}">
+                <block wx:if="{{ knowledgePoints.length > 0 }}">
                   <view class="hr question-options-child"></view>
                   <view class="question-options-child knowledge-point advise-to-ques">
                     <view class="knowledge">
                       <title>知识点</title>
                       <view class="tag-wrapper">
-                        <title class="tag">新媒体工具</title>
-                        <title class="tag">新媒体</title>
-                        <title class="tag">新媒</title>
-                        <title class="tag">新媒体工具</title>
-                        <title class="tag">新媒体工具</title>
-                        <title class="tag">新媒体工具</title>
+                        <title class="tag" wx:for="{{ knowledgePoints }}" wx:for-item="pointItem">{{ pointItem }}</title>
                       </view>
                     </view>
                     <view class="advise">

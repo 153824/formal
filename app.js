@@ -69,7 +69,8 @@ App({
     windowHeight: 0,
     screenHeight: 0,
     pixelRate: 0,
-    eventId: "5ea6b2b26df4251c4a09a4cc"
+    eventId: "5ea6b2b26df4251c4a09a4cc",
+    assistant: ["5edefe43b9e2430008a3f99a","5d786ea66e9ba10069596a61"]
   },
   onLaunch: function(options) {
     var that = this;
@@ -181,6 +182,7 @@ App({
           appid: that.globalData.appid,
           code: code
         },
+        noLoading: true,
         success: function(res) {
           that.globalData.userMsg = res.userMsg || {};
           var userData = res.data;

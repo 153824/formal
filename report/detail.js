@@ -763,8 +763,8 @@ Page({
       cardCur: e.detail.current
     });
     console.log("I Scroll It");
-    this.scrollSelectItem(e.detail.current);
-  },10,{
+    this.scrollSelectItem(e.detail.current,true);
+  },50,{
     leading: true,
     trailing: false
   }),
@@ -795,7 +795,7 @@ Page({
     this.setData({
       isScroll: true
     });
-    this.scrollSelectItem(cardCur);
+    this.scrollSelectItem(cardCur,false);
   },
   switchClass: function (e) {
     const offsetLeft = e.currentTarget.offsetLeft;

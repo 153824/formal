@@ -654,14 +654,14 @@
       </view>
       <view class="question-scroll-box">
         <swiper class="card-swiper question-swiper" bindchange="cardSwiper" current="{{ cardCur }}">
-          <swiper-item wx:for="{{ responseRecord }}" wx:for-item="recordItem" class="{{ cardCur === index ? 'cur':'' }}">
+          <swiper-item wx:for="{{ responseRecord }}" wx:for-item="recordItem" wx:key="unique" class="{{ cardCur === index ? 'cur':'' }}">
             <view class="question-child swiper-item question-item">
               <view class="question-stem">
                 {{ index+1 }}.{{ recordItem.stem }}
               </view>
               <!--单选题-未配置对错-题目-->
               <view wx:if="{{ recordItem.choiceType === 'single' && recordItem.correctIdx.length <= 0  }}" class="question-options">
-                <view wx:for="{{ recordItem.options }}" wx:for-item="optionItem" wx:for-index="optionIndex" class="question-options-child">
+                <view wx:for="{{ recordItem.options }}" wx:for-item="optionItem" wx:for-index="optionIndex" wx:key="unique" class="question-options-child">
                   <title class="option-char {{ util.isIncludes(recordItem.respondIdx,optionIndex) ? 'user-checked-char' : '' }}">{{ util.ASCIIToChar(optionIndex) }}</title>
                   <title class="option-word {{ util.isIncludes(recordItem.respondIdx,optionIndex) ? 'user-checked-word' : '' }}">{{ optionItem }}</title>
                 </view>
@@ -714,7 +714,7 @@
               </view>
               <!--单选题-配置了对错-题目-->
               <view wx:elif="{{ recordItem.choiceType === 'single' && recordItem.correctIdx.length > 0  }}" class="question-options">
-                <view wx:for="{{ recordItem.options }}" wx:for-item="optionItem" wx:for-index="optionIndex" class="question-options-child">
+                <view wx:for="{{ recordItem.options }}" wx:for-item="optionItem" wx:for-index="optionIndex" wx:key="unique" class="question-options-child">
                   <image wx:if="{{ util.isIncludes(recordItem.correctIdx,optionIndex) }}" src="../img/right.png" class="right-answer-checked"/>
                   <image wx:elif="{{ util.isIncludes(recordItem.analysis.wrong,optionIndex) }}" src="../img/fault.png" class="fault-answer-checked"/>
                   <title wx:else class="option-char">{{ util.ASCIIToChar(optionIndex) }}</title>
@@ -760,7 +760,7 @@
               </view>
               <!--多选题-配置了对错-题目-->
               <view wx:elif="{{ recordItem.choiceType === 'multiple'  }}" class="question-options">
-                <view wx:for="{{ recordItem.options }}" wx:for-item="optionItem" wx:for-index="optionIndex" class="question-options-child">
+                <view wx:for="{{ recordItem.options }}" wx:for-item="optionItem" wx:for-index="optionIndex" wx:key="unique" class="question-options-child">
                   <image wx:if="{{ util.isIncludes(recordItem.analysis.right,optionIndex) }}" src="../img/rectangle-right.png" class="right-answer-checked"/>
                   <image wx:elif="{{ util.isIncludes(recordItem.analysis.wrong,optionIndex) }}" src="../img/rectangle-fault.png" class="fault-answer-checked"/>
                   <image wx:elif="{{ util.isIncludes(recordItem.analysis.omit,optionIndex) }}" src="../img/rectangle-omit.png" class="fault-answer-checked"/>
@@ -821,8 +821,7 @@
                 </block>
               </view>
               <view wx:if="{{ recordItem.correctIdx.length > 0 }}" class="situation {{ recordItem.analysis.right > 0 ? 'percent-person-right' : 'percent-person-fault' }}">
-                40%的人做
-                {{ recordItem.analysis.right > 0 ? '对':'错' }}
+                40%的人做{{ recordItem.analysis.right > 0 ? '对':'错' }}
               </view>
             </view>
           </swiper-item>

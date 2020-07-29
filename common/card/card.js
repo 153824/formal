@@ -14,7 +14,7 @@ Component({
     },
     feature: {
       type: String,
-      value: "免费"
+      value: ""
     },
     image: {
       type: String,

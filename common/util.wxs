@@ -84,6 +84,9 @@ var isIncludes = function(array=[],item){
     return false;
   }
 };
+var toFix = function (value) {
+  return value.toFixed(2)
+};
 module.exports = {
   getMonthAndDayByFrag: getMonthAndDayByFrag,
   getHourAndMinByFrag: getHourAndMinByFrag,
@@ -91,5 +94,6 @@ module.exports = {
   saveDouble: saveDouble,
   hidePartPhoneNumber: hidePartPhoneNumber,
   ASCIIToChar: ASCIIToChar,
-  isIncludes: isIncludes
+  isIncludes: isIncludes,
+  toFix: toFix
 };

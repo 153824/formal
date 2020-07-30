@@ -63,7 +63,7 @@ Page({
     // var that = this;
     // if( checkedItem === "0" ){
     //   app.doAjax({
-    //     url: "reports",
+    //     url: "sharePapers/reports",
     //     method: "get",
     //     data: {
     //       orgId: app.teamId,
@@ -129,7 +129,7 @@ Page({
     var that = this;
     if( checkedItem === "0" ){
       app.doAjax({
-        url: "reports",
+        url: "sharePapers/reports",
         method: "get",
         data: {
           orgId: app.teamId,
@@ -247,7 +247,7 @@ Page({
     });
     if( targetValue === "0" ){
       app.doAjax({
-        url: "reports",
+        url: "sharePapers/reports",
         method: "get",
         data: {
           orgId: app.teamId,
@@ -311,7 +311,7 @@ Page({
     });
     if( checkedItem === "0" ){
       app.doAjax({
-        url: "reports",
+        url: "sharePapers/reports",
         method: "get",
         data: {
           orgId: app.teamId,
@@ -369,7 +369,7 @@ Page({
       reportPage: 0
     });
     app.doAjax({
-      url: "reports",
+      url: "sharePapers/reports",
       method: "get",
       data: {
         orgId: app.teamId,
@@ -431,7 +431,7 @@ Page({
     if( checkedItem === "0" && (maxReportPage === -1 || reportPage + 1 < maxReportPage) ){
       reportPage = reportPage + 1;
       app.doAjax({
-        url: "reports",
+        url: "sharePapers/reports",
         method: "get",
         data: {
           orgId: app.teamId,

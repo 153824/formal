@@ -130,7 +130,7 @@
   <view wx:if="{{ buyByCounts }}" class="buy-by-counts">
     <view class="total-counts">
       <view>合计</view>
-      <view>￥{{ filters.toFix((evaluation.evaluationInfo.price||0) * count) }}</view>
+      <view>￥{{ util.toFix((evaluation.evaluationInfo.price||0) * count) }}</view>
       <view style="color: #F7B500FF;font-size: 26rpx;">推荐按年买断更加划算</view>
     </view>
     <view class="total-operator">

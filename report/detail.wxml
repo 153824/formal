@@ -820,7 +820,8 @@
                   </view>
                 </block>
               </view>
-              <view wx:if="{{ recordItem.correctIdx.length > 0 }}" class="situation {{ recordItem.analysis.right > 0 ? 'percent-person-right' : 'percent-person-fault' }}">
+              <view wx:if="{{ recordItem.correctIdx.length > 0 }}"
+                    class="situation {{ recordItem.analysis.wrong.length > 0 || recordItem.analysis.omit.length > 0 ? 'percent-person-fault' : 'percent-person-right' }}">
                 40%的人做{{ recordItem.analysis.right > 0 ? '对':'错' }}
               </view>
             </view>
@@ -831,8 +832,7 @@
                    scroll-left='{{ scrollLeft }}' scroll-with-animation="true">
         <!--未配置对错-题号 -->
         <view wx:if="{{ recordItem.choiceType === 'single' && recordItem.correctIdx.length <= 0 }}" id="scroll-item-{{ recordIndex }}" wx:for="{{ responseRecord }}" wx:for-index="recordIndex" wx:for-item="recordItem"
-              data-id="{{ recordIndex }}" bindtap="selectItem"
-              class="question-number {{ cardCur === recordIndex ? 'question-checked' : '' }}"
+              data-id="{{ recordIndex }}" bindtap="selectItem" class="question-number {{ cardCur === recordIndex ? 'question-checked' : '' }}"
         >
           {{ recordIndex + 1 }}
         </view>
@@ -960,15 +960,15 @@
                 <view class="title {{node.active}}" bindtap="activeItem" data-index="{{index}}" data-i="{{i}}">{{node.name}}：
                   <block wx:if="{{ item.showSubScore === 'total' }}">
                     <block wx:if="{{ item.subScale === 'origin' }}">
-                      <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.total)}}分</text>
+                      <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.subTotal)}}分</text>
                       <image src="../img/report/icon2.png"></image>
                     </block>
                     <block wx:elif="{{ item.subScale === 'decimal' }}">
-                      <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.total10)}}分</text>
+                      <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.subTotal10)}}分</text>
                       <image src="../img/report/icon2.png"></image>
                     </block>
                     <block wx:elif="{{ item.subScale === 'centesimal' }}">
-                      <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.total100)}}分</text>
+                      <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.subTotal100)}}分</text>
                       <image src="../img/report/icon2.png"></image>
                     </block>
                   </block>
@@ -978,18 +978,14 @@
                       <image src="../img/report/icon2.png"></image>
                     </block>
                     <block wx:elif="{{ item.subScale === 'decimal' }}">
-                      <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.av10)}}分</text>
+                      <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.average10)}}分</text>
                       <image src="../img/report/icon2.png"></image>
                     </block>
                     <block wx:elif="{{ item.subScale === 'centesimal' }}">
-                      <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.av100)}}分</text>
+                      <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.average100)}}分</text>
                       <image src="../img/report/icon2.png"></image>
                     </block>
                   </block>
-                  <!--                <block wx:elif="{{ item.showSubScore === 'none' }}">-->
-                  <!--                  <text style="color:{{node.color}};">{{node.lvName}}  {{util.saveDouble(node.av10)}}分</text>-->
-                  <!--                  <image src="../img/report/icon2.png"></image>-->
-                  <!--                </block>-->
                 </view>
                 <view class="contentMsg" wx:if="{{node.active}}">
                   <block wx:for="{{node.lvTexts}}" wx:key="unique" wx:for-item="n" wx:for-index="j">

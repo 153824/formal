@@ -399,7 +399,7 @@ Page({
         var { showSubScore } = objs[n];
         for (var i in arr) {
           var node = arr[i];
-          if( showSubScore == 'average' ){
+          if( showSubScore === 'average' ){
             value_1[n].push(node.average);
           }else if(!showSubScore){
             value_1[n].push(node.average);
@@ -742,9 +742,6 @@ Page({
    * 返回首页
    */
   back: function() {
-    // wx.switchTab({
-    //   url: '../index/index'
-    // });
     wx.switchTab({
       url: '../store/store'
     });
@@ -772,10 +769,15 @@ Page({
     this.scrollLeft = e.detail.scrollLeft;
     console.log("scroll: ", e);
   },
-  touchStart: function (e) {
+  touchStart: debounce(function (e) {
     this.startPageX = e.changedTouches[0].pageX;
-  },
-  touchEnd: function (e) {
+    console.log("touchStart: ",e);
+  },50,{
+    leading: true,
+    trailing: false
+  }),
+  touchEnd: debounce(function (e) {
+    console.log("touchEnd：",e)
     const QUESTION_NUMBER_WIDTH = 88;
     const moveX = Math.abs(e.changedTouches[0].pageX - this.startPageX);
     const rate = app.globalData.pixelRate;
@@ -796,7 +798,10 @@ Page({
       isScroll: true
     });
     this.scrollSelectItem(cardCur,false);
-  },
+  },50,{
+    leading: true,
+    trailing: false
+  }),
   switchClass: function (e) {
     const offsetLeft = e.currentTarget.offsetLeft;
     const cardCur = e.target.dataset.id;
@@ -808,6 +813,7 @@ Page({
   getRect: function (elementId) {
       const that = this;
       wx.createSelectorQuery().select(elementId).boundingClientRect((rect)=>{
+        console.log("rect：",rect);
         let moveParams = that.data.moveParams;
         try{
           moveParams.subLeft = rect.left;

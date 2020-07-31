@@ -974,6 +974,10 @@ Page({
         this.setData({
           isFillAll: true,
         });
+      }else{
+        this.setData({
+          isFillAll: false,
+        });
       }
     }
     this.setData({

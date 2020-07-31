@@ -475,18 +475,6 @@ Page({
     ctx.draw();
   },
   /**
-   * 分享内容
-   */
-  onShareAppMessage: function(res) {
-
-      // 来自页面内转发按钮
-      return {
-        path: 'store/store',
-        title: "我发现了一个不错的测评工具，快来试试吧",
-        imageUrl: "http://ihola.luoke101.com/wxShareImg.png"
-      };
-  },
-  /**
    * 进入分享报告页面
    */
   toShareReport: function() {

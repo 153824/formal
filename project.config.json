@@ -344,7 +344,7 @@
 					"id": 39,
 					"name": "station/detail",
 					"pathName": "station/detail",
-					"query": "id=5d786ea66e9ba10069596a61",
+					"query": "id=5db1624aa673f5007249c9ee&resubscribe=true",
 					"scene": null
 				}
 			]

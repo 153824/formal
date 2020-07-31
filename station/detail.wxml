@@ -3,266 +3,158 @@
   <view class="header">
     <view class="header-wrapper">
       <view class="cover-wrapper">
-        <image class="head-cover" src="{{ paperDetail.setting.smallImg }}"></image>
+        <image class="head-cover" src="{{ evaluation.evaluationInfo.smallImg }}"></image>
       </view>
       <view class="info-wrapper">
-        <text class="title">{{ paperDetail.name }}</text>
-        <view class="price-wrapper">
-          <view wx:if="{{ !paperDetail.setting.isFree&&!isIos }}" style="display: flex;align-items: center;">
-            <text class="old">¥{{ paperDetail.setting.defaultPrice }}</text>
-            <text class="new">¥{{ paperDetail.setting.price }}</text>
-          </view>
-          <view wx:else>
-            <free ios="{{ isIos }}" free="{{ paperDetail.setting.isFree }}" price="{{ paperDetail.setting.defaultPrice }}"
-                  actual="{{ paperDetail.setting.price }}"></free>
-          </view>
-        </view>
-        <text class="use-time">{{ paperDetail.quesCount }}题 / 预计用时{{ paperDetail.setting.time }}分钟</text>
-      </view>
-      <view class="leave-wrapper" bindtap="paymore" wx:if="{{paperDetail.userPapersNum.hasOld&&dataLoaded&&!paperDetail.setting.isFree}}">
-        <text>剩余可用数量：{{paperDetail.userPapersNum.total}}份</text>
-        <text class="buy-more" wx:if="{{teamRole!=1&&!isAllFree&&!paperDetail.userPapersNum.freeTicket&&!paperDetail.userPapersNum.vipTicket&&isIos}}">{{isIos?'用券兑换':'购买更多'}}</text>
-        <text class="buy-more" wx:elif="{{!isAllFree&&teamRole!=1}}">{{isIos?'用券兑换':'购买更多'}}</text>
+        <text class="title">{{ evaluation.evaluationInfo.name }}</text>
+        <text class="use-time">{{ evaluation.evaluationInfo.quesCount }}题 / 预计用时{{ evaluation.evaluationInfo.estimatedTime }}分钟</text>
       </view>
     </view>
   </view>
   <view style="background-color: #fff;margin-top: 20rpx;">
-<!--    wx:if="{{hasFreeTick&&!freeTickId&&teamRole!=1&&((paperDetail.setting.price&&!isfree && paperDetail.setting.testRule.maxInvite != 0)&&dataLoaded&&couponGet0)||(isfree&&paperDetail.userPapersNum.hasOld&&paperDetail.setting.price)}}"-->
-<!--    wx:if="{{(!couponGet0)&&teamRole==3&&isTodayTeam&&!isfree}}"-->
-    <block wx:if="{{(!couponGet0)&&teamRole==3&&!isfree}}">
-      <button class="get-free-ticket" style="background: transparent;border: none !important;"
-              data-id="{{ paperDetail.id }}" bindtap="getNewerTicket" data-name="{{ paperDetail.name }}">
-        <ticket image="../img/user/vip/icon18.png" height="99rpx"></ticket>
-      </button>
-    </block>
-<!--    && paperDetail.setting.testRule.maxInvite != 0-->
-<!--      wx:if="{{hasFreeTick&&!freeTickId&&teamRole!=1&&((paperDetail.setting.price&&!isfree)&&dataLoaded&&(couponGet0||!couponGet0&&!isTodayTeam))||(isfree&&paperDetail.userPapersNum.hasOld&&paperDetail.setting.price)}}"-->
-    <block wx:if="{{hasFreeTick&&!freeTickId&&teamRole!=1&&((paperDetail.setting.price&&!isfree)&&dataLoaded&&(couponGet0))||(isfree&&paperDetail.userPapersNum.hasOld&&paperDetail.setting.price)}}">
-      <button wx:if="{{!freeTick && getInOnceAgainst}}"
+    <block>
+      <button wx:if="{{ !evaluation.isBeginner && !evaluation.freeEvaluation && isGetInAgainst === 'YES' && !evaluation.hadShare }}"
               class="get-free-ticket"
               open-type="share"
-              data-id="{{ paperDetail.id }}"
-              style="background: transparent;border: none !important;"
-              data-name="{{ paperDetail.name }}">
+              style="background: transparent;border: none !important;">
         <ticket></ticket>
       </button>
     </block>
-<!--    <view>“!freeTick：”{{ !freeTick }}</view>-->
-<!--    <view>“hasFreeTick”：{{ hasFreeTick }}</view>-->
-<!--    <view>“!freeTickId”：{{ freeTickId }}</view>-->
-<!--    <view>“teamRole!=1”：{{ teamRole }}</view>-->
-<!--    <view>“paperDetail.setting.price”：{{ paperDetail.setting.price }}</view>-->
-<!--    <view>“!isfree”：{{ isfree }}</view>-->
-<!--    <view>“dataLoaded”：{{ dataLoaded }}</view>-->
-<!--    <view>“paperDetail.userPapersNum.hasOld”：{{ paperDetail.userPapersNum.hasOld }}</view>-->
-<!--    <view>“couponGet0”：{{ couponGet0 }}</view>-->
-<!--    <view>“isTodayTeam”： {{ isTodayTeam }}</view>-->
-<!--    <view>“hasFreeTick&&!freeTickId&&teamRole!=1”：{{ hasFreeTick&&!freeTickId&&teamRole!=1 }}</view>-->
-<!--    <view>“((paperDetail.setting.price&&!isfree)&&dataLoaded&&(couponGet0||!couponGet0&&!isTodayTeam))”：{{ ((paperDetail.setting.price&&!isfree)&&dataLoaded&&(couponGet0||!couponGet0&&!isTodayTeam)) }}</view>-->
-<!--    <view>“(isfree&&paperDetail.userPapersNum.hasOld&&paperDetail.setting.price)”：{{ (isfree&&paperDetail.userPapersNum.hasOld&&paperDetail.setting.price) }}</view>-->
-    <checkout title="测评简介" type="introduction" info="{{ paperDetail.setting.info }}"></checkout>
-    <checkout title="测量维度" type="dimension" list="{{ paperDetail.setting.measureDimension }}"></checkout>
-    <checkout title="适用场景" type="scenarios" list="{{ paperDetail.setting.apply }}"></checkout>
-    <checkout isShow="{{ paperDetail.setting.reportExample }}" title="报告示例" type="report" info="{{ paperDetail.setting.reportExample }}" subtitle="{{ paperDetail.name }}"></checkout>
-    <checkout title="例题" type="example" list="{{ paperDetail.setting.quesType }}"></checkout>
+    <checkout title="报价方案" type="price" isShow="{{ !evaluation.freeEvaluation }}" data="{{ evaluation.evaluationInfo }}"></checkout>
+    <checkout title="测评简介" type="introduction" info="{{ evaluation.evaluationInfo.synopsis }}"></checkout>
+    <checkout title="测量维度" type="dimension" list="{{ evaluation.evaluationInfo.measureDimension }}"></checkout>
+    <checkout title="适用场景" type="scenarios" list="{{ evaluation.evaluationInfo.scenario }}"></checkout>
+    <checkout title="报告示例" type="report" isShow="{{ evaluation.evaluationInfo.reportExample }}" info="{{ evaluation.evaluationInfo.reportExample }}" subtitle="{{ evaluation.evaluationInfo.name }}"></checkout>
+    <checkout title="例题" type="example" list="{{ evaluation.evaluationInfo.quesExamples }}"></checkout>
   </view>
-<!--  <view>-->
-<!--    <press color="" title="购买" subtitle="100元/份"></press>-->
-<!--  </view>-->
-<!--  wx:if="{{ paperDetail.setting.isFree }}"-->
 </scroll-view>
-
-<view class="button-group" wx:if="{{ isvip1||paperDetail.userPapersNum.type==-1||paperDetail.userPapersNum.hasOld||showFullBtn }}">
-  <view class="meal">
-    <meal isShow="{{ (!paperDetail.userPapersNum.hasOld || !dataLoaded) && !isIos && !paperDetail.setting.isFree }}"></meal>
+<!-- 免费测评的按钮组 -->
+<view class="button-group" wx:if="{{ evaluation.freeEvaluation }}">
+  <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}"  data-oldShareId="{{ oldShareId }}" data-id="{{ evaluation.evaluationInfo.id }}">
+    <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF" fontSize="32" fontWeight="600"></press>
   </view>
-  <view wx:if="{{ oldShareId }}" bindtap="gotoguide" data-oldShareId="{{ oldShareId }}" data-name="{{ paperDetail.name }}" data-id="{{ paperDetail.id }}">
-    <press title="{{ '继续体验'}}" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
-  </view>
-  <view wx:else bindtap="gotoguide" data-oldShareId="{{ oldShareId }}" data-name="{{ paperDetail.name }}" data-id="{{ paperDetail.id }}">
-    <press title="{{ '自己体验'}}" bgColor="#FFFFFFFF" color="#353EE8FF"></press>
-  </view>
-  <view bindtap="gotodati">
-    <press title="测别人(微信/智联/BOSS/51...)"></press>
+  <view class="gotodati-btn" bindtap="gotodati">
+    <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
   </view>
 </view>
-
-<view class="buy-group" wx:elif="{{ !isAllFree&&!freeCount&&!paperDetail.userPapersNum.hasOld }}">
-  <view class="meal">
-    <meal isShow="{{ (!paperDetail.userPapersNum.hasOld || !dataLoaded) && !isIos && !paperDetail.setting.isFree }}"></meal>
-  </view>
-  <view wx:if="{{ isIos && ((paperDetail.userPapersNum.freeTicket || 0) + (paperDetail.userPapersNum.vipTicket || 0)) <= 0 }}">
-    <press color="" title="iOS暂不支持购买，请用券兑换或联系客服"></press>
-  </view>
-  <view wx:if="{{ isIos && ((paperDetail.userPapersNum.freeTicket || 0) + (paperDetail.userPapersNum.vipTicket || 0)) > 0 }}" bindtap="paymoney">
-    <press color="" title="用券兑换"></press>
-  </view>
-  <view wx:if="{{ !isIos }}" bindtap="paymore">
-    <press color="" title="购买" subtitle="{{ paperDetail.setting.price }}元/份"></press>
-  </view>
-</view>
-
-<!--支付-->
-<view class="paypage" wx:if="{{ispay && !isIos}}" catchtouchmove="true">
-  <view class="closebox" bindtap="closepaypage"></view>
-  <view class="paybox">
-    <view class="toBuyVip flex" style="margin:40rpx 26rpx 0;" wx:if="{{teamRole!=1&&!isAllFree&&!isvip1&&!isvip2&&paperDetail.userPapersNum.hasOld&&!isIos}}" bindtap="changePage" data-url="./becomevip">
-
-<!--      <image class="bgImg" src="../img/store/detail/icon27.png"></image>-->
-
-      <view class="flex-main"></view>
-      <view>
-
-<!--        <image class="img1" src="../img/store/detail/icon15.png"></image>-->
-
-<!--        <text>升级成为会员，优惠购买测评</text>-->
-
-<!--        <image class="img2" src="../img/store/detail/icon16.png"></image>-->
-
-        <!-- <view class="animationView"></view> -->
-      </view>
-      <view class="flex-main"></view>
+<!-- 未购买过测评的按钮组且未买断 -->
+<view class="buy-group" wx:elif="{{ !evaluation.hadConsumed && !evaluation.buyoutInfo.hadBuyout }}">
+    <button class="meal meal-button" style="background-color: #FFF3E0FF;outline: none;border: none;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" >
+      <meal isShow="{{ evaluation.isBeginner }}" title="新用户领券，免费体验测评" subIcon="../../img/newer-ticket.gif" subtitle="立即领券 >" icon="false"></meal>
+    </button>
+    <view class="meal" bindtap="buyByTicket">
+      <meal isShow="{{ hasVoucher }}" icon="false" title="您有{{ experienceTicket + officialTicket + experienceTicket + shareTicket }}张体验券可用于本测评" subtitle="立即使用 >"></meal>
     </view>
-    <view class="paypagehead">
-      <view class="payheadleft">
-        <view>{{paperDetail.name}}</view>
-        <text>单价：¥{{paperDetail.setting.price||0}}</text>
-      </view>
-      <view class="payheadright">
-        <image src="{{paperDetail.setting.smallImg}}"></image>
-      </view>
+    <view wx:if="{{ isIos }}">
+      <press title="iOS暂不支持直接购买" fontSize="32" fontWeight="600"></press>
     </view>
-    <view class="paypagebody">
-      <wxs module="filters" src="../store/filters.wxs"></wxs>
-      <view class="paybodyleft">合计：￥{{filters.toFix((paperDetail.setting.price||0) * count)}}</view>
-      <view class="paybodyright">
-        <button bindtap="jiancount">-</button>
-        <!-- <view>{{count}}</view> -->
-        <input type="number" bindinput="inputprice" value="{{count}}"></input>
-        <button bindtap="addcount">+</button>
-      </view>
-    </view>
-    <view style="height:14rpx;background:rgba(248, 248, 248, 1);"></view>
-    <view class="wechatpay">
-      <view>支付方式</view>
-      <view class="wechatpaybox" bindtap="changePaymentmoney">
-        <view>
-          <image class="wechatpayimg" src="../img/store/icon31.png"></image>
-          <text class="allpaytext">微信支付</text>
-        </view>
-        <view>
-          <image class="checkicon" src="{{isticket ? '../img/store/icon33.png':'../img/store/icon34.png'}}"></image>
-        </view>
-      </view>
-    </view>
-    <view class="ticketpay" bindtap="changePaymentticket">
-      <view class="ticketpaybox">
-        <view>
-          <image class="ticketpayimg" src="../img/store/icon32.png"></image>
-          <text class="allpaytext">用券兑换</text>
-        </view>
-        <view>
-          <text class="allpaygraytext">{{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)}}张券可用于本测评</text>
-          <image class="checkicon" src="{{!isticket ? '../img/store/icon33.png':'../img/store/icon34.png'}}"></image>
-        </view>
-      </view>
-    </view>
-  </view>
-    <view class="paytabbox {{phoneModel ? 'isiphoneX':''}}">
-      <view wx:if="{{isticket}}" class="checkusebtn {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)<count?'disabledBtn':''}}" bindtap="useticket">
-        {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0) < count? '券数量不足': '用券兑换'+count+ '份'}}
-      </view>
-      <view wx:if="{{!isticket}}" class="checkusebtn" bindtap="payfished">
-        微信支付￥{{filters.toFix((paperDetail.setting.price||0) * count)}}
-      </view>
+    <view wx:else bindtap="payForEvaluation">
+      <press title="购买测评" fontSize="32" fontWeight="600"></press>
     </view>
 </view>
-<!-- 支付IOS -->
-  <view class="paypage paypageIos" wx:if="{{ispay&&isIos}}" catchtouchmove="true">
-    <view class="closebox" bindtap="closepaypage"></view>
-    <view class="paybox">
-      <view class="paypagehead">
-        <view class="payheadleft">
-          <view>{{paperDetail.name}}</view>
-          <view class="allpaygraytext">{{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)}}张券可用于本测评</view>
-        </view>
-        <view class="payheadright">
-          <image src="{{paperDetail.setting.smallImg}}"></image>
-        </view>
-      </view>
-      <view class="paybodyright">
-        <button bindtap="jiancount">-</button>
-        <!-- <view>{{count}}</view> -->
-        <input type="number" bindinput="inputprice" value="{{count}}"></input>
-        <button bindtap="addcount">+</button>
-      </view>
-    </view>
-    <view class="lineView"></view>
-    <view class="paytabbox {{phoneModel ? 'isiphoneX':''}}">
-      <view wx:if="{{isticket}}" class="checkusebtn {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0) < count ? 'disabledBtn' : '' }}" bindtap="useticket">
-        {{(paperDetail.userPapersNum.freeTicket||0)+(paperDetail.userPapersNum.vipTicket||0)
-        < count? '券数量不足': '用券兑换'+count+ '份'}} </view>
-      </view>
+<!-- 购买过测评券的按钮组且未买断 -->
+<view class="button-group" wx:elif="{{ evaluation.hadConsumed && !evaluation.buyoutInfo.hadBuyout }}">
+  <view wx:if="{{ isIos }}" class="meal" bindtap="buyByTicket">
+    <meal isShow="{{ !evaluation.buyoutInfo.hadBuyout }}" icon="false" title="剩余可用份数：{{ evaluation.availableCount }}" subtitle="{{ isIos ? '用券继续兑换' : '购买更多 >' }}"></meal>
   </view>
-    <view class="cover" wx:if="{{dlgShow||showDlg1}}" bindtap="hidenDlg"></view>
-    <view class="dlg" wx:if="{{dlgShow}}">
-      <image src="../img/store/detail/icon12.png"></image>
-      <view class="txtView">{{paperDetail.setting.dateDesc}}</view>
+  <view wx:else class="meal" bindtap="payForEvaluation">
+    <meal isShow="{{ !evaluation.buyoutInfo.hadBuyout }}" icon="false" title="剩余可用份数：{{ evaluation.availableCount }}" subtitle="{{ isIos ? '用券继续兑换' : '购买更多 >' }}"></meal>
+  </view>
+  <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}" data-oldShareId="{{ oldShareId }}" data-id="{{ evaluation.evaluationInfo.id }}">
+    <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF" fontSize="32" fontWeight="600"></press>
+  </view>
+  <view class="gotodati-btn" bindtap="gotodati">
+    <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
+  </view>
+</view>
+<!-- 买断 -->
+<view class="button-group" wx:elif="{{ evaluation.buyoutInfo.hadBuyout }}">
+  <view class="meal" bindtap="payForEvaluation">
+    <meal isShow="{{ evaluation.buyoutInfo.hadBuyout }}" icon="false" title="有效期至：{{ isIos ? util.getFullDateByFrag(evaluation.buyoutInfo.expiryDate,'.',true) : util.getFullDateByFrag(evaluation.buyoutInfo.expiryDate,'.',true) }}" subtitle="{{ isIos ? '' : '续费' }}"></meal>
+  </view>
+  <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}"  data-oldShareId="{{ oldShareId }}" data-id="{{ evaluation.evaluationInfo.id }}">
+    <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF" fontSize="32" fontWeight="600"></press>
+  </view>
+  <view class="gotodati-btn" bindtap="gotodati">
+    <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
+  </view>
+</view>
+<view wx:if="{{ payTrigger }}" class="new-pay-page">
+  <view class="pay-title">
+    <text>选择购买方式</text>
+    <view style="display: flex;align-items: center;" bindtap="buyByTicket">
+      <image style="width: 30rpx;height: 30rpx;" src="../img/station/ticket.png"></image>
+      <text style="font-weight: initial;font-size: 26rpx;color: rgba(157,157,157,1);line-height:36rpx;font-weight: 600">用券兑换</text>
     </view>
-    <view wx:if="{{showDlg1}}" class="dlg1">
-      <view class="title">客服微信号</view>
-      <view class="flex content">
-        <view class="flex-main"></view>
-        <image src='../img/store/icon39.png'></image>
-        <text>haola72</text>
-        <view class="flex-main"></view>
-      </view>
-      <view bindtap="copyIt" class="copyBtn">复制</view>
-      <view class="mind">添加时，请备注公司所属行业和规模</view>
+  </view>
+  <view class="pay-button-group">
+    <view style="width: 300rpx;" bindtap="buyByBuyout">
+      <press title="按年买断" height="56" borderRadius-="10" color="{{ buyByBuyout ? '#fff' : '#353EE8FF' }}" bgColor="{{ buyByBuyout ? '#353EE8FF' : '#fff' }}" border="{{ buyByBuyout ? '' : '1px solid #353EE8FF' }}" fontSize="28" fontWeight="600" shadow="{{ buyByBuyout ? '0px 2px 4px 0px rgba(0,0,0,0.3)' : '' }}"></press>
     </view>
-    <!-- <view class="pointerView flex" wx:if="{{showMindDlg&&!isFreeTickId}}" style="padding-bottom:{{phoneModel?80:0}}rpx;">
-      <text class="flex-main"></text>
-      <view class="{{activePointer==0?'active':''}}"></view>
-      <view class="{{activePointer==1?'active':''}}"></view>
-      <view class="{{activePointer==2?'active':''}}"></view>
-      <text class="flex-main"></text>
-    </view> -->
-
-<!--    <view wx:if="{{showMindDlg&&!isFreeTickId}}" current="{{activePointer}}" bindchange="changeActivePointer" class="dlgMsg" style="padding-bottom:{{phoneModel?80:0}}rpx;" >-->
-<!--      <view class="item1">-->
-<!--        <view class="btnView" bindtap="hidenDlg">我知道了</view>-->
-<!--        <view class="mindMsg"><text>测别人点这里</text><text style="margin-left:80rpx">自测点这里</text></view>-->
-<!--        <image class="btnImg3" src="../img/store/detail/icon31.png"></image>-->
-<!--        <image class="btnImg4" src="../img/store/detail/icon31.png"></image>-->
-<!--        <image class="btnImg1" bindtap="gotodati" src="../img/store/detail/icon21.png"></image>-->
-<!--        <image class="btnImg2" bindtap="gotoguide" src="../img/store/detail/icon23.png"></image>-->
-<!--      </view>-->
-
-      <!-- <swiper-item class="item2">
-        <view class="title">测别人</view>
-        <view class="mindMsg">测别人点这里</view>
-        <image src="../img/store/detail/icon22.png" class="pointerImg"></image>
-        <image class="btnImg" bindtap="gotodati" src="../img/store/detail/icon21.png"></image>
-        <view class="btnView" bindtap="showMindDlgFn">我知道了</view>
-      </swiper-item> -->
-      <!-- <view class="item3">
-      <view class="g">
-        <view class="mindMsg">测别人点这里</view>
-        <view class="mindMsg">自测点这里</view>
-        <image class="btnImg" bindtap="gotoguide" src="../img/store/detail/icon23.png"></image>
-        <view class="btnView" bindtap="hidenDlg">我知道了</view>
-      </view> -->
-
-<!--    </view>-->
-
-<!--    <view wx:if="{{showMindDlg&&isFreeTickId}}" class="dlgMsg" style="margin-bottom:{{phoneModel?80:0}}rpx;">-->
-<!--      <view class="item3">-->
-<!--        <view class="title">立即体验</view>-->
-<!--        <view class="mindMsg">点击可体验本测评，完成后，系统将生成对应的报告。</view>-->
-<!--        <image src="../img/store/detail/icon24.png" class="pointerImg"></image>-->
-<!--        <image class="btnImg" bindtap="gotoguide" src="../img/store/detail/icon23.png"></image>-->
-<!--        &lt;!&ndash; <view class="btnView" bindtap="showMindDlgFn">我知道了</view> &ndash;&gt;-->
-<!--      </view>-->
-<!--    </view>-->
-<view wx:if="{{ loading }}" class="loading"></view>
-<serving mobile="{{ mobile }}" wechat="{{ wechat }}" bottom="180rpx"></serving>
+    <view style="width: 300rpx;" bindtap="buyByCounts">
+      <press title="按份购买" height="56" borderRadius="10" color="{{ buyByCounts ? '#fff' : '#353EE8FF' }}" bgColor="{{ buyByCounts ? '#353EE8FF' : '#fff' }}" border="{{ buyByCounts ? '' : '1px solid #353EE8FF' }}" fontSize="28" fontWeight="600" shadow="{{ buyByCounts ? '0px 2px 4px 0px rgba(0,0,0,0.3)' : '' }}"></press>
+    </view>
+  </view>
+  <view wx:if="{{ buyByBuyout }}" class="company-choice">
+    92%企业的选择
+  </view>
+  <view wx:if="{{ buyByBuyout }}" class="buy-by-buyout">
+    <view wx:if="{{ evaluation.evaluationInfo.buyoutPlans[0].price }}" class="pay-way">￥{{ evaluation.evaluationInfo.buyoutPlans[0].price }}/年</view>
+    <view wx:else class="pay-way">即将推出，尽情期待</view>
+    <view>不限量使用本测评</view>
+  </view>
+  <view wx:if="{{ buyByCounts }}" class="buy-by-counts">
+    <view class="total-counts">
+      <view>合计</view>
+      <view>￥{{ filters.toFix((evaluation.evaluationInfo.price||0) * count) }}</view>
+      <view style="color: #F7B500FF;font-size: 26rpx;">推荐按年买断更加划算</view>
+    </view>
+    <view class="total-operator">
+      <view bindtap="addcount" class="add">+</view>
+      <input type="number" class="total-display" bindinput="inputprice" value="{{count}}"/>
+      <view bindtap="jiancount" class="subtraction">-</view>
+    </view>
+  </view>
+  <view class="pay-group">
+    <view wx:if="{{ buyByCounts }}" bindtap="payByCounts">
+      <press title="微信支付" fontSize="32" fontWeight="600" letterSpacing="2" shadow="0px 4px 8px 0px rgba(192,192,192,0.97)"></press>
+    </view>
+    <view wx:if="{{ buyByBuyout }}" bindtap="payByBuyout">
+      <press title="微信支付" fontSize="32" fontWeight="600" letterSpacing="2" shadow="0px 4px 8px 0px rgba(192,192,192,0.97)"></press>
+    </view>
+    <view bindtap="servingTrigger">
+      <press title="对公转账" fontSize="32" color="#353EE8FF" bgColor="#fff" border="none" fontWeight="600" letterSpacing="2"></press>
+    </view>
+  </view>
+</view>
+<view wx:if="{{ payTrigger }}" class="mask" style="background-color: rgba(0,0,0,.5);" bindtap="cancelPayForEvaluation"></view>
+<view wx:if="{{ buyByTicket }}" class="pay-by-ticket-page">
+  <view class="head-wrapper">
+    <view class="title-wrapper">
+      <text>{{ evaluation.evaluationInfo.name }}</text>
+      <text style="font-size: 24rpx;font-weight: initial;margin: 10rpx 0 10rpx 0;letter-spacing: 4rpx;color: rgba(0,0,0,.4)">{{ voucher }}张券可用于本测评</text>
+    </view>
+    <image src="{{ evaluation.evaluationInfo.smallImg }}" style="width: 100rpx;height: 100rpx;background-color: #2f3038;border-radius: 10rpx;"></image>
+  </view>
+  <view class="operator-wrapper">
+    <view class="operator">
+      <view class="ticket-sub" bindtap="subTicket">-</view>
+      <input class="ticket-display" type="text" value="{{ ticketCount }}"/>
+      <view class="ticket-add" bindtap="addTicket">+</view>
+    </view>
+  </view>
+  <view bindtap="useticket">
+    <press title="{{ ticketCount ? '用券兑换'+ticketCount+'份' : '用券兑换' }}" height="90" fontSize="32" shadow="0px 4px 8px 0px rgba(192,192,192,0.97);"></press>
+  </view>
+</view>
+<view class="mask" wx:if="{{ buyByTicket }}" bindtap="cancelBuyByTicket" style="background-color: rgba(0,0,0,.5);"></view>
+<view wx:if="{{ giftTrigger }}" class="gift-container">
+  <view class="image-container">
+    <image src="http://ihola.luoke101.com/20200709145310.png" style="width: 675rpx;height: 855rpx;margin-top: 52rpx;" bindtap="buyByTicket"></image>
+  </view>
+  <view class="mask" bindtap="closeGift"></view>
+</view>
+<!-- 新用户 || 有券 || (未买断&&买过测评) || 买断 以上这种情况出现均会出现小黄条 -->
+<serving id="serving" mobile="{{ mobile }}" wechat="{{ wechat }}" bottom="180rpx" bottom="{{ evaluation.isBeginner || hasVoucher || (!evaluation.buyoutInfo.hadBuyout&&evaluation.hadConsumed) || evaluation.buyoutInfo.hadBuyout ? '240rpx' : '180rpx'}}"></serving>
+<mask isShow="{{ loading }}" bgColor="#fff" top="0"></mask>
+<wxs src="../common/util.wxs" module="util"></wxs>

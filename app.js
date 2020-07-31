@@ -1,13 +1,49 @@
-//app.js
+/***********************************************************************************************************************
+ * @NAME: WEID       /       @DATE: 2020/7/21      /       @DESC: 变量注释模板(新增变量务必添加)
+ * ald: 阿拉丁
+ * qiniuUpload: 七牛云
+ * push: 小神推
+ * deBug: 调试模式
+ * debuggerQueue: 请求时长
+ * region: 区域码
+ * domain: 域名
+ * uptokenURL: 令牌
+ * shouldUseQiniuFileName: 文件ID生成规则
+ * defaultShareObj: 默认好友分享图片
+ * teamName: 团队名字
+ * teamId: 团队ID
+ * teamRole: 团队角色
+ * isLogin: 登录状态
+ * isIos: 系统类型
+ * qiniuUpload: 七牛配置
+ * isIphoneX: 苹果X
+ * host: 主机地址
+ * globalData: 全局数据
+ * appid: 小程序标识
+ * userInfo: 用户信息
+ * userMsg: 用户信息
+ * team: 当前团队
+ * teams: 团队列表
+ * titleHeight: 系统状态栏高度
+ * statusbarHeight: 小程序状态栏高度
+ * windowHeight: 视口高度
+ * screenHeight: 屏幕高度
+ * pixelRate: dpi
+ * eventId:  小神推模板ID
+ * ********************************************************************************************************************/
 const ald = require('./utils/ald-stat.js');
-var qiniuUpload = require("./utils/qiniuUpload");
-var push = require('./utils/push_sdk.js');
+const qiniuUpload = require("./utils/qiniuUpload");
+const push = require('./utils/push_sdk.js');
+const deBug = false;
+const debuggerQueue = []; // 用于判断请求时长
+
 qiniuUpload.init({
-  region: 'SCN', // 是你注册bucket的时候选择的区域的代码
+  region: 'SCN',
   domain: 'ihola.luoke101.com',
   uptokenURL: 'https://admin.luoke101.com/hola/getQiNiuToken', //
-  shouldUseQiniuFileName: false // 如果是 true，则文件 key 由 qiniu 服务器分配 (全局去重)。默认是 false: 即使用微信产生的 filename
+  shouldUseQiniuFileName: false
 });
+
 App({
   defaultShareObj: {
     imageUrl: "http://ihola.luoke101.com/wxShareImg.png",
@@ -15,76 +51,101 @@ App({
   teamName: "",
   teamId: "",
   teamRole: "",
-  nowhF: 1,
-  isTodayTeam: false,
-  couponGet0: false,
-  couponGet: false,
-  couponGet1: false,
   isLogin: false,
   isIos: false,
   qiniuUpload: qiniuUpload,
   isIphoneX: false,
-  // host: "https://api.dev.luoke101.com",
-  host: "https://h5.luoke101.com",
+  host: "https://api.dev.luoke101.com",
+  // host: "https://h5.luoke101.com",
+  globalData: {
+    appid: wx.getAccountInfoSync().miniProgram.appId,
+    userInfo: null,
+    userMsg: {},
+    team: null,
+    teams: [],
+    titleHeight: 0,
+    statusbarHeight: 0,
+    windowHeight: 0,
+    screenHeight: 0,
+    pixelRate: 0,
+    eventId: "5ea6b2b26df4251c4a09a4cc"
+  },
   onLaunch: function(options) {
+    var that = this;
     var referrerInfo = options.referrerInfo;
     var menuBtnObj = wx.getMenuButtonBoundingClientRect();
+    var sysMsg = wx.getSystemInfoSync();
+    this.isIphoneX = false;
+    this.isIos = false;
+    this.isLogin = false;
+    this.fromAppId = '';
+    this.teamId = wx.getStorageSync("myTeamId") || "";
+    this.rate = sysMsg.windowWidth / 750;
     if ( referrerInfo && referrerInfo.appid ) {
       this.fromAppId = referrerInfo.appid;
     }
     wx.removeStorageSync("hideLastTestMind");
-    this.teamId = wx.getStorageSync("myTeamId") || "";
     wx.onMemoryWarning(function(res) {
       console.log('onMemoryWarningReceive', res)
     });
-    var that = this;
-    that.isLogin = false;
-    var sysMsg = wx.getSystemInfoSync();
-    // 获取机型
-    that.rate = sysMsg.windowWidth / 750;
-    that.isIphoneX = false;
-    that.isIos = false;
+    /*获取机型 **/
     if (sysMsg.model.indexOf("iPhone X") != -1) {
-      that.isIphoneX = true;
+      this.isIphoneX = true;
     }
     if (sysMsg.system.indexOf("iOS") != -1) {
-      that.isIos = true;
+      this.isIos = true;
     }
-
-    // 登录
+    /**
+     * @Description: 登录
+     * @author: WE!D
+     * @name: wx.login
+     * @args: Object
+     * @return: Object {openId, sessionKey, unionId}
+     * @date: 2020/7/21
+    */
     wx.login({
       success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
         this.userLogin(res.code).then(res=>{
           wx.aldPushSendOpenid(res.openId);
         });
       }
     });
-
-    // 获取用户信息
+    /**
+     * @Description: 获取设置
+     * @author: WE!D
+     * @name: wx.getSetting
+     * @args: Object
+     * @return: Object
+     * @date: 2020/7/21
+    */
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
             success: res => {
-              // 可以将 res 发送给后台解码出 unionId
+              /** 可以将 res 发送给后台解码出 unionId */
               this.globalData.userInfo = Object.assign(res.userInfo, this.globalData.userInfo || {});
-
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
+              /** 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回 */
+              /** 所以此处加入 callback 以防止这种情况 */
               if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
+                this.userInfoReadyCallback(res);
               }
             }
           })
         }
       }
     });
-
+    /**
+     * @Description: 获取设备信息
+     * @author: WE!D
+     * @name: wx.getSystemInfo
+     * @args: Object
+     * @return: Object
+     * @date: 2020/7/21
+    */
     wx.getSystemInfo({
         success: (res) => {
-          let { statusBarHeight,windowHeight,screenHeight,windowWidth } = res;
+          let { windowHeight,screenHeight,windowWidth } = res;
           let statusbarHeight = res.statusBarHeight,
               titleHeight = menuBtnObj.height + (menuBtnObj.top - statusbarHeight)*2;
           this.globalData.statusbarHeight = statusbarHeight;
@@ -99,9 +160,16 @@ App({
       });
   },
 
+  /**
+   * @Description: 用户登录
+   * @author: WE!D
+   * @name: userLogin
+   * @args: String
+   * @return: Promise
+   * @date: 2020/7/21
+  */
   userLogin: function(code) {
     var that = this;
-    var result = { openId: "" };
     var userLoginPromise = new Promise((resolve, reject) => {
       that.doAjax({
         url: "userLogin",
@@ -111,26 +179,18 @@ App({
           appid: that.globalData.appid,
           code: code
         },
-        success: function(ret) {
-          that.globalData.userMsg = ret.userMsg || {};
-          var userData = ret.data;
-          var now = new Date().getTime();
-          var createdAt = new Date(userData.createdAt).getTime();
-          var isTodayTeam = false;
-          if (now - createdAt < (24 * 60 * 60 * 1000)) {
-            //24小时内注册的团队--默认为新用户
-            isTodayTeam = true;
-          }
-          that.isTodayTeam = isTodayTeam;
-          if (0 == ret.code) {
+        success: function(res) {
+          that.globalData.userMsg = res.userMsg || {};
+          var userData = res.data;
+          wx.hideLoading();
+          if (0 === res.code) {
             var userMsg = that.globalData.userMsg;
-            wx.hideLoading();
             wx.setStorageSync("userInfo", userData);
             wx.setStorageSync("openId", userData.openid || userMsg.openid);
             wx.setStorageSync("unionId", userData.uid || userMsg.unionid);
             that.globalData.userInfo = Object.assign(userData, that.globalData.userInfo || {});
-            that.getMyTeamList(that.checkUser);
             that.isLogin = true;
+            that.getMyTeamList(that.checkUser);
             resolve ({ openId: userData.openid || userMsg.openid })
           } else {
             wx.showModal({
@@ -139,8 +199,7 @@ App({
               showCancel: !1,
               confirmText: "确定",
               confirmColor: "#0099ff",
-              success: function(e) {}}
-            );
+              success: function(e) {}});
             reject({ openId: "" });
           };
         },
@@ -151,8 +210,16 @@ App({
     });
     return userLoginPromise;
   },
+
+  /**
+   * @Description: 获取用户信息
+   * @author: WE!D
+   * @name: getUserInfo
+   * @args: Function
+   * @return: none
+   * @date: 2020/7/21
+  */
   getUserInfo: function(callBack) {
-    //刷新用户信息
     var that = this;
     if (!wx.getStorageSync("openId") || !that.isLogin) {
       callBack && callBack();
@@ -166,134 +233,32 @@ App({
         openid: wx.getStorageSync("openId")
       },
       noLoading: true,
-      success: function(ret) {
-        var userData = ret.data;
-        if (0 == ret.code) {
+      success: function(res) {
+        var userData = res.data;
+        if (0 === res.code) {
           var userMsg = that.globalData.userMsg;
-          wx.hideLoading();
           wx.setStorageSync("userInfo", userData);
           wx.setStorageSync("openId", userData.openid || userMsg.openid);
           wx.setStorageSync("unionId", userData.uid || userMsg.unionid);
           that.globalData.userInfo = Object.assign(that.globalData.userInfo || {}, userData);
         }
+        wx.hideLoading();
         that.getMyTeamList(callBack);
+      },
+      fail(err) {
+        wx.hideLoading();
       }
     });
   },
-  checkUserVip: function(ret) {
-    //设置用户VIP信息
-    var createdAt = new Date(ret.createdAt).getTime();
-    var now = new Date().getTime();
-    var isTodayTeam = false;
-    if (now - createdAt < (24 * 60 * 60 * 1000)) {
-      //24小时内注册的团队--默认为新用户
-      isTodayTeam = true;
-    }
-    var couponGet0 = ret.couponGet0 || false;
-    var couponGet = ret.couponGet || false;
-    var couponGet1 = ret.couponGet1 || false;
-    // isTodayTeam = false;
-    // this.isTodayTeam = isTodayTeam;
-    this.couponGet0 = couponGet0;
-    this.couponGet = couponGet;
-    this.couponGet1 = couponGet1;
-    var nowtime = new Date().getTime();
-    if (ret.payVip0) {
-      var vip0endtime = new Date(Date.parse(ret.vip0EndTime)).getTime();
-      if (vip0endtime >= nowtime) {
-        wx.setStorageSync("isvip0", true)
-      } else {
-        wx.setStorageSync("isvip0", false)
-      }
-    } else {
-      wx.setStorageSync("isvip2", false)
-    }
-    if (ret.payVip1) {
-      var vipendtime = new Date(Date.parse(ret.vipEndTime)).getTime();
-      if (vipendtime >= nowtime) {
-        wx.setStorageSync("isvip1", true)
-      } else {
-        wx.setStorageSync("isvip1", false)
-      }
-    } else {
-      wx.setStorageSync("isvip1", false)
-    }
 
-    if (ret.payVip2) {
-      var vip2endtime = new Date(Date.parse(ret.vip2EndTime)).getTime();
-      if (vip2endtime >= nowtime) {
-        wx.setStorageSync("isvip2", true)
-      } else {
-        wx.setStorageSync("isvip2", false)
-      }
-    } else {
-      wx.setStorageSync("isvip2", false)
-    }
-    if (ret.payVip3) {
-      var vip3endtime = new Date(Date.parse(ret.vip3EndTime)).getTime();
-      if (vip3endtime >= nowtime) {
-        wx.setStorageSync("isvip3", true)
-      } else {
-        wx.setStorageSync("isvip3", false)
-      }
-    } else {
-      wx.setStorageSync("isvip3", false)
-    }
-    if (ret.payVip4) {
-      var vip4endtime = new Date(Date.parse(ret.vip4EndTime)).getTime();
-      if (vip4endtime >= nowtime) {
-        wx.setStorageSync("isvip4", true)
-      } else {
-        wx.setStorageSync("isvip4", false)
-      }
-    } else {
-      wx.setStorageSync("isvip4", false)
-    }
-  },
   /**
-   * @Description: getInOnceAgainst 领完5张券，再次进入测评详情页才会显示领取3张券的广告
+   * @Description: 时间转换函数
    * @author: WE!D
-   * @args:
-   * @return:
-   * @date: 2020/6/17
+   * @name: changeDate
+   * @args: Date,String
+   * @return: String
+   * @date: 2020/7/21
   */
-  globalData: {
-    appid: wx.getAccountInfoSync().miniProgram.appId,
-    userInfo: null,
-    userMsg: {},
-    team: null,
-    teams: [],
-    checked: 0,
-    getInOnceAgainst: false,
-    titleHeight: 0,
-    statusbarHeight: 0,
-    eventId: "5f07d5c97739104342928f48"
-  },
-
-  changeDate2: function(time, dateType) {
-    //日期格式化处理
-    //dateType示例：yyyy-MM-dd hh:mm:ss
-     dateType ="MM-dd hh:mm"
-    time = new Date(time);
-    // var y = time.getFullYear();
-    var M = time.getMonth() + 1;
-    var d = time.getDate();
-    var h = time.getHours();
-    var m = time.getMinutes();
-    // var s = time.getSeconds();
-    M = M < 10 ? ("0" + M) : M;
-    d = d < 10 ? ("0" + d) : d;
-    h = h < 10 ? ("0" + h) : h;
-    m = m < 10 ? ("0" + m) : m;
-    // s = s < 10 ? ("0" + s) : s;
-    // dateType = dateType.replace("yyyy", y);
-    dateType = dateType.replace("MM", M);
-    dateType = dateType.replace("dd", d);
-    dateType = dateType.replace("hh", h);
-    dateType = dateType.replace("mm", m);
-    // dateType = dateType.replace("ss", s);
-    return dateType;
-  },
   changeDate: function(time, dateType) {
     //日期格式化处理
     //dateType示例：yyyy-MM-dd hh:mm:ss
@@ -317,6 +282,15 @@ App({
     dateType = dateType.replace("ss", s);
     return dateType;
   },
+
+  /**
+   * @Description: 全局数据请求
+   * @author: WE!D
+   * @name: doAjax
+   * @args: Object
+   * @return: none
+   * @date: 2020/7/21
+  */
   doAjax: function(params) {
     //request请求
     var that = this;
@@ -366,15 +340,31 @@ App({
       }
     });
   },
-  //toast信息显示
-  toast: function(txt,duration=2000) {
+
+  /**
+   * @Description: 全局toast
+   * @author: WE!D
+   * @name: toast
+   * @args: String,Number
+   * @return: none
+   * @date: 2020/7/21
+  */
+  toast: function(text,duration=2000) {
     wx.showToast({
-      title: txt,
+      title: text,
       icon: "none",
       duration
     });
   },
-  //数组去除空值
+
+  /**
+   * @Description: 数组去除空值
+   * @author: WE!D
+   * @name: trimSpace
+   * @args: Array
+   * @return: Array
+   * @date: 2020/7/21
+  */
   trimSpace: function(array) {
     for (var i = 0; i < array.length; i++) {
       if ((array[i] == " " && array[i] != 0) || array[i] == null || typeof(array[i]) == "undefined") {
@@ -384,9 +374,15 @@ App({
     }
     return array;
   },
+
   /**
-   * 页面切换
-   */
+   * @Description: 切换页面
+   * @author: WE!D
+   * @name: changePage
+   * @args: (String,String)
+   * @return: none
+   * @date: 2020/7/21
+  */
   changePage: function(url, tab) {
     var that = this;
     if (url) {
@@ -403,12 +399,16 @@ App({
       });
     }
   },
+
   /**
-   * 获取团队列表
-   */
+   * @Description: 获取团队列表
+   * @author: WE!D
+   * @name: getMyTeamList
+   * @args: Function
+   * @return: none
+   * @date: 2020/7/21
+  */
   getMyTeamList: function(cb) {
-    // cb && cb([]);
-    // return;
     var that = this;
     that.doAjax({
       url: "myTeamList",
@@ -420,11 +420,11 @@ App({
         pageSize: 12
       },
       success: function(list) {
+        var toAddNew = true;
+        list = list || [];
         if (that.checkUser && !that.isLogin) {
           that.isLogin = true;
         }
-        list = list || [];
-        var toAddNew = true;
         list.forEach(function(n) {
           if (n.role == 3 && n.createUser.objectId == that.globalData.userInfo.id) { //有我创建的团队时不进行自动新增团队
             toAddNew = false;
@@ -441,7 +441,7 @@ App({
             teams.push(item.name);
           });
           that.globalData.teams = teams;
-          that.checkUserVip(obj);
+          // that.checkUserVip(obj);
           cb && cb(list);
         }
         if (toAddNew && !list.length) {
@@ -453,16 +453,18 @@ App({
       }
     });
   },
+
   /**
-   * 添加一个默认团队
-   */
+   * @Description: 添加团队(默认会添加一个自己的团队)
+   * @author: WE!D
+   * @name: addNewTeam
+   * @args: Function
+   * @return: none
+   * @date: 2020/7/21
+  */
   addNewTeam: function(cb) {
     var that = this;
     var userInfo = that.globalData.userInfo;
-    // if (!userInfo || !userInfo.nickname || !userInfo.isBind) {
-    //   cb && cb([]);
-    //   return;
-    // }
     that.doAjax({
       url: "updateTeamMember",
       method: "post",
@@ -477,4 +479,24 @@ App({
       }
     })
   },
+
+  /**
+   * @Description: 测试函数
+   * @author: WE!D
+   * @name: output
+   * @args: String
+   * @return: none
+   * @date: 2020/7/21
+  */
+  output: function (text) {
+    if (!deBug) return;
+    let _text = text || '当前时间'
+    _text += ':' + (+Date.now())
+    if (debuggerQueue.length > 0) {
+      const diff = +Date.now() - debuggerQueue[debuggerQueue.length - 1]
+      _text += ',diff:' + diff
+    }
+    debuggerQueue.push(+Date.now())
+    console.log(_text)
+  }
 });

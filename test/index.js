@@ -99,16 +99,23 @@ Page({
             quesIdsOrder.push(node.id);
             ques.push(node);
             if(node.type==3){
-              node.slider=new Array(node.options.length).fill(0);
+              node.slider = new Array(node.options.length).fill(0);
               node.totalScore = node.totalScore;
-              node.step = Math.floor(node.totalScore/( node.totalScore - 1 ));
+              node.step = Math.floor(node.totalScore/5);
               node.stepArr = [];
-              for(let i =0;i<node.totalScore;i++)
-              {
-                node.stepArr.push(Math.floor(i*node.step));
+              if( node.totalScore < 5 ){
+                node.step = 1;
+                for(let i =0;i<node.totalScore;i++){
+                  node.stepArr.push(Math.floor(i*node.step));
+                }
+              }else{
+                for(let i =0;i<5;i++){
+                  node.stepArr.push(Math.floor(i*node.step));
+                }
               }
             }
             ques1.push(node);
+            console.log("node-1：",node);
             if (showQues.length < 5) {
               showQues.push(node);
             }
@@ -116,16 +123,23 @@ Page({
             var i = quesIdsOrder.indexOf(node.id);
             ques[i] = node;
             if(node.type==3){
-              node.slider=new Array(node.options.length).fill(0);
+              node.slider = new Array(node.options.length).fill(0);
               node.totalScore = node.totalScore;
-              node.step = Math.floor(node.totalScore/(node.totalScore - 1));
+              node.step = Math.floor(node.totalScore/5);
               node.stepArr = [];
-              for(let i =0;i<node.totalScore;i++)
-              {
-                node.stepArr.push(Math.floor(i*node.step));
+              if( node.totalScore < 5 ){
+                node.step = 1;
+                for(let i =0;i<node.totalScore;i++){
+                  node.stepArr.push(Math.floor(i*node.step));
+                }
+              }else{
+                for(let i =0;i<5;i++){
+                  node.stepArr.push(Math.floor(i*node.step));
+                }
               }
             }
             ques1[i] = node;
+            console.log("node-2：",node);
             var oldswiperCurrent = oldData.swiperCurrent;
             var i1 = oldswiperCurrent - i;
             if (i1 > -3 && i1 < 3) {
@@ -922,17 +936,11 @@ Page({
                   getphoneNum: true,
                   phoneNumber: res.data.phone
                 });
-                wx.aldstat.sendEvent('授权手机号成功', {
-                  '测评名称': `名称：${ name }`
-                });
               }
             });
           }
         });
       }
-      wx.aldstat.sendEvent('授权手机号', {
-        '测评名称': `名称：${ name }`
-      });
       return;
     }
   },

@@ -1,10 +1,11 @@
 <!--common/meal/meal.wxml-->
-<view wx:if="{{ isShow }}" class="meal" bindtap="changePage">
+<view wx:if="{{ isShow }}" class="meal">
     <view class="meal-info">
-        <image class="meal-icon" src="../../img/station/meal/meal_icon.png@2x.png"></image>
-        <text>购买测评套餐，测评最低仅需15元/份</text>
+        <image wx:if="{{ icon }}" class="meal-icon" style="{{ icon ? 'width:0;' : 'width:36rpx;' }}"></image>
+        <text>{{ title }}</text>
     </view>
-    <view class="meal-detail">
-        查看详情 >
+    <view class="meal-detail" style="display: flex;align-items: center;">
+        <image wx:if="{{ subIcon }}" src="{{ subIcon }}" class="sub-icon"></image>
+        {{ subtitle }}
     </view>
 </view>

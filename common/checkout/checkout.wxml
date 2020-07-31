@@ -53,13 +53,13 @@
   <view class="example-content">
       <view class="example-child" wx:for="{{ list }}" wx:for-item="quesTypeitem" wx:for-index="quesTypeindex" wx:key="unique" data-i="{{quesTypeindex}}">
           <rich-text class="queStem bold rich-text" nodes="<p>{{quesTypeindex+1}}、{{quesTypeitem.stem}}</p>"></rich-text>
-          <view class="subject-wrapper" wx:for="{{quesTypeitem.options}}" wx:key="unique" wx:for-item="node">
+          <view class="subject-wrapper" wx:for="{{quesTypeitem.options}}" wx:key="unique" wx:for-item="node" wx:for-index="idx">
               <view class="subject-child">
                   <view>
-                      {{node.txt}}
+                      {{ util.ASCIIToChar(idx) }}:
                   </view>
                   <view>
-                      {{node.msg}}
+                      {{ node }}
                   </view>
               </view>
           </view>
@@ -80,3 +80,24 @@
         </view>
     </view>
 </view>
+
+<view class="price" wx:if="{{ type === 'price' && isShow }}">
+    <view class="head">
+        <text class="title">报价方案</text>
+        <text class="line"></text>
+        <text class="title-bg">Price</text>
+    </view>
+    <view class="price-content">
+        <view class="price-child price-child-by-count">
+            <view class="buy">按份购买</view>
+            <view>￥{{ data.price }}元/份</view>
+        </view>
+        <view class="price-child price-child-by-buyout">
+            <view class="buy">按年买断</view>
+            <view wx:if="{{ data.buyoutPlans[0].price }}">￥{{ data.buyoutPlans[0].price }}元/年/不限量使用</view>
+            <view wx:else>即将推出，敬请期待</view>
+        </view>
+    </view>
+</view>
+
+<wxs src="../util.wxs" module="util"></wxs>

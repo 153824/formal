@@ -547,9 +547,10 @@ Page({
         }, 500);
       });
     }, 350);
+
     that.setData({
       isFillAll: false
-    })
+    });
   },
   change: function (e) {
     //选项点击选中
@@ -618,13 +619,15 @@ Page({
     var que = data.quesAll[swiperCurrent];
     var answers = data.answers;
     var answer = app.trimSpace(JSON.parse(JSON.stringify(answers[que.id] || [])));
+
     if(que.type==3){
       var tmpsum = 0;
       answer.forEach(score=>{
-        tmpsum+=score;
+        console.log(score);
+        tmpsum = Number(score) + tmpsum;
       });
       console.log("tmpsum,que.totalScore: ",tmpsum,que.totalScore);
-      if(tmpsum!=que.totalScore){
+      if(tmpsum != que.totalScore){
         that.setData({
           isChangeQue: false
         });
@@ -633,7 +636,6 @@ Page({
     }
     const { name } = e.target.dataset;
     console.log("formSubmit", e);
-    var that = this;
     var chapter = that.data.chapter;
     var hasNextChapter = false;
     if (answerTimeOut) {
@@ -673,7 +675,6 @@ Page({
       return;
     }
     var now = new Date().getTime();
-    var data = this.data;
     var startTime = data.startTime;
     var chapterTime = data.chapterTime || {};
     var answerTimes = {};
@@ -942,49 +943,59 @@ Page({
     var i = d.i;
     var list = this.data.quesAll;
     var obj = list[index];
+    console.log("obj：", obj);
     var { answers,swiperCurrent,quesAll,lastAnswer } = this.data;
+    var totalScore = quesAll[swiperCurrent].totalScore;
     answers[obj.id] = answers[obj.id] || [];
+    console.log("answers： ",answers);
     var answer = app.trimSpace(JSON.parse(JSON.stringify(answers[obj.id])));
-    answers[obj.id][i]=e.detail.value;
+    answers[obj.id][i]= e.detail.value ? Number(e.detail.value) : 0;
     var t = "showQues["+index+"].slider["+i+"]";
     var a = "answers."+obj.id+"["+i+"]";
     var score = 0;
-    // if( (swiperCurrent + 1) == quesAll.length ){
-    //   answers[obj.id].forEach((v,k)=>{
-    //     score = score + v;
-    //   });
-    //   if(  ){
-    //
-    //   }
-    // }
+    console.log("swiperCurrent: ",swiperCurrent);
+    if( (swiperCurrent + 1) == quesAll.length ){
+      answers[obj.id].forEach((v,k)=>{
+        score = score + Number(v);
+        console.log("v score: ",v);
+        console.log("score: ",score);
+        console.log("totalScore: ",totalScore);
+      });
+      if( score == totalScore ){
+        console.log("score === totalScore: ",score === totalScore);
+        this.setData({
+          isFillAll: true,
+        });
+      }
+    }
     this.setData({
       [t]:e.detail.value,
       [a]:e.detail.value,
     });
-    if(obj.options.length>=2&&(i==(obj.options.length-2))){
-      var tmp = obj.totalScore;
-      for(let ti=0;ti<obj.slider.length-1;ti++){
-        tmp -= obj.slider[ti];
-      }
-      if(tmp>=0){
-        var t1="showQues["+index+"].slider["+(obj.options.length-1)+"]";
-        var a1 = "answers."+obj.id+"["+(obj.options.length-1)+"]";
-        this.setData({
-          [t1]:tmp,
-          [a1]:tmp,
-          isFillAll: true
-        })
-      }
-      else{
-        var t1="showQues["+index+"].slider["+(obj.options.length-1)+"]";
-        var a1 = "answers."+obj.id+"["+(obj.options.length-1)+"]";
-        this.setData({
-          [t1]:0,
-          [a1]:0,
-          isFillAll: true
-        })
-      }
-    }
+    // if(obj.options.length>=2&&(i==(obj.options.length-2))){
+    //   var tmp = obj.totalScore;
+    //   for(let ti=0;ti<obj.slider.length-1;ti++){
+    //     tmp -= obj.slider[ti];
+    //   }
+    //   if(tmp>=0){
+    //     var t1="showQues["+index+"].slider["+(obj.options.length-1)+"]";
+    //     var a1 = "answers."+obj.id+"["+(obj.options.length-1)+"]";
+    //     this.setData({
+    //       [t1]:tmp,
+    //       [a1]:tmp,
+    //       isFillAll: true
+    //     })
+    //   }
+    //   else{
+    //     var t1="showQues["+index+"].slider["+(obj.options.length-1)+"]";
+    //     var a1 = "answers."+obj.id+"["+(obj.options.length-1)+"]";
+    //     this.setData({
+    //       [t1]:0,
+    //       [a1]:0,
+    //       isFillAll: true
+    //     })
+    //   }
+    // }
   },
   notFillAll: function (e) {
     var that = this;

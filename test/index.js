@@ -957,11 +957,21 @@ Page({
     var i = d.i;
     var list = this.data.quesAll;
     var obj = list[index];
+    var userInputAnswer = e.detail.value;
+    var NUMBER_REG = new RegExp(/^[0-9]*$/);
+    try{
+      userInputAnswer = Number(userInputAnswer);
+    }catch(e){
+
+    }
+    if( !NUMBER_REG.test(userInputAnswer) ){
+      app.toast("必须输入数字");
+    }
     var { answers,swiperCurrent,quesAll,lastAnswer } = this.data;
     var totalScore = quesAll[swiperCurrent].totalScore;
     answers[obj.id] = answers[obj.id] || [];
     var answer = app.trimSpace(JSON.parse(JSON.stringify(answers[obj.id])));
-    answers[obj.id][i]= e.detail.value ? Number(e.detail.value) : 0;
+    answers[obj.id][i]= userInputAnswer ? Number(userInputAnswer) : 0;
     var t = "showQues["+index+"].slider["+i+"]";
     var a = "answers."+obj.id+"["+i+"]";
     var score = 0;
@@ -983,8 +993,8 @@ Page({
       }
     }
     this.setData({
-      [t]:e.detail.value,
-      [a]:e.detail.value,
+      [t]:userInputAnswer,
+      [a]:userInputAnswer,
     });
     // if(obj.options.length>=2&&(i==(obj.options.length-2))){
     //   var tmp = obj.totalScore;

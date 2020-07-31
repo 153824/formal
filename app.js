@@ -41,7 +41,7 @@ const debuggerQueue = []; // 用于判断请求时长
 qiniuUpload.init({
   region: 'SCN',
   domain: 'ihola.luoke101.com',
-  uptokenURL: 'https://admin.luoke101.com/hola/getQiNiuToken', //
+  uptokenURL: 'https://admin.luoke101.com/hola/getQiNiuToken',
   shouldUseQiniuFileName: false
 });
 
@@ -56,8 +56,8 @@ App({
   isIos: false,
   qiniuUpload: qiniuUpload,
   isIphoneX: false,
-  host: "https://api.dev.luoke101.com",
-  // host: "https://h5.luoke101.com",
+  // host: "https://api.dev.luoke101.com",
+  host: "https://h5.luoke101.com",
   globalData: {
     appid: wx.getAccountInfoSync().miniProgram.appId,
     userInfo: null,
@@ -299,7 +299,8 @@ App({
     //request请求
     var that = this;
     var url = that.host + "/hola/" + params.url;
-    var urlArr = ["homePages","positionTags","reports","buyTickets"];
+
+    var urlArr = ["homePages","reports","buyTickets","positionTags"];
     if( urlArr.includes(params.url.split("/")[0]) ){
       url = that.host+ "/haola/" +params.url;
     }

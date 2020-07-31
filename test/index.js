@@ -37,7 +37,8 @@ Page({
     answers: {},
     phoneNumber: "微信一键授权",
     username: app.globalData.userMsg.nickname || "好啦访客",
-    lastAnswer: []
+    lastAnswer: [],
+    theFinalQuestionAnswer: [],
   },
 
   onLoad: function (options) {
@@ -468,10 +469,22 @@ Page({
   },
 
   next: function (e, oldIndex, newD) {
-    console.log("First in,data: ", this.data.isFillAll);
-    // console.log("First in,newD: ", newD.isFillAll);
     //下一题
     var that = this;
+    var { swiperCurrent,quesAll,theFinalQuestionAnswer } = this.data;
+    var finalTotalScore = quesAll[quesAll.length-1].totalScore;
+    var score = 0;
+    if( theFinalQuestionAnswer.length > 0 && swiperCurrent + 1 === quesAll.length){
+      theFinalQuestionAnswer.forEach(((value, index) => {
+        score = value + score;
+      }));
+      if ( score === finalTotalScore ){
+        console.log("theFinalQuestionAnswer", theFinalQuestionAnswer);
+        this.setData({
+          isFillAll: true,
+        });
+      }
+    }
     that.setData({
       isChangeQue: true
     });
@@ -552,8 +565,6 @@ Page({
           d["showQues"] = showQues;
           d["isChangeQue"] = false;
           that.setData(d);
-          console.log("that.setData(d): " ,d);
-          console.log("that.data.isFillAll: ",that.data.isFillAll)
           that.saveAnswerStorageSync();
           if (e && e.currentTarget.dataset.n == "finish") {
             that.formSubmit();
@@ -561,10 +572,6 @@ Page({
         }, 500);
       });
     }, 350);
-
-    that.setData({
-      isFillAll: false
-    });
   },
   change: function (e) {
     //选项点击选中
@@ -945,17 +952,14 @@ Page({
     }
   },
   changeslider(e){
-    console.log("You get in here!");
     var d = e.currentTarget.dataset;
     var index = d.index;
     var i = d.i;
     var list = this.data.quesAll;
     var obj = list[index];
-    console.log("obj：", obj);
     var { answers,swiperCurrent,quesAll,lastAnswer } = this.data;
     var totalScore = quesAll[swiperCurrent].totalScore;
     answers[obj.id] = answers[obj.id] || [];
-    console.log("answers： ",answers);
     var answer = app.trimSpace(JSON.parse(JSON.stringify(answers[obj.id])));
     answers[obj.id][i]= e.detail.value ? Number(e.detail.value) : 0;
     var t = "showQues["+index+"].slider["+i+"]";
@@ -965,14 +969,12 @@ Page({
     if( (swiperCurrent + 1) == quesAll.length ){
       answers[obj.id].forEach((v,k)=>{
         score = score + Number(v);
-        console.log("v score: ",v);
-        console.log("score: ",score);
-        console.log("totalScore: ",totalScore);
       });
       if( score == totalScore ){
         console.log("score === totalScore: ",score === totalScore);
         this.setData({
           isFillAll: true,
+          theFinalQuestionAnswer: answers[obj.id]
         });
       }else{
         this.setData({

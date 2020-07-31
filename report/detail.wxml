@@ -117,119 +117,6 @@
         <rich-text nodes="{{summary.txt}}"></rich-text>
       </view>
     </view>
-    <!--  回答结果-->
-    <view class="evaluation-result">
-      <view class="title">
-        <text>回答结果</text>
-      </view>
-      <view class="question-scroll-box">
-        <swiper class="card-swiper question-swiper" bindchange="cardSwiper" current="{{ cardCur }}">
-          <swiper-item wx:for="{{ test }}" class="{{ cardCur === index ? 'cur':'' }}">
-            <view class="question-child swiper-item">
-              <view class="question-stem">
-                {{ index }}.您喜欢的领导方式或团队组织类型是
-              </view>
-              <view class="question-options">
-                <view class="question-options-child">
-                  <title class="option-char">A</title>
-                  <title class="option-word">所有权在领导手中，下属听从并执行所有权在领导手中，下属听从并执行所有权在领导手中，下属听从并执行</title>
-                </view>
-                <view class="question-options-child">
-                  <title class="option-char">A</title>
-                  <title class="option-word">所有权在领导手中，下属听从并执行</title>
-                </view>
-                <view class="question-options-child">
-                  <title class="option-char">A</title>
-                  <title class="option-word">所有权在领导手中，下属听从并执行</title>
-                </view>
-                <view class="question-options-child">
-                  <title class="option-char">A</title>
-                  <title class="option-word">所有权在领导手中，下属听从并执行</title>
-                </view>
-                <view class="question-options-child" bindtap="go">
-                  <title class="option-char">A</title>
-                  <title class="option-word">所有权在领导手中，下属听从并执行</title>
-                </view>
-              </view>
-            </view>
-          </swiper-item>
-        </swiper>
-      </view>
-      <scroll-view class="question-num-box" id="question-num-box" scroll-x bindscroll="scrollMove" bindtouchstart="touchStart" bindtouchend="touchEnd"
-                   scroll-left='{{scrollLeft}}' scroll-with-animation="true">
-        <view id="scroll-item-{{ index }}" wx:for="{{ test }}" data-id="{{ index }}" class="question-number {{ cardCur === index ? 'question-checked' : '' }}" id="scroll-item-{{index}}"  bindtap="selectItem">
-          {{ index }}
-      </view>
-    </scroll-view>
-  </view>
-    <!--  作答分析-->
-    <view class="report-analyse">
-      <view class="title">
-        <text>作答分析</text>
-      </view>
-      <view class="question-scroll-box">
-        <swiper class="card-swiper question-swiper" bindchange="cardSwiper" current="{{ cardCur }}">
-          <swiper-item wx:for="{{ test }}" class="{{ cardCur === index ? 'cur':'' }}">
-            <view class="question-child swiper-item question-item">
-              <view class="question-stem">
-                {{ index }}.您喜欢的领导方式或团队组织类型是
-              </view>
-              <view class="question-options">
-                <view class="question-options-child">
-                  <title class="option-char">A</title>
-                  <title class="option-word">所有权在领导手中，下属听从并执行所有权在领导手中，下属听从并执行所有权在领导手中，下属听从并执行</title>
-                </view>
-                <view class="question-options-child">
-                  <title class="option-char">B</title>
-                  <title class="option-word">所有权在领导手中，下属听从并执行</title>
-                </view>
-                <view class="question-options-child">
-                  <image src="../img/right.png" class="right">C</image>
-                  <title class="option-word">所有权在领导手中，下属听从并执行</title>
-                </view>
-                <view class="question-options-child">
-                  <image src="../img/fault.png" class="fault"></image>
-                  <title class="option-word">所有权在领导手中，下属听从并执行</title>
-                </view>
-                <view class="question-options-child">
-                  <title class="option-char">E</title>
-                  <title class="option-word">所有权在领导手中，下属听从并执行</title>
-                </view>
-                <title class="compare">
-                  正确答案：B 用户选择：C
-                </title>
-                <view class="hr question-options-child"></view>
-                <view class="question-options-child knowledge-point advise-to-ques">
-                  <view class="knowledge">
-                    <title>知识点</title>
-                    <view class="tag-wrapper">
-                      <title class="tag">新媒体工具</title>
-                    </view>
-                  </view>
-                  <view class="advise">
-                    <title>建议追问</title>
-                    <view class="ques-wrapper">
-                      <title class="advise-question">
-                        之前工作中，你用过哪些新媒体工具？
-                      </title>
-                    </view>
-                  </view>
-                </view>
-              </view>
-              <view class="situation">
-                40%的人做错
-              </view>
-            </view>
-          </swiper-item>
-        </swiper>
-      </view>
-      <scroll-view class="question-num-box" id="question-num-box" scroll-x bindscroll="scrollMove" bindtouchstart="touchStart" bindtouchend="touchEnd"
-                   scroll-left='{{scrollLeft}}' scroll-with-animation="true">
-        <view id="scroll-item-{{ index }}" wx:for="{{ test }}" data-id="{{ index }}" class="question-number {{ cardCur === index ? 'question-checked' : '' }}" id="scroll-item-{{index}}"  bindtap="selectItem">
-          {{ index }}
-        </view>
-      </scroll-view>
-    </view>
     <!-- 模型介绍 -->
     <view class="box2" wx:if="{{showModelIntroduce&&dimension['1']}}">
       <view class="title">
@@ -326,7 +213,7 @@
           <!-- 柱状图 -->
           <!-- <view class="chartImg" wx:if="{{item.chartType==2}}">
           <ec-canvas id="mychart{{index}}" canvas-id="mychartcanvas{{index}}" ec="{{getChartMsg}}"></ec-canvas>
-      </view> -->
+          </view> -->
           <!-- 雷达图 -->
           <view class="chartImg" wx:if="{{item.chartType!=1}}">
             <ec-canvas id="mychart{{index}}" canvas-id="mychartcanvas{{index}}" ec="{{getChartMsg1}}"></ec-canvas>
@@ -602,53 +489,177 @@
         <rich-text nodes="{{summary.txt}}"></rich-text>
       </view>
     </view>
-    <!--  回答结果-->
-    <!-- <view class="evaluation-result">
+    <!-- 模型介绍 -->
+    <view class="box2" wx:if="{{showModelIntroduce&&dimension['1']}}">
       <view class="title">
-        <text>回答结果</text>
+        <text class="underLineBg">{{modelIntroduceName||"模型介绍"}}</text>
       </view>
-      <view class="question-scroll-box">
-        <swiper class="card-swiper question-swiper" bindchange="cardSwiper" current="{{ cardCur }}">
-          <swiper-item wx:for="{{ test }}" class="{{ cardCur === index ? 'cur':'' }}">
-            <view class="question-child swiper-item">
-              <view class="question-stem">
-                {{ index }}.您喜欢的领导方式或团队组织类型是
+      <view class="content">
+        <rich-text nodes="<p>{{modelIntroduceTxt||''}}</p>"></rich-text>
+        <block wx:for="{{dimension}}" wx:key="unique">
+          <view class="dimensionName">
+            <text></text> {{item.name}}
+          </view>
+        </block>
+      </view>
+    </view>
+    <!-- 维度分析 -->
+    <view class="box3" wx:if="{{showDimension}}">
+      <block wx:for="{{dimension}}" wx:key="unique">
+        <block wx:if="{{item.show&&item.name}}">
+          <view class="spaceView" wx:if="{{index==1}}" style="height:20rpx;"></view>
+          <view class="title">
+            <text class="underLineBg">{{item.name}}</text>
+          </view>
+          <block wx:if="{{ item.showScore }}">
+            <view class="flex total" wx:if="{{item.showTotal || item.rankOrg || item.rankAll || item.showScore !='none'}}">
+              <view class="flex-main" wx:if="{{item.showTotal || item.showScore !='none'}}">
+                <block wx:if="{{ item.showScore === 'total' }}">
+                  <block wx:if="{{ item.scale === 'origin' }}">
+                    <view class="name">得分</view>
+                    <view class="lv">{{ util.saveDouble(item.originTotal) }}</view>
+                  </block>
+                  <block wx:if="{{ item.scale === 'decimal' }}">
+                    <view class="name">得分</view>
+                    <view class="lv">{{ util.saveDouble(item.decimalTotal) }}</view>
+                  </block>
+                  <block wx:elif="{{ item.scale === 'centesimal' }}">
+                    <view class="name">得分</view>
+                    <view class="lv">{{ util.saveDouble(item.centesimalTotal) }}</view>
+                  </block>
+                </block>
+                <block wx:if="{{ item.showScore === 'average' }}">
+                  <block wx:if="{{ item.scale === 'origin' }}">
+                    <view class="name">得分</view>
+                    <view class="lv">{{ util.saveDouble(item.sumOfAverage) }}</view>
+                  </block>
+                  <block wx:if="{{ item.scale === 'decimal' }}">
+                    <view class="name">得分</view>
+                    <view class="lv">{{ util.saveDouble(item.sumOfAverage10) }}</view>
+                  </block>
+                  <block wx:elif="{{ item.scale === 'centesimal' }}">
+                    <view class="name">得分</view>
+                    <view class="lv">{{ util.saveDouble(item.sumOfAverage100) }}</view>
+                  </block>
+                </block>
               </view>
-              <view class="question-options">
-                <view class="question-options-child">
-                  <title class="option-char">A</title>
-                  <title class="option-word">所有权在领导手中，下属听从并执行所有权在领导手中，下属听从并执行所有权在领导手中，下属听从并执行</title>
-                </view>
-                <view class="question-options-child">
-                  <title class="option-char">A</title>
-                  <title class="option-word">所有权在领导手中，下属听从并执行</title>
-                </view>
-                <view class="question-options-child">
-                  <title class="option-char">A</title>
-                  <title class="option-word">所有权在领导手中，下属听从并执行</title>
-                </view>
-                <view class="question-options-child">
-                  <title class="option-char">A</title>
-                  <title class="option-word">所有权在领导手中，下属听从并执行</title>
-                </view>
-                <view class="question-options-child" bindtap="go">
-                  <title class="option-char">A</title>
-                  <title class="option-word">所有权在领导手中，下属听从并执行</title>
-                </view>
+              <view class="flex-main" wx:if="{{item.showLevel}}">
+                <block>
+                  <view class="name">等级</view>
+                  <view class="lv">{{ item.lvName }}</view>
+                </block>
+              </view>
+              <view class="flex-main" wx:if="{{item.rankOrg}}">
+                <view class="name">组织排名</view>
+                <view class="lv" wx:if="{{index==0}}">{{d1.order||0}}%</view>
+                <view class="lv" wx:if="{{index==1}}">{{d2.order||0}}%</view>
+              </view>
+              <view class="flex-main" wx:if="{{item.rankAll}}">
+                <view class="name">全国排名</view>
+                <view class="lv" wx:if="{{index==0}}">{{d1.orderAll||0}}%</view>
+                <view class="lv" wx:if="{{index==1}}">{{d2.orderAll||0}}%</view>
               </view>
             </view>
-          </swiper-item>
-        </swiper>
-      </view>
-      <scroll-view class="question-num-box" id="question-num-box" scroll-x bindscroll="scrollMove" bindtouchstart="touchStart" bindtouchend="touchEnd"
-                   scroll-left='{{scrollLeft}}' scroll-with-animation="true">
-        <view id="scroll-item-{{ index }}" wx:for="{{ test }}" data-id="{{ index }}" class="question-number {{ cardCur === index ? 'question-checked' : '' }}" id="scroll-item-{{index}}"  bindtap="selectItem">
-          {{ index }}
-      </view>
-    </scroll-view>
-  </view> -->
+          </block>
+          <block wx:else>
+            <view class="flex total" wx:if="{{item.showTotal||item.rankOrg||item.rankAll}}">
+              <view class="flex-main" wx:if="{{item.showTotal}}">
+                <view class="name">得分</view>
+                <view class="lv">{{ util.saveDouble(item.total2) }}</view>
+              </view>
+              <view class="flex-main" wx:if="{{item.rankOrg}}">
+                <view class="name">组织排名</view>
+                <view class="lv" wx:if="{{index==0}}">{{d1.order||0}}%</view>
+                <view class="lv" wx:if="{{index==1}}">{{d2.order||0}}%</view>
+              </view>
+              <view class="flex-main" wx:if="{{item.rankAll}}">
+                <view class="name">全国排名</view>
+                <view class="lv" wx:if="{{index==0}}">{{d1.orderAll||0}}%</view>
+                <view class="lv" wx:if="{{index==1}}">{{d2.orderAll||0}}%</view>
+              </view>
+            </view>
+          </block>
+          <view class="content" wx:if="{{item.lvDesc}}">
+            <rich-text nodes="<p>{{item.lvDesc||''}}</p>"></rich-text>
+          </view>
+          <!-- 柱状图 -->
+          <!-- <view class="chartImg" wx:if="{{item.chartType==2}}">
+          <ec-canvas id="mychart{{index}}" canvas-id="mychartcanvas{{index}}" ec="{{getChartMsg}}"></ec-canvas>
+      </view> -->
+          <!-- 雷达图 -->
+          <view class="chartImg" wx:if="{{item.chartType!=1}}">
+            <ec-canvas id="mychart{{index}}" canvas-id="mychartcanvas{{index}}" ec="{{getChartMsg1}}"></ec-canvas>
+          </view>
+          <view style="height:50rpx;" wx:if="{{!item.lvDesc&&!item.showTotal&&!item.rankOrg&&!item.rankAll&&item.chartType==1}}"></view>
+          <!-- 维度 -->
+          <view class="list" wx:if="{{show&&item.showScore}}">
+            <block wx:if="{{ item.showSubScore !== 'none' }}" wx:for="{{item.subclass}}" wx:key="unique" wx:for-item="node" wx:for-index="i">
+              <view class="item">
+                <view class="title {{node.active}}" bindtap="activeNewItem" data-index="{{index}}" data-i="{{i}}">{{node.name}}：
+                  <block wx:if="{{ item.showSubScore === 'total' }}">
+                    <block wx:if="{{ item.subScale === 'origin' }}">
+                      <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.subTotal)}}分</text>
+                      <image src="../img/report/icon2.png"></image>
+                    </block>
+                    <block wx:elif="{{ item.subScale === 'decimal' }}">
+                      <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.subTotal10)}}分</text>
+                      <image src="../img/report/icon2.png"></image>
+                    </block>
+                    <block wx:elif="{{ item.subScale === 'centesimal' }}">
+                      <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.subTotal100)}}分</text>
+                      <image src="../img/report/icon2.png"></image>
+                    </block>
+                  </block>
+                  <block wx:elif="{{ item.showSubScore === 'average' }}">
+                    <block wx:if="{{ item.subScale === 'origin' }}">
+                      <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.average)}}分</text>
+                      <image src="../img/report/icon2.png"></image>
+                    </block>
+                    <block wx:elif="{{ item.subScale === 'decimal' }}">
+                      <text style="color:{{node.lvArr[node.lv].color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.average10)}}分</text>
+                      <image src="../img/report/icon2.png"></image>
+                    </block>
+                    <block wx:elif="{{ item.subScale === 'centesimal' }}">
+                      <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.average100)}}分</text>
+                      <image src="../img/report/icon2.png"></image>
+                    </block>
+                  </block>
+                </view>
+                <view class="contentMsg" wx:if="{{node.active}}">
+                  <block wx:for="{{node.lvTexts}}" wx:key="unique" wx:for-item="n" wx:for-index="j">
+                    <view class="title1">
+                      <text class="underLineBg">{{n.title}}：</text>
+                    </view>
+                    <rich-text class="msg" nodes="<p>{{n.content}}</p>"></rich-text>
+                  </block>
+                </view>
+              </view>
+            </block>
+          </view>
+          <view class="list" wx:if="{{show&&!item.showScore}}">
+            <block wx:for="{{item.child}}" wx:key="unique" wx:for-item="node" wx:for-index="i">
+              <view class="item">
+                <view class="title {{node.active}}" bindtap="activeItem" data-index="{{index}}" data-i="{{i}}">{{node.name}}：
+                  <text style="color:{{node.color}};">{{node.lvName}}  {{util.saveDouble(node.av10)}}分</text>
+                  <image src="../img/report/icon2.png"></image>
+                </view>
+                <view class="contentMsg" wx:if="{{node.active}}">
+                  <block wx:for="{{node.lvTexts}}" wx:key="unique" wx:for-item="n" wx:for-index="j">
+                    <view class="title1">
+                      <text class="underLineBg">{{n.title}}：</text>
+                    </view>
+                    <rich-text class="msg" nodes="<p>{{n.content}}</p>"></rich-text>
+                  </block>
+                </view>
+              </view>
+            </block>
+          </view>
+        </block>
+      </block>
+    </view>
+    <view class="spaceView" wx:if="{{proposalShow}}" style="height:18rpx;"></view>
     <!--  作答分析-->
-    <view wx:if="{{ !showRespRecord }}" class="report-analyse">
+    <view wx:if="{{ showRespRecord }}" class="report-analyse">
       <view class="title">
         <text>{{ respRecordName }}</text>
       </view>
@@ -841,7 +852,7 @@
               data-id="{{ recordIndex }}" bindtap="selectItem"
               class="question-number {{ cardCur === recordIndex ? 'question-checked' : '' }} {{ recordItem.analysis.wrong.length <= 0 ? 'question-num-checked-right' : 'question-num-checked-fault' }} {{ cardCur === recordIndex && recordItem.analysis.wrong.length <= 0 ? 'question-right-checked' : '' }} {{ cardCur === recordIndex && recordItem.analysis.wrong.length > 0 ? 'question-fault-checked' : '' }}"
         >
-            {{ recordIndex + 1 }}
+          {{ recordIndex + 1 }}
         </view>
         <view wx:if="{{ recordItem.choiceType === 'multiple' }}" id="scroll-item-{{ recordIndex }}" wx:for="{{ responseRecord }}" wx:for-index="recordIndex" wx:for-item="recordItem"
               data-id="{{ recordIndex }}" bindtap="selectItem"
@@ -851,175 +862,6 @@
         </view>
       </scroll-view>
     </view>
-    <!-- 模型介绍 -->
-    <view class="box2" wx:if="{{showModelIntroduce&&dimension['1']}}">
-      <view class="title">
-        <text class="underLineBg">{{modelIntroduceName||"模型介绍"}}</text>
-      </view>
-      <view class="content">
-        <rich-text nodes="<p>{{modelIntroduceTxt||''}}</p>"></rich-text>
-        <block wx:for="{{dimension}}" wx:key="unique">
-          <view class="dimensionName">
-            <text></text> {{item.name}}
-          </view>
-        </block>
-      </view>
-    </view>
-    <!-- 维度分析 -->
-    <view class="box3" wx:if="{{showDimension}}">
-      <block wx:for="{{dimension}}" wx:key="unique">
-        <block wx:if="{{item.show&&item.name}}">
-          <view class="spaceView" wx:if="{{index==1}}" style="height:20rpx;"></view>
-          <view class="title">
-            <text class="underLineBg">{{item.name}}</text>
-          </view>
-          <block wx:if="{{ item.showScore }}">
-            <view class="flex total" wx:if="{{item.showTotal || item.rankOrg || item.rankAll || item.showScore !='none'}}">
-              <view class="flex-main" wx:if="{{item.showTotal || item.showScore !='none'}}">
-                <block wx:if="{{ item.showScore === 'total' }}">
-                  <block wx:if="{{ item.scale === 'origin' }}">
-                    <view class="name">得分</view>
-                    <view class="lv">{{ util.saveDouble(item.originTotal) }}</view>
-                  </block>
-                  <block wx:if="{{ item.scale === 'decimal' }}">
-                    <view class="name">得分</view>
-                    <view class="lv">{{ util.saveDouble(item.decimalTotal) }}</view>
-                  </block>
-                  <block wx:elif="{{ item.scale === 'centesimal' }}">
-                    <view class="name">得分</view>
-                    <view class="lv">{{ util.saveDouble(item.centesimalTotal) }}</view>
-                  </block>
-                </block>
-                <block wx:if="{{ item.showScore === 'average' }}">
-                  <block wx:if="{{ item.scale === 'origin' }}">
-                    <view class="name">得分</view>
-                    <view class="lv">{{ util.saveDouble(item.sumOfAverage) }}</view>
-                  </block>
-                  <block wx:if="{{ item.scale === 'decimal' }}">
-                    <view class="name">得分</view>
-                    <view class="lv">{{ util.saveDouble(item.sumOfAverage10) }}</view>
-                  </block>
-                  <block wx:elif="{{ item.scale === 'centesimal' }}">
-                    <view class="name">得分</view>
-                    <view class="lv">{{ util.saveDouble(item.sumOfAverage100) }}</view>
-                  </block>
-                </block>
-              </view>
-              <view class="flex-main" wx:if="{{item.showLevel}}">
-                <block>
-                  <view class="name">等级</view>
-                  <view class="lv">{{ item.lvName }}</view>
-                </block>
-              </view>
-              <view class="flex-main" wx:if="{{item.rankOrg}}">
-                <view class="name">组织排名</view>
-                <view class="lv" wx:if="{{index==0}}">{{d1.order||0}}%</view>
-                <view class="lv" wx:if="{{index==1}}">{{d2.order||0}}%</view>
-              </view>
-              <view class="flex-main" wx:if="{{item.rankAll}}">
-                <view class="name">全国排名</view>
-                <view class="lv" wx:if="{{index==0}}">{{d1.orderAll||0}}%</view>
-                <view class="lv" wx:if="{{index==1}}">{{d2.orderAll||0}}%</view>
-              </view>
-            </view>
-          </block>
-          <block wx:else>
-            <view class="flex total" wx:if="{{item.showTotal||item.rankOrg||item.rankAll}}">
-              <view class="flex-main" wx:if="{{item.showTotal}}">
-                <view class="name">得分</view>
-                <view class="lv">{{ util.saveDouble(item.total2) }}</view>
-              </view>
-              <view class="flex-main" wx:if="{{item.rankOrg}}">
-                <view class="name">组织排名</view>
-                <view class="lv" wx:if="{{index==0}}">{{d1.order||0}}%</view>
-                <view class="lv" wx:if="{{index==1}}">{{d2.order||0}}%</view>
-              </view>
-              <view class="flex-main" wx:if="{{item.rankAll}}">
-                <view class="name">全国排名</view>
-                <view class="lv" wx:if="{{index==0}}">{{d1.orderAll||0}}%</view>
-                <view class="lv" wx:if="{{index==1}}">{{d2.orderAll||0}}%</view>
-              </view>
-            </view>
-          </block>
-          <view class="content" wx:if="{{item.lvDesc}}">
-            <rich-text nodes="<p>{{item.lvDesc||''}}</p>"></rich-text>
-          </view>
-          <!-- 柱状图 -->
-          <!-- <view class="chartImg" wx:if="{{item.chartType==2}}">
-          <ec-canvas id="mychart{{index}}" canvas-id="mychartcanvas{{index}}" ec="{{getChartMsg}}"></ec-canvas>
-      </view> -->
-          <!-- 雷达图 -->
-          <view class="chartImg" wx:if="{{item.chartType!=1}}">
-            <ec-canvas id="mychart{{index}}" canvas-id="mychartcanvas{{index}}" ec="{{getChartMsg1}}"></ec-canvas>
-          </view>
-          <view style="height:50rpx;" wx:if="{{!item.lvDesc&&!item.showTotal&&!item.rankOrg&&!item.rankAll&&item.chartType==1}}"></view>
-          <!-- 维度 -->
-          <view class="list" wx:if="{{show&&item.showScore}}">
-            <block wx:if="{{ item.showSubScore !== 'none' }}" wx:for="{{item.child}}" wx:key="unique" wx:for-item="node" wx:for-index="i">
-              <view class="item">
-                <view class="title {{node.active}}" bindtap="activeItem" data-index="{{index}}" data-i="{{i}}">{{node.name}}：
-                  <block wx:if="{{ item.showSubScore === 'total' }}">
-                    <block wx:if="{{ item.subScale === 'origin' }}">
-                      <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.subTotal)}}分</text>
-                      <image src="../img/report/icon2.png"></image>
-                    </block>
-                    <block wx:elif="{{ item.subScale === 'decimal' }}">
-                      <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.subTotal10)}}分</text>
-                      <image src="../img/report/icon2.png"></image>
-                    </block>
-                    <block wx:elif="{{ item.subScale === 'centesimal' }}">
-                      <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.subTotal100)}}分</text>
-                      <image src="../img/report/icon2.png"></image>
-                    </block>
-                  </block>
-                  <block wx:elif="{{ item.showSubScore === 'average' }}">
-                    <block wx:if="{{ item.subScale === 'origin' }}">
-                      <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.average)}}分</text>
-                      <image src="../img/report/icon2.png"></image>
-                    </block>
-                    <block wx:elif="{{ item.subScale === 'decimal' }}">
-                      <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.average10)}}分</text>
-                      <image src="../img/report/icon2.png"></image>
-                    </block>
-                    <block wx:elif="{{ item.subScale === 'centesimal' }}">
-                      <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }} {{util.saveDouble(node.average100)}}分</text>
-                      <image src="../img/report/icon2.png"></image>
-                    </block>
-                  </block>
-                </view>
-                <view class="contentMsg" wx:if="{{node.active}}">
-                  <block wx:for="{{node.lvTexts}}" wx:key="unique" wx:for-item="n" wx:for-index="j">
-                    <view class="title1">
-                      <text class="underLineBg">{{n.title}}：</text>
-                    </view>
-                    <rich-text class="msg" nodes="<p>{{n.content}}</p>"></rich-text>
-                  </block>
-                </view>
-              </view>
-            </block>
-          </view>
-          <view class="list" wx:if="{{show&&!item.showScore}}">
-            <block wx:for="{{item.child}}" wx:key="unique" wx:for-item="node" wx:for-index="i">
-              <view class="item">
-                <view class="title {{node.active}}" bindtap="activeItem" data-index="{{index}}" data-i="{{i}}">{{node.name}}：
-                  <text style="color:{{node.color}};">{{node.lvName}}  {{util.saveDouble(node.av10)}}分</text>
-                  <image src="../img/report/icon2.png"></image>
-                </view>
-                <view class="contentMsg" wx:if="{{node.active}}">
-                  <block wx:for="{{node.lvTexts}}" wx:key="unique" wx:for-item="n" wx:for-index="j">
-                    <view class="title1">
-                      <text class="underLineBg">{{n.title}}：</text>
-                    </view>
-                    <rich-text class="msg" nodes="<p>{{n.content}}</p>"></rich-text>
-                  </block>
-                </view>
-              </view>
-            </block>
-          </view>
-        </block>
-      </block>
-    </view>
-    <view class="spaceView" wx:if="{{proposalShow}}" style="height:18rpx;"></view>
     <!-- 建议 -->
     <view class="box4" wx:if="{{proposalShow}}">
       <scroll-view class="tabs" scroll-x>

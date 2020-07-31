@@ -966,6 +966,7 @@ Page({
     }
     if( !NUMBER_REG.test(userInputAnswer) ){
       app.toast("必须输入数字");
+      return;
     }
     var { answers,swiperCurrent,quesAll,lastAnswer } = this.data;
     var totalScore = quesAll[swiperCurrent].totalScore;

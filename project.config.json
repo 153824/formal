@@ -344,7 +344,21 @@
 					"id": 39,
 					"name": "station/detail",
 					"pathName": "station/detail",
-					"query": "id=5db1624aa673f5007249c9ee&resubscribe=true",
+					"query": "id=5f2297acdeb7760006afcba6",
+					"scene": null
+				},
+				{
+					"id": 40,
+					"name": "report/detail",
+					"pathName": "report/detail",
+					"query": "id=5f2297acdeb7760006afcba6",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "manager/manager",
+					"pathName": "manager/manager",
+					"query": "",
 					"scene": null
 				}
 			]

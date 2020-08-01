@@ -20,7 +20,7 @@
         <ticket></ticket>
       </button>
     </block>
-    <checkout title="报价方案" type="price" isShow="{{ !evaluation.freeEvaluation }}" data="{{ evaluation.evaluationInfo }}"></checkout>
+    <checkout title="报价方案" type="price" isShow="{{ !evaluation.freeEvaluation && !isIos }}" data="{{ evaluation.evaluationInfo }}"></checkout>
     <checkout title="测评简介" type="introduction" info="{{ evaluation.evaluationInfo.synopsis }}"></checkout>
     <checkout title="测量维度" type="dimension" list="{{ evaluation.evaluationInfo.measureDimension }}"></checkout>
     <checkout title="适用场景" type="scenarios" list="{{ evaluation.evaluationInfo.scenario }}"></checkout>

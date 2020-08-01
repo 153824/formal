@@ -94,7 +94,6 @@ module.exports = {
   saveDouble: saveDouble,
   hidePartPhoneNumber: hidePartPhoneNumber,
   ASCIIToChar: ASCIIToChar,
-  isIncludes: isIncludes
-  ASCIIToChar: ASCIIToChar,
+  isIncludes: isIncludes,
   toFix: toFix
 };

@@ -5,6 +5,8 @@
         <text class="title">{{ title }}</text>
         <text class="detail">{{ subtitle }}</text>
     </view>
-    <view wx:if="{{ feature != '免费' }}" class="feature need-stone-feature">{{ feature }}</view>
-    <view wx:else class="feature free-pay-feature">{{ feature }}</view>
+    <block wx:if="{{ feature.length > 0 }}">
+        <view wx:if="{{ feature != '免费' }}" class="feature need-stone-feature">{{ feature }}</view>
+        <view wx:else class="feature free-pay-feature">{{ feature }}</view>
+    </block>
 </view>

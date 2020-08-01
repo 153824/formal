@@ -282,6 +282,7 @@ Page({
         setTimeout(function() {
           that.toGetPaperDetail(true);
         }, 500);
+        console.log(res);
       }
     });
   },

@@ -366,6 +366,7 @@ Page({
       if( this.isInTeams(res) ){
         return;
       }
+      console.log("I come here!");
       let now = new Date().getFullYear();
       let userMsg = res.userMsg;
       let t = new Date(userMsg.birthday).getFullYear();
@@ -399,7 +400,7 @@ Page({
         var { showSubScore } = objs[n];
         for (var i in arr) {
           var node = arr[i];
-          if( showSubScore == 'average' ){
+          if( showSubScore === 'average' ){
             value_1[n].push(node.average);
           }else if(!showSubScore){
             value_1[n].push(node.average);
@@ -432,11 +433,11 @@ Page({
         newChild.sort(function(it1, it2) {
           return it2.average - it1.average;
         });
-        objs[n].child = newChild;
+        objs[n].subclass = newChild;
         var keys = Object.keys(newChild);
-        try{objs[n].child[keys[0]]["active"] = "active"}catch(e){
-          console.error("objs[n].child[keys[0]][\"active\"] = \"active\": ", e);
-        };
+        console.log("keys" ,keys);
+        objs[n].subclass[keys[0]]["active"] = "active"
+        console.log("objs[n].subclass[keys[0]][\"active\"]",objs[n].subclass[keys[0]]["active"]);
       }
       res["id"] = id;
       var total1Full = res.generalTotal100;
@@ -512,13 +513,37 @@ Page({
    */
   activeItem: function(e) {
     var d = e.currentTarget.dataset;
+    console.log(d);
+    var index = d.index;
+    console.log(index);
+    if (index == null) return;
+    var i = d.i;
+    console.log(i);
+    var list = this.data.dimension;
+    console.log("dimension", list);
+    if (i != null) {
+      var old = list[index]["child"][i]["active"];
+      list[index]["child"][i]["active"] = old ? "" : "active";
+    } else {
+      var old = list[index]["active"];
+      list[index]["active"] = old ? "" : "active";
+    }
+    this.setData({
+      dimension: list
+    });
+  },
+  /**
+   * 展开显示维度信息(兼容新的数据结构)
+   */
+  activeNewItem: function(e){
+    var d = e.currentTarget.dataset;
     var index = d.index;
     if (index == null) return;
     var i = d.i;
     var list = this.data.dimension;
     if (i != null) {
-      var old = list[index]["child"][i]["active"];
-      list[index]["child"][i]["active"] = old ? "" : "active";
+      var old = list[index]["subclass"][i]["active"];
+      list[index]["subclass"][i]["active"] = old ? "" : "active";
     } else {
       var old = list[index]["active"];
       list[index]["active"] = old ? "" : "active";
@@ -742,9 +767,6 @@ Page({
    * 返回首页
    */
   back: function() {
-    // wx.switchTab({
-    //   url: '../index/index'
-    // });
     wx.switchTab({
       url: '../store/store'
     });
@@ -763,8 +785,8 @@ Page({
       cardCur: e.detail.current
     });
     console.log("I Scroll It");
-    this.scrollSelectItem(e.detail.current);
-  },10,{
+    this.scrollSelectItem(e.detail.current,true);
+  },50,{
     leading: true,
     trailing: false
   }),
@@ -772,10 +794,15 @@ Page({
     this.scrollLeft = e.detail.scrollLeft;
     console.log("scroll: ", e);
   },
-  touchStart: function (e) {
+  touchStart: debounce(function (e) {
     this.startPageX = e.changedTouches[0].pageX;
-  },
-  touchEnd: function (e) {
+    console.log("touchStart: ",e);
+  },50,{
+    leading: true,
+    trailing: false
+  }),
+  touchEnd: debounce(function (e) {
+    console.log("touchEnd：",e)
     const QUESTION_NUMBER_WIDTH = 88;
     const moveX = Math.abs(e.changedTouches[0].pageX - this.startPageX);
     const rate = app.globalData.pixelRate;
@@ -795,8 +822,11 @@ Page({
     this.setData({
       isScroll: true
     });
-    this.scrollSelectItem(cardCur);
-  },
+    this.scrollSelectItem(cardCur,false);
+  },50,{
+    leading: true,
+    trailing: false
+  }),
   switchClass: function (e) {
     const offsetLeft = e.currentTarget.offsetLeft;
     const cardCur = e.target.dataset.id;
@@ -808,6 +838,7 @@ Page({
   getRect: function (elementId) {
       const that = this;
       wx.createSelectorQuery().select(elementId).boundingClientRect((rect)=>{
+        console.log("rect：",rect);
         let moveParams = that.data.moveParams;
         try{
           moveParams.subLeft = rect.left;

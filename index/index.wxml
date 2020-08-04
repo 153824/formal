@@ -33,7 +33,7 @@
       </view>
     </view>
     <view wx:for="{{ column }}" wx:key="unique" wx:for-item="columnItem" wx:if="{{ columnItem.data.length > 0 }}">
-      <view class="header">
+      <view class="header column-title">
         <text>{{ columnItem.column_name }}</text>
       </view>
       <view wx:if="{{ columnItem.showType == 1 }}" class="card-wrapper">
@@ -71,7 +71,7 @@
     </view>
 
   <view class="recomend-reading" wx:if="{{ news.isShow }}">
-    <view class="header">
+    <view class="header column-title">
       <text>推荐阅读</text>
     </view>
     <view class="recomend-set" wx:for="{{news.data}}" wx:key="unique">

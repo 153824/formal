@@ -636,3 +636,21 @@
   box-shadow:0px 2px 8px 0px rgba(53,62,232,0.1);
   border-radius:0px 0px 40px 40px;
 }
+
+.column-title{
+  display: flex;
+  flex-direction: column;
+}
+
+.column-title > text{
+  height: 56rpx;
+  margin-bottom: 4rpx;
+}
+
+.column-title:after{
+  display: inline-block;
+  content: '';
+  width: 80rpx;
+  height: 12rpx;
+  background-color: #353EE8;
+}

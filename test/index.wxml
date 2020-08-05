@@ -91,6 +91,14 @@
         <block wx:for="{{showQues}}" wx:for-index="quesindex" wx:for-item="quesitem" wx:key="unique">
           <swiper-item catchtouchmove="pageTouch" wx:if="{{quesindex<(swiperCurrent+3)&&quesindex>(swiperCurrent-3)}}">
             <scroll-view scroll-y="true" wx:if="{{quesitem}}">
+              <view class="question-number-group">
+                <view class="current-question">
+                  <text>08</text>
+                  <text style="display: inline-block;width: 68rpx;height: 8rpx;background:rgba(53,62,232,1);border-radius:2px;"></text>
+                </view>
+                <text class="fragment-question">/</text>
+                <text class="total-question">108</text>
+              </view>
               <view class="paperhead">
                 <rich-text class="title" space="nbsp" nodes="<p>{{quesitem.maxChoose>1?html:''}}{{quesitem.stem}}</p>"></rich-text>
               </view>

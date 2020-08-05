@@ -52,7 +52,7 @@ page, page>view {
   padding: 0 10rpx;
 }
 assessor-info
-/* box0 */
+  /* box0 */
 
 .box0 {
   height: 200rpx !important;
@@ -287,7 +287,7 @@ assessor-info
 /* box1 */
 
 .box1 {
-  padding: 40rpx 40rpx 0rpx 40rpx;
+  padding: 40rpx 40rpx 40rpx 40rpx;
   background-color: #f7f8fa;
 }
 
@@ -929,7 +929,6 @@ swiper, swiper-item {
 .report-analyse,.evaluation-result{
   display: flex;
   flex-direction: column;
-  padding: 40rpx 0rpx 0rpx 0rpx;
   background-color: #f7f8fa;
 }
 .report-analyse .title,.evaluation-result .title{

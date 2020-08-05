@@ -61,7 +61,7 @@ assessor-info
 }
 
 .box0 .paperName {
-  padding-top: 18rpx;
+  margin-bottom: 40rpx;
   text-align: center;
   font-size: 44rpx;
   font-family: PingFangSC-Semibold, PingFangSC;
@@ -88,9 +88,9 @@ assessor-info
 }
 
 .box0 .time {
-  margin-top: 40rpx;
-  position: relative;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   font-size: 24rpx;
   font-family: PingFangSC-Regular, PingFangSC;
   font-weight: 400;
@@ -99,19 +99,15 @@ assessor-info
 }
 
 .box0 .time text {
-  position: relative;
-  z-index: 2;
   padding: 0 30rpx;
 }
 
-.box0 .time:before {
+.box0 .time:before,.box0 .time:after {
+  display: inline-block;
   content: "";
-  position: absolute;
-  left: 60rpx;
-  right: 60rpx;
   height: 1px;
+  width: 88rpx;
   background: rgba(231, 231, 231, 1);
-  top: 50%;
 }
 
 /* box */

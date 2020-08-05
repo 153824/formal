@@ -93,11 +93,11 @@
             <scroll-view scroll-y="true" wx:if="{{quesitem}}">
               <view class="question-number-group">
                 <view class="current-question">
-                  <text>08</text>
+                  <text>{{swiperCurrent + 1 >= 10 ? swiperCurrent + 1 : '0' + (swiperCurrent + 1) }}</text>
                   <text style="display: inline-block;width: 68rpx;height: 8rpx;background:rgba(53,62,232,1);border-radius:2px;"></text>
                 </view>
                 <text class="fragment-question">/</text>
-                <text class="total-question">108</text>
+                <text class="total-question">{{quesAll.length}}</text>
               </view>
               <view class="paperhead">
                 <rich-text class="title" space="nbsp" nodes="<p>{{quesitem.maxChoose>1?html:''}}{{quesitem.stem}}</p>"></rich-text>
@@ -141,13 +141,10 @@
       </swiper>
     </view>
     <view class="bottombtn {{phoneModel ? 'isiphoneX':''}}">
-      <view class="btnprev" bindtap="prev" data-index="{{swiperCurrent}}">上一题</view>
-      <view>
-        <text>{{swiperCurrent + 1}} / {{quesAll.length}}</text>
-      </view>
-      <view class="btnnext" data-index="{{swiperCurrent}}" wx:if="{{(swiperCurrent + 1) != quesAll.length}}" bindtap="next">下一题</view>
-      <button class="btnnext" data-n="finish" bindtap="notFillAll" wx:if="{{(swiperCurrent + 1) == quesAll.length&&!isFillAll}}">提交</button>
-      <button class="btnnext btnnextUp" wx:if="{{(swiperCurrent + 1) == quesAll.length&&isFillAll}}" form-type="submit">提交</button>
+      <view class="btnprev" bindtap="prev" data-index="{{swiperCurrent}}">《上一题</view>
+      <view class="btnnext" data-index="{{swiperCurrent}}" wx:if="{{(swiperCurrent + 1) != quesAll.length}}" bindtap="next">下一题》</view>
+      <button class="btnnext btn-no-all-fill" data-n="finish" bindtap="notFillAll" wx:if="{{(swiperCurrent + 1) == quesAll.length&&!isFillAll}}">提交</button>
+      <button class="btnnext btnnextUp btn-is-all-fill" wx:if="{{(swiperCurrent + 1) == quesAll.length&&isFillAll}}" form-type="submit">提交</button>
     </view>
   </form>
 </view>

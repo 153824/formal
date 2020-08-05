@@ -556,8 +556,6 @@ assessor-info
   position: absolute;
   left: 10rpx;
   right: 10rpx;
-  /* width: 400rpx; *//* left: 70rpx;
-  right: 70rpx; *//* left: 50%; *//* transform: translateX(-50%); *//* height: 500rpx; */
   top: 0;
   bottom: 0;
   display: block;

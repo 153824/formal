@@ -190,8 +190,11 @@ Page({
   onShow: function() {
 
   },
-  onReady() {
-
+  onReady: function() {
+    let that = this;
+    setTimeout(function() {
+      that.scrollSelectItem(0,false);
+    },2000);
   },
   /**
    * 获取报告详情
@@ -366,7 +369,7 @@ Page({
       if( this.isInTeams(res) ){
         return;
       }
-      console.log("I come here!");
+      console.log("getReport: ",res);
       let now = new Date().getFullYear();
       let userMsg = res.userMsg;
       let t = new Date(userMsg.birthday).getFullYear();
@@ -464,6 +467,10 @@ Page({
       res["noTeamMember"] = false;
       res["teamRole"] = (app.teamId == res.teamId) ? app.teamRole : 1;
       res["showPage"] = true;
+      res.fillBlank = [];
+      for( let i = 0; i < 4; i++ ){
+        res.fillBlank.push("");
+      }
       that.setData(res);
       console.log("res: ",res);
       app.doAjax({
@@ -513,14 +520,10 @@ Page({
    */
   activeItem: function(e) {
     var d = e.currentTarget.dataset;
-    console.log(d);
     var index = d.index;
-    console.log(index);
     if (index == null) return;
     var i = d.i;
-    console.log(i);
     var list = this.data.dimension;
-    console.log("dimension", list);
     if (i != null) {
       var old = list[index]["child"][i]["active"];
       list[index]["child"][i]["active"] = old ? "" : "active";
@@ -663,19 +666,10 @@ Page({
     var userPapersNum = this.data.userPapersNum;
     wx.navigateTo({
       url: '../station/detail?id=' + paperDetail.id,
-    })
+    });
     wx.aldstat.sendEvent('报告详情页测测别人', {
        '测评名称': 'name' + paperDetail.name
     });
-  },
-  /**返回首页 */
-  backToHome: function() {
-    this.getMyTeamList()
-    wx.switchTab({
-      url: '../index/index'
-    });
-    this.loadUserMsg();
-    return;
   },
   /**
    * 获取团队列表，并切换到我自己的团队
@@ -695,74 +689,6 @@ Page({
       });
     });
   },
-  loadUserMsg: function() {
-    var userData = app.globalData.userInfo || wx.getStorageSync("userInfo");
-    var teamData = app.globalData.team || userData;
-    var vip0EndTime = teamData.vip0EndTime;
-    var vipEndTime = teamData.vipEndTime;
-    var vip2EndTime = teamData.vip2EndTime;
-    var vip3EndTime = teamData.vip3EndTime;
-    var vip4EndTime = teamData.vip4EndTime;
-    var now = new Date().getTime();
-    var vip0 = false;
-    var vip1 = false;
-    var vip2 = false;
-    var vip3 = false;
-    var vip4 = false;
-    if (vip0EndTime) {
-      vip0EndTime = new Date(vip0EndTime).getTime();
-      userData.vip0EndTime = app.changeDate(vip0EndTime, "yyyy.MM.dd");
-    }
-    if (vipEndTime) {
-      vipEndTime = new Date(vipEndTime).getTime();
-      userData.vipEndTime = app.changeDate(vipEndTime, "yyyy.MM.dd");
-    }
-    if (vip2EndTime) {
-      vip2EndTime = new Date(vip2EndTime).getTime();
-      userData.vip2EndTime = app.changeDate(vip2EndTime, "yyyy.MM.dd");
-    }
-    if (vip3EndTime) {
-      vip3EndTime = new Date(vip3EndTime).getTime();
-      userData.vip3EndTime = app.changeDate(vip3EndTime, "yyyy.MM.dd");
-    }
-    if (vip4EndTime) {
-      vip4EndTime = new Date(vip4EndTime).getTime();
-      userData.vip4EndTime = app.changeDate(vip4EndTime, "yyyy.MM.dd");
-    }
-    if (vip0EndTime && vip0EndTime > now) {
-      vip0 = true;
-    }
-    if (vipEndTime && vipEndTime > now) {
-      vip1 = true;
-    }
-    if (vip2EndTime && vip2EndTime > now) {
-      vip2 = true;
-    }
-    if (vip3EndTime && vip3EndTime > now) {
-      vip3 = true;
-    }
-    if (vip4EndTime && vip4EndTime > now) {
-      vip4 = true;
-    }
-    if (vip1 && vip2 && vip2EndTime >= vipEndTime) {
-      vip1 = false;
-    } else if (vip1 && vip2 && vip2EndTime <= vipEndTime) {
-      vip2 = false;
-    } else if (vip1 && vip3 && vip3EndTime <= vipEndTime) {
-      vip3 = false;
-    } else if (vip1 && vip4 && vip4EndTime <= vipEndTime) {
-      vip4 = false;
-    }
-    this.setData({
-      vip0: vip0,
-      vip1: vip1,
-      vip2: vip2,
-      vip3: vip3,
-      vip4: vip4,
-      userInfo: userData
-    });
-    // this.getMyTeamList();
-  },
   /**
    * 返回首页
    */
@@ -771,6 +697,7 @@ Page({
       url: '../store/store'
     });
   },
+
   onShareAppMessage: function (options) {
     const { id,userMsg,paper,sharePic } = this.data;
     const { globalData } = app;
@@ -780,6 +707,7 @@ Page({
       imageUrl: sharePic,
     }
   },
+
   cardSwiper: debounce(function(e){
     this.setData({
       cardCur: e.detail.current
@@ -790,43 +718,12 @@ Page({
     leading: true,
     trailing: false
   }),
+
   scroll: function (e) {
     this.scrollLeft = e.detail.scrollLeft;
     console.log("scroll: ", e);
   },
-  touchStart: debounce(function (e) {
-    this.startPageX = e.changedTouches[0].pageX;
-    console.log("touchStart: ",e);
-  },50,{
-    leading: true,
-    trailing: false
-  }),
-  touchEnd: debounce(function (e) {
-    console.log("touchEnd：",e)
-    const QUESTION_NUMBER_WIDTH = 88;
-    const moveX = Math.abs(e.changedTouches[0].pageX - this.startPageX);
-    const rate = app.globalData.pixelRate;
-    if( moveX < (QUESTION_NUMBER_WIDTH/rate) ){
-      return
-    }
-    let { cardCur,responseRecord } = this.data;
-    const direction = e.changedTouches[0].pageX - this.startPageX > 0 ? 'FINGER_TO_RIGHT' : 'FINGER_TO_LEFT';
-    const moveRPX = Math.abs(moveX*rate);
-    const multiple = Math.ceil(moveRPX/QUESTION_NUMBER_WIDTH);
-    const maxPage = responseRecord.length - 1;
-    if( direction === 'FINGER_TO_RIGHT' ){
-      cardCur =  cardCur - multiple <= 0 ? 0 : cardCur - multiple;
-    }else{
-      cardCur =  cardCur + multiple >= maxPage ? maxPage : cardCur + multiple;
-    }
-    this.setData({
-      isScroll: true
-    });
-    this.scrollSelectItem(cardCur,false);
-  },50,{
-    leading: true,
-    trailing: false
-  }),
+
   switchClass: function (e) {
     const offsetLeft = e.currentTarget.offsetLeft;
     const cardCur = e.target.dataset.id;
@@ -835,6 +732,7 @@ Page({
       cardCur
     })
   },
+
   getRect: function (elementId) {
       const that = this;
       wx.createSelectorQuery().select(elementId).boundingClientRect((rect)=>{
@@ -851,8 +749,8 @@ Page({
         moveParams.screenHalfWidth = app.globalData.windowWidth / 2;
         that.moveTo();
       }).exec();
-      console.log("getRect")
   },
+
   moveTo: function () {
     let subLeft = this.data.moveParams.subLeft;
     let screenHalfWidth = this.data.moveParams.screenHalfWidth;
@@ -865,13 +763,13 @@ Page({
     });
     console.log("moveTo")
   },
+
   scrollMove(e) {
     let moveParams = this.data.moveParams;
     moveParams.scrollLeft = e.detail.scrollLeft;
-    this.setData({
-      moveParams: moveParams
-    });
+    this.moveParams = moveParams;
   },
+
   selectItem: function (e) {
     let ele = 'scroll-item-' + e.target.dataset.id;
     this.getRect('#' + ele);
@@ -879,6 +777,7 @@ Page({
       cardCur: e.target.dataset.id
     })
   },
+
   scrollSelectItem: function (id,vibrate=true) {
     console.log("scrollSelectItem");
     let ele = 'scroll-item-' + id;

@@ -312,7 +312,7 @@
     <view class="botbox flex" wx:if="{{ command !== 'close' }}">
       <!--    bindtap="toShareReport"-->
       <button class="sharebtn" open-type="share" bindtap="" wx:if="{{teamRole!=1}}">
-        <image src="../img/report/icon_share.png"></image>
+        <image src="../img/report/icon21.png"></image>
         <text>分享报告</text>
       </button>
       <button class="toTestOther" id="TOT" bindtap="toTestOtherUser" wx:if="{{teamRole!=1}}">
@@ -884,7 +884,7 @@
     <view class="botbox flex" wx:if="{{ command !== 'close' }}">
       <!--    bindtap="toShareReport"-->
       <button class="sharebtn" open-type="share" bindtap="" wx:if="{{teamRole!=1}}">
-        <image src="../img/report/icon_share.png"></image>
+        <image src="../img/report/icon21.png"></image>
         <text>分享报告</text>
       </button>
       <button class="toTestOther" id="TOT" bindtap="toTestOtherUser" wx:if="{{teamRole!=1}}">

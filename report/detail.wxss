@@ -711,29 +711,36 @@ assessor-info
 
 .botbox {
   display: flex;
-  padding: 8rpx 0;
+  align-items: center;
+  padding: 44rpx 66rpx;
   justify-content: space-around;
   align-items: center;
+  font-family:PingFangSC-Semibold,PingFang SC;
+  background-color: #fff;
 }
 
 .sharebtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top:30rpx;
-  margin-left: 20rpx;
   height: 96rpx;
   border-radius: 14rpx;
   background:#FFFFFF;
   /* border:1px solid rgba(7,9,34,0.2); */
   font-size: 32rpx;
+  font-weight: 600;
   font-family: PingFangSC-Semibold, PingFangSC;
   color:rgba(7,9,34,1);
   line-height: 96rpx;
   text-align: center;
-  padding:0 22rpx;
-  margin-right: 0;
-  width: 42%;
+  background:rgba(53,62,232,1);
+  color: #fff;
+  width: 100%;
 }
 
 .toTestOther {
+  display: none;
   margin: 30rpx 20rpx 0 0;
   height: 96rpx;
   background: rgba(89, 96, 237, 1);
@@ -775,8 +782,8 @@ assessor-info
 }
 
 .sharebtn image {
-  width: 40rpx;
-  height: 40rpx;
+  width: 30rpx;
+  height: 30rpx;
   color: rgba(0, 0, 0, 1);
   margin-right: 16rpx;
 }
@@ -791,14 +798,13 @@ assessor-info
 /* bottomMsg */
 
 .bottomMsg {
-  margin-top: 40rpx;
   font-size: 24rpx;
   font-family: PingFangSC-Semibold, PingFangSC;
   font-weight: 400;
   color: rgba(144, 145, 156, 1);
   line-height: 150%;
-  padding: 0 28rpx;
-
+  padding: 0 66rpx;
+  background-color: #fff;
 }
 
 .bottomMsg text {
@@ -808,14 +814,14 @@ assessor-info
 /* ownerMsg */
 
 .ownerMsg {
-  margin-top: 20rpx;
   text-align: center;
   font-size: 24rpx;
   font-family: PingFangSC-Regular, PingFangSC;
   font-weight: 400;
   color: rgba(144, 145, 156, 1);
   line-height: 34rpx;
-  padding-bottom: 40rpx;
+  padding: 20rpx 0  40rpx 0; 
+  background-color: #fff;
 }
 
 swiper, swiper-item {
@@ -927,7 +933,7 @@ swiper, swiper-item {
 .report-analyse,.evaluation-result{
   display: flex;
   flex-direction: column;
-  background-color: #f7f8fa;
+  background-color: rgba(247,248,250,1);
 }
 .report-analyse .title,.evaluation-result .title{
   display: flex;

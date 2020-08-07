@@ -726,8 +726,12 @@
               <!--单选题-配置了对错-题目-->
               <view wx:elif="{{ recordItem.choiceType === 'single' && recordItem.correctIdx.length > 0  }}" class="question-options">
                 <view wx:for="{{ recordItem.options }}" wx:for-item="optionItem" wx:for-index="optionIndex" wx:key="unique" class="question-options-child">
-                  <image wx:if="{{ util.isIncludes(recordItem.correctIdx,optionIndex) }}" src="../img/right.png" class="right-answer-checked"/>
-                  <image wx:elif="{{ util.isIncludes(recordItem.analysis.wrong,optionIndex) }}" src="../img/fault.png" class="fault-answer-checked"/>
+                  <view wx:if="{{ util.isIncludes(recordItem.correctIdx,optionIndex) }}" class="right-answer-checked-wrapper">
+                    <image src="../img/right.png" class="right-answer-checked"/>
+                  </view>
+                  <view wx:elif="{{ util.isIncludes(recordItem.analysis.wrong,optionIndex) }}" class="fault-answer-checked-wrapper">
+                    <image src="../img/fault.png" class="fault-answer-checked"/>
+                  </view>
                   <title wx:else class="option-char">{{ util.ASCIIToChar(optionIndex) }}</title>
                   <title wx:if="{{ util.isIncludes(recordItem.correctIdx,optionIndex) }}" class="option-word option-word-right-color">
                     {{ optionItem }}
@@ -772,9 +776,15 @@
               <!--多选题-配置了对错-题目-->
               <view wx:elif="{{ recordItem.choiceType === 'multiple'  }}" class="question-options">
                 <view wx:for="{{ recordItem.options }}" wx:for-item="optionItem" wx:for-index="optionIndex" wx:key="unique" class="question-options-child">
-                  <image wx:if="{{ util.isIncludes(recordItem.analysis.right,optionIndex) }}" src="../img/rectangle-right.png" class="right-answer-checked"/>
-                  <image wx:elif="{{ util.isIncludes(recordItem.analysis.wrong,optionIndex) }}" src="../img/rectangle-fault.png" class="fault-answer-checked"/>
-                  <image wx:elif="{{ util.isIncludes(recordItem.analysis.omit,optionIndex) }}" src="../img/rectangle-omit.png" class="fault-answer-checked"/>
+                  <view wx:if="{{ util.isIncludes(recordItem.analysis.right,optionIndex) }}" class="right-answer-checked-wrapper multiple-question">
+                    <image src="../img/right.png" class="right-answer-checked"/>
+                  </view>
+                  <view wx:elif="{{ util.isIncludes(recordItem.analysis.wrong,optionIndex) }}" class="fault-answer-checked-wrapper multiple-question">
+                    <image src="../img/fault.png" class="fault-answer-checked"/>
+                  </view>
+                  <view wx:elif="{{ util.isIncludes(recordItem.analysis.omit,optionIndex) }}" class="fault-answer-checked-wrapper multiple-question">
+                    <image src="../img/omit.png" class="fault-answer-checked"/>
+                  </view>
                   <title wx:else class="option-char">{{ util.ASCIIToChar(optionIndex) }}</title>
                   <title wx:if="{{ util.isIncludes(recordItem.correctIdx,optionIndex) && !util.isIncludes(recordItem.analysis.omit,optionIndex) }}" class="option-word option-word-right-color">
                     {{ optionItem }}
@@ -846,7 +856,7 @@
           {{ recordIndex + 1 }}
         </view>
         <!-- 配置了对错-题号 -->
-        <view wx:if="{{ recordItem.choiceType === 'single' && recordItem.correctIdx.length > 0 }}" id="scroll-item-{{ recordIndex }}" wx:for="{{ responseRecord }}" wx:for-index="recordIndex" wx:for-item="recordItem" wx:key="unique" bindtouchmove="touchMove"
+        <view wx:if="{{ recordItem.choiceType === 'single' && recordItem.correctIdx.length > 0 }}" id="scroll-item-{{ recordIndex }}" wx:for="{{ responseRecord }}" wx:for-index="recordIndex" wx:for-item="recordItem" wx:key="unique"
               data-id="{{ recordIndex }}" bindtap="selectItem"
               class="question-number {{ cardCur === recordIndex ? 'question-checked' : '' }} {{ recordItem.analysis.wrong.length <= 0 ? 'question-num-checked-right' : 'question-num-checked-fault' }} {{ cardCur === recordIndex && recordItem.analysis.wrong.length <= 0 ? 'question-right-checked' : '' }} {{ cardCur === recordIndex && recordItem.analysis.wrong.length > 0 ? 'question-fault-checked' : '' }}"
         >

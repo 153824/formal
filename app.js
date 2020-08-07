@@ -31,6 +31,7 @@
  * screenHeight: 屏幕高度
  * pixelRate: dpi
  * eventId:  小神推模板ID
+ * assistant 面试助手
  * ********************************************************************************************************************/
 const ald = require('./utils/ald-stat.js');
 const qiniuUpload = require("./utils/qiniuUpload");
@@ -56,8 +57,8 @@ App({
   isIos: false,
   qiniuUpload: qiniuUpload,
   isIphoneX: false,
-  // host: "https://api.dev.luoke101.com",
-  host: "https://h5.luoke101.com",
+  host: "https://api.dev.luoke101.com",
+  // host: "https://h5.luoke101.com",
   globalData: {
     appid: wx.getAccountInfoSync().miniProgram.appId,
     userInfo: null,
@@ -70,7 +71,7 @@ App({
     screenHeight: 0,
     pixelRate: 0,
     eventId: "5ea6b2b26df4251c4a09a4cc",
-    assistant: ["5edefe43b9e2430008a3f99a","5d786ea66e9ba10069596a61"]
+    assistant: ["5efed573b1ef0200062a85f7"]
   },
   onLaunch: function(options) {
     var that = this;

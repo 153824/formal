@@ -557,7 +557,9 @@
   background-color: white !important;
   padding: unset !important;
 }
-
+.multiple-question{
+  background-color: rgba(250,250,250,1) !important;
+}
 .get-user-phone-wrapper > text{
 
 }

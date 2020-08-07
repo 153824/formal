@@ -105,7 +105,7 @@
               <view class="paperbody">
                 <view class="options">
                   <block wx:for="{{quesitem.options}}" wx:for-index="i" wx:for-item="item" wx:key="unique">
-                    <view wx:if="{{ quesitem.type!=3 }}" class="selectItem {{answers[quesitem.id][i]!=null?'active':''}}" bindtap="change" data-index="{{quesindex}}" data-i="{{i}}">
+                    <view wx:if="{{ quesitem.type!=3 }}" class="selectItem {{answers[quesitem.id][i]!=null?'active':''}} {{ quesitem.type == 1 ? 'multiple-question':'' }}" bindtap="change" data-index="{{quesindex}}" data-i="{{i}}">
                       <label>
                         <text class="langoption">{{optionsAry[i]}}:</text>
                         <rich-text class="optiontext" nodes="<p>{{item}}</p>"></rich-text>

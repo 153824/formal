@@ -281,14 +281,14 @@
   display: flex;
   justify-content: left;
   align-items: center;
-  font-size: 30rpx;
+  font-size: 30rpx !important;
   font-family: PingFangSC-Medium,PingFang SC;
   font-weight: 500;
   letter-spacing: 0.2rpx;
 }
 
 .container .title {
-  font-size: 28rpx;
+  font-size: 30rpx;
   font-weight: 600;
   line-height: 40rpx;
 }

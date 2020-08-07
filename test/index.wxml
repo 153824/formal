@@ -100,21 +100,21 @@
                 <text class="total-question">{{quesAll.length}}</text>
               </view>
               <view class="paperhead">
-                <rich-text class="title" space="nbsp" nodes="<p>{{quesitem.maxChoose>1?html:''}}{{quesitem.stem}}</p>"></rich-text>
+                <rich-text class="title" space="nbsp" nodes="<p style='font-size: 30rpx;'>{{quesitem.maxChoose>1?html:''}}{{quesitem.stem}}</p>"></rich-text>
               </view>
               <view class="paperbody">
                 <view class="options">
                   <block wx:for="{{quesitem.options}}" wx:for-index="i" wx:for-item="item" wx:key="unique">
-                    <view wx:if="{{ quesitem.type!=3 }}" class="selectItem {{answers[quesitem.id][i]!=null?'active':''}} {{ quesitem.type == 1 ? 'multiple-question':'' }}" bindtap="change" data-index="{{quesindex}}" data-i="{{i}}">
+                    <view wx:if="{{ quesitem.type!=3 }}" class="selectItem {{answers[quesitem.id][i]!=null?'active':''}} {{ quesitem.maxChoose > 1 ? 'multiple-question':'' }}" bindtap="change" data-index="{{quesindex}}" data-i="{{i}}">
                       <label>
                         <text class="langoption">{{optionsAry[i]}}:</text>
-                        <rich-text class="optiontext" nodes="<p>{{item}}</p>"></rich-text>
+                        <rich-text class="optiontext" nodes="<p style='font-size: 30rpx;'>{{item}}</p>"></rich-text>
                       </label>
                     </view>
-                    <view wx:else class="notborderview selectItem {{answers[quesitem.id][i]!=null?'active':''}}"  data-index="{{quesindex}}" data-i="{{i}}">
+                    <view wx:else class="notborderview selectItem {{answers[quesitem.id][i]!=null?'active':''}} {{ quesitem.maxChoose > 1 ? 'multiple-question':'' }}"  data-index="{{quesindex}}" data-i="{{i}}">
                       <view>
                         <text class="langoption">{{optionsAry[i]}}:</text>
-                        <rich-text class="optiontext" nodes="<p>{{item}}</p>"></rich-text>
+                        <rich-text class="optiontext" nodes="<p style='font-size: 30rpx;'>{{item}}</p>"></rich-text>
                       </view>
                       <view>
                         <input class="number_input" type="number" value="{{answers[quesitem.id][i]!=null?answers[quesitem.id][i]:0}}" bindinput="changeslider" bindconfirm="changeslider" data-i="{{i}}" data-index="{{quesindex}}" />

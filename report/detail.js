@@ -267,8 +267,6 @@ Page({
         indicator_1[n] = indicator_1[n] || [];
         value_2[n] = value_2[n] || [];
         indicator_2[n] = indicator_2[n] || [];
-        console.log("max值=" + objs[n].max);
-        console.log("objs: ",objs)
         var { showSubScore } = objs[n];
         for (var i in arr) {
           var node = arr[i];

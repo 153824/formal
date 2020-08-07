@@ -2,7 +2,7 @@
 <block>
   <title id="title"></title>
 </block>
-<van-skeleton title="asdsalk" row="17" row-width="{{ skeletonConfig }}" loading="{{ loading }}">
+<van-skeleton row="17" row-width="{{ skeletonConfig }}" loading="{{ loading }}">
   <view class="topTestView flex" style="margin-top:{{ (statusbarHeight + titleHeight) }}px;" wx:if="{{oldShareInfo&&oldShareInfo.id}}" bindtap="continueTest">
     <image class="icon25" src="../img/index/icon25.png"></image>
     <view class="flex-main">您有一份《

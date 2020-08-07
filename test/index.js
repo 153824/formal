@@ -40,6 +40,7 @@ Page({
     username: app.globalData.userMsg.nickname || "好啦访客",
     lastAnswer: [],
     theFinalQuestionAnswer: [],
+    loading: true,
   },
 
   onLoad: function (options) {
@@ -85,6 +86,9 @@ Page({
         id: options.pid
       },
       success: function (res) {
+        that.setData({
+          loading: false
+        });
         if (oldData) {
           quesIdsOrder = oldData.quesIdsOrder || [];
         }

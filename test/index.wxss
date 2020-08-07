@@ -1,6 +1,9 @@
 /* takephoto.wxss */
 @import "../common/colorui/main.wxss";
 @import "../common/colorui/icon.wxss";
+page{
+  background-color: #fff;
+}
 .isChangeQue {
   position: fixed;
   z-index: 999999;
@@ -664,4 +667,13 @@
 }
 .fragment-question{
   margin-left: 10rpx;
+}
+.skeleton-wrapper{
+  position: relative;
+  left: 30rpx;
+  right: 30rpx;
+  top: 32rpx;
+  /* height: 1000rpx; */
+  border-radius: 20rpx;
+  width: calc(100% - 60rpx);
 }

@@ -287,7 +287,7 @@ assessor-info
 /* box1 */
 
 .box1 {
-  padding: 40rpx 40rpx 40rpx 40rpx;
+  padding: 40rpx 40rpx 20rpx 40rpx;
   background-color: #f7f8fa;
 }
 
@@ -928,6 +928,9 @@ swiper, swiper-item {
   width:10px;
   height:6px;
   background:rgba(53,62,232,1);
+}
+.report-analyse{
+  padding: 40rpx 0 0 0 ;
 }
 .report-analyse,.evaluation-result{
   display: flex;

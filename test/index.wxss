@@ -1,5 +1,6 @@
 /* takephoto.wxss */
-
+@import "../common/colorui/main.wxss";
+@import "../common/colorui/icon.wxss";
 .isChangeQue {
   position: fixed;
   z-index: 999999;
@@ -246,16 +247,17 @@
   left: 30rpx;
   right: 30rpx;
   top: 32rpx;
-  height: 1000rpx;
-  background-color: #fff;
-  box-shadow: 0 6rpx 12rpx 0 rgba(0, 0, 0, 0.12);
+  /* height: 1000rpx; */
   border-radius: 20rpx;
 }
-
+@media(min-height: 736px){
+  .paper{
+    height: 1228rpx !important;
+  }
+}
 .container .notiphoneXpaper {
   bottom: 216rpx;
 }
-
 .container .isiphoneXpaper {
   bottom: 276rpx;
 }
@@ -267,12 +269,17 @@
 }
 
 .container .paper swiper-item {
+  height: 99% !important;
   overflow-y: scroll;
   border-radius: 40rpx;
+  background-color: #fff;
+  box-shadow: 0 6rpx 12rpx 0 rgba(0, 0, 0, 0.12);
 }
 
 .container scroll-view {
   height: 100%;
+  /* background-color: #fff;
+  box-shadow: 0 6rpx 12rpx 0 rgba(0, 0, 0, 0.12); */
 }
 
 .container .paperhead {

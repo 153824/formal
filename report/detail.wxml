@@ -850,24 +850,32 @@
         </swiper>
       </view>
       <scroll-view class="question-num-box" id="question-num-box" scroll-x bindscroll="scrollMove" scroll-left='{{ scrollLeft }}' scroll-with-animation="true">
-        <!--未配置对错-题号 -->
-        <view wx:if="{{ recordItem.choiceType === 'single' && recordItem.correctIdx.length <= 0 }}" id="scroll-item-{{ recordIndex }}" wx:for="{{ responseRecord }}" wx:for-index="recordIndex" wx:for-item="recordItem" wx:key="unique"
-              data-id="{{ recordIndex }}" bindtap="selectItem" class="question-number {{ cardCur === recordIndex ? 'question-checked' : '' }}">
-          {{ recordIndex + 1 }}
-        </view>
-        <!-- 配置了对错-题号 -->
-        <view wx:if="{{ recordItem.choiceType === 'single' && recordItem.correctIdx.length > 0 }}" id="scroll-item-{{ recordIndex }}" wx:for="{{ responseRecord }}" wx:for-index="recordIndex" wx:for-item="recordItem" wx:key="unique"
-              data-id="{{ recordIndex }}" bindtap="selectItem"
-              class="question-number {{ cardCur === recordIndex ? 'question-checked' : '' }} {{ recordItem.analysis.wrong.length <= 0 ? 'question-num-checked-right' : 'question-num-checked-fault' }} {{ cardCur === recordIndex && recordItem.analysis.wrong.length <= 0 ? 'question-right-checked' : '' }} {{ cardCur === recordIndex && recordItem.analysis.wrong.length > 0 ? 'question-fault-checked' : '' }}"
-        >
-          {{ recordIndex + 1 }}
-        </view>
-        <view wx:if="{{ recordItem.choiceType === 'multiple' }}" id="scroll-item-{{ recordIndex }}" wx:for="{{ responseRecord }}" wx:for-index="recordIndex" wx:for-item="recordItem" wx:key="unique"
-              data-id="{{ recordIndex }}" bindtap="selectItem"
-              class="question-number {{ cardCur === recordIndex ? 'question-checked' : '' }} {{ recordItem.analysis.wrong.length <= 0 ? 'question-num-checked-right' : 'question-num-checked-fault' }} {{ cardCur === recordIndex && recordItem.analysis.wrong.length <= 0 ? 'question-right-checked' : '' }} {{ cardCur === recordIndex && recordItem.analysis.wrong.length > 0 ? 'question-fault-checked' : '' }}"
-        >
-          {{ recordIndex + 1 }}
-        </view>
+        <block wx:for="{{ responseRecord }}" wx:for-index="recordIndex" wx:for-item="recordItem" wx:key="unique">
+          <!--未配置对错-题号 -->
+          <block wx:if="{{ recordItem.choiceType === 'single' && recordItem.correctIdx.length <= 0 }}">
+            <view id="scroll-item-{{ recordIndex }}"
+                  data-id="{{ recordIndex }}" bindtap="selectItem" class="question-number {{ cardCur === recordIndex ? 'question-checked' : '' }}">
+              {{ recordIndex + 1 }}
+            </view>
+          </block>
+          <!-- 配置了对错-题号 -->
+          <block wx:elif="{{ recordItem.choiceType === 'single' && recordItem.correctIdx.length > 0 }}">
+            <view id="scroll-item-{{ recordIndex }}"
+                  data-id="{{ recordIndex }}" bindtap="selectItem"
+                  class="question-number {{ cardCur === recordIndex ? 'question-checked' : '' }} {{ recordItem.analysis.wrong.length <= 0 ? 'question-num-checked-right' : 'question-num-checked-fault' }} {{ cardCur === recordIndex && recordItem.analysis.wrong.length <= 0 ? 'question-right-checked' : '' }} {{ cardCur === recordIndex && recordItem.analysis.wrong.length > 0 ? 'question-fault-checked' : '' }}"
+            >
+              {{ recordIndex + 1 }}
+            </view>
+          </block>
+          <block wx:elif="{{ recordItem.choiceType === 'multiple' }}">
+            <view id="scroll-item-{{ recordIndex }}"
+                  data-id="{{ recordIndex }}" bindtap="selectItem"
+                  class="question-number {{ cardCur === recordIndex ? 'question-checked' : '' }} {{ recordItem.analysis.wrong.length <= 0 ? 'question-num-checked-right' : 'question-num-checked-fault' }} {{ cardCur === recordIndex && recordItem.analysis.wrong.length <= 0 ? 'question-right-checked' : '' }} {{ cardCur === recordIndex && recordItem.analysis.wrong.length > 0 ? 'question-fault-checked' : '' }}"
+            >
+              {{ recordIndex + 1 }}
+            </view>
+          </block>
+        </block>
       </scroll-view>
     </view>
     <!-- 建议 -->

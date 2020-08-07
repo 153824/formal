@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: space-between;
     height: 38rpx;
-    padding: 22rpx 46rpx 22rpx 42rpx;
+    padding: 22rpx 46rpx 22rpx 60rpx;
     background-color: #FFF3E0FF;
     color: #B8702BFF;
     font-size: 28rpx;

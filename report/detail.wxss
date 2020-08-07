@@ -712,7 +712,7 @@ assessor-info
 .botbox {
   display: flex;
   align-items: center;
-  padding: 44rpx 66rpx;
+  padding: 70rpx 66rpx;
   justify-content: space-around;
   align-items: center;
   font-family:PingFangSC-Semibold,PingFang SC;
@@ -723,7 +723,6 @@ assessor-info
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top:30rpx;
   height: 96rpx;
   border-radius: 14rpx;
   background:#FFFFFF;

@@ -100,7 +100,7 @@
                 <text class="total-question">{{quesAll.length}}</text>
               </view>
               <view class="paperhead">
-                <rich-text class="title" space="nbsp" nodes="<p style='font-size: 30rpx;'>{{quesitem.maxChoose>1?html:''}}{{quesitem.stem}}</p>"></rich-text>
+                <rich-text class="title" space="nbsp" nodes="<p style='font-size: 30rpx;'>{{quesitem.maxChoose>1?multipleQuesHTML:''}}{{ quesitem.type == 3 ? percentQuesHTML:'' }}{{quesitem.stem}}</p>"></rich-text>
               </view>
               <view class="paperbody">
                 <view class="options">
@@ -119,7 +119,7 @@
                       <view>
                         <input class="number_input" type="number" value="{{answers[quesitem.id][i]!=null?answers[quesitem.id][i]:0}}" bindinput="changeslider" bindconfirm="changeslider" data-i="{{i}}" data-index="{{quesindex}}" />
                         <view class="number_slider_wrap">
-                          <slider bindchanging="changeslider" bindchange="changeslider" data-i="{{i}}" data-index="{{quesindex}}" class="number_slider" min="0" max="{{quesitem.totalScore}}" step="{{quesitem.step}}"  value="{{answers[quesitem.id][i]!=null?answers[quesitem.id][i]:0}}" activeColor="#2672ff" block-size="16" block-color="#2672ff"/>
+                          <slider bindchanging="changeslider" bindchange="changeslider" data-i="{{i}}" data-index="{{quesindex}}" class="number_slider" min="0" max="{{quesitem.totalScore}}" step="{{quesitem.step}}"  value="{{answers[quesitem.id][i]!=null?answers[quesitem.id][i]:0}}" activeColor="#353EE8" block-size="10" block-color="#353EE8"/>
                           <view class="number_slider_tip">
                             <view class="number_slider_tip_item_center">
                               <view class="number_slider_tip_item" wx:for="{{quesitem.stepArr}}" wx:for-item="slider_item" wx:key="unique" wx:for-index="idx">

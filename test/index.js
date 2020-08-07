@@ -8,7 +8,8 @@ Page({
   data: {
     isChangeQue: false,
     numArr: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"],
-    html: "<span style='display: inline-block;padding: 0px 10px;box-sizing: border-box;height: 20px;background: rgba(36, 88, 240, 1);border-radius: 3px;font-size: 13px;font-weight: 400;color: rgba(255, 255, 255, 1);line-height: 20px;margin-right: 10px;'>多选题</span>",
+    multipleQuesHTML: "<span style='display: inline-block;box-sizing: border-box;height: 20px;font-size: 15px;font-weight: 600;color: #353EE8;line-height: 20px;margin-right: 10px;'>【多选题】</span>",
+    percentQuesHTML: "<span style='display: inline-block;box-sizing: border-box;height: 20px;font-size: 15px;font-weight: 600;color: #353EE8;line-height: 20px;margin-right: 10px;'>【分数分配题】</span>",
     isFillAll: false,
     count: 5,
     array: [

@@ -1090,8 +1090,8 @@ swiper, swiper-item {
 }
 .compare{
   display: inline-block;
-  height: 40rpx;
-  line-height: 40rpx;
+  height: 46rpx;
+  line-height: 46rpx;
   padding: 0 20rpx;
   background: rgba(233,233,233,1);
   border-radius: 10rpx;

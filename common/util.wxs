@@ -69,9 +69,9 @@ var hidePartPhoneNumber = function(phone){
   return targetPhone;
 };
 
-var toFix = function (value) {
-  return value.toFixed(2);
-}
+var toFix = function (value,tail=2) {
+  return value.toFixed(tail);
+};
 /**
  * @return
  */

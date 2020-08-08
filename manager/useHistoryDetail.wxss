@@ -89,7 +89,15 @@ page{
     color: #070922FF;
 }
 .rate-info {
-    color: #070922;
+
+}
+.rate-info > text{
+    color: #171C69;
+    font-size: 28rpx;
+    font-weight: 400;
+}
+.rate-info > text:first-child{
+    margin-right: 40rpx;
 }
 .title > image{
     width: 12rpx;

@@ -686,13 +686,13 @@
                     {{util.ASCIIToChar(respondItem)}}
                   </block>
                 </title>
-                <block wx:if="{{ knowledgePoints.length > 0 }}">
+                <block wx:if="{{ knowledgePoints[recordItem.qId].length > 0 }}">
                   <view class="hr question-options-child"></view>
                   <view class="question-options-child knowledge-point advise-to-ques">
                     <view class="knowledge">
                       <title>知识点</title>
                       <view class="tag-wrapper">
-                        <title class="tag" wx:for="{{ knowledgePoints }}" wx:for-item="pointItem" wx:key="unique">{{ pointItem }}</title>
+                        <title class="tag" wx:for="{{ knowledgePoints[recordItem.qId] }}" wx:for-item="pointItem" wx:key="unique">{{ pointItem }}</title>
                       </view>
                     </view>
                     <view class="advise" style="display: none;">
@@ -748,13 +748,13 @@
                     {{util.ASCIIToChar(respondItem)}}
                   </block>
                 </title>
-                <block wx:if="{{ knowledgePoints.length > 0 }}">
+                <block wx:if="{{ knowledgePoints[recordItem.qId].length > 0 }}">
                   <view class="hr question-options-child"></view>
                   <view class="question-options-child knowledge-point advise-to-ques">
                     <view class="knowledge">
                       <title>知识点</title>
                       <view class="tag-wrapper">
-                        <title class="tag" wx:for="{{ knowledgePoints }}" wx:for-item="pointItem" wx:key="unique">{{ pointItem }}</title>
+                        <title class="tag" wx:for="{{ knowledgePoints[recordItem.qId] }}" wx:for-item="pointItem" wx:key="unique">{{ pointItem }}</title>
                       </view>
                     </view>
                     <view class="advise" style="display: none;">
@@ -804,13 +804,13 @@
                     {{util.ASCIIToChar(respondItem)}}
                   </block>
                 </title>
-                <block wx:if="{{ knowledgePoints.length > 0 }}">
+                <block wx:if="{{ knowledgePoints[recordItem.qId].length > 0 }}">
                   <view class="hr question-options-child"></view>
                   <view class="question-options-child knowledge-point advise-to-ques">
                     <view class="knowledge">
                       <title>知识点</title>
                       <view class="tag-wrapper">
-                        <title class="tag" wx:for="{{ knowledgePoints }}" wx:for-item="pointItem" wx:key="unique">{{ pointItem }}</title>
+                        <title class="tag" wx:for="{{ knowledgePoints[recordItem.qId] }}" wx:for-item="pointItem" wx:key="unique">{{ pointItem }}</title>
                       </view>
                     </view>
                     <view class="advise" style="display: none;">
@@ -852,13 +852,13 @@
                     {{util.ASCIIToChar(respondItem)}}
                   </block>
                 </title>
-                <block wx:if="{{ knowledgePoints.length > 0 }}">
+                <block wx:if="{{ knowledgePoints[recordItem.qId].length > 0 }}">
                   <view class="hr question-options-child"></view>
                   <view class="question-options-child knowledge-point advise-to-ques">
                     <view class="knowledge">
                       <title>知识点</title>
                       <view class="tag-wrapper">
-                        <title class="tag" wx:for="{{ knowledgePoints }}" wx:for-item="pointItem" wx:key="unique">{{ pointItem }}</title>
+                        <title class="tag" wx:for="{{ knowledgePoints[recordItem.qId] }}" wx:for-item="pointItem" wx:key="unique">{{ pointItem }}</title>
                       </view>
                     </view>
                     <view class="advise" style="display: none;">

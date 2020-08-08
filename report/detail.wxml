@@ -461,7 +461,7 @@
             <view class="lvName" wx:if="{{showSummaryDefinition}}">{{summary.title}}</view>
             <view class="lvNum" wx:if="{{showSummaryTotal}}">
               <canvas class="circle" canvas-id="canvasArcCir"></canvas>
-              <view class="num">{{total1}}分</view>
+              <view class="num">{{generalTotal100}}分</view>
             </view>
           </view>
         </view>
@@ -658,7 +658,7 @@
       </block>
     </view>
     <view class="spaceView" wx:if="{{proposalShow}}" style="height:18rpx;"></view>
-    <!--  作答分析-->
+    <!-- 作答记录 -->
     <view wx:if="{{ showRespRecord }}" class="report-analyse">
       <view class="title">
         <text>{{ respRecordName }}</text>
@@ -667,8 +667,8 @@
         <swiper class="card-swiper question-swiper" bindchange="cardSwiper" current="{{ cardCur }}">
           <swiper-item wx:for="{{ responseRecord }}" wx:for-item="recordItem" wx:key="unique" class="{{ cardCur === index ? 'cur':'' }}">
             <view class="question-child swiper-item question-item">
-              <view class="question-stem">
-                {{ index+1 }}.{{ recordItem.stem }}
+              <view class="question-stem" style="display: block;">
+                <title style="font-size: 30rpx;font-weight: 600;color: #353EE8;">【多选题】</title>{{ index+1 }}.{{ recordItem.stem }}
               </view>
               <!--单选题-未配置对错-题目-->
               <view wx:if="{{ recordItem.choiceType === 'single' && recordItem.correctIdx.length <= 0  }}" class="question-options">
@@ -686,21 +686,16 @@
                     {{util.ASCIIToChar(respondItem)}}
                   </block>
                 </title>
-                <block wx:if="{{ false }}">
+                <block wx:if="{{ knowledgePoints.length > 0 }}">
                   <view class="hr question-options-child"></view>
                   <view class="question-options-child knowledge-point advise-to-ques">
                     <view class="knowledge">
                       <title>知识点</title>
                       <view class="tag-wrapper">
-                        <title class="tag">新媒体工具</title>
-                        <title class="tag">新媒体</title>
-                        <title class="tag">新媒</title>
-                        <title class="tag">新媒体工具</title>
-                        <title class="tag">新媒体工具</title>
-                        <title class="tag">新媒体工具</title>
+                        <title class="tag" wx:for="{{ knowledgePoints }}" wx:for-item="pointItem" wx:key="unique">{{ pointItem }}</title>
                       </view>
                     </view>
-                    <view class="advise">
+                    <view class="advise" style="display: none;">
                       <title>建议追问</title>
                       <view class="ques-wrapper">
                         <title class="advise-question">
@@ -841,6 +836,54 @@
                   </view>
                 </block>
               </view>
+              <!--多选题-未配置对错-题目-->
+              <view wx:if="{{ recordItem.choiceType === 'multiple' && recordItem.correctIdx.length <= 0  }}" class="question-options">
+                <view wx:for="{{ recordItem.options }}" wx:for-item="optionItem" wx:for-index="optionIndex" wx:key="unique" class="question-options-child">
+                  <title class="option-char {{ util.isIncludes(recordItem.respondIdx,optionIndex) ? 'user-checked-char' : '' }}">{{ util.ASCIIToChar(optionIndex) }}</title>
+                  <title class="option-word {{ util.isIncludes(recordItem.respondIdx,optionIndex) ? 'user-checked-word' : '' }}">{{ optionItem }}</title>
+                </view>
+                <title wx:if="{{ false }}" class="compare">
+                  正确答案：
+                  <block wx:for="{{ recordItem.correctIdx }}" wx:for-item="correctItem">
+                    {{util.ASCIIToChar(correctItem)}}
+                  </block>
+                  用户选择：
+                  <block wx:for="{{ recordItem.respondIdx }}" wx:for-item="respondItem" wx:key="unique">
+                    {{util.ASCIIToChar(respondItem)}}
+                  </block>
+                </title>
+                <block wx:if="{{ knowledgePoints.length > 0 }}">
+                  <view class="hr question-options-child"></view>
+                  <view class="question-options-child knowledge-point advise-to-ques">
+                    <view class="knowledge">
+                      <title>知识点</title>
+                      <view class="tag-wrapper">
+                        <title class="tag" wx:for="{{ knowledgePoints }}" wx:for-item="pointItem" wx:key="unique">{{ pointItem }}</title>
+                      </view>
+                    </view>
+                    <view class="advise" style="display: none;">
+                      <title>建议追问</title>
+                      <view class="ques-wrapper">
+                        <title class="advise-question">
+                          之前工作中，你用过哪些新媒体工具？
+                        </title>
+                        <title class="advise-question">
+                          之前工作中，你用过哪些新媒体工具？
+                        </title>
+                        <title class="advise-question">
+                          之前工作中，你用过哪些新媒体工具？
+                        </title>
+                        <title class="advise-question">
+                          之前工作中，你用过哪些新媒体工具？
+                        </title>
+                        <title class="advise-question">
+                          之前工作中，你用过哪些新媒体工具？
+                        </title>
+                      </view>
+                    </view>
+                  </view>
+                </block>
+              </view>
               <view wx:if="{{ recordItem.correctIdx.length > 0 && false }}"
                     class="situation {{ recordItem.analysis.wrong.length > 0 || recordItem.analysis.omit.length > 0 ? 'percent-person-fault' : 'percent-person-right' }}">
                 40%的人做{{ recordItem.analysis.right > 0 ? '对':'错' }}
@@ -872,6 +915,12 @@
                   data-id="{{ recordIndex }}" bindtap="selectItem"
                   class="question-number {{ cardCur === recordIndex ? 'question-checked' : '' }} {{ recordItem.analysis.wrong.length <= 0 ? 'question-num-checked-right' : 'question-num-checked-fault' }} {{ cardCur === recordIndex && recordItem.analysis.wrong.length <= 0 ? 'question-right-checked' : '' }} {{ cardCur === recordIndex && recordItem.analysis.wrong.length > 0 ? 'question-fault-checked' : '' }}"
             >
+              {{ recordIndex + 1 }}
+            </view>
+          </block>
+          <block wx:if="{{ recordItem.choiceType === 'multiple' && recordItem.correctIdx.length <= 0 }}">
+            <view id="scroll-item-{{ recordIndex }}"
+                  data-id="{{ recordIndex }}" bindtap="selectItem" class="question-number {{ cardCur === recordIndex ? 'question-checked' : '' }}">
               {{ recordIndex + 1 }}
             </view>
           </block>

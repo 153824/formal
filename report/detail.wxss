@@ -977,8 +977,8 @@ swiper, swiper-item {
   margin-bottom: 52rpx;
   width: 540rpx;
   font-size: 30rpx;
-  font-family:PingFangSC-Medium,PingFang SC;
-  font-weight:500;
+  font-family: PingFangSC-Medium,PingFang SC;
+  font-weight: 600;
   letter-spacing: 1.1rpx;
   color: rgba(47,48,56,1);
 }

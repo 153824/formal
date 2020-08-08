@@ -20,6 +20,14 @@ Component({
       type: String,
       value: ""
     },
+    align: {
+      type: String,
+      value: "space-between"
+    },
+    subMargin: {
+      type: String,
+      value: ""
+    },
     subIcon: {
       type: String,
       value: ""

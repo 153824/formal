@@ -1,14 +1,15 @@
 // test/index.js
-var app = getApp();
-var sKey = "";
-var quesIdsOrder = [];
-var answerTimeOut;
-var saveTimeOut;
+let app = getApp();
+let sKey = "";
+let quesIdsOrder = [];
+let answerTimeOut;
+let saveTimeOut;
 Page({
   data: {
     isChangeQue: false,
     numArr: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"],
-    html: "<span style='display: inline-block;padding: 0px 10px;box-sizing: border-box;height: 20px;background: rgba(36, 88, 240, 1);border-radius: 3px;font-size: 13px;font-weight: 400;color: rgba(255, 255, 255, 1);line-height: 20px;margin-right: 10px;'>多选题</span>",
+    multipleQuesHTML: "<span style='display: inline-block;box-sizing: border-box;height: 20px;font-size: 15px;font-weight: 600;color: #353EE8;line-height: 20px;margin-right: 10px;'>【多选题】</span>",
+    percentQuesHTML: "<span style='display: inline-block;box-sizing: border-box;height: 20px;font-size: 15px;font-weight: 600;color: #353EE8;line-height: 20px;margin-right: 10px;'>【分数分配题】</span>",
     isFillAll: false,
     count: 5,
     array: [
@@ -39,10 +40,11 @@ Page({
     username: app.globalData.userMsg.nickname || "好啦访客",
     lastAnswer: [],
     theFinalQuestionAnswer: [],
+    loading: true,
   },
 
   onLoad: function (options) {
-    var that = this;
+    let that = this;
     that.setData({
       applyStatus: options.type,
       startTime: new Date().getTime()
@@ -55,23 +57,23 @@ Page({
     }
     quesIdsOrder = [];
     sKey = "oldAnswer" + options.id;
-    var oldData = wx.getStorageSync(sKey);
+    let oldData = wx.getStorageSync(sKey);
     if( oldData.pathIndex == "2" || oldData.pathIndex == "1" ){
       oldData.pathIndex = 3
     }
-    var storages = wx.getStorageInfoSync().keys;
+    let storages = wx.getStorageInfoSync().keys;
     storages.forEach(function (n) {
       if (n.indexOf("oldAnswer") == 0 && n != sKey) {
         wx.removeStorageSync(n);
       }
     });
-    var getphoneNum = false;
-    var userPhone = (app.globalData.userInfo || {}).phone;
+    let getphoneNum = false;
+    let userPhone = (app.globalData.userInfo || {}).phone;
     console.log("userPhone: ", app.globalData.userInfo);
     if (userPhone) {
       getphoneNum = true;
     }
-    var oldPeopleMsg = wx.getStorageSync("oldPeopleMsg");
+    let oldPeopleMsg = wx.getStorageSync("oldPeopleMsg");
     wx.removeStorageSync("oldPeopleMsg");
     if (oldPeopleMsg) {
       oldPeopleMsg["education"] = that.data.array.indexOf(oldPeopleMsg.educationName);
@@ -84,13 +86,16 @@ Page({
         id: options.pid
       },
       success: function (res) {
+        that.setData({
+          loading: false
+        });
         if (oldData) {
           quesIdsOrder = oldData.quesIdsOrder || [];
         }
-        var ques = [];
-        var ques1 = [];
-        var showQues = [];
-        var oldChapter = oldData.chapter;
+        let ques = [];
+        let ques1 = [];
+        let showQues = [];
+        let oldChapter = oldData.chapter;
 
         res.ques.forEach(function (node) {
           node.stem = node.stem.replace(/<img/g, "<img style='max-width:100%;'");
@@ -121,7 +126,7 @@ Page({
               showQues.push(node);
             }
           } else {
-            var i = quesIdsOrder.indexOf(node.id);
+            let i = quesIdsOrder.indexOf(node.id);
             ques[i] = node;
             if(node.type==3){
               node.slider = new Array(node.options.length).fill(0);
@@ -141,8 +146,8 @@ Page({
             }
             ques1[i] = node;
             console.log("node-2：",node);
-            var oldswiperCurrent = oldData.swiperCurrent;
-            var i1 = oldswiperCurrent - i;
+            let oldswiperCurrent = oldData.swiperCurrent;
+            let i1 = oldswiperCurrent - i;
             if (i1 > -3 && i1 < 3) {
               showQues[i] = node;
             }
@@ -190,9 +195,9 @@ Page({
           });
           that.setData(oldData);
           that.toAnswerIt(null, oldData);
-          var startTime = oldData.startTime;
-          // var endTime = oldData.endTime;
-          var now = new Date().getTime();
+          let startTime = oldData.startTime;
+          // let endTime = oldData.endTime;
+          let now = new Date().getTime();
 
           // oldData["startTime"] = startTime + (now - endTime);
           if ((now - startTime) > (6 * 60 * 60 * 1000)) {
@@ -248,9 +253,9 @@ Page({
   },
   // 答题前填写个人信息部分
   userInput: function (e) {
-    var value = e.detail.value;
-    var name = e.currentTarget.dataset.n;
-    var obj = {};
+    let value = e.detail.value;
+    let name = e.currentTarget.dataset.n;
+    let obj = {};
     obj[name] = value;
     console.log("obj[name] = value: ", obj);
     console.log(this.data);
@@ -264,7 +269,7 @@ Page({
     })
   },
   takePhoto: function () {
-    var that = this;
+    let that = this;
     wx.chooseImage({
       count: 1,
       sizeType: ['compressed'],
@@ -274,13 +279,13 @@ Page({
         //   title: '上传图片...',
         // });
         // tempFilePath可以作为img标签的src属性显示图片
-        var imgUrl = res.tempFilePaths[0];
+        let imgUrl = res.tempFilePaths[0];
         that.setData({
           selImg: imgUrl
         });
-        var imgType = imgUrl.split(".");
+        let imgType = imgUrl.split(".");
         imgType = imgType[imgType.length - 1];
-        var fileName = app.globalData.userInfo.id + "/" + (new Date().getTime()) + "." + imgType;
+        let fileName = app.globalData.userInfo.id + "/" + (new Date().getTime()) + "." + imgType;
         app.qiniuUpload.upload(imgUrl, function (file) {
           wx.hideLoading();
           //成功
@@ -303,13 +308,13 @@ Page({
   },
   submit: function (e) {
     const { name } = e.target.dataset;
-    var that = this;
+    let that = this;
     function doNext() {
-      var data = that.data;
-      var imgUrl = data.imgUrl;
-      var username = data.username;
-      var birthday = data.birthday;
-      var education = data.education;
+      let data = that.data;
+      let imgUrl = data.imgUrl;
+      let username = data.username;
+      let birthday = data.birthday;
+      let education = data.education;
       if (!username || !(/^[\u4E00-\u9FA5A-Za-z]+$/.test(username))) {
         app.toast("请输入正确的姓名！");
         return;
@@ -332,12 +337,12 @@ Page({
       });
     }
     if (!that.data.getphoneNum) {
-      var detail = e.detail;
-      var iv = detail.iv;
-      var encryptedData = detail.encryptedData;
+      let detail = e.detail;
+      let iv = detail.iv;
+      let encryptedData = detail.encryptedData;
       if (encryptedData) {
         //用户授权手机号
-        var userMsg = app.globalData.userMsg || {};
+        let userMsg = app.globalData.userMsg || {};
         userMsg["iv"] = iv;
         userMsg["encryptedData"] = encryptedData;
         app.doAjax({
@@ -358,7 +363,7 @@ Page({
   },
   gotoallready: function () {
     //进入答题前说明
-    var that = this;
+    let that = this;
     that.setData({
       count: 5,
       pathIndex: 3
@@ -371,11 +376,11 @@ Page({
    * 倒计时
    */
   toTimeDown(timeKey, callBack) {
-    var that = this;
+    let that = this;
     timeKey = timeKey || "count";
 
     function timeDown() {
-      var time = that.data[timeKey];
+      let time = that.data[timeKey];
       time = time - 1
       if (time <= 0) {
         if (callBack) {
@@ -388,12 +393,12 @@ Page({
         });
         return;
       }
-      var obj = {};
+      let obj = {};
       obj[timeKey] = time;
-      var timeDownFull = "";
-      var h = parseInt(time / 3600);
-      var m = parseInt((time - h * 3600) / 60);
-      var s = (time - h * 3600) - m * 60;
+      let timeDownFull = "";
+      let h = parseInt(time / 3600);
+      let m = parseInt((time - h * 3600) / 60);
+      let s = (time - h * 3600) - m * 60;
       if (h < 10) {
         timeDownFull = timeDownFull + ("0" + h + ":");
       } else {
@@ -418,7 +423,7 @@ Page({
   //答题前信息展示部分
   gototest: function () {
     // if (!this.data.isok) return;
-    var pathIndex = 3;
+    let pathIndex = 3;
     if (this.data.chapter && this.data.chapter.length > 1) {
       pathIndex = 4;
     }
@@ -434,14 +439,14 @@ Page({
   //正式答题部分
   prev: function (e) {
     //上一题
-    var that = this;
+    let that = this;
     that.setData({
       isChangeQue: true
     });
-    var data = that.data;
-    var showQues = data.showQues;
-    var ques = data.quesAll;
-    var swiperCurrent = data.swiperCurrent;
+    let data = that.data;
+    let showQues = data.showQues;
+    let ques = data.quesAll;
+    let swiperCurrent = data.swiperCurrent;
     swiperCurrent = swiperCurrent > 0 ? swiperCurrent - 1 : 0;
     if (!showQues[swiperCurrent - 1] && ques[swiperCurrent - 1]) {
       showQues[swiperCurrent - 1] = ques[swiperCurrent - 1];
@@ -449,7 +454,7 @@ Page({
     if (!showQues[swiperCurrent - 2] && ques[swiperCurrent - 2]) {
       showQues[swiperCurrent - 2] = ques[swiperCurrent - 2];
     }
-    var swiperCurrent1 = swiperCurrent;
+    let swiperCurrent1 = swiperCurrent;
     if (swiperCurrent >= 3) {
       swiperCurrent1 = 2;
     }
@@ -470,16 +475,15 @@ Page({
 
   next: function (e, oldIndex, newD) {
     //下一题
-    var that = this;
-    var { swiperCurrent,quesAll,theFinalQuestionAnswer } = this.data;
-    var finalTotalScore = quesAll[quesAll.length-1].totalScore;
-    var score = 0;
+    let that = this;
+    let { swiperCurrent,quesAll,theFinalQuestionAnswer } = this.data;
+    let finalTotalScore = quesAll[quesAll.length-1].totalScore;
+    let score = 0;
     if( theFinalQuestionAnswer.length > 0 && swiperCurrent + 1 === quesAll.length){
       theFinalQuestionAnswer.forEach(((value, index) => {
         score = value + score;
       }));
       if ( score === finalTotalScore ){
-        console.log("theFinalQuestionAnswer", theFinalQuestionAnswer);
         this.setData({
           isFillAll: true,
         });
@@ -488,21 +492,20 @@ Page({
     that.setData({
       isChangeQue: true
     });
-    var d = {};
-    var data = that.data;
-    var showQues = data.showQues;
-    var ques = data.quesAll;
-    var swiperCurrent = +data.swiperCurrent;
+    let d = {};
+    let data = that.data;
+    let showQues = data.showQues;
+    let ques = data.quesAll;
     if (oldIndex != null) {
       swiperCurrent = +oldIndex;
     }
-    var que = data.quesAll[swiperCurrent];
-    var answers = newD ? newD.answers : data.answers;
-    var minChoose = que.minChoose || 1;
-    var maxChoose = que.maxChoose || 1;
-    var answer = app.trimSpace(JSON.parse(JSON.stringify(answers[que.id] || [])));
+    let que = data.quesAll[swiperCurrent];
+    let answers = newD ? newD.answers : data.answers;
+    let minChoose = que.minChoose || 1;
+    let maxChoose = que.maxChoose || 1;
+    let answer = app.trimSpace(JSON.parse(JSON.stringify(answers[que.id] || [])));
     if(que.type==3){
-      var tmpsum = 0;
+      let tmpsum = 0;
       answer.forEach(score=>{
         score = +score;
         tmpsum+=score;
@@ -521,7 +524,7 @@ Page({
         return app.toast("至少选中" + minChoose + "个选项");
       }
     }
-    var isLastQue = false;
+    let isLastQue = false;
     swiperCurrent += 1;
     if (swiperCurrent == that.data.quesAll.length) {
       console.log("that.data.quesAll.length: ",that.data.quesAll.length);
@@ -542,7 +545,7 @@ Page({
       showQues[swiperCurrent + 2] = ques[swiperCurrent + 2];
     }
 
-    var swiperCurrent1 = (data.swiperCurrent1 || 0) + 1;
+    let swiperCurrent1 = (data.swiperCurrent1 || 0) + 1;
     if (swiperCurrent > 2) {
       d["swiperCurrent1"] = 2;
       swiperCurrent1 = 3;
@@ -575,28 +578,21 @@ Page({
   },
   change: function (e) {
     //选项点击选中
-    var that = this;
-    var isFillAll = false;
+    let that = this;
     this.setData({
       isChangeQue: true
     });
-    console.log("You click change!");
-    var d = e.currentTarget.dataset;
-    var index = d.index;
-    var i = d.i;
-    var list = this.data.quesAll;
-    var obj = list[index];
-    var answers = this.data.answers;
+    let { index,i } = e.currentTarget.dataset;
+    let { quesAll,answers,swiperCurrent } = this.data;
+    let obj = quesAll[index];
     answers[obj.id] = answers[obj.id] || [];
-    var maxChoose = obj.maxChoose || 1;
-    var minChoose = obj.minChoose || 1;
-    var answer = app.trimSpace(JSON.parse(JSON.stringify(answers[obj.id])));
+    let maxChoose = obj.maxChoose || 1;
+    let minChoose = obj.minChoose || 1;
+    console.log("maxChoose: ",maxChoose);
+    let answer = app.trimSpace(JSON.parse(JSON.stringify(answers[obj.id])));
     if (maxChoose < 2) { //单选
       answers[obj.id] = [];
       answers[obj.id][i] = i;
-      if ((this.data.swiperCurrent + 1) == this.data.quesAll.length) {
-        isFillAll = true;
-      }
     } else {
       if (answer.length >= maxChoose && answers[obj.id][i] == null) {
         that.setData({
@@ -604,27 +600,33 @@ Page({
         });
         return app.toast("最多选中" + maxChoose + "个选项");
       }
-      if (answer.length >= minChoose) {
-        if ((this.data.swiperCurrent + 1) == this.data.quesAll.length) {
-          isFillAll = true;
-        }
-      }
       if (answers[obj.id][i] != null) {
         answers[obj.id][i] = null;
       } else {
         answers[obj.id][i] = i;
       }
     }
-
+    if( quesAll.length === swiperCurrent + 1 ){
+      const answerCopy = app.trimSpace(JSON.parse(JSON.stringify(answers[obj.id])));
+      console.log("answerCopy",answerCopy);
+      if( maxChoose < 2 || ( answerCopy.length >= Number(minChoose) && answerCopy.length <= Number(maxChoose) )  ){
+        console.log("Get in?","YES");
+        this.setData({
+          isFillAll: true
+        })
+      }else{
+        this.setData({
+          isFillAll: false
+        })
+      }
+    }
     if (maxChoose < 2) {
       this.next(null, index, {
-        isFillAll: isFillAll,
         answers: answers
       });
     } else {
       this.setData({
         isChangeQue: false,
-        isFillAll: isFillAll,
         answers: answers
       });
     }
@@ -634,20 +636,18 @@ Page({
    * 答题提交
    */
   formSubmit: function (e) {
-    var that = this;
-    var data = this.data;
-    var swiperCurrent = +data.swiperCurrent;
-    var que = data.quesAll[swiperCurrent];
-    var answers = data.answers;
-    var answer = app.trimSpace(JSON.parse(JSON.stringify(answers[que.id] || [])));
-
+    let that = this;
+    let data = this.data;
+    let swiperCurrent = +data.swiperCurrent;
+    let que = data.quesAll[swiperCurrent];
+    let answers = data.answers;
+    let answer = app.trimSpace(JSON.parse(JSON.stringify(answers[que.id] || [])));
     if(que.type==3){
-      var tmpsum = 0;
+      let tmpsum = 0;
       answer.forEach(score=>{
         console.log(score);
         tmpsum = Number(score) + tmpsum;
       });
-      console.log("tmpsum,que.totalScore: ",tmpsum,que.totalScore);
       if(tmpsum != que.totalScore){
         that.setData({
           isChangeQue: false
@@ -657,8 +657,8 @@ Page({
     }
     const { name } = e.target.dataset;
     console.log("formSubmit", e);
-    var chapter = that.data.chapter;
-    var hasNextChapter = false;
+    let chapter = that.data.chapter;
+    let hasNextChapter = false;
     if (answerTimeOut) {
       clearTimeout(answerTimeOut);
     }
@@ -695,16 +695,16 @@ Page({
       // });
       return;
     }
-    var now = new Date().getTime();
-    var startTime = data.startTime;
-    var chapterTime = data.chapterTime || {};
-    var answerTimes = {};
-    for (var i in chapterTime) {
-      var o = chapterTime[i];
+    let now = new Date().getTime();
+    let startTime = data.startTime;
+    let chapterTime = data.chapterTime || {};
+    let answerTimes = {};
+    for (let i in chapterTime) {
+      let o = chapterTime[i];
       answerTimes[i] = now - o.st;
     }
-    var answer = data.answers;
-    var educationName = data.array[data.education];
+    answer = data.answers;
+    let educationName = data.array[data.education];
     answer["time"] = answerTimes || {}; //各个章节答题用时
     answer["timeTotal"] = now - startTime; //答题总用时
     answer["birthday"] = data.birthday; //生日
@@ -733,13 +733,14 @@ Page({
     });
   },
   saveAnswerStorageSync: function () {
-    var data = this.data;
-    var activeChapterId = data.activeChapterId;
+    let data = this.data;
+    let activeChapterId = data.activeChapterId;
+    let chapterTime = {};
     if (activeChapterId != null) {
-      var chapterTime = data.chapterTime || {};
+      chapterTime = data.chapterTime || {};
       chapterTime[activeChapterId]["et"] = new Date().getTime();
     }
-    var d = {
+    let d = {
       chapter: data.chapter,
       chapterTime: chapterTime,
       pathIndex: data.pathIndex,
@@ -762,17 +763,17 @@ Page({
    * 进入章节作答
    */
   toAnswerIt: function (e, oldData) {
-    var that = this;
+    let that = this;
     if (answerTimeOut) {
       clearTimeout(answerTimeOut);
     }
-    var i = 0;
-    var data = that.data;
-    var chapterTime = data.chapterTime || {};
+    let i = 0;
+    let data = that.data;
+    let chapterTime = data.chapterTime || {};
     if (oldData) {
       chapterTime = oldData.chapterTime || {};
-      var oldChapter = oldData.chapter || [];
-      var oldIndex = 0;
+      let oldChapter = oldData.chapter || [];
+      let oldIndex = 0;
       oldChapter.forEach(function (node, index) {
         if (node.status == 1) {
           oldIndex = index;
@@ -782,19 +783,19 @@ Page({
     } else if (e) {
       i = e.currentTarget.dataset.index;
     }
-    var chapter = data.chapter || [];
-    var obj = chapter[i] || {};
+    let chapter = data.chapter || [];
+    let obj = chapter[i] || {};
     if (obj.status != 1) return; //非可作答
-    var ques = obj.ques;
+    let ques = obj.ques;
     if (!ques.length) return;
-    var type = obj.type;
-    var quesFull = data.paperList.ques;
-    var quesAll = [];
-    var showQues = [];
-    var swiperCurrent = 0;
-    var swiperCurrent1 = 0;
+    let type = obj.type;
+    let quesFull = data.paperList.ques;
+    let quesAll = [];
+    let showQues = [];
+    let swiperCurrent = 0;
+    let swiperCurrent1 = 0;
     quesFull.forEach(function (node) {
-      var qI = ques.indexOf(node.id);
+      let qI = ques.indexOf(node.id);
       if (qI != -1) {
         quesAll[qI] = node;
       }
@@ -810,16 +811,16 @@ Page({
           showQues.push(node);
         }
       } else {
-        var oldswiperCurrent = oldData.swiperCurrent;
+        let oldswiperCurrent = oldData.swiperCurrent;
         swiperCurrent1 = oldData.swiperCurrent1;
         swiperCurrent = oldswiperCurrent;
-        var i1 = oldswiperCurrent - i2;
+        let i1 = oldswiperCurrent - i2;
         if (i1 > -3 && i1 < 3) {
           showQues[i2] = node;
         }
       }
     });
-    var chapterTimeDown = obj.time * 60;
+    let chapterTimeDown = obj.time * 60;
     if (oldData && oldData.chapterTime && oldData.chapterTime[i]) {
       chapterTime[i] = oldData.chapterTime[i];
       // chapterTime[i]["st"] = chapterTime[i]["st"] + (new Date().getTime() - chapterTime[i]["et"]);
@@ -873,15 +874,15 @@ Page({
   },
   //定时保存作答
   saveDraftAnswer: function () {
-    var that = this;
+    let that = this;
     saveTimeOut && clearTimeout(saveTimeOut);
-    var data = that.data;
-    var activeChapterId = data.activeChapterId;
+    let data = that.data;
+    let activeChapterId = data.activeChapterId;
     if (activeChapterId != null) {
-      var chapterTime = data.chapterTime || {};
+      let chapterTime = data.chapterTime || {};
       chapterTime[activeChapterId]["et"] = new Date().getTime();
     }
-    var draftAnswer = {
+    let draftAnswer = {
       chapter: data.chapter,
       chapterTime: chapterTime,
       pathIndex: data.pathIndex,
@@ -918,14 +919,14 @@ Page({
   },
   getPhoneNumber: function (e) {
     const { name } = e.currentTarget.dataset;
-    var that = this;
+    let that = this;
     if (!that.data.getphoneNum || that.data.getphoneNum) {
-      var detail = e.detail;
-      var iv = detail.iv;
-      var encryptedData = detail.encryptedData;
+      let detail = e.detail;
+      let iv = detail.iv;
+      let encryptedData = detail.encryptedData;
       if (encryptedData) {
         //用户授权手机号
-        var userMsg = app.globalData.userMsg || {};
+        let userMsg = app.globalData.userMsg || {};
         userMsg["iv"] = iv;
         userMsg["encryptedData"] = encryptedData;
         app.doAjax({
@@ -952,13 +953,11 @@ Page({
     }
   },
   changeslider(e){
-    var d = e.currentTarget.dataset;
-    var index = d.index;
-    var i = d.i;
-    var list = this.data.quesAll;
-    var obj = list[index];
-    var userInputAnswer = e.detail.value;
-    var NUMBER_REG = new RegExp(/^[0-9]*$/);
+    let { index,i } = e.currentTarget.dataset;
+    let { answers,swiperCurrent,quesAll,lastAnswer } = this.data;
+    let obj = quesAll[index];
+    let userInputAnswer = e.detail.value;
+    let NUMBER_REG = new RegExp(/^[0-9]*$/);
     try{
       userInputAnswer = Number(userInputAnswer);
     }catch(e){
@@ -968,21 +967,19 @@ Page({
       app.toast("必须输入数字");
       return;
     }
-    var { answers,swiperCurrent,quesAll,lastAnswer } = this.data;
-    var totalScore = quesAll[swiperCurrent].totalScore;
+    let totalScore = quesAll[swiperCurrent].totalScore;
     answers[obj.id] = answers[obj.id] || [];
-    var answer = app.trimSpace(JSON.parse(JSON.stringify(answers[obj.id])));
+    let answer = app.trimSpace(JSON.parse(JSON.stringify(answers[obj.id])));
     answers[obj.id][i]= userInputAnswer ? Number(userInputAnswer) : 0;
-    var t = "showQues["+index+"].slider["+i+"]";
-    var a = "answers."+obj.id+"["+i+"]";
-    var score = 0;
-    console.log("swiperCurrent: ",swiperCurrent);
-    if( (swiperCurrent + 1) == quesAll.length ){
+    let t = "showQues["+index+"].slider["+i+"]";
+    let a = "answers."+obj.id+"["+i+"]";
+    let score = 0;
+
+    if( (swiperCurrent + 1) === quesAll.length ){
       answers[obj.id].forEach((v,k)=>{
         score = score + Number(v);
       });
-      if( score == totalScore ){
-        console.log("score === totalScore: ",score === totalScore);
+      if( score === Number(totalScore) ){
         this.setData({
           isFillAll: true,
           theFinalQuestionAnswer: answers[obj.id]
@@ -994,39 +991,15 @@ Page({
       }
     }
     this.setData({
-      [t]:userInputAnswer,
-      [a]:userInputAnswer,
+      [t]: userInputAnswer,
+      [a]: userInputAnswer,
     });
-    // if(obj.options.length>=2&&(i==(obj.options.length-2))){
-    //   var tmp = obj.totalScore;
-    //   for(let ti=0;ti<obj.slider.length-1;ti++){
-    //     tmp -= obj.slider[ti];
-    //   }
-    //   if(tmp>=0){
-    //     var t1="showQues["+index+"].slider["+(obj.options.length-1)+"]";
-    //     var a1 = "answers."+obj.id+"["+(obj.options.length-1)+"]";
-    //     this.setData({
-    //       [t1]:tmp,
-    //       [a1]:tmp,
-    //       isFillAll: true
-    //     })
-    //   }
-    //   else{
-    //     var t1="showQues["+index+"].slider["+(obj.options.length-1)+"]";
-    //     var a1 = "answers."+obj.id+"["+(obj.options.length-1)+"]";
-    //     this.setData({
-    //       [t1]:0,
-    //       [a1]:0,
-    //       isFillAll: true
-    //     })
-    //   }
-    // }
   },
   notFillAll: function (e) {
-    var that = this;
-    var data = that.data;
-    var swiperCurrent = +data.swiperCurrent;
-    var que = data.quesAll[swiperCurrent];
+    let that = this;
+    let data = that.data;
+    let swiperCurrent = +data.swiperCurrent;
+    let que = data.quesAll[swiperCurrent];
     return app.toast("各项分数之和必须等于"+que.totalScore+"分");
   },
   input: function (e) {

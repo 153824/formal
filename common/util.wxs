@@ -69,15 +69,23 @@ var hidePartPhoneNumber = function(phone){
   return targetPhone;
 };
 
-var toFix = function (value) {
-  return value.toFixed(2);
-}
+var toFix = function (value,tail=2) {
+  return value.toFixed(tail);
+};
 /**
  * @return
  */
 var ASCIIToChar = function(number){
   var options = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
   return options[number];
+};
+
+var isIncludes = function(array=[],item){
+  if( array.indexOf(item) > -1 ){
+    return true;
+  }else{
+    return false;
+  }
 };
 module.exports = {
   getMonthAndDayByFrag: getMonthAndDayByFrag,
@@ -86,5 +94,6 @@ module.exports = {
   saveDouble: saveDouble,
   hidePartPhoneNumber: hidePartPhoneNumber,
   ASCIIToChar: ASCIIToChar,
+  isIncludes: isIncludes,
   toFix: toFix
 };

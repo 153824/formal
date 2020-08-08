@@ -27,9 +27,11 @@
  * titleHeight: 系统状态栏高度
  * statusbarHeight: 小程序状态栏高度
  * windowHeight: 视口高度
+ * windowWidth: 视口宽度
  * screenHeight: 屏幕高度
  * pixelRate: dpi
  * eventId:  小神推模板ID
+ * assistant 面试助手
  * ********************************************************************************************************************/
 const ald = require('./utils/ald-stat.js');
 const qiniuUpload = require("./utils/qiniuUpload");
@@ -40,7 +42,7 @@ const debuggerQueue = []; // 用于判断请求时长
 qiniuUpload.init({
   region: 'SCN',
   domain: 'ihola.luoke101.com',
-  uptokenURL: 'https://admin.luoke101.com/hola/getQiNiuToken', //
+  uptokenURL: 'https://admin.luoke101.com/hola/getQiNiuToken',
   shouldUseQiniuFileName: false
 });
 
@@ -68,7 +70,8 @@ App({
     windowHeight: 0,
     screenHeight: 0,
     pixelRate: 0,
-    eventId: "5ea6b2b26df4251c4a09a4cc"
+    eventId: "5ea6b2b26df4251c4a09a4cc",
+    assistant: ["5efed573b1ef0200062a85f7"]
   },
   onLaunch: function(options) {
     var that = this;
@@ -151,6 +154,7 @@ App({
           this.globalData.statusbarHeight = statusbarHeight;
           this.globalData.titleHeight = titleHeight;
           this.globalData.windowHeight = windowHeight;
+          this.globalData.windowWidth = windowWidth;
           this.globalData.screenHeight = screenHeight;
           this.globalData.pixelRate = 750 / windowWidth;
         },
@@ -179,6 +183,7 @@ App({
           appid: that.globalData.appid,
           code: code
         },
+        noLoading: true,
         success: function(res) {
           that.globalData.userMsg = res.userMsg || {};
           var userData = res.data;
@@ -295,7 +300,8 @@ App({
     //request请求
     var that = this;
     var url = that.host + "/hola/" + params.url;
-    var urlArr = ["homePages","positionTags","reports","buyTickets"];
+
+    var urlArr = ["homePages","reports","buyTickets","positionTags"];
     if( urlArr.includes(params.url.split("/")[0]) ){
       url = that.host+ "/haola/" +params.url;
     }

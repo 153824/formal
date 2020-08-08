@@ -37,7 +37,7 @@
       <image class="rebtn" src="../img/guide/takephoto.png"></image>
       <text>重新拍摄</text>
     </view> -->
-<!--    &&education!=0-->
+    <!--    &&education!=0-->
 
     <!-- getphoneNum -->
     <block wx:if="{{ username && (education != -1) && getphoneNum && phoneNumber.length > 6 }}">
@@ -82,17 +82,30 @@
   </view>
 </view>
 <!-- 答题页面 -->
+<view class="skeleton-wrapper">
+  <van-skeleton row="17" loading="{{ loading }}">
+  </van-skeleton>
+</view>
+
 <view class="coverView" style="background-color:transparent;" wx:if="{{isChangeQue}}"></view>
-<view class="container font {{pathIndex==3?'':'pageHide'}}">
+<view wx:if="{{ !loading }}" class="container font {{pathIndex==3?'':'pageHide'}}">
   <view class="timebox" wx:if="{{chapterTimeDownFull}}">剩余时间：{{chapterTimeDownFull}}</view>
   <form bindsubmit="formSubmit" data-name="{{ paperList.setting.name1 }}">
     <view class="paper {{phoneModel ? 'isiphoneXpaper':'notiphoneXpaper'}}" style="top:{{chapterTimeDownFull?84:32}}rpx;">
       <swiper current="{{swiperCurrent1}}">
         <block wx:for="{{showQues}}" wx:for-index="quesindex" wx:for-item="quesitem" wx:key="unique">
-          <swiper-item catchtouchmove="pageTouch" wx:if="{{quesindex<(swiperCurrent+3)&&quesindex>(swiperCurrent-3)}}">
+          <swiper-item catchtouchmove="pageTouch" wx:if="{{quesindex<(swiperCurrent+3)&&quesindex>(swiperCurrent-3)}}" style="height: 99%;width: 99%;">
             <scroll-view scroll-y="true" wx:if="{{quesitem}}">
+              <view class="question-number-group">
+                <view class="current-question">
+                  <text>{{swiperCurrent + 1 >= 10 ? swiperCurrent + 1 : '0' + (swiperCurrent + 1) }}</text>
+                  <text style="display: inline-block;width: 68rpx;height: 8rpx;background:rgba(53,62,232,1);border-radius:2px;"></text>
+                </view>
+                <text class="fragment-question">/</text>
+                <text class="total-question">{{quesAll.length}}</text>
+              </view>
               <view class="paperhead">
-                <rich-text class="title" space="nbsp" nodes="<p>{{quesitem.maxChoose>1?html:''}}{{quesitem.stem}}</p>"></rich-text>
+                <rich-text class="title" space="nbsp" nodes="<p style='font-size: 30rpx;'>{{quesitem.maxChoose>1?multipleQuesHTML:''}}{{ quesitem.type == 3 ? percentQuesHTML:'' }}{{quesitem.stem}}</p>"></rich-text>
               </view>
               <view class="paperbody">
                 <view class="options">
@@ -100,18 +113,18 @@
                     <view wx:if="{{ quesitem.type!=3 }}" class="selectItem {{answers[quesitem.id][i]!=null?'active':''}}" bindtap="change" data-index="{{quesindex}}" data-i="{{i}}">
                       <label>
                         <text class="langoption">{{optionsAry[i]}}:</text>
-                        <rich-text class="optiontext" nodes="<p>{{item}}</p>"></rich-text>
+                        <rich-text class="optiontext" nodes="<p style='font-size: 30rpx;'>{{item}}</p>"></rich-text>
                       </label>
                     </view>
                     <view wx:else class="notborderview selectItem {{answers[quesitem.id][i]!=null?'active':''}}"  data-index="{{quesindex}}" data-i="{{i}}">
                       <view>
                         <text class="langoption">{{optionsAry[i]}}:</text>
-                        <rich-text class="optiontext" nodes="<p>{{item}}</p>"></rich-text>
+                        <rich-text class="optiontext" nodes="<p style='font-size: 30rpx;'>{{item}}</p>"></rich-text>
                       </view>
                       <view>
                         <input class="number_input" type="number" value="{{answers[quesitem.id][i]!=null?answers[quesitem.id][i]:0}}" bindinput="changeslider" bindconfirm="changeslider" data-i="{{i}}" data-index="{{quesindex}}" />
                         <view class="number_slider_wrap">
-                          <slider bindchanging="changeslider" bindchange="changeslider" data-i="{{i}}" data-index="{{quesindex}}" class="number_slider" min="0" max="{{quesitem.totalScore}}" step="{{quesitem.step}}"  value="{{answers[quesitem.id][i]!=null?answers[quesitem.id][i]:0}}" activeColor="#2672ff" block-size="16" block-color="#2672ff"/>
+                          <slider bindchanging="changeslider" bindchange="changeslider" data-i="{{i}}" data-index="{{quesindex}}" class="number_slider" min="0" max="{{quesitem.totalScore}}" step="{{quesitem.step}}"  value="{{answers[quesitem.id][i]!=null?answers[quesitem.id][i]:0}}" activeColor="#353EE8" block-size="10" block-color="#353EE8"/>
                           <view class="number_slider_tip">
                             <view class="number_slider_tip_item_center">
                               <view class="number_slider_tip_item" wx:for="{{quesitem.stepArr}}" wx:for-item="slider_item" wx:key="unique" wx:for-index="idx">
@@ -133,14 +146,18 @@
       </swiper>
     </view>
     <view class="bottombtn {{phoneModel ? 'isiphoneX':''}}">
-      <view class="btnprev" bindtap="prev" data-index="{{swiperCurrent}}">上一题</view>
-      <view>
-        <text>{{swiperCurrent + 1}} / {{quesAll.length}}</text>
+      <view class="btnprev" bindtap="prev" data-index="{{swiperCurrent}}" style="display: flex;align-items: center;">
+        <image src="../img/scroll-left.png" style="width: 48rpx;height: 48rpx;"></image>
+        上一题
       </view>
-      <view class="btnnext" data-index="{{swiperCurrent}}" wx:if="{{(swiperCurrent + 1) != quesAll.length}}" bindtap="next">下一题</view>
-      <button class="btnnext" data-n="finish" bindtap="notFillAll" wx:if="{{(swiperCurrent + 1) == quesAll.length&&!isFillAll}}">提交</button>
-      <button class="btnnext btnnextUp" wx:if="{{(swiperCurrent + 1) == quesAll.length&&isFillAll}}" form-type="submit">提交</button>
+      <view class="btnnext" data-index="{{swiperCurrent}}" style="display: flex;align-items: center;" wx:if="{{(swiperCurrent + 1) != quesAll.length}}" bindtap="next">
+        下一题
+        <image src="../img/scroll-right.png" style="width: 48rpx;height: 48rpx;"></image>
+      </view>
+      <button class="btnnext btn-no-all-fill" data-n="finish" bindtap="notFillAll" wx:if="{{(swiperCurrent + 1) == quesAll.length&&!isFillAll}}">提交</button>
+      <button class="btnnext btnnextUp btn-is-all-fill" wx:if="{{(swiperCurrent + 1) == quesAll.length&&isFillAll}}" form-type="submit">提交</button>
     </view>
   </form>
 </view>
+
 <wxs src="../common/util.wxs" module="util"></wxs>

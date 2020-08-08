@@ -1,7 +1,7 @@
 <!--common/meal/meal.wxml-->
-<view wx:if="{{ isShow }}" class="meal">
-    <view class="meal-info">
-        <image wx:if="{{ icon }}" class="meal-icon" style="{{ icon ? 'width:0;' : 'width:36rpx;' }}"></image>
+<view wx:if="{{ isShow }}" class="meal" style="justify-content: {{ align }}">
+    <view class="meal-info" style="margin:{{ subMargin.length > 0 ? subMargin : '' }};">
+        <image wx:if="{{ icon.length > 0 && icon != 'false' }}" src="{{ icon }}" class="meal-icon" style="{{ icon ? 'width:36rpx;margin-right: 20rpx;' : 'width:0rpx;' }}"></image>
         <text>{{ title }}</text>
     </view>
     <view class="meal-detail" style="display: flex;align-items: center;">

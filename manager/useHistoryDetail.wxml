@@ -44,8 +44,8 @@
                         </view>
                         <view class="rate">
                             <view class="rate-info">
-                                <text wx:if="{{ finishedItem.showSummaryTotal }}">{{ finishedItem.report.summary.title }}</text>
-                                <text wx:if="{{ finishedItem.showSummaryDefinition }}">{{ finishedItem.report.total1 }}分</text>
+                                <text wx:if="{{ finishedItem.report.showSummaryTotal }}">{{ finishedItem.report.summary.title }}</text>
+                                <text wx:if="{{ finishedItem.report.showSummaryDefinition }}">{{ finishedItem.report.total1 }}分</text>
                             </view>
                             <text>{{ util.getFullDateByFrag(finishedItem.time,"/",true) }}-{{ util.getHourAndMinByFrag(finishedItem.time,":",true) }}</text>
                         </view>

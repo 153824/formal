@@ -20,25 +20,48 @@
         <ticket></ticket>
       </button>
     </block>
-    <checkout title="报价方案" type="price" isShow="{{ !evaluation.freeEvaluation && !isIos }}" data="{{ evaluation.evaluationInfo }}"></checkout>
-    <checkout title="测评简介" type="introduction" info="{{ evaluation.evaluationInfo.synopsis }}"></checkout>
-    <checkout title="测量维度" type="dimension" list="{{ evaluation.evaluationInfo.measureDimension }}"></checkout>
-    <checkout title="适用场景" type="scenarios" list="{{ evaluation.evaluationInfo.scenario }}"></checkout>
-    <checkout title="报告示例" type="report" isShow="{{ evaluation.evaluationInfo.reportExample }}" info="{{ evaluation.evaluationInfo.reportExample }}" subtitle="{{ evaluation.evaluationInfo.name }}"></checkout>
-    <checkout title="例题" type="example" list="{{ evaluation.evaluationInfo.quesExamples }}"></checkout>
+    <!--面试助手判断逻辑-->
+    <block wx:if="{{ util.isIncludes(assistant,evaluation.evaluationInfo.id) }}">
+      <checkout title="助手简介" type="introduction" info="{{ evaluation.evaluationInfo.synopsis }}"></checkout>
+      <checkout title="助手可以帮你问" type="assistant" list="{{ evaluation.evaluationInfo.quesExamples }}"></checkout>
+    </block>
+    <block wx:else>
+      <checkout title="报价方案" type="price" isShow="{{ !evaluation.freeEvaluation && !isIos }}" data="{{ evaluation.evaluationInfo }}"></checkout>
+      <checkout title="测评简介" type="introduction" info="{{ evaluation.evaluationInfo.synopsis }}"></checkout>
+      <checkout title="测量维度" type="dimension" list="{{ evaluation.evaluationInfo.measureDimension }}"></checkout>
+      <checkout title="适用场景" type="scenarios" list="{{ evaluation.evaluationInfo.scenario }}"></checkout>
+      <checkout title="报告示例" type="report" isShow="{{ evaluation.evaluationInfo.reportExample }}" info="{{ evaluation.evaluationInfo.reportExample }}" subtitle="{{ evaluation.evaluationInfo.name }}"></checkout>
+      <checkout title="例题" type="example" list="{{ evaluation.evaluationInfo.quesExamples }}"></checkout>
+    </block>
   </view>
 </scroll-view>
-<!-- 免费测评的按钮组 -->
-<view class="button-group" wx:if="{{ evaluation.freeEvaluation }}">
-  <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}"  data-oldShareId="{{ oldShareId }}" data-id="{{ evaluation.evaluationInfo.id }}">
-    <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF" fontSize="32" fontWeight="600"></press>
+<block wx:if="{{ util.isIncludes(assistant,evaluation.evaluationInfo.id) }}">
+  <view class="button-group">
+    <view class="meal" bindtap="">
+      <meal isShow="{{ true }}" icon="../../img/station/meal/meal_icon.png@2x.png" title="定制个性化问题，开启候选人视频作答"
+            subtitle="➜" align="center" subMargin="0 20rpx 0 0">
+      </meal>
+    </view>
+    <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}"  data-oldShareId="{{ oldShareId }}" data-id="{{ evaluation.evaluationInfo.id }}">
+      <press title="自己测" bgColor="#FFFFFFFF" color="#353EE8FF" fontSize="32" fontWeight="600"></press>
+    </view>
+    <view class="gotodati-btn" bindtap="gotodati">
+      <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
+    </view>
   </view>
-  <view class="gotodati-btn" bindtap="gotodati">
-    <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
+</block>
+<block wx:else>
+  <!-- 免费测评的按钮组 -->
+  <view class="button-group" wx:if="{{ evaluation.freeEvaluation }}">
+    <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}"  data-oldShareId="{{ oldShareId }}" data-id="{{ evaluation.evaluationInfo.id }}">
+      <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF" fontSize="32" fontWeight="600"></press>
+    </view>
+    <view class="gotodati-btn" bindtap="gotodati">
+      <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
+    </view>
   </view>
-</view>
-<!-- 未购买过测评的按钮组且未买断 -->
-<view class="buy-group" wx:elif="{{ !evaluation.hadConsumed && !evaluation.buyoutInfo.hadBuyout }}">
+  <!-- 未购买过测评的按钮组且未买断 -->
+  <view class="buy-group" wx:elif="{{ !evaluation.hadConsumed && !evaluation.buyoutInfo.hadBuyout }}">
     <button class="meal meal-button" style="background-color: #FFF3E0FF;outline: none;border: none;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" >
       <meal isShow="{{ evaluation.isBeginner }}" title="新用户领券，免费体验测评" subIcon="../../img/newer-ticket.gif" subtitle="立即领券 >" icon="false"></meal>
     </button>
@@ -51,34 +74,35 @@
     <view wx:else bindtap="payForEvaluation">
       <press title="购买测评" fontSize="32" fontWeight="600"></press>
     </view>
-</view>
-<!-- 购买过测评券的按钮组且未买断 -->
-<view class="button-group" wx:elif="{{ evaluation.hadConsumed && !evaluation.buyoutInfo.hadBuyout }}">
-  <view wx:if="{{ isIos }}" class="meal" bindtap="buyByTicket">
-    <meal isShow="{{ !evaluation.buyoutInfo.hadBuyout }}" icon="false" title="剩余可用份数：{{ evaluation.availableCount }}" subtitle="{{ isIos ? '用券继续兑换' : '购买更多 >' }}"></meal>
   </view>
-  <view wx:else class="meal" bindtap="payForEvaluation">
-    <meal isShow="{{ !evaluation.buyoutInfo.hadBuyout }}" icon="false" title="剩余可用份数：{{ evaluation.availableCount }}" subtitle="{{ isIos ? '用券继续兑换' : '购买更多 >' }}"></meal>
+  <!-- 购买过测评券的按钮组且未买断 -->
+  <view class="button-group" wx:elif="{{ evaluation.hadConsumed && !evaluation.buyoutInfo.hadBuyout }}">
+    <view wx:if="{{ isIos }}" class="meal" bindtap="buyByTicket">
+      <meal isShow="{{ !evaluation.buyoutInfo.hadBuyout }}" icon="false" title="剩余可用份数：{{ evaluation.availableCount }}" subtitle="{{ isIos ? '用券继续兑换' : '购买更多 >' }}"></meal>
+    </view>
+    <view wx:else class="meal" bindtap="payForEvaluation">
+      <meal isShow="{{ !evaluation.buyoutInfo.hadBuyout }}" icon="false" title="剩余可用份数：{{ evaluation.availableCount }}" subtitle="{{ isIos ? '用券继续兑换' : '购买更多 >' }}"></meal>
+    </view>
+    <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}" data-oldShareId="{{ oldShareId }}" data-id="{{ evaluation.evaluationInfo.id }}">
+      <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF" fontSize="32" fontWeight="600"></press>
+    </view>
+    <view class="gotodati-btn" bindtap="gotodati">
+      <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
+    </view>
   </view>
-  <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}" data-oldShareId="{{ oldShareId }}" data-id="{{ evaluation.evaluationInfo.id }}">
-    <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF" fontSize="32" fontWeight="600"></press>
+  <!-- 买断 -->
+  <view class="button-group" wx:elif="{{ evaluation.buyoutInfo.hadBuyout }}">
+    <view class="meal" bindtap="payForEvaluation">
+      <meal isShow="{{ evaluation.buyoutInfo.hadBuyout }}" icon="false" title="有效期至：{{ isIos ? util.getFullDateByFrag(evaluation.buyoutInfo.expiryDate,'.',true) : util.getFullDateByFrag(evaluation.buyoutInfo.expiryDate,'.',true) }}" subtitle="{{ isIos ? '' : '续费' }}"></meal>
+    </view>
+    <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}"  data-oldShareId="{{ oldShareId }}" data-id="{{ evaluation.evaluationInfo.id }}">
+      <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF" fontSize="32" fontWeight="600"></press>
+    </view>
+    <view class="gotodati-btn" bindtap="gotodati">
+      <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
+    </view>
   </view>
-  <view class="gotodati-btn" bindtap="gotodati">
-    <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
-  </view>
-</view>
-<!-- 买断 -->
-<view class="button-group" wx:elif="{{ evaluation.buyoutInfo.hadBuyout }}">
-  <view class="meal" bindtap="payForEvaluation">
-    <meal isShow="{{ evaluation.buyoutInfo.hadBuyout }}" icon="false" title="有效期至：{{ isIos ? util.getFullDateByFrag(evaluation.buyoutInfo.expiryDate,'.',true) : util.getFullDateByFrag(evaluation.buyoutInfo.expiryDate,'.',true) }}" subtitle="{{ isIos ? '' : '续费' }}"></meal>
-  </view>
-  <view class="gotoguide-btn" bindtap="gotoguide" data-name="{{ evaluation.evaluationInfo.name }}"  data-oldShareId="{{ oldShareId }}" data-id="{{ evaluation.evaluationInfo.id }}">
-    <press title="{{ oldShareId ? '继续体验' : '自己测'}}" bgColor="#FFFFFFFF" color="#353EE8FF" fontSize="32" fontWeight="600"></press>
-  </view>
-  <view class="gotodati-btn" bindtap="gotodati">
-    <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
-  </view>
-</view>
+</block>
 <view wx:if="{{ payTrigger }}" class="new-pay-page">
   <view class="pay-title">
     <text>选择购买方式</text>

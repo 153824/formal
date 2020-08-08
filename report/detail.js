@@ -484,8 +484,12 @@ Page({
           })
         }
       });
+      this.getEvaluationQues();
     });
   },
+  /**
+   * 是否在团队里
+   */
   isInTeams: function(teamInfo){
     let { shareKey='' } = this.data;
     if (teamInfo && teamInfo.type == "noTeamMember") {
@@ -695,7 +699,9 @@ Page({
       url: '../store/store'
     });
   },
-
+  /**
+   * 分享
+   */
   onShareAppMessage: function (options) {
     const { id,userMsg,paper,sharePic } = this.data;
     const { globalData } = app;
@@ -705,7 +711,36 @@ Page({
       imageUrl: sharePic,
     }
   },
-
+  /**
+   * @Description: 获取题目
+   * @author: WE!D
+   * @name:
+   * @args:
+   * @return:
+   * @date: 2020/8/8
+  */
+  getEvaluationQues: function(){
+    const that = this;
+    const { paper } = this.data;
+    app.doAjax({
+      url: "paperQues",
+      method: "get",
+      data: {
+        id: paper.id
+      },
+      success: function (res) {
+        const { ques } = res;
+        const knowledgePoints = {};
+        ques.forEach((item,key)=>{
+          knowledgePoints[item.id] = item.knowledgePoints;
+        });
+        console.log(knowledgePoints);
+        that.setData({
+          knowledgePoints
+        })
+      }
+    });
+  },
   cardSwiper: debounce(function(e){
     this.setData({
       cardCur: e.detail.current

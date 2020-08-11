@@ -246,9 +246,10 @@ page{
 }
 
 .container .paper {
-  position: relative;
+  position: fixed;
   top: 32rpx;
-  margin: 0 auto;
+  left: 30px;
+  right: 30px;
   width: calc(100% - 60px) !important;
   /* height: 1000rpx; */
   border-radius: 20rpx;

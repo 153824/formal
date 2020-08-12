@@ -1,5 +1,0 @@
-<!--index/pcGetTickSuccess.wxml-->
-<view class="content">
-  <image src="../img/index/icon23.png"></image>
-  <view class="mind">领取成功，请返回电脑端进行体验</view>
-</view>

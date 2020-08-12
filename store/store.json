@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "测评商城",
-  "usingComponents": {
-    "change": "../common/change/change",
-    "skill": "../common/skill/skill"
-  }
-}

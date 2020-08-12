@@ -37,7 +37,7 @@
 </scroll-view>
 <block wx:if="{{ util.isIncludes(assistant,evaluation.evaluationInfo.id) }}">
   <view class="button-group">
-    <view class="meal" bindtap="">
+    <view class="meal" bindtap="servingTrigger">
       <meal isShow="{{ true }}" icon="../../img/station/meal/meal_icon.png@2x.png" title="定制个性化问题，开启候选人视频作答"
             subtitle="➜" align="center" subMargin="0 20rpx 0 0">
       </meal>

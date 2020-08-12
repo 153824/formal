@@ -34,6 +34,7 @@ page{
 }
 
 .use-history-content-wrapper{
+    margin-bottom: 59px;
     margin-top: 20rpx;
     font-size: 28rpx;
     border-top: 20rpx solid #07092208;

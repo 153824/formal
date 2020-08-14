@@ -52,7 +52,7 @@
     transition: all .1s;
 }
 .user-history{
-    padding: 0 40rpx;
+    z-index: 999999999;
 }
 .user-history-wrapper{
     padding: 40rpx 40rpx 0rpx 40rpx;
@@ -63,7 +63,7 @@
     color: #070922CC;
 }
 .user-history-child{
-    padding: 40rpx 0 40rpx 0;
+    padding: 40rpx 40rpx;
     border-bottom: 2rpx solid #0709221A;
 }
 .title{
@@ -223,4 +223,21 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
 }
 .evaluation-picker{
     margin-right: 20rpx;
+}
+@keyframes box-shadow-light {
+    0%{
+        box-shadow: 0 0 0rpx transparent;
+    }
+    50%{
+        box-shadow: 0 0rpx 20rpx rgba(53, 62, 232,.4);
+    }
+    100%{
+        box-shadow: 0 0 10rpx transparent;
+    }
+}
+.checked-report{
+    animation: box-shadow-light .5s ease-in-out;
+}
+.checked-use-history{
+    animation: box-shadow-light .5s ease-in-out;
 }

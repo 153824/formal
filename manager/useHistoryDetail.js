@@ -25,7 +25,14 @@ Page({
     ],
     checkedItem: 0,
     baseInfo: {},
-    imageTrigger: false
+    imageTrigger: false,
+    statusbarHeight: app.globalData.statusbarHeight,
+    titleHeight: app.globalData.titleHeight,
+    tarBarHeight: app.globalData.tarBarHeight,
+    pixelRatio: app.globalData.pixelRatio,
+    windowHeight: app.globalData.windowHeight,
+    screenHeight: app.globalData.screenHeight,
+    pixelRate: app.globalData.pixelRate
   },
 
   /**
@@ -34,7 +41,16 @@ Page({
   onLoad: function (options) {
     var that = this;
     const { sharePaperId,status } = options;
-    console.log("{ sharePaperId,status } = options", options);
+    console.log("app.globalData.pixelRate: ",app.globalData.pixelRate);
+    this.setData({
+      statusbarHeight: app.globalData.statusbarHeight,
+      titleHeight: app.globalData.titleHeight,
+      tarBarHeight: app.globalData.tarBarHeight,
+      pixelRatio: app.globalData.pixelRatio,
+      windowHeight: app.globalData.windowHeight,
+      screenHeight: app.globalData.screenHeight,
+      pixelRate: app.globalData.pixelRate
+    });
     app.doAjax({
       url: `sharePapers/batchDetail`,
       method: "get",

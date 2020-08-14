@@ -3,7 +3,7 @@
 <view class="use-history-detail">
     <view class="use-history-head-wrapper">
         <view class="cover">
-            <image src="{{ baseInfo.paper.smallImg }}"></image>
+            <image style="height: 168rpx;width: 168rpx;" src="{{ baseInfo.paper.smallImg }}"></image>
         </view>
         <view class="info">
             <view class="title">{{ baseInfo.paper.name }}</view>
@@ -32,7 +32,7 @@
                 </block>
             </view>
         </view>
-        <view class="content">
+        <view class="content" style="height: {{ windowHeight - 384/pixelRate - ( statusbarHeight + titleHeight ) }}px;">
             <!--完成测评开始-->
             <block wx:if="{{ checkedItem === 0 }}">
                 <block wx:if="{{ baseInfo.finishedCount > 0 }}">

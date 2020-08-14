@@ -5,6 +5,7 @@ page{
 .use-history-head-wrapper{
     display: flex;
     padding: 20rpx 0rpx 40rpx 40rpx;
+    height: 168rpx;
 }
 .cover{
 
@@ -34,8 +35,6 @@ page{
 }
 
 .use-history-content-wrapper{
-    margin-bottom: 59px;
-    margin-top: 20rpx;
     font-size: 28rpx;
     border-top: 20rpx solid #07092208;
     color: #07092299;
@@ -71,6 +70,7 @@ page{
 .content{
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
 }
 .content-child{
     display: flex;

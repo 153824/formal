@@ -16,8 +16,7 @@ Page({
     getInOnceAgainst: false,
     subscribe: false,
     giftTrigger: false,
-    buyByBuyout: true,
-    buyByCounts: false,
+    buyByCounts: true,
     buyByTicket: false,
     ticketCount: 1,
     assistant: app.globalData.assistant
@@ -243,9 +242,9 @@ Page({
       payTrigger: true
     })
   },
-  cancelPayForEvaluation: function(){
+  cancelPayForEvaluation: function(e){
     this.setData({
-      payTrigger: false
+      payTrigger: false,
     })
   },
   /**
@@ -668,7 +667,7 @@ Page({
             '测评名称': `名称: ${evaluationInfo.name}`
           });
         }catch (e) {
-    
+
         }
       },
       fail: function (err) {
@@ -772,17 +771,9 @@ Page({
       giftTrigger: true
     })
   },
-  /**按年买断*/
-  buyByBuyout: function () {
-    this.setData({
-      buyByBuyout: true,
-      buyByCounts: false
-    })
-  },
   buyByCounts: function () {
     this.setData({
-      buyByCounts: true,
-      buyByBuyout: false
+      buyByCounts: true
     })
   },
   servingTrigger: function () {

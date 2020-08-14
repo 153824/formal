@@ -7,6 +7,7 @@
     "ticket": "../common/ticket/ticket",
     "free": "../common/free/free",
     "serving": "../common/serving/serving",
-    "mask": "../common/mask/mask"
+    "mask": "../common/mask/mask",
+    "van-overlay": "../common/vant-weapp/dist/overlay/index"
   }
 }

@@ -1094,9 +1094,8 @@
   position: fixed;
   right: 0;
   left: 0;
-  bottom: 0;
+  bottom: -100%;
   padding: 60rpx 50rpx  24rpx 50rpx;
-  height: 880rpx;
   border-top-left-radius: 20rpx;
   border-top-right-radius: 20rpx;
   background-color: white;
@@ -1255,4 +1254,29 @@
   box-shadow: unset !important;
   outline: unset !important;
   border-radius: 0 !important;
+}
+.popup-new-pay-page{
+  animation: popup-new-pay-page 0.5s ease-in-out forwards;
+}
+.hide-new-pay-page{
+  animation: hide-new-pay-page 0.5s ease-in-out forwards;
+}
+@keyframes popup-new-pay-page {
+  from{
+    bottom: -100%;
+  }
+  to{
+    bottom: 0;
+  }
+}
+@keyframes hide-new-pay-page {
+  from{
+    bottom: 0;
+  }
+  to{
+    bottom: -100%;
+  }
+}
+.van-transition{
+  z-index: 999!important;
 }

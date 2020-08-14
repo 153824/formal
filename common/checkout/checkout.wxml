@@ -87,16 +87,20 @@
         <text class="line"></text>
         <text class="title-bg">Price</text>
     </view>
-    <view class="price-content">
+    <view wx:if="{{ !isIos }}" class="price-content">
         <view class="price-child price-child-by-count">
             <view class="buy">按份购买</view>
             <view>￥{{ data.price }}元/份</view>
         </view>
         <view class="price-child price-child-by-buyout">
             <view class="buy">按年买断</view>
-            <view wx:if="{{ data.buyoutPlans[0].price }}">￥{{ data.buyoutPlans[0].price }}元/年/不限量使用</view>
+            <view wx:if="{{ data.buyoutPlans[0].price }}">联系客服获取优惠报价</view>
             <view wx:else>即将推出，敬请期待</view>
         </view>
+    </view>
+    <view wx:else class="price-content price-content-ios" style="background-image: url('http://ihola.luoke101.com/ios-buyout-img.png')">
+        <view>由于相关政策规定</view>
+        <view>iOS 暂不支持显示报价方案</view>
     </view>
 </view>
 

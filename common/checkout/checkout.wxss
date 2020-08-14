@@ -178,3 +178,12 @@
 .price-child > view{
 
 }
+.price-content-ios{
+  position: inherit;
+  display: inherit;
+  justify-content: inherit;
+  width: 578rpx;
+  height: 88rpx;
+  padding: 34rpx 46rpx;
+  margin-left: -10rpx;
+}

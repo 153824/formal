@@ -57,8 +57,8 @@ App({
   isIos: false,
   qiniuUpload: qiniuUpload,
   isIphoneX: false,
-  host: "https://api.dev.luoke101.com",
-  // host: "https://h5.luoke101.com",
+  // host: "https://api.dev.luoke101.com",
+  host: "https://h5.luoke101.com",
   globalData: {
     appid: wx.getAccountInfoSync().miniProgram.appId,
     userInfo: null,
@@ -74,6 +74,9 @@ App({
     assistant: ["5efed573b1ef0200062a85f7"]
   },
   onLaunch: function(options) {
+    wx.hideTabBar({
+      animation: true
+    });
     var that = this;
     var referrerInfo = options.referrerInfo;
     var menuBtnObj = wx.getMenuButtonBoundingClientRect();

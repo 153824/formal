@@ -44,6 +44,7 @@
     }
   },
   "tabBar": {
+    "custom": false,
     "color": "#5C6171",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",

@@ -180,11 +180,21 @@
 
 }
 .price-content-ios{
-  position: inherit;
-  display: inherit;
-  justify-content: inherit;
-  width: 578rpx;
-  height: 88rpx;
-  padding: 34rpx 46rpx;
-  margin-left: -10rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 60rpx;
+  margin-left: -15rpx;
+  width: 670rpx;
+  height: 152rpx;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #353EE8FF;
+}
+.price-content-ios > view{
+  margin-left: 55rpx;
 }

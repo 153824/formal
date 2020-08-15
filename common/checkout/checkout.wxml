@@ -98,7 +98,7 @@
             <view wx:else>即将推出，敬请期待</view>
         </view>
     </view>
-    <view wx:else class="price-content price-content-ios" style="background-image: url('http://ihola.luoke101.com/ios-buyout-img.png')">
+    <view wx:else class="price-content-ios" style="background-image: url('http://ihola.luoke101.com/ios-buyout-img.png')">
         <view>由于相关政策规定</view>
         <view>iOS 暂不支持显示报价方案</view>
     </view>

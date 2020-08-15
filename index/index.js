@@ -12,23 +12,15 @@ Page({
     isIos: app.isIos,
     loading: true,
     loading2: true,
-    skeletonConfig: ["100%","100%","40%","100%","100%","100%","100%","100","100%","100%","100%","100%","100%","100%","100%",
-      "100%","60%"],
     mobile: "18559297592",
-    wechat: "haola72"
+    wechat: "haola72",
+    active: 0,
   },
   onLoad: function(options) {
-  },
-  onShow: function() {
+    wx.hideTabBar({
+      animation: true
+    });
     var that = this;
-    app.freeTickId = "";
-    if (!app.isLogin) {
-      app.checkUser = function() {
-        that.onShow();
-        app.checkUser = null;
-      };
-      return;
-    };
     var homePagesPromiseList = [],
         teamEvaluationPromiseList = [];
     const homePagesPromise = new Promise(function (resolve,reject) {
@@ -77,11 +69,30 @@ Page({
         column: targetColumn,
         loading: false
       });
+      setTimeout(()=>{
+        wx.showTabBar({
+          animation: true
+        });
+      },500);
     }).catch(err=>{
+      setTimeout(()=>{
+        wx.showTabBar();
+      },500);
       that.setData({
         loading: false
       })
     });
+  },
+  onShow: function() {
+    var that = this;
+    app.freeTickId = "";
+    if (!app.isLogin) {
+      app.checkUser = function() {
+        that.onShow();
+        app.checkUser = null;
+      };
+      return;
+    };
     /**
      * @Description: 专属测评
      * @author: WE!D
@@ -130,11 +141,7 @@ Page({
     this.title = this.selectComponent("#title");
     app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
   },
-  onHide: function () {
-    this.setData({
-      loading: true
-    })
-  },
+  onHide: function () {},
   onShareAppMessage(options) {
     return app.defaultShareObj;
   },

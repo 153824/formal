@@ -103,7 +103,8 @@
     </view>
   </view>
 </block>
-<van-overlay show="{{ payTrigger }}" bind:click="cancelPayForEvaluation">
+<block>
+  <van-overlay show="{{ payTrigger }}" bind:click="cancelPayForEvaluation" z-index="0"></van-overlay>
   <view wx:if="{{ payTrigger }}" class="new-pay-page {{ payTrigger ? 'popup-new-pay-page':'' }}">
     <view class="pay-title">
       <text>购买测评</text>
@@ -126,36 +127,36 @@
     </view>
     <view class="pay-group">
       <view wx:if="{{ buyByCounts }}" bindtap="payByCounts">
-        <press title="微信支付" fontSize="32" fontWeight="600" letterSpacing="2" shadow="0px 4px 8px 0px rgba(192,192,192,0.97)"></press>
+        <press title="微信支付" fontSize="32" fontWeight="600" letterSpacing="2" shadow=""></press>
       </view>
       <view bindtap="servingTrigger">
         <press title="对公转账" fontSize="32" color="#353EE8FF" bgColor="#fff" border="none" fontWeight="600" letterSpacing="2"></press>
       </view>
     </view>
   </view>
-</van-overlay>
-<!--<view wx:if="{{ payTrigger }}" class="mask {{ payTrigger ? '':'' }}" bindtap="cancelPayForEvaluation"></view>-->
-<van-overlay show="{{ buyByTicket }}" bind:click="cancelBuyByTicket">
+</block>
+<block>
+  <van-overlay show="{{ buyByTicket }}" bind:click="cancelBuyByTicket"></van-overlay>
   <view wx:if="{{ buyByTicket }}" class="pay-by-ticket-page {{ buyByTicket ? 'popup-new-pay-page':'' }}">
-  <view class="head-wrapper">
-    <view class="title-wrapper">
-      <text>{{ evaluation.evaluationInfo.name }}</text>
-      <text style="font-size: 24rpx;font-weight: initial;margin: 10rpx 0 10rpx 0;letter-spacing: 4rpx;color: rgba(0,0,0,.4)">{{ voucher }}张券可用于本测评</text>
+    <view class="head-wrapper">
+      <view class="title-wrapper">
+        <text>{{ evaluation.evaluationInfo.name }}</text>
+        <text style="font-size: 24rpx;font-weight: initial;margin: 10rpx 0 10rpx 0;letter-spacing: 4rpx;color: rgba(0,0,0,.4)">{{ voucher }}张券可用于本测评</text>
+      </view>
+      <image src="{{ evaluation.evaluationInfo.smallImg }}" style="width: 100rpx;height: 100rpx;background-color: #2f3038;border-radius: 10rpx;"></image>
     </view>
-    <image src="{{ evaluation.evaluationInfo.smallImg }}" style="width: 100rpx;height: 100rpx;background-color: #2f3038;border-radius: 10rpx;"></image>
-  </view>
-  <view class="operator-wrapper">
-    <view class="operator">
-      <view class="ticket-sub" bindtap="subTicket">-</view>
-      <input class="ticket-display" type="text" value="{{ ticketCount }}"/>
-      <view class="ticket-add" bindtap="addTicket">+</view>
+    <view class="operator-wrapper">
+      <view class="operator">
+        <view class="ticket-sub" bindtap="subTicket">-</view>
+        <input class="ticket-display" type="text" value="{{ ticketCount }}"/>
+        <view class="ticket-add" bindtap="addTicket">+</view>
+      </view>
+    </view>
+    <view bindtap="useticket">
+      <press title="{{ ticketCount ? '用券兑换'+ticketCount+'份' : '用券兑换' }}" height="90" fontSize="32" shadow="0px 4px 8px 0px rgba(192,192,192,0.97);"></press>
     </view>
   </view>
-  <view bindtap="useticket">
-    <press title="{{ ticketCount ? '用券兑换'+ticketCount+'份' : '用券兑换' }}" height="90" fontSize="32" shadow="0px 4px 8px 0px rgba(192,192,192,0.97);"></press>
-  </view>
-</view>
-</van-overlay>
+</block>
 <view wx:if="{{ giftTrigger }}" class="gift-container">
   <view class="image-container">
     <image src="http://ihola.luoke101.com/20200709145310.png" style="width: 675rpx;height: 855rpx;margin-top: 52rpx;" bindtap="buyByTicket"></image>

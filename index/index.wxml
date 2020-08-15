@@ -103,7 +103,7 @@
     <!--  <mask isShow="{{ loading1 }}"></mask>-->
     <serving mobile="{{ mobile }}" wechat="{{ wechat }}"></serving>
 </block>
-<view wx:if="{{ loading }}" class="skeleton-index-page-wrapper">
+<view wx:if="{{ loading }}" class="skeleton-index-page-wrapper" style="margin-top:{{ (statusbarHeight + titleHeight) }}px;">
     <view class="skeleton-banner-wrapper">
         <view class="skeleton-banner">
             <van-skeleton row="1"></van-skeleton>

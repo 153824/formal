@@ -712,7 +712,7 @@ Page({
     answer["username"] = data.username; //姓名
     answer["imgUrl"] = data.imgUrl; //头像
     app.doAjax({
-      url: "updateUserAnswer",
+      url: "sharePapers/updateUserAnswer",
       method: "POST",
       data: {
         id: data.id,
@@ -900,7 +900,7 @@ Page({
       swiperCurrent1: data.swiperCurrent1
     };
     app.doAjax({
-      url: "updateUserAnswer",
+      url: "sharePapers/updateUserAnswer",
       method: "POST",
       data: {
         id: data.id,

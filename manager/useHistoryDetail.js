@@ -174,7 +174,7 @@ Page({
     });
     return;
     app.doAjax({
-      url: 'toSharePaper',
+      url: 'sharePapers/toSharePaper',
       method: 'post',
       data: {
         id: that.data.paperid,

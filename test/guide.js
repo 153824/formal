@@ -8,7 +8,7 @@ Page({
     var userData = wx.getStorageSync("userInfo")
     var that = this;
     app.doAjax({
-      url: "getSharePaper",
+      url: "sharePapers/getSharePaper",
       data: {
         getOldPeopleMsg: true,
         id: option.id

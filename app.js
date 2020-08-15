@@ -57,6 +57,7 @@ App({
   isIos: false,
   qiniuUpload: qiniuUpload,
   isIphoneX: false,
+  // host: "http://192.168.0.101:3000",
   // host: "https://api.dev.luoke101.com",
   host: "https://h5.luoke101.com",
   globalData: {

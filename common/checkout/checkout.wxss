@@ -162,9 +162,10 @@
   top: 50%;
   transform: translate(0,-50%);
   height: 181rpx;
+  letter-spacing: 0;
 }
 .price-child-by-count{
-  left: 50rpx;
+  left: 44rpx;
 }
 .price-child-by-buyout{
   right: 50rpx;

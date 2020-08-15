@@ -108,7 +108,7 @@
     <view class="head">
         <text class="title">{{ title }}</text>
         <text class="line"></text>
-        <text class="title-bg">Assistant</text>
+        <text class="title-bg">Example</text>
     </view>
     <view class="example-content">
         <view class="example-child" wx:for="{{ list }}" wx:for-item="quesTypeitem" wx:for-index="quesTypeindex" wx:key="unique" data-i="{{quesTypeindex}}">

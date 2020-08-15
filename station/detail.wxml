@@ -22,8 +22,8 @@
     </block>
     <!--面试助手判断逻辑-->
     <block wx:if="{{ util.isIncludes(assistant,evaluation.evaluationInfo.id) }}">
-      <checkout title="助手简介" type="introduction" info="{{ evaluation.evaluationInfo.synopsis }}"></checkout>
-      <checkout title="助手可以帮你问" type="assistant" list="{{ evaluation.evaluationInfo.quesExamples }}"></checkout>
+      <checkout title="测评简介" type="introduction" info="{{ evaluation.evaluationInfo.synopsis }}"></checkout>
+      <checkout title="例题" type="assistant" list="{{ evaluation.evaluationInfo.quesExamples }}"></checkout>
     </block>
     <block wx:else>
       <checkout title="报价方案" type="price" isShow="{{ !evaluation.freeEvaluation }}" data="{{ evaluation.evaluationInfo }}"></checkout>

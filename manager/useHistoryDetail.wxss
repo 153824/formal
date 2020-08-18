@@ -31,7 +31,7 @@ page{
     margin: 10rpx 0 14rpx 0;
 }
 .code{
-    color: #353EE8FF;
+    color: rgba(53,62,232,1);
 }
 
 .use-history-content-wrapper{
@@ -45,7 +45,7 @@ page{
     justify-content: space-between;
     padding: 0 40rpx;
     height: 106rpx;
-    border-bottom: 2rpx solid #0709221A;
+    border-bottom: 2rpx solid rgba(7,9,34,0.1);
 }
 .nav > view{
     height: 90rpx;
@@ -61,7 +61,7 @@ page{
     display: inline-block;
     width: 80rpx;
     height: 4rpx;
-    background-color: #353EE8FF;
+    background-color: rgba(53,62,232,1);
     position: absolute;
     left: 50%;
     bottom: 0;

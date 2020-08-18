@@ -28,7 +28,7 @@
     font-size: 36rpx;
     font-weight: 500;
     color: #070922FF;
-    border-bottom: 4rpx solid #353EE8FF;
+    border-bottom: 4rpx solid rgba(53,62,232,1);
     padding-bottom: 12rpx;
     transition: all 0.1s;
 }
@@ -64,7 +64,7 @@
 }
 .user-history-child{
     padding: 40rpx 40rpx;
-    border-bottom: 2rpx solid #0709221A;
+    border-bottom: 2rpx solid rgba(7,9,34,0.1);
 }
 .title{
     display: flex;
@@ -83,7 +83,7 @@
 .info > view{
     margin: 10rpx 0;
     font-size: 28rpx;
-    color: #070922CC;
+    color: rgba(7, 9, 34, 0.8);
 }
 .evaluation-reports{
     margin-top: 40rpx;
@@ -229,7 +229,7 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
         box-shadow: 0 0 0rpx transparent;
     }
     50%{
-        box-shadow: 0 0rpx 20rpx rgba(53, 62, 232,.4);
+        box-shadow: 0 0rpx 20rpx rgba(53, 62, 232,.2);
     }
     100%{
         box-shadow: 0 0 10rpx transparent;

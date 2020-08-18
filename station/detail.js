@@ -19,13 +19,15 @@ Page({
     buyByCounts: true,
     buyByTicket: false,
     ticketCount: 1,
-    assistant: app.globalData.assistant
+    assistant: app.globalData.assistant,
+    isPC: false
   },
   onLoad: function(options) {
     var that = this;
     var { resubscribe='false' } = options;
     var userData = app.globalData.userInfo || wx.getStorageSync("userInfo");
     var isGetInAgainst = wx.getStorageSync('isGetInAgainst') || 'NO';
+    console.log("app.isPC: ",app.isPC);
     this.setData({
       isIos: app.isIos,
       teamRole: app.teamRole,
@@ -33,7 +35,8 @@ Page({
       evaluationId: options.id,
       getPhoneNum: true,
       resubscribe: resubscribe === 'true' ? true : false,
-      isGetInAgainst
+      isGetInAgainst,
+      isPC: app.isPC
     });
     if (app.isLogin) return;
     app.checkUser = function() {

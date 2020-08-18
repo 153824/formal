@@ -1163,7 +1163,7 @@
   font-size: 38rpx;
   font-weight: 600;
   text-align: center;
-  color: #353EE8FF;
+  color: rgba(53,62,232,1);
 }
 .total-counts > view{
   text-align: center;

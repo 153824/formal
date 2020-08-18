@@ -79,8 +79,8 @@
 					<image class="title-icon" src="../img/user/index/icon3.png"></image>
 				</view>
 				<view class="info">
-					<view>发放数量：<text style="color: #353EE8FF;">{{ item.totalCount }}</text>份</view>
-					<view>已完成数量：<text style="color: #353EE8FF;">{{ item.usedCount }}</text>份</view>
+					<view>发放数量：<text style="color: rgba(53,62,232,1);">{{ item.totalCount }}</text>份</view>
+					<view>已完成数量：<text style="color: rgba(53,62,232,1);">{{ item.usedCount }}</text>份</view>
 					<view>发放时间：{{ util.getFullDateByFrag(item.createdAt,'/',true) }} {{ util.getHourAndMinByFrag(item.createdAt,':',true) }}</view>
 				</view>
 			</view>

@@ -8,7 +8,7 @@
         <view class="info">
             <view class="title">{{ baseInfo.paper.name }}</view>
             <view class="count">
-                <text>发放数量：{{ baseInfo.batchCount }}份</text><text wx:if="{{ status == '3' }}" style="color: red;"> ( 已撤回{{ baseInfo.batchCount - baseInfo.finishedCount - baseInfo.receivedCount }}份 )</text>
+                <text>发放数量：{{ baseInfo.batchCount }}份</text><text wx:if="{{ status == '3' }}" style="color: rgba(255,0,0,1);"> ( 已撤回{{ baseInfo.batchCount - baseInfo.finishedCount - baseInfo.receivedCount }}份 )</text>
             </view>
             <view>
                 <text class="send-way">发放方式：二维码</text>

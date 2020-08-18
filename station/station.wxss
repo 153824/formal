@@ -15,7 +15,7 @@
   flex-direction: column;
   height: 100%;
   width: 204rpx;
-  background-color: #F2F2F4FF;
+  background-color: rgba(7,9,34,0.05);
 }
 
 .left-catalog-wrapper{
@@ -41,7 +41,7 @@
 
 .active {
   color: #070922CC;
-  background-color: #FFFFFFFF;
+  background-color: rgba(255,255,255,1);
   font-size: 32rpx;
   font-weight: 500;
   transition: all .1s;
@@ -95,7 +95,7 @@
 .skill-info > .more{
   font-size: 24rpx;
   font-weight: 500;
-  color: #353EE8FF;
+  color: rgba(53,62,232,1);
 }
 
 .child{

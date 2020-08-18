@@ -42,7 +42,7 @@ Component({
         success: function(ret) {
           if (ret.confirm) {
             app.doAjax({
-              url: 'sharePapers/cancelSharePaper',
+              url: 'cancelSharePaper',
               method: 'post',
               data: {
                 id: e.target.dataset.id

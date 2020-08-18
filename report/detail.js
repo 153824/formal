@@ -206,7 +206,7 @@ Page({
     let { userInfo } = app.globalData;
     let getReportPromise = new Promise((resolve, reject) => {
           app.doAjax({
-            url: "getReport",
+            url: "sharePapers/getReport",
             method: "get",
             data: {
               id: id,

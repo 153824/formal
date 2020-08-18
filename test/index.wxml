@@ -102,7 +102,7 @@
                   <text style="display: inline-block;width: 68rpx;height: 8rpx;background:rgba(53,62,232,1);border-radius:2px;"></text>
                 </view>
                 <text class="fragment-question">/</text>
-                <text class="total-question">{{quesAll.length}}</text>
+                <text class="total-question">{{quesAll.length >= 10 ? quesAll.length : '0' + (quesAll.length) }}</text>
               </view>
               <view class="paperhead">
                 <rich-text class="title" space="nbsp" nodes="<p style='font-size: 30rpx;'>{{quesitem.maxChoose>1?multipleQuesHTML:''}}{{ quesitem.type == 3 ? percentQuesHTML:'' }}{{quesitem.stem}}</p>"></rich-text>

@@ -441,7 +441,7 @@
         </view>
         <!-- <view style="opacity: 0;">1</view> -->
       </view>
-      <view class="content" wx:if="{{rule}}">{{(matchArr.type!=1||timeNormal!=1)?rule2:rule1}}</view>
+      <view class="content" wx:if="{{rule}}">{{(matchArr.type||timeNormal!=1)?rule2:rule1}}</view>
       <view class="title" style="margin-top:80rpx;" wx:if="{{ showReportUseInfo }}">
         <text class="underLineBg assessor-info">报告使用说明</text>
       </view>

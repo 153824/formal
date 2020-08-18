@@ -34,16 +34,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const { redirectToIndex,redirectReportId } = app.globalData;
-    if( redirectReportId ){
-      wx.navigateTo({
-        url: `../report/detail?id=${ app.globalData.redirectReportId }`,
-      });
-      this.setData({
-        loading: false,
-      });
-      app.globalData.redirectReportId = null;
-    }
     this.setData({
       statusbarHeight: app.globalData.statusbarHeight,
       titleHeight: app.globalData.titleHeight,
@@ -123,6 +113,16 @@ Page({
           });
         }
       })
+    }
+    const { redirectToIndex,redirectReportId } = app.globalData;
+    if( redirectReportId ){
+      wx.navigateTo({
+        url: `../report/detail?id=${ app.globalData.redirectReportId }`,
+      });
+      this.setData({
+        loading: false,
+      });
+      app.globalData.redirectReportId = null;
     }
   },
 

@@ -878,8 +878,9 @@ Page({
     saveTimeOut && clearTimeout(saveTimeOut);
     let data = that.data;
     let activeChapterId = data.activeChapterId;
+    let chapterTime = {};
     if (activeChapterId != null) {
-      let chapterTime = data.chapterTime || {};
+      chapterTime = data.chapterTime || {};
       chapterTime[activeChapterId]["et"] = new Date().getTime();
     }
     let draftAnswer = {

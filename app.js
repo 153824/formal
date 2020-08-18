@@ -60,7 +60,7 @@ App({
   isIphoneX: false,
   isPC: false,
   // host: "http://192.168.0.101:3000",
-  host: "https://api.dev.luoke101.com",
+  // host: "https://api.dev.luoke101.com",
   host: "https://h5.luoke101.com",
   globalData: {
     appid: wx.getAccountInfoSync().miniProgram.appId,
@@ -74,7 +74,8 @@ App({
     screenHeight: 0,
     pixelRate: 0,
     eventId: "5ea6b2b26df4251c4a09a4cc",
-    assistant: ["5efed573b1ef0200062a85f7"]
+    assistant: ["5efed573b1ef0200062a85f7"],
+    redirectReportId: null
   },
   onLaunch: function(options) {
     wx.hideTabBar({

@@ -149,6 +149,9 @@
   font-weight: 600;
   color: rgba(7,9,34,1);
   line-height: 40rpx;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .card-wrapper,.free-base-and-classic-table{

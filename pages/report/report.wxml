@@ -26,11 +26,6 @@
         <view class="box">
             <view class="title">
                 <text class="underLineBg assessor-info ">测评者信息</text>
-                <!-- <view class="showImg flex" bindtap="showBigImg" data-url="{{userMsg.imgUrl}}">
-                  <image src="{{userMsg.imgUrl}}" class="userImg"></image>
-        <text>查看照片</text>
-        <image src="../img/report/icon1.png" class="pointerImg"></image>
-      </view> -->
             </view>
             <view class="people flex">
                 <image src="{{userMsg.avatar||'./images/report@icon-avatar.png'}}" class="avatar"></image>
@@ -222,10 +217,6 @@
                     <view class="content" wx:if="{{item.lvDesc}}">
                         <rich-text nodes="<p>{{item.lvDesc||''}}</p>"></rich-text>
                     </view>
-                    <!-- 柱状图 -->
-                    <!-- <view class="chartImg" wx:if="{{item.chartType==2}}">
-                    <ec-canvas id="mychart{{index}}" canvas-id="mychartcanvas{{index}}" ec="{{getChartMsg}}"></ec-canvas>
-          </view> -->
                     <!-- 雷达图 -->
                     <view class="chartImg" wx:if="{{item.chartType!=1}}">
                         <ec-canvas id="mychart{{index}}" canvas-id="mychartcanvas{{index}}"
@@ -280,11 +271,6 @@
                                             <image src="./images/report@icon-arrow.png"></image>
                                         </block>
                                     </block>
-                                    <!--                <block wx:elif="{{ item.showSubScore === 'none' }}">-->
-                                    <!--                  <text style="color:{{node.color}};">{{node.lvName}}  {{util.saveDouble(node.av10)
-                                    }}分</text>-->
-                                    <!--                  <image src="../img/report/icon2.png"></image>-->
-                                    <!--                </block>-->
                                 </view>
                                 <view class="contentMsg" wx:if="{{node.active}}">
                                     <block wx:for="{{node.lvTexts}}" wx:key="unique" wx:for-item="n" wx:for-index="j">

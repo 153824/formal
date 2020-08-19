@@ -589,7 +589,7 @@ assessor-info
   width: 32rpx;
   height: 16rpx;
   position: relative;
-  top: 10rpx;
+  top: -25rpx;
   transform: rotate(-90deg);
 }
 

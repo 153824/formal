@@ -7,11 +7,97 @@
 - appid: `wx85cde7d3e8f3d949`
 
 ## 程序目录说明
-- `user` 用户相关的界面
-- `test` 测评答题操作相关、报告、分享等界面
-- `index` 首页
-- `store` 商城-目前仅存在sharePaper页面，新版迭代将优化
-- `station` 人岗匹配 
+```$xslt
+├─app.js
+├─app.json
+├─app.wxss
+├─config.js
+├─project.config.json
+├─README.md
+├─sitemap.json
+├─utils                             #通用函数库目录
+├─pages                             #小程序页面目录
+|   ├─user                          #用户中心
+|   |  ├─user.js
+|   |  ├─user.json
+|   |  ├─user.wxml
+|   |  ├─user.wxss
+|   |  ├─images
+|   |  ├─components                 #用户中心副页
+|   |  |     ├─ticket
+|   |  |     ├─teamTitle
+|   |  |     ├─teamTicket
+|   |  |     ├─teams
+|   |  |     ├─teamInvite
+|   |  |     ├─selTeamAdmin
+|   |  |     ├─myTeam
+|   |  |     ├─invoice
+|   |  |     ├─addGroup
+|   ├─station                        #人岗匹配
+|   |    ├─station.js
+|   |    ├─station.json
+|   |    ├─station.wxml
+|   |    ├─station.wxss
+|   |    ├─images
+|   |    ├─components                #人岗匹配副页
+|   |    |     ├─sharePaper
+|   |    |     ├─more
+|   |    |     ├─detail
+|   ├─report                         #测评报告
+|   |   ├─report.js
+|   |   ├─report.json
+|   |   ├─report.wxml
+|   |   ├─report.wxss
+|   |   ├─images
+|   |   ├─components                 #测评副页
+|   |   |     ├─shareReport
+|   ├─replying                       #作答中心
+|   |    ├─replying.js
+|   |    ├─replying.json
+|   |    ├─replying.wxml
+|   |    ├─replying.wxss
+|   |    ├─images
+|   |    ├─components                 #作答副页
+|   |    |     ├─guide
+|   |    |     ├─finish
+|   ├─manager                         #测评管理  
+|   |    ├─manager.js
+|   |    ├─manager.json
+|   |    ├─manager.wxml
+|   |    ├─manager.wxss
+|   |    ├─images
+|   |    ├─components                 #测评管理副页  
+|   |    |     ├─useHistoryDetail
+|   |    |     ├─evaluationReport
+|   ├─home
+|   |  ├─home.js
+|   |  ├─home.json
+|   |  ├─home.wxml
+|   |  ├─home.wxss
+|   |  ├─images
+├─images                              #公共图像资源
+|   ├─icon
+├─common                              #通用组件
+|   ├─webView.js
+|   ├─webView.json
+|   ├─webView.wxml
+|   ├─webView.wxss
+|   ├─vant-weapp
+|   ├─title
+|   ├─ticket
+|   ├─skill
+|   ├─serving
+|   ├─press
+|   ├─meal
+|   ├─mask
+|   ├─free
+|   ├─follow
+|   ├─empty
+|   ├─colorui
+|   ├─checkout
+|   ├─catalog
+|   ├─card
+```
 ## 自动构建
 
 - 代码的Push会自动推送钉钉群机器人

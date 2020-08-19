@@ -433,7 +433,7 @@
                     <view class="name">作答时长</view>
                     <view class="msg" wx:if="{{timeNormal==1}}">{{timeTotal}}分钟（正常）</view>
                     <view class="msg msg1" wx:else>异常</view>
-                    <image src="./images/report@icon-{{timeNormal?'success':'thinking'}}.png"></image>
+                    <image src="./images/report@icon-{{timeNormal==1?'success':'thinking'}}.png"></image>
                 </view>
                 <view class="item flex-main" wx:if="{{matchArr.show}}" bindtap="showDlg"
                       data-n="{{matchArr.type==1?'':'noMatchDlg'}}">
@@ -441,7 +441,7 @@
                     <view class="name">作答一致性</view>
                     <view class="msg" wx:if="{{matchArr.type==1}}">正常</view>
                     <view class="msg msg1" wx:else>异常</view>
-                    <image src="./images/report@icon-{{matchArr.type?'success':'thinking'}}.png"></image>
+                    <image src="./images/report@icon-{{matchArr.type==1?'success':'thinking'}}.png"></image>
                 </view>
                 <view class="item flex-main" wx:if="{{optionChoose}}" bindtap="showDlg" data-n="optionChooseDlg">
                     <view class="topView {{timeNormal==1?'':'topView1'}}"></view>

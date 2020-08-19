@@ -1,4 +1,4 @@
 <!--common/ticket/ticket.wxml-->
 <view class="ticket">
-    <image class="share-take" src="../{{ image }}" style="height: {{ height }};width: {{ width }};"></image>
+    <image class="share-take" src="{{ image }}" style="height: {{ height }};width: {{ width }};"></image>
 </view>

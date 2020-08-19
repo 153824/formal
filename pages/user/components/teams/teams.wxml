@@ -1,0 +1,83 @@
+<!--user/teams.wxml-->
+<view wx:if="{{oldTeamMsg}}" class="oldTeamMsg">
+    <!-- 旧企业认证信息 -->
+    <view class="title flex">
+        <image src="../../images/teams@icon-done.png"></image>
+        企业认证信息
+    </view>
+    <view style="height:20rpx;"></view>
+    <view class="item">
+        <view class="label">企业名称</view>
+        <view class="valueView">{{oldTeamMsg.name}}</view>
+    </view>
+    <view class="item">
+        <view class="label">所属行业</view>
+        <view class="valueView">{{oldTeamMsg.vocation}}</view>
+    </view>
+    <view class="item">
+        <view class="label">团队规模</view>
+        <view class="valueView">{{oldTeamMsg.memberNum}}</view>
+    </view>
+    <view class="takephotobtn" bindtap="reset">重新认证</view>
+</view>
+<view class="container font" wx:else>
+    <view class="header" wx:if="{{isNew}}">
+        <image src="../../images/teams@icon-background.png"></image>
+        <view class="headbox">
+            <view class="headboxtop">
+                <view class="headboxtoptext">企业认证</view>
+                <image src="../../images/teams@icon-cert-mark.png"></image>
+            </view>
+            <view class="headboxtoptext">领取专属权益</view>
+            <view class="headlist" bindtap="changePage" data-url="../teamTicket/teamTicket">
+                <view>5张通用测评兑换券</view>
+                <image src="../../images/teams@icon-left-arrow.png"></image>
+            </view>
+            <view class="headlist" bindtap="changePage" data-url="../teamTitle/teamTitle">
+                <view>专属测评封面</view>
+                <image src="../../images/teams@icon-left-arrow.png"></image>
+            </view>
+        </view>
+    </view>
+    <form bindsubmit="submit">
+        <view class="formbox">
+            <view class="formtext">企业名称</view>
+            <input name="companyname" placeholder="填写企业名称" placeholder-class="placeholder" value="{{companyname}}"
+                   bindinput="getcompanyname"></input>
+        </view>
+        <view class="formbox">
+            <view class="formtext">所属行业</view>
+            <picker mode="multiSelector" bindchange="vocationChange" bindcolumnchange="vocationColumnChange"
+                    value="{{selvocation}}" range="{{vocationAry}}">
+                <view class="picker">
+                    <text class="placeholder" wx:if="{{selvocation[1]==null}}">选择所属行业</text>
+                    <text wx:else>
+                        {{vocationAry[0][selvocation[0]]}}-{{vocationFullArr[selvocation[0]][selvocation[1]]}}
+                    </text>
+                </view>
+            </picker>
+        </view>
+        <view class="formbox formboxmargin">
+            <view class="formtext">团队规模</view>
+            <picker name="memberNum" mode="selector" value="{{memberNumValue}}" bindchange="memberNumChange"
+                    range="{{memberNumAry}}">
+                <view class="picker">
+                    <text class="placeholder" wx:if="{{!memberNumValue}}">选择团队人数</text>
+                    {{memberNumAry[memberNumValue]}}
+                </view>
+            </picker>
+        </view>
+        <view class="takephoto">
+            <view class="takephototext">请上传营业执照</view>
+            <view class="takephotobox" bindtap="takephoto">
+                <image wx:if="{{!imgurl}}" class="takeicon" src="../../images/teams@icon-upload.png"></image>
+                <view wx:if="{{!imgurl}}">点击上传营业执照</view>
+                <image class="photo" wx:if="{{imgurl}}" src="{{imgurl}}"></image>
+            </view>
+            <view wx:if="{{!imgurl||!companyname||selvocation[1]==null||!memberNumAry[memberNumValue]}}"
+                  class="graybtn">提交认证
+            </view>
+            <button class="takephotobtn" wx:else form-type="submit">提交认证</button>
+        </view>
+    </form>
+</view>

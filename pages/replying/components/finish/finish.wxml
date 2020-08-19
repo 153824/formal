@@ -1,0 +1,7 @@
+<!--test/finish.wxml-->
+<view class="pageView">
+  <image src="../../images/finish@icon-done-reply.png"></image>
+  <view class="mindMsg">您的作答结果已提交</view>
+  <view class="mindMsg">感谢您的参与</view>
+  <view class="reportBtn" bindtap="toReportDetail">查看报告详情</view>
+</view>

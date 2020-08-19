@@ -1,0 +1,135 @@
+<!--user/home.wxml-->
+<view class="container font" style="background-color: #fff;">
+    <view class="usermsg" data-url="">
+        <!-- 跳转个人信息查看界面 -->
+        <button wx:if="{{!userInfo.isBind}}" class="userInfoBtn" bindtap="showLoginDlg"></button>
+        <span style="position: relative;">
+          <image class="headerImage"
+                 src="{{userInfo.isBind?(userInfo.avatar||'./images/user@icon-avatar.png'):'./images/user@icon-avatar.png'}}"></image>
+          <view wx:if="{{teamRole==1&&userInfo.isBind}}" class="roleTxt">普通成员</view>
+          <view wx:if="{{teamRole==2&&userInfo.isBind}}" class="roleTxt">子管理员</view>
+          <view wx:if="{{teamRole==3&&userInfo.isBind}}" class="roleTxt">超级管理员</view>
+        </span>
+        <view class="usernanme">
+            <view class="fontbig" style="margin-left: -8rpx;">
+                {{userInfo.isBind?userInfo.nickname:"登录"}}
+            </view>
+            <view class="flex">
+                <view class="fontsmall flex-main">
+                    <text class="nameText">{{userInfo.isBind?(nowTeam.name||userInfo.userCompany.name):'登录以使用更多功能'}}
+                    </text>
+                    <text wx:if="{{teamList.length>1&&userInfo.isBind}}">切换</text>
+                    <image wx:if="{{teamList.length>1&&userInfo.isBind}}"
+                           src="./images/user@icon-arrow-fill.png"></image>
+                    <picker wx:if="{{teamList.length>1&&userInfo.isBind}}" class="selTeamPicker" bindchange="changeTeam"
+                            value="{{selTeam}}" range="{{teamNames}}">
+                        <view class="pickerView"></view>
+                    </picker>
+                </view>
+                <view class="outTeam" bindtap="outTeam" wx:if="{{teamId&&teamRole!=3&&userInfo.isBind}}">退出</view>
+            </view>
+        </view>
+    </view>
+    <button wx:if="{{!userInfo.isBind}}" class="userInfoBtn1" open-type="getUserInfo"
+            bindgetuserinfo="getUserInfo"></button>
+    <view class="footerbox" style="border-top: 10rpx solid rgb(242, 242, 242)">
+        <view class="boxlist" bindtap="changePage" data-n="teams" data-url="./components/teams/teams" wx:if="{{teamRole==3}}">
+            <view class="listleft">
+                <image src="./images/user@icon-company-cert.png"></image>
+                企业认证
+            </view>
+            <view class="listright golden">
+                <image wx:if="{{nowTeam.certConfig}}" style="height:28rpx;width:28rpx;margin-right:12rpx;"
+                       src="../../images/icon/icon@icon-success.png"></image>
+                <text wx:if="{{nowTeam.certConfig}}" style="color:#323541;">已认证</text>
+                <text wx:else style="color: #979BA9FF">认证送企业专属封面</text>
+                <image src="./images/user@icon-left-arrow.png"></image>
+            </view>
+        </view>
+        <view class="boxlist" bindtap="changePage" data-url="./components/myTeam/myTeam?id={{teamId}}" wx:if="{{teamRole==3}}">
+            <view class="listleft">
+                <image src="./images/user@icon-child-admin.png"></image>
+                子管理员设置
+            </view>
+            <view class="listright">与同事一起协同办公
+                <image src="./images/user@icon-left-arrow.png"></image>
+            </view>
+        </view>
+
+        <view class="boxlist flex" bindtap="changePage" data-url="./components/ticket/ticket" wx:if="{{teamRole!=1}}">
+            <view class="listleft flex-main">
+                <image src="./images/user@icon-team-ticket.png"></image>
+                团队卡券
+            </view>
+            <view class="listright">
+                <image src="./images/user@icon-left-arrow.png"></image>
+            </view>
+        </view>
+        <view class="boxlist flex" bindtap="changePage" data-url="./components/addGroup/addGroup">
+            <view class="listleft">
+                <image src="./images/user@icon-wechat.png"></image>
+                成为共创用户
+            </view>
+            <view class="listright">
+                <text class="golden">免费体验更多测评</text>
+                <image src="./images/user@icon-left-arrow.png"></image>
+            </view>
+        </view>
+        <view class="boxlist" bindtap="changePage" data-url="./components/invoice/invoice" wx:if="{{teamRole!=1}}">
+            <view class="listleft">
+                <image src="./images/user@icon-invoice-manage.png"></image>
+                发票管理
+            </view>
+            <view class="listright">
+                <image src="./images/user@icon-left-arrow.png"></image>
+            </view>
+        </view>
+    </view>
+</view>
+<view class="coverView" wx:if="{{showLogin||showDlg}}" bindtap="hideDlg"></view>
+<view class="loginDlg" wx:if="{{showLogin}}">
+    <view class="title">您还未登录</view>
+    <view class="dlgContent">
+        <text>请先登录再进行操作</text>
+        <image src="./images/user@icon-unlogin.png"></image>
+    </view>
+    <view class="dlgBottom flex">
+        <view class="noLogin btn" bindtap="hideLoginDlg">暂不登录</view>
+        <button class="toLogin btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo">立即登录</button>
+    </view>
+</view>
+<view class="dlg" wx:if="{{showDlg}}">
+    <view class="title">权限说明</view>
+    <view class="borderView"></view>
+    <view class="title1">超级管理员</view>
+    <view class="mind">测评购买、测评发放、查看、分享报告 、 企业认证、充值、组织管理</view>
+    <view class="title1">子管理员</view>
+    <view class="mind">购买、发放、体验测评、查看报告</view>
+    <view class="title1">普通成员</view>
+    <view class="mind">查看分享给自己的报告</view>
+</view>
+<view class="coverView" wx:if="{{ showServing }}" bindtap="hideServing"></view>
+<view class="dlg" wx:if="{{ showServing }}">
+    <view class="title">客服联系方式</view>
+    <view class="flex" style="text-align: left !important;">
+        <view class="flex-main">
+            <view class="callMobile">
+                <image src="./images/user@icon-call.png"></image>
+                点击拨打电话
+            </view>
+            <view class="kefuMobile" bindtap="callIt">{{ mobile }}</view>
+        </view>
+    </view>
+    <view class="borderView"></view>
+    <view class="flex" style="display: flex;">
+        <view class="flex-main">
+            <view class="callWX">
+                <image src="./images/user@icon-service-wechat.png"></image>
+                客服微信
+            </view>
+            <view class="kefuWX">{{ wechat }}</view>
+        </view>
+        <view class="copyBtn" bindtap="copyIt" style="display: inline-block;">复制微信号</view>
+    </view>
+    <view class="mind">添加时，请备注公司所属行业和规模</view>
+</view>

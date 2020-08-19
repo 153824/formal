@@ -1,0 +1,1103 @@
+<!--admins/report.wxml-->
+<block wx:if="{{ !(reportVersion || false ) }}">
+    <view wx:if="{{noTeamMember&&showPage}}" class="noTeamMemberView">
+        <image src="./images/report@icon-failed.png"></image>
+        <view class="mind">
+            <view>仅团队内部成员有权限访问该报告</view>
+            <view>请联系管理员{{teamAdminNickname?("："+teamAdminNickname):""}}添加</view>
+            <view class="back" bindtap="back">返回首页</view>
+        </view>
+    </view>
+    <view wx:elif="{{showPage}}">
+        <!-- 头部信息 -->
+        <view class="box0" style='padding: 36rpx  60rpx 48rpx 60rpx;background: #fff;'>
+            <view class="paperName">
+                <text class="underLineBg">{{paper.name}}</text>
+            </view>
+            <!-- <view class="mind">
+            <text>LINWEI等5人已读</text>
+          </view> -->
+            <view class="time">
+                <text>报告生成时间：{{finishTime}}</text>
+            </view>
+        </view>
+        <view class="spaceView" style="height:40rpx;"></view>
+        <!-- 用户信息 -->
+        <view class="box">
+            <view class="title">
+                <text class="underLineBg assessor-info ">测评者信息</text>
+                <!-- <view class="showImg flex" bindtap="showBigImg" data-url="{{userMsg.imgUrl}}">
+                  <image src="{{userMsg.imgUrl}}" class="userImg"></image>
+        <text>查看照片</text>
+        <image src="../img/report/icon1.png" class="pointerImg"></image>
+      </view> -->
+            </view>
+            <view class="people flex">
+                <image src="{{userMsg.avatar||'./images/report@icon-avatar.png'}}" class="avatar"></image>
+                <view class="flex-main">
+                    <view class="name">{{userMsg.username}}</view>
+                    <view class="otherMsg">
+                        <text>年龄：{{userMsg.age}}</text>
+                        <text>学历：{{userMsg.educationName}}</text>
+                    </view>
+                </view>
+            </view>
+            <view class="title" style="margin-top:100rpx;" wx:if="{{show}}">
+                <text class="underLineBg">{{name}}</text>
+            </view>
+            <view class="list flex" wx:if="{{show}}">
+                <view class="item flex-main" wx:if="{{showAnswerTime}}" bindtap="showDlg"
+                      data-n="{{timeNormal==1?'':'timeDlg'}}">
+                    <view class="topView {{timeNormal==1?'':'topView1'}}"></view>
+                    <view class="name">作答时长</view>
+                    <view class="msg" wx:if="{{timeNormal==1}}">{{timeTotal}}分钟（正常）</view>
+                    <view class="msg msg1" wx:else>异常</view>
+                    <image src="./images/report@icon-{{timeNormal==1?'success':'thinking'}}.png"></image>
+                </view>
+                <view class="item flex-main" wx:if="{{matchArr.show}}" bindtap="showDlg"
+                      data-n="{{matchArr.type==1?'':'noMatchDlg'}}">
+                    <view class="topView {{matchArr.type==1?'':'topView1'}}"></view>
+                    <view class="name">作答一致性</view>
+                    <view class="msg" wx:if="{{matchArr.type==1}}">正常</view>
+                    <view class="msg msg1" wx:else>异常</view>
+                    <image src="./images/report@icon-{{matchArr.type==1?'success':'thinking'}}.png"></image>
+                </view>
+                <view class="item flex-main" wx:if="{{optionChoose}}" bindtap="showDlg" data-n="optionChooseDlg">
+                    <view class="topView {{timeNormal==1?'':'topView1'}}"></view>
+                    <view class="name">选项分布</view>
+                    <view class="msg" wx:if="{{timeNormal==1}}">{{time}}分钟（正常）</view>
+                    <view class="msg msg1" wx:else>异常</view>
+                    <image src="./images/report@icon-{{timeNormal==1?'success':'thinking'}}.png"></image>
+                </view>
+                <!-- <view style="opacity: 0;">1</view> -->
+            </view>
+            <view class="content" wx:if="{{rule}}">{{(matchArr.type!=1||timeNormal!=1)?rule2:rule1}}</view>
+            <view class="title" style="margin-top:80rpx;" wx:if="{{ showReportUseInfo }}">
+                <text class="underLineBg">报告使用说明</text>
+            </view>
+            <view class="list flex" wx:if="{{ showReportUseInfo }}" style="padding-right: 54rpx;padding-left: 24rpx;">
+                <rich-text nodes="<p>{{reportUseInfoTxt||''}}</p>"></rich-text>
+            </view>
+        </view>
+        <!-- 报告总述 -->
+        <view class="box1" wx:if="{{showSummary}}">
+            <view class="title report-summary">
+                <text>{{summaryName}}</text>
+            </view>
+            <view class="flex temple"
+                  wx:if="{{showSummaryTotal||showSummaryDefinition||summaryRankOrg||summaryRankAll}}">
+                <view class="flex-main item noramlTem"
+                      style="padding:56rpx 0;{{!summaryRankOrg&&!summaryRankAll?'':'margin-right:20rpx;'}}{{(!summaryRankOrg||!summaryRankAll)&&!showSummaryTotal?'height:230rpx;':''}}"
+                      wx:if="{{showSummaryTotal||showSummaryDefinition||summary.title}}">
+                    <view style="width: 100%;">
+                        <view class="name" wx:if="{{showSummaryDefinition}}">{{summaryDefinitionName}}</view>
+                        <view class="lvName" wx:if="{{showSummaryDefinition}}">{{summary.title}}</view>
+                        <view class="lvNum" wx:if="{{showSummaryTotal}}">
+                            <canvas class="circle" canvas-id="canvasArcCir"></canvas>
+                            <view class="num">{{total1}}分</view>
+                        </view>
+                    </view>
+                </view>
+                <view class="flex-main noramlTem" wx:if="{{summaryRankOrg||summaryRankAll}}"
+                      style="{{((summaryRankOrg&&summaryRankAll)||showSummaryTotal)?'':'height:230rpx;'}}">
+                    <view class="topView item" wx:if="{{summaryRankOrg}}"
+                          style="{{!summaryRankAll&&showSummaryTotal?'height:476rpx;':''}}">
+                        <view>
+                            <progress percent="{{main.order||0}}" border-radius="6rpx" backgroundColor="#E7E7E7"
+                                      activeColor="#5960ED"></progress>
+                            <view class="orderView">组织排名：
+                                <text>{{main.order||0}}%</text>
+                            </view>
+                        </view>
+                    </view>
+                    <view style="height:16rpx;" wx:if="{{summaryRankAll&&summaryRankOrg}}"></view>
+                    <view class="bottomView item" wx:if="{{summaryRankAll}}"
+                          style="{{!summaryRankOrg&&showSummaryTotal?'height:476rpx;':''}}">
+                        <view>
+                            <progress percent="{{main.orderAll||32}}" border-radius="6rpx" backgroundColor="#E7E7E7"
+                                      activeColor="#5960ED"></progress>
+                            <view class="orderView">全国排名：
+                                <text>{{main.orderAll||32}}%</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="content" wx:if="{{summary.txt}}">
+                <rich-text nodes="{{summary.txt}}"></rich-text>
+            </view>
+        </view>
+        <!-- 模型介绍 -->
+        <view class="box2" wx:if="{{showModelIntroduce&&dimension['1']}}">
+            <view class="title">
+                <text class="underLineBg">{{modelIntroduceName||"模型介绍"}}</text>
+            </view>
+            <view class="content">
+                <rich-text nodes="<p>{{modelIntroduceTxt||''}}</p>"></rich-text>
+                <block wx:for="{{dimension}}" wx:key="unique">
+                    <view class="dimensionName">
+                        <text></text>
+                        {{item.name}}
+                    </view>
+                </block>
+            </view>
+        </view>
+        <!-- 维度分析 -->
+        <view class="box3" wx:if="{{showDimension}}">
+            <block wx:for="{{dimension}}" wx:key="unique">
+                <block wx:if="{{item.show&&item.name}}">
+                    <view class="spaceView" wx:if="{{index==1}}" style="height:20rpx;"></view>
+                    <view class="title">
+                        <text class="underLineBg">{{item.name}}</text>
+                    </view>
+                    <block wx:if="{{ item.showScore }}">
+                        <view class="flex total"
+                              wx:if="{{item.showTotal || item.rankOrg || item.rankAll || item.showScore !='none'}}">
+                            <view class="flex-main" wx:if="{{item.showTotal || item.showScore !='none'}}">
+                                <block wx:if="{{ item.showScore === 'total' }}">
+                                    <block wx:if="{{ item.scale === 'origin' }}">
+                                        <view class="name">得分</view>
+                                        <view class="lv">{{ util.saveDouble(item.originTotal) }}</view>
+                                    </block>
+                                    <block wx:if="{{ item.scale === 'decimal' }}">
+                                        <view class="name">得分</view>
+                                        <view class="lv">{{ util.saveDouble(item.decimalTotal) }}</view>
+                                    </block>
+                                    <block wx:elif="{{ item.scale === 'centesimal' }}">
+                                        <view class="name">得分</view>
+                                        <view class="lv">{{ util.saveDouble(item.centesimalTotal) }}</view>
+                                    </block>
+                                </block>
+                                <block wx:if="{{ item.showScore === 'average' }}">
+                                    <block wx:if="{{ item.scale === 'origin' }}">
+                                        <view class="name">得分</view>
+                                        <view class="lv">{{ util.saveDouble(item.sumOfAverage) }}</view>
+                                    </block>
+                                    <block wx:if="{{ item.scale === 'decimal' }}">
+                                        <view class="name">得分</view>
+                                        <view class="lv">{{ util.saveDouble(item.sumOfAverage10) }}</view>
+                                    </block>
+                                    <block wx:elif="{{ item.scale === 'centesimal' }}">
+                                        <view class="name">得分</view>
+                                        <view class="lv">{{ util.saveDouble(item.sumOfAverage100) }}</view>
+                                    </block>
+                                </block>
+                            </view>
+                            <view class="flex-main" wx:if="{{item.showLevel}}">
+                                <block>
+                                    <view class="name">等级</view>
+                                    <view class="lv">{{ item.lvName }}</view>
+                                </block>
+                            </view>
+                            <view class="flex-main" wx:if="{{item.rankOrg}}">
+                                <view class="name">组织排名</view>
+                                <view class="lv" wx:if="{{index==0}}">{{d1.order||0}}%</view>
+                                <view class="lv" wx:if="{{index==1}}">{{d2.order||0}}%</view>
+                            </view>
+                            <view class="flex-main" wx:if="{{item.rankAll}}">
+                                <view class="name">全国排名</view>
+                                <view class="lv" wx:if="{{index==0}}">{{d1.orderAll||0}}%</view>
+                                <view class="lv" wx:if="{{index==1}}">{{d2.orderAll||0}}%</view>
+                            </view>
+                        </view>
+                    </block>
+                    <block wx:else>
+                        <view class="flex total" wx:if="{{item.showTotal||item.rankOrg||item.rankAll}}">
+                            <view class="flex-main" wx:if="{{item.showTotal}}">
+                                <view class="name">得分</view>
+                                <view class="lv">{{ util.saveDouble(item.total2) }}</view>
+                            </view>
+                            <view class="flex-main" wx:if="{{item.rankOrg}}">
+                                <view class="name">组织排名</view>
+                                <view class="lv" wx:if="{{index==0}}">{{d1.order||0}}%</view>
+                                <view class="lv" wx:if="{{index==1}}">{{d2.order||0}}%</view>
+                            </view>
+                            <view class="flex-main" wx:if="{{item.rankAll}}">
+                                <view class="name">全国排名</view>
+                                <view class="lv" wx:if="{{index==0}}">{{d1.orderAll||0}}%</view>
+                                <view class="lv" wx:if="{{index==1}}">{{d2.orderAll||0}}%</view>
+                            </view>
+                        </view>
+                    </block>
+                    <view class="content" wx:if="{{item.lvDesc}}">
+                        <rich-text nodes="<p>{{item.lvDesc||''}}</p>"></rich-text>
+                    </view>
+                    <!-- 柱状图 -->
+                    <!-- <view class="chartImg" wx:if="{{item.chartType==2}}">
+                    <ec-canvas id="mychart{{index}}" canvas-id="mychartcanvas{{index}}" ec="{{getChartMsg}}"></ec-canvas>
+          </view> -->
+                    <!-- 雷达图 -->
+                    <view class="chartImg" wx:if="{{item.chartType!=1}}">
+                        <ec-canvas id="mychart{{index}}" canvas-id="mychartcanvas{{index}}"
+                                   ec="{{getChartMsg1}}"></ec-canvas>
+                    </view>
+                    <view style="height:50rpx;"
+                          wx:if="{{!item.lvDesc&&!item.showTotal&&!item.rankOrg&&!item.rankAll&&item.chartType==1}}"></view>
+                    <!-- 维度 -->
+                    <view class="list" wx:if="{{show&&item.showScore}}">
+                        <block wx:if="{{ item.showSubScore !== 'none' }}" wx:for="{{item.child}}" wx:key="unique"
+                               wx:for-item="node" wx:for-index="i">
+                            <view class="item">
+                                <view class="title {{node.active}}" bindtap="activeItem" data-index="{{index}}"
+                                      data-i="{{i}}">{{node.name}}：
+                                    <block wx:if="{{ item.showSubScore === 'total' }}">
+                                        <block wx:if="{{ item.subScale === 'origin' }}">
+                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
+                                                }} {{util.saveDouble(node.total)}}分
+                                            </text>
+                                            <image src="./images/report@icon-arrow.png"></image>
+                                        </block>
+                                        <block wx:elif="{{ item.subScale === 'decimal' }}">
+                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
+                                                }} {{util.saveDouble(node.total10)}}分
+                                            </text>
+                                            <image src="./images/report@icon-arrow.png"></image>
+                                        </block>
+                                        <block wx:elif="{{ item.subScale === 'centesimal' }}">
+                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
+                                                }} {{util.saveDouble(node.total100)}}分
+                                            </text>
+                                            <image src="./images/report@icon-arrow.png"></image>
+                                        </block>
+                                    </block>
+                                    <block wx:elif="{{ item.showSubScore === 'average' }}">
+                                        <block wx:if="{{ item.subScale === 'origin' }}">
+                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
+                                                }} {{util.saveDouble(node.average)}}分
+                                            </text>
+                                            <image src="./images/report@icon-arrow.png"></image>
+                                        </block>
+                                        <block wx:elif="{{ item.subScale === 'decimal' }}">
+                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
+                                                }} {{util.saveDouble(node.av10)}}分
+                                            </text>
+                                            <image src="./images/report@icon-arrow.png"></image>
+                                        </block>
+                                        <block wx:elif="{{ item.subScale === 'centesimal' }}">
+                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
+                                                }} {{util.saveDouble(node.av100)}}分
+                                            </text>
+                                            <image src="./images/report@icon-arrow.png"></image>
+                                        </block>
+                                    </block>
+                                    <!--                <block wx:elif="{{ item.showSubScore === 'none' }}">-->
+                                    <!--                  <text style="color:{{node.color}};">{{node.lvName}}  {{util.saveDouble(node.av10)
+                                    }}分</text>-->
+                                    <!--                  <image src="../img/report/icon2.png"></image>-->
+                                    <!--                </block>-->
+                                </view>
+                                <view class="contentMsg" wx:if="{{node.active}}">
+                                    <block wx:for="{{node.lvTexts}}" wx:key="unique" wx:for-item="n" wx:for-index="j">
+                                        <view class="title1">
+                                            <text class="underLineBg">{{n.title}}：</text>
+                                        </view>
+                                        <rich-text class="msg" nodes="<p>{{n.content}}</p>"></rich-text>
+                                    </block>
+                                </view>
+                            </view>
+                        </block>
+                    </view>
+                    <view class="list" wx:if="{{show&&!item.showScore}}">
+                        <block wx:for="{{item.child}}" wx:key="unique" wx:for-item="node" wx:for-index="i">
+                            <view class="item">
+                                <view class="title {{node.active}}" bindtap="activeItem" data-index="{{index}}"
+                                      data-i="{{i}}">{{node.name}}：
+                                    <text style="color:{{node.color}};">{{node.lvName}}
+                                        {{util.saveDouble(node.av10)}}分
+                                    </text>
+                                    <image src="./images/report@icon-arrow.png"></image>
+                                </view>
+                                <view class="contentMsg" wx:if="{{node.active}}">
+                                    <block wx:for="{{node.lvTexts}}" wx:key="unique" wx:for-item="n" wx:for-index="j">
+                                        <view class="title1">
+                                            <text class="underLineBg">{{n.title}}：</text>
+                                        </view>
+                                        <rich-text class="msg" nodes="<p>{{n.content}}</p>"></rich-text>
+                                    </block>
+                                </view>
+                            </view>
+                        </block>
+                    </view>
+                </block>
+            </block>
+        </view>
+        <view class="spaceView" wx:if="{{proposalShow}}" style="height:18rpx;"></view>
+        <!-- 建议 -->
+        <view class="box4" wx:if="{{proposalShow}}">
+            <scroll-view class="tabs" scroll-x>
+                <block wx:for="{{proposal}}" wx:key="unique">
+                    <view wx:if="{{item.show}}" class="item {{activeProposal==index?'active':''}}"
+                          bindtap="changeProposal" data-i="{{index}}">{{item.name}}
+                    </view>
+                </block>
+            </scroll-view>
+            <view class="content">
+                <view class="stars flex" wx:if="{{proposal[activeProposal].color}}">
+                    <image src="./images/report@{{proposal[activeProposal].color>=1?'icon-star-fill':'icon-star-outline'}}.png"></image>
+                    <image src="./images/report@{{proposal[activeProposal].color>=2?'icon-star-fill':'icon-star-outline'}}.png"></image>
+                    <image src="./images/report@{{proposal[activeProposal].color>=3?'icon-star-fill':'icon-star-outline'}}.png"></image>
+                    <image src="./images/report@{{proposal[activeProposal].color>=4?'icon-star-fill':'icon-star-outline'}}.png"></image>
+                    <image src="./images/report@{{proposal[activeProposal].color>=5?'icon-star-fill':'icon-star-outline'}}.png"></image>
+                </view>
+                <rich-text class="msg" style="{{proposal[activeProposal].color?'':'padding-top:0;'}}"
+                           nodes="<p>{{proposal[activeProposal].content}}</p>"></rich-text>
+            </view>
+        </view>
+        <!-- 分享报告按钮--普通团队成员无法使用该按钮 -->
+        <view class="botbox flex" wx:if="{{ command !== 'close' }}">
+            <button class="sharebtn" open-type="share" bindtap="" wx:if="{{teamRole!=1}}">
+                <image src="./images/report@icon-share.png"></image>
+                <text>分享报告</text>
+            </button>
+            <button class="toTestOther" id="TOT" bindtap="toTestOtherUser" wx:if="{{teamRole!=1}}">
+                <image src="./images/report@icon-invite.png"></image>
+                <text>测测别人</text>
+            </button>
+            <button class="toTestOther" bindtap="backToHome" wx:if="{{teamRole==1}}">
+                <image src="./images/report@icon-invite.png"></image>
+                <text>体验更多测评</text>
+            </button>
+        </view>
+        <!-- 申请查看报告 -->
+        <view wx:if="{{(applyStatus==1||applyStatus==2)&&teamRole!=1}}" class="hasApply">
+            <view class="msg">被测者申请查看报告结果，是否同意？</view>
+            <view class="agreenBtn flex" wx:if="{{applyStatus==1}}" bindtap="applyReportAudit">
+                <view class="flex-main"></view>
+                <image src="./images/report@icon-agreeing.png"></image>
+                同意
+                <view class="flex-main"></view>
+            </view>
+            <view class="agreenBtn agreenBtn1 flex" wx:if="{{applyStatus==2}}" bindtap="applyReportAudit">
+                <view class="flex-main"></view>
+                <image src="./images/report@icon-agreed.png"></image>
+                已同意
+                <view class="flex-main"></view>
+            </view>
+        </view>
+        <!-- 免责声明 -->
+        <view class="bottomMsg" wx:if="{{statement}}">
+            <rich-text nodes="{{statement}}"></rich-text>
+        </view>
+        <!-- 底部固定 -->
+        <view class="ownerMsg">©好啦测评</view>
+        <!-- 弹窗信息 -->
+        <view class="coverView" wx:if="{{showDlg}}" bindtap="hideDlg"></view>
+        <view class="dlgView" wx:if="{{showDlg}}">
+            <view wx:if="{{dlgName=='timeDlg'}}">
+                <image src="./images/report@icon-sandglass.png"></image>
+                <view class="msgTitle">作答时长：{{timeTotal}}分钟</view>
+                <view class="msg">{{answerTimeTxt}}</view>
+            </view>
+            <view wx:if="{{dlgName=='noMatchDlg'}}">
+                <image src="./images/report@icon-uniformity-unusual.png"></image>
+                <view class="msgTitle">作答一致性：异常</view>
+                <view class="msg">{{matchArr.txt}}</view>
+            </view>
+            <view wx:if="{{dlgName=='optionChooseDlg'}}">
+                <image src="./images/report@icon-spread-unusual.png"></image>
+                <view class="msgTitle">选项分布：异常</view>
+                <view class="msg">{{matchArr.txt}}</view>
+            </view>
+        </view>
+    </view>
+</block>
+<block wx:else>
+    <view wx:if="{{noTeamMember&&showPage}}" class="noTeamMemberView">
+        <image src="./images/report@icon-failed.png"></image>
+        <view class="mind">
+            <view>仅团队内部成员有权限访问该报告</view>
+            <view>请联系管理员{{teamAdminNickname?("："+teamAdminNickname):""}}添加</view>
+            <view class="back" bindtap="back">返回首页</view>
+        </view>
+    </view>
+    <view wx:elif="{{showPage}}">
+        <!-- 头部信息 -->
+        <view class="box0" style='padding: 36rpx  60rpx 48rpx 60rpx;background: #fff;'>
+            <view class="paperName">
+                <text class="underLineBg">{{paper.name}}</text>
+            </view>
+            <view class="time">
+                <text>报告生成时间：{{finishTime}}</text>
+            </view>
+        </view>
+        <view class="spaceView" style="height:40rpx;"></view>
+        <!-- 用户信息 -->
+        <view class="box">
+            <view class="title">
+                <text class="underLineBg assessor-info ">测评者信息</text>
+
+            </view>
+            <view class="people flex">
+                <image src="{{userMsg.avatar||'./images/report@icon-avatar.png'}}" class="avatar"></image>
+                <view class="flex-main">
+                    <view class="name">{{userMsg.username}}</view>
+                    <view class="otherMsg">
+                        <text>年龄：{{userMsg.age}}</text>
+                        <text>学历：{{userMsg.educationName}}</text>
+                    </view>
+                </view>
+            </view>
+            <view class="title" style="margin-top:100rpx;" wx:if="{{show}}">
+                <text class="underLineBg assessor-info">{{name}}</text>
+            </view>
+            <view class="list flex" wx:if="{{show}}">
+                <view class="item flex-main" wx:if="{{showAnswerTime}}" bindtap="showDlg"
+                      data-n="{{timeNormal==1?'':'timeDlg'}}">
+                    <view class="topView {{timeNormal==1?'':'topView1'}}"></view>
+                    <view class="name">作答时长</view>
+                    <view class="msg" wx:if="{{timeNormal==1}}">{{timeTotal}}分钟（正常）</view>
+                    <view class="msg msg1" wx:else>异常</view>
+                    <image src="./images/report@icon-{{timeNormal?'success':'thinking'}}.png"></image>
+                </view>
+                <view class="item flex-main" wx:if="{{matchArr.show}}" bindtap="showDlg"
+                      data-n="{{matchArr.type==1?'':'noMatchDlg'}}">
+                    <view class="topView {{matchArr.type==1?'':'topView1'}}"></view>
+                    <view class="name">作答一致性</view>
+                    <view class="msg" wx:if="{{matchArr.type==1}}">正常</view>
+                    <view class="msg msg1" wx:else>异常</view>
+                    <image src="./images/report@icon-{{matchArr.type?'success':'thinking'}}.png"></image>
+                </view>
+                <view class="item flex-main" wx:if="{{optionChoose}}" bindtap="showDlg" data-n="optionChooseDlg">
+                    <view class="topView {{timeNormal==1?'':'topView1'}}"></view>
+                    <view class="name">选项分布</view>
+                    <view class="msg" wx:if="{{timeNormal==1}}">{{time}}分钟（正常）</view>
+                    <view class="msg msg1" wx:else>异常</view>
+                    <image src="./images/report@icon-{{timeNormal==1?'success':'thinking'}}.png"></image>
+                </view>
+            </view>
+            <view class="content" wx:if="{{rule}}">{{(matchArr.type!=1||timeNormal!=1)?rule2:rule1}}</view>
+            <view class="title" style="margin-top:80rpx;" wx:if="{{ showReportUseInfo }}">
+                <text class="underLineBg assessor-info">报告使用说明</text>
+            </view>
+            <view class="list flex" wx:if="{{ showReportUseInfo }}" style="padding-right: 54rpx;padding-left: 24rpx;">
+                <rich-text nodes="<p>{{reportUseInfoTxt||''}}</p>"></rich-text>
+            </view>
+        </view>
+        <!-- 报告总述 -->
+        <view class="box1" wx:if="{{showSummary}}">
+            <view class="title report-summary">
+                <text>{{summaryName}}</text>
+            </view>
+            <view class="flex temple"
+                  wx:if="{{showSummaryTotal||showSummaryDefinition||summaryRankOrg||summaryRankAll}}">
+                <view class="flex-main item noramlTem"
+                      style="padding:56rpx 0;{{!summaryRankOrg&&!summaryRankAll?'':'margin-right:20rpx;'}}{{(!summaryRankOrg||!summaryRankAll)&&!showSummaryTotal?'height:230rpx;':''}}"
+                      wx:if="{{showSummaryTotal||showSummaryDefinition||summary.title}}">
+                    <view style="width: 100%;">
+                        <view class="name" wx:if="{{showSummaryDefinition}}">{{summaryDefinitionName}}</view>
+                        <view class="lvName" wx:if="{{showSummaryDefinition}}">{{summary.title}}</view>
+                        <view class="lvNum" wx:if="{{showSummaryTotal}}">
+                            <canvas class="circle" canvas-id="canvasArcCir"></canvas>
+                            <view class="num">{{util.toFix(generalTotal100,1)}}分</view>
+                        </view>
+                    </view>
+                </view>
+                <view class="flex-main noramlTem" wx:if="{{summaryRankOrg||summaryRankAll}}"
+                      style="{{((summaryRankOrg&&summaryRankAll)||showSummaryTotal)?'':'height:230rpx;'}}">
+                    <view class="topView item" wx:if="{{summaryRankOrg}}"
+                          style="{{!summaryRankAll&&showSummaryTotal?'height:476rpx;':''}}">
+                        <view>
+                            <progress percent="{{main.order||0}}" border-radius="6rpx" backgroundColor="#E7E7E7"
+                                      activeColor="#5960ED"></progress>
+                            <view class="orderView">组织排名：
+                                <text>{{main.order||0}}%</text>
+                            </view>
+                        </view>
+                    </view>
+                    <view style="height:16rpx;" wx:if="{{summaryRankAll&&summaryRankOrg}}"></view>
+                    <view class="bottomView item" wx:if="{{summaryRankAll}}"
+                          style="{{!summaryRankOrg&&showSummaryTotal?'height:476rpx;':''}}">
+                        <view>
+                            <progress percent="{{main.orderAll||32}}" border-radius="6rpx" backgroundColor="#E7E7E7"
+                                      activeColor="#5960ED"></progress>
+                            <view class="orderView">全国排名：
+                                <text>{{main.orderAll||32}}%</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="content" wx:if="{{summary.txt}}">
+                <rich-text nodes="{{summary.txt}}"></rich-text>
+            </view>
+        </view>
+        <!-- 模型介绍 -->
+        <view class="box2" wx:if="{{showModelIntroduce&&dimension['1']}}">
+            <view class="title">
+                <text class="underLineBg assessor-info">{{modelIntroduceName||"模型介绍"}}</text>
+            </view>
+            <view class="content">
+                <rich-text nodes="<p>{{modelIntroduceTxt||''}}</p>"></rich-text>
+                <block wx:for="{{dimension}}" wx:key="unique">
+                    <view class="dimensionName">
+                        <text></text>
+                        {{item.name}}
+                    </view>
+                </block>
+            </view>
+        </view>
+        <!-- 维度分析 -->
+        <view class="box3" wx:if="{{showDimension}}">
+            <block wx:for="{{dimension}}" wx:key="unique">
+                <block wx:if="{{item.show&&item.name}}">
+                    <view class="spaceView" wx:if="{{index==1}}" style="height:20rpx;"></view>
+                    <view class="title">
+                        <text class="underLineBg assessor-info">{{item.name}}</text>
+                    </view>
+                    <block wx:if="{{ item.showScore }}">
+                        <view class="flex total"
+                              wx:if="{{item.showTotal || item.rankOrg || item.rankAll || item.showScore !='none'}}">
+                            <view class="flex-main" wx:if="{{item.showTotal || item.showScore !='none'}}">
+                                <block wx:if="{{ item.showScore === 'total' }}">
+                                    <block wx:if="{{ item.scale === 'origin' }}">
+                                        <view class="name">得分</view>
+                                        <view class="lv">{{ util.saveDouble(item.originTotal) }}</view>
+                                    </block>
+                                    <block wx:if="{{ item.scale === 'decimal' }}">
+                                        <view class="name">得分</view>
+                                        <view class="lv">{{ util.saveDouble(item.decimalTotal) }}</view>
+                                    </block>
+                                    <block wx:elif="{{ item.scale === 'centesimal' }}">
+                                        <view class="name">得分</view>
+                                        <view class="lv">{{ util.saveDouble(item.centesimalTotal) }}</view>
+                                    </block>
+                                </block>
+                                <block wx:if="{{ item.showScore === 'average' }}">
+                                    <block wx:if="{{ item.scale === 'origin' }}">
+                                        <view class="name">得分</view>
+                                        <view class="lv">{{ util.saveDouble(item.sumOfAverage) }}</view>
+                                    </block>
+                                    <block wx:if="{{ item.scale === 'decimal' }}">
+                                        <view class="name">得分</view>
+                                        <view class="lv">{{ util.saveDouble(item.sumOfAverage10) }}</view>
+                                    </block>
+                                    <block wx:elif="{{ item.scale === 'centesimal' }}">
+                                        <view class="name">得分</view>
+                                        <view class="lv">{{ util.saveDouble(item.sumOfAverage100) }}</view>
+                                    </block>
+                                </block>
+                            </view>
+                            <view class="flex-main" wx:if="{{item.showLevel}}">
+                                <block>
+                                    <view class="name">等级</view>
+                                    <view class="lv">{{ item.lvName }}</view>
+                                </block>
+                            </view>
+                            <view class="flex-main" wx:if="{{item.rankOrg}}">
+                                <view class="name">组织排名</view>
+                                <view class="lv" wx:if="{{index==0}}">{{d1.order||0}}%</view>
+                                <view class="lv" wx:if="{{index==1}}">{{d2.order||0}}%</view>
+                            </view>
+                            <view class="flex-main" wx:if="{{item.rankAll}}">
+                                <view class="name">全国排名</view>
+                                <view class="lv" wx:if="{{index==0}}">{{d1.orderAll||0}}%</view>
+                                <view class="lv" wx:if="{{index==1}}">{{d2.orderAll||0}}%</view>
+                            </view>
+                        </view>
+                    </block>
+                    <block wx:else>
+                        <view class="flex total" wx:if="{{item.showTotal||item.rankOrg||item.rankAll}}">
+                            <view class="flex-main" wx:if="{{item.showTotal}}">
+                                <view class="name">得分</view>
+                                <view class="lv">{{ util.saveDouble(item.total2) }}</view>
+                            </view>
+                            <view class="flex-main" wx:if="{{item.rankOrg}}">
+                                <view class="name">组织排名</view>
+                                <view class="lv" wx:if="{{index==0}}">{{d1.order||0}}%</view>
+                                <view class="lv" wx:if="{{index==1}}">{{d2.order||0}}%</view>
+                            </view>
+                            <view class="flex-main" wx:if="{{item.rankAll}}">
+                                <view class="name">全国排名</view>
+                                <view class="lv" wx:if="{{index==0}}">{{d1.orderAll||0}}%</view>
+                                <view class="lv" wx:if="{{index==1}}">{{d2.orderAll||0}}%</view>
+                            </view>
+                        </view>
+                    </block>
+                    <view class="content" wx:if="{{item.lvDesc}}">
+                        <rich-text nodes="<p>{{item.lvDesc||''}}</p>"></rich-text>
+                    </view>
+                    <!-- 雷达图 -->
+                    <view class="chartImg" wx:if="{{item.chartType!=1}}">
+                        <ec-canvas id="mychart{{index}}" canvas-id="mychartcanvas{{index}}"
+                                   ec="{{getChartMsg1}}"></ec-canvas>
+                    </view>
+                    <view style="height:50rpx;"
+                          wx:if="{{!item.lvDesc&&!item.showTotal&&!item.rankOrg&&!item.rankAll&&item.chartType==1}}"></view>
+                    <!-- 维度 -->
+                    <view class="list" wx:if="{{show&&item.showScore}}">
+                        <block wx:if="{{ item.showSubScore !== 'none' }}" wx:for="{{item.subclass}}" wx:key="unique"
+                               wx:for-item="node" wx:for-index="i">
+                            <view class="item">
+                                <view class="title {{node.active}}" bindtap="activeNewItem" data-index="{{index}}"
+                                      data-i="{{i}}">{{node.name}}：
+                                    <block wx:if="{{ item.showSubScore === 'total' }}">
+                                        <block wx:if="{{ item.subScale === 'origin' }}">
+                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
+                                                }} {{util.saveDouble(node.subTotal)}}分
+                                            </text>
+                                            <image src="./images/report@icon-arrow.png"></image>
+                                        </block>
+                                        <block wx:elif="{{ item.subScale === 'decimal' }}">
+                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
+                                                }} {{util.saveDouble(node.subTotal10)}}分
+                                            </text>
+                                            <image src="./images/report@icon-arrow.png"></image>
+                                        </block>
+                                        <block wx:elif="{{ item.subScale === 'centesimal' }}">
+                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
+                                                }} {{util.saveDouble(node.subTotal100)}}分
+                                            </text>
+                                            <image src="./images/report@icon-arrow.png"></image>
+                                        </block>
+                                    </block>
+                                    <block wx:elif="{{ item.showSubScore === 'average' }}">
+                                        <block wx:if="{{ item.subScale === 'origin' }}">
+                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
+                                                }} {{util.saveDouble(node.average)}}分
+                                            </text>
+                                            <image src="./images/report@icon-arrow.png"></image>
+                                        </block>
+                                        <block wx:elif="{{ item.subScale === 'decimal' }}">
+                                            <text style="color:{{node.lvArr[node.lv].color}};">{{ item.showSubLevel ?
+                                                node.lvName : "" }} {{util.saveDouble(node.average10)}}分
+                                            </text>
+                                            <image src="./images/report@icon-arrow.png"></image>
+                                        </block>
+                                        <block wx:elif="{{ item.subScale === 'centesimal' }}">
+                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
+                                                }} {{util.saveDouble(node.average100)}}分
+                                            </text>
+                                            <image src="./images/report@icon-arrow.png"></image>
+                                        </block>
+                                    </block>
+                                </view>
+                                <view class="contentMsg" wx:if="{{node.active}}">
+                                    <block wx:for="{{node.lvTexts}}" wx:key="unique" wx:for-item="n" wx:for-index="j">
+                                        <view class="title1">
+                                            <text class="underLineBg">{{n.title}}：</text>
+                                        </view>
+                                        <rich-text class="msg" nodes="<p>{{n.content}}</p>"></rich-text>
+                                    </block>
+                                </view>
+                            </view>
+                        </block>
+                    </view>
+                    <view class="list" wx:if="{{show&&!item.showScore}}">
+                        <block wx:for="{{item.child}}" wx:key="unique" wx:for-item="node" wx:for-index="i">
+                            <view class="item">
+                                <view class="title {{node.active}}" bindtap="activeItem" data-index="{{index}}"
+                                      data-i="{{i}}">{{node.name}}：
+                                    <text style="color:{{node.color}};">{{node.lvName}}
+                                        {{util.saveDouble(node.av10)}}分
+                                    </text>
+                                    <image src="./images/report@icon-arrow.png"></image>
+                                </view>
+                                <view class="contentMsg" wx:if="{{node.active}}">
+                                    <block wx:for="{{node.lvTexts}}" wx:key="unique" wx:for-item="n" wx:for-index="j">
+                                        <view class="title1">
+                                            <text class="underLineBg">{{n.title}}：</text>
+                                        </view>
+                                        <rich-text class="msg" nodes="<p>{{n.content}}</p>"></rich-text>
+                                    </block>
+                                </view>
+                            </view>
+                        </block>
+                    </view>
+                </block>
+            </block>
+        </view>
+        <view class="spaceView" wx:if="{{proposalShow}}" style="height:18rpx;"></view>
+        <!-- 作答记录 -->
+        <view wx:if="{{ showRespRecord }}" class="report-analyse">
+            <view class="title">
+                <text>{{ respRecordName }}</text>
+            </view>
+            <view class="question-scroll-box">
+                <swiper class="card-swiper question-swiper" bindchange="cardSwiper" current="{{ cardCur }}">
+                    <swiper-item wx:for="{{ responseRecord }}" wx:for-item="recordItem" wx:key="unique"
+                                 class="{{ cardCur === index ? 'cur':'' }}">
+                        <view class="question-child swiper-item question-item">
+                            <view class="question-stem" style="display: block;">
+                                <title wx:if="{{ recordItem.choiceType === 'multiple' }}"
+                                       style="font-size: 30rpx;font-weight: 600;color: #353EE8;">【多选题】</title>{{ index+1
+                                }}.{{ recordItem.stem }}
+                            </view>
+                            <!--单选题-未配置对错-题目-->
+                            <view wx:if="{{ recordItem.choiceType === 'single' && recordItem.correctIdx.length <= 0  }}"
+                                  class="question-options">
+                                <view wx:for="{{ recordItem.options }}" wx:for-item="optionItem"
+                                      wx:for-index="optionIndex" wx:key="unique" class="question-options-child">
+                                    <title class="option-char {{ util.isIncludes(recordItem.respondIdx,optionIndex) ? 'user-checked-char' : '' }}">
+                                        {{ util.ASCIIToChar(optionIndex) }}</title>
+                                    <title class="option-word {{ util.isIncludes(recordItem.respondIdx,optionIndex) ? 'user-checked-word' : '' }}">
+                                        {{ optionItem }}</title>
+                                </view>
+                                <title wx:if="{{ false }}" class="compare">
+                                    正确答案:
+                                    <block wx:for="{{ recordItem.correctIdx }}" wx:for-item="correctItem">
+                                        {{util.ASCIIToChar(correctItem)}}
+                                    </block>
+                                    <text></text>
+                                    用户选择:
+                                    <block wx:for="{{ recordItem.respondIdx }}" wx:for-item="respondItem"
+                                           wx:key="unique">{{util.ASCIIToChar(respondItem)}}
+                                    </block>
+                                </title>
+                                <block wx:if="{{ knowledgePoints[recordItem.qId].length > 0 }}">
+                                    <view class="hr question-options-child"></view>
+                                    <view class="question-options-child knowledge-point advise-to-ques">
+                                        <view class="knowledge">
+                                            <title>知识点</title>
+                                            <view class="tag-wrapper">
+                                                <title class="tag" wx:for="{{ knowledgePoints[recordItem.qId] }}"
+                                                       wx:for-item="pointItem" wx:key="unique">{{ pointItem }}</title>
+                                            </view>
+                                        </view>
+                                        <view class="advise" style="display: none;">
+                                            <title>建议追问</title>
+                                            <view class="ques-wrapper">
+                                                <title class="advise-question">
+                                                    之前工作中，你用过哪些新媒体工具？
+                                                </title>
+                                                <title class="advise-question">
+                                                    之前工作中，你用过哪些新媒体工具？
+                                                </title>
+                                                <title class="advise-question">
+                                                    之前工作中，你用过哪些新媒体工具？
+                                                </title>
+                                                <title class="advise-question">
+                                                    之前工作中，你用过哪些新媒体工具？
+                                                </title>
+                                                <title class="advise-question">
+                                                    之前工作中，你用过哪些新媒体工具？
+                                                </title>
+                                            </view>
+                                        </view>
+                                    </view>
+                                </block>
+                            </view>
+                            <!--单选题-配置了对错-题目-->
+                            <view wx:elif="{{ recordItem.choiceType === 'single' && recordItem.correctIdx.length > 0  }}"
+                                  class="question-options">
+                                <view wx:for="{{ recordItem.options }}" wx:for-item="optionItem"
+                                      wx:for-index="optionIndex" wx:key="unique" class="question-options-child">
+                                    <view wx:if="{{ util.isIncludes(recordItem.correctIdx,optionIndex) }}"
+                                          class="right-answer-checked-wrapper">
+                                        <image src="./images/report@icon-question-right.png"
+                                               class="right-answer-checked"/>
+                                    </view>
+                                    <view wx:elif="{{ util.isIncludes(recordItem.analysis.wrong,optionIndex) }}"
+                                          class="fault-answer-checked-wrapper">
+                                        <image src="./images/report@icon-question-fault.png"
+                                               class="fault-answer-checked"/>
+                                    </view>
+                                    <title wx:else class="option-char">{{ util.ASCIIToChar(optionIndex) }}</title>
+                                    <title wx:if="{{ util.isIncludes(recordItem.correctIdx,optionIndex) }}"
+                                           class="option-word option-word-right-color">
+                                        {{ optionItem }}
+                                    </title>
+                                    <title wx:elif="{{ util.isIncludes(recordItem.analysis.wrong,optionIndex) }}"
+                                           class="option-word option-word-fault-color">
+                                        {{ optionItem }}
+                                    </title>
+                                    <title wx:else class="option-word">
+                                        {{ optionItem }}
+                                    </title>
+                                </view>
+                                <title class="compare">
+                                    正确答案:
+                                    <block wx:for="{{ recordItem.correctIdx }}" wx:for-item="correctItem">
+                                        {{util.ASCIIToChar(correctItem)}}
+                                    </block>
+                                    <text></text>
+                                    用户选择:
+                                    <block wx:for="{{ recordItem.respondIdx }}" wx:for-item="respondItem"
+                                           wx:key="unique">{{util.ASCIIToChar(respondItem)}}
+                                    </block>
+                                </title>
+                                <block wx:if="{{ knowledgePoints[recordItem.qId].length > 0 }}">
+                                    <view class="hr question-options-child"></view>
+                                    <view class="question-options-child knowledge-point advise-to-ques">
+                                        <view class="knowledge">
+                                            <title>知识点</title>
+                                            <view class="tag-wrapper">
+                                                <title class="tag" wx:for="{{ knowledgePoints[recordItem.qId] }}"
+                                                       wx:for-item="pointItem" wx:key="unique">{{ pointItem }}</title>
+                                            </view>
+                                        </view>
+                                        <view class="advise" style="display: none;">
+                                            <title>建议追问</title>
+                                            <view class="ques-wrapper">
+                                                <title class="advise-question">
+                                                    之前工作中，你用过哪些新媒体工具？
+                                                </title>
+                                            </view>
+                                        </view>
+                                    </view>
+                                </block>
+                            </view>
+                            <!--多选题-配置了对错-题目-->
+                            <view wx:elif="{{ recordItem.choiceType === 'multiple' && recordItem.correctIdx.length > 0  }}"
+                                  class="question-options">
+                                <view wx:for="{{ recordItem.options }}" wx:for-item="optionItem"
+                                      wx:for-index="optionIndex" wx:key="unique" class="question-options-child">
+                                    <view wx:if="{{ util.isIncludes(recordItem.analysis.right,optionIndex) }}"
+                                          class="right-answer-checked-wrapper multiple-question">
+                                        <image src="./images/report@icon-question-right.png"
+                                               class="right-answer-checked"/>
+                                    </view>
+                                    <view wx:elif="{{ util.isIncludes(recordItem.analysis.wrong,optionIndex) }}"
+                                          class="fault-answer-checked-wrapper multiple-question">
+                                        <image src="./images/report@icon-question-fault.png"
+                                               class="fault-answer-checked"/>
+                                    </view>
+                                    <view wx:elif="{{ util.isIncludes(recordItem.analysis.omit,optionIndex) }}"
+                                          class="fault-answer-checked-wrapper multiple-question">
+                                        <image src="./images/report@icon-question-omit.png"
+                                               class="fault-answer-checked"/>
+                                    </view>
+                                    <title wx:else class="option-char">{{ util.ASCIIToChar(optionIndex) }}</title>
+                                    <title wx:if="{{ util.isIncludes(recordItem.correctIdx,optionIndex) && !util.isIncludes(recordItem.analysis.omit,optionIndex) }}"
+                                           class="option-word option-word-right-color">
+                                        {{ optionItem }}
+                                    </title>
+                                    <title wx:elif="{{ util.isIncludes(recordItem.analysis.wrong,optionIndex) }}"
+                                           class="option-word option-word-fault-color">
+                                        {{ optionItem }}
+                                    </title>
+                                    <title wx:elif="{{ util.isIncludes(recordItem.analysis.omit,optionIndex) }}"
+                                           class="option-word option-word-fault-color">
+                                        {{ optionItem }}
+                                    </title>
+                                    <title wx:else class="option-word">
+                                        {{ optionItem }}
+                                    </title>
+                                </view>
+                                <title class="compare">
+                                    正确答案：
+                                    <block wx:for="{{ recordItem.correctIdx }}" wx:for-item="correctItem"
+                                           wx:key="unique">
+                                        {{util.ASCIIToChar(correctItem)}}
+                                    </block>
+                                    用户选择：
+                                    <block wx:for="{{ recordItem.respondIdx }}" wx:for-item="respondItem"
+                                           wx:key="unique">
+                                        {{util.ASCIIToChar(respondItem)}}
+                                    </block>
+                                </title>
+                                <block wx:if="{{ knowledgePoints[recordItem.qId].length > 0 }}">
+                                    <view class="hr question-options-child"></view>
+                                    <view class="question-options-child knowledge-point advise-to-ques">
+                                        <view class="knowledge">
+                                            <title>知识点</title>
+                                            <view class="tag-wrapper">
+                                                <title class="tag" wx:for="{{ knowledgePoints[recordItem.qId] }}"
+                                                       wx:for-item="pointItem" wx:key="unique">{{ pointItem }}</title>
+                                            </view>
+                                        </view>
+                                        <view class="advise" style="display: none;">
+                                            <title>建议追问</title>
+                                            <view class="ques-wrapper">
+                                                <title class="advise-question">
+                                                    之前工作中，你用过哪些新媒体工具？
+                                                </title>
+                                                <title class="advise-question">
+                                                    之前工作中，你用过哪些新媒体工具？
+                                                </title>
+                                                <title class="advise-question">
+                                                    之前工作中，你用过哪些新媒体工具？
+                                                </title>
+                                                <title class="advise-question">
+                                                    之前工作中，你用过哪些新媒体工具？
+                                                </title>
+                                                <title class="advise-question">
+                                                    之前工作中，你用过哪些新媒体工具？
+                                                </title>
+                                            </view>
+                                        </view>
+                                    </view>
+                                </block>
+                            </view>
+                            <!--多选题-未配置对错-题目-->
+                            <view wx:if="{{ recordItem.choiceType === 'multiple' && recordItem.correctIdx.length <= 0  }}"
+                                  class="question-options">
+                                <view wx:for="{{ recordItem.options }}" wx:for-item="optionItem"
+                                      wx:for-index="optionIndex" wx:key="unique" class="question-options-child">
+                                    <title class="option-char {{ util.isIncludes(recordItem.respondIdx,optionIndex) ? 'user-checked-char' : '' }}">
+                                        {{ util.ASCIIToChar(optionIndex) }}</title>
+                                    <title class="option-word {{ util.isIncludes(recordItem.respondIdx,optionIndex) ? 'user-checked-word' : '' }}">
+                                        {{ optionItem }}</title>
+                                </view>
+                                <title wx:if="{{ false }}" class="compare">
+                                    正确答案:
+                                    <block wx:for="{{ recordItem.correctIdx }}" wx:for-item="correctItem">
+                                        {{util.ASCIIToChar(correctItem)}}
+                                    </block>
+                                    <text></text>
+                                    用户选择:
+                                    <block wx:for="{{ recordItem.respondIdx }}" wx:for-item="respondItem"
+                                           wx:key="unique">{{util.ASCIIToChar(respondItem)}}
+                                    </block>
+                                </title>
+                                <block wx:if="{{ knowledgePoints[recordItem.qId].length > 0 }}">
+                                    <view class="hr question-options-child"></view>
+                                    <view class="question-options-child knowledge-point advise-to-ques">
+                                        <view class="knowledge">
+                                            <title>知识点</title>
+                                            <view class="tag-wrapper">
+                                                <title class="tag" wx:for="{{ knowledgePoints[recordItem.qId] }}"
+                                                       wx:for-item="pointItem" wx:key="unique">{{ pointItem }}</title>
+                                            </view>
+                                        </view>
+                                        <view class="advise" style="display: none;">
+                                            <title>建议追问</title>
+                                            <view class="ques-wrapper">
+                                                <title class="advise-question">
+                                                    之前工作中，你用过哪些新媒体工具？
+                                                </title>
+                                                <title class="advise-question">
+                                                    之前工作中，你用过哪些新媒体工具？
+                                                </title>
+                                                <title class="advise-question">
+                                                    之前工作中，你用过哪些新媒体工具？
+                                                </title>
+                                                <title class="advise-question">
+                                                    之前工作中，你用过哪些新媒体工具？
+                                                </title>
+                                                <title class="advise-question">
+                                                    之前工作中，你用过哪些新媒体工具？
+                                                </title>
+                                            </view>
+                                        </view>
+                                    </view>
+                                </block>
+                            </view>
+                            <view wx:if="{{ recordItem.correctIdx.length > 0 && false }}"
+                                  class="situation {{ recordItem.analysis.wrong.length > 0 || recordItem.analysis.omit.length > 0 ? 'percent-person-fault' : 'percent-person-right' }}">
+                                40%的人做{{ recordItem.analysis.right > 0 ? '对':'错' }}
+                            </view>
+                        </view>
+                    </swiper-item>
+                </swiper>
+            </view>
+            <scroll-view class="question-num-box" id="question-num-box" scroll-x bindscroll="scrollMove"
+                         scroll-left='{{ scrollLeft }}' scroll-with-animation="true">
+                <block wx:for="{{ responseRecord }}" wx:for-index="recordIndex" wx:for-item="recordItem"
+                       wx:key="unique">
+                    <!--未配置对错-题号 -->
+                    <block wx:if="{{ recordItem.choiceType === 'single' && recordItem.correctIdx.length <= 0 }}">
+                        <view id="scroll-item-{{ recordIndex }}"
+                              data-id="{{ recordIndex }}" bindtap="selectItem"
+                              class="question-number {{ cardCur === recordIndex ? 'question-checked' : '' }}">
+                            {{ recordIndex + 1 }}
+                        </view>
+                    </block>
+                    <!-- 配置了对错-题号 -->
+                    <block wx:elif="{{ recordItem.choiceType === 'single' && recordItem.correctIdx.length > 0 }}">
+                        <view id="scroll-item-{{ recordIndex }}"
+                              data-id="{{ recordIndex }}" bindtap="selectItem"
+                              class="question-number {{ cardCur === recordIndex ? 'question-checked' : '' }} {{ recordItem.analysis.wrong.length <= 0 ? 'question-num-checked-right' : 'question-num-checked-fault' }} {{ cardCur === recordIndex && recordItem.analysis.wrong.length <= 0 ? 'question-right-checked' : '' }} {{ cardCur === recordIndex && recordItem.analysis.wrong.length > 0 ? 'question-fault-checked' : '' }}"
+                        >
+                            {{ recordIndex + 1 }}
+                        </view>
+                    </block>
+                    <block wx:elif="{{ recordItem.choiceType === 'multiple' && recordItem.correctIdx.length > 0 }}">
+                        <view id="scroll-item-{{ recordIndex }}"
+                              data-id="{{ recordIndex }}" bindtap="selectItem"
+                              class="question-number {{ cardCur === recordIndex ? 'question-checked' : '' }} {{ recordItem.analysis.wrong.length <= 0 ? 'question-num-checked-right' : 'question-num-checked-fault' }} {{ cardCur === recordIndex && recordItem.analysis.wrong.length <= 0 ? 'question-right-checked' : '' }} {{ cardCur === recordIndex && recordItem.analysis.wrong.length > 0 ? 'question-fault-checked' : '' }}"
+                        >
+                            {{ recordIndex + 1 }}
+                        </view>
+                    </block>
+                    <block wx:if="{{ recordItem.choiceType === 'multiple' && recordItem.correctIdx.length <= 0 }}">
+                        <view id="scroll-item-{{ recordIndex }}"
+                              data-id="{{ recordIndex }}" bindtap="selectItem"
+                              class="question-number {{ cardCur === recordIndex ? 'question-checked' : '' }}">
+                            {{ recordIndex + 1 }}
+                        </view>
+                    </block>
+                </block>
+            </scroll-view>
+        </view>
+        <!-- 建议 -->
+        <view class="box4" wx:if="{{proposalShow}}">
+            <scroll-view class="tabs" scroll-x>
+                <block wx:for="{{proposal}}" wx:key="unique">
+                    <view wx:if="{{item.show}}" class="item {{activeProposal==index?'active':''}}"
+                          bindtap="changeProposal" data-i="{{index}}">{{item.name}}
+                    </view>
+                </block>
+            </scroll-view>
+            <view class="content">
+                <view class="stars flex" wx:if="{{proposal[activeProposal].color}}">
+                    <image src="./images/report@{{proposal[activeProposal].color>=1?'icon-star-fill':'icon-star-outline'}}.png"></image>
+                    <image src="./images/report@{{proposal[activeProposal].color>=2?'icon-star-fill':'icon-star-outline'}}.png"></image>
+                    <image src="./images/report@{{proposal[activeProposal].color>=3?'icon-star-fill':'icon-star-outline'}}.png"></image>
+                    <image src="./images/report@{{proposal[activeProposal].color>=4?'icon-star-fill':'icon-star-outline'}}.png"></image>
+                    <image src="./images/report@{{proposal[activeProposal].color>=5?'icon-star-fill':'icon-star-outline'}}.png"></image>
+                </view>
+                <rich-text class="msg" style="{{proposal[activeProposal].color?'':'padding-top:0;'}}"
+                           nodes="<p>{{proposal[activeProposal].content}}</p>"></rich-text>
+            </view>
+        </view>
+        <!-- 分享报告按钮--普通团队成员无法使用该按钮 -->
+        <view class="botbox flex" wx:if="{{ command !== 'close' }}">
+            <!--    bindtap="toShareReport"-->
+            <button class="sharebtn" open-type="share" bindtap="" wx:if="{{teamRole!=1}}">
+                <image src="./images/report@icon-share.png"></image>
+                <text>分享报告</text>
+            </button>
+            <button class="toTestOther" id="TOT" bindtap="toTestOtherUser" wx:if="{{teamRole!=1}}">
+                <image src="./images/report@icon-invite.png"></image>
+                <text>测测别人</text>
+            </button>
+            <button class="toTestOther" bindtap="backToHome" wx:if="{{teamRole==1}}">
+                <image src="./images/report@icon-invite.png"></image>
+                <text>体验更多测评</text>
+            </button>
+        </view>
+        <!-- 申请查看报告 -->
+        <view wx:if="{{(applyStatus==1||applyStatus==2)&&teamRole!=1}}" class="hasApply">
+            <view class="msg">被测者申请查看报告结果，是否同意？</view>
+            <view class="agreenBtn flex" wx:if="{{applyStatus==1}}" bindtap="applyReportAudit">
+                <view class="flex-main"></view>
+                <image src="./images/report@icon-agreeing.png"></image>
+                同意
+                <view class="flex-main"></view>
+            </view>
+            <view class="agreenBtn agreenBtn1 flex" wx:if="{{applyStatus==2}}" bindtap="applyReportAudit">
+                <view class="flex-main"></view>
+                <image src="./images/report@icon-agreed.png"></image>
+                已同意
+                <view class="flex-main"></view>
+            </view>
+        </view>
+        <!-- 免责声明 -->
+        <view class="bottomMsg" wx:if="{{statement}}">
+            <rich-text nodes="{{statement}}"></rich-text>
+        </view>
+        <!-- 底部固定 -->
+        <view class="ownerMsg">©好啦测评</view>
+        <!-- 弹窗信息 -->
+        <view class="coverView" wx:if="{{showDlg}}" bindtap="hideDlg"></view>
+        <view class="dlgView" wx:if="{{showDlg}}">
+            <view wx:if="{{dlgName=='timeDlg'}}">
+                <image src="./images/report@icon-sandglass.png"></image>
+                <view class="msgTitle">作答时长：{{timeTotal}}分钟</view>
+                <view class="msg">{{answerTimeTxt}}</view>
+            </view>
+            <view wx:if="{{dlgName=='noMatchDlg'}}">
+                <image src="./images/report@icon-uniformity-unusual.png"></image>
+                <view class="msgTitle">作答一致性：异常</view>
+                <view class="msg">{{matchArr.txt}}</view>
+            </view>
+            <view wx:if="{{dlgName=='optionChooseDlg'}}">
+                <image src="./images/report@icon-spread-unusual.png"></image>
+                <view class="msgTitle">选项分布：异常</view>
+                <view class="msg">{{matchArr.txt}}</view>
+            </view>
+        </view>
+    </view>
+</block>
+<wxs src="../../utils/util.wxs" module="util"></wxs>
+

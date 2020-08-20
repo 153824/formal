@@ -78,7 +78,7 @@
         <button class="meal meal-button" style="background-color: rgba(255,243,224,1);outline: none;border: none;"
                 open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
             <meal isShow="{{ evaluation.isBeginner }}" title="新用户领券，免费体验测评"
-                  subIcon="../../images/detail@banner-ticket.gif" subtitle="立即领券 >" icon="false"></meal>
+                  subIcon="../../images/icon/icon@banner-ticket.gif" subtitle="立即领券 >" icon="false"></meal>
         </button>
         <view class="meal" bindtap="buyByTicket">
             <meal isShow="{{ hasVoucher }}" icon="false"

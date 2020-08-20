@@ -15,10 +15,6 @@
     </view>
     <view style="background-color: #fff;margin-top: 20rpx;">
         <block>
-            <button wx:if="{{ evaluation.isBeginner && !evaluation.freeEvaluation }}" class="get-free-ticket" style="background: transparent;border: none !important;"
-                    data-id="{{ evaluation.evaluationInfo.id }}" bindtap="getNewerTicket" data-name="{{ evaluation.evaluationInfo.name }}">
-                <ticket height="99rpx"></ticket>
-            </button>
             <button wx:if="{{ !evaluation.isBeginner && !evaluation.freeEvaluation && isGetInAgainst === 'YES' && !evaluation.hadShare }}"
                     class="get-free-ticket"
                     open-type="share"

@@ -17,7 +17,7 @@
     </view>
     <view class="dimension-content">
         <view class="dimension-content-wrapper">
-            <view class="dimension-child" wx:for="{{ list }}">
+            <view class="dimension-child" wx:for="{{ list }}" wx:key="unique">
                 <text>{{ item }}</text>
             </view>
         </view>

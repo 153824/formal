@@ -103,16 +103,16 @@ Page({
     var reportId = this.data.reportId;
     var userName = app.globalData.userInfo.nickname || "";
     var shareKey = "teamMsg_" + app.teamId + "_1";
-    var path = '/report/detail?id=' + reportId;
+    var path = 'pages/report/report?id=' + reportId;
     var paperName = this.data.paperName;
     var username = this.data.username;
     var title = userName + "邀请你查看" + username + "的" + paperName + "报告";
     if (t == 2) {
       //邀请入团
-      path = "/user/teamInvite?key=" + shareKey;
+      path = "pages/user/components/teamInvite/teamInvite?key=" + shareKey;
       if (this.data.checked) {
         //同时分享报告
-        path = '/report/detail?id=' + reportId + "&key=" + shareKey;
+        path = 'pages/report/report?id=' + reportId + "&key=" + shareKey;
       } else {
         title = userName + "邀请你加入团队";
       }
@@ -127,7 +127,6 @@ Page({
         }
       });
     }
-    console.log("path", path);
     return {
       title: title,
       path: path,

@@ -6,7 +6,7 @@ Component({
   properties: {
     image: {
       type: String,
-      value: "../../images/icon/icon@icon-ticket-banner.png"
+      value: "../../images/icon/icon@icon-new-user-ticket.png"
     },
     width: {
       type: String,

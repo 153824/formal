@@ -649,6 +649,10 @@ Page({
   },
   onShareAppMessage(options) {
     const { evaluationInfo } = this.data.evaluation;
+    const { teamId } = app,
+        { userInfo } = app.globalData,
+        that = this;
+    const { id,name } = this.data.evaluation.evaluationInfo;
     try{
       wx.aldstat.sendEvent('点击分享领3张券', {
         '测评名称': `名称: ${evaluationInfo.name}`
@@ -656,12 +660,15 @@ Page({
     }catch (e) {
 
     }
-    const { teamId } = app,
-        userId = app.globalData.userInfo.id,
-        that = this;
-    const { id,name } = this.data.evaluation.evaluationInfo;
+    if( options.from !== 'button' ){
+      return {
+        title: `${userInfo.nickname}邀您参与《${evaluationInfo.name}》测评~`,
+        path: `pages/station/components/detail/detail?id=${id}`,
+        imageUrl: "http://ihola.luoke101.com/wxShareImg.png",
+      }
+    }
     app.doAjax({
-      url: `drawVoucher?userId=${userId}&paperId=${id}&teamId=${teamId}`,
+      url: `drawVoucher?paperId=${id}`,
       success: function (res) {
         app.toast(res);
         try{
@@ -689,10 +696,10 @@ Page({
           }
         }
       });
-    },2000)
+    },2000);
     return {
       title: "我发现一个不错的人才测评软件，快来看看吧~",
-      path: "/index/index",
+      path: "pages/home/home",
       imageUrl: "http://ihola.luoke101.com/wxShareImg.png",
     }
   },

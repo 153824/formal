@@ -701,7 +701,7 @@ Page({
     const { globalData } = app;
     return {
       title: `${ globalData.team.name }邀您看${ userMsg.username }的《${ paper.name }》报告`,
-      path: `/report/detail?id=${id}`,
+      path: `pages/report/report?id=${id}`,
       imageUrl: sharePic,
     }
   },

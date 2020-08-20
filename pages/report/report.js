@@ -169,7 +169,6 @@ Page({
   },
   onLoad: function(options) {
     wx.hideShareMenu();
-    console.log(options);
     var that = this;
     ctx = wx.createCanvasContext('canvasArcCir');
     var id = that.data.id || options.id;
@@ -228,7 +227,6 @@ Page({
     });
     getReportPromise.then(res=>{
       if( res.reportVersion ){
-        console.log("I Get in!");
         return new Promise((resolve, reject) => {
           resolve(res);
         });
@@ -367,7 +365,6 @@ Page({
       if( this.isInTeams(res) ){
         return;
       }
-      console.log("getReport: ",res);
       let now = new Date().getFullYear();
       let userMsg = res.userMsg;
       let t = new Date(userMsg.birthday).getFullYear();
@@ -436,9 +433,7 @@ Page({
         });
         objs[n].subclass = newChild;
         var keys = Object.keys(newChild);
-        console.log("keys" ,keys);
         objs[n].subclass[keys[0]]["active"] = "active"
-        console.log("objs[n].subclass[keys[0]][\"active\"]",objs[n].subclass[keys[0]]["active"]);
       }
       res["id"] = id;
       var total1Full = res.generalTotal100;
@@ -466,11 +461,10 @@ Page({
       res["teamRole"] = (app.teamId == res.teamId) ? app.teamRole : 1;
       res["showPage"] = true;
       res.fillBlank = [];
-      for( let i = 0; i < 4; i++ ){
+      for(let i = 0; i < 4; i++){
         res.fillBlank.push("");
       }
       that.setData(res);
-      console.log("res: ",res);
       app.doAjax({
         url: 'evaluationDetail',
         method: 'get',

@@ -59,9 +59,9 @@ App({
   qiniuUpload: qiniuUpload,
   isIphoneX: false,
   isPC: false,
-  host: "http://192.168.0.101:3000",
+  // host: "http://192.168.0.101:3000",
   // host: "https://api.dev.luoke101.com",
-  // host: 'https://h5.luoke101.com',
+  host: 'https://h5.luoke101.com',
   globalData: {
     appid: wx.getAccountInfoSync().miniProgram.appId,
     userInfo: null,
@@ -80,23 +80,23 @@ App({
     wx.hideTabBar({
       animation: true,
     })
-    var that = this
-    var referrerInfo = options.referrerInfo
-    var menuBtnObj = wx.getMenuButtonBoundingClientRect()
-    var sysMsg = wx.getSystemInfoSync()
-    this.isIphoneX = false
-    this.isIos = false
-    this.isLogin = false
-    this.fromAppId = ''
-    this.teamId = wx.getStorageSync('myTeamId') || ''
-    this.rate = sysMsg.windowWidth / 750
+    var that = this;
+    var referrerInfo = options.referrerInfo;
+    var menuBtnObj = wx.getMenuButtonBoundingClientRect();
+    var sysMsg = wx.getSystemInfoSync();
+    this.isIphoneX = false;
+    this.isIos = false;
+    this.isLogin = false;
+    this.fromAppId = '';
+    this.teamId = wx.getStorageSync('myTeamId') || '';
+    this.rate = sysMsg.windowWidth / 750;
     if (referrerInfo && referrerInfo.appid) {
       this.fromAppId = referrerInfo.appid
     }
-    wx.removeStorageSync('hideLastTestMind')
+    wx.removeStorageSync('hideLastTestMind');
     wx.onMemoryWarning(function (res) {
       console.log('onMemoryWarningReceive', res)
-    })
+    });
     /*获取机型 **/
     if (sysMsg.model.indexOf('iPhone X') != -1) {
       this.isIphoneX = true
@@ -119,7 +119,7 @@ App({
     wx.login({
       success: res => {
         this.userLogin(res.code).then(res => {
-          wx.aldPushSendOpenid(res.openId)
+          wx.aldPushSendOpenid(res.openId);
         })
       },
     })

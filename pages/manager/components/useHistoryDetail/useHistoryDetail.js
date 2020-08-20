@@ -34,14 +34,12 @@ Page({
     screenHeight: app.globalData.screenHeight,
     pixelRate: app.globalData.pixelRate
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     var that = this;
-    const { sharePaperId,status } = options;
-    console.log("app.globalData.pixelRate: ",app.globalData.pixelRate);
+    const { sharePaperId,status=-1 } = options;
     this.setData({
       statusbarHeight: app.globalData.statusbarHeight,
       titleHeight: app.globalData.titleHeight,

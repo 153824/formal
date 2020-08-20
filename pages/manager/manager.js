@@ -338,7 +338,6 @@ Page({
         evaluationId: catalog[checkedEvaluation].id
       },
       success: function (res) {
-        console.log(res);
         that.setData({
           evaluationList: res.data,
           loading: false
@@ -378,9 +377,7 @@ Page({
       shareTrigger: !shareTrigger
     })
   },
-  checkboxChange: function (e) {
-    console.log(e.detail.id)
-  },
+  checkboxChange: function (e) {},
   nextPage: function (e) {
     var { checkedItem,
       checkedTime,
@@ -417,7 +414,6 @@ Page({
           res.data.forEach((item,key)=>{
             const { id,name } = item.evaluation;
             if( compareArr.indexOf(id) <= -1 ){
-              console.log("item.evaluation222222222: ",id);
               var catalogChild = {};
               catalogChild.id = id;
               catalogChild.name = name;

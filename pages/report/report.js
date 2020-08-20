@@ -68,8 +68,6 @@ var value_1 = {};
 var indicator_1 = {};
 
 function getChartMsg1(canvas, width, height) {
-  console.log(width,height);
-  console.log("value_1: ",value_1);
   var canvasId = canvas.canvasId;
   var index = canvasId.replace("mychartcanvas", "");
   const chart = echarts.init(canvas, null, {
@@ -268,7 +266,6 @@ Page({
         var { showSubScore } = objs[n];
         for (var i in arr) {
           var node = arr[i];
-          console.log("arr: ",node);
           if( showSubScore == 'average' ){
             value_1[n].push(node.average);
           }else if(!showSubScore){
@@ -671,11 +668,8 @@ Page({
    * 获取团队列表，并切换到我自己的团队
    */
   getMyTeamList: function(e) {
-    var that = this;
     app.getMyTeamList(function(list) {
-      // var teamNames = [];
       list.forEach(function(node) {
-        console.log("user role="+node.role);
         if (node.role == 3) {
           app.teamId = node.objectId;
           app.teamName = node.name;
@@ -728,7 +722,6 @@ Page({
         ques.forEach((item,key)=>{
           knowledgePoints[item.id] = item.knowledgePoints;
         });
-        console.log(knowledgePoints);
         that.setData({
           knowledgePoints
         })
@@ -739,7 +732,6 @@ Page({
     this.setData({
       cardCur: e.detail.current
     });
-    console.log("I Scroll It");
     this.scrollSelectItem(e.detail.current,true);
   },50,{
     leading: true,
@@ -748,7 +740,6 @@ Page({
 
   scroll: function (e) {
     this.scrollLeft = e.detail.scrollLeft;
-    console.log("scroll: ", e);
   },
 
   switchClass: function (e) {
@@ -763,7 +754,6 @@ Page({
   getRect: function (elementId) {
       const that = this;
       wx.createSelectorQuery().select(elementId).boundingClientRect((rect)=>{
-        console.log("rect：",rect);
         let moveParams = that.data.moveParams;
         try{
           moveParams.subLeft = rect.left;
@@ -788,7 +778,6 @@ Page({
     this.setData({
       scrollLeft: scrollLeft
     });
-    console.log("moveTo")
   },
 
   scrollMove(e) {
@@ -806,7 +795,6 @@ Page({
   },
 
   scrollSelectItem: function (id,vibrate=true) {
-    console.log("scrollSelectItem");
     let ele = 'scroll-item-' + id;
     this.getRect('#' + ele);
     this.setData({
@@ -814,9 +802,7 @@ Page({
     });
     if( vibrate ){
       wx.vibrateShort({
-        success: function (res) {
-          console.log(res);
-        }
+        success: function (res) {}
       })
     }
   },

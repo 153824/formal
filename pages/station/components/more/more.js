@@ -20,7 +20,6 @@ Page({
     wx.setNavigationBarTitle({
       title: title
     });
-    console.log(options);
     app.doAjax({
       url: `homePages/columns/${ id }/evaluations`,
       method: "get",

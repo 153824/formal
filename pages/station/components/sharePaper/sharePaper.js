@@ -57,7 +57,6 @@ Page({
     var that = this;
     var t = e.currentTarget.dataset.t;
     var { maxCount=0,count,hadBuyout,isFree } = that.data;
-    console.log( maxCount,count,hadBuyout,isFree);
     if (t == 1) {
       count -= 1;
     } else if (t == 2) {
@@ -115,7 +114,6 @@ Page({
         shareMsg: JSON.stringify(shareMsg)
       },
       success: function(ret) {
-        console.log("ret= " + JSON.stringify(ret))
         that.setData({
           retData: ret
         });
@@ -137,7 +135,6 @@ Page({
    * 隐藏分享码
    */
   closeQrCode: function(e) {
-    console.log(e);
     this.setData({
       "retData.img": ""
     });

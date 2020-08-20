@@ -180,7 +180,6 @@ Page({
   },
 
   buyTicket: function (e) {
-    console.log("buyTicket", e);
     const { type } = e.currentTarget.dataset,
           { userId,teamId } = app,
           openid = wx.getStorageSync("openId") || app.globalData.userMsg.openid;
@@ -195,7 +194,6 @@ Page({
         mp_openid: ""
       },
       success: function (res) {
-        console.log(res);
         wx.requestPayment(res);
       }
     })

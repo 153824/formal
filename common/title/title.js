@@ -148,7 +148,7 @@ Component({
             });
             that.getMyTeamList();
           }).catch((err)=>{
-            console.log(err);
+            console.error(err);
           })
         }
       });

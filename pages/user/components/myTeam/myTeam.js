@@ -145,7 +145,6 @@ Page({
         role: role
       },
       success: function(ret) {
-        console.log(ret);
       }
     });
   },

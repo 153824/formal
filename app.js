@@ -106,7 +106,6 @@ App({
     }
     if(sysMsg.platform.indexOf("windows") != -1){
       this.isPC = true;
-      console.log("System",sysMsg.platform.indexOf("windows"));
     }
     /**
      * @Description: 登录
@@ -171,7 +170,7 @@ App({
         this.globalData.pixelRate = 750 / windowWidth
       },
       fail (err) {
-        console.log(err)
+        console.error(err)
       },
     })
   },
@@ -521,6 +520,5 @@ App({
       _text += ',diff:' + diff
     }
     debuggerQueue.push(+Date.now())
-    console.log(_text)
   },
 })

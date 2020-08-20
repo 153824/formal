@@ -27,7 +27,6 @@ Page({
     var { resubscribe='false' } = options;
     var userData = app.globalData.userInfo || wx.getStorageSync("userInfo");
     var isGetInAgainst = wx.getStorageSync('isGetInAgainst') || 'NO';
-    console.log("app.isPC: ",app.isPC);
     this.setData({
       isIos: app.isIos,
       teamRole: app.teamRole,
@@ -132,7 +131,6 @@ Page({
         title: '正在请求...'
       });
       Promise.all([teamDetailPromise,evaluationDetailPromise]).then(values => {
-        console.log(values);
         wx.hideLoading();
         this.setData({
           loading: false,
@@ -284,7 +282,6 @@ Page({
         setTimeout(function() {
           that.toGetPaperDetail(true);
         }, 500);
-        console.log(res);
       }
     });
   },
@@ -332,7 +329,6 @@ Page({
       }
       /*无体验过,开启小神推订阅*/
       if( ( !oldshareid && isFirstExperience ) || this.data.resubscribe ){
-        console.log("app.globalData.eventId",app.globalData.eventId);
         wx.aldPushSubscribeMessage({
           eventId: app.globalData.eventId,
           success(res) {
@@ -482,7 +478,7 @@ Page({
                 })
               }
               //支付失败
-              console.log(res);
+              console.error(res);
             },
             'complete': function(res) {}
           })
@@ -512,7 +508,6 @@ Page({
         openid: wx.getStorageSync("openId") || app.globalData.userMsg.openid,
       },
       success: function (res) {
-        console.log(res);
         wx.requestPayment({
           'appId': res.appId,
           'timeStamp': res.timeStamp,
@@ -546,7 +541,7 @@ Page({
               })
             }
             //支付失败
-            console.log(res);
+            console.error(res);
           },
           complete: function(res) {}
         })
@@ -680,7 +675,7 @@ Page({
         }
       },
       fail: function (err) {
-        console.log(err);
+        console.error(err);
       }
     });
     setTimeout(()=>{

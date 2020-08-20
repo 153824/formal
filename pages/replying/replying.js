@@ -69,7 +69,6 @@ Page({
     });
     let getphoneNum = false;
     let userPhone = (app.globalData.userInfo || {}).phone;
-    console.log("userPhone: ", app.globalData.userInfo);
     if (userPhone) {
       getphoneNum = true;
     }
@@ -121,7 +120,6 @@ Page({
               }
             }
             ques1.push(node);
-            console.log("node-1：",node);
             if (showQues.length < 5) {
               showQues.push(node);
             }
@@ -145,7 +143,6 @@ Page({
               }
             }
             ques1[i] = node;
-            console.log("node-2：",node);
             let oldswiperCurrent = oldData.swiperCurrent;
             let i1 = oldswiperCurrent - i;
             if (i1 > -3 && i1 < 3) {
@@ -228,7 +225,6 @@ Page({
   },
   onShow: function () {
     const that = this;
-    console.log("wx.getStorageSync(\"openId\")",wx.getStorageSync("openId"));
     app.doAjax({
       url: "/userDetail",
       method: "get",
@@ -257,8 +253,6 @@ Page({
     let name = e.currentTarget.dataset.n;
     let obj = {};
     obj[name] = value;
-    console.log("obj[name] = value: ", obj);
-    console.log(this.data);
     this.setData(obj);
   },
   sexInput: function (e) {
@@ -527,7 +521,6 @@ Page({
     let isLastQue = false;
     swiperCurrent += 1;
     if (swiperCurrent == that.data.quesAll.length) {
-      console.log("that.data.quesAll.length: ",that.data.quesAll.length);
       d["isFillAll"] = true;
     }
     if (swiperCurrent == data.quesAll.length) {
@@ -588,7 +581,6 @@ Page({
     answers[obj.id] = answers[obj.id] || [];
     let maxChoose = obj.maxChoose || 1;
     let minChoose = obj.minChoose || 1;
-    console.log("maxChoose: ",maxChoose);
     let answer = app.trimSpace(JSON.parse(JSON.stringify(answers[obj.id])));
     if (maxChoose < 2) { //单选
       answers[obj.id] = [];
@@ -608,9 +600,7 @@ Page({
     }
     if( quesAll.length === swiperCurrent + 1 ){
       const answerCopy = app.trimSpace(JSON.parse(JSON.stringify(answers[obj.id])));
-      console.log("answerCopy",answerCopy);
       if( maxChoose < 2 || ( answerCopy.length >= Number(minChoose) && answerCopy.length <= Number(maxChoose) )  ){
-        console.log("Get in?","YES");
         this.setData({
           isFillAll: true
         })
@@ -645,7 +635,6 @@ Page({
     if(que.type==3){
       let tmpsum = 0;
       answer.forEach(score=>{
-        console.log(score);
         tmpsum = Number(score) + tmpsum;
       });
       if(tmpsum != que.totalScore){
@@ -656,7 +645,6 @@ Page({
       }
     }
     const { name } = e.target.dataset;
-    console.log("formSubmit", e);
     let chapter = that.data.chapter;
     let hasNextChapter = false;
     if (answerTimeOut) {
@@ -720,7 +708,6 @@ Page({
         answer: JSON.stringify(answer)
       },
       success: function (ret) {
-        console.log(that.data);
         wx.redirectTo({
           url: './components/finish/finish?id=' + data.id + "&type=" + that.data.applyStatus + "&name=" + that.data.paperList.setting.name1
         });
@@ -1003,7 +990,5 @@ Page({
     let que = data.quesAll[swiperCurrent];
     return app.toast("各项分数之和必须等于"+que.totalScore+"分");
   },
-  input: function (e) {
-    console.log(e);
-  }
+  input: function (e) {}
 });

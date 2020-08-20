@@ -122,9 +122,7 @@ Page({
           id: app.teamId,
           role: 1
         },
-        success: function(ret) {
-          console.log(ret);
-        }
+        success: function(ret) {}
       });
     }
     return {

@@ -42,7 +42,6 @@ Page({
     const checkedId = e.currentTarget.id,
           { name } = e.currentTarget.dataset,
           { menu } = this.data;
-          console.log(e);
     for( let i = 0;i < menu.length;i++ ){
       if( checkedId === menu[i].objectId ){
         this.setData({

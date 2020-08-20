@@ -38,67 +38,7 @@ Component({
     loadUserMsg: function() {
       var userData = app.globalData.userInfo || wx.getStorageSync("userInfo");
       var teamData = app.globalData.team || userData;
-      var vip0EndTime = teamData.vip0EndTime;
-      var vipEndTime = teamData.vipEndTime;
-      var vip2EndTime = teamData.vip2EndTime;
-      var vip3EndTime = teamData.vip3EndTime;
-      var vip4EndTime = teamData.vip4EndTime;
-      var now = new Date().getTime();
-      var vip0 = false;
-      var vip1 = false;
-      var vip2 = false;
-      var vip3 = false;
-      var vip4 = false;
-      if (vip0EndTime) {
-        vip0EndTime = new Date(vip0EndTime).getTime();
-        userData.vip0EndTime = app.changeDate(vip0EndTime, "yyyy.MM.dd");
-      }
-      if (vipEndTime) {
-        vipEndTime = new Date(vipEndTime).getTime();
-        userData.vipEndTime = app.changeDate(vipEndTime, "yyyy.MM.dd");
-      }
-      if (vip2EndTime) {
-        vip2EndTime = new Date(vip2EndTime).getTime();
-        userData.vip2EndTime = app.changeDate(vip2EndTime, "yyyy.MM.dd");
-      }
-      if (vip3EndTime) {
-        vip3EndTime = new Date(vip3EndTime).getTime();
-        userData.vip3EndTime = app.changeDate(vip3EndTime, "yyyy.MM.dd");
-      }
-      if (vip4EndTime) {
-        vip4EndTime = new Date(vip4EndTime).getTime();
-        userData.vip4EndTime = app.changeDate(vip4EndTime, "yyyy.MM.dd");
-      }
-      if (vip0EndTime && vip0EndTime > now) {
-        vip0 = true;
-      }
-      if (vipEndTime && vipEndTime > now) {
-        vip1 = true;
-      }
-      if (vip2EndTime && vip2EndTime > now) {
-        vip2 = true;
-      }
-      if (vip3EndTime && vip3EndTime > now) {
-        vip3 = true;
-      }
-      if (vip4EndTime && vip4EndTime > now) {
-        vip4 = true;
-      }
-      if (vip1 && vip2 && vip2EndTime >= vipEndTime) {
-        vip1 = false;
-      } else if (vip1 && vip2 && vip2EndTime <= vipEndTime) {
-        vip2 = false;
-      } else if (vip1 && vip3 && vip3EndTime <= vipEndTime) {
-        vip3 = false;
-      } else if (vip1 && vip4 && vip4EndTime <= vipEndTime) {
-        vip4 = false;
-      }
       this.setData({
-        vip0: vip0,
-        vip1: vip1,
-        vip2: vip2,
-        vip3: vip3,
-        vip4: vip4,
         userInfo: userData
       });
       this.getMyTeamList();

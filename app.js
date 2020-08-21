@@ -465,7 +465,7 @@ App({
             if (toAddNew && !LOCAL_MY_TEAM_LIST.length) {
                 that.addNewTeam(cb)
             }
-            if (toAddNew && list.length) {
+            if (toAddNew && LOCAL_MY_TEAM_LIST.length) {
                 that.addNewTeam()
             }
         } else {

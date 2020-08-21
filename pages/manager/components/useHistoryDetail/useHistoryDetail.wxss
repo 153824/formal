@@ -112,6 +112,7 @@ page{
 }
 .rate > text{
     color: #07092266;
+    align-self: flex-end;
 }
 .press-wrapper{
     position: fixed;

@@ -197,14 +197,14 @@ Page({
           let now = new Date().getTime();
 
           // oldData["startTime"] = startTime + (now - endTime);
-          if ((now - startTime) > (6 * 60 * 60 * 1000)) {
+          if (true) {
             //答题时长超过6小时
             wx.showModal({
               title: '作答提示',
               content: '答题时长超过6小时，已自动提交',
               showCancel: false,
               success: function () {
-                that.formSubmit();
+                that.formSubmit(null,true);
               }
             });
             return;
@@ -625,14 +625,14 @@ Page({
   /**
    * 答题提交
    */
-  formSubmit: function (e) {
+  formSubmit: function (e,autoSubmit=false) {
     let that = this;
     let data = this.data;
     let swiperCurrent = +data.swiperCurrent;
     let que = data.quesAll[swiperCurrent];
     let answers = data.answers;
     let answer = app.trimSpace(JSON.parse(JSON.stringify(answers[que.id] || [])));
-    if(que.type==3){
+    if(que.type==3 && !autoSubmit){
       let tmpsum = 0;
       answer.forEach(score=>{
         tmpsum = Number(score) + tmpsum;

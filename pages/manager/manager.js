@@ -1,10 +1,5 @@
-// manager/manager.js
 const app = getApp();
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
     titleHeight: app.globalData.titleHeight,
     statusbarHeight: app.globalData.statusbarHeight,
@@ -21,22 +16,13 @@ Page({
     historyPage: 1,
     loading: true,
     compareArr: [],
-    /**
-     * @Description: maxReportPage初始化为-1，指无最大页数限制
-     * @author: WE!D
-     * @name: maxReportPage
-     * @date: 2020/6/29
-    */
     maxReportPage: -1
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-    const { redirectToIndex,redirectReportId } = app.globalData;
+    const that = this;
+    const { reportId=null } = options;
     let { checkedItem,checkedTime,evaluationId } = this.data;
-    let that = this;
     if( checkedItem === "0" ){
       app.doAjax({
         url: "sharePapers/reports",
@@ -71,6 +57,11 @@ Page({
             reportPage: 1,
             historyPage: 1
           });
+          if( reportId ){
+            wx.navigateTo({
+              url: `../report/report?id=${ reportId }`,
+            });
+          }
         },
         error: function(err){
           that.setData({
@@ -92,6 +83,11 @@ Page({
           size: 10
         },
         success: function (res) {
+          if( reportId ){
+            wx.navigateTo({
+              url: `../report/report?id=${ reportId }`,
+            });
+          }
           that.setData({
             useList: res.data,
             loading: false,
@@ -106,38 +102,20 @@ Page({
         }
       })
     }
-    if( redirectReportId ){
-      wx.navigateTo({
-        url: `../report/report?id=${ app.globalData.redirectReportId }`,
-      });
-      this.setData({
-        loading: false,
-      });
-      app.globalData.redirectReportId = null;
-    }
     this.setData({
       statusbarHeight: app.globalData.statusbarHeight,
       titleHeight: app.globalData.titleHeight,
       tarBarHeight: app.globalData.tarBarHeight,
-      pixelRatio: app.globalData.pixelRatio,
       windowHeight: app.globalData.windowHeight,
       screenHeight: app.globalData.screenHeight,
       pixelRate: app.globalData.pixelRate
     });
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
+  onReady: function () {},
 
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow: function () {
-    /*1.获取title组件 2.调用title组件的*/
+    /*1.获取title组件 2.调用title组件的loadUserMsg方法*/
     this.title = this.selectComponent("#title");
     app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
     const checkedReportId = wx.getStorageSync('checkedReportId');
@@ -148,16 +126,10 @@ Page({
     })
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
   onHide: function () {
 
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
   onUnload: function () {
     wx.removeStorageSync('checkedReportId');
     wx.removeStorageSync('checkedUseHistoryId');
@@ -167,16 +139,8 @@ Page({
     })
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function () {},
 
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
   onReachBottom: function () {
 
   },

@@ -18,10 +18,9 @@ Page({
    * 进入测评管理页面
    */
   toReportDetail: function(e) {
-    const { id,name } = this.data;
-    app.globalData.redirectReportId = id;
-    wx.switchTab({
-      url: "../../../manager/manager"
+    const { id,name, } = this.data;
+    wx.reLaunch({
+      url: `../../../manager/manager?reportId=${id}`,
     });
     wx.aldstat.sendEvent('查看自己的报告', {
       '测评名称': `名称：${ name }`

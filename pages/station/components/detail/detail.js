@@ -144,15 +144,19 @@ Page({
     }
   },
   onUnload: function(){
-    const { isBeginner,hadShare } = this.data.evaluation;
-    if( !isBeginner && !hadShare ){
-      this.setData({
-        isGetInAgainst: 'NO'
-      });
-      wx.setStorage({
-        key: 'isGetInAgainst',
-        data: 'YES'
-      })
+    try{
+      const { isBeginner,hadShare } = this.data.evaluation;
+      if( !isBeginner && !hadShare ){
+        this.setData({
+          isGetInAgainst: 'NO'
+        });
+        wx.setStorage({
+          key: 'isGetInAgainst',
+          data: 'YES'
+        })
+      }
+    }catch (e) {
+
     }
   },
   toGetPaperDetail: function() {

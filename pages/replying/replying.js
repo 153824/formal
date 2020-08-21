@@ -197,7 +197,7 @@ Page({
           let now = new Date().getTime();
 
           // oldData["startTime"] = startTime + (now - endTime);
-          if (true) {
+          if ((now - startTime) > (6 * 60 * 60 * 1000)) {
             //答题时长超过6小时
             wx.showModal({
               title: '作答提示',

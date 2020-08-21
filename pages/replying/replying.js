@@ -644,7 +644,8 @@ Page({
         return app.toast("各项分数之和必须等于"+que.totalScore+"分");
       }
     }
-    const { name } = e.target.dataset;
+    let name = "";
+    try{ name = e.target.dataset.name }catch (e) {}
     let chapter = that.data.chapter;
     let hasNextChapter = false;
     if (answerTimeOut) {

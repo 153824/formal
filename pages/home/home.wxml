@@ -4,7 +4,7 @@
 </block>
 <block wx:if="{{ !loading }}">
     <view class="topTestView flex" style="margin-top:{{ (statusbarHeight + titleHeight) }}px;"
-          wx:if="{{oldShareInfo&&oldShareInfo.id}}" bindtap="continueTest">
+          wx:if="{{oldShareInfo&&oldShareInfo.id}}" bindtap="goToReplying">
         <image class="icon25" src="./images/home@icon-broadcast.png"></image>
         <view class="flex-main">您有一份《
             <span>{{oldShareInfo.paperName}}</span>》测试未完成，戳我继续
@@ -100,7 +100,8 @@
     <!--  <mask isShow="{{ loading1 }}"></mask>-->
     <serving mobile="{{ mobile }}" wechat="{{ wechat }}"></serving>
 </block>
-<view wx:if="{{ loading }}" class="skeleton-index-page-wrapper" style="margin-top:{{ (statusbarHeight + titleHeight) }}px;">
+<view wx:if="{{ loading }}" class="skeleton-index-page-wrapper"
+      style="margin-top:{{ (statusbarHeight + titleHeight) }}px;">
     <view class="skeleton-banner-wrapper">
         <view class="skeleton-banner">
             <van-skeleton row="1"></van-skeleton>

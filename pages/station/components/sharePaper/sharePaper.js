@@ -65,6 +65,9 @@ Page({
       count = e.detail.value;
     }
     if (count > parseInt(maxCount) && !hadBuyout && !isFree) {
+      that.setData({
+        count: maxCount
+      });
       app.toast("最大可选择数量为" + maxCount);
       return;
     }
@@ -96,6 +99,7 @@ Page({
     if (!costNum && !hadBuyout && !isFree ) {
       return;
     }
+    console.log(costNum,maxCount);
     if (costNum > maxCount && !hadBuyout && !isFree) {
       app.toast("测评可用数量不足");
       return;

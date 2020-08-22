@@ -43,7 +43,7 @@
 <block wx:if="{{ util.isIncludes(assistant,evaluation.evaluationInfo.id) }}">
     <view class="button-group">
         <view class="meal" bindtap="servingTrigger">
-            <meal isShow="{{ true }}" icon="../../images/detail@icon-meal.png" title="定制个性化问题，开启候选人视频作答"
+            <meal isShow="{{ true }}" icon="../../images/icon/icon@icon-meal.png" title="定制个性化问题，开启候选人视频作答"
                   subtitle="➜" align="center" subMargin="0 20rpx 0 0">
             </meal>
         </view>

@@ -286,25 +286,25 @@ App({
     changeDate: function (time, dateType) {
         //日期格式化处理
         //dateType示例：yyyy-MM-dd hh:mm:ss
-        time = new Date(time)
-        var y = time.getFullYear()
-        var M = time.getMonth() + 1
-        var d = time.getDate()
-        var h = time.getHours()
-        var m = time.getMinutes()
-        var s = time.getSeconds()
-        M = M < 10 ? ('0' + M) : M
-        d = d < 10 ? ('0' + d) : d
-        h = h < 10 ? ('0' + h) : h
-        m = m < 10 ? ('0' + m) : m
-        s = s < 10 ? ('0' + s) : s
-        dateType = dateType.replace('yyyy', y)
-        dateType = dateType.replace('MM', M)
-        dateType = dateType.replace('dd', d)
-        dateType = dateType.replace('hh', h)
-        dateType = dateType.replace('mm', m)
-        dateType = dateType.replace('ss', s)
-        return dateType
+        time = new Date(time);
+        var y = time.getFullYear();
+        var M = time.getMonth() + 1;
+        var d = time.getDate();
+        var h = time.getHours();
+        var m = time.getMinutes();
+        var s = time.getSeconds();
+        M = M < 10 ? ('0' + M) : M;
+        d = d < 10 ? ('0' + d) : d;
+        h = h < 10 ? ('0' + h) : h;
+        m = m < 10 ? ('0' + m) : m;
+        s = s < 10 ? ('0' + s) : s;
+        dateType = dateType.replace('yyyy', y);
+        dateType = dateType.replace('MM', M);
+        dateType = dateType.replace('dd', d);
+        dateType = dateType.replace('hh', h);
+        dateType = dateType.replace('mm', m);
+        dateType = dateType.replace('ss', s);
+        return dateType;
     },
 
     /**
@@ -315,49 +315,38 @@ App({
      * @return: none
      * @date: 2020/7/21
      */
-    doAjax: function (params) {
-        //request请求
-        var that = this
-        var url = that.host + '/hola/' + params.url
-
-        var urlArr = []
-        if (urlArr.includes(params.url.split('/')[0])) {
-            url = that.host + '/haola/' + params.url
-        }
+    doAjax: function (params={noLoading:true}) {
+        const that = this;
+        const url = this.host + '/hola/' + params.url;
         if (!params.noLoading) {
-            //默认显示加载中弹窗
+            console.log(params.url);
             wx.showLoading({
                 title: '正在请求...',
-            })
+            });
         }
-        params.data = params.data || {}
-        params.data['userId'] = (that.globalData.userInfo || {}).id || ''
-        params.data['teamId'] = that.teamId
-        params.data['teamRole'] = that.teamRole
+        params.data = params.data || {};
+        params.data['userId'] = (that.globalData.userInfo || {}).id || '';
+        params.data['teamId'] = that.teamId;
+        params.data['teamRole'] = that.teamRole;
         wx.request({
             url: url,
-            // url: that.host + params.url,
             method: params.method || 'POST',
             data: params.data || {},
             header: params.header || {},
             success: function (ret) {
-                wx.hideLoading()
-                var retData = ret.data
+                wx.hideLoading();
+                var retData = ret.data;
                 if (retData.code) {
-                    if (params.error) return params.error(retData)
+                    if (params.error) return params.error(retData);
                     wx.showToast({
                         title: retData.msg,
                         icon: 'none',
                         duration: 2000,
-                    })
-                    return
+                    });
+                    return;
                 }
                 if (params.success) {
-                    try {
-                        return params.success(retData)
-                    } catch (e) {
-
-                    }
+                    try { return params.success(retData) } catch (e) {}
                 }
             },
             error: function () {
@@ -546,24 +535,5 @@ App({
                 that.getMyTeamList(cb);
             },
         })
-    },
-
-    /**
-     * @Description: 测试函数
-     * @author: WE!D
-     * @name: output
-     * @args: String
-     * @return: none
-     * @date: 2020/7/21
-     */
-    output: function (text) {
-        if (!deBug) return
-        let _text = text || '当前时间'
-        _text += ':' + (+Date.now())
-        if (debuggerQueue.length > 0) {
-            const diff = +Date.now() - debuggerQueue[debuggerQueue.length - 1]
-            _text += ',diff:' + diff
-        }
-        debuggerQueue.push(+Date.now())
-    },
-})
+    }
+});

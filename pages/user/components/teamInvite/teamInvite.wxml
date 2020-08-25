@@ -1,11 +1,11 @@
 <!--user/teamInvite.wxml-->
 <view class="isPass" wx:if="{{!id&&showPage}}">
-  <image src="../img/user/teams/icon11.png"></image>
+  <image src="../../images/teams@icon-team-fail.png"></image>
   <view class="mind1">链接已失效</view>
   <view class="back" bindtap="back">返回首页</view>
 </view>
 <view wx:elif="{{showPage}}" class="teamInvite">
-  <image src="../img/user/teams/icon10.png"></image>
+  <image src="../../images/teams@icon-team-invite.png"></image>
   <view class="mind1">你即将加入</view>
   <view class="mind1">{{name}}</view>
   <view class="bottomView">

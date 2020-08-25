@@ -11,9 +11,7 @@ Page({
       name: name
     });
   },
-  onShow: function() {
-
-  },
+  onShow: function() {},
   /**
    * 进入测评管理页面
    */
@@ -25,5 +23,13 @@ Page({
     wx.aldstat.sendEvent('查看自己的报告', {
       '测评名称': `名称：${ name }`
     });
+  },
+  onUnload: function () {
+    wx.reLaunch({
+      url: `../../../manager/manager`,
+      fail: function (err) {
+        console.error(err);
+      }
+    })
   }
-})
+});

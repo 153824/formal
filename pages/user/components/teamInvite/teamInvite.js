@@ -29,7 +29,7 @@ Page({
     }
     var that = this;
 
-    function toCkeck() {
+    function toCheck() {
       app.doAjax({
         url: "getTeamInvite",
         data: {
@@ -45,11 +45,11 @@ Page({
       });
     }
     if (app.isLogin) {
-      toCkeck();
+      toCheck();
       return;
     }
     app.checkUser = function() {
-      toCkeck();
+      toCheck();
       app.checkUser = null;
     };
     // var that = this;
@@ -172,7 +172,7 @@ Page({
             return;
           }
           wx.switchTab({
-            url: '../../../index/index'
+            url: '../../../home/home'
           });
         }, 500);
       }

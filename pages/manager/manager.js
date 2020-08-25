@@ -144,13 +144,6 @@ Page({
   onReachBottom: function () {
 
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
   changeTab: function (e) {
     const targetValue = e.currentTarget.dataset.item,
         { checkedTime,evaluationId } = this.data,

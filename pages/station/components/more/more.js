@@ -78,13 +78,6 @@ Page({
   onReachBottom: function () {
 
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
   toEvaluationDetail: function(e){
     const { id } = e.currentTarget.dataset;
     wx.navigateTo({

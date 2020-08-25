@@ -9,12 +9,12 @@
     margin-right: 16rpx;
     text-decoration: line-through;
     font-size: 24rpx;
-    color: #B1B1B1CC;
+    color: rgb(177,177,177);
 }
 
 .actual-price{
     display: inline-block;
-    color: #E31A46FF;
+    color: rgba(226,23,61,1);
     font-weight: 600;
 }
 

@@ -457,7 +457,6 @@ Page({
             'signType': 'MD5',
             'paySign': res.payObj.paySign,
             'success': function(res) {
-              that.showMindDlgFn();
               wx.showToast({
                 title: '购买成功',
                 duration: 2000
@@ -513,14 +512,13 @@ Page({
       },
       success: function (res) {
         wx.requestPayment({
-          'appId': res.appId,
-          'timeStamp': res.timeStamp,
-          'nonceStr': res.nonceStr,
-          'package': res.package,
-          'signType': 'MD5',
-          'paySign': res.paySign,
-          'success': function(res) {
-            that.showMindDlgFn();
+          appId: res.appId,
+          timeStamp: res.timeStamp,
+          nonceStr: res.nonceStr,
+          package: res.package,
+          signType: 'MD5',
+          paySign: res.paySign,
+          success: function(res) {
             wx.showToast({
               title: '购买成功',
               duration: 2000
@@ -528,7 +526,9 @@ Page({
             setTimeout(function() {
               that.toGetPaperDetail();
             }, 500);
-            //这里完成跳转
+            that.setData({
+              buyByTicket: false
+            });
           },
           fail: function(res) {
             if (res.errMsg === "requestPayment:fail cancel") {
@@ -544,10 +544,15 @@ Page({
                 duration: 1200
               })
             }
-            //支付失败
-            console.error(res);
+            that.setData({
+              buyByTicket: false
+            });
           },
-          complete: function(res) {}
+          complete: function(res) {
+            that.setData({
+              buyByTicket: false
+            });
+          }
         })
       }
     });

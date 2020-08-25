@@ -909,7 +909,7 @@
                             <!--多选题-未配置对错-题目-->
                             <view wx:if="{{ recordItem.choiceType === 'multiple' && recordItem.correctIdx.length <= 0  }}"
                                   class="question-options">
-                                <view wx:for="{{ recordItem.options }}" wx:for-item="optionItem"
+                                <view wx:for="{{ recordItem.options }}" wx:for-item="optionItem"  wx:key="unique"
                                       wx:for-index="optionIndex" wx:key="unique" class="question-options-child">
                                     <title class="option-char {{ util.isIncludes(recordItem.respondIdx,optionIndex) ? 'user-checked-char' : '' }}">
                                         {{ util.ASCIIToChar(optionIndex) }}</title>
@@ -918,12 +918,12 @@
                                 </view>
                                 <title wx:if="{{ false }}" class="compare">
                                     正确答案:
-                                    <block wx:for="{{ recordItem.correctIdx }}" wx:for-item="correctItem">
+                                    <block wx:for="{{ recordItem.correctIdx }}" wx:for-item="correctItem" wx:key="unique">
                                         {{util.ASCIIToChar(correctItem)}}
                                     </block>
                                     <text></text>
                                     用户选择:
-                                    <block wx:for="{{ recordItem.respondIdx }}" wx:for-item="respondItem"
+                                    <block wx:for="{{ recordItem.respondIdx }}" wx:for-item="respondItem"  wx:key="unique"
                                            wx:key="unique">{{util.ASCIIToChar(respondItem)}}
                                     </block>
                                 </title>

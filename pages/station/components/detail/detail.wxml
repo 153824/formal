@@ -131,9 +131,7 @@
             <text>购买测评</text>
             <view style="display: flex;align-items: center;" bindtap="buyByTicket">
                 <image style="width: 30rpx;height: 30rpx;" src="../../images/detail@icon-ticket.png"></image>
-                <text style="font-weight: initial;font-size: 26rpx;color: rgba(157,157,157,1);line-height:36rpx;font-weight: 600">
-                    用券兑换
-                </text>
+                <view style="font-weight: initial;font-size: 26rpx;color: rgba(157,157,157,1);line-height:36rpx;font-weight: 600">用券兑换</view>
             </view>
         </view>
         <view wx:if="{{ buyByCounts }}" class="buy-by-counts">

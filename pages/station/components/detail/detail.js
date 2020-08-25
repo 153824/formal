@@ -663,7 +663,7 @@ Page({
       return {
         title: `${userInfo.nickname}邀您参与《${evaluationInfo.name}》测评~`,
         path: `pages/station/components/detail/detail?id=${id}`,
-        imageUrl: "http://ihola.luoke101.com/wxShareImg.png",
+        imageUrl: `${evaluationInfo.smallImg}`,
       }
     }
     app.doAjax({

@@ -121,7 +121,7 @@ App({
                     wx.aldPushSendOpenid(res.openId);
                 })
             },
-        })
+        });
         /**
          * @Description: 获取设置
          * @author: WE!D
@@ -147,7 +147,7 @@ App({
                     })
                 }
             },
-        })
+        });
         /**
          * @Description: 获取设备信息
          * @author: WE!D
@@ -317,9 +317,12 @@ App({
      */
     doAjax: function (params={noLoading:true}) {
         const that = this;
-        const url = this.host + '/hola/' + params.url;
+        const { prefix='' } = params;
+        let url = this.host + '/hola/' + params.url;
+        if(prefix){
+            url = `${this.host}/${prefix}/${params.url}`;
+        }
         if (!params.noLoading) {
-            console.log(params.url);
             wx.showLoading({
                 title: '正在请求...',
             });
@@ -337,6 +340,7 @@ App({
                 wx.hideLoading();
                 var retData = ret.data;
                 if (retData.code) {
+                    console.log("retData： ",retData);
                     if (params.error) return params.error(retData);
                     wx.showToast({
                         title: retData.msg,

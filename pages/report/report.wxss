@@ -963,7 +963,6 @@ swiper, swiper-item {
   display: flex;
   flex-direction: column;
   padding: 50rpx 40rpx;
-  width: 620rpx;
   height: 956rpx;
   background: rgba(255,255,255,1);
   box-shadow: 0rpx 4rpx 10rpx 0rpx rgba(200,200,200,0.34);
@@ -973,9 +972,8 @@ swiper, swiper-item {
   overflow: scroll !important;
 }
 .question-stem{
-  display: flex;
+  display: flex !important;
   margin-bottom: 52rpx;
-  width: 540rpx;
   font-size: 30rpx;
   font-family: PingFangSC-Medium,PingFang SC;
   font-weight: 600;
@@ -1222,4 +1220,7 @@ swiper, swiper-item {
 }
 .option-word-fault-color{
   color:  #FA6400;
+}
+.question-stem-rich-text-img{
+  max-width: 100%;
 }

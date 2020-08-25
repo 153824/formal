@@ -703,9 +703,12 @@
                     <swiper-item wx:for="{{ responseRecord }}" wx:for-item="recordItem" wx:key="unique"
                                  class="{{ cardCur === index ? 'cur':'' }}">
                         <view class="question-child swiper-item question-item">
-                            <view class="question-stem" style="display: block;">
-                                <rich-text wx:if="{{recordItem.choiceType === 'multiple'}}" nodes="<span style='font-size: 30rpx;font-weight: 600;color: #353EE8;'>【多选题】</span>{{ index+1 }}.{{ recordItem.stem }}"></rich-text>
-                                <rich-text wx:else nodes="{{ index+1 }}.{{ recordItem.stem }}"></rich-text>
+                            <view class="question-stem">
+                                <rich-text class="question-stem-rich-text"
+                                           wx:if="{{recordItem.choiceType === 'multiple'}}"
+                                           nodes="<p><span style='font-size: 30rpx;font-weight: 600;color: #353EE8;'>【多选题】</span>{{ index+1 }}.{{ util.richTextFilter(recordItem.stem) }}</p>"></rich-text>
+                                <rich-text wx:else class="question-stem-rich-text"
+                                           nodes="<p>{{ index+1 }}.{{ util.richTextFilter(recordItem.stem) }}</p>"></rich-text>
                             </view>
                             <!--单选题-未配置对错-题目-->
                             <view wx:if="{{ recordItem.choiceType === 'single' && recordItem.correctIdx.length <= 0  }}"

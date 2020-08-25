@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "press": "../common/press/press"
+    "press": "../../../../common/press/press",
+    "van-image": "../../../../common/vant-weapp/dist/image/index"
   }
 }

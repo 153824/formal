@@ -17,6 +17,7 @@ Page({
     endTime: "",
     statusbarHeight: app.globalData.statusbarHeight,
     titleHeight: app.globalData.titleHeight,
+    loading: "loading...",
   },
 
   /**

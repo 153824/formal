@@ -1,11 +1,11 @@
 {
   "usingComponents": {
-    "card": "../common/card/card",
-    "skill": "../common/skill/skill",
-    "title": "../common/title/title",
-    "mask": "../common/mask/mask",
-    "serving": "../common/serving/serving",
-    "van-skeleton": "../common/vant-weapp/dist/skeleton/index"
+    "card": "../../common/card/card",
+    "skill": "../../common/skill/skill",
+    "title": "../../common/title/title",
+    "mask": "../../common/mask/mask",
+    "serving": "../../common/serving/serving",
+    "van-skeleton": "../../common/vant-weapp/dist/skeleton/index"
   },
   "navigationStyle": "custom"
 }

@@ -1,13 +1,13 @@
 {
   "component": true,
   "usingComponents": {
-    "checkout": "../common/checkout/checkout",
-    "meal": "../common/meal/meal",
-    "press": "../common/press/press",
-    "ticket": "../common/ticket/ticket",
-    "free": "../common/free/free",
-    "serving": "../common/serving/serving",
-    "mask": "../common/mask/mask",
-    "van-overlay": "../common/vant-weapp/dist/overlay/index"
+    "checkout": "../../../../common/checkout/checkout",
+    "meal": "../../../../common/meal/meal",
+    "press": "../../../../common/press/press",
+    "ticket": "../../../../common/ticket/ticket",
+    "free": "../../../../common/free/free",
+    "serving": "../../../../common/serving/serving",
+    "mask": "../../../../common/mask/mask",
+    "van-overlay": "../../../../common/vant-weapp/dist/overlay/index"
   }
 }

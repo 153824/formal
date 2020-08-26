@@ -112,7 +112,7 @@ Page({
       pcQrcode: "1"
     };
     app.doAjax({
-      url: "toSharePaper",
+      url: "sharePapers/toSharePaper",
       method: "post",
       data: {
         id: that.data.paperId,

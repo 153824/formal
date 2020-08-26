@@ -220,7 +220,7 @@ Page({
       })
     }).then(res=>{
       app.doAjax({
-        url: 'toSharePaper',
+        url: 'sharePapers/toSharePaper',
         method: 'post',
         data: {
           type: "self",
@@ -293,7 +293,7 @@ Page({
   toReportDetail: function() {
     var that = this;
     app.doAjax({
-      url: 'toSharePaper',
+      url: 'sharePapers/toSharePaper',
       method: 'post',
       data: {
         type: "self",
@@ -358,7 +358,7 @@ Page({
     });
     function toNext(promise) {
       app.doAjax({
-        url: 'toSharePaper',
+        url: 'sharePapers/toSharePaper',
         method: 'post',
         data: {
           type: "self",
@@ -381,7 +381,7 @@ Page({
       });
     }
     app.doAjax({
-      url: 'toSharePaper',
+      url: 'sharePapers/toSharePaper',
       method: 'post',
       data: {
         type: "self",

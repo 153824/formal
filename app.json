@@ -22,7 +22,8 @@
     "pages/replying/replying",
     "pages/replying/components/finish/finish",
     "pages/replying/components/guide/guide",
-    "utils/ence_push/ence_push"
+    "utils/ence_push/ence_push",
+    "station/detail"
   ],
   "plugins": {
     "contactPlugin": {

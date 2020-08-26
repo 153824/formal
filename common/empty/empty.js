@@ -1,4 +1,11 @@
-// common/empty/empty.js
+/***********************************************************************************************************************
+ * @NAME: WEID       /       @DATE: 2020/8/20      /       @DESC: 变量注释模板(新增变量务必添加)
+ * title: 组件的标题
+ * type: 组件类型
+ * paperId: 测评ID
+ * isShow: 组件控制器
+ * status: 是否撤回(3-是,默认-1)
+ * ********************************************************************************************************************/
 const app = getApp();
 Component({
   /**
@@ -27,7 +34,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-
+    status: 3
   },
 
   /**
@@ -35,7 +42,7 @@ Component({
    */
   methods: {
     revocation: function(e) {
-      var that = this;
+      const that = this;
       wx.showModal({
         title: '提示',
         content: '确认撤销该分享？',
@@ -52,6 +59,9 @@ Component({
                 setTimeout(that.onShow, 1500);
                 that.setData({
                   isCancel: true
+                });
+                wx.redirectTo({
+                  url: `useHistoryDetail?sharePaperId=${ e.target.dataset.id }&status=${that.data.status}`,
                 })
               }
             });

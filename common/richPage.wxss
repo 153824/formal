@@ -1,6 +1,0 @@
-/* common/richPage.wxss */
-
-rich-text {
-  font-size: 28rpx;
-  display: block;
-}

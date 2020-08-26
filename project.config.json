@@ -34,7 +34,9 @@
 	},
 	"isGameTourist": false,
 	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
+	"simulatorPluginLibVersion": {
+		"qywx_simulator_plugin": "2.4.0"
+	},
 	"scripts": {
 		"beforeCompile": "",
 		"beforePreview": "",
@@ -86,45 +88,10 @@
 					"scene": null
 				},
 				{
-					"id": 3,
-					"name": "栏目详情",
-					"pathName": "store/category",
-					"query": "id=5d647727ba39c800675b3ddc",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "发放记录（单个测评）",
-					"pathName": "store/sendlog",
-					"query": "id=5d79a22ea673f5007080cdb1",
-					"scene": null
-				},
-				{
 					"id": -1,
 					"name": "我的",
 					"pathName": "user/index",
 					"query": "",
-					"scene": null
-				},
-				{
-					"id": 8,
-					"name": "测试详情界面",
-					"pathName": "store/detail",
-					"query": "id=5d8c521da91c930068f95812",
-					"scene": null
-				},
-				{
-					"id": 9,
-					"name": "会员权益",
-					"pathName": "store/vipdetail",
-					"query": "type=1",
-					"scene": null
-				},
-				{
-					"id": 10,
-					"name": "会员权益2",
-					"pathName": "store/vipdetail",
-					"query": "type=2",
 					"scene": null
 				},
 				{
@@ -153,13 +120,6 @@
 					"name": "报告详情",
 					"pathName": "report/detail",
 					"query": "id=5ed185aa7ce4740006746bbd",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "vip购买",
-					"pathName": "store/becomevip",
-					"query": "",
 					"scene": null
 				},
 				{
@@ -223,13 +183,6 @@
 				},
 				{
 					"id": -1,
-					"name": "vip购买",
-					"pathName": "store/becomevip",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
 					"name": "个人中心",
 					"pathName": "user/index",
 					"query": "",
@@ -285,13 +238,6 @@
 					"scene": null
 				},
 				{
-					"id": 31,
-					"name": "store/detail",
-					"pathName": "store/detail",
-					"query": "id=5db1624aa673f5007249c9ee",
-					"scene": null
-				},
-				{
 					"id": -1,
 					"name": "manager/manager",
 					"pathName": "manager/manager",
@@ -327,10 +273,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 37,
 					"name": "test/index",
 					"pathName": "test/index",
-					"query": "id=5ef872264b6b6b000782e07c",
+					"query": "id=5f2a697b1c2c2b0008babd20",
 					"scene": null
 				},
 				{
@@ -341,10 +287,10 @@
 					"scene": null
 				},
 				{
-					"id": 39,
+					"id": 31,
 					"name": "station/detail",
 					"pathName": "station/detail",
-					"query": "id=5f2297acdeb7760006afcba6",
+					"query": "id=5efed573b1ef0200062a85f7",
 					"scene": null
 				},
 				{
@@ -359,6 +305,20 @@
 					"name": "manager/manager",
 					"pathName": "manager/manager",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": 42,
+					"name": "test/index",
+					"pathName": "test/index",
+					"query": "id=5edefe43b9e2430008a3f99a",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "manager/manager",
+					"pathName": "manager/manager",
+					"query": "id=5efed573b1ef0200062a85f7",
 					"scene": null
 				}
 			]

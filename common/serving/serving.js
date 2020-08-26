@@ -6,7 +6,7 @@ Component({
   properties: {
     image: {
       type: String,
-      value: "../../img/index/serving.png"
+      value: "../../images/icon/icon@icon-serving.png"
     },
     mobile: {
       type: String,

@@ -1,41 +1,28 @@
 {
   "pages": [
-    "index/index",
-    "test/index",
-    "test/guide",
-    "test/finish",
-    "station/station",
-    "station/detail",
-    "common/webView",
-    "common/loginPage",
-    "user/teamticket",
-    "user/teamtitle",
-    "user/setting",
-    "user/index",
-    "user/upgrade",
-    "user/teams",
-    "user/feedback",
-    "user/teamuser",
-    "user/ticket",
-    "user/about",
-    "report/list",
-    "report/detail",
-    "user/invoice",
-    "report/shareList",
-    "user/addGroup",
-    "user/myTeam",
-    "user/teamInvite",
-    "user/selTeamAdmin",
-    "report/shareReport",
-    "store/sharePaper",
-    "station/send",
-    "common/dialog/dialog",
-    "user/useHistory",
-    "manager/manager",
-    "manager/useHistoryDetail",
-    "manager/evaluationReport",
-    "station/more",
-    "ence_push/ence_push"
+    "pages/home/home",
+    "pages/station/station",
+    "pages/station/components/detail/detail",
+    "pages/station/components/sharePaper/sharePaper",
+    "pages/manager/manager",
+    "pages/manager/components/evaluationReport/evaluationReport",
+    "pages/manager/components/useHistoryDetail/useHistoryDetail",
+    "pages/report/report",
+    "pages/report/components/shareReport/shareReport",
+    "pages/user/user",
+    "pages/user/components/addGroup/addGroup",
+    "pages/user/components/invoice/invoice",
+    "pages/user/components/myTeam/myTeam",
+    "pages/user/components/selTeamAdmin/selTeamAdmin",
+    "pages/user/components/teamInvite/teamInvite",
+    "pages/user/components/teams/teams",
+    "pages/user/components/teamTicket/teamTicket",
+    "pages/user/components/teamTitle/teamTitle",
+    "pages/user/components/ticket/ticket",
+    "pages/replying/replying",
+    "pages/replying/components/finish/finish",
+    "pages/replying/components/guide/guide",
+    "utils/ence_push/ence_push"
   ],
   "plugins": {
     "contactPlugin": {
@@ -51,28 +38,28 @@
     "selectedColor": "#5960ED",
     "list": [
       {
-        "pagePath": "index/index",
+        "pagePath": "pages/home/home",
         "text": "主页",
-        "iconPath": "img/index/index_no_active.png",
-        "selectedIconPath": "img/index/index_active.png"
+        "iconPath": "images/icon/icon@index-no-active.png",
+        "selectedIconPath": "images/icon/icon@index-active.png"
       },
       {
-        "pagePath": "station/station",
+        "pagePath": "pages/station/station",
         "text": "人岗匹配",
-        "iconPath": "img/index/person_job_no_active@2x.png",
-        "selectedIconPath": "img/index/person_job_active@2x.png"
+        "iconPath": "images/icon/icon@person-job-no-active.png",
+        "selectedIconPath": "images/icon/icon@person-job-active.png"
       },
       {
-        "pagePath": "manager/manager",
+        "pagePath": "pages/manager/manager",
         "text": "测评管理",
-        "iconPath": "img/index/evaluation-manager-no-active@2x.png",
-        "selectedIconPath": "img/index/evaluation-manager-active@2x.png"
+        "iconPath": "images/icon/icon@evaluation-manager-no-active.png",
+        "selectedIconPath": "images/icon/icon@evaluation-manager-active.png"
       },
       {
-        "pagePath": "user/index",
+        "pagePath": "pages/user/user",
         "text": "我的",
-        "iconPath": "img/index/my_no_active@2x.png",
-        "selectedIconPath": "img/index/my_active@2x.png"
+        "iconPath": "images/icon/icon@my-no-active.png",
+        "selectedIconPath": "images/icon/icon@my-active.png"
       }
     ]
   },

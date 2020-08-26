@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "press": "../common/press/press",
-    "dialog": "../common/dialog/dialog"
-  }
-}

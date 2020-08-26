@@ -1,2 +1,0 @@
-<!--common/richPage.wxml-->
-<rich-text nodes="{{texts}}"></rich-text>

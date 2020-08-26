@@ -1,70 +1,73 @@
 <!--common/checkout/checkout.wxml-->
 <view class="introduction" wx:if="{{ type === 'introduction' && isShow }}">
-  <view class="head">
-    <text class="title">{{title}}</text>
-    <text class="line"></text>
-    <text class="title-bg">Introduction</text>
-  </view>
-  <view class="introduction-content">
-    <rich-text nodes="{{ info }}"></rich-text>
-  </view>
-</view>
-
-<view class="dimension" wx:if="{{ type === 'dimension' && isShow }}">
-  <view class="head">
-    <text class="title">{{ title }}</text>
-    <text class="line"></text>
-    <text class="title-bg">Dimension</text>
-  </view>
-  <view class="dimension-content">
-    <view class="dimension-content-wrapper">
-       <view class="dimension-child" wx:for="{{ list }}">
-          <text>{{ item }}</text>
-       </view>
+    <view class="head">
+        <text class="title">{{title}}</text>
+        <text class="line"></text>
+        <text class="title-bg">Introduction</text>
     </view>
-  </view>
+    <view class="introduction-content">
+        <rich-text nodes="{{ info }}"></rich-text>
+    </view>
+</view>
+<view class="dimension" wx:if="{{ type === 'dimension' && isShow }}">
+    <view class="head">
+        <text class="title">{{ title }}</text>
+        <text class="line"></text>
+        <text class="title-bg">Dimension</text>
+    </view>
+    <view class="dimension-content">
+        <view class="dimension-content-wrapper">
+            <view class="dimension-child" wx:for="{{ list }}" wx:key="unique">
+                <text>{{ item }}</text>
+            </view>
+        </view>
+    </view>
 </view>
 
 <view class="scenarios" wx:if="{{ type === 'scenarios' && isShow }}">
-  <view class="head">
-    <text class="title">{{ title }}</text>
-    <text class="line"></text>
-    <text class="title-bg">Scenarios</text>
-  </view>
-  <view class="scenarios-area" wx:for="{{ list }}" wx:for-item="applyitem" wx:for-index="applyindex" wx:key="unique">
-      <view class="scenarios-content">
-          <view class="scenarios-child">
-              <image class="scenarios-icon" src="{{ applyitem.icon.length <= 0 ? '../../img/report/icon23.png' : applyitem.icon }}"></image>
-              <text class="scenarios-title">{{ applyitem.name }}</text>
-          </view>
-          <view class="scenarios-info">
-              {{ applyitem.content }}
-          </view>
-      </view>
-  </view>
+    <view class="head">
+        <text class="title">{{ title }}</text>
+        <text class="line"></text>
+        <text class="title-bg">Scenarios</text>
+    </view>
+    <view class="scenarios-area" wx:for="{{ list }}" wx:for-item="applyitem" wx:for-index="applyindex" wx:key="unique">
+        <view class="scenarios-content">
+            <view class="scenarios-child">
+                <image class="scenarios-icon"
+                       src="{{ applyitem.icon.length <= 0 ? '../../images/icon/icon@icon-edit.png' : applyitem.icon }}"></image>
+                <text class="scenarios-title">{{ applyitem.name }}</text>
+            </view>
+            <view class="scenarios-info">
+                {{ applyitem.content }}
+            </view>
+        </view>
+    </view>
 </view>
 
 <view class="example" wx:if="{{ type === 'example' && isShow }}">
-  <view class="head">
-    <text class="title">{{ title }}</text>
-    <text class="line"></text>
-    <text class="title-bg">Example</text>
-  </view>
-  <view class="example-content">
-      <view class="example-child" wx:for="{{ list }}" wx:for-item="quesTypeitem" wx:for-index="quesTypeindex" wx:key="unique" data-i="{{quesTypeindex}}">
-          <rich-text class="queStem bold rich-text" nodes="<p>{{quesTypeindex+1}}、{{quesTypeitem.stem}}</p>"></rich-text>
-          <view class="subject-wrapper" wx:for="{{quesTypeitem.options}}" wx:key="unique" wx:for-item="node" wx:for-index="idx">
-              <view class="subject-child">
-                  <view>
-                      {{ util.ASCIIToChar(idx) }}:
-                  </view>
-                  <view>
-                      {{ node }}
-                  </view>
-              </view>
-          </view>
-      </view>
-  </view>
+    <view class="head">
+        <text class="title">{{ title }}</text>
+        <text class="line"></text>
+        <text class="title-bg">Example</text>
+    </view>
+    <view class="example-content">
+        <view class="example-child" wx:for="{{ list }}" wx:for-item="quesTypeitem" wx:for-index="quesTypeindex"
+              wx:key="unique" data-i="{{quesTypeindex}}">
+            <rich-text class="queStem bold rich-text"
+                       nodes="<p>{{quesTypeindex+1}}、{{quesTypeitem.stem}}</p>"></rich-text>
+            <view class="subject-wrapper" wx:for="{{quesTypeitem.options}}" wx:key="unique" wx:for-item="node"
+                  wx:for-index="idx">
+                <view class="subject-child">
+                    <view>
+                        {{ util.ASCIIToChar(idx) }}:
+                    </view>
+                    <view>
+                        {{ node }}
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
 </view>
 
 <view class="report" wx:if="{{ type === 'report' && isShow }}">
@@ -76,7 +79,7 @@
     <view class="report-content">
         <view class="report-child" bindtap="changePage" data-name="{{ subtitle }}" data-id="{{ info }}">
             <text>{{ subtitle }}报告模板</text>
-            <image src="../../img/report/icon1.png"></image>
+            <image src="../../images/icon/icon@icon-right-arrow.png"></image>
         </view>
     </view>
 </view>
@@ -98,7 +101,8 @@
             <view wx:else>即将推出，敬请期待</view>
         </view>
     </view>
-    <view wx:else class="price-content-ios" style="background-image: url('http://ihola.luoke101.com/ios-buyout-img.png')">
+    <view wx:else class="price-content-ios"
+          style="background-image: url('http://ihola.luoke101.com/ios-buyout-img.png')">
         <view>由于相关政策规定</view>
         <view>iOS 暂不支持显示报价方案</view>
     </view>
@@ -111,9 +115,12 @@
         <text class="title-bg">Example</text>
     </view>
     <view class="example-content">
-        <view class="example-child" wx:for="{{ list }}" wx:for-item="quesTypeitem" wx:for-index="quesTypeindex" wx:key="unique" data-i="{{quesTypeindex}}">
-            <rich-text class="queStem bold rich-text" nodes="<p>{{quesTypeindex+1}}、{{quesTypeitem.stem}}</p>"></rich-text>
-            <view class="subject-wrapper" wx:for="{{quesTypeitem.options}}" wx:key="unique" wx:for-item="node" wx:for-index="idx">
+        <view class="example-child" wx:for="{{ list }}" wx:for-item="quesTypeitem" wx:for-index="quesTypeindex"
+              wx:key="unique" data-i="{{quesTypeindex}}">
+            <rich-text class="queStem bold rich-text"
+                       nodes="<p>{{quesTypeindex+1}}、{{quesTypeitem.stem}}</p>"></rich-text>
+            <view class="subject-wrapper" wx:for="{{quesTypeitem.options}}" wx:key="unique" wx:for-item="node"
+                  wx:for-index="idx">
                 <view class="subject-child">
                     <view>
                         {{ util.ASCIIToChar(idx) }}:
@@ -126,5 +133,4 @@
         </view>
     </view>
 </view>
-
-<wxs src="../util.wxs" module="util"></wxs>
+<wxs src="../../utils/util.wxs" module="util"></wxs>

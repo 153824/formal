@@ -1,0 +1,210 @@
+<!--home.wxml-->
+<block>
+    <title id="title"></title>
+</block>
+<block wx:if="{{ !loading }}">
+    <view class="topTestView flex" style="margin-top:{{ (statusbarHeight + titleHeight) }}px;"
+          wx:if="{{oldShareInfo&&oldShareInfo.id}}" bindtap="goToReplying">
+        <image class="icon25" src="./images/home@icon-broadcast.png"></image>
+        <view class="flex-main">您有一份《
+            <span>{{oldShareInfo.paperName}}</span>》测试未完成，戳我继续
+        </view>
+        <image class="icon24" src="./images/home@icon-close.png" data-t="2"></image>
+    </view>
+    <view class="container font"
+          style="padding-top:{{ oldShareInfo&&oldShareInfo.id ? 0 : (statusbarHeight + titleHeight) }}px;">
+        <view class="header-wrapper">
+            <view class="banner">
+                <swiper wx:if="{{ banner.isShow }}" autoplay="true" indicator-dots="{{banner.data.length>1?true:false}}"
+                        circular="true" indicator-color="rgba(255,255,255,0.3)" indicator-active-color="#fff">
+                    <block wx:for="{{banner.data}}" wx:key="unique">
+                        <swiper-item bindtap="gotoDetail" data-id="{{ item.linkId }}">
+                            <image src="{{item.picture}}" class="slide-image" style="width: 670rpx;height: 320rpx;"/>
+                        </swiper-item>
+                    </block>
+                </swiper>
+            </view>
+            <view class="function-set" wx:if="{{ navigation.isShow }}">
+                <view wx:for="{{ navigation.data }}" wx:key="unique" class="function-set-child"
+                      data-id="{{ item.columnId }}"
+                      data-name="{{ item.name }}" bindtap="gotoMore">
+                    <image src="{{item.picture}}"></image>
+                    <text>{{item.name}}</text>
+                </view>
+            </view>
+        </view>
+        <view wx:for="{{ column }}" wx:key="unique" wx:for-item="columnItem" wx:if="{{ columnItem.data.length > 0 }}">
+            <view class="header column-title">
+                <text>{{ columnItem.column_name }}</text>
+            </view>
+            <view wx:if="{{ columnItem.showType == 1 }}" class="card-wrapper">
+                <view class="card-set">
+                    <block wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem">
+                        <view wx:if="{{ isIos }}" bindtap="changePage" data-name="{{ dataItem.name }}"
+                              data-url='../station/components/detail/detail?id={{ dataItem.id }}&name={{dataItem.name}}'>
+                            <card image="{{ dataItem.img }}" title="{{ dataItem.name }}"
+                                  subtitle="{{ dataItem.infoPc }}"
+                                  feature="{{ dataItem.isFree ? '免费' : '' }}">
+                            </card>
+                        </view>
+                        <view wx:else bindtap="changePage" data-name="{{ dataItem.name }}"
+                              data-url='../station/components/detail/detail?id={{ dataItem.id }}&name={{dataItem.name}}'>
+                            <card image="{{ dataItem.img }}" title="{{ dataItem.name }}"
+                                  subtitle="{{ dataItem.infoPc }}"
+                                  feature="{{ dataItem.isFree ? '免费' : '￥' + (dataItem.price || dataItem.defaultPrice) }}">
+                            </card>
+                        </view>
+                    </block>
+                </view>
+            </view>
+            <view wx:elif="{{ columnItem.showType == 2 }}">
+                <view wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem" wx:for-index="dataIndex"
+                      wx:if="{{ dataIndex < 2 }}">
+                    <view bindtap="changePage"
+                          data-url='../station/components/detail?id={{ dataItem.id }}&name={{ dataItem.name }}'
+                          data-name="{{ dataItem.name }}">
+                        <skill ios="{{ isIos }}" free="{{ dataItem.isFree }}" price="{{ dataItem.price }}"
+                               actual="{{ dataItem.defaultPrice }}" title="{{ dataItem.name }}"
+                               subtitle="{{ dataItem.infoPc }}"
+                               image="{{ dataItem.smallImg }}" objectId="{{ dataItem.id }}" name="{{ dataItem.name }}"
+                               companyUseName="{{ dataItem.companyUseName }}"
+                               companyUseNum="{{ dataItem.companyUseNum }}">
+                        </skill>
+                    </view>
+                </view>
+                <button wx:if="{{ columnItem.data.length > 2 }}" class="view-more" data-id="{{ columnItem.column_id }}"
+                        data-name="{{ columnItem.column_name }}" bindtap="gotoMore">
+                    查看更多
+                </button>
+            </view>
+        </view>
+
+        <view class="recomend-reading" wx:if="{{ news.isShow }}">
+            <view class="header column-title">
+                <text>推荐阅读</text>
+            </view>
+            <view class="recomend-set" wx:for="{{news.data}}" wx:key="unique">
+                <view class="recomend-child" bindtap="navWebView" data-url="{{item.linkUrl}}">
+                    <view class="cover-wrapper">
+                        <image src="{{item.picture||'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ7IibHdlO45pMJLDYI0WDibHuuKMrxNzrdzuf8pBib8MzbiaIxrl0icTD7u9eadm8zuYElF9JlBMYZbog/132'}}"
+                               class="cover"></image>
+                    </view>
+                    <view class="recomend-info">
+                        <text class="title">{{item.name}}</text>
+                        <text class="date">{{item.recommendTime}}</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <!--  <mask isShow="{{ loading1 }}"></mask>-->
+    <serving mobile="{{ mobile }}" wechat="{{ wechat }}"></serving>
+</block>
+<view wx:if="{{ loading }}" class="skeleton-index-page-wrapper"
+      style="margin-top:{{ (statusbarHeight + titleHeight) }}px;">
+    <view class="skeleton-banner-wrapper">
+        <view class="skeleton-banner">
+            <van-skeleton row="1"></van-skeleton>
+        </view>
+        <view class="skeleton-functional">
+            <view class="skeleton-functional-child">
+                <van-skeleton row="1"></van-skeleton>
+                <view class="skeleton-functional-child-rectangle-item" style="margin-top: 20rpx;">
+                    <van-skeleton row="1"></van-skeleton>
+                </view>
+            </view>
+            <view class="skeleton-functional-child">
+                <van-skeleton row="1"></van-skeleton>
+                <view class="skeleton-functional-child-rectangle-item" style="margin-top: 20rpx;">
+                    <van-skeleton row="1"></van-skeleton>
+                </view>
+            </view>
+            <view class="skeleton-functional-child">
+                <van-skeleton row="1"></van-skeleton>
+                <view class="skeleton-functional-child-rectangle-item" style="margin-top: 20rpx;">
+                    <van-skeleton row="1"></van-skeleton>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="skeleton-content-wrapper">
+        <view class="skeleton-content-child">
+            <view class="skeleton-column-title">
+                <van-skeleton row="1"></van-skeleton>
+                <view class="skeleton-underline">
+                    <van-skeleton row="1"></van-skeleton>
+                </view>
+            </view>
+            <view class="skeleton-column-child-wrapper">
+                <view class="skeleton-column-child">
+                    <view class="skeleton-column-banner">
+                        <van-skeleton row="1"></van-skeleton>
+                    </view>
+                    <view class="skeleton-column-child-title">
+                        <van-skeleton row="1"></van-skeleton>
+                    </view>
+                    <view class="skeleton-column-child-info">
+                        <van-skeleton row="3"></van-skeleton>
+                    </view>
+                </view>
+                <view class="skeleton-column-child">
+                    <view class="skeleton-column-banner">
+                        <van-skeleton row="1"></van-skeleton>
+                    </view>
+                    <view class="skeleton-column-child-title">
+                        <van-skeleton row="1"></van-skeleton>
+                    </view>
+                    <view class="skeleton-column-child-info">
+                        <van-skeleton row="3"></van-skeleton>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="skeleton-content-child">
+            <view class="skeleton-column-title">
+                <van-skeleton row="1"></van-skeleton>
+                <view class="skeleton-underline">
+                    <van-skeleton row="1"></van-skeleton>
+                </view>
+            </view>
+            <view class="skeleton-column-child-wrapper">
+                <view class="skeleton-column-child">
+                    <view class="skeleton-column-banner">
+                        <van-skeleton row="1"></van-skeleton>
+                    </view>
+                    <view class="skeleton-column-child-title">
+                        <van-skeleton row="1"></van-skeleton>
+                    </view>
+                    <view class="skeleton-column-child-info">
+                        <van-skeleton row="3"></van-skeleton>
+                    </view>
+                </view>
+                <view class="skeleton-column-child">
+                    <view class="skeleton-column-banner">
+                        <van-skeleton row="1"></van-skeleton>
+                    </view>
+                    <view class="skeleton-column-child-title">
+                        <van-skeleton row="1"></van-skeleton>
+                    </view>
+                    <view class="skeleton-column-child-info">
+                        <van-skeleton row="3"></van-skeleton>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="skeleton-tabbar-wrapper">
+        <view class="skeleton-tabbar-child">
+            <van-skeleton row="1"></van-skeleton>
+        </view>
+        <view class="skeleton-tabbar-child">
+            <van-skeleton row="1"></van-skeleton>
+        </view>
+        <view class="skeleton-tabbar-child">
+            <van-skeleton row="1"></van-skeleton>
+        </view>
+        <view class="skeleton-tabbar-child">
+            <van-skeleton row="1"></van-skeleton>
+        </view>
+    </view>
+</view>

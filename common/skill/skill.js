@@ -14,7 +14,7 @@ Component({
     },
     image: {
       type: String,
-      value: "../../img/index/classic_test@2x.png"
+      value: "../../images/index/classic_test@2x.png"
     },
     isShow: {
       type: Boolean,
@@ -92,17 +92,8 @@ Component({
   /**
    * 组件的方法列表
    */
-  methods: {
-    // changePage: function (e) {
-    //   const { id,name } = e.currentTarget.dataset;
-    //   wx.navigateTo({
-    //       url: `../station/detail?id=${ id }`
-    //   });
-    // }
-  },
+  methods: {},
   lifetimes: {
-    attached() {
-      console.log()
-    }
+    attached() {}
   }
 });

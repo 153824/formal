@@ -39,481 +39,505 @@ const qiniuUpload = require("./utils/qiniuUpload");
 const push = require('./utils/push_sdk.js');
 const deBug = false;
 const debuggerQueue = []; // 用于判断请求时长
-
+const common = require('./utils/common.js');
 qiniuUpload.init({
-  region: 'SCN',
-  domain: 'ihola.luoke101.com',
-  uptokenURL: 'https://admin.luoke101.com/hola/getQiNiuToken',
-  shouldUseQiniuFileName: false
+    region: 'SCN',
+    domain: 'ihola.luoke101.com',
+    uptokenURL: 'https://admin.luoke101.com/hola/getQiNiuToken',
+    shouldUseQiniuFileName: false
 });
 
 App({
-  defaultShareObj: {
-    imageUrl: "http://ihola.luoke101.com/wxShareImg.png",
-  },
-  teamName: "",
-  teamId: "",
-  teamRole: "",
-  isLogin: false,
-  isIos: false,
-  qiniuUpload: qiniuUpload,
-  isIphoneX: false,
-  isPC: false,
-  // host: "http://192.168.0.101:3000",
-  // host: "https://api.dev.luoke101.com",
-  host: "https://h5.luoke101.com",
-  globalData: {
-    appid: wx.getAccountInfoSync().miniProgram.appId,
-    userInfo: null,
-    userMsg: {},
-    team: null,
-    teams: [],
-    titleHeight: 0,
-    statusbarHeight: 0,
-    windowHeight: 0,
-    screenHeight: 0,
-    pixelRate: 0,
-    eventId: "5ea6b2b26df4251c4a09a4cc",
-    assistant: ["5efed573b1ef0200062a85f7"],
-    redirectReportId: null
-  },
-  onLaunch: function(options) {
-    wx.hideTabBar({
-      animation: true
-    });
-    var that = this;
-    var referrerInfo = options.referrerInfo;
-    var menuBtnObj = wx.getMenuButtonBoundingClientRect();
-    var sysMsg = wx.getSystemInfoSync();
-    this.isIphoneX = false;
-    this.isIos = false;
-    this.isLogin = false;
-    this.fromAppId = '';
-    this.teamId = wx.getStorageSync("myTeamId") || "";
-    this.rate = sysMsg.windowWidth / 750;
-    if ( referrerInfo && referrerInfo.appid ) {
-      this.fromAppId = referrerInfo.appid;
-    }
-    wx.removeStorageSync("hideLastTestMind");
-    wx.onMemoryWarning(function(res) {
-      console.log('onMemoryWarningReceive', res)
-    });
-    /*获取机型 **/
-    if (sysMsg.model.indexOf("iPhone X") != -1) {
-      this.isIphoneX = true;
-    }
-    if (sysMsg.system.indexOf("iOS") != -1) {
-      this.isIos = true;
-    }
-    if(sysMsg.platform.indexOf("windows") != -1){
-      this.isPC = true;
-      console.log("System",sysMsg.platform.indexOf("windows"));
-    }
-    /**
-     * @Description: 登录
-     * @author: WE!D
-     * @name: wx.login
-     * @args: Object
-     * @return: Object {openId, sessionKey, unionId}
-     * @date: 2020/7/21
-    */
-    wx.login({
-      success: res => {
-        this.userLogin(res.code).then(res=>{
-          wx.aldPushSendOpenid(res.openId);
+    defaultShareObj: {
+        imageUrl: "http://ihola.luoke101.com/wxShareImg.png",
+    },
+    teamName: "",
+    teamId: "",
+    teamRole: "",
+    isLogin: false,
+    isIos: false,
+    qiniuUpload: qiniuUpload,
+    isIphoneX: false,
+    isPC: false,
+    host: "http://192.168.0.101:3000",
+    // host: "https://api.dev.luoke101.com",
+    // host: 'https://h5.luoke101.com',
+    globalData: {
+        appid: wx.getAccountInfoSync().miniProgram.appId,
+        userInfo: null,
+        userMsg: {},
+        team: null,
+        teams: [],
+        titleHeight: 0,
+        statusbarHeight: 0,
+        windowHeight: 0,
+        screenHeight: 0,
+        pixelRate: 0,
+        eventId: "5ea6b2b26df4251c4a09a4cc",
+        assistant: ["5efed573b1ef0200062a85f7"]
+    },
+    onLaunch: function (options) {
+        wx.hideTabBar({
+            animation: true,
+        })
+        var that = this;
+        var referrerInfo = options.referrerInfo;
+        var menuBtnObj = wx.getMenuButtonBoundingClientRect();
+        var sysMsg = wx.getSystemInfoSync();
+        this.isIphoneX = false;
+        this.isIos = false;
+        this.isLogin = false;
+        this.fromAppId = '';
+        this.teamId = wx.getStorageSync('myTeamId') || '';
+        this.rate = sysMsg.windowWidth / 750;
+        if (referrerInfo && referrerInfo.appid) {
+            this.fromAppId = referrerInfo.appid
+        }
+        wx.removeStorageSync('hideLastTestMind');
+        wx.onMemoryWarning(function (res) {
+            console.log('onMemoryWarningReceive', res)
         });
-      }
-    });
-    /**
-     * @Description: 获取设置
-     * @author: WE!D
-     * @name: wx.getSetting
-     * @args: Object
-     * @return: Object
-     * @date: 2020/7/21
-    */
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
+        /*获取机型 **/
+        if (sysMsg.model.indexOf('iPhone X') != -1) {
+            this.isIphoneX = true
+        }
+        if (sysMsg.system.indexOf('iOS') != -1) {
+            this.isIos = true
+        }
+        if (sysMsg.platform.indexOf("windows") != -1) {
+            this.isPC = true;
+        }
+        /**
+         * @Description: 登录
+         * @author: WE!D
+         * @name: wx.login
+         * @args: Object
+         * @return: Object {openId, sessionKey, unionId}
+         * @date: 2020/7/21
+         */
+        wx.login({
             success: res => {
-              /** 可以将 res 发送给后台解码出 unionId */
-              this.globalData.userInfo = Object.assign(res.userInfo, this.globalData.userInfo || {});
-              /** 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回 */
-              /** 所以此处加入 callback 以防止这种情况 */
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res);
-              }
-            }
-          })
-        }
-      }
-    });
-    /**
-     * @Description: 获取设备信息
-     * @author: WE!D
-     * @name: wx.getSystemInfo
-     * @args: Object
-     * @return: Object
-     * @date: 2020/7/21
-    */
-    wx.getSystemInfo({
-        success: (res) => {
-          let { windowHeight,screenHeight,windowWidth } = res;
-          let statusbarHeight = res.statusBarHeight,
-              titleHeight = menuBtnObj.height + (menuBtnObj.top - statusbarHeight)*2;
-          this.globalData.statusbarHeight = statusbarHeight;
-          this.globalData.titleHeight = titleHeight;
-          this.globalData.windowHeight = windowHeight;
-          this.globalData.windowWidth = windowWidth;
-          this.globalData.screenHeight = screenHeight;
-          this.globalData.pixelRate = 750 / windowWidth;
-        },
-        fail(err){
-          console.log(err);
-        }
-      });
-  },
-
-  /**
-   * @Description: 用户登录
-   * @author: WE!D
-   * @name: userLogin
-   * @args: String
-   * @return: Promise
-   * @date: 2020/7/21
-  */
-  userLogin: function(code) {
-    var that = this;
-    var userLoginPromise = new Promise((resolve, reject) => {
-      that.doAjax({
-        url: "userLogin",
-        method: "POST",
-        data: {
-          fromAppId: that.fromAppId,
-          appid: that.globalData.appid,
-          code: code
-        },
-        noLoading: true,
-        success: function(res) {
-          that.globalData.userMsg = res.userMsg || {};
-          var userData = res.data;
-          wx.hideLoading();
-          if (0 === res.code) {
-            var userMsg = that.globalData.userMsg;
-            wx.setStorageSync("userInfo", userData);
-            wx.setStorageSync("openId", userData.openid || userMsg.openid);
-            wx.setStorageSync("unionId", userData.uid || userMsg.unionid);
-            that.globalData.userInfo = Object.assign(userData, that.globalData.userInfo || {});
-            that.isLogin = true;
-            that.getMyTeamList(that.checkUser);
-            resolve ({ openId: userData.openid || userMsg.openid })
-          } else {
-            wx.showModal({
-              title: "登入失败！",
-              content: "网络故障，请退出重新进入小程序。",
-              showCancel: !1,
-              confirmText: "确定",
-              confirmColor: "#0099ff",
-              success: function(e) {}});
-            reject({ openId: "" });
-          };
-        },
-        complete: function() {
-          wx.hideLoading();
-        }
-      });
-    });
-    return userLoginPromise;
-  },
-
-  /**
-   * @Description: 获取用户信息
-   * @author: WE!D
-   * @name: getUserInfo
-   * @args: Function
-   * @return: none
-   * @date: 2020/7/21
-  */
-  getUserInfo: function(callBack) {
-    var that = this;
-    if (!wx.getStorageSync("openId") || !that.isLogin) {
-      callBack && callBack();
-      return;
-    }
-    that.checkUser = null;
-    that.doAjax({
-      url: "userDetail",
-      method: "GET",
-      data: {
-        openid: wx.getStorageSync("openId")
-      },
-      noLoading: true,
-      success: function(res) {
-        var userData = res.data;
-        if (0 === res.code) {
-          var userMsg = that.globalData.userMsg;
-          wx.setStorageSync("userInfo", userData);
-          wx.setStorageSync("openId", userData.openid || userMsg.openid);
-          wx.setStorageSync("unionId", userData.uid || userMsg.unionid);
-          that.globalData.userInfo = Object.assign(that.globalData.userInfo || {}, userData);
-        }
-        wx.hideLoading();
-        that.getMyTeamList(callBack);
-      },
-      fail(err) {
-        wx.hideLoading();
-      }
-    });
-  },
-
-  /**
-   * @Description: 时间转换函数
-   * @author: WE!D
-   * @name: changeDate
-   * @args: Date,String
-   * @return: String
-   * @date: 2020/7/21
-  */
-  changeDate: function(time, dateType) {
-    //日期格式化处理
-    //dateType示例：yyyy-MM-dd hh:mm:ss
-    time = new Date(time);
-    var y = time.getFullYear();
-    var M = time.getMonth() + 1;
-    var d = time.getDate();
-    var h = time.getHours();
-    var m = time.getMinutes();
-    var s = time.getSeconds();
-    M = M < 10 ? ("0" + M) : M;
-    d = d < 10 ? ("0" + d) : d;
-    h = h < 10 ? ("0" + h) : h;
-    m = m < 10 ? ("0" + m) : m;
-    s = s < 10 ? ("0" + s) : s;
-    dateType = dateType.replace("yyyy", y);
-    dateType = dateType.replace("MM", M);
-    dateType = dateType.replace("dd", d);
-    dateType = dateType.replace("hh", h);
-    dateType = dateType.replace("mm", m);
-    dateType = dateType.replace("ss", s);
-    return dateType;
-  },
-
-  /**
-   * @Description: 全局数据请求
-   * @author: WE!D
-   * @name: doAjax
-   * @args: Object
-   * @return: none
-   * @date: 2020/7/21
-  */
-  doAjax: function(params) {
-    //request请求
-    var that = this;
-    var url = that.host + "/hola/" + params.url;
-
-    var urlArr = ["homePages","reports","buyTickets","positionTags"];
-    if( urlArr.includes(params.url.split("/")[0]) ){
-      url = that.host+ "/haola/" +params.url;
-    }
-    if (!params.noLoading) {
-      //默认显示加载中弹窗
-      wx.showLoading({
-        title: '正在请求...'
-      });
-    }
-    params.data = params.data || {};
-    params.data["userId"] = (that.globalData.userInfo || {}).id || "";
-    params.data["teamId"] = that.teamId;
-    params.data["teamRole"] = that.teamRole;
-    wx.request({
-      url: url,
-      // url: that.host + params.url,
-      method: params.method || "POST",
-      data: params.data || {},
-      header: params.header || {},
-      success: function(ret) {
-        wx.hideLoading();
-        var retData = ret.data;
-        if (retData.code) {
-          if (params.error) return params.error(retData);
-          wx.showToast({
-            title: retData.msg,
-            icon: 'none',
-            duration: 2000
-          });
-          return;
-        }
-        if (params.success) {
-          try{
-            return params.success(retData);
-          }catch (e) {
-
-          }
-        }
-      },
-      error: function() {
-        wx.hideLoading();
-      }
-    });
-  },
-
-  /**
-   * @Description: 全局toast
-   * @author: WE!D
-   * @name: toast
-   * @args: String,Number
-   * @return: none
-   * @date: 2020/7/21
-  */
-  toast: function(text,duration=2000) {
-    wx.showToast({
-      title: text,
-      icon: "none",
-      duration
-    });
-  },
-
-  /**
-   * @Description: 数组去除空值
-   * @author: WE!D
-   * @name: trimSpace
-   * @args: Array
-   * @return: Array
-   * @date: 2020/7/21
-  */
-  trimSpace: function(array) {
-    for (var i = 0; i < array.length; i++) {
-      if ((array[i] == " " && array[i] != 0) || array[i] == null || typeof(array[i]) == "undefined") {
-        array.splice(i, 1);
-        i = i - 1;
-      }
-    }
-    return array;
-  },
-
-  /**
-   * @Description: 切换页面
-   * @author: WE!D
-   * @name: changePage
-   * @args: (String,String)
-   * @return: none
-   * @date: 2020/7/21
-  */
-  changePage: function(url, tab) {
-    var that = this;
-    if (url) {
-      wx.navigateTo({
-        url: url
-      });
-    }
-    if (tab) {
-      wx.switchTab({
-        url: tab,
-        success: function () {
-          that.onShow();
-        }
-      });
-    }
-  },
-
-  /**
-   * @Description: 获取团队列表
-   * @author: WE!D
-   * @name: getMyTeamList
-   * @args: Function
-   * @return: none
-   * @date: 2020/7/21
-  */
-  getMyTeamList: function(cb) {
-    var that = this;
-    that.doAjax({
-      url: "myTeamList",
-      method: "get",
-      noLoading: true,
-      data: {
-        teamId: that.teamId,
-        page: 1,
-        pageSize: 12
-      },
-      success: function(list) {
-        var toAddNew = true;
-        list = list || [];
-        if (that.checkUser && !that.isLogin) {
-          that.isLogin = true;
-        }
-        list.forEach(function(n) {
-          if (n.role == 3 && n.createUser.objectId == that.globalData.userInfo.id) { //有我创建的团队时不进行自动新增团队
-            toAddNew = false;
-          }
+                this.userLogin(res.code).then(res => {
+                    wx.aldPushSendOpenid(res.openId);
+                })
+            },
         });
-        if (list.length) {
-          var obj = list[0];
-          var teams = [];
-          that.teamId = obj.objectId;
-          that.teamName = obj.name;
-          that.teamRole = obj.role;
-          that.globalData.team = obj;
-          list.forEach((item,key)=>{
-            teams.push(item.name);
-          });
-          that.globalData.teams = teams;
-          // that.checkUserVip(obj);
-          cb && cb(list);
-        }
-        if (toAddNew && !list.length) {
-          that.addNewTeam(cb);
-        }
-        if (toAddNew && list.length) {
-          that.addNewTeam();
-        }
-      }
-    });
-  },
+        /**
+         * @Description: 获取设置
+         * @author: WE!D
+         * @name: wx.getSetting
+         * @args: Object
+         * @return: Object
+         * @date: 2020/7/21
+         */
+        wx.getSetting({
+            success: res => {
+                if (res.authSetting['scope.userInfo']) {
+                    wx.getUserInfo({
+                        success: res => {
+                            /** 可以将 res 发送给后台解码出 unionId */
+                            this.globalData.userInfo = Object.assign(res.userInfo,
+                                this.globalData.userInfo || {})
+                            /** 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回 */
+                            /** 所以此处加入 callback 以防止这种情况 */
+                            if (this.userInfoReadyCallback) {
+                                this.userInfoReadyCallback(res)
+                            }
+                        },
+                    })
+                }
+            },
+        });
+        /**
+         * @Description: 获取设备信息
+         * @author: WE!D
+         * @name: wx.getSystemInfo
+         * @args: Object
+         * @return: Object
+         * @date: 2020/7/21
+         */
+        wx.getSystemInfo({
+            success: (res) => {
+                let {windowHeight, screenHeight, windowWidth} = res
+                let statusbarHeight = res.statusBarHeight,
+                    titleHeight = menuBtnObj.height + (menuBtnObj.top - statusbarHeight) *
+                        2
+                this.globalData.statusbarHeight = statusbarHeight
+                this.globalData.titleHeight = titleHeight
+                this.globalData.windowHeight = windowHeight
+                this.globalData.windowWidth = windowWidth
+                this.globalData.screenHeight = screenHeight
+                this.globalData.pixelRate = 750 / windowWidth
+            },
+            fail(err) {
+                console.error(err)
+            },
+        })
+    },
 
-  /**
-   * @Description: 添加团队(默认会添加一个自己的团队)
-   * @author: WE!D
-   * @name: addNewTeam
-   * @args: Function
-   * @return: none
-   * @date: 2020/7/21
-  */
-  addNewTeam: function(cb) {
-    var that = this;
-    var userInfo = that.globalData.userInfo;
-    that.doAjax({
-      url: "updateTeamMember",
-      method: "post",
-      noLoading: true,
-      data: {
-        type: 6,
-        name: userInfo.nickname + "的团队",
-        remark: "自动生成的团队"
-      },
-      success: function() {
-        that.getMyTeamList(cb);
-      }
-    })
-  },
+    /**
+     * @Description: 用户登录
+     * @author: WE!D
+     * @name: userLogin
+     * @args: String
+     * @return: Promise
+     * @date: 2020/7/21
+     */
+    userLogin: function (code) {
+        var that = this
+        var userLoginPromise = new Promise((resolve, reject) => {
+            that.doAjax({
+                url: 'userLogin',
+                method: 'POST',
+                data: {
+                    fromAppId: that.fromAppId,
+                    appid: that.globalData.appid,
+                    code: code,
+                },
+                noLoading: true,
+                success: function (res) {
+                    that.globalData.userMsg = res.userMsg || {}
+                    var userData = res.data
+                    wx.hideLoading()
+                    if (0 === res.code) {
+                        var userMsg = that.globalData.userMsg
+                        wx.setStorageSync('userInfo', userData)
+                        wx.setStorageSync('openId', userData.openid || userMsg.openid)
+                        wx.setStorageSync('unionId', userData.uid || userMsg.unionid)
+                        that.globalData.userInfo = Object.assign(userData,
+                            that.globalData.userInfo || {})
+                        that.isLogin = true
+                        that.getMyTeamList(that.checkUser)
+                        resolve({openId: userData.openid || userMsg.openid})
+                    } else {
+                        wx.showModal({
+                            title: '登入失败！',
+                            content: '网络故障，请退出重新进入小程序。',
+                            showCancel: !1,
+                            confirmText: '确定',
+                            confirmColor: '#0099ff',
+                            success: function (e) {
+                            },
+                        })
+                        reject({openId: ''})
+                    }
 
-  /**
-   * @Description: 测试函数
-   * @author: WE!D
-   * @name: output
-   * @args: String
-   * @return: none
-   * @date: 2020/7/21
-  */
-  output: function (text) {
-    if (!deBug) return;
-    let _text = text || '当前时间'
-    _text += ':' + (+Date.now())
-    if (debuggerQueue.length > 0) {
-      const diff = +Date.now() - debuggerQueue[debuggerQueue.length - 1]
-      _text += ',diff:' + diff
+                },
+                complete: function () {
+                    wx.hideLoading()
+                },
+            })
+        })
+        return userLoginPromise
+    },
+
+    /**
+     * @Description: 获取用户信息
+     * @author: WE!D
+     * @name: getUserInfo
+     * @args: Function
+     * @return: none
+     * @date: 2020/7/21
+     */
+    getUserInfo: function (callBack) {
+        const that = this;
+        if (!wx.getStorageSync('openId') || !this.isLogin) {
+            callBack && callBack();
+            return;
+        }
+        const LOCAL_USER_INFO = wx.getStorageSync('USER_DETAIL');
+        this.checkUser = null;
+        if (Object.keys(LOCAL_USER_INFO).length > 0) {
+            common.setUserDetail.call(this, [LOCAL_USER_INFO]);
+            wx.hideLoading();
+            that.getMyTeamList(callBack)
+        } else {
+            this.doAjax({
+                url: 'userDetail',
+                method: 'GET',
+                data: {
+                    openid: wx.getStorageSync('openId'),
+                },
+                noLoading: true,
+                success: function (res) {
+                    wx.setStorage({
+                        key: 'USER_DETAIL',
+                        data: res
+                    });
+                    common.setUserDetail.call(this, [res]);
+                    wx.hideLoading();
+                    that.getMyTeamList(callBack);
+                },
+                fail(err) {
+                    wx.hideLoading()
+                },
+            })
+        }
+    },
+
+    /**
+     * @Description: 时间转换函数
+     * @author: WE!D
+     * @name: changeDate
+     * @args: Date,String
+     * @return: String
+     * @date: 2020/7/21
+     */
+    changeDate: function (time, dateType) {
+        //日期格式化处理
+        //dateType示例：yyyy-MM-dd hh:mm:ss
+        time = new Date(time);
+        var y = time.getFullYear();
+        var M = time.getMonth() + 1;
+        var d = time.getDate();
+        var h = time.getHours();
+        var m = time.getMinutes();
+        var s = time.getSeconds();
+        M = M < 10 ? ('0' + M) : M;
+        d = d < 10 ? ('0' + d) : d;
+        h = h < 10 ? ('0' + h) : h;
+        m = m < 10 ? ('0' + m) : m;
+        s = s < 10 ? ('0' + s) : s;
+        dateType = dateType.replace('yyyy', y);
+        dateType = dateType.replace('MM', M);
+        dateType = dateType.replace('dd', d);
+        dateType = dateType.replace('hh', h);
+        dateType = dateType.replace('mm', m);
+        dateType = dateType.replace('ss', s);
+        return dateType;
+    },
+
+    /**
+     * @Description: 全局数据请求
+     * @author: WE!D
+     * @name: doAjax
+     * @args: Object
+     * @return: none
+     * @date: 2020/7/21
+     */
+    doAjax: function (params={noLoading:true}) {
+        const that = this;
+        const { prefix='' } = params;
+        let url = this.host + '/hola/' + params.url;
+        if(prefix){
+            url = `${this.host}/${prefix}/${params.url}`;
+        }
+        if (!params.noLoading) {
+            wx.showLoading({
+                title: '正在请求...',
+            });
+        }
+        params.data = params.data || {};
+        params.data['userId'] = (that.globalData.userInfo || {}).id || '';
+        params.data['teamId'] = that.teamId;
+        params.data['teamRole'] = that.teamRole;
+        wx.request({
+            url: url,
+            method: params.method || 'POST',
+            data: params.data || {},
+            header: params.header || {},
+            success: function (ret) {
+                wx.hideLoading();
+                var retData = ret.data;
+                if (retData.code) {
+                    console.log("retData： ",retData);
+                    if (params.error) return params.error(retData);
+                    wx.showToast({
+                        title: retData.msg,
+                        icon: 'none',
+                        duration: 2000,
+                    });
+                    return;
+                }
+                if (params.success) {
+                    try { return params.success(retData) } catch (e) {}
+                }
+            },
+            error: function () {
+                wx.hideLoading()
+            },
+        })
+    },
+
+    /**
+     * @Description: 全局toast
+     * @author: WE!D
+     * @name: toast
+     * @args: String,Number
+     * @return: none
+     * @date: 2020/7/21
+     */
+    toast: function (text, duration = 2000) {
+        wx.showToast({
+            title: text,
+            icon: 'none',
+            duration,
+        })
+    },
+
+    /**
+     * @Description: 数组去除空值
+     * @author: WE!D
+     * @name: trimSpace
+     * @args: Array
+     * @return: Array
+     * @date: 2020/7/21
+     */
+    trimSpace: function (array) {
+        for (var i = 0; i < array.length; i++) {
+            if ((array[i] == ' ' && array[i] != 0) || array[i] == null ||
+                typeof (array[i]) == 'undefined') {
+                array.splice(i, 1)
+                i = i - 1
+            }
+        }
+        return array
+    },
+
+    /**
+     * @Description: 切换页面
+     * @author: WE!D
+     * @name: changePage
+     * @args: (String,String)
+     * @return: none
+     * @date: 2020/7/21
+     */
+    changePage: function (url, tab) {
+        var that = this
+        if (url) {
+            wx.navigateTo({
+                url: url,
+            })
+        }
+        if (tab) {
+            wx.switchTab({
+                url: tab,
+                success: function () {
+                    that.onShow()
+                },
+            })
+        }
+    },
+
+    /**
+     * @Description: 获取团队列表
+     * @author: WE!D
+     * @name: getMyTeamList
+     * @args: Function
+     * @return: none
+     * @date: 2020/7/21
+     */
+    getMyTeamList: function (cb) {
+        const that = this;
+        let LOCAL_MY_TEAM_LIST = wx.getStorageSync('GET_MY_TEAM_LIST');
+        if (LOCAL_MY_TEAM_LIST.length) {
+            var toAddNew = true
+            LOCAL_MY_TEAM_LIST = LOCAL_MY_TEAM_LIST || []
+            if (that.checkUser && !that.isLogin) {
+                that.isLogin = true
+            }
+            LOCAL_MY_TEAM_LIST.forEach(function (n) {
+                if (n.role == 3 && n.createUser.objectId ==
+                    that.globalData.userInfo.id) { //有我创建的团队时不进行自动新增团队
+                    toAddNew = false
+                }
+            })
+            if (LOCAL_MY_TEAM_LIST.length) {
+                var obj = LOCAL_MY_TEAM_LIST[0]
+                var teams = []
+                that.teamId = obj.objectId
+                that.teamName = obj.name
+                that.teamRole = obj.role
+                that.globalData.team = obj
+                LOCAL_MY_TEAM_LIST.forEach((item, key) => {
+                    teams.push(item.name)
+                })
+                that.globalData.teams = teams
+                cb && cb(LOCAL_MY_TEAM_LIST)
+            }
+            if (toAddNew && !LOCAL_MY_TEAM_LIST.length) {
+                that.addNewTeam(cb)
+            }
+            if (toAddNew && LOCAL_MY_TEAM_LIST.length) {
+                that.addNewTeam()
+            }
+        } else {
+            this.doAjax({
+                url: 'myTeamList',
+                method: 'get',
+                noLoading: true,
+                data: {
+                    teamId: that.teamId,
+                    page: 1,
+                    pageSize: 12,
+                },
+                success: function (list) {
+                    var toAddNew = true
+                    list = list || []
+                    if (list.length) {
+                        wx.setStorage({
+                            key: 'GET_MY_TEAM_LIST',
+                            data: list
+                        })
+                    }
+                    if (that.checkUser && !that.isLogin) {
+                        that.isLogin = true
+                    }
+                    list.forEach(function (n) {
+                        if (n.role == 3 && n.createUser.objectId ==
+                            that.globalData.userInfo.id) { //有我创建的团队时不进行自动新增团队
+                            toAddNew = false
+                        }
+                    })
+                    if (list.length) {
+                        var obj = list[0]
+                        var teams = []
+                        that.teamId = obj.objectId
+                        that.teamName = obj.name
+                        that.teamRole = obj.role
+                        that.globalData.team = obj
+                        list.forEach((item, key) => {
+                            teams.push(item.name)
+                        })
+                        that.globalData.teams = teams
+                        // that.checkUserVip(obj);
+                        cb && cb(list)
+                    }
+                    if (toAddNew && !list.length) {
+                        that.addNewTeam(cb)
+                    }
+                    if (toAddNew && list.length) {
+                        that.addNewTeam()
+                    }
+                },
+            });
+        }
+    },
+
+    /**
+     * @Description: 添加团队(默认会添加一个自己的团队)
+     * @author: WE!D
+     * @name: addNewTeam
+     * @args: Function
+     * @return: none
+     * @date: 2020/7/21
+     */
+    addNewTeam: function (cb) {
+        var that = this;
+        var userInfo = that.globalData.userInfo;
+        that.doAjax({
+            url: 'updateTeamMember',
+            method: 'post',
+            noLoading: true,
+            data: {
+                type: 6,
+                name: userInfo.nickname + '的团队',
+                remark: '自动生成的团队',
+            },
+            success: function () {
+                wx.removeStorageSync('GET_MY_TEAM_LIST');
+                that.getMyTeamList(cb);
+            },
+        })
     }
-    debuggerQueue.push(+Date.now())
-    console.log(_text)
-  }
 });

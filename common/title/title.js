@@ -96,25 +96,8 @@ Component({
                 teamRole: app.teamRole,
             });
             this.loadUserMsg(false);
-            // wx.switchTab({
-            //     url: `../${that.properties.url}`,
-            //     success: function (e) {
-            //         var page = getCurrentPages().pop();
-            //         if( page === "undefined" || page === "null" ){
-            //             return;
-            //         }
-            //         page.onShow();
-            //     }
-            // })
-            wx.switchTab({
-                url: `../../pages/${that.properties.url}`,
-                success: function (e) {
-                    var page = getCurrentPages().pop();
-                    if( page === "undefined" || page === "null" ){
-                        return;
-                    }
-                    page.onLoad({ loadingTrigger: true });
-                }
+            wx.reLaunch({
+                url: `../../pages/${that.properties.url}?loadingTrigger=true`,
             })
         },
 

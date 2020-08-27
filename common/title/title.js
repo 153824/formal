@@ -81,7 +81,7 @@ Component({
             app.teamName = nowTeam.name;
             app.teamRole = nowTeam.role;
             app.globalData.team = nowTeam;
-            app.globalData.selTeam = val;
+            app.globalData.selTeam = value;
             wx.setStorageSync("MY_TEAM_ID", app.teamId);
             this.setData({
                 nowTeam: nowTeam,

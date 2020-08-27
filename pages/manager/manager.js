@@ -1,3 +1,4 @@
+
 const app = getApp();
 Page({
   data: {
@@ -35,6 +36,7 @@ Page({
           pageSize: 10,
           evaluationId: ""
         },
+        noLoading: true,
         success: function (res) {
           var catalog = [];
           var compareArr = [];
@@ -52,11 +54,15 @@ Page({
           that.setData({
             evaluationList: res.data,
             catalog: catalog,
-            loading: false,
             compareArr,
             reportPage: 1,
             historyPage: 1
           });
+          setTimeout(()=>{
+            that.setData({
+              loading: false,
+            });
+          },500);
           if( reportId ){
             wx.navigateTo({
               url: `../report/report?id=${ reportId }`,
@@ -80,7 +86,8 @@ Page({
           teamId: app.teamId,
           type: checkedTime,
           page: 1,
-          size: 10
+          size: 10,
+          noLoading: true,
         },
         success: function (res) {
           if( reportId ){
@@ -90,10 +97,14 @@ Page({
           }
           that.setData({
             useList: res.data,
-            loading: false,
             reportPage: 1,
             historyPage: 1
           });
+          setTimeout(()=>{
+            that.setData({
+              loading: false,
+            });
+          },500);
         },
         error: function(err){
           that.setData({
@@ -118,8 +129,8 @@ Page({
     /*1.获取title组件 2.调用title组件的loadUserMsg方法*/
     this.title = this.selectComponent("#title");
     app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
-    const checkedReportId = wx.getStorageSync('checkedReportId');
-    const checkedUseHistoryId = wx.getStorageSync('checkedUseHistoryId');
+    const checkedReportId = wx.getStorageSync('CHECKED_REPORT_ID');
+    const checkedUseHistoryId = wx.getStorageSync('CHECKED_USE_HISTORY_ID');
     this.setData({
       checkedReportId: checkedReportId,
       checkedUseHistoryId: checkedUseHistoryId
@@ -131,8 +142,8 @@ Page({
   },
 
   onUnload: function () {
-    wx.removeStorageSync('checkedReportId');
-    wx.removeStorageSync('checkedUseHistoryId');
+    wx.removeStorageSync('CHECKED_REPORT_ID');
+    wx.removeStorageSync('CHECKED_USE_HISTORY_ID');
     this.setData({
       checkedReportId: '',
       checkedUseHistoryId: ''
@@ -144,6 +155,7 @@ Page({
   onReachBottom: function () {
 
   },
+
   changeTab: function (e) {
     const targetValue = e.currentTarget.dataset.item,
         { checkedTime,evaluationId } = this.data,
@@ -153,8 +165,8 @@ Page({
       loading: true
     });
     try{
-      wx.setStorage({ key: 'checkedReportId',data:"" });
-      wx.setStorage({ key: 'checkedUseHistoryId',data:"" });
+      wx.setStorage({ key: 'CHECKED_REPORT_ID',data:"" });
+      wx.setStorage({ key: 'CHECKED_USE_HISTORY_ID',data:"" });
       this.setData({
         checkedReportId: "",
         checkedUseHistoryId: ""
@@ -170,14 +182,19 @@ Page({
           type: checkedTime,
           page: 1,
           pageSize: 10,
-          evaluationId: ""
+          evaluationId: "",
         },
+        noLoading: true,
         success: function (res) {
           that.setData({
             evaluationList: res.data,
-            loading: false,
             historyPage: 1
           });
+          setTimeout(()=>{
+            that.setData({
+              loading: false,
+            });
+          },500);
         },
         error: function(err){
           that.setData({
@@ -197,12 +214,17 @@ Page({
           page: 1,
           size: 10
         },
+        noLoading: true,
         success: function (res) {
           that.setData({
             useList: res.data,
-            loading: false,
             reportPage: 1
           });
+          setTimeout(()=>{
+            that.setData({
+              loading: false,
+            });
+          },500);
         },
         error: function(err){
           that.setData({
@@ -212,6 +234,7 @@ Page({
       })
     }
   },
+
   changeTimer: function (e) {
     const targetValue = e.detail.value,
         { checkedItem,
@@ -236,6 +259,7 @@ Page({
           pageSize: 10,
           evaluationId: evaluationId
         },
+        noLoading: true,
         success: function (res) {
           that.setData({
             evaluationList: res.data,
@@ -260,6 +284,7 @@ Page({
           page: 1,
           size: 10
         },
+        noLoading: true,
         success: function (res) {
           that.setData({
             useList: res.data,
@@ -274,6 +299,7 @@ Page({
       })
     }
   },
+
   changeEvaluation: function (e) {
     const that = this;
     const { checkedTime,catalog } = this.data;
@@ -294,14 +320,15 @@ Page({
         pageSize: 10,
         evaluationId: catalog[checkedEvaluation].id
       },
+      noLoading: true,
       success: function (res) {
         that.setData({
           evaluationList: res.data,
-          loading: false
         });
       }
     })
   },
+
   changePage: function (e) {
     const { sharepaperid,status } = e.currentTarget.dataset;
     wx.setStorage({
@@ -312,6 +339,7 @@ Page({
       url: `./components/useHistoryDetail/useHistoryDetail?sharePaperId=${ sharepaperid }&status=${ status }`
     })
   },
+
   toReport: function (e) {
     const { id,name } = e.currentTarget.dataset,
           { shareTrigger } = this.data;
@@ -320,7 +348,7 @@ Page({
       return;
     }else{
       wx.setStorage({
-        key: 'checkedReportId',
+        key: 'CHECKED_REPORT_ID',
         data: id
       });
       wx.navigateTo({
@@ -328,13 +356,16 @@ Page({
       });
     }
   },
+
   changeShareTrigger: function (e) {
     const { shareTrigger } = this.data;
     this.setData({
       shareTrigger: !shareTrigger
     })
   },
+
   checkboxChange: function (e) {},
+
   nextPage: function (e) {
     var { checkedItem,
       checkedTime,
@@ -361,6 +392,7 @@ Page({
           pageSize: 10,
           evaluationId: evaluationId
         },
+        noLoading: true,
         success: function (res) {
           if( res.data.length <=  0) {
             var maxReportPage = reportPage - 1;
@@ -404,6 +436,7 @@ Page({
           page: historyPage,
           size: 10
         },
+        noLoading: true,
         success: function (res) {
           res.data.forEach((item,key)=>{
             useList.push(item)

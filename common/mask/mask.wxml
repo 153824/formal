@@ -1,4 +1,5 @@
 <!--common/mask/mask.wxml-->
 <view wx:if="{{ isShow }}" class="mask"
-      style="background-color: {{ backgroundColor }};top: {{ top }}rpx;">
+      style="background-color: {{ backgroundColor }};top: {{ top }}rpx;height: {{height}}px;">
+    <van-loading color="#353EE8FF" type="spinner"/>
 </view>

@@ -95,11 +95,17 @@
 <view class="press-wrapper" bindtap="gotoDetail" data-id="{{ baseInfo.paper.id }}">
     <press title="继续发放本测评"></press>
 </view>
-<view class="qrcode-wrapper" wx:if="{{ imageTrigger }}">
-    <view class="qrcode">
-        <image class="qrcode-img" src="{{ baseInfo.img }}" bindload="imageLoad" show-menu-by-longpress="true"></image>
-        <image class="close-icon" src="../../images/manager@icon-close.png" bindtap="closeQrcode"></image>
+<van-overlay show="{{ imageTrigger }}">
+    <view class="qrcode-wrapper" wx:if="{{ imageTrigger }}">
+        <view class="qrcode">
+            <van-image width="556rpx" height="990rpx" src="{{sharePaperImg}}" lazy-load show-loading use-loading-slot fill
+                       show-menu-by-longpress="true">
+                <van-loading slot="loading" size="0" vertical>
+                    <image src="../../../../images/icon/icon@icon-loading.png" class="loading"></image>
+                </van-loading>
+            </van-image>
+            <image class="close-icon" src="../../images/manager@icon-close.png" bindtap="closeQrcode"></image>
+        </view>
     </view>
-    <view class="mask" bindtap="closeQrcode"></view>
-</view>
+</van-overlay>
 <wxs src="../../../../utils/util.wxs" module="util"></wxs>

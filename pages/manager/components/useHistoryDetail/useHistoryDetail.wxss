@@ -135,10 +135,6 @@ page{
 .qrcode{
     position: relative;
 }
-.qrcode-img {
-    width: 556rpx;
-    height: 998rpx;
-}
 .mask{
     position: absolute;
     top: 0;
@@ -156,4 +152,17 @@ page{
     right: -20rpx;
     width: 56rpx;
     height: 56rpx;
+}
+.loading{
+    width: 44rpx;
+    height: 44rpx;
+    animation: loading 1s infinite;
+}
+@keyframes loading {
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
 }

@@ -1,4 +1,3 @@
-// common/mask/mask.js
 const app = getApp();
 Component({
   /**
@@ -16,6 +15,10 @@ Component({
     top: {
       type: Number,
       value: 0
+    },
+    height: {
+      type: String,
+      value: "100%"
     }
   },
 

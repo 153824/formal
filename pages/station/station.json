@@ -1,11 +1,12 @@
 {
   "navigationBarTitleText": "人岗匹配",
   "usingComponents": {
-    "skill": "../common/skill/skill",
-    "title": "../common/title/title",
-    "free": "../common/free/free",
-    "mask": "../common/mask/mask",
-    "serving": "../common/serving/serving"
+    "skill": "../../common/skill/skill",
+    "title": "../../common/title/title",
+    "free": "../../common/free/free",
+    "mask": "../../common/mask/mask",
+    "serving": "../../common/serving/serving",
+    "van-overlay": "../../common/vant-weapp/dist/overlay/index"
   },
   "navigationStyle": "custom"
 }

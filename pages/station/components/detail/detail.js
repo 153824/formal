@@ -20,7 +20,10 @@ Page({
     buyByTicket: false,
     ticketCount: 1,
     assistant: app.globalData.assistant,
-    isPC: false
+    isPC: false,
+    statusbarHeight: app.globalData.statusbarHeight,
+    titleHeight: app.globalData.titleHeight,
+    windowHeight: app.globalData.windowHeight
   },
   onLoad: function(options) {
     var that = this;
@@ -53,6 +56,7 @@ Page({
           data: {
             id: app.teamId
           },
+          noLoading: true,
           success: function(ret) {
             that.setData({
               teamAdminUser: ret.adminUser.nickname
@@ -71,6 +75,7 @@ Page({
           data: {
             evaluationId: that.data.evaluationId
           },
+          noLoading: true,
           success: function (res) {
             var hasVoucher = true,
                 voucher = 0,
@@ -127,16 +132,13 @@ Page({
           }
         });
       });
-      wx.showLoading({
-        title: '正在请求...'
-      });
       Promise.all([teamDetailPromise,evaluationDetailPromise]).then(values => {
-        wx.hideLoading();
-        this.setData({
-          loading: false,
-        })
+        setTimeout(()=>{
+          this.setData({
+            loading: false,
+          })
+        },500)
       }).catch(err=>{
-        wx.hideLoading();
         this.setData({
           loading: false,
         })

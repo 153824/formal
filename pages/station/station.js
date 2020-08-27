@@ -12,19 +12,29 @@ Page({
     mobile: "18559297592",
     wechat: "haola72",
   },
-  onLoad: function(){
+  onLoad: function(option){
     let that = this;
+    if(option.loadingTrigger){
+      this.setData({
+        loading: true
+      })
+    }
     app.doAjax({
       url: "positionTags",
       method: "GET",
+      noLoading: true,
       success: function(res) {
         that.setData({
           menu: res.data,
           childs: res.data[0].childs,
           isConnected: true,
           checkedId: res.data[0].objectId,
-          loading: false
         });
+        setTimeout(()=>{
+          that.setData({
+            loading: false
+          })
+        },500)
       },
       fail: function (ret) {
         that.setData({

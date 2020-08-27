@@ -207,5 +207,8 @@
     <serving id="serving" mobile="{{ mobile }}" wechat="{{ wechat }}"
              bottom="{{ evaluation.isBeginner || hasVoucher || (!evaluation.buyoutInfo.hadBuyout&&evaluation.hadConsumed) || evaluation.buyoutInfo.hadBuyout ? '240rpx' : '180rpx'}}"></serving>
 </block>
-<mask isShow="{{ loading }}" bgColor="rgba(0,0,0,1)" top="0"></mask>
+<van-overlay show="{{ loading }}" custom-style="background-color: #fff;">
+    <mask isShow="{{ loading }}" top="{{ (statusbarHeight + titleHeight)/pixelRate }}"
+          height="{{ windowHeight - ( statusbarHeight + titleHeight) }}" backgroundColor="transparent" ></mask>
+</van-overlay>
 <wxs src="../../../../utils/util.wxs" module="util"></wxs>

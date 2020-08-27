@@ -22,8 +22,14 @@ Page({
 
   onLoad: function (options) {
     const that = this;
-    const { reportId=null } = options;
+    let reportId = "";
+    try{ reportId = options.reportId; }catch (e) {}
     let { checkedItem,checkedTime,evaluationId } = this.data;
+    if(options.loadingTrigger){
+      this.setData({
+        loading: true
+      })
+    }
     if( checkedItem === "0" ){
       app.doAjax({
         url: "sharePapers/reports",

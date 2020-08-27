@@ -9,7 +9,12 @@
  * ********************************************************************************************************************/
 const app = getApp();
 Component({
-    properties: {},
+    properties: {
+        url: {
+            value: "",
+            type: String,
+        }
+    },
     data: {
         statusbarHeight: app.globalData.statusbarHeight,
         titleHeight: app.globalData.titleHeight,
@@ -47,7 +52,7 @@ Component({
         getMyTeamList: function (cacheTrigger) {
             const that = this;
             app.getMyTeamList(function (list) {
-                var teamNames = [];
+                const teamNames = [];
                 list.forEach(function (node) {
                     teamNames.push(node.name);
                 });
@@ -71,8 +76,9 @@ Component({
          * @date: 2020/8/27
          */
         changeTeam: function (e) {
-            const {value} = e.detail;
-            const {teamList} = this.data;
+            const that = this;
+            const { value } = e.detail;
+            const { teamList } = this.data;
             const nowTeam = teamList[value];
             if (!nowTeam) {
                 return;
@@ -90,6 +96,26 @@ Component({
                 teamRole: app.teamRole,
             });
             this.loadUserMsg(false);
+            // wx.switchTab({
+            //     url: `../${that.properties.url}`,
+            //     success: function (e) {
+            //         var page = getCurrentPages().pop();
+            //         if( page === "undefined" || page === "null" ){
+            //             return;
+            //         }
+            //         page.onShow();
+            //     }
+            // })
+            wx.switchTab({
+                url: `../../pages/${that.properties.url}`,
+                success: function (e) {
+                    var page = getCurrentPages().pop();
+                    if( page === "undefined" || page === "null" ){
+                        return;
+                    }
+                    page.onLoad({ loadingTrigger: true });
+                }
+            })
         },
 
         /**

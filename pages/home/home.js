@@ -13,7 +13,12 @@ Page({
         active: 0,
         column: []
     },
-    onLoad: function (options) {
+    onLoad: function (options,name) {
+        if( options.loadingTrigger ){
+            this.setData({
+                loading: true
+            })
+        }
         wx.hideTabBar({
             animation: true
         });
@@ -62,22 +67,24 @@ Page({
             }
             that.setData({
                 column: targetColumn,
-                loading: false
             });
             setTimeout(() => {
                 wx.showTabBar({
-                    animation: true
+                    animation: true,
                 });
+                that.setData({
+                    loading: false
+                })
             }, 500);
         }).catch(err => {
             setTimeout(() => {
                 wx.showTabBar({
-                  animation: true
+                  animation: true,
                 });
+                that.setData({
+                    loading: false
+                })
             }, 500);
-            that.setData({
-                loading: false
-            })
         });
     },
     onShow: function () {

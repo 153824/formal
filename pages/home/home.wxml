@@ -1,6 +1,6 @@
 <!--home.wxml-->
 <block>
-    <title id="title"></title>
+    <title id="title" url="home/home"></title>
 </block>
 <block wx:if="{{ !loading }}">
     <view class="topTestView flex" style="margin-top:{{ (statusbarHeight + titleHeight) }}px;"

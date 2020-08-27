@@ -450,13 +450,13 @@ Page({
         },
         success: function(res){
           wx.requestPayment({
-            'appId': res.payObj.appId,
-            'timeStamp': res.payObj.timeStamp,
-            'nonceStr': res.payObj.nonceStr,
-            'package': res.payObj.package,
-            'signType': 'MD5',
-            'paySign': res.payObj.paySign,
-            'success': function(res) {
+            appId: res.appId,
+            timeStamp: res.timeStamp,
+            nonceStr: res.nonceStr,
+            package: res.package,
+            signType: 'MD5',
+            paySign: res.paySign,
+            success: function(res) {
               wx.showToast({
                 title: '购买成功',
                 duration: 2000
@@ -466,7 +466,7 @@ Page({
               }, 500);
               //这里完成跳转
             },
-            'fail': function(res) {
+            fail: function(res) {
               if (res.errMsg == "requestPayment:fail cancel") {
                 wx.showToast({
                   title: '购买取消',
@@ -483,7 +483,7 @@ Page({
               //支付失败
               console.error(res);
             },
-            'complete': function(res) {}
+            complete: function(res) {}
           })
         }
       })

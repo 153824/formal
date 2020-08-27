@@ -59,8 +59,8 @@ App({
     qiniuUpload: qiniuUpload,
     isIphoneX: false,
     isPC: false,
-    host: "http://192.168.0.101:3000",
-    // host: "https://api.dev.luoke101.com",
+    // host: "http://192.168.0.101:3000",
+    host: "https://api.luoke101.com",
     // host: 'https://h5.luoke101.com',
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
@@ -88,7 +88,7 @@ App({
         this.isIos = false;
         this.isLogin = false;
         this.fromAppId = '';
-        this.teamId = wx.getStorageSync('myTeamId') || '';
+        this.teamId = wx.getStorageSync('MY_TEAM_ID') || '';
         this.rate = sysMsg.windowWidth / 750;
         if (referrerInfo && referrerInfo.appid) {
             this.fromAppId = referrerInfo.appid
@@ -427,10 +427,10 @@ App({
      * @return: none
      * @date: 2020/7/21
      */
-    getMyTeamList: function (cb) {
+    getMyTeamList: function (cb,cacheTrigger=true) {
         const that = this;
         let LOCAL_MY_TEAM_LIST = wx.getStorageSync('GET_MY_TEAM_LIST');
-        if (LOCAL_MY_TEAM_LIST.length) {
+        if (LOCAL_MY_TEAM_LIST.length && cacheTrigger) {
             var toAddNew = true
             LOCAL_MY_TEAM_LIST = LOCAL_MY_TEAM_LIST || []
             if (that.checkUser && !that.isLogin) {

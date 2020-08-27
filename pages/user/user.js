@@ -107,7 +107,7 @@ Page({
         selTeam: 0,
         teamNames: teamNames
       });
-    });
+    },false);
   },
   /**
    * 切换团队
@@ -128,7 +128,7 @@ Page({
     app.teamName = nowTeam.name;
     app.teamRole = nowTeam.role;
     app.globalData.team = nowTeam;
-    wx.setStorageSync("myTeamId", app.teamId);
+    wx.setStorageSync("MY_TEAM_ID", app.teamId);
     this.setData({
       nowTeam: nowTeam,
       selTeam: val,

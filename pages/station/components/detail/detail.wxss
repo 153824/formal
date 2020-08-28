@@ -958,7 +958,7 @@
 }
 .header-wrapper{
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   padding: 34rpx 64rpx 40rpx 40rpx;
   background-color: #fff;
   width: 100%;
@@ -977,6 +977,7 @@
 }
 .info-wrapper > .title{
   display: flex;
+  flex-wrap: nowrap;
   font-size: 46rpx;
   font-weight: 600;
   color: #070922FF;

@@ -1,0 +1,16 @@
+<van-dialog
+        use-slot
+        title="作答须知"
+        show="{{ trigger }}"
+        show-cancel-button
+        custom-style="border-radius: 10rpx;"
+        bind:close="closeNotification"
+        bind:confirm="goToReplying"
+>
+    <view class="content">
+        <view>1.</view>
+        <view>2.</view>
+        <view>3.</view>
+        <view>4.</view>
+    </view>
+</van-dialog>

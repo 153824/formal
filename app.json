@@ -22,6 +22,7 @@
     "pages/replying/replying",
     "pages/replying/components/finish/finish",
     "pages/replying/components/guide/guide",
+    "pages/replying/components/notification/notification",
     "utils/ence_push/ence_push",
     "station/detail"
   ],

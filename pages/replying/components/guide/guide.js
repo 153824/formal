@@ -44,7 +44,7 @@ Page({
   onShow: function() {
 
   },
-  closemask: function(e) {
+  goToReplying: function(e) {
     const { id,name } = e.currentTarget.dataset;
     var that = this;
     var sKey = "oldAnswer" + this.data.id;
@@ -54,6 +54,9 @@ Page({
       wx.redirectTo({
         url: '../../replying?pid=' + that.data.paperId + '&id=' + that.data.id
       });
+      // wx.navigateTo({
+      //   url: `../notification/notification?pid=${that.data.paperId}&id=${that.data.id}`
+      // });
       wx.aldstat.sendEvent('点击开始作答', {
         '测评名称': `名称：${ name } id：${ id }`
       });

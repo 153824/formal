@@ -668,7 +668,7 @@ Page({
     }
     if( options.from !== 'button' ){
       return {
-        title: `${userInfo.nickname}邀您参与《${evaluationInfo.name}》测评~`,
+        title: `邀您体验《${evaluationInfo.name}》测评~`,
         path: `pages/station/components/detail/detail?id=${id}`,
         imageUrl: `${evaluationInfo.smallImg}`,
       }

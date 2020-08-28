@@ -611,8 +611,7 @@
                           wx:if="{{!item.lvDesc&&!item.showTotal&&!item.rankOrg&&!item.rankAll&&item.chartType==1}}"></view>
                     <!-- 维度 -->
                     <view class="list" wx:if="{{show&&item.showScore}}">
-                        <block wx:if="{{ item.showSubScore !== 'none' }}" wx:for="{{item.subclass}}" wx:key="unique"
-                               wx:for-item="node" wx:for-index="i">
+                        <block wx:for="{{item.subclass}}" wx:key="unique" wx:for-item="node" wx:for-index="i">
                             <view class="item">
                                 <view class="title {{node.active}}" bindtap="activeNewItem" data-index="{{index}}"
                                       data-i="{{i}}">{{node.name}}：
@@ -655,6 +654,12 @@
                                             </text>
                                             <image src="./images/report@icon-arrow.png"></image>
                                         </block>
+                                    </block>
+                                    <block wx:elif="{{ item.showSubScore !== 'none' }}" >
+                                        <text style="color:{{node.color}};">
+                                            {{ item.showSubLevel ? node.lvName : "" }}
+                                        </text>
+                                        <image src="./images/report@icon-arrow.png"></image>
                                     </block>
                                 </view>
                                 <view class="contentMsg" wx:if="{{node.active}}">

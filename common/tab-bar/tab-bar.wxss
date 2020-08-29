@@ -1,0 +1,3 @@
+.van-tabbar--safe{
+    border-top: 1px solid #5C6171 !important;
+}

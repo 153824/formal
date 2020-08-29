@@ -139,7 +139,9 @@
             <text>购买测评</text>
             <view style="display: flex;align-items: center;" bindtap="buyByTicket">
                 <image style="width: 30rpx;height: 30rpx;" src="../../images/detail@icon-ticket.png"></image>
-                <view style="font-weight: initial;font-size: 26rpx;color: rgba(157,157,157,1);line-height:36rpx;font-weight: 600">用券兑换</view>
+                <view style="font-weight: initial;font-size: 26rpx;color: rgba(157,157,157,1);line-height:36rpx;font-weight: 600">
+                    用券兑换
+                </view>
             </view>
         </view>
         <view wx:if="{{ buyByCounts }}" class="buy-by-counts">
@@ -199,16 +201,11 @@
     <view class="mask" bindtap="closeGift"></view>
 </view>
 <!-- 新用户 || 有券 || (未买断&&买过测评) || 买断 以上这种情况出现均会出现小黄条 -->
-<block wx:if="{{ isPC }}">
-    <serving id="serving" mobile="{{ mobile }}" wechat="{{ wechat }}"
-             bottom="{{ isPC ? '300rpx' : '180rpx' }}"></serving>
-</block>
-<block wx:else>
-    <serving id="serving" mobile="{{ mobile }}" wechat="{{ wechat }}"
-             bottom="{{ evaluation.isBeginner || hasVoucher || (!evaluation.buyoutInfo.hadBuyout&&evaluation.hadConsumed) || evaluation.buyoutInfo.hadBuyout ? '240rpx' : '180rpx'}}"></serving>
-</block>
+<serving id="serving" mobile="{{ mobile }}" wechat="{{ wechat }}"
+         bottom="{{ evaluation.isBeginner || hasVoucher || (!evaluation.buyoutInfo.hadBuyout&&evaluation.hadConsumed) || evaluation.buyoutInfo.hadBuyout ? '240rpx' : '180rpx'}}"></serving>
+
 <van-overlay show="{{ loading }}" custom-style="background-color: #fff;">
     <mask isShow="{{ loading }}" top="{{ (statusbarHeight + titleHeight)/pixelRate }}"
-          height="{{ windowHeight - ( statusbarHeight + titleHeight) }}" backgroundColor="transparent" ></mask>
+          height="{{ windowHeight - ( statusbarHeight + titleHeight) }}" backgroundColor="transparent"></mask>
 </van-overlay>
 <wxs src="../../../../utils/util.wxs" module="util"></wxs>

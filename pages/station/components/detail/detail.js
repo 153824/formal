@@ -713,7 +713,6 @@ Page({
   continueTest: function(e) {
     var t = e.target.dataset.t;
     if (t == 2) {
-      wx.setStorageSync("hideLastTestMind", true);
       this.setData({
         oldShareInfo: ""
       });

@@ -31,27 +31,34 @@ Component({
             admin: [
                 {
                     text: "工作台",
-                    normal: '../../images/icon/icon@index-no-active.png',
-                    active: '../../images/icon/icon@index-active.png',
-                    path: "../../pages/home/home"
+                    normal: '../../images/icon/icon@evaluation-manager-no-active.png',
+                    active: '../../images/icon/icon@evaluation-manager-active.png',
+                    path: "../../pages/work-base/work-base"
                 },
                 {
                     text: "我的",
-                    normal: '../../images/icon/icon@index-no-active.png',
-                    active: '../../images/icon/icon@index-active.png',
-                    path: "../../pages/home/home"
+                    normal: '../../images/icon/icon@my-no-active.png',
+                    active: '../../images/icon/icon@my-active.png',
+                    path: "../../pages/user-center/user-center"
                 },
             ],
             member: [
                 {
-                    text: "主页",
+                    text: "测评任务",
                     normal: '../../images/icon/icon@index-no-active.png',
                     active: '../../images/icon/icon@index-active.png',
                     path: "../../pages/home/home"
                 },
+                {
+                    text: "任务中心",
+                    normal: '../../images/icon/icon@index-no-active.png',
+                    active: '../../images/icon/icon@index-active.png',
+                    path: "../../pages/user-center/user-center"
+                },
             ]
         },
-        WX_WORK: app.WX_WORK,
+        isWxWork: app.wxWorkInfo.isWxWork,
+        isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
     },
     properties: {
         active: {
@@ -62,10 +69,21 @@ Component({
     methods: {
         onChange(event) {
             const that = this;
+            const { isWxWork,isWxWorkAdmin } = this.data;
             const active = Number(event.detail);
-            wx.switchTab({
-                url: `${that.data.wxPage[active].path}`
-            });
+            if( !isWxWork ){
+                wx.switchTab({
+                    url: `${that.data.wxPage[active].path}`
+                });
+            }else if( isWxWorkAdmin ){
+                wx.switchTab({
+                    url: `${that.data.wxWorkPage.admin[active].path}`
+                });
+            }else{
+                wx.switchTab({
+                    url: `${that.data.wxWorkPage.member[active].path}`
+                });
+            }
         },
     },
     pageLifetimes: {
@@ -83,11 +101,6 @@ Component({
         }
     },
     lifetimes: {
-        attached() {
-            this.setData({
-                WX_WORK: app.WX_WORK
-            });
-            console.log("app.WX_WORK: ",app.WX_WORK)
-        }
+
     }
 });

@@ -1,4 +1,4 @@
-<block wx:if="{{ !WX_WORK }}">
+<block wx:if="{{ !isWxWork }}">
     <van-tabbar active="{{ active }}" bind:change="onChange" border="{{ true }}" active-color="#5960ED" z-index="9999">
         <van-tabbar-item wx:for="{{ wxPage }}" wx:key="unique">
             <image slot="icon" src="{{ item.normal }}" mode="aspectFit" style="width: 24px; height: 24px;"/>
@@ -7,7 +7,16 @@
         </van-tabbar-item>
     </van-tabbar>
 </block>
-<block wx:else>
+<block wx:elif="{{ isWxWork && isWxWorkAdmin }}">
+    <van-tabbar active="{{ active }}" bind:change="onChange" border="{{ true }}" active-color="#5960ED">
+        <van-tabbar-item wx:for="{{ wxWorkPage.admin }}" wx:key="unique">
+            <image slot="icon" src="{{ item.normal }}" mode="aspectFit" style="width: 24px; height: 24px;"/>
+            <image slot="icon-active" src="{{ item.active }}" mode="aspectFit" style="width: 24px; height: 24px;"/>
+            {{item.text}}
+        </van-tabbar-item>
+    </van-tabbar>
+</block>
+<block wx:elif="{{ isWxWork && !isWxWorkAdmin }}">
     <van-tabbar active="{{ active }}" bind:change="onChange" border="{{ true }}" active-color="#5960ED">
         <van-tabbar-item wx:for="{{ wxWorkPage.admin }}" wx:key="unique">
             <image slot="icon" src="{{ item.normal }}" mode="aspectFit" style="width: 24px; height: 24px;"/>

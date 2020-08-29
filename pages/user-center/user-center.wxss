@@ -1,0 +1,43 @@
+page{
+    font-weight: 600;
+    font-size: 32rpx;
+    background-color: #F2F2F2FF;
+    color: #313645FF;
+}
+.user-page-wrapper{
+
+}
+.head{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 28rpx 0 56rpx 0;
+    height: 216rpx;
+    background-color: #fff;
+    z-index: 999999999;
+}
+.user-personal-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 36rpx;
+    color: #333333FF;
+}
+.content{
+    margin-top: 316rpx;
+    background-color: #fff;
+}
+.user-action-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 34rpx 44rpx;
+    height: 52rpx;
+}
+.title{
+    display: flex;
+    align-items: center;
+}

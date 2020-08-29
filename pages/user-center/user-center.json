@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "hola-tab-bar": "../../common/tab-bar/tab-bar"
+  }
+}

@@ -15,11 +15,11 @@
  * teamRole: 团队角色
  * isLogin: 登录状态
  * isIos: 是否为ios端
- * isPC: 是否为PC端
  * qiniuUpload: 七牛配置
  * isIphoneX: 苹果X
  * host: 主机地址
  * globalData: 全局数据
+ * WX_WORK: 是否为企业微信
  * appid: 小程序标识
  * userInfo: 用户信息
  * userMsg: 用户信息
@@ -58,7 +58,6 @@ App({
     isIos: false,
     qiniuUpload: qiniuUpload,
     isIphoneX: false,
-    isPC: false,
     // host: "http://192.168.0.101:3000",
     host: "https://api.luoke101.com",
     // host: 'https://h5.luoke101.com',
@@ -80,6 +79,7 @@ App({
         wx.hideTabBar({
             animation: true,
         })
+        this.WX_WORK = false;
         var that = this;
         var referrerInfo = options.referrerInfo;
         var menuBtnObj = wx.getMenuButtonBoundingClientRect();
@@ -93,7 +93,6 @@ App({
         if (referrerInfo && referrerInfo.appid) {
             this.fromAppId = referrerInfo.appid
         }
-        wx.removeStorageSync('hideLastTestMind');
         wx.onMemoryWarning(function (res) {
             console.log('onMemoryWarningReceive', res)
         });
@@ -104,8 +103,8 @@ App({
         if (sysMsg.system.indexOf('iOS') != -1) {
             this.isIos = true
         }
-        if (sysMsg.platform.indexOf("windows") != -1) {
-            this.isPC = true;
+        if(sysMsg.environment === 'wxwork'){
+            this.WX_WORK = true;
         }
         /**
          * @Description: 登录

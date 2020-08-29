@@ -11,6 +11,7 @@ Page({
     loading: true,
     mobile: "18559297592",
     wechat: "haola72",
+    active: 1
   },
   onLoad: function(option){
     let that = this;

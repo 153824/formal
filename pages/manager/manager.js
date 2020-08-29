@@ -17,7 +17,8 @@ Page({
     historyPage: 1,
     loading: true,
     compareArr: [],
-    maxReportPage: -1
+    maxReportPage: -1,
+    active: 2
   },
 
   onLoad: function (options) {

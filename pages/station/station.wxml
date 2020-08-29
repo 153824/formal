@@ -45,3 +45,4 @@
           height="{{ windowHeight - ( statusbarHeight + titleHeight) }}" backgroundColor="transparent" ></mask>
 </van-overlay>
 <serving mobile="{{ mobile }}" wechat="{{ wechat }}"></serving>
+<hola-tab-bar active="{{ active }}"></hola-tab-bar>

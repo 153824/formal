@@ -2,6 +2,7 @@
   "navigationBarTitleText": "个人中心",
   "usingComponents": {
     "title": "../../common/title/title",
-    "serving": ".././common/serving/serving"
+    "serving": ".././common/serving/serving",
+    "hola-tab-bar": "../../common/tab-bar/tab-bar"
   }
 }

@@ -14,6 +14,9 @@ Page({
         column: []
     },
     onLoad: function (options,name) {
+        wx.hideTabBar({
+            animation: true
+        });
         if( options.loadingTrigger ){
             this.setData({
                 loading: true
@@ -69,18 +72,18 @@ Page({
                 column: targetColumn,
             });
             setTimeout(() => {
-                wx.showTabBar({
-                    animation: true,
-                });
+                // wx.showTabBar({
+                //     animation: true,
+                // });
                 that.setData({
                     loading: false
                 })
             }, 500);
         }).catch(err => {
             setTimeout(() => {
-                wx.showTabBar({
-                  animation: true,
-                });
+                // wx.showTabBar({
+                //   animation: true,
+                // });
                 that.setData({
                     loading: false
                 })
@@ -167,7 +170,6 @@ Page({
     goToReplying: function (e) {
         const { t } = e.target.dataset;
         if (t === '2') {
-            wx.setStorageSync("hideLastTestMind", true);
             this.setData({
                 oldShareInfo: ""
             });

@@ -96,3 +96,4 @@
 <wxs src="../../utils/util.wxs" module="util"></wxs>
 <mask isShow="{{ loading }}" top="{{ 255 + ( ( statusbarHeight + titleHeight )/pixelRate ) }}"
       height="{{ windowHeight - 139/pixelRate - ( statusbarHeight + titleHeight )}}"></mask>
+<hola-tab-bar active="{{ active }}" pages=""></hola-tab-bar>

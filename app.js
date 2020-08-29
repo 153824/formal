@@ -19,7 +19,7 @@
  * isIphoneX: 苹果X
  * host: 主机地址
  * globalData: 全局数据
- * WX_WORK: 是否为企业微信
+ * wxWork: 是否为企业微信
  * appid: 小程序标识
  * userInfo: 用户信息
  * userMsg: 用户信息
@@ -37,8 +37,6 @@
 const ald = require('./utils/ald-stat.js');
 const qiniuUpload = require("./utils/qiniuUpload");
 const push = require('./utils/push_sdk.js');
-const deBug = false;
-const debuggerQueue = []; // 用于判断请求时长
 const common = require('./utils/common.js');
 qiniuUpload.init({
     region: 'SCN',
@@ -75,15 +73,17 @@ App({
         eventId: "5ea6b2b26df4251c4a09a4cc",
         assistant: ["5efed573b1ef0200062a85f7"]
     },
+    wxWorkInfo: {
+        wxWorkUserId: "",
+        wxWorkTeamId: "",
+        isWxWork: false,
+        isWxWorkAdmin: true,
+    },
     onLaunch: function (options) {
-        wx.hideTabBar({
-            animation: true,
-        })
-        this.WX_WORK = false;
-        var that = this;
-        var referrerInfo = options.referrerInfo;
-        var menuBtnObj = wx.getMenuButtonBoundingClientRect();
-        var sysMsg = wx.getSystemInfoSync();
+        const that = this;
+        const referrerInfo = options.referrerInfo;
+        const menuBtnObj = wx.getMenuButtonBoundingClientRect();
+        const sysMsg = wx.getSystemInfoSync();
         this.isIphoneX = false;
         this.isIos = false;
         this.isLogin = false;
@@ -104,7 +104,7 @@ App({
             this.isIos = true
         }
         if(sysMsg.environment === 'wxwork'){
-            this.WX_WORK = true;
+            this.wxWorkInfo.isWxWork = true;
         }
         /**
          * @Description: 登录
@@ -183,8 +183,8 @@ App({
      * @date: 2020/7/21
      */
     userLogin: function (code) {
-        var that = this
-        var userLoginPromise = new Promise((resolve, reject) => {
+        const that = this;
+        const userLoginPromise = new Promise((resolve, reject) => {
             that.doAjax({
                 url: 'userLogin',
                 method: 'POST',

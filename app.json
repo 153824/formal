@@ -23,8 +23,11 @@
     "pages/replying/components/finish/finish",
     "pages/replying/components/guide/guide",
     "pages/replying/components/notification/notification",
+    "pages/work-base/work-base",
     "utils/ence_push/ence_push",
-    "station/detail"
+    "station/detail",
+    "common/tab-bar/tab-bar",
+    "pages/user-center/user-center"
   ],
   "plugins": {
     "contactPlugin": {
@@ -33,7 +36,7 @@
     }
   },
   "tabBar": {
-    "custom": false,
+    "custom": true,
     "color": "#5C6171",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
@@ -58,7 +61,13 @@
         "selectedIconPath": "images/icon/icon@evaluation-manager-active.png"
       },
       {
-        "pagePath": "pages/user/user",
+        "pagePath": "pages/work-base/work-base",
+        "text": "工作台",
+        "iconPath": "images/icon/icon@my-no-active.png",
+        "selectedIconPath": "images/icon/icon@my-active.png"
+      },
+      {
+        "pagePath": "pages/user-center/user-center",
         "text": "我的",
         "iconPath": "images/icon/icon@my-no-active.png",
         "selectedIconPath": "images/icon/icon@my-active.png"

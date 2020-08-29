@@ -11,20 +11,21 @@ Page({
         mobile: "18559297592",
         wechat: "haola72",
         active: 0,
-        column: []
+        column: [],
+        isWxWork: app.wxWorkInfo.isWxWork
     },
     onLoad: function (options,name) {
-        wx.hideTabBar({
-            animation: true
-        });
+        if( this.data.isWxWork ){
+            wx.switchTab({
+                url: `../work-base/work-base`,
+            });
+            return;
+        }
         if( options.loadingTrigger ){
             this.setData({
                 loading: true
             })
         }
-        wx.hideTabBar({
-            animation: true
-        });
         const that = this;
         let homePagesPromiseList = [];
         const homePagesPromise = new Promise(function (resolve, reject) {

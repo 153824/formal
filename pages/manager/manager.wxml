@@ -21,7 +21,7 @@
         </view>
     </view>
     <view wx:if="{{ checkedItem === '0' && evaluationList.length > 0 && !loading }}"
-          style="position: relative;height: {{ windowHeight - 270/pixelRate - ( statusbarHeight + titleHeight ) }}px;">
+          style="position: relative;height: {{ windowHeight - 390/pixelRate - ( statusbarHeight + titleHeight ) }}px;">
         <scroll-view scroll-y bindscrolltolower="nextPage" class="evaluation-reports"
                      style="height: 100%;margin-top: 0;position: absolute;">
             <label for="" wx:for="{{ evaluationList }}">
@@ -63,7 +63,7 @@
         <empty type="default" title="您还没有报告，请先体验或发放测评~"></empty>
     </view>
     <view wx:if="{{ checkedItem === '1' && useList.length > 0 && !loading }}"
-          style="height: {{ windowHeight - 270/pixelRate - ( statusbarHeight + titleHeight ) }}px;"
+          style="height: {{ windowHeight - 390/pixelRate - ( statusbarHeight + titleHeight ) }}px;"
           class="user-history">
         <scroll-view scroll-y bindscrolltolower="nextPage" style="height: 100%;">
             <view class="user-history-child {{ checkedUseHistoryId === item.sharePaperId ? 'checked-use-history' : '' }}"
@@ -96,4 +96,4 @@
 <wxs src="../../utils/util.wxs" module="util"></wxs>
 <mask isShow="{{ loading }}" top="{{ 255 + ( ( statusbarHeight + titleHeight )/pixelRate ) }}"
       height="{{ windowHeight - 139/pixelRate - ( statusbarHeight + titleHeight )}}"></mask>
-<hola-tab-bar active="{{ active }}" pages=""></hola-tab-bar>
+<hola-tab-bar active="{{ active }}"></hola-tab-bar>

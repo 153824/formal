@@ -11,7 +11,6 @@
   padding: 0 34rpx 0 26rpx;
   background: rgba(239, 240, 253, 1);
 }
-
 .topTestView span {
   width: 120rpx;
   line-height: 1;
@@ -617,7 +616,9 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
 }
-
+.container{
+  margin-bottom: 125rpx;
+}
 .mask{
   position: fixed;
   top: 0;

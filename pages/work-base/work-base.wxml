@@ -1,4 +1,5 @@
-<view class="home-page-wrapper">
+<!--Start: 企业微信端管理员页工作台-->
+<view wx:if="{{ isWxWorkAdmin }}" class="home-page-wrapper">
     <view class="head">
         <image src="" style="width: 50rpx;height: 44rpx;"></image>
         <text>康师傅集团</text>
@@ -23,7 +24,7 @@
                     </view>
                     <view style="width: 4rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
                     <view class="send-evaluation">
-                        <image src="./images/home@icon-1.png" style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-plane.png" style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
                         <text>发测评</text>
                     </view>
                 </view>
@@ -40,7 +41,7 @@
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
                     <view class="send-evaluation">
-                        <image src="./images/home@icon-1.png" style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-plane.png" style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
                         <text>发测评</text>
                     </view>
                 </view>
@@ -57,7 +58,7 @@
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
                     <view class="send-evaluation">
-                        <image src="./images/home@icon-1.png" style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-plane.png" style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
                         <text>发测评</text>
                     </view>
                 </view>
@@ -74,7 +75,7 @@
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
                     <view class="send-evaluation">
-                        <image src="./images/home@icon-1.png" style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-plane.png" style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
                         <text>发测评</text>
                     </view>
                 </view>
@@ -91,7 +92,7 @@
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
                     <view class="send-evaluation">
-                        <image src="./images/home@icon-1.png" style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-plane.png" style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
                         <text>发测评</text>
                     </view>
                 </view>
@@ -122,7 +123,7 @@
                         </view>
                     </view>
                     <view class="send-evaluation">
-                        <image src="./images/home@icon-1.png" style="width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
                     <view class="new-adding-mark">
                         <text>新</text>
@@ -145,7 +146,7 @@
                         </view>
                     </view>
                     <view class="send-evaluation">
-                        <image src="./images/home@icon-1.png" style="width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
                 </view>
                 <view class="program-body the-last-report">
@@ -165,7 +166,7 @@
                         </view>
                     </view>
                     <view class="send-evaluation">
-                        <image src="./images/home@icon-1.png" style="width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
                 </view>
                 <view class="program-body the-last-report">
@@ -185,7 +186,7 @@
                         </view>
                     </view>
                     <view class="send-evaluation">
-                        <image src="./images/home@icon-1.png" style="width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
                 </view>
             </view>
@@ -210,7 +211,7 @@
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
                     <view class="send-evaluation">
-                        <image src="./images/home@icon-1.png" style="width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
                 </view>
                 <view class="program-body reply-track-body">
@@ -228,7 +229,7 @@
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
                     <view class="send-evaluation">
-                        <image src="./images/home@icon-1.png" style="width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
                 </view>
                 <view class="program-body reply-track-body">
@@ -246,7 +247,7 @@
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
                     <view class="send-evaluation">
-                        <image src="./images/home@icon-1.png" style="width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
                 </view>
                 <view class="program-body reply-track-body">
@@ -264,7 +265,7 @@
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
                     <view class="send-evaluation">
-                        <image src="./images/home@icon-1.png" style="width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
                 </view>
                 <view class="program-body reply-track-body">
@@ -282,105 +283,40 @@
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
                     <view class="send-evaluation">
-                        <image src="./images/home@icon-1.png" style="width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
                 </view>
             </view>
         </scroll-view>
     </view>
+    <hola-tab-bar active="{{ active }}"></hola-tab-bar>
 </view>
-<hola-tab-bar active="{{ active }}"></hola-tab-bar>
-<!--<view class="skeleton-index-page-wrapper">-->
-<!--    <view class="skeleton-banner-wrapper">-->
-<!--        <view class="skeleton-banner">-->
-<!--            <van-skeleton row="1"></van-skeleton>-->
-<!--        </view>-->
-<!--        <view class="skeleton-functional">-->
-<!--            <view class="skeleton-functional-child">-->
-<!--                <van-skeleton row="1"></van-skeleton>-->
-<!--                <view class="skeleton-functional-child-rectangle-item" style="margin-top: 20rpx;">-->
-<!--                    <van-skeleton row="1"></van-skeleton>-->
-<!--                </view>-->
-<!--            </view>-->
-<!--            <view class="skeleton-functional-child">-->
-<!--                <van-skeleton row="1"></van-skeleton>-->
-<!--                <view class="skeleton-functional-child-rectangle-item" style="margin-top: 20rpx;">-->
-<!--                    <van-skeleton row="1"></van-skeleton>-->
-<!--                </view>-->
-<!--            </view>-->
-<!--            <view class="skeleton-functional-child">-->
-<!--                <van-skeleton row="1"></van-skeleton>-->
-<!--                <view class="skeleton-functional-child-rectangle-item" style="margin-top: 20rpx;">-->
-<!--                    <van-skeleton row="1"></van-skeleton>-->
-<!--                </view>-->
-<!--            </view>-->
-<!--        </view>-->
-<!--    </view>-->
-<!--    <view class="skeleton-content-wrapper">-->
-<!--        <view class="skeleton-content-child">-->
-<!--            <view class="skeleton-column-title">-->
-<!--                <van-skeleton row="1"></van-skeleton>-->
-<!--                <view class="skeleton-underline">-->
-<!--                    <van-skeleton row="1"></van-skeleton>-->
-<!--                </view>-->
-<!--            </view>-->
-<!--            <view class="skeleton-column-child-wrapper">-->
-<!--                <view class="skeleton-column-child">-->
-<!--                    <view class="skeleton-column-banner">-->
-<!--                        <van-skeleton row="1"></van-skeleton>-->
-<!--                    </view>-->
-<!--                    <view class="skeleton-column-child-title">-->
-<!--                        <van-skeleton row="1"></van-skeleton>-->
-<!--                    </view>-->
-<!--                    <view class="skeleton-column-child-info">-->
-<!--                        <van-skeleton row="3"></van-skeleton>-->
-<!--                    </view>-->
-<!--                </view>-->
-<!--                <view class="skeleton-column-child">-->
-<!--                    <view class="skeleton-column-banner">-->
-<!--                        <van-skeleton row="1"></van-skeleton>-->
-<!--                    </view>-->
-<!--                    <view class="skeleton-column-child-title">-->
-<!--                        <van-skeleton row="1"></van-skeleton>-->
-<!--                    </view>-->
-<!--                    <view class="skeleton-column-child-info">-->
-<!--                        <van-skeleton row="3"></van-skeleton>-->
-<!--                    </view>-->
-<!--                </view>-->
-<!--            </view>-->
-<!--        </view>-->
-<!--        <view class="skeleton-content-child">-->
-<!--            <view class="skeleton-column-title">-->
-<!--                <van-skeleton row="1"></van-skeleton>-->
-<!--                <view class="skeleton-underline">-->
-<!--                    <van-skeleton row="1"></van-skeleton>-->
-<!--                </view>-->
-<!--            </view>-->
-<!--            <view class="skeleton-column-child-wrapper">-->
-<!--                <view class="skeleton-column-child">-->
-<!--                    <view class="skeleton-column-banner">-->
-<!--                        <van-skeleton row="1"></van-skeleton>-->
-<!--                    </view>-->
-<!--                    <view class="skeleton-column-child-title">-->
-<!--                        <van-skeleton row="1"></van-skeleton>-->
-<!--                    </view>-->
-<!--                    <view class="skeleton-column-child-info">-->
-<!--                        <van-skeleton row="3"></van-skeleton>-->
-<!--                    </view>-->
-<!--                </view>-->
-<!--                <view class="skeleton-column-child">-->
-<!--                    <view class="skeleton-column-banner">-->
-<!--                        <van-skeleton row="1"></van-skeleton>-->
-<!--                    </view>-->
-<!--                    <view class="skeleton-column-child-title">-->
-<!--                        <van-skeleton row="1"></van-skeleton>-->
-<!--                    </view>-->
-<!--                    <view class="skeleton-column-child-info">-->
-<!--                        <van-skeleton row="3"></van-skeleton>-->
-<!--                    </view>-->
-<!--                </view>-->
-<!--            </view>-->
-<!--        </view>-->
-<!--    </view>-->
-<!--</view>-->
-
+<!--End: 企业微信端管理员页工作台-->
+<!--------------------------------------------------------------------------------------------------------------------->
+<!--Start: 企业微信端非管理员页工作台-未登录-->
+<view wx:elif="{{ !isWxWorkAdmin && !isLogin }}">
+    <view class="container font">
+        <view class="testPaperView">
+            <image src="./images/work-base@icon-demonstrate.png" class="iconImg"></image>
+            <view class="title">罗课（厦门）网络科技有限公司</view>
+            <view class="name">《模拟测评》</view>
+            <view class="toTest" bindtap="toTestIt">开始模拟测试</view>
+        </view>
+        <view class="bottomView">
+            <view class="mindMsg">
+                <view>您需要授权微信登录后</view>
+                <view>才能查看到企业发给您的测评</view>
+            </view>
+            <button style="margin-top:26rpx;" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+                <image class="btnicon" src="./images/work-base@icon-weixin.png"/>
+                微信授权登录
+            </button>
+        </view>
+    </view>
+    <hola-tab-bar active="{{ active }}"></hola-tab-bar>
+</view>
+<!--End: 企业微信端非管理员页工作台（测评任务、答题端小程序）-->
+<!--------------------------------------------------------------------------------------------------------------------->
+<!--Start: 企业微信端非管理员页工作台-测评列表-->
+<hola-report-list reportListTrigger="{{ reportListTrigger }}"></hola-report-list>
+<!--End: 企业微信端非管理员页工作台-测评列表-->

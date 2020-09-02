@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "van-skeleton": "../../common/vant-weapp/dist/skeleton/index",
-    "hola-tab-bar": "../../common/tab-bar/tab-bar"
+    "hola-tab-bar": "../../common/tab-bar/tab-bar",
+    "hola-report-list": "./components/report-list/report-list"
   }
 }

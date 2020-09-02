@@ -31,8 +31,7 @@
     "utils/ence_push/ence_push",
     "station/detail",
     "common/tab-bar/tab-bar",
-    "pages/user-center/user-center",
-    "pages/assess-task/assess-task"
+    "pages/user-center/user-center"
   ],
   "tabBar": {
     "custom": true,

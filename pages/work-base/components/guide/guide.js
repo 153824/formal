@@ -7,12 +7,18 @@ Page({
     isPass: false,
     hasUserInfo: false,
     isTest: false,
-    isok: false
+    loading: false
   },
   onLoad: function(option) {
     if (option.id) {
       this.setData({
         id: option.id
+      });
+    }
+    if(option.maskTrigger){
+      this.setData({
+        maskTrigger: option.maskTrigger,
+        loading: true
       });
     }
   },
@@ -27,7 +33,8 @@ Page({
         that.onShow();
       }, 500);
       return;
-    }
+    };
+
     app.doAjax({
       url: "sharePapers/getSharePaper",
       data: {
@@ -45,21 +52,24 @@ Page({
         }
         var sKey = "oldAnswer" + id;
         var oldData = wx.getStorageSync(sKey);
-        console.log("getSharePaper","reportMeet",ret.reportMeet);
         that.setData({
           reportMeet: ret.reportMeet
         });
         if (oldData) {
-          wx.redirectTo({
-            url: '../answering/answering?pid=' + ret.paperId + '&id=' + id + "&type=" + ret.applyStatus  + "&reportMeet=" + ret.reportMeet
+          that.setData({
+            loading: true
           });
+          setTimeout(()=>{
+            wx.redirectTo({
+              url: '../answering/answering?pid=' + ret.paperId + '&id=' + id + "&type=" + ret.applyStatus  + "&reportMeet=" + ret.reportMeet
+            });
+          },500);
           return;
         }
         var oldPeopleMsg = ret.oldPeopleMsg;
         if (oldPeopleMsg && oldPeopleMsg.username) {
           wx.setStorageSync("oldPeopleMsg", oldPeopleMsg);
         }
-        console.log("getSharePaper： ",ret);
         that.getPaperMsg({
           applyStatus: ret.applyStatus,
           draftAnswer: ret.draftAnswer,
@@ -194,4 +204,4 @@ Page({
       url: '../../../report/report?id=' + id,
     });
   },
-})
+});

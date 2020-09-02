@@ -30,3 +30,4 @@
   <button wx:else class="begin" open-type="getUserInfo" bindgetuserinfo="goToReplying">{{draftAnswer?'继续作答':'开始作答'}}</button>
   <text class="infotext">好啦测评提供技术支持</text>
 </view>
+<hola-mask isShow="{{ loading }}"></hola-mask>

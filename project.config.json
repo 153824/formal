@@ -26,7 +26,7 @@
 		"useCompilerModule": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.8.0",
+	"libVersion": "2.12.2",
 	"appid": "wx85cde7d3e8f3d949",
 	"projectname": "hola-new",
 	"debugOptions": {
@@ -290,7 +290,7 @@
 					"id": 31,
 					"name": "station/detail",
 					"pathName": "station/detail",
-					"query": "id=5efed573b1ef0200062a85f7",
+					"query": "id=5d9064b9d5de2b0073c8d711",
 					"scene": null
 				},
 				{
@@ -319,6 +319,13 @@
 					"name": "manager/manager",
 					"pathName": "manager/manager",
 					"query": "id=5efed573b1ef0200062a85f7",
+					"scene": null
+				},
+				{
+					"id": 36,
+					"name": "pages/work-base/work-base",
+					"pathName": "pages/work-base/work-base",
+					"query": "id=5f4f1035b03e4b23148078c5",
 					"scene": null
 				}
 			]

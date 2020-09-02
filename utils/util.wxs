@@ -96,6 +96,7 @@ var richTextFilter = function(nodeString=""){
   targetNode = nodeString.replace(getRegExp("\<img","ig"), "<img class='question-stem-rich-text-img'");
   return targetNode;
 };
+
 module.exports = {
   getMonthAndDayByFrag: getMonthAndDayByFrag,
   getHourAndMinByFrag: getHourAndMinByFrag,

@@ -64,32 +64,37 @@ Component({
         active: {
             type: Number,
             value: 0
+        },
+        morePath: {
+            type: "String",
+            value: ""
         }
     },
     methods: {
         onChange(event) {
             const that = this;
             const {isWxWork, isWxWorkAdmin} = this.data;
+            const {morePath} = this.properties;
             const active = Number(event.detail);
             if (!isWxWork) {
                 wx.switchTab({
-                    url: `${that.data.wxPage[active].path}`
+                    url: `${morePath}${that.data.wxPage[active].path}`
                 });
             } else if (isWxWorkAdmin) {
                 wx.switchTab({
-                    url: `${that.data.wxWorkPage.admin[active].path}`
+                    url: `${morePath}${that.data.wxWorkPage.admin[active].path}`
                 });
             } else {
                 try{
                     wx.redirectTo({
-                        url: `${that.data.wxWorkPage.member[active].path}`
+                        url: `${morePath}${that.data.wxWorkPage.member[active].path}`
                     });
                 }catch (e) {
 
                 }
                 try {
                     wx.switchTab({
-                        url: `${that.data.wxWorkPage.member[active].path}`
+                        url: `${morePath}${that.data.wxWorkPage.member[active].path}`
                     });
                 }catch (e) {
 

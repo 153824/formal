@@ -24,17 +24,16 @@
     "pages/replying/components/guide/guide",
     "pages/replying/components/notification/notification",
     "pages/work-base/work-base",
+    "pages/work-base/components/answering/answering",
+    "pages/work-base/components/done/done",
+    "pages/work-base/components/guide/guide",
+    "pages/work-base/components/report-list/report-list",
     "utils/ence_push/ence_push",
     "station/detail",
     "common/tab-bar/tab-bar",
-    "pages/user-center/user-center"
+    "pages/user-center/user-center",
+    "pages/assess-task/assess-task"
   ],
-  "plugins": {
-    "contactPlugin": {
-      "version": "1.3.0",
-      "provider": "wx104a1a20c3f81ec2"
-    }
-  },
   "tabBar": {
     "custom": true,
     "color": "#5C6171",

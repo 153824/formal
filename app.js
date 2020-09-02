@@ -41,7 +41,7 @@ const common = require('./utils/common.js');
 qiniuUpload.init({
     region: 'SCN',
     domain: 'ihola.luoke101.com',
-    uptokenURL: 'https://admin.luoke101.com/hola/getQiNiuToken',
+    uptokenURL: 'https://api.luoke101.com/hola/getQiNiuToken',
     shouldUseQiniuFileName: false
 });
 
@@ -54,6 +54,7 @@ App({
     teamRole: "",
     isLogin: false,
     isIos: false,
+    isTest: false,
     qiniuUpload: qiniuUpload,
     isIphoneX: false,
     // host: "http://192.168.0.101:3000",
@@ -77,7 +78,7 @@ App({
         wxWorkUserId: "",
         wxWorkTeamId: "",
         isWxWork: false,
-        isWxWorkAdmin: true,
+        isWxWorkAdmin: false,
     },
     onLaunch: function (options) {
         const that = this;
@@ -402,7 +403,7 @@ App({
      * @date: 2020/7/21
      */
     changePage: function (url, tab) {
-        var that = this
+        const that = this;
         if (url) {
             wx.navigateTo({
                 url: url,

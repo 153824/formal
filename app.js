@@ -437,9 +437,13 @@ App({
                 that.isLogin = true
             }
             LOCAL_MY_TEAM_LIST.forEach(function (n) {
-                if (n.role == 3 && n.createUser.objectId ==
-                    that.globalData.userInfo.id) { //有我创建的团队时不进行自动新增团队
-                    toAddNew = false
+                try{
+                    if (n.role == 3 && n.createUser.objectId ==
+                        that.globalData.userInfo.id) { //有我创建的团队时不进行自动新增团队
+                        toAddNew = false
+                    }
+                }catch (e) {
+                    console.error("At app.js 445, ",e)
                 }
             })
             if (LOCAL_MY_TEAM_LIST.length) {

@@ -49,7 +49,7 @@ Component({
          * @return:  none
          * @date: 2020/8/27
          */
-        getMyTeamList: function (cacheTrigger) {
+        getMyTeamList: function (cacheTrigger,reLaunchTrigger=false) {
             const that = this;
             app.getMyTeamList(function (list) {
                 const teamNames = [];
@@ -99,6 +99,48 @@ Component({
             wx.reLaunch({
                 url: `../../pages/${that.properties.url}?loadingTrigger=true`,
             })
+        },
+
+        getUserInfo: function(e) {
+            var that = this;
+            var userInfo = e.detail.userInfo;
+            if (!userInfo) {
+                return;
+            }
+            userInfo["openid"] = wx.getStorageSync("openId") || app.globalData.userMsg.openid;
+            userInfo["unionid"] = wx.getStorageSync("unionId") || app.globalData.userMsg.unionid;
+            app.doAjax({
+                url: "updateUserMsg",
+                method: "post",
+                data: {
+                    data: JSON.stringify({
+                        wxUserInfo: userInfo,
+                        userCompany: {
+                            name: userInfo.nickName + "的团队"
+                        }
+                    }),
+                },
+                success: function(res) {
+                    let info = that.data.userInfo;
+                    app.globalData.userInfo.nickname = userInfo.nickName;
+                    try{
+                        const isBindPromise = new Promise(function (resolve,reject) {
+                            resolve(app.addNewTeam(app.getUserInfo.call(that.loadUserMsg)));
+                        });
+                        isBindPromise.then(()=>{
+                            info.isBind = true;
+                            that.setData({
+                                userInfo: info
+                            });
+                            that.getMyTeamList(false,true);
+                        }).catch((err)=>{
+                            console.log(err);
+                        })
+                    }catch (e) {
+                        console.error("At common/title/title 140, ",e);
+                    }
+                }
+            });
         },
 
         /**

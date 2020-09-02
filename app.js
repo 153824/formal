@@ -43,7 +43,7 @@ const common = require('./utils/common.js');
 qiniuUpload.init({
     region: 'SCN',
     domain: 'ihola.luoke101.com',
-    uptokenURL: 'https://admin.luoke101.com/hola/getQiNiuToken',
+    uptokenURL: 'https://api.luoke101.com/hola/getQiNiuToken',
     shouldUseQiniuFileName: false
 });
 

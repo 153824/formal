@@ -45,12 +45,12 @@ Component({
             member: [
                 {
                     text: "测评任务",
-                    normal: '../../images/icon/icon@index-no-active.png',
-                    active: '../../images/icon/icon@index-active.png',
-                    path: "../../pages/home/home"
+                    normal: '../../images/icon/icon@evaluation-manager-no-active.png',
+                    active: '../../images/icon/icon@evaluation-manager-active.png',
+                    path: "../../pages/work-base/work-base"
                 },
                 {
-                    text: "任务中心",
+                    text: "个人中心",
                     normal: '../../images/icon/icon@index-no-active.png',
                     active: '../../images/icon/icon@index-active.png',
                     path: "../../pages/user-center/user-center"
@@ -69,38 +69,47 @@ Component({
     methods: {
         onChange(event) {
             const that = this;
-            const { isWxWork,isWxWorkAdmin } = this.data;
+            const {isWxWork, isWxWorkAdmin} = this.data;
             const active = Number(event.detail);
-            if( !isWxWork ){
+            if (!isWxWork) {
                 wx.switchTab({
                     url: `${that.data.wxPage[active].path}`
                 });
-            }else if( isWxWorkAdmin ){
+            } else if (isWxWorkAdmin) {
                 wx.switchTab({
                     url: `${that.data.wxWorkPage.admin[active].path}`
                 });
-            }else{
-                wx.switchTab({
-                    url: `${that.data.wxWorkPage.member[active].path}`
-                });
+            } else {
+                try{
+                    wx.redirectTo({
+                        url: `${that.data.wxWorkPage.member[active].path}`
+                    });
+                }catch (e) {
+
+                }
+                try {
+                    wx.switchTab({
+                        url: `${that.data.wxWorkPage.member[active].path}`
+                    });
+                }catch (e) {
+
+                }
             }
         },
     },
     pageLifetimes: {
         onLoad: function () {
-            const { active } = this.properties;
+            const {active} = this.properties;
             this.setData({
                 active
             });
         },
         onShow: function () {
-            const { active } = this.properties;
+            const {active} = this.properties;
             this.setData({
                 active
             });
         }
     },
-    lifetimes: {
-
-    }
+    lifetimes: {}
 });

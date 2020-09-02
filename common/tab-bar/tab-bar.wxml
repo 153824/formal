@@ -18,7 +18,7 @@
 </block>
 <block wx:elif="{{ isWxWork && !isWxWorkAdmin }}">
     <van-tabbar active="{{ active }}" bind:change="onChange" border="{{ true }}" active-color="#5960ED">
-        <van-tabbar-item wx:for="{{ wxWorkPage.admin }}" wx:key="unique">
+        <van-tabbar-item wx:for="{{ wxWorkPage.member }}" wx:key="unique">
             <image slot="icon" src="{{ item.normal }}" mode="aspectFit" style="width: 24px; height: 24px;"/>
             <image slot="icon-active" src="{{ item.active }}" mode="aspectFit" style="width: 24px; height: 24px;"/>
             {{item.text}}

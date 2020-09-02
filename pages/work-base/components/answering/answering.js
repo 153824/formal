@@ -42,8 +42,6 @@ Page({
   },
   onLoad: function (options) {
     var that = this;
-    console.log("reportMeet: ", options.reportMeet);
-    console.log("options", options);
     that.setData({
       applyStatus: options.type,
       reportMeet: options.reportMeet,

@@ -1,4 +1,4 @@
-<view wx:if="{{!list.length}}" class="noData">
+<view wx:if="{{!list.length && reportListTrigger}}" class="noData">
   <view class="testPaperView" wx:if="{{scene!=1035}}">
     <image src="../../images/work-base@icon-demonstrate.png" class="iconImg"></image>
     <view class="title">罗课（厦门）网络科技有限公司</view>
@@ -17,8 +17,8 @@
         <image wx:if="{{item.status==2}}" class="finishImg" src="../../images/report-list@icon-done.png"></image>
         <text class="status" wx:else>未完成</text>
       </view>
-      <view class="btnView btnView1" bindtap="changePage" data-url="../guide/guide?id={{item.id}}" wx:if="{{item.status==1}}">继续作答</view>
-      <view class="btnView btnView1" bindtap="changePage" data-url="../guide/guide?id={{item.id}}" wx:elif="{{item.status==4}}">继续作答</view>
+      <view class="btnView btnView1" bindtap="changePage" data-url="../../../components/guide/guide?id={{item.id}}" wx:if="{{item.status==1}}">继续作答</view>
+      <view class="btnView btnView1" bindtap="changePage" data-url="../../../components/guide/guide?id={{item.id}}" wx:elif="{{item.status==4}}">继续作答</view>
       <view class="btnView btnView2" bindtap="toDetail" data-index="{{index}}" wx:elif="{{item.status==2&&item.applyStatus==2 || item.shareMsg.reportMeet == 1 }}">查看报告</view>
       <view class="btnView btnView3" wx:elif="{{item.status==2&&item.applyStatus==1}}">已向HR申请查看报告，请耐心等待</view>
       <view class="btnView btnView2" bindtap="toApply" data-id="{{item.id}}" wx:else>向HR申请查看报告</view>
@@ -31,5 +31,6 @@
   <image class="centerImg" src="../img/report/icon_check1.png"></image>
   <view class="mindMsg">申请成功，请关注罗课学堂公众号</view>
   <view class="mindMsg">我们将通过公众号推送HR的回复信息</view>
-  <button open-type="contact" show-message-card="true" send-message-img="{{mpImg}}">关注公众号</button>
+  <button class="dlgView-button" open-type="contact" show-message-card="true" send-message-img="{{mpImg}}">关注公众号</button>
 </view>
+<hola-tab-bar active="{{ active }}" morePath="../../../"></hola-tab-bar>

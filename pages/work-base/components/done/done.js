@@ -23,7 +23,7 @@ Page({
   },
   onUnload() {
     wx.reLaunch({
-      url: "../../pages/work-base/work-base"
+      url: "../../pages/work-base/work-base?maskTrigger=true"
     });
   },
   /**

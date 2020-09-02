@@ -1,0 +1,169 @@
+/* admins/reportList.wxss */
+
+page {
+  background-color: #f6f7ff;
+}
+
+.noData {
+  padding-top: 40rpx;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.noData .icon1 {
+  width: 334rpx;
+  display: block;
+  margin: 132rpx auto 0;
+}
+
+.noData .mind {
+  text-align: center;
+  margin-top: 18rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Medium, PingFangSC;
+  font-weight: 500;
+  color: rgba(92, 97, 113, 1);
+  line-height: 40rpx;
+}
+
+page {
+  background-color: #f6f7ff;
+}
+
+.list {
+  padding: 20rpx 20rpx 60rpx;
+}
+
+.list .item {
+  margin-top: 20rpx;
+  padding: 36rpx 0;
+  position: relative;
+  text-align: center;
+  background: rgba(254, 255, 255, 1);
+  box-shadow: 0px 4rpx 18rpx 0px rgba(166, 166, 166, 0.18);
+  border-radius: 18rpx;
+}
+
+.list .item .companyName {
+  font-size: 32rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 1);
+  line-height: 44rpx;
+}
+
+.list .item .reportMsg {
+  margin-top: 24rpx;
+}
+
+.list .item .reportMsg .paperName {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(92, 97, 113, 1);
+  line-height: 40rpx;
+}
+
+.list .item .reportMsg .status {
+  display: inline-block;
+  width: 110rpx;
+  height: 36rpx;
+  background: rgba(250, 140, 22, 1);
+  border-radius: 6rpx;
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(254, 255, 255, 1);
+  line-height: 36rpx;
+}
+
+.list .item .reportMsg .finishImg {
+  width: 120rpx;
+  height: 146rpx;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.list .item .btnView {
+  width: 436rpx;
+  height: 76rpx;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  line-height: 76rpx;
+  margin: 74rpx auto 0;
+}
+
+.list .item .btnView1 {
+  color: rgba(255, 255, 255, 1);
+  background: #353EE8FF;
+}
+
+.list .item .btnView2 {
+  color: rgba(255, 255, 255, 1);
+  background: #00a47c;
+}
+
+.list .item .btnView3 {
+  color: #00a47c;
+  background: #fff;
+}
+
+.coverView {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.dlgView {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 560rpx;
+  height: 790rpx;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 4rpx 26rpx 0px rgba(110, 110, 110, 0.71);
+  border-radius: 14rpx;
+  text-align: center;
+  z-index: 9999;
+}
+
+.dlgView .closeImg {
+  width: 92rpx;
+  height: 92rpx;
+  position: absolute;
+  right: -46rpx;
+  top: -46rpx;
+}
+
+.dlgView .centerImg {
+  width: 130rpx;
+  height: 126rpx;
+  display: block;
+  margin: 74rpx auto 50rpx;
+}
+
+.dlgView .mindMsg {
+  font-size: 28rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 600;
+  color: rgba(50, 53, 65, 1);
+  line-height: 40rpx;
+}
+
+.dlgView button {
+  width: 358rpx;
+  height: 80rpx;
+  background: rgba(89, 96, 237, 1);
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1);
+  line-height: 80rpx;
+  margin-top: 296rpx;
+}

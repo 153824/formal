@@ -61,27 +61,29 @@ Page({
       data: {
         id: app.teamId
       },
-      success: function(ret) {
-        adminNum = ret.adminMemberMax || adminNum;
-        var members = ret.members || [];
-        var memberRole = ret.memberRole || {};
-        var adminMember = []; //管理员
-        var member = []; //普通成员
+      success: function(res) {
+        adminNum = res.adminMemberMax || adminNum;
+        let members = res.members || [];
+        console.log(members.length)
+        let memberRole = res.memberRole || {};
+        let adminMember = []; //管理员
+        let member = []; //普通成员
         members.forEach(function(node) {
+          console.log(node);
           if (node) {
-            var id = node.objectId;
-            var role = memberRole[id] || 1;
-            if (role == 2) {
+            let id = node.objectId;
+            let role = memberRole[id] || 1;
+            if (role === 2) {
               adminMember.push(node);
             } else {
               member.push(node);
             }
           }
         });
-        ret["adminNum"] = adminNum;
-        ret["adminMember"] = adminMember;
-        ret["member"] = member;
-        that.setData(ret);
+        res["adminNum"] = adminNum;
+        res["adminMember"] = adminMember;
+        res["member"] = member;
+        that.setData(res);
       }
     });
   },
@@ -130,6 +132,7 @@ Page({
    * 邀请用户
    */
   inviteMember: function(e) {
+    console.log("inviteMember",e);
     var d = e.currentTarget.dataset;
     var n = d.n;
     var num = d.num;
@@ -144,8 +147,7 @@ Page({
         id: app.teamId,
         role: role
       },
-      success: function(ret) {
-      }
+      success: function(res) {}
     });
   },
   /**

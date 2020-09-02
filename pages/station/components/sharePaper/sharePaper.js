@@ -118,6 +118,7 @@ Page({
         id: that.data.paperId,
         shareMsg: JSON.stringify(shareMsg)
       },
+      noLoading: true,
       success: function(ret) {
         that.setData({
           retData: ret

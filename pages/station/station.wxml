@@ -1,7 +1,7 @@
 <block>
     <title id="title" url="station/station"></title>
 </block>
-<view class="store-wrapper" style="margin-top:{{ (statusbarHeight + titleHeight) }}px;">
+<view wx:if="{{ !loading }}" class="store-wrapper" style="margin-top:{{ (statusbarHeight + titleHeight) }}px;">
     <scroll-view class="left-catalog" scroll-y="true" scroll-x="false" scroll-with-animation="true" bindtap="tabMenu">
         <view class="left-catalog-wrapper">
             <view id="{{item.objectId}}" wx:for="{{menu}}" wx:key="unique" data-id="{{item.objectId}}"

@@ -5,8 +5,8 @@
         <text>康师傅集团</text>
     </view>
     <view class="content">
-        <scroll-view class="content-scroll-area" scroll-y >
-<!--            我的测评-->
+        <scroll-view class="content-scroll-area" scroll-y>
+            <!--Start: 我的测评-->
             <view class="program-wrapper">
                 <view class="program-title">
                     <text>我的测评</text>
@@ -97,7 +97,8 @@
                     </view>
                 </view>
             </view>
-<!--            最新报告-->
+            <!--End: 我的测评-->
+            <!--Start: 最新报告-->
             <view class="program-wrapper">
                 <view class="program-title">
                     <view>
@@ -190,7 +191,8 @@
                     </view>
                 </view>
             </view>
-<!--            做的跟踪-->
+            <!--End: 最新报告-->
+            <!--Start: 作答跟踪-->
             <view class="program-wrapper">
                 <view class="program-title">
                     <text>作答跟踪</text>
@@ -286,7 +288,80 @@
                         <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
                 </view>
+                <view class="program-body reply-track-body">
+                    <view class="evaluation-wrapper">
+                        <view class="evaluation-name">
+                            康师傅业务代表测评
+                        </view>
+                        <view class="reply-track-info">
+                            发放数量: <text class="count" style="margin: 0 10rpx;">10</text>
+                            完成数量: <text class="count" style="margin-left: 10rpx;">2</text>
+                        </view>
+                        <view class="reply-track-info">
+                            发放时间: <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
+                        </view>
+                    </view>
+                    <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
+                    <view class="send-evaluation">
+                        <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
+                    </view>
+                </view>
+                <view class="program-body reply-track-body">
+                    <view class="evaluation-wrapper">
+                        <view class="evaluation-name">
+                            康师傅业务代表测评
+                        </view>
+                        <view class="reply-track-info">
+                            发放数量: <text class="count" style="margin: 0 10rpx;">10</text>
+                            完成数量: <text class="count" style="margin-left: 10rpx;">2</text>
+                        </view>
+                        <view class="reply-track-info">
+                            发放时间: <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
+                        </view>
+                    </view>
+                    <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
+                    <view class="send-evaluation">
+                        <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
+                    </view>
+                </view>
+                <view class="program-body reply-track-body">
+                    <view class="evaluation-wrapper">
+                        <view class="evaluation-name">
+                            康师傅业务代表测评
+                        </view>
+                        <view class="reply-track-info">
+                            发放数量: <text class="count" style="margin: 0 10rpx;">10</text>
+                            完成数量: <text class="count" style="margin-left: 10rpx;">2</text>
+                        </view>
+                        <view class="reply-track-info">
+                            发放时间: <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
+                        </view>
+                    </view>
+                    <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
+                    <view class="send-evaluation">
+                        <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
+                    </view>
+                </view>
+                <view class="program-body reply-track-body">
+                    <view class="evaluation-wrapper">
+                        <view class="evaluation-name">
+                            康师傅业务代表测评
+                        </view>
+                        <view class="reply-track-info">
+                            发放数量: <text class="count" style="margin: 0 10rpx;">10</text>
+                            完成数量: <text class="count" style="margin-left: 10rpx;">2</text>
+                        </view>
+                        <view class="reply-track-info">
+                            发放时间: <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
+                        </view>
+                    </view>
+                    <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
+                    <view class="send-evaluation">
+                        <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
+                    </view>
+                </view>
             </view>
+            <!--End: 作答跟踪-->
         </scroll-view>
     </view>
     <hola-tab-bar active="{{ active }}"></hola-tab-bar>
@@ -318,5 +393,7 @@
 <!--End: 企业微信端非管理员页工作台（测评任务、答题端小程序）-->
 <!--------------------------------------------------------------------------------------------------------------------->
 <!--Start: 企业微信端非管理员页工作台-测评列表-->
-<hola-report-list reportListTrigger="{{ reportListTrigger }}"></hola-report-list>
+<hola-report-list reportListTrigger="{{ false }}"></hola-report-list>
 <!--End: 企业微信端非管理员页工作台-测评列表-->
+<!--------------------------------------------------------------------------------------------------------------------->
+<hola-mask isShow="{{ maskTrigger }}"></hola-mask>

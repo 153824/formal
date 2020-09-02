@@ -4,14 +4,24 @@ Page({
         shareId: "",
         active: 0,
         isLogin: false,
-        loading: true
+        loading: true,
+        maskTrigger: false,
+        reportListTrigger: false,
+        isWxWork: app.wxWorkInfo.isWxWork,
+        isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin
     },
 
     onLoad: function(option={id:""}) {
+        const { isWxWorkAdmin,isWxWork } = this;
         if( option.id ){
             app.shareId = option.id;
         }
-        if (app.shareId) { //跳转到答题界面
+        if( option.maskTrigger ){
+            this.setData({
+                maskTrigger: true
+            })
+        }
+        if ( app.shareId && this.data.isWxWork ) { //跳转到答题界面
             wx.reLaunch({
                 url: "./components/guide/guide?id=" + app.shareId
             });
@@ -21,9 +31,13 @@ Page({
         const userInfo = wx.getStorageSync("userInfo");
         if (userInfo && userInfo.avatar) {
             this.setData({
-                reportListTrigger: true,
                 isLogin: true
             });
+            if(isWxWork && !isWxWorkAdmin){
+                this.setData({
+                    reportListTrigger: true,
+                });
+            }
             return;
         }
     },

@@ -21,6 +21,11 @@ Page({
   onShow: function() {
 
   },
+  onUnload() {
+    wx.reLaunch({
+      url: "../../pages/work-base/work-base"
+    });
+  },
   /**
    * 申请查看报告
    */
@@ -69,7 +74,7 @@ Page({
   toDetail: function(e) {
     var id = this.data.id;
     wx.redirectTo({
-      url: '../report/detail?id=' + id
+      url: '../report/report?id=' + id
     });
   },
 })

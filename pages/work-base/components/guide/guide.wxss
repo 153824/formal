@@ -97,7 +97,7 @@
 .begin {
   width: 632rpx;
   height: 88rpx;
-  background: rgba(89, 96, 237, 1);
+  background: #353EE8FF;
   box-shadow: 0 4rpx 8rpx 0 rgba(153, 162, 228, 0.5);
   border-radius: 18rpx;
   margin: 0 58rpx 0 60rpx;

@@ -34,7 +34,7 @@
 .reportBtn {
   width: 468rpx;
   height: 88rpx;
-  background: rgba(89, 96, 237, 1);
+  background: #353EE8FF;
   border-radius: 10rpx;
   margin: 100rpx auto 0;
   font-size: 32rpx;

@@ -134,7 +134,7 @@
 .container1 button {
   margin-top: 40rpx;
   height: 94rpx;
-  background: rgba(89, 96, 237, 1);
+  background: #353EE8FF;
   border-radius: 8rpx;
   color: #fff;
   font-size: 32rpx;

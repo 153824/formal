@@ -220,8 +220,13 @@
                     <!-- 雷达图 -->
                     <view class="chartImg" wx:if="{{item.chartType!=1}}">
                         <ec-canvas id="mychart{{index}}" canvas-id="mychartcanvas{{index}}"
-                                   ec="{{getChartMsg1}}"></ec-canvas>
+                                   ec="{{getRadarChartInfo}}"></ec-canvas>
                     </view>
+                    <!--                    &lt;!&ndash; 柱状图 &ndash;&gt;-->
+                    <!--                    <view class="chartImg" wx:if="{{item.chartType == 2}}">-->
+                    <!--                        <ec-canvas id="mychart{{index}}" canvas-id="mychartcanvas{{index}}" ec="{{getChartMsg
+                    }}"></ec-canvas>-->
+                    <!--                    </view>-->
                     <view style="height:50rpx;"
                           wx:if="{{!item.lvDesc&&!item.showTotal&&!item.rankOrg&&!item.rankAll&&item.chartType==1}}"></view>
                     <!-- 维度 -->
@@ -602,10 +607,15 @@
                     <view class="content" wx:if="{{item.lvDesc}}">
                         <rich-text nodes="<p>{{item.lvDesc||''}}</p>"></rich-text>
                     </view>
+                    <!-- 柱状图 -->
+                    <cover-view class="chartImg" class="{{ !canvasLoading ? 'chartImg' : 'chartImg' }}">
+                        <ec-canvas id="mychart{{index}}" canvas-id="mychartcanvas{{index}}"
+                                   ec="{{getChartMsg}}"></ec-canvas>
+                    </cover-view>
                     <!-- 雷达图 -->
                     <view class="chartImg" wx:if="{{item.chartType!=1}}">
                         <ec-canvas id="mychart{{index}}" canvas-id="mychartcanvas{{index}}"
-                                   ec="{{getChartMsg1}}"></ec-canvas>
+                                   ec="{{getRadarChartInfo}}"></ec-canvas>
                     </view>
                     <view style="height:50rpx;"
                           wx:if="{{!item.lvDesc&&!item.showTotal&&!item.rankOrg&&!item.rankAll&&item.chartType==1}}"></view>
@@ -655,7 +665,7 @@
                                             <image src="./images/report@icon-arrow.png"></image>
                                         </block>
                                     </block>
-                                    <block wx:elif="{{ item.showSubScore !== 'none' }}" >
+                                    <block wx:elif="{{ item.showSubScore !== 'none' }}">
                                         <text style="color:{{node.color}};">
                                             {{ item.showSubLevel ? node.lvName : "" }}
                                         </text>
@@ -914,7 +924,7 @@
                             <!--多选题-未配置对错-题目-->
                             <view wx:if="{{ recordItem.choiceType === 'multiple' && recordItem.correctIdx.length <= 0  }}"
                                   class="question-options">
-                                <view wx:for="{{ recordItem.options }}" wx:for-item="optionItem"  wx:key="unique"
+                                <view wx:for="{{ recordItem.options }}" wx:for-item="optionItem" wx:key="unique"
                                       wx:for-index="optionIndex" wx:key="unique" class="question-options-child">
                                     <title class="option-char {{ util.isIncludes(recordItem.respondIdx,optionIndex) ? 'user-checked-char' : '' }}">
                                         {{ util.ASCIIToChar(optionIndex) }}</title>
@@ -923,12 +933,14 @@
                                 </view>
                                 <title wx:if="{{ false }}" class="compare">
                                     正确答案:
-                                    <block wx:for="{{ recordItem.correctIdx }}" wx:for-item="correctItem" wx:key="unique">
+                                    <block wx:for="{{ recordItem.correctIdx }}" wx:for-item="correctItem"
+                                           wx:key="unique">
                                         {{util.ASCIIToChar(correctItem)}}
                                     </block>
                                     <text></text>
                                     用户选择:
-                                    <block wx:for="{{ recordItem.respondIdx }}" wx:for-item="respondItem"  wx:key="unique"
+                                    <block wx:for="{{ recordItem.respondIdx }}" wx:for-item="respondItem"
+                                           wx:key="unique"
                                            wx:key="unique">{{util.ASCIIToChar(respondItem)}}
                                     </block>
                                 </title>

@@ -219,14 +219,9 @@
                     </view>
                     <!-- 雷达图 -->
                     <view class="chartImg" wx:if="{{item.chartType!=1}}">
-                        <ec-canvas id="mychart{{index}}" canvas-id="mychartcanvas{{index}}"
-                                   ec="{{getRadarChartInfo}}"></ec-canvas>
+                        <hola-radar id="{{index}}" radarValue="{{ radarValue }}"
+                                    radarIndicator="{{ radarIndicator }}"></hola-radar>
                     </view>
-                    <!--                    &lt;!&ndash; 柱状图 &ndash;&gt;-->
-                    <!--                    <view class="chartImg" wx:if="{{item.chartType == 2}}">-->
-                    <!--                        <ec-canvas id="mychart{{index}}" canvas-id="mychartcanvas{{index}}" ec="{{getChartMsg
-                    }}"></ec-canvas>-->
-                    <!--                    </view>-->
                     <view style="height:50rpx;"
                           wx:if="{{!item.lvDesc&&!item.showTotal&&!item.rankOrg&&!item.rankAll&&item.chartType==1}}"></view>
                     <!-- 维度 -->
@@ -608,14 +603,16 @@
                         <rich-text nodes="<p>{{item.lvDesc||''}}</p>"></rich-text>
                     </view>
                     <!-- 柱状图 -->
-                    <cover-view class="chartImg" class="{{ !canvasLoading ? 'chartImg' : 'chartImg' }}">
-                        <ec-canvas id="mychart{{index}}" canvas-id="mychartcanvas{{index}}"
-                                   ec="{{getChartMsg}}"></ec-canvas>
-                    </cover-view>
+                    <view wx:if="{{ true }}" class="chartImg">
+                        <hola-histogram id="{{index}}"></hola-histogram>
+                    </view>
                     <!-- 雷达图 -->
-                    <view class="chartImg" wx:if="{{item.chartType!=1}}">
-                        <ec-canvas id="mychart{{index}}" canvas-id="mychartcanvas{{index}}"
-                                   ec="{{getRadarChartInfo}}"></ec-canvas>
+                    <view class="chartImg" wx:if="{{ item.chartType!=1 }}">
+                        <hola-radar id="{{index}}" radarValue="{{ radarValue }}"
+                                    radarIndicator="{{ radarIndicator }}"></hola-radar>
+                    </view>
+                    <view class="chartImg" style="display: flex;justify-content: center;align-items: center;">
+                        <hola-grid></hola-grid>
                     </view>
                     <view style="height:50rpx;"
                           wx:if="{{!item.lvDesc&&!item.showTotal&&!item.rankOrg&&!item.rankAll&&item.chartType==1}}"></view>

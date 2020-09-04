@@ -547,7 +547,8 @@ assessor-info
 }
 
 .box3 .chartImg {
-  height: 100vw;
+  background-color: #fff;
+  margin: 80rpx 0 60rpx;
 }
 
 .box3 .chartImg ec-canvas {
@@ -1218,15 +1219,4 @@ swiper, swiper-item {
 }
 .question-stem-rich-text-img{
   max-width: 100%;
-}
-.animation{
-  animation: rotate .5s forwards;
-}
-@keyframes rotate {
-  from{
-    transform: rotate(0deg);
-  }
-  to{
-    transform: rotate(90deg);
-  }
 }

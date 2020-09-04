@@ -64,268 +64,34 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 15,
+			"current": -1,
 			"list": [
 				{
-					"id": -1,
-					"name": "index/manage",
-					"pathName": "index/manage",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "test/index",
-					"pathName": "test/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 2,
-					"name": "答题",
-					"pathName": "test/index",
-					"query": "pid=5db1624aa673f5007249c9ee&id=5dd7b4e521460d0071fbfc29",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "我的",
-					"pathName": "user/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "我的卡券",
-					"pathName": "user/ticket",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "新用户大礼包",
-					"pathName": "index/couponGet",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "提交答题成功",
-					"pathName": "test/finish",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 12,
-					"name": "报告详情",
-					"pathName": "report/detail",
-					"query": "id=5ed185aa7ce4740006746bbd",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "团队管理",
-					"pathName": "user/myTeam",
-					"query": "id=5db5993c6e9ba1006d1f5622",
-					"scene": null
-				},
-				{
-					"id": 15,
-					"name": "邀请",
-					"pathName": "user/teamInvite",
-					"query": "key=teamMsg_5e095efe7796d9006a820d21_1",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "企业认证",
-					"pathName": "user/teams",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "分享报告",
-					"pathName": "report/shareReport",
-					"query": "id=5dc53478fc36ed0071ec094f",
-					"scene": null
-				},
-				{
-					"id": 18,
-					"name": "新人领取免费测评券",
-					"pathName": "index/getFreeTicket",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 19,
-					"name": "index/index",
-					"pathName": "index/index",
-					"query": "",
-					"scene": 1043,
-					"referrerInfo": {
-						"appId": "wx68b480755b09f358"
-					}
-				},
-				{
-					"id": -1,
-					"name": "index/pcGetTickSuccess",
-					"pathName": "index/pcGetTickSuccess",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "  领券",
-					"pathName": "index/getFreeTicket",
-					"query": "fromPc=true",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "个人中心",
-					"pathName": "user/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "测评发放",
-					"pathName": "store/sharePaper",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 25,
-					"name": "user/teamInvite",
-					"pathName": "user/teamInvite",
-					"query": "reportId=5e82f09b7d5774006aa69d6a&key=teamMsg_5e1985617d5774006ac4533e_1",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "test/index",
-					"pathName": "test/index",
-					"query": "id=5daaa765a673f50072176475",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "station/more",
-					"pathName": "station/more",
-					"query": "id=5daaa765a673f50072176475",
-					"scene": null
-				},
-				{
-					"id": 28,
-					"name": "station/more",
-					"pathName": "station/more",
-					"query": "id=5ee0762890962500088b5343&title=",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "index/index",
-					"pathName": "index/index",
-					"query": "id= 5ee0762890962500088b5343&title=",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "station/station",
-					"pathName": "station/station",
-					"query": "userId=5ee1c3825291d70009685874",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "manager/manager",
-					"pathName": "manager/manager",
-					"query": "id = 5db1624aa673f5007249c9ee",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "user/index",
-					"pathName": "user/index",
-					"query": "id=5db1624aa673f5007249c9ee",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "user/myTeam",
-					"pathName": "user/myTeam",
-					"query": "id=5ed185aa7ce4740006746bbd",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "test/finish",
-					"pathName": "test/finish",
-					"query": "id=5ee89aacec674d0009e5d919",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "test/guide",
-					"pathName": "test/guide",
-					"query": "id=5ef872264b6b6b000782e07c",
-					"scene": null
-				},
-				{
-					"id": 37,
-					"name": "test/index",
-					"pathName": "test/index",
-					"query": "id=5f2a697b1c2c2b0008babd20",
-					"scene": null
-				},
-				{
-					"id": 38,
-					"name": "user/teamInvite",
-					"pathName": "user/teamInvite",
-					"query": "userId=5eeb5372372a690009f6a806&teamId=5e1985617d5774006ac4533e",
-					"scene": null
-				},
-				{
-					"id": 31,
-					"name": "station/detail",
-					"pathName": "station/detail",
-					"query": "id=5d9064b9d5de2b0073c8d711",
-					"scene": null
-				},
-				{
-					"id": 40,
-					"name": "report/detail",
-					"pathName": "report/detail",
-					"query": "id=5f2297acdeb7760006afcba6",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "manager/manager",
-					"pathName": "manager/manager",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 42,
-					"name": "test/index",
-					"pathName": "test/index",
-					"query": "id=5edefe43b9e2430008a3f99a",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "manager/manager",
-					"pathName": "manager/manager",
-					"query": "id=5efed573b1ef0200062a85f7",
-					"scene": null
-				},
-				{
-					"id": 36,
-					"name": "pages/work-base/work-base",
+					"id": 0,
+					"name": "工作台",
 					"pathName": "pages/work-base/work-base",
 					"query": "id=5f4f1035b03e4b23148078c5",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "加入团队",
+					"pathName": "pages/user/components/teamInvite/teamInvite",
+					"query": "key=teamMsg_5f51ada624e15034a2a33827_2",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "报告详情",
+					"pathName": "pages/report/report",
+					"query": "id=5f4f6cf094dbb6144681a465",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/station/components/detail/detail",
+					"pathName": "pages/station/components/detail/detail",
+					"query": "id=5f4f4d561d704b746010e22a",
 					"scene": null
 				}
 			]

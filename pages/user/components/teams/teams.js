@@ -53,13 +53,13 @@ Page({
         list.forEach(function(node) {
           var parent = node.parent;
           if (parent) {
-            vocationFull[parent.objectId] = vocationFull[parent.objectId] || {
+            vocationFull[parent._id] = vocationFull[parent._id] || {
               name: parent.name,
               child: []
             };
-            vocationFull[parent.objectId]["child"].push(node.name);
+            vocationFull[parent._id]["child"].push(node.name);
           } else {
-            vocationFull[node.objectId] = vocationFull[node.objectId] || {
+            vocationFull[node._id] = vocationFull[node._id] || {
               name: node.name,
               child: []
             };

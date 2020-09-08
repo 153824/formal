@@ -22,7 +22,9 @@ Component({
         isIos: false,
         showAddNewTeam: false,
         userInfo: app.globalData.userInfo,
-        teamNames: []
+        teamNames: [],
+        loading: false,
+        titleLoading: true
     },
     methods: {
         /**
@@ -33,12 +35,12 @@ Component({
          * @return:  none
          * @date: 2020/8/27
          */
-        loadUserMsg: function (cacheTrigger = true) {
+        loadUserMsg: function (cacheTrigger = true,reLaunchTrigger) {
             const userData = app.globalData.userInfo || wx.getStorageSync("userInfo");
             this.setData({
                 userInfo: userData
             });
-            this.getMyTeamList(cacheTrigger);
+            this.getMyTeamList(cacheTrigger,reLaunchTrigger);
         },
 
         /**
@@ -49,7 +51,7 @@ Component({
          * @return:  none
          * @date: 2020/8/27
          */
-        getMyTeamList: function (cacheTrigger,reLaunchTrigger=false) {
+        getMyTeamList: function (cacheTrigger, reLaunchTrigger = false) {
             const that = this;
             app.getMyTeamList(function (list) {
                 const teamNames = [];
@@ -62,8 +64,20 @@ Component({
                     nowTeam: list[0],
                     teamList: list,
                     selTeam: 0,
-                    teamNames: teamNames
+                    teamNames: teamNames,
                 });
+                if(reLaunchTrigger){
+                    setTimeout(()=>{
+                        wx.reLaunch({
+                            url: `../../pages/${that.properties.url}?loadingTrigger=true`,
+                        })
+                    },500)
+                }
+                setTimeout(() => {
+                    that.setData({
+                        titleLoading: false
+                    })
+                }, 300)
             }, cacheTrigger);
         },
 
@@ -77,8 +91,8 @@ Component({
          */
         changeTeam: function (e) {
             const that = this;
-            const { value } = e.detail;
-            const { teamList } = this.data;
+            const {value} = e.detail;
+            const {teamList} = this.data;
             const nowTeam = teamList[value];
             if (!nowTeam) {
                 return;
@@ -94,14 +108,17 @@ Component({
                 selTeam: value,
                 teamId: app.teamId,
                 teamRole: app.teamRole,
+                titleLoading: true
             });
-            this.loadUserMsg(false);
-            wx.reLaunch({
-                url: `../../pages/${that.properties.url}?loadingTrigger=true`,
-            })
+            this.loadUserMsg(false,true);
+            // setTimeout(()=>{
+            //     wx.reLaunch({
+            //         url: `../../pages/${that.properties.url}?loadingTrigger=true`,
+            //     })
+            // },500)
         },
 
-        getUserInfo: function(e) {
+        getUserInfo: function (e) {
             var that = this;
             var userInfo = e.detail.userInfo;
             if (!userInfo) {
@@ -120,24 +137,24 @@ Component({
                         }
                     }),
                 },
-                success: function(res) {
+                success: function (res) {
                     let info = that.data.userInfo;
                     app.globalData.userInfo.nickname = userInfo.nickName;
-                    try{
-                        const isBindPromise = new Promise(function (resolve,reject) {
+                    try {
+                        const isBindPromise = new Promise(function (resolve, reject) {
                             resolve(app.addNewTeam(app.getUserInfo.call(that.loadUserMsg)));
                         });
-                        isBindPromise.then(()=>{
+                        isBindPromise.then(() => {
                             info.isBind = true;
                             that.setData({
                                 userInfo: info
                             });
-                            that.getMyTeamList(false,true);
-                        }).catch((err)=>{
+                            that.getMyTeamList(false, true);
+                        }).catch((err) => {
                             console.log(err);
                         })
-                    }catch (e) {
-                        console.error("At common/title/title 140, ",e);
+                    } catch (e) {
+                        console.error("At common/title/title 140, ", e);
                     }
                 }
             });

@@ -1,0 +1,10 @@
+<view class="hola-receive-reports">
+    <van-tabs active="{{ active }}" color="rgba(53, 62, 232, 1)" border="{{false}}" bind:change="onChange">
+        <van-tab title="测评报告">
+            <hola-evaluation-reports reportsList="{{ moreReportsList }}"></hola-evaluation-reports>
+        </van-tab>
+        <van-tab title="测评项目">
+
+        </van-tab>
+    </van-tabs>
+</view>

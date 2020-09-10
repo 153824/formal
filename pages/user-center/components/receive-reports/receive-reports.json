@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "van-tab": "../../../../common/vant-weapp/dist/tab/index",
+    "van-tabs": "../../../../common/vant-weapp/dist/tabs/index",
+    "hola-evaluation-reports": "../../../../common/evaluation-reports/evaluation-reports"
+  }
+}

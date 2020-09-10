@@ -1,41 +1,28 @@
-// test/guide.js
-var app = getApp();
+const app = getApp();
 Page({
   data: {
     isok: false
   },
   onLoad: function(option) {
-    var userData = wx.getStorageSync("userInfo")
-    var that = this;
+    const that = this;
+    const userData = wx.getStorageSync("userInfo")
+    const {receiveRecordId,evaluationId} = option;
+    console.log(option);
     app.doAjax({
-      url: "sharePapers/getSharePaper",
+      url: "paperQues",
+      method: "get",
       data: {
-        getOldPeopleMsg: true,
-        id: option.id
+        id: evaluationId
       },
-      success: function(ret) {
-        var paperId = ret.paperId;
-        var oldPeopleMsg = ret.oldPeopleMsg;
-        if (oldPeopleMsg && oldPeopleMsg.username) {
-          wx.setStorageSync("oldPeopleMsg", oldPeopleMsg);
-        }
-        app.doAjax({
-          url: "paperQues",
-          method: "get",
-          data: {
-            id: paperId
-          },
-          success: function(res) {
-            var sKey = "oldAnswer" + that.data.id;
-            var draftAnswer = wx.getStorageSync(sKey);
-            that.setData({
-              draftAnswer: draftAnswer || ret.draftAnswer,
-              userInfo: userData,
-              id: option.id,
-              paperId: paperId,
-              paperList: res
-            });
-          }
+      success: function(res) {
+        const sKey = "oldAnswer" + receiveRecordId;
+        const draftAnswer = wx.getStorageSync(sKey);
+        that.setData({
+          draftAnswer: draftAnswer,
+          userInfo: userData,
+          evaluationId: evaluationId,
+          receiveRecordId: receiveRecordId,
+          paperList: res
         });
       }
     });
@@ -46,30 +33,20 @@ Page({
   },
   goToReplying: function(e) {
     const { id,name } = e.currentTarget.dataset;
-    var that = this;
-    var sKey = "oldAnswer" + this.data.id;
-    var draftAnswer = this.data.draftAnswer;
+    const that = this;
+    const sKey = "oldAnswer" + this.data.evaluationId;
+    const {receiveRecordId,evaluationId} = this.data;
+    console.log("id: ",receiveRecordId,evaluationId)
+    const draftAnswer = this.data.draftAnswer;
     if (draftAnswer || !draftAnswer) {
       wx.setStorageSync(sKey, draftAnswer);
       wx.redirectTo({
-        url: '../../replying?pid=' + that.data.paperId + '&id=' + that.data.id
+        url: '../../replying?pid=' + evaluationId + '&id=' + receiveRecordId
       });
-      // wx.navigateTo({
-      //   url: `../notification/notification?pid=${that.data.paperId}&id=${that.data.id}`
-      // });
       wx.aldstat.sendEvent('点击开始作答', {
         '测评名称': `名称：${ name } id：${ id }`
       });
       return;
     }
-    this.setData({
-      // isok: !this.data.isok
-    })
   },
-  gototakephoto: function() {
-    var data = this.data;
-    wx.redirectTo({
-      url: 'index?pid=' + data.paperId + "&id=" + data.id
-    });
-  }
 })

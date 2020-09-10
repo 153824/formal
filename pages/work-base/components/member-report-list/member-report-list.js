@@ -5,7 +5,8 @@ Component({
   data: {
     mpImg: "../img/mpImg.png",
     showDlg: false,
-    active: 0
+    active: 0,
+    evaluationTask: []
   },
   properties: {
     reportListTrigger: {
@@ -18,45 +19,24 @@ Component({
       paperId = options.id || "";
       page = 1;
     },
-    onShow: function() {
-      // const that = this;
-      // that.setData({
-      //   scene: app.scene
-      // });
-      // app.isTest = false;
-      // if (!app.globalData.userInfo || !app.globalData.userInfo.id) {
-      //   app.checkUser = function() {
-      //     app.checkUser = null;
-      //     that.getList();
-      //   }
-      // } else {
-      //   that.getList();
-      // }
-    },
+    onShow: function() {},
   },
   methods: {
     /**
      * 获取报告列表
      */
     getList: function() {
-      var that = this;
+      const that = this;
       app.doAjax({
-        url: "getMyReportList",
+        url: "receive_records",
         method: "get",
         data: {
           page: page,
           pageSize: 12
         },
-        success: function(ret) {
-          ret.data.forEach(function(node) {
-            node.report = node.report || {};
-            if (node.report.finishTime) {
-              node.report.finishTime = app.changeDate(node.report.finishTime, "yyyy-MM-dd hh:mm");
-              node.report.finishTime = node.report.finishTime.substring(2);
-            }
-          });
+        success: function(res) {
           that.setData({
-            list: ret.data
+            evaluationTask: res
           });
         }
       });
@@ -64,12 +44,12 @@ Component({
     /**
      * 进入报告详情
      */
-    toDetail: function(e) {
-      var index = e.currentTarget.dataset.index;
-      var obj = this.data.list[index];
+    goToReportDetail: function(e) {
+      const index = e.currentTarget.dataset.index;
+      const obj = this.data.evaluationTask[index];
       app.isTest = false;
       wx.navigateTo({
-        url: '../../../../report/report?id=' + obj.id + "&name=" + obj.paper.name
+        url: '../../../../report/report?id=' + obj.receiveRecordId + "&name=" + obj.evaluationName
       });
     },
     /**
@@ -122,7 +102,7 @@ Component({
     created() {
       const that = this;
       that.setData({
-        scene: app.scene
+        scene: app.scene || 0
       });
       app.isTest = false;
       if (!app.globalData.userInfo || !app.globalData.userInfo.id) {

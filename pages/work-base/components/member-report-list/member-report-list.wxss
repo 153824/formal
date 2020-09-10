@@ -1,8 +1,8 @@
 /* admins/reportList.wxss */
 
-page {
-  background-color: #f6f7ff;
-}
+/*page {*/
+/*  background-color: #f6f7ff;*/
+/*}*/
 
 
 
@@ -31,9 +31,9 @@ page {
   line-height: 40rpx;
 }
 
-page {
-  background-color: #f6f7ff;
-}
+/*page {*/
+/*  background-color: #f6f7ff;*/
+/*}*/
 
 .list {
   padding: 20rpx 20rpx 60rpx;
@@ -172,9 +172,9 @@ page {
 }
 
 /* index/index.wxss */
-page {
-  background-color: #f6f7ff;
-}
+/*page {*/
+/*  background-color: #f6f7ff;*/
+/*}*/
 .container {
   text-align: center;
   display: flex;
@@ -211,7 +211,7 @@ page {
   line-height: 40rpx;
 }
 
-button {
+.contact-button {
   width: 632rpx;
   height: 88rpx;
   background: rgba(0, 167, 98, 1);
@@ -239,9 +239,9 @@ button {
 
 /**app.wxss**/
 
-page {
-  background: #fff;
-}
+/*page {*/
+/*  background: #fff;*/
+/*}*/
 
 /* .container {
   height: 100%;
@@ -299,11 +299,11 @@ page {
   line-height: 40rpx;
 }
 
-.listNoData image {
-  width: 334rpx;
-  height: 266rpx;
-  margin-bottom: 40rpx;
-}
+/*.listNoData image {*/
+/*  width: 334rpx;*/
+/*  height: 266rpx;*/
+/*  margin-bottom: 40rpx;*/
+/*}*/
 
 .coverView {
   position: fixed;
@@ -348,12 +348,12 @@ page {
   line-height: 44rpx;
 }
 
-.loginDlg .dlgContent image {
-  width: 294rpx;
-  height: 220rpx;
-  display: block;
-  margin: 62rpx auto 0;
-}
+/*.loginDlg .dlgContent image {*/
+/*  width: 294rpx;*/
+/*  height: 220rpx;*/
+/*  display: block;*/
+/*  margin: 62rpx auto 0;*/
+/*}*/
 
 .loginDlg .dlgBottom {
   padding: 0 52rpx 50rpx;

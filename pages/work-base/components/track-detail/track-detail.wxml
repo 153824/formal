@@ -1,0 +1,123 @@
+<view class="use-history-detail">
+    <view class="use-history-head-wrapper">
+        <view class="cover">
+            <image style="height: 168rpx;width: 168rpx;border-radius: 10rpx;" src="{{ trackInfo.smallImg || cover }}"></image>
+        </view>
+        <view class="info">
+            <view class="title">{{ trackInfo.evaluationName }}</view>
+            <view class="count">
+                <text>发放数量：{{ trackInfo.amount || amount }}份</text>
+                <text wx:if="{{ status === 'REVOKED' }}" style="color: rgba(255,0,0,1);"> ( 已撤回{{ trackInfo.amount -
+                    trackInfo.finished - trackInfo.examining || amount-finishList.length-examiningList.length }}份 )
+                </text>
+            </view>
+            <view>
+                <text class="send-way">发放方式：二维码</text>
+                <text class="code" bindtap="loadQrcode">【查看二维码】</text>
+            </view>
+        </view>
+    </view>
+    <view class="use-history-content-wrapper">
+        <view class="nav">
+            <view bindtap="changeTab" wx:for="{{ nav }}" wx:key="id" data-id="{{ item.id }}"
+                  class="{{ item.checked ? 'checked' : '' }}"
+            >
+                <block wx:if="{{ item.id === 0 }}">
+                    {{ item.name }}({{ trackInfo.finished || '0' }})
+                </block>
+                <block wx:if="{{ item.id === 1 }}">
+                    {{ item.name }}({{ trackInfo.examining || '0' }})
+                </block>
+                <block wx:if="{{ item.id === 2 }}">
+                    {{ item.name }}({{ status == "REVOKED" ? '0' : (trackInfo.available||amount-finishList.length-examiningList.length) }})
+                </block>
+            </view>
+        </view>
+        <view class="content" style="height: {{ windowHeight - 384/pixelRate - ( statusbarHeight + titleHeight ) }}px;">
+            <!--完成测评开始-->
+            <block wx:if="{{ checkedItem === 0 }}">
+                <block wx:if="{{ finishList.length > 0 }}">
+                    <view wx:for="{{ finishList }}" wx:for-item="finishedItem" wx:key="unique"
+                          class="content-child" data-id="{{ finishedItem.receiveRecordId }}" bindtap="changePage">
+                        <view class="title">
+                            <text>{{ finishedItem.participant }}</text>
+                            <image src="../../images/manager@icon-left-arrow.png"></image>
+                        </view>
+                        <view class="rate">
+                            <view class="rate-info">
+                                <text wx:if="{{ finishedItem.showSummary }}">{{
+                                    finishedItem.summary }}
+                                </text>
+                                <text wx:if="{{ finishedItem.showGrade }}">{{
+                                    finishedItem.grade }}分
+                                </text>
+                            </view>
+                            <text>{{ util.getFullDateByFrag(finishedItem.time,"/",true) }}-{{
+                                util.getHourAndMinByFrag(finishedItem.time,":",true) }}
+                            </text>
+                        </view>
+                    </view>
+                </block>
+                <block wx:if="{{ finishList.length <= 0 }}">
+                    <empty type="default" title="暂时没有人完成测评"></empty>
+                </block>
+            </block>
+            <!--完成测评结束-->
+            <!--作答中开始-->
+            <block wx:if="{{ checkedItem === 1 }}">
+                <block wx:if="{{ examiningList.length > 0 }}">
+                    <view wx:for="{{ examiningList }}" wx:for-item="receivedItem" wx:key="unique"
+                          class="content-child">
+                        <view class="title">
+                            <text>{{ receivedItem.participant }}</text>
+                        </view>
+                        <view class="rate">
+                            <view class="rate-info">
+                                <text>作答开始时间：</text>
+                                <text>{{ util.getFullDateByFrag(receivedItem.time,"/",true) }}-{{
+                                    util.getHourAndMinByFrag(receivedItem.time,":",true) }}
+                                </text>
+                            </view>
+                        </view>
+                    </view>
+                </block>
+                <block wx:if="{{ examiningList.length <= 0 }}">
+                    <empty type="default" title="暂时没有人在作答"></empty>
+                </block>
+            </block>
+            <!--作答中结束-->
+            <!--未做答开始-->
+            <block wx:if="{{ checkedItem === 2 }}">
+                <block wx:if="{{ status === 'AVAILABLE' }}">
+                    <empty type="scan" title="{{trackInfo.available}}份测评暂未被人扫码作答" paperId="{{ trackInfo.releaseRecordId || releaseRecordId }}"
+                           subtitle="撤回测评"></empty>
+                </block>
+                <block wx:elif="{{ status == 'REVOKED' }}">
+                    <empty type="default" title="{{ trackInfo.available || amount-finishList.length-examiningList.length }}份测评已全部被撤回" subtitle="撤回测评"></empty>
+                </block>
+                <block wx:else>
+                    <empty type="default" title="测评已全部被领取了" subtitle="撤回测评"></empty>
+                </block>
+            </block>
+            <!--未做答结束-->
+        </view>
+    </view>
+</view>
+<view class="press-wrapper" bindtap="gotoDetail" data-id="{{ trackInfo.evaluationId || evaluationId }}">
+    <press title="继续发放本测评"></press>
+</view>
+<van-overlay show="{{ imageTrigger }}">
+    <view class="qrcode-wrapper" wx:if="{{ imageTrigger }}">
+        <view class="qrcode">
+            <van-image width="556rpx" height="990rpx" src="{{trackInfo.QRCode}}" lazy-load show-loading use-loading-slot
+                       fill
+                       show-menu-by-longpress="true">
+                <van-loading slot="loading" size="0" vertical>
+                    <image src="../../../../images/icon/icon@icon-loading.png" class="loading"></image>
+                </van-loading>
+            </van-image>
+            <image class="close-icon" src="../../images/manager@icon-close.png" bindtap="closeQrcode"></image>
+        </view>
+    </view>
+</van-overlay>
+<wxs src="../../../../utils/util.wxs" module="util"></wxs>

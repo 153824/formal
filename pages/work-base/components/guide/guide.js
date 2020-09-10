@@ -1,18 +1,17 @@
 // test/guide.js
-var app = getApp();
+const app = getApp();
 var isHasApplyFor = false;
 Page({
-
   data: {
-    isPass: false,
     hasUserInfo: false,
     isTest: false,
     loading: false
   },
   onLoad: function(option) {
-    if (option.id) {
+    if (option.releaseRecordId || option.receiveRecordId) {
       this.setData({
-        id: option.id
+        id: option.releaseRecordId,
+        receiveRecordId: option.receiveRecordId
       });
     }
     if(option.maskTrigger){
@@ -23,8 +22,8 @@ Page({
     }
   },
   onShow: function() {
-    var that = this;
-    var id = that.data.id;
+    const that = this;
+    const id = that.data.id;
     if (app.isTest && !id) {
       return that.getPaperMsg()
     };
@@ -36,24 +35,16 @@ Page({
     };
 
     app.doAjax({
-      url: "sharePapers/getSharePaper",
+      url: "release/fetch",
+      method: "post",
       data: {
-        backUserInfo: true,
-        id: id
+        releaseRecordId: id
       },
-      success: function(ret) {
-        if (ret.isPass) {
-          app.shareId = "";
-          that.setData(ret);
-          return;
-        }
-        if (ret.id) {
-          id = ret.id;
-        }
-        var sKey = "oldAnswer" + id;
-        var oldData = wx.getStorageSync(sKey);
+      success: function(res) {
+        const sKey = "oldAnswer" + id;
+        const oldData = wx.getStorageSync(sKey);
         that.setData({
-          reportMeet: ret.reportMeet
+          reportPermit: res.reportPermit
         });
         if (oldData) {
           that.setData({
@@ -61,22 +52,46 @@ Page({
           });
           setTimeout(()=>{
             wx.redirectTo({
-              url: '../answering/answering?pid=' + ret.paperId + '&id=' + id + "&type=" + ret.applyStatus  + "&reportMeet=" + ret.reportMeet
+              url: '../answering/answering?pid=' + res.evaluationId + '&id=' + id + '&receiveRecordId=' + res.receiveRecordId + "&reportPermit=" + res.reportPermit  + "&status=" + res.status
             });
           },500);
           return;
         }
-        var oldPeopleMsg = ret.oldPeopleMsg;
+        const oldPeopleMsg = res.participantInfo;
         if (oldPeopleMsg && oldPeopleMsg.username) {
           wx.setStorageSync("oldPeopleMsg", oldPeopleMsg);
         }
+        let text = "";
+        switch (res.msg) {
+          case 'continue examining':
+            text = "继续作答";
+            break;
+          case 'show report':
+            text = "查看报告";
+            break;
+          case 'apply to view report':
+            text = "申请查看报告";
+            break;
+          case 'wait for approving view report':
+            text = "等待hr通过申请";
+            break;
+          case 'not available':
+            text = "分享已失效";
+            break;
+        }
         that.getPaperMsg({
-          applyStatus: ret.applyStatus,
-          draftAnswer: ret.draftAnswer,
-          paperId: ret.paperId,
-          userInfo: ret.userInfo,
+          status: res.status,
+          reportPermit: res.reportPermit,
+          draftAnswer: res.draft,
+          evaluationId: res.evaluationId,
+          userInfo: res.participantInfo,
           id: id,
+          receiveRecordId: res.receiveRecordId
         });
+        that.setData({
+          avatar: res.avatar,
+          teamName: res.teamName
+        })
       }
     });
   },
@@ -85,11 +100,11 @@ Page({
    */
   toApply: function(e) {
     if (isHasApplyFor) {
-      app.toast("已申请，请等待审核")
+      app.toast("已申请，请等待审核");
       return;
     }
-    var id = e.currentTarget.dataset.id;
-    var that = this;
+    const id = e.currentTarget.dataset.id;
+    const that = this;
     app.doAjax({
       url: "applyToMeetReport",
       method: "post",
@@ -113,24 +128,27 @@ Page({
       url: "paperQues",
       method: "get",
       data: {
-        id: params.paperId || "",
+        id: params.evaluationId || "",
         isTest: app.isTest
       },
       success: function(res) {
-        var hasUserInfo = false;
-        var userInfo = wx.getStorageSync("userInfo");
-        if (userInfo && userInfo.avatar) {
+        let hasUserInfo = false;
+        const userInfo = wx.getStorageSync("userInfo");
+        if (userInfo && userInfo.avatar || params.userInfo.hasParticipantInfo) {
           hasUserInfo = true;
         }
         that.setData({
           hasUserInfo: hasUserInfo,
+          status: params.status,
           isTest: app.isTest,
           userInfo: params.userInfo,
           draftAnswer: params.draftAnswer,
-          applyStatus: params.applyStatus,
+          reportPermit: params.reportPermit,
           id: params.id || "",
-          paperId: params.paperId || "",
-          paperList: res
+          evaluationId: params.evaluationId || "",
+          evaluationList: res,
+          msg: params.msg,
+          receiveRecordId: params.receiveRecordId
         });
       }
     });
@@ -166,12 +184,12 @@ Page({
               var sKey = "oldAnswer" + that.data.id;
               wx.setStorageSync(sKey, draftAnswer);
               wx.redirectTo({
-                url: '../answering/answering?pid=' + that.data.paperId + '&id=' + that.data.id + "&type=" + that.data.applyStatus + "&reportMeet=" + that.data.reportMeet
+                url: '../answering/answering?pid=' + that.data.evaluationId + '&id=' + that.data.id + '&receiveRecordId='+ that.data.receiveRecordId + "&reportPermit=" + that.data.reportPermit + "&status=" + that.data.status
               });
               return;
             }else{
               wx.redirectTo({
-                url: '../answering/answering?pid=' + that.data.paperId + '&id=' + that.data.id + "&type=" + that.data.applyStatus + "&reportMeet=" + that.data.reportMeet
+                url: '../answering/answering?pid=' + that.data.evaluationId + '&id=' + that.data.id + '&receiveRecordId='+ that.data.receiveRecordId + "&reportPermit=" + that.data.reportPermit + "&status=" + that.data.status
               });
             }
             that.setData({
@@ -187,7 +205,7 @@ Page({
       var sKey = "oldAnswer" + that.data.id;
       wx.setStorageSync(sKey, draftAnswer);
       wx.redirectTo({
-        url: '../answering/answering?pid=' + that.data.paperId + '&id=' + that.data.id + "&type=" + that.data.applyStatus + "&reportMeet=" + that.data.reportMeet
+        url: '../answering/answering?pid=' + that.data.evaluationId + '&id=' + that.data.id + '&receiveRecordId='+ that.data.receiveRecordId +  "&reportPermit=" + that.data.reportPermit + "&status=" + that.data.status
       });
       return;
     }

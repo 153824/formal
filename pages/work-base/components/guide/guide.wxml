@@ -1,33 +1,37 @@
 <!--test/guide.wxml-->
 <view class="container font">
-  <view class="headbox flex">
-    <image src="{{userInfo.avatar}}" wx:if="{{userInfo.avatar}}"></image>
-    <view class="headtitle flex-main">
-      <view>{{userInfo.userCompany.name||''}}</view>
-      <view class="invitetext">邀您参加测评</view>
+    <view class="headbox flex">
+        <image src="{{avatar}}" wx:if="{{avatar}}"></image>
+        <view class="headtitle flex-main">
+            <view>{{teamName}}</view>
+            <view class="invitetext">邀您参加测评</view>
+        </view>
     </view>
-  </view>
 
-  <view class="bodybox">
-    <view class="topic">
-      <text class="bodytitle">测评名称</text>
-      <view class="bigtext">{{paperList.setting.name1}}</view>
+    <view class="bodybox">
+        <view class="topic">
+            <text class="bodytitle">测评名称</text>
+            <view class="bigtext">{{evaluationList.setting.name1}}</view>
+        </view>
+        <view class="topicnum">
+            <text class="bodytitle">题量</text>
+            <view class="smalltext">本测评共{{evaluationList.quesCount}}题</view>
+        </view>
+        <view class="topictime">
+            <text class="bodytitle">用时</text>
+            <view class="smalltext">平均用时{{evaluationList.setting.time}}分钟</view>
+        </view>
     </view>
-    <view class="topicnum">
-      <text class="bodytitle">题量</text>
-      <view class="smalltext">本测评共{{paperList.quesCount}}题</view>
+    <view wx:if="{{text === '分享已失效'}}" class="begin">测评已失效</view>
+    <view wx:elif="{{text === '等待hr通过申请'}}" class="begin">{{text}}</view>
+    <view wx:elif="{{reportPermit === 'APPROVED'  && status === 'FINISHED'}}" class="begin" bindtap="toDetail">查看报告
     </view>
-    <view class="topictime">
-      <text class="bodytitle">用时</text>
-      <view class="smalltext">平均用时{{paperList.setting.time}}分钟</view>
+    <view wx:elif="{{reportPermit === 'DISABLED' && status === 'FINISHED'}}" class="begin" bindtap="toApply"
+          data-id="{{id}}">向HR申请查看报告
     </view>
-  </view>
-  <view wx:if="{{isPass&&btnTxt&&applyStatus&&paperId}}" class="begin">测评已失效</view>
-  <view wx:elif="{{isPass&&btnTxt}}" class="begin">{{btnTxt}}</view>
-  <view wx:elif="{{isPass&&applyStatus==2&&reportMeet==1}}" class="begin" bindtap="toDetail">查看报告</view>
-  <view wx:elif="{{isPass&&applyStatus!=2&&reportMeet==2}}" class="begin" bindtap="toApply" data-id="{{id}}">向HR申请查看报告</view>
-  <view wx:elif="{{isTest||hasUserInfo}}" class="begin" bindtap="goToReplying">{{draftAnswer?'继续作答':'开始作答'}}</view>
-  <button wx:else class="begin" open-type="getUserInfo" bindgetuserinfo="goToReplying">{{draftAnswer?'继续作答':'开始作答'}}</button>
-  <text class="infotext">好啦测评提供技术支持</text>
+    <view wx:elif="{{isTest||hasUserInfo}}" class="begin" bindtap="goToReplying">{{draftAnswer?'继续作答':'开始作答'}}</view>
+    <button wx:else class="begin" open-type="getUserInfo" bindgetuserinfo="goToReplying">{{draftAnswer?'继续作答':'开始作答'}}
+    </button>
+    <text class="infotext">好啦测评提供技术支持</text>
 </view>
 <hola-mask isShow="{{ loading }}"></hola-mask>

@@ -10,13 +10,10 @@
 		<image src="../../images/done@icon-done.png"></image>
 		<view class="mindMsg">您的作答结果已提交</view>
 		<view class="mindMsg">感谢您的参与</view>
-		<block wx:if="{{ reportMeet == 1 }}">
+		<block wx:if="{{ reportPermit == 'APPROVED' }}">
 			<button style="width:260px;" class="reportBtn" bindtap="toDetail">查看报告</button>
 		</block>
-		<block wx:elif="{{ reportMeet == 2 }}">
-			<view class="reportBtn" bindtap="toApply" wx:if="{{type==1}}">向HR申请查看报告</view>
-			<button style="width:260px;" class="reportBtn" bindtap="toDetail" wx:else>查看报告</button>
-		</block>
+		<view class="reportBtn" bindtap="toApply" wx:if="{{ reportPermit == 'DISABLED' }}">向HR申请查看报告</view>
 	</view>
 	<view class="mpView" wx:else>
 		<image src="../../images/done@icon-checked.png"></image>

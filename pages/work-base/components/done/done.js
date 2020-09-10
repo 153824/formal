@@ -12,10 +12,9 @@ Page({
     console.log("options.reportMeet: ", options);
     this.setData({
       isMp: false,
-      type: +options.type || 1,
       isTest: app.isTest,
       id: id,
-      reportMeet: options.reportMeet
+      reportPermit: options.reportPermit
     });
   },
   onShow: function() {
@@ -73,8 +72,8 @@ Page({
    */
   toDetail: function(e) {
     var id = this.data.id;
-    wx.redirectTo({
-      url: '../report/report?id=' + id
+    wx.navigateTo({
+      url: '../../../report/report?id=' + id
     });
   },
 })

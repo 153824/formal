@@ -343,7 +343,6 @@ Page({
         wx.hideShareMenu();
         var that = this;
         ctx = wx.createCanvasContext('canvasArcCir');
-        console.log(that.data.id,options.id);
         var id = that.data.id || options.id;
         var shareKey = options.key || "";
         var command = options.command || "";
@@ -374,22 +373,13 @@ Page({
     getReport: function (id) {
         let that = this;
         id = id || that.data.id;
-        let {shareKey = ''} = this.data;
-        let {userInfo} = app.globalData;
         let getReportPromise = new Promise((resolve, reject) => {
             app.doAjax({
-                url: "sharePapers/getReport",
+                url: "reports/detail",
                 method: "get",
                 noLoading: false,
                 data: {
-                    id: id,
-                    shareKey: shareKey,
-                    userMsg: JSON.stringify({
-                        id: userInfo.id,
-                        avatar: userInfo.avatar || "",
-                        nickname: userInfo.nickname || "",
-                        realName: userInfo.realName || ""
-                    })
+                    receiveRecordId: id
                 },
                 success: function (res) {
                     resolve(res);
@@ -400,7 +390,7 @@ Page({
             })
         });
         getReportPromise.then(res => {
-            if (res.reportVersion) {
+            if (res.report.reportVersion) {
                 return new Promise((resolve, reject) => {
                     resolve(res);
                 });
@@ -409,10 +399,10 @@ Page({
                 return;
             }
             let now = new Date().getFullYear();
-            let userMsg = res.userMsg;
+            let userMsg = res.report.userMsg;
             let t = new Date(userMsg.birthday).getFullYear();
-            res.userMsg.age = now - t + 1;
-            res.finishTime = app.changeDate(res.finishTime, "yyyy/MM/dd hh:mm");
+            res.report.userMsg.age = now - t + 1;
+            res.report.finishTime = app.changeDate(res.report.finishTime, "yyyy/MM/dd hh:mm");
             let timeNormal = 1; //作答时长正常
             let answeTimeSatr = +res.answeTimeSatr;
             let answeTimeEnd = +res.answeTimeEnd;
@@ -504,13 +494,12 @@ Page({
             res["teamRole"] = (app.teamId == res.teamId) ? app.teamRole : 1;
             res["showPage"] = true;
             that.setData(res);
-
             app.doAjax({
                 url: "userOrderMsg",
                 method: "get",
                 data: {
                     id: res.id,
-                    paperId: res.paper.id,
+                    paperId: res.evaluationInfo.evaluationId,
                     total: total1Full || 0,
                     totalD1: res.dimension1Total || 0,
                     totalD2: res.dimension2Total || 0
@@ -522,16 +511,15 @@ Page({
             });
 
             app.doAjax({
-                url: 'evaluationDetail',
+                url: 'evaluations/outline',
                 method: 'get',
                 data: {
-                    evaluationId: res.paper.id
+                    evaluationId: res.evaluationInfo.evaluationId,
                 },
                 noLoading: true,
                 success: function (res) {
                     that.setData({
                         sharePic: res.evaluationInfo.smallImg,
-
                     })
                 }
             });
@@ -540,14 +528,14 @@ Page({
                 return;
             }
             let now = new Date().getFullYear();
-            let userMsg = res.userMsg;
-            let t = new Date(userMsg.birthday).getFullYear();
-            res.userMsg.age = now - t + 1;
-            res.finishTime = app.changeDate(res.finishTime, "yyyy/MM/dd hh:mm");
+            let participantInfo = res.participantInfo;
+            let t = new Date(participantInfo.birthday).getFullYear();
+            res.participantInfo.age = now - t + 1;
+            res.report.finishTime = app.changeDate(res.report.finishTime, "yyyy/MM/dd hh:mm");
             let timeNormal = 1; //作答时长正常
-            let answeTimeSatr = +res.answeTimeSatr;
-            let answeTimeEnd = +res.answeTimeEnd;
-            let time = +res.timeTotal;
+            let answeTimeSatr = +res.report.answeTimeSatr;
+            let answeTimeEnd = +res.report.answeTimeEnd;
+            let time = +res.report.timeTotal;
             if (time <= answeTimeSatr) {
                 //作答时长偏短
                 timeNormal = 2;
@@ -556,12 +544,12 @@ Page({
                 //作答时长偏长
                 timeNormal = 3;
             }
-            res["timeNormal"] = timeNormal;
+            res.report["timeNormal"] = timeNormal;
             radarValue = {};
             radarIndicator = {};
             value_2 = {};
             indicator_2 = {};
-            var objs = res.dimension;
+            var objs = res.report.dimension;
             for (var n in objs) {
                 var arr = objs[n].subclass;
                 var newChild = [];
@@ -614,46 +602,47 @@ Page({
                 objs[n].subclass[keys[0]]["active"] = "active"
             }
             res["id"] = id;
-            var total1Full = res.generalTotal100;
+            var total1Full = res.report.generalTotal100;
             try {
-                res.total100 = +res.generalTotal100.toFixed(0);
+                res.report.total100 = +res.generalTotal100.toFixed(0);
             } catch (e) {
             }
-            var proposal = res.proposal || [];
-            var dimensions = res.dimension || {};
-            res["proposalShow"] = false;
-            res["showDimension"] = false;
+            var proposal = res.report.proposal || [];
+            var dimensions = res.report.dimension || {};
+            res.report["proposalShow"] = false;
+            res.report["showDimension"] = false;
             for (var i in dimensions) {
                 if (dimensions[i].show) {
-                    res["showDimension"] = true;
+                    res.report["showDimension"] = true;
                 }
             }
             proposal.forEach(function (n) {
                 if (n.show) {
-                    res["proposalShow"] = true;
+                    res.report["proposalShow"] = true;
                 }
             });
             that.drawCircle(res.total100);
-            res["statement"] = res["statement"].replace(/\n/g, "<br>").replace("<bold", "<span style='font-weight: 600;'").replace("</bold", "</span");
-            res["noTeamMember"] = false;
-            res["teamRole"] = (app.teamId == res.teamId) ? app.teamRole : 1;
-            res["showPage"] = true;
+            res.report["statement"] = res.report["statement"].replace(/\n/g, "<br>").replace("<bold", "<span style='font-weight: 600;'").replace("</bold", "</span");
+            res.report["noTeamMember"] = false;
+            res.report["teamRole"] = (app.teamId == res.teamId) ? app.teamRole : 1;
+            res.report["showPage"] = true;
             res.fillBlank = [];
             for (let i = 0; i < 4; i++) {
                 res.fillBlank.push("");
             }
             that.setData(res);
+            console.log("res: ",res);
             app.doAjax({
-                url: 'evaluationDetail',
+                url: 'evaluations/outline',
                 method: 'get',
                 data: {
-                    evaluationId: res.paper.id
+                    evaluationId: res.evaluationInfo.evaluationId
                 },
                 noLoading: true,
                 success: function (response) {
                     that.setData({
-                        sharePic: response.evaluationInfo.smallImg,
-                        knowledgePoints: response.evaluationInfo.knowledgePoints
+                        sharePic: response.smallImg,
+                        // knowledgePoints: response.evaluationInfo.knowledgePoints
                     })
                 }
             });
@@ -892,12 +881,12 @@ Page({
      */
     getEvaluationQues: function () {
         const that = this;
-        const {paper} = this.data;
+        const {evaluationInfo} = this.data;
         app.doAjax({
             url: "paperQues",
             method: "get",
             data: {
-                id: paper.id
+                id: evaluationInfo.evaluationId
             },
             noLoading: true,
             success: function (res) {

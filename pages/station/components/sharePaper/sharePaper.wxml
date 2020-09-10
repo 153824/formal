@@ -17,13 +17,13 @@
             是否允许受测者直接查看报告
         </view>
         <view class="flex box3">
-            <view class="flex-main {{reportMeet==2?'active':''}}" bindtap="changeReportMeet" data-k="2">
+            <view class="flex-main {{reportMeet==2?'active':''}}" bindtap="changeReportMeet" data-can-read="2">
                 <view class="circle-wrapper">
                     <span></span>
                 </view>
                 <text>不允许</text>
             </view>
-            <view class="flex-main {{reportMeet==1?'active':''}}" bindtap="changeReportMeet" data-k="1">
+            <view class="flex-main {{reportMeet==1?'active':''}}" bindtap="changeReportMeet" data-can-read="1">
                 <view class="circle-wrapper">
                     <span></span>
                 </view>
@@ -33,18 +33,19 @@
     </view>
     <view class="inviteBtn" bindtap="toSharePaper">生成测评邀请函</view>
 </view>
-<view class="datibox" wx:if="{{retData.img}}" catchtouchmove="true" style="z-index: 999;">
+<view class="datibox" wx:if="{{sharePaperInfo.img}}" catchtouchmove="true" style="z-index: 999;">
     <view style="color:#FFFFFFFF;font-size: 32rpx;font-weight: 600;margin-top: 68rpx;">长按下图保存，可发放至以下招聘渠道</view>
     <image src="../../images/sharePaper@banner-share-platform.png"
            style="width: 484rpx;min-height: 56rpx;max-height: 56rpx;margin: 24rpx 0 68rpx 0;"></image>
     <view class="daticenterbox">
-        <van-image width="556rpx" height="990rpx" src="{{retData.img}}" lazy-load show-loading use-loading-slot fill
+        <van-image width="556rpx" height="990rpx" src="{{sharePaperInfo.img}}" lazy-load show-loading use-loading-slot
+                   fill
                    show-menu-by-longpress="true">
             <van-loading slot="loading" type="spinner" size="88" vertical>
                 <image src="../../../../images/icon/icon@icon-loading.png" class="loading"></image>
             </van-loading>
         </van-image>
-        <!--    <image class="daticenterboximg" src="{{retData.img}}" show-menu-by-longpress="true"></image>-->
+        <!--    <image class="daticenterboximg" src="{{sharePaperInfo.img}}" show-menu-by-longpress="true"></image>-->
         <image class="daticlosebtn" bindtap="closeQrCode" src="../../images/sharePaper@icon-close.png"></image>
     </view>
 </view>

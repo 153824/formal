@@ -1,4 +1,7 @@
 {
   "component": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "van-overlay": "../common/vant-weapp/dist/overlay/index",
+    "van-loading": "../common/vant-weapp/dist/loading/index"
+  }
 }

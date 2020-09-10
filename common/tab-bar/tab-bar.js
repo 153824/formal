@@ -15,16 +15,16 @@ Component({
                 path: "../../pages/station/station"
             },
             {
-                text: "测评管理",
+                text: "工作台",
                 normal: '../../images/icon/icon@evaluation-manager-no-active.png',
                 active: '../../images/icon/icon@evaluation-manager-active.png',
-                path: "../../pages/manager/manager"
+                path: "../../pages/work-base/work-base"
             },
             {
                 text: "个人中心",
                 normal: '../../images/icon/icon@my-no-active.png',
                 active: '../../images/icon/icon@my-active.png',
-                path: "../../pages/user/user"
+                path: "../../pages/user-center/user-center"
             }
         ],
         wxWorkPage: {
@@ -51,8 +51,8 @@ Component({
                 },
                 {
                     text: "个人中心",
-                    normal: '../../images/icon/icon@index-no-active.png',
-                    active: '../../images/icon/icon@index-active.png',
+                    normal: '../../images/icon/icon@my-no-active.png',
+                    active: '../../images/icon/icon@my-active.png',
                     path: "../../pages/user-center/user-center"
                 },
             ]

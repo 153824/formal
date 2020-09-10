@@ -1,5 +1,5 @@
 <!--Start: 企业微信端管理员页工作台-->
-<view wx:if="{{ isWxWorkAdmin }}" class="home-page-wrapper">
+<view wx:if="{{ isWxWork&&isWxWorkAdmin }}" class="home-page-wrapper">
     <view class="head">
         <image src="" style="width: 50rpx;height: 44rpx;"></image>
         <text>康师傅集团</text>
@@ -11,8 +11,10 @@
                 <view class="program-title">
                     <text>我的测评</text>
                 </view>
-                <view class="program-body" bindtap="openSharePaper" data-id="5edefe43b9e2430008a3f99a" data-name="新媒体运营">
-                    <image src="http://img2.luoke101.com/2020-06-17T10:10:31.391ZnormalImg.png" style="width: 114rpx;height: 114rpx;border-radius: 15rpx;"></image>
+                <view class="program-body" bindtap="openSharePaper" data-id="5edefe43b9e2430008a3f99a"
+                      data-name="新媒体运营">
+                    <image src="http://img2.luoke101.com/2020-06-17T10:10:31.391ZnormalImg.png"
+                           style="width: 114rpx;height: 114rpx;border-radius: 15rpx;"></image>
                     <view class="evaluation-wrapper">
                         <view class="evaluation-name">
                             康师傅业务代表测评
@@ -24,12 +26,14 @@
                     </view>
                     <view style="width: 4rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
                     <view class="send-evaluation">
-                        <image src="./images/work-base@icon-plane.png" style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-plane.png"
+                               style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
                         <text>发测评</text>
                     </view>
                 </view>
                 <view class="program-body">
-                    <image src="http://img2.luoke101.com/2020-06-17T10:10:31.391ZnormalImg.png" style="width: 114rpx;height: 114rpx;border-radius: 15rpx;"></image>
+                    <image src="http://img2.luoke101.com/2020-06-17T10:10:31.391ZnormalImg.png"
+                           style="width: 114rpx;height: 114rpx;border-radius: 15rpx;"></image>
                     <view class="evaluation-wrapper">
                         <view class="evaluation-name">
                             康师傅业务代表测评
@@ -41,12 +45,14 @@
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
                     <view class="send-evaluation">
-                        <image src="./images/work-base@icon-plane.png" style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-plane.png"
+                               style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
                         <text>发测评</text>
                     </view>
                 </view>
                 <view class="program-body">
-                    <image src="http://img2.luoke101.com/2020-06-17T10:10:31.391ZnormalImg.png" style="width: 114rpx;height: 114rpx;border-radius: 15rpx;"></image>
+                    <image src="http://img2.luoke101.com/2020-06-17T10:10:31.391ZnormalImg.png"
+                           style="width: 114rpx;height: 114rpx;border-radius: 15rpx;"></image>
                     <view class="evaluation-wrapper">
                         <view class="evaluation-name">
                             康师傅业务代表测评
@@ -58,12 +64,14 @@
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
                     <view class="send-evaluation">
-                        <image src="./images/work-base@icon-plane.png" style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-plane.png"
+                               style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
                         <text>发测评</text>
                     </view>
                 </view>
                 <view class="program-body">
-                    <image src="http://img2.luoke101.com/2020-06-17T10:10:31.391ZnormalImg.png" style="width: 114rpx;height: 114rpx;border-radius: 15rpx;"></image>
+                    <image src="http://img2.luoke101.com/2020-06-17T10:10:31.391ZnormalImg.png"
+                           style="width: 114rpx;height: 114rpx;border-radius: 15rpx;"></image>
                     <view class="evaluation-wrapper">
                         <view class="evaluation-name">
                             康师傅业务代表测评
@@ -75,12 +83,14 @@
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
                     <view class="send-evaluation">
-                        <image src="./images/work-base@icon-plane.png" style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-plane.png"
+                               style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
                         <text>发测评</text>
                     </view>
                 </view>
                 <view class="program-body">
-                    <image src="http://img2.luoke101.com/2020-06-17T10:10:31.391ZnormalImg.png" style="width: 114rpx;height: 114rpx;border-radius: 15rpx;"></image>
+                    <image src="http://img2.luoke101.com/2020-06-17T10:10:31.391ZnormalImg.png"
+                           style="width: 114rpx;height: 114rpx;border-radius: 15rpx;"></image>
                     <view class="evaluation-wrapper">
                         <view class="evaluation-name">
                             康师傅业务代表测评
@@ -92,7 +102,8 @@
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
                     <view class="send-evaluation">
-                        <image src="./images/work-base@icon-plane.png" style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-plane.png"
+                               style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
                         <text>发测评</text>
                     </view>
                 </view>
@@ -204,11 +215,14 @@
                             康师傅业务代表测评
                         </view>
                         <view class="reply-track-info">
-                            发放数量: <text class="count" style="margin: 0 10rpx;">10</text>
-                            完成数量: <text class="count" style="margin-left: 10rpx;">2</text>
+                            发放数量:
+                            <text class="count" style="margin: 0 10rpx;">10</text>
+                            完成数量:
+                            <text class="count" style="margin-left: 10rpx;">2</text>
                         </view>
                         <view class="reply-track-info">
-                            发放时间: <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
+                            发放时间:
+                            <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
                         </view>
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
@@ -222,11 +236,14 @@
                             康师傅业务代表测评
                         </view>
                         <view class="reply-track-info">
-                            发放数量: <text class="count" style="margin: 0 10rpx;">10</text>
-                            完成数量: <text class="count" style="margin-left: 10rpx;">2</text>
+                            发放数量:
+                            <text class="count" style="margin: 0 10rpx;">10</text>
+                            完成数量:
+                            <text class="count" style="margin-left: 10rpx;">2</text>
                         </view>
                         <view class="reply-track-info">
-                            发放时间: <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
+                            发放时间:
+                            <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
                         </view>
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
@@ -240,11 +257,14 @@
                             康师傅业务代表测评
                         </view>
                         <view class="reply-track-info">
-                            发放数量: <text class="count" style="margin: 0 10rpx;">10</text>
-                            完成数量: <text class="count" style="margin-left: 10rpx;">2</text>
+                            发放数量:
+                            <text class="count" style="margin: 0 10rpx;">10</text>
+                            完成数量:
+                            <text class="count" style="margin-left: 10rpx;">2</text>
                         </view>
                         <view class="reply-track-info">
-                            发放时间: <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
+                            发放时间:
+                            <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
                         </view>
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
@@ -258,11 +278,14 @@
                             康师傅业务代表测评
                         </view>
                         <view class="reply-track-info">
-                            发放数量: <text class="count" style="margin: 0 10rpx;">10</text>
-                            完成数量: <text class="count" style="margin-left: 10rpx;">2</text>
+                            发放数量:
+                            <text class="count" style="margin: 0 10rpx;">10</text>
+                            完成数量:
+                            <text class="count" style="margin-left: 10rpx;">2</text>
                         </view>
                         <view class="reply-track-info">
-                            发放时间: <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
+                            发放时间:
+                            <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
                         </view>
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
@@ -276,11 +299,14 @@
                             康师傅业务代表测评
                         </view>
                         <view class="reply-track-info">
-                            发放数量: <text class="count" style="margin: 0 10rpx;">10</text>
-                            完成数量: <text class="count" style="margin-left: 10rpx;">2</text>
+                            发放数量:
+                            <text class="count" style="margin: 0 10rpx;">10</text>
+                            完成数量:
+                            <text class="count" style="margin-left: 10rpx;">2</text>
                         </view>
                         <view class="reply-track-info">
-                            发放时间: <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
+                            发放时间:
+                            <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
                         </view>
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
@@ -294,11 +320,14 @@
                             康师傅业务代表测评
                         </view>
                         <view class="reply-track-info">
-                            发放数量: <text class="count" style="margin: 0 10rpx;">10</text>
-                            完成数量: <text class="count" style="margin-left: 10rpx;">2</text>
+                            发放数量:
+                            <text class="count" style="margin: 0 10rpx;">10</text>
+                            完成数量:
+                            <text class="count" style="margin-left: 10rpx;">2</text>
                         </view>
                         <view class="reply-track-info">
-                            发放时间: <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
+                            发放时间:
+                            <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
                         </view>
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
@@ -312,11 +341,14 @@
                             康师傅业务代表测评
                         </view>
                         <view class="reply-track-info">
-                            发放数量: <text class="count" style="margin: 0 10rpx;">10</text>
-                            完成数量: <text class="count" style="margin-left: 10rpx;">2</text>
+                            发放数量:
+                            <text class="count" style="margin: 0 10rpx;">10</text>
+                            完成数量:
+                            <text class="count" style="margin-left: 10rpx;">2</text>
                         </view>
                         <view class="reply-track-info">
-                            发放时间: <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
+                            发放时间:
+                            <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
                         </view>
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
@@ -330,11 +362,14 @@
                             康师傅业务代表测评
                         </view>
                         <view class="reply-track-info">
-                            发放数量: <text class="count" style="margin: 0 10rpx;">10</text>
-                            完成数量: <text class="count" style="margin-left: 10rpx;">2</text>
+                            发放数量:
+                            <text class="count" style="margin: 0 10rpx;">10</text>
+                            完成数量:
+                            <text class="count" style="margin-left: 10rpx;">2</text>
                         </view>
                         <view class="reply-track-info">
-                            发放时间: <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
+                            发放时间:
+                            <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
                         </view>
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
@@ -348,11 +383,14 @@
                             康师傅业务代表测评
                         </view>
                         <view class="reply-track-info">
-                            发放数量: <text class="count" style="margin: 0 10rpx;">10</text>
-                            完成数量: <text class="count" style="margin-left: 10rpx;">2</text>
+                            发放数量:
+                            <text class="count" style="margin: 0 10rpx;">10</text>
+                            完成数量:
+                            <text class="count" style="margin-left: 10rpx;">2</text>
                         </view>
                         <view class="reply-track-info">
-                            发放时间: <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
+                            发放时间:
+                            <text class="date" style="margin-left: 10rpx;">2020/08/08 18:30</text>
                         </view>
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
@@ -369,7 +407,7 @@
 <!--End: 企业微信端管理员页工作台-->
 <!--------------------------------------------------------------------------------------------------------------------->
 <!--Start: 企业微信端非管理员页工作台-未登录-->
-<view wx:elif="{{ !isWxWorkAdmin && !isLogin }}">
+<view wx:elif="{{ isWxWork&&!isWxWorkAdmin && !isLogin }}">
     <view class="container font">
         <view class="testPaperView">
             <image src="./images/work-base@icon-demonstrate.png" class="iconImg"></image>
@@ -393,7 +431,121 @@
 <!--End: 企业微信端非管理员页工作台（测评任务、答题端小程序）-->
 <!--------------------------------------------------------------------------------------------------------------------->
 <!--Start: 企业微信端非管理员页工作台-测评列表-->
-<hola-report-list reportListTrigger="{{ false }}"></hola-report-list>
+<block wx:elif="{{ !isWxWork }}">
+    <view class="head">
+        <image src="" style="width: 50rpx;height: 44rpx;"></image>
+        <text>康师傅集团</text>
+    </view>
+    <view class="content">
+        <scroll-view class="content-scroll-area"
+                     style="height: {{ windowHeight - (120+112+60)/pixelRate - ( statusbarHeight + titleHeight ) }}px;"
+                     scroll-y>
+            <!--Start: 我的测评-->
+            <view class="program-wrapper">
+                <view class="program-title">
+                    <text>我的测评</text>
+                </view>
+                <view wx:for="{{ myEvaluation }}" wx:for-item="evaluationItem" wx:key="unique">
+                    <view class="program-body" data-name="{{ evaluationItem.evaluationName }}">
+                        <image src="{{ evaluationItem.smallImg || 'http://img2.luoke101.com/2020-06-17T10:10:31.391ZnormalImg.png' }}"
+                               style="width: 114rpx;height: 114rpx;border-radius: 15rpx;"></image>
+                        <view class="evaluation-wrapper" bindtap="goToEvaluationDetail" data-evaluation-id="{{ evaluationItem.evaluationId }}">
+                            <view class="evaluation-name">
+                                {{evaluationItem.evaluationName}}
+                            </view>
+                            <view class="evaluation-info">
+                                <text>{{ evaluationItem.quesCount }}题</text>
+                                <text style="margin-left: 10rpx;">{{evaluationItem.estimatedTime}}分钟</text>
+                            </view>
+                        </view>
+                        <view style="width: 4rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
+                        <view class="send-evaluation" bindtap="goToEvaluationDetail"
+                              data-evaluation-id="{{ evaluationItem.evaluationId }}">
+                            <image src="./images/work-base@icon-plane.png"
+                                   style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
+                            <text>发测评</text>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <!--End: 我的测评-->
+            <!--Start: 最新报告-->
+            <view class="program-wrapper">
+                <view class="program-title">
+                    <view>
+                        <text>最新报告</text>
+                        <text wx:if="{{ false }}" class="new-adding">今日+6</text>
+                    </view>
+                    <text class="more" bindtap="goToReportMore">更多...</text>
+                </view>
+                <view class="program-body the-last-report" wx:for="{{ reportsList }}" wx:for-item="reportItem" wx:key="unique">
+                    <view class="report-created-time">
+                        <text>{{util.getMonthAndDayByFrag(reportItem.reportGeneratedAt,"/",true)}}</text>
+                        <text>{{util.getHourAndMinByFrag(reportItem.reportGeneratedAt,":",true)}}</text>
+                    </view>
+                    <view class="evaluation-wrapper">
+                        <view class="evaluation-name user-info-wrapper">
+                            <view class="user-info">
+                                <text>{{reportItem.participant}}</text>
+                                <text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text>
+                            </view>
+                        </view>
+                        <view class="user-answer-evaluation">
+                            {{reportItem.evaluation}}
+                        </view>
+                    </view>
+                    <view class="send-evaluation">
+                        <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
+                    </view>
+                    <view wx:if="{{ false }}" class="new-adding-mark">
+                        <text>新</text>
+                    </view>
+                </view>
+            </view>
+            <!--End: 最新报告-->
+            <!--Start: 作答跟踪-->
+            <view class="program-wrapper">
+                <view class="program-title">
+                    <text>作答跟踪</text>
+                    <text class="more" bindtap="goToTrackMore">更多...</text>
+                </view>
+                <view wx:for="{{ evaluationTrack }}" wx:for-item="trackItem" wx:for-index="trackIndex" wx:key="unique"
+                      class="program-body reply-track-body" bindtap="goToTrackDetail"
+                      data-track-id="{{trackItem.releaseRecordId}}" data-track-index="{{trackIndex}}"
+                >
+                    <view class="evaluation-wrapper">
+                        <view class="evaluation-name">
+                            {{ trackItem.evaluationName }}
+                        </view>
+                        <view class="reply-track-info">
+                            发放数量:
+                            <text class="count" style="margin: 0 10rpx;">{{trackItem.amount}}</text>
+                            完成数量:
+                            <text class="count" style="margin-left: 10rpx;">{{trackItem.finished}}</text>
+                        </view>
+                        <view class="reply-track-info">
+                            发放时间:
+                            <text class="date" style="margin-left: 10rpx;">{{trackItem.createdAt}}</text>
+                        </view>
+                    </view>
+                    <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
+                    <view class="send-evaluation">
+                        <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
+                    </view>
+                </view>
+            </view>
+            <!--End: 作答跟踪-->
+        </scroll-view>
+    </view>
+    <hola-tab-bar active="{{ 2 }}"></hola-tab-bar>
+</block>
+<!--End: 企业微信端非管理员页工作台-测评列表-->
+<!--------------------------------------------------------------------------------------------------------------------->
+<!--Start: 企业微信端非管理员页工作台-测评列表-->
+<block wx:elif="{{ isWxWork && !isWxWorkAdmin }}">
+    <hola-member-report-list reportListTrigger="{{ true }}"></hola-member-report-list>
+</block>
 <!--End: 企业微信端非管理员页工作台-测评列表-->
 <!--------------------------------------------------------------------------------------------------------------------->
 <hola-mask isShow="{{ maskTrigger }}"></hola-mask>
+<wxs src="../../utils/util.wxs" module="util"></wxs>

@@ -24,7 +24,7 @@
           style="position: relative;height: {{ windowHeight - 390/pixelRate - ( statusbarHeight + titleHeight ) }}px;">
         <scroll-view scroll-y bindscrolltolower="nextPage" class="evaluation-reports"
                      style="height: 100%;margin-top: 0;position: absolute;">
-            <label for="" wx:for="{{ evaluationList }}">
+            <label wx:for="{{ evaluationList }}">
                 <view class="report-child {{ checkedReportId === item.id ? 'checked-report' : '' }}"
                       style="{{ shareTrigger ? 'padding: 40rpx 80rpx 40rpx 40rpx;': ''}}" data-id="{{ item.id }}"
                       data-name="{{ item.evaluation.name }}" bindtap="toReport">
@@ -33,10 +33,10 @@
                     </view>
                     <view class="time-wrapper">
                         <view class="date" style="text-align: center;">
-                            {{ util.getMonthAndDayByFrag(item.createdTime,'/',false) }}
+                            {{ util.getMonthAndDayByFrag(item.reportGeneratedAt,'/',false) }}
                         </view>
                         <view class="clock" style="text-align: center;">
-                            {{ util.getHourAndMinByFrag(item.createdTime,':',false) }}
+                            {{ util.getHourAndMinByFrag(item.reportGeneratedAt,':',false) }}
                         </view>
                     </view>
                     <view class="user-wrapper">

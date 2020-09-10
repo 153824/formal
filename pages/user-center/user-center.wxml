@@ -1,34 +1,112 @@
-<view class="user-page-wrapper">
-    <view class="head">
-        <view class="user-personal-info">
-            <image src="" style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;background-color: black;"></image>
-            <text>马艺娴</text>
+<view wx:if="{{ !isWxWork }}">
+    <view class="user-page-wrapper">
+        <view class="head">
+            <view class="user-personal-info">
+                <image src=""
+                       style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;background-color: black;"></image>
+                <text>马艺娴</text>
+            </view>
+        </view>
+        <view class="content">
+            <scroll-view class="content-scroll-area" scroll-y>
+                <view class="user-action-item" bindtap="goToReceiveReports">
+                    <view class="title">
+                        <image src="./images/user@othors-invite-to-read-report.png"
+                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                        <text>他人分享给我的报告</text>
+                    </view>
+                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                </view>
+                <view class="user-action-item" bindtap="goToReceiveEvaluation">
+                    <view class="title">
+                        <image src="./images/user@othors-invite-to-reply-report.png"
+                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                        <text>他人邀请我参加的测评</text>
+                    </view>
+                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                </view>
+                <view class="user-action-item">
+                    <view class="title">
+                        <image src="./images/user@connect-serving.png"
+                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                        <text>成为共创用户</text>
+                    </view>
+                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                </view>
+            </scroll-view>
         </view>
     </view>
-    <view class="content">
-        <scroll-view class="content-scroll-area" scroll-y>
-            <view class="user-action-item">
-                <view class="title">
-                    <image src="./images/user@othors-invite-to-read-report.png" style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
-                    <text>他人邀请我查看的报告</text>
-                </view>
-                <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
-            </view>
-            <view class="user-action-item">
-                <view class="title">
-                    <image src="./images/user@othors-invite-to-reply-report.png" style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
-                    <text>他人邀请我参与的测评</text>
-                </view>
-                <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
-            </view>
-            <view class="user-action-item">
-                <view class="title">
-                    <image src="./images/user@connect-serving.png" style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
-                    <text>联系客服</text>
-                </view>
-                <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
-            </view>
-        </scroll-view>
-    </view>
+    <hola-tab-bar active="{{ 3 }}"></hola-tab-bar>
 </view>
-<hola-tab-bar active="{{ active }}"></hola-tab-bar>
+<view wx:elif="{{ isWxWork && isWxWorkAdmin }}">
+    <view class="user-page-wrapper">
+        <view class="head">
+            <view class="user-personal-info">
+                <image src=""
+                       style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;background-color: black;"></image>
+                <text>马艺娴</text>
+            </view>
+        </view>
+        <view class="content">
+            <scroll-view class="content-scroll-area" scroll-y>
+                <view class="user-action-item">
+                    <view class="title">
+                        <image src="./images/user@othors-invite-to-read-report.png"
+                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                        <text>他人分享给我的报告</text>
+                    </view>
+                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                </view>
+                <view class="user-action-item">
+                    <view class="title">
+                        <image src="./images/user@othors-invite-to-reply-report.png"
+                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                        <text>他人邀请我参加的测评</text>
+                    </view>
+                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                </view>
+                <view class="user-action-item">
+                    <view class="title">
+                        <image src="./images/user@connect-serving.png"
+                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                        <text>联系专属客服</text>
+                    </view>
+                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                </view>
+            </scroll-view>
+        </view>
+    </view>
+    <hola-tab-bar active="{{ 1 }}"></hola-tab-bar>
+</view>
+<view wx:elif="{{ isWxWork && !isWxWorkAdmin }}">
+    <view class="user-page-wrapper">
+        <view class="head">
+            <view class="user-personal-info">
+                <image src=""
+                       style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;background-color: black;"></image>
+                <text>马艺娴</text>
+            </view>
+        </view>
+        <view class="content">
+            <scroll-view class="content-scroll-area" scroll-y>
+                <view class="user-action-item">
+                    <view class="title">
+                        <image src="./images/user@othors-invite-to-read-report.png"
+                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                        <text>他人分享给我的报告</text>
+                    </view>
+                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                </view>
+                <view class="user-action-item">
+                    <view class="title">
+                        <image src="./images/user@connect-serving.png"
+                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                        <text>联系专属客服</text>
+                    </view>
+                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                </view>
+            </scroll-view>
+        </view>
+    </view>
+    <hola-tab-bar active="{{ 1 }}"></hola-tab-bar>
+</view>

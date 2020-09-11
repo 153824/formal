@@ -27,7 +27,7 @@ Page({
     onLoad: function (options) {
         const {necessaryInfo} = options;
         console.log("necessaryInfo： ",necessaryInfo);
-        const {count, id, name, hadBuyout, isFree, norms,quesCount,estimatedTime} = JSON.parse(necessaryInfo);
+        const {count=0, id="", name="", hadBuyout=false, isFree=false, norms="",quesCount=0,estimatedTime=7} = JSON.parse(necessaryInfo);
         this.setData({
             maxCount: count,
             evaluationId: id,
@@ -102,6 +102,7 @@ Page({
             app.toast("测评可用数量不足");
             return;
         }
+        console.log(norms);
         app.doAjax({
             url: "release/share",
             method: "post",
@@ -136,7 +137,6 @@ Page({
      */
     closeQrCode: function (e) {
         const that = this;
-        console.log("that.data.sharePaperInfo： ",that.data.sharePaperInfo);
         wx.redirectTo({
             url: `../../../work-base/components/track-detail/track-detail?trackId=${that.data.sharePaperInfo.releaseRecordId}`
         })

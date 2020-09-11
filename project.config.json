@@ -10,11 +10,11 @@
 		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
-		"autoAudits": false,
 		"coverView": true,
+		"autoAudits": false,
 		"showShadowRootInWxmlPanel": true,
 		"scopeDataCheck": false,
-		"uglifyFileName": true,
+		"uglifyFileName": false,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
@@ -92,6 +92,13 @@
 					"name": "pages/station/components/detail/detail",
 					"pathName": "pages/station/components/detail/detail",
 					"query": "id=5f4f4d561d704b746010e22a",
+					"scene": null
+				},
+				{
+					"id": 4,
+					"name": "pages/",
+					"pathName": "pages/work-base/components/guide/guide",
+					"query": "releaseRecordId=5f59e37120703638c0fd56e1",
 					"scene": null
 				}
 			]

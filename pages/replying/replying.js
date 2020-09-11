@@ -52,6 +52,9 @@ Page({
     });
     if (app.isTest || !app.isTest ) {
       that.setData({
+
+
+
         // pathIndex: 2
         pathIndex: 3
       });

@@ -27,11 +27,16 @@
     "pages/work-base/components/answering/answering",
     "pages/work-base/components/done/done",
     "pages/work-base/components/guide/guide",
-    "pages/work-base/components/report-list/report-list",
+    "pages/work-base/components/member-report-list/member-report-list",
     "utils/ence_push/ence_push",
     "station/detail",
     "common/tab-bar/tab-bar",
-    "pages/user-center/user-center"
+    "pages/user-center/user-center",
+    "pages/work-base/components/track-more/track-more",
+    "pages/work-base/components/track-detail/track-detail",
+    "pages/work-base/components/report-more/report-more",
+    "pages/user-center/components/receive-reports/receive-reports",
+    "pages/user-center/components/receive-evaluations/receive-evaluations"
   ],
   "tabBar": {
     "custom": true,

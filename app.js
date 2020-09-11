@@ -58,8 +58,9 @@ App({
     qiniuUpload: qiniuUpload,
     isIphoneX: false,
     // host: "http://192.168.0.101:3000",
-    host: "https://api.luoke101.com",
+    // host: "https://api.luoke101.com",
     // host: 'https://h5.luoke101.com',
+    host: "http://192.168.0.225:3000",
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
         userInfo: null,
@@ -78,7 +79,8 @@ App({
         wxWorkUserId: "",
         wxWorkTeamId: "",
         isWxWork: false,
-        isWxWorkAdmin: false,
+        isWxWorkAdmin: true,
+        wxWorkUserInfo: {},
     },
     onLaunch: function (options) {
         const that = this;
@@ -98,30 +100,41 @@ App({
             console.log('onMemoryWarningReceive', res)
         });
         /*获取机型 **/
-        if (sysMsg.model.indexOf('iPhone X') != -1) {
+        if (sysMsg.model.indexOf('iPhone X') !== -1) {
             this.isIphoneX = true
         }
-        if (sysMsg.system.indexOf('iOS') != -1) {
+        if (sysMsg.system.indexOf('iOS') !== -1) {
             this.isIos = true
         }
-        if(sysMsg.environment === 'wxwork'){
+        if (sysMsg.environment === 'wxwork') {
             this.wxWorkInfo.isWxWork = true;
         }
-        /**
-         * @Description: 登录
-         * @author: WE!D
-         * @name: wx.login
-         * @args: Object
-         * @return: Object {openId, sessionKey, unionId}
-         * @date: 2020/7/21
-         */
-        wx.login({
-            success: res => {
-                this.userLogin(res.code).then(res => {
-                    wx.aldPushSendOpenid(res.openId);
-                })
-            },
-        });
+        if (false) {
+            wx.qy.login({
+                success: res => {
+                    this.wxWorkUserLogin(res.code).then(res => {
+                        wx.aldPushSendOpenid(res.openId);
+                    })
+                },
+            })
+        } else {
+            /**
+             * @Description: 登录
+             * @author: WE!D
+             * @name: wx.login
+             * @args: Object
+             * @return: Object {openId, sessionKey, unionId}
+             * @date: 2020/7/21
+             */
+            wx.login({
+                success: res => {
+                    this.userLogin(res.code).then(res => {
+                        wx.aldPushSendOpenid(res.openId);
+                    })
+                },
+            });
+        }
+
         /**
          * @Description: 获取设置
          * @author: WE!D
@@ -232,6 +245,18 @@ App({
     },
 
     /**
+     * @Description:
+     * @author: WE!D
+     * @name:
+     * @args:
+     * @return:
+     * @date: 2020/9/8
+     */
+    wxWorkUserLogin: function (code) {
+
+    },
+
+    /**
      * @Description: 获取用户信息
      * @author: WE!D
      * @name: getUserInfo
@@ -315,11 +340,11 @@ App({
      * @return: none
      * @date: 2020/7/21
      */
-    doAjax: function (params={noLoading:true}) {
+    doAjax: function (params = {noLoading: true}) {
         const that = this;
-        const { prefix='' } = params;
+        const {prefix = ''} = params;
         let url = this.host + '/hola/' + params.url;
-        if(prefix){
+        if (prefix) {
             url = `${this.host}/${prefix}/${params.url}`;
         }
         if (!params.noLoading) {
@@ -340,7 +365,7 @@ App({
                 wx.hideLoading();
                 var retData = ret.data;
                 if (retData.code) {
-                    console.log("retData： ",retData);
+                    console.log("retData： ", retData);
                     if (params.error) return params.error(retData);
                     wx.showToast({
                         title: retData.msg,
@@ -350,7 +375,10 @@ App({
                     return;
                 }
                 if (params.success) {
-                    try { return params.success(retData) } catch (e) {}
+                    try {
+                        return params.success(retData)
+                    } catch (e) {
+                    }
                 }
             },
             error: function () {
@@ -427,7 +455,7 @@ App({
      * @return: none
      * @date: 2020/7/21
      */
-    getMyTeamList: function (cb,cacheTrigger=true) {
+    getMyTeamList: function (cb, cacheTrigger = true) {
         const that = this;
         let LOCAL_MY_TEAM_LIST = wx.getStorageSync('GET_MY_TEAM_LIST');
         if (LOCAL_MY_TEAM_LIST.length && cacheTrigger) {

@@ -17,7 +17,8 @@ Page({
     historyPage: 1,
     loading: true,
     compareArr: [],
-    maxReportPage: -1
+    maxReportPage: -1,
+    active: 2
   },
 
   onLoad: function (options) {
@@ -32,35 +33,20 @@ Page({
     }
     if( checkedItem === "0" ){
       app.doAjax({
-        url: "sharePapers/reports",
+        url: "reports",
         method: "get",
         data: {
           orgId: app.teamId,
           userId: app.userId,
           type: checkedTime,
           page: 1,
-          pageSize: 10,
-          evaluationId: ""
+          pageSize: 10
         },
         noLoading: true,
         success: function (res) {
-          var catalog = [];
-          var compareArr = [];
-          res.data.forEach((item,key)=>{
-            const { id,name } = item.evaluation;
-            if( !compareArr.includes(id) ){
-              var catalogChild = {};
-              catalogChild.id = id;
-              catalogChild.name = name;
-              catalog.push(catalogChild);
-              compareArr.push(id);
-            }
-          });
-          catalog.unshift({ id: "",name: "全部测评" });
+          console.log(res);
           that.setData({
-            evaluationList: res.data,
-            catalog: catalog,
-            compareArr,
+            evaluationList: res,
             reportPage: 1,
             historyPage: 1
           });
@@ -85,7 +71,7 @@ Page({
     }
     if( checkedItem === "1" ){
       app.doAjax({
-        url: "sharePapers/batch",
+        url: "batch",
         method: "get",
         data: {
           userId: app.userId,
@@ -180,7 +166,7 @@ Page({
     }catch(e){}
     if( targetValue === "0" ){
       app.doAjax({
-        url: "sharePapers/reports",
+        url: "reports",
         method: "get",
         data: {
           orgId: app.teamId,
@@ -193,7 +179,7 @@ Page({
         noLoading: true,
         success: function (res) {
           that.setData({
-            evaluationList: res.data,
+            evaluationList: res,
             historyPage: 1
           });
           setTimeout(()=>{
@@ -211,7 +197,7 @@ Page({
     }
     if( targetValue === "1" ){
       app.doAjax({
-        url: "sharePapers/batch",
+        url: "batch",
         method: "get",
         data: {
           userId: app.userId,
@@ -255,20 +241,18 @@ Page({
     });
     if( checkedItem === "0" ){
       app.doAjax({
-        url: "sharePapers/reports",
+        url: "reports",
         method: "get",
         data: {
-          orgId: app.teamId,
-          userId: app.userId,
-          type: targetValue,
+          isEE: app.wxWorkInfo.isWxWork,
           page: 1,
           pageSize: 10,
-          evaluationId: evaluationId
         },
         noLoading: true,
         success: function (res) {
+          console.log("reports: ",res);
           that.setData({
-            evaluationList: res.data,
+            evaluationList: res,
             loading: false
           });
         },
@@ -281,7 +265,7 @@ Page({
     }
     if( checkedItem === "1" ){
       app.doAjax({
-        url: "sharePapers/batch",
+        url: "batch",
         method: "get",
         data: {
           userId: app.userId,
@@ -316,7 +300,7 @@ Page({
       reportPage: 0
     });
     app.doAjax({
-      url: "sharePapers/reports",
+      url: "reports",
       method: "get",
       data: {
         orgId: app.teamId,
@@ -329,7 +313,7 @@ Page({
       noLoading: true,
       success: function (res) {
         that.setData({
-          evaluationList: res.data,
+          evaluationList: res,
         });
       }
     })
@@ -388,7 +372,7 @@ Page({
     if( checkedItem === "0" && (maxReportPage === -1 || reportPage + 1 < maxReportPage) ){
       reportPage = reportPage + 1;
       app.doAjax({
-        url: "sharePapers/reports",
+        url: "reports",
         method: "get",
         data: {
           orgId: app.teamId,
@@ -433,7 +417,7 @@ Page({
     if( checkedItem === "1" ){
       historyPage = historyPage + 1;
       app.doAjax({
-        url: "sharePapers/batch",
+        url: "batch",
         method: "get",
         data: {
           userId: app.userId,

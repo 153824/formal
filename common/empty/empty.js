@@ -41,18 +41,19 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    revocation: function(e) {
+    recallEvaluation: function(e) {
       const that = this;
+      console.log(that.properties.paperId);
       wx.showModal({
         title: '提示',
         content: '确认撤销该分享？',
         success: function(ret) {
           if (ret.confirm) {
             app.doAjax({
-              url: 'sharePapers/cancelSharePaper',
+              url: 'release/revoke',
               method: 'post',
               data: {
-                id: e.target.dataset.id
+                releaseRecordId: that.properties.paperId
               },
               success: function(res) {
                 app.toast('撤回成功，测评已返还');
@@ -61,7 +62,7 @@ Component({
                   isCancel: true
                 });
                 wx.redirectTo({
-                  url: `useHistoryDetail?sharePaperId=${ e.target.dataset.id }&status=${that.data.status}`,
+                  url: `track-detail?status=REVOKED&trackId=${that.properties.paperId}`,
                 })
               }
             });

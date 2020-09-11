@@ -11,17 +11,21 @@ Page({
         mobile: "18559297592",
         wechat: "haola72",
         active: 0,
-        column: []
+        column: [],
+        isWxWork: app.wxWorkInfo.isWxWork
     },
     onLoad: function (options,name) {
+        if( this.data.isWxWork ){
+            wx.switchTab({
+                url: `../work-base/work-base`,
+            });
+            return;
+        }
         if( options.loadingTrigger ){
             this.setData({
                 loading: true
             })
         }
-        wx.hideTabBar({
-            animation: true
-        });
         const that = this;
         let homePagesPromiseList = [];
         const homePagesPromise = new Promise(function (resolve, reject) {
@@ -69,18 +73,18 @@ Page({
                 column: targetColumn,
             });
             setTimeout(() => {
-                wx.showTabBar({
-                    animation: true,
-                });
+                // wx.showTabBar({
+                //     animation: true,
+                // });
                 that.setData({
                     loading: false
                 })
             }, 500);
         }).catch(err => {
             setTimeout(() => {
-                wx.showTabBar({
-                  animation: true,
-                });
+                // wx.showTabBar({
+                //   animation: true,
+                // });
                 that.setData({
                     loading: false
                 })
@@ -167,7 +171,6 @@ Page({
     goToReplying: function (e) {
         const { t } = e.target.dataset;
         if (t === '2') {
-            wx.setStorageSync("hideLastTestMind", true);
             this.setData({
                 oldShareInfo: ""
             });

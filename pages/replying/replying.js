@@ -45,18 +45,23 @@ Page({
 
   onLoad: function (options) {
     let that = this;
+    console.log(options);
     that.setData({
       applyStatus: options.type,
       startTime: new Date().getTime()
     });
     if (app.isTest || !app.isTest ) {
       that.setData({
+
+
+
         // pathIndex: 2
         pathIndex: 3
       });
     }
     quesIdsOrder = [];
     sKey = "oldAnswer" + options.id;
+    console.log("oldAnswer" + options.id);
     let oldData = wx.getStorageSync(sKey);
     if( oldData.pathIndex == "2" || oldData.pathIndex == "1" ){
       oldData.pathIndex = 3
@@ -701,12 +706,11 @@ Page({
     answer["username"] = data.username; //姓名
     answer["imgUrl"] = data.imgUrl; //头像
     app.doAjax({
-      url: "sharePapers/updateUserAnswer",
+      url: "receive_records/update_answer",
       method: "POST",
       data: {
-        id: data.id,
-        paperId: data.paperId,
-        answer: JSON.stringify(answer)
+        receiveRecordId: data.id,
+        answer: answer
       },
       success: function (ret) {
         wx.redirectTo({
@@ -889,12 +893,11 @@ Page({
       swiperCurrent1: data.swiperCurrent1
     };
     app.doAjax({
-      url: "sharePapers/updateUserAnswer",
+      url: "receive_records/update_answer",
       method: "POST",
       data: {
-        id: data.id,
-        paperId: data.paperId,
-        draftAnswer: JSON.stringify(draftAnswer)
+        receiveRecordId: data.id,
+        draft: draftAnswer
       },
       noLoading: true,
       success: function (ret) {

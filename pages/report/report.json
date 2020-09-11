@@ -1,5 +1,8 @@
 {
   "usingComponents": {
-    "ec-canvas": "../../utils/ec-canvas/ec-canvas"
+    "ec-canvas": "../../utils/ec-canvas/ec-canvas",
+    "hola-histogram": "./components/histogram/histogram",
+    "hola-radar": "./components/radar/radar",
+    "hola-grid": "./components/grid/grid"
   }
 }

@@ -133,3 +133,4 @@
     </view>
     <view class="mind">添加时，请备注公司所属行业和规模</view>
 </view>
+<hola-tab-bar active="{{ active }}"></hola-tab-bar>

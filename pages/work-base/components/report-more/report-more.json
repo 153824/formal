@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "hola-evaluation-reports": "../../../../common/evaluation-reports/evaluation-reports"
+  }
+}

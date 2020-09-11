@@ -1,0 +1,26 @@
+<view class="program-wrapper">
+    <view class="program-body the-last-report" wx:for="{{ reportList }}" wx:for-item="reportItem" wx:key="unique">
+        <view class="report-created-time">
+            <text>{{util.getMonthAndDayByFrag(reportItem.reportGeneratedAt,"/",true)}}</text>
+            <text>{{util.getHourAndMinByFrag(reportItem.reportGeneratedAt,":",true)}}</text>
+        </view>
+        <view class="evaluation-wrapper">
+            <view class="evaluation-name user-info-wrapper">
+                <view class="user-info">
+                    <text>{{reportItem.participant}}</text>
+                    <text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text>
+                </view>
+            </view>
+            <view class="user-answer-evaluation">
+                {{reportItem.evaluation}}
+            </view>
+        </view>
+        <view class="send-evaluation">
+            <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
+        </view>
+        <view wx:if="{{ false }}" class="new-adding-mark">
+            <text>新</text>
+        </view>
+    </view>
+</view>
+<wxs src="../../utils/util.wxs" module="util"></wxs>

@@ -15,11 +15,11 @@
  * teamRole: 团队角色
  * isLogin: 登录状态
  * isIos: 是否为ios端
- * isPC: 是否为PC端
  * qiniuUpload: 七牛配置
  * isIphoneX: 苹果X
  * host: 主机地址
  * globalData: 全局数据
+ * wxWork: 是否为企业微信
  * appid: 小程序标识
  * userInfo: 用户信息
  * userMsg: 用户信息
@@ -37,8 +37,6 @@
 const ald = require('./utils/ald-stat.js');
 const qiniuUpload = require("./utils/qiniuUpload");
 const push = require('./utils/push_sdk.js');
-const deBug = false;
-const debuggerQueue = []; // 用于判断请求时长
 const common = require('./utils/common.js');
 qiniuUpload.init({
     region: 'SCN',
@@ -56,12 +54,13 @@ App({
     teamRole: "",
     isLogin: false,
     isIos: false,
+    isTest: false,
     qiniuUpload: qiniuUpload,
     isIphoneX: false,
-    isPC: false,
     // host: "http://192.168.0.101:3000",
-    host: "https://api.luoke101.com",
+    // host: "https://api.luoke101.com",
     // host: 'https://h5.luoke101.com',
+    host: "http://192.168.0.225:3000",
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
         userInfo: null,
@@ -76,14 +75,18 @@ App({
         eventId: "5ea6b2b26df4251c4a09a4cc",
         assistant: ["5efed573b1ef0200062a85f7"]
     },
+    wxWorkInfo: {
+        wxWorkUserId: "",
+        wxWorkTeamId: "",
+        isWxWork: false,
+        isWxWorkAdmin: true,
+        wxWorkUserInfo: {},
+    },
     onLaunch: function (options) {
-        wx.hideTabBar({
-            animation: true,
-        })
-        var that = this;
-        var referrerInfo = options.referrerInfo;
-        var menuBtnObj = wx.getMenuButtonBoundingClientRect();
-        var sysMsg = wx.getSystemInfoSync();
+        const that = this;
+        const referrerInfo = options.referrerInfo;
+        const menuBtnObj = wx.getMenuButtonBoundingClientRect();
+        const sysMsg = wx.getSystemInfoSync();
         this.isIphoneX = false;
         this.isIos = false;
         this.isLogin = false;
@@ -93,35 +96,45 @@ App({
         if (referrerInfo && referrerInfo.appid) {
             this.fromAppId = referrerInfo.appid
         }
-        wx.removeStorageSync('hideLastTestMind');
         wx.onMemoryWarning(function (res) {
             console.log('onMemoryWarningReceive', res)
         });
         /*获取机型 **/
-        if (sysMsg.model.indexOf('iPhone X') != -1) {
+        if (sysMsg.model.indexOf('iPhone X') !== -1) {
             this.isIphoneX = true
         }
-        if (sysMsg.system.indexOf('iOS') != -1) {
+        if (sysMsg.system.indexOf('iOS') !== -1) {
             this.isIos = true
         }
-        if (sysMsg.platform.indexOf("windows") != -1) {
-            this.isPC = true;
+        if (sysMsg.environment === 'wxwork') {
+            this.wxWorkInfo.isWxWork = true;
         }
-        /**
-         * @Description: 登录
-         * @author: WE!D
-         * @name: wx.login
-         * @args: Object
-         * @return: Object {openId, sessionKey, unionId}
-         * @date: 2020/7/21
-         */
-        wx.login({
-            success: res => {
-                this.userLogin(res.code).then(res => {
-                    wx.aldPushSendOpenid(res.openId);
-                })
-            },
-        });
+        if (false) {
+            wx.qy.login({
+                success: res => {
+                    this.wxWorkUserLogin(res.code).then(res => {
+                        wx.aldPushSendOpenid(res.openId);
+                    })
+                },
+            })
+        } else {
+            /**
+             * @Description: 登录
+             * @author: WE!D
+             * @name: wx.login
+             * @args: Object
+             * @return: Object {openId, sessionKey, unionId}
+             * @date: 2020/7/21
+             */
+            wx.login({
+                success: res => {
+                    this.userLogin(res.code).then(res => {
+                        wx.aldPushSendOpenid(res.openId);
+                    })
+                },
+            });
+        }
+
         /**
          * @Description: 获取设置
          * @author: WE!D
@@ -184,8 +197,8 @@ App({
      * @date: 2020/7/21
      */
     userLogin: function (code) {
-        var that = this
-        var userLoginPromise = new Promise((resolve, reject) => {
+        const that = this;
+        const userLoginPromise = new Promise((resolve, reject) => {
             that.doAjax({
                 url: 'userLogin',
                 method: 'POST',
@@ -229,6 +242,18 @@ App({
             })
         })
         return userLoginPromise
+    },
+
+    /**
+     * @Description:
+     * @author: WE!D
+     * @name:
+     * @args:
+     * @return:
+     * @date: 2020/9/8
+     */
+    wxWorkUserLogin: function (code) {
+
     },
 
     /**
@@ -315,11 +340,11 @@ App({
      * @return: none
      * @date: 2020/7/21
      */
-    doAjax: function (params={noLoading:true}) {
+    doAjax: function (params = {noLoading: true}) {
         const that = this;
-        const { prefix='' } = params;
+        const {prefix = ''} = params;
         let url = this.host + '/hola/' + params.url;
-        if(prefix){
+        if (prefix) {
             url = `${this.host}/${prefix}/${params.url}`;
         }
         if (!params.noLoading) {
@@ -340,7 +365,7 @@ App({
                 wx.hideLoading();
                 var retData = ret.data;
                 if (retData.code) {
-                    console.log("retData： ",retData);
+                    console.log("retData： ", retData);
                     if (params.error) return params.error(retData);
                     wx.showToast({
                         title: retData.msg,
@@ -350,7 +375,10 @@ App({
                     return;
                 }
                 if (params.success) {
-                    try { return params.success(retData) } catch (e) {}
+                    try {
+                        return params.success(retData)
+                    } catch (e) {
+                    }
                 }
             },
             error: function () {
@@ -403,7 +431,7 @@ App({
      * @date: 2020/7/21
      */
     changePage: function (url, tab) {
-        var that = this
+        const that = this;
         if (url) {
             wx.navigateTo({
                 url: url,
@@ -427,7 +455,7 @@ App({
      * @return: none
      * @date: 2020/7/21
      */
-    getMyTeamList: function (cb,cacheTrigger=true) {
+    getMyTeamList: function (cb, cacheTrigger = true) {
         const that = this;
         let LOCAL_MY_TEAM_LIST = wx.getStorageSync('GET_MY_TEAM_LIST');
         if (LOCAL_MY_TEAM_LIST.length && cacheTrigger) {

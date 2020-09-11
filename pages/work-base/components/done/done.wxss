@@ -1,0 +1,60 @@
+/* test/finish.wxss */
+
+.fullPage {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.pageView {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  transform: translateY(-50%);
+}
+
+.pageView image {
+  display: block;
+  margin: 0 auto 22rpx;
+  width: 328rpx;
+  height: 316rpx;
+}
+
+.mindMsg {
+  text-align: center;
+  font-size: 28rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 600;
+  color: rgba(50, 53, 65, 1);
+  line-height: 40rpx;
+}
+
+.reportBtn {
+  width: 468rpx;
+  height: 88rpx;
+  background: #353EE8FF;
+  border-radius: 10rpx;
+  margin: 100rpx auto 0;
+  font-size: 32rpx;
+  font-family: PingFangSC-Semibold, PingFangSC;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1);
+  line-height: 88rpx;
+  text-align: center;
+}
+
+.mpView {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  transform: translateY(-50%);
+}
+
+.mpView image {
+  display: block;
+  margin: 0 auto 50rpx;
+  width: 130rpx;
+  height: 126rpx;
+}

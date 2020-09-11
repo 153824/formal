@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "van-skeleton": "../../common/vant-weapp/dist/skeleton/index",
+    "hola-tab-bar": "../../common/tab-bar/tab-bar",
+    "hola-member-report-list": "components/member-report-list/member-report-list",
+    "hola-mask": "../../common/mask/mask"
+  },
+  "navigationBarTitleText": ""
+}

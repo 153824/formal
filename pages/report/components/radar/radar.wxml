@@ -1,0 +1,2 @@
+<ec-canvas id="mychart{{id}}" canvas-id="mychartcanvas{{id}}"
+           ec="{{getRadarChartInfoInit}}"></ec-canvas>

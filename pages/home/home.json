@@ -1,11 +1,13 @@
 {
+  "component": true,
   "usingComponents": {
     "card": "../../common/card/card",
     "skill": "../../common/skill/skill",
     "title": "../../common/title/title",
     "mask": "../../common/mask/mask",
     "serving": "../../common/serving/serving",
-    "van-skeleton": "../../common/vant-weapp/dist/skeleton/index"
+    "van-skeleton": "../../common/vant-weapp/dist/skeleton/index",
+    "hola-tab-bar": "../../common/tab-bar/tab-bar"
   },
   "navigationStyle": "custom"
 }

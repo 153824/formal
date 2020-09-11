@@ -480,6 +480,7 @@ assessor-info
 
 .box3 {
   background: rgba(255, 255, 255, 1);
+  perspective: 200rpx;
 }
 
 .box3 .title {
@@ -546,19 +547,14 @@ assessor-info
 }
 
 .box3 .chartImg {
-  position: relative;
   background-color: #fff;
   margin: 80rpx 0 60rpx;
-  height: 500rpx;
 }
 
 .box3 .chartImg ec-canvas {
-  position: absolute;
-  left: 10rpx;
-  right: 10rpx;
-  top: 0;
-  bottom: 0;
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .box3 .list {

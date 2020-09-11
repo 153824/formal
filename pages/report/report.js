@@ -2,7 +2,9 @@ import debounce from '../../utils/lodash/debounce';
 import * as echarts from '../../utils/ec-canvas/echarts';
 
 var app = getApp();
+var _this;
 var ctx;
+var timer;
 //柱状图数据
 var value_2 = {};
 var indicator_2 = {};
@@ -15,79 +17,183 @@ function getChartMsg(canvas, width, height) {
         height: height
     });
     canvas.setChart(chart);
-
     var option = {
-        xAxis: {
-            data: indicator_2[index],
-            axisLine: {
-                show: false
-            },
-            axisTick: {
-                show: false
-            },
-            splitLine: {
-                show: false
-            }
+        legend: {
+            data:[
+                {
+                    name: '受测者得分',
+                    textStyle: {
+                        color: 'rgba(53, 62, 232, 1)',
+                        fontSize: +(24 * app.rate).toFixed(0),
+                    }
+                },
+                {
+                    name: '均分',
+                    textStyle: {
+                        color: 'rgba(109, 212, 0, 1)',
+                        fontSize: +(24 * app.rate).toFixed(0),
+                    }
+                },
+                {
+                    name: '达标线',
+                    textStyle: {
+                        color: 'rgba(247, 181, 0, 1)',
+                        fontSize: +(24 * app.rate).toFixed(0),
+                    }
+                }
+            ],
+            right: (40 * app.rate).toFixed(0),
+            icon: "roundRect",
+            itemWidth: 28,
+            itemHeight: 6,
         },
         grid: {
             containLabel: true
         },
-        yAxis: {
+        yAxis: [
+            {
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: "rgba(233, 233, 233, 1)"
+                    }
+                },
+                axisTick: {
+                    show: false,
+                    alignWithLabel: true,
+                    length: 10
+                },
+                splitLine: {
+                    show: false
+                },
+                axisLabel: {
+                    textStyle: {
+                        color: 'rgba(53, 62, 232, 1)',
+                        fontSize: +(24 * app.rate).toFixed(0),
+                    }
+                },
+                type: 'category',
+                boundaryGap: true,
+                data: ["积极主动", "乐观自信", "外向亲和", "坚韧抗压", "认真负责"],
+            }
+        ],
+        xAxis: {
+            position: 'top',
+            type: 'value',
+            scale: true,
+            max: 9,
             min: 0,
-            max: 10,
-            minInterval: 0.8,
-            axisLabel: {
-                show: false,
-                color: "#F6F7FF"
-            },
+            splitNumber: 3,
+            boundaryGap: [0.2, 0.2],
             axisLine: {
-                show: false
-            },
-            axisTick: {
-                show: false
+                show: true,
+                lineStyle: {
+                    color: "rgba(233, 233, 233, 1)"
+                }
             },
             splitLine: {
-                show: false
+                show: false,
+            },
+            axisTick: {
+                show: true,
+            },
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'line',
+                crossStyle: {
+                    color: '#fff'
+                }
             }
         },
-        series: [{
-            type: 'bar',
-            data: value_2[index],
-            label: {
-                show: true,
-                position: "top"
+        series: [
+            {
+                name: "受测者得分",
+                type: 'bar',
+                data: [6, 5, 7, 4, 9],
+                label: {
+                    show: true,
+                    position: "right",
+                    textStyle: {
+                        color: 'rgba(53, 62, 232, 0.43)',
+                        fontSize: +(22 * app.rate).toFixed(0),
+                    }
+                },
+                barWidth: (28 * app.rate).toFixed(0),
+                itemStyle: {
+                    normal: {
+                        color: function () {
+                            return {
+                                colorStops: [
+                                    {
+                                        offset: 1, color: "rgba(154, 161, 244, 1)"
+                                    },
+                                    {
+                                        offset: 0, color: "rgba(109, 115, 229, 1)"
+                                    },
+                                ]
+                            }
+                        }(),
+                    }
+                },
+            },
+            {
+                name: "均分",
+                type: 'line',
+                data: [7,4.5,6.8,8.5,7.3],
+                itemStyle: {
+                    normal: {
+                        color: 'rgba(109, 212, 0, 1)',
+                        lineStyle: {
+                            color: 'rgba(109, 212, 0, 1)'
+                        }
+                    }
+                }
+            },
+            {
+                name: "达标线",
+                type: 'line',
+                data: [5.7,3.2,5.8,6,5.9],
+                itemStyle: {
+                    normal: {
+                        color: 'rgba(247, 181, 0, 1)',
+                        lineStyle: {
+                            color: 'rgba(247, 181, 0, 1)'
+                        }
+                    }
+                }
             }
-        }]
+        ]
     };
-
     chart.setOption(option);
     return chart;
 }
 
 //雷达图数据
-var value_1 = {};
-var indicator_1 = {};
+var radarValue = {};
+var radarIndicator = {};
 
-function getChartMsg1(canvas, width, height) {
-    var canvasId = canvas.canvasId;
-    var index = canvasId.replace("mychartcanvas", "");
+function getRadarChartInfo(canvas, width, height) {
+    const canvasId = canvas.canvasId;
+    const index = canvasId.replace("mychartcanvas", "");
     const chart = echarts.init(canvas, null, {
         width: width,
         height: height
     });
     if (!app.rate) {
-        var sysMsg = wx.getSystemInfoSync();
+        const sysMsg = wx.getSystemInfoSync();
         app.rate = sysMsg.windowWidth / 750;
     }
     canvas.setChart(chart);
-    var option = {
+    const option = {
         radar: {
             name: {
                 fontWeight: 400,
                 color: "#323541",
                 fontSize: +(24 * app.rate).toFixed(0),
             },
-            indicator: indicator_1[index],
+            indicator: radarIndicator[index],
             splitArea: {
                 areaStyle: {
                     color: ['#fff',
@@ -127,7 +233,74 @@ function getChartMsg1(canvas, width, height) {
                 }
             },
             data: [{
-                value: value_1[index]
+                value: radarValue[index]
+            }]
+        }]
+    };
+    chart.setOption(option);
+    return chart;
+}
+
+function getHistogramInfo(canvas, width, height) {
+    const canvasId = canvas.canvasId;
+    const index = canvasId.replace("mychartcanvas", "");
+    const chart = echarts.init(canvas, null, {
+        width: width,
+        height: height
+    });
+    if (!app.rate) {
+        const sysMsg = wx.getSystemInfoSync();
+        app.rate = sysMsg.windowWidth / 750;
+    }
+    canvas.setChart(chart);
+    const option = {
+        radar: {
+            name: {
+                fontWeight: 400,
+                color: "#323541",
+                fontSize: +(24 * app.rate).toFixed(0),
+            },
+            indicator: radarIndicator[index],
+            splitArea: {
+                areaStyle: {
+                    color: ['#fff',
+                        '#fff', '#fff',
+                        '#fff', '#fff',
+                    ]
+                }
+            },
+            splitLine: {
+                lineStyle: {
+                    color: ['rgba(238, 238, 238, 0.2)', 'rgba(238, 238, 238, 0.3)', 'rgba(238, 238, 238, 0.5)', 'rgba(238, 238, 238, 0.6)', 'rgba(238, 238, 238, 0.7)', 'rgba(238, 238, 238, 0.8)']
+                }
+            },
+            axisLine: {
+                lineStyle: {
+                    color: 'rgba(238, 238, 238, 0.8)'
+                }
+            }
+        },
+        series: [{
+            type: 'radar',
+            tooltip: {
+                trigger: 'item'
+            },
+            lineStyle: {
+                color: "#FFCC20"
+            },
+            symbol: "roundRect",
+            itemStyle: {
+                normal: {
+                    color: "#FFCC20",
+                    borderColor: "#FFCC20",
+                    areaStyle: {
+                        type: 'default',
+                        color: "rgba(251, 178, 60, 0.5)"
+                    }
+                }
+            },
+            data: [{
+                value: radarValue[index]
             }]
         }]
     };
@@ -142,8 +315,11 @@ Page({
         getChartMsg: {
             onInit: getChartMsg
         },
-        getChartMsg1: {
-            onInit: getChartMsg1
+        getRadarChartInfo: {
+            onInit: getRadarChartInfo
+        },
+        getHistogramInfo: {
+            onInit: getHistogramInfo
         },
         activeProposal: 0,
         showDlg: false,
@@ -156,14 +332,18 @@ Page({
         moveParams: {
             scrollLeft: 0
         },
-
+        canvasLoading: true,
+        radarIndicator: "",
+        radarValue: "",
+        radarLoading: true
     },
 
     onLoad: function (options) {
+        _this = this;
         wx.hideShareMenu();
         var that = this;
         ctx = wx.createCanvasContext('canvasArcCir');
-        var id = that.data.id || options.id;
+        var id = that.data.id || options.receiveRecordId;
         var shareKey = options.key || "";
         var command = options.command || "";
         this.setData({
@@ -179,8 +359,7 @@ Page({
         }
     },
 
-    onShow: function () {
-    },
+    onShow: function () {},
 
     onReady: function () {
         let that = this;
@@ -194,22 +373,13 @@ Page({
     getReport: function (id) {
         let that = this;
         id = id || that.data.id;
-        let {shareKey = ''} = this.data;
-        let {userInfo} = app.globalData;
         let getReportPromise = new Promise((resolve, reject) => {
             app.doAjax({
-                url: "sharePapers/getReport",
+                url: "reports/detail",
                 method: "get",
                 noLoading: false,
                 data: {
-                    id: id,
-                    shareKey: shareKey,
-                    userMsg: JSON.stringify({
-                        id: userInfo.id,
-                        avatar: userInfo.avatar || "",
-                        nickname: userInfo.nickname || "",
-                        realName: userInfo.realName || ""
-                    })
+                    receiveRecordId: id
                 },
                 success: function (res) {
                     resolve(res);
@@ -220,7 +390,7 @@ Page({
             })
         });
         getReportPromise.then(res => {
-            if (res.reportVersion) {
+            if (res.report.reportVersion) {
                 return new Promise((resolve, reject) => {
                     resolve(res);
                 });
@@ -229,10 +399,10 @@ Page({
                 return;
             }
             let now = new Date().getFullYear();
-            let userMsg = res.userMsg;
+            let userMsg = res.report.userMsg;
             let t = new Date(userMsg.birthday).getFullYear();
-            res.userMsg.age = now - t + 1;
-            res.finishTime = app.changeDate(res.finishTime, "yyyy/MM/dd hh:mm");
+            res.report.userMsg.age = now - t + 1;
+            res.report.finishTime = app.changeDate(res.report.finishTime, "yyyy/MM/dd hh:mm");
             let timeNormal = 1; //作答时长正常
             let answeTimeSatr = +res.answeTimeSatr;
             let answeTimeEnd = +res.answeTimeEnd;
@@ -246,29 +416,29 @@ Page({
                 timeNormal = 3;
             }
             res["timeNormal"] = timeNormal;
-            value_1 = {};
-            indicator_1 = {};
+            radarValue = {};
+            radarIndicator = {};
             value_2 = {};
             indicator_2 = {};
             var objs = res.dimension;
             for (var n in objs) {
                 var arr = objs[n].child;
                 var newChild = [];
-                value_1[n] = value_1[n] || [];
-                indicator_1[n] = indicator_1[n] || [];
+                radarValue[n] = radarValue[n] || [];
+                radarIndicator[n] = radarIndicator[n] || [];
                 value_2[n] = value_2[n] || [];
                 indicator_2[n] = indicator_2[n] || [];
                 var {showSubScore} = objs[n];
                 for (var i in arr) {
                     var node = arr[i];
                     if (showSubScore == 'average') {
-                        value_1[n].push(node.average);
+                        radarValue[n].push(node.average);
                     } else if (!showSubScore) {
-                        value_1[n].push(node.average);
+                        radarValue[n].push(node.average);
                     } else {
-                        value_1[n].push(node.total);
+                        radarValue[n].push(node.total);
                     }
-                    indicator_1[n].push({
+                    radarIndicator[n].push({
                         text: node.name,
                         color: "#323541",
                         max: objs[n].max || 5
@@ -290,6 +460,10 @@ Page({
                     });
                     newChild.push(node);
                 }
+                that.setData({
+                    radarIndicator: JSON.stringify(radarIndicator),
+                    radarValue: JSON.stringify(radarValue)
+                })
                 newChild.sort(function (it1, it2) {
                     return it2.average - it1.average;
                 });
@@ -320,13 +494,12 @@ Page({
             res["teamRole"] = (app.teamId == res.teamId) ? app.teamRole : 1;
             res["showPage"] = true;
             that.setData(res);
-
             app.doAjax({
                 url: "userOrderMsg",
                 method: "get",
                 data: {
                     id: res.id,
-                    paperId: res.paper.id,
+                    paperId: res.evaluationInfo.evaluationId,
                     total: total1Full || 0,
                     totalD1: res.dimension1Total || 0,
                     totalD2: res.dimension2Total || 0
@@ -338,16 +511,15 @@ Page({
             });
 
             app.doAjax({
-                url: 'evaluationDetail',
+                url: 'evaluations/outline',
                 method: 'get',
                 data: {
-                    evaluationId: res.paper.id
+                    evaluationId: res.evaluationInfo.evaluationId,
                 },
                 noLoading: true,
                 success: function (res) {
                     that.setData({
                         sharePic: res.evaluationInfo.smallImg,
-
                     })
                 }
             });
@@ -356,14 +528,14 @@ Page({
                 return;
             }
             let now = new Date().getFullYear();
-            let userMsg = res.userMsg;
-            let t = new Date(userMsg.birthday).getFullYear();
-            res.userMsg.age = now - t + 1;
-            res.finishTime = app.changeDate(res.finishTime, "yyyy/MM/dd hh:mm");
+            let participantInfo = res.participantInfo;
+            let t = new Date(participantInfo.birthday).getFullYear();
+            res.participantInfo.age = now - t + 1;
+            res.report.finishTime = app.changeDate(res.report.finishTime, "yyyy/MM/dd hh:mm");
             let timeNormal = 1; //作答时长正常
-            let answeTimeSatr = +res.answeTimeSatr;
-            let answeTimeEnd = +res.answeTimeEnd;
-            let time = +res.timeTotal;
+            let answeTimeSatr = +res.report.answeTimeSatr;
+            let answeTimeEnd = +res.report.answeTimeEnd;
+            let time = +res.report.timeTotal;
             if (time <= answeTimeSatr) {
                 //作答时长偏短
                 timeNormal = 2;
@@ -372,30 +544,30 @@ Page({
                 //作答时长偏长
                 timeNormal = 3;
             }
-            res["timeNormal"] = timeNormal;
-            value_1 = {};
-            indicator_1 = {};
+            res.report["timeNormal"] = timeNormal;
+            radarValue = {};
+            radarIndicator = {};
             value_2 = {};
             indicator_2 = {};
-            var objs = res.dimension;
+            var objs = res.report.dimension;
             for (var n in objs) {
                 var arr = objs[n].subclass;
                 var newChild = [];
-                value_1[n] = value_1[n] || [];
-                indicator_1[n] = indicator_1[n] || [];
+                radarValue[n] = radarValue[n] || [];
+                radarIndicator[n] = radarIndicator[n] || [];
                 value_2[n] = value_2[n] || [];
                 indicator_2[n] = indicator_2[n] || [];
                 var {showSubScore} = objs[n];
                 for (var i in arr) {
                     var node = arr[i];
                     if (showSubScore === 'average') {
-                        value_1[n].push(node.average);
+                        radarValue[n].push(node.average);
                     } else if (!showSubScore) {
-                        value_1[n].push(node.average);
+                        radarValue[n].push(node.average);
                     } else {
-                        value_1[n].push(node.subTotal);
+                        radarValue[n].push(node.subTotal);
                     }
-                    indicator_1[n].push({
+                    radarIndicator[n].push({
                         text: node.name,
                         color: "#323541",
                         max: objs[n].max || 5
@@ -417,6 +589,11 @@ Page({
                     });
                     newChild.push(node);
                 }
+                that.setData({
+                    radarIndicator: JSON.stringify(radarIndicator),
+                    radarValue: JSON.stringify(radarValue)
+                });
+                console.log("report.js: ",radarIndicator,radarValue);
                 newChild.sort(function (it1, it2) {
                     return it2.average - it1.average;
                 });
@@ -425,46 +602,47 @@ Page({
                 objs[n].subclass[keys[0]]["active"] = "active"
             }
             res["id"] = id;
-            var total1Full = res.generalTotal100;
+            var total1Full = res.report.generalTotal100;
             try {
-                res.total100 = +res.generalTotal100.toFixed(0);
+                res.report.total100 = +res.generalTotal100.toFixed(0);
             } catch (e) {
             }
-            var proposal = res.proposal || [];
-            var dimensions = res.dimension || {};
-            res["proposalShow"] = false;
-            res["showDimension"] = false;
+            var proposal = res.report.proposal || [];
+            var dimensions = res.report.dimension || {};
+            res.report["proposalShow"] = false;
+            res.report["showDimension"] = false;
             for (var i in dimensions) {
                 if (dimensions[i].show) {
-                    res["showDimension"] = true;
+                    res.report["showDimension"] = true;
                 }
             }
             proposal.forEach(function (n) {
                 if (n.show) {
-                    res["proposalShow"] = true;
+                    res.report["proposalShow"] = true;
                 }
             });
             that.drawCircle(res.total100);
-            res["statement"] = res["statement"].replace(/\n/g, "<br>").replace("<bold", "<span style='font-weight: 600;'").replace("</bold", "</span");
-            res["noTeamMember"] = false;
-            res["teamRole"] = (app.teamId == res.teamId) ? app.teamRole : 1;
-            res["showPage"] = true;
+            res.report["statement"] = res.report["statement"].replace(/\n/g, "<br>").replace("<bold", "<span style='font-weight: 600;'").replace("</bold", "</span");
+            res.report["noTeamMember"] = false;
+            res.report["teamRole"] = (app.teamId == res.teamId) ? app.teamRole : 1;
+            res.report["showPage"] = true;
             res.fillBlank = [];
             for (let i = 0; i < 4; i++) {
                 res.fillBlank.push("");
             }
             that.setData(res);
+            console.log("res: ",res);
             app.doAjax({
-                url: 'evaluationDetail',
+                url: 'evaluations/outline',
                 method: 'get',
                 data: {
-                    evaluationId: res.paper.id
+                    evaluationId: res.evaluationInfo.evaluationId
                 },
                 noLoading: true,
                 success: function (response) {
                     that.setData({
-                        sharePic: response.evaluationInfo.smallImg,
-                        knowledgePoints: response.evaluationInfo.knowledgePoints
+                        sharePic: response.smallImg,
+                        // knowledgePoints: response.evaluationInfo.knowledgePoints
                     })
                 }
             });
@@ -637,11 +815,15 @@ Page({
      * 进入分享报告页面
      */
     toShareReport: function () {
-        var paper = this.data.paper;
-        var userMsg = this.data.userMsg;
-
-        wx.navigateTo({
-            url: './components/shareReport/shareReport?id=' + this.data.id + "&username=" + userMsg.username + "&paperName=" + paper.name
+        const that = this;
+        app.doAjax({
+            url: 'reports/share',
+            method: 'post',
+            success: function (res) {
+                that.setData({
+                    reportShareId: res._id
+                })
+            }
         });
         wx.aldstat.sendEvent('报告详情页分享报告', {
             '触发点击': '点击数'
@@ -649,10 +831,10 @@ Page({
     },
     /**测测他人 */
     toTestOtherUser: function () {
-        var paperDetail = this.data.paper;
+        var {evaluationInfo} = this.data;
         var userPapersNum = this.data.userPapersNum;
         wx.navigateTo({
-            url: '../station/components/detail/detail?id=' + paperDetail.id,
+            url: '../station/components/detail/detail?id=' + evaluationInfo.evaluationId,
         });
         wx.aldstat.sendEvent('报告详情页测测别人', {
             '测评名称': 'name' + paperDetail.name
@@ -674,22 +856,15 @@ Page({
         });
     },
     /**
-     * 返回首页
-     */
-    back: function () {
-        wx.switchTab({
-            url: '../store/store'
-        });
-    },
-    /**
      * 分享
      */
     onShareAppMessage: function (options) {
-        const {id, userMsg, paper, sharePic} = this.data;
+        const {reportShareId, participantInfo,evaluationInfo, paper, sharePic} = this.data;
         const {globalData} = app;
+        console.log("reportShareId",reportShareId)
         return {
-            title: `${globalData.team.name}邀您看${userMsg.username}的《${paper.name}》报告`,
-            path: `pages/report/report?id=${id}`,
+            title: `${globalData.team.name}邀您看${participantInfo.username}的《${evaluationInfo.evaluationName}》报告`,
+            path: `pages/report/report?reportShareId=${reportShareId}`,
             imageUrl: sharePic,
         }
     },
@@ -703,12 +878,12 @@ Page({
      */
     getEvaluationQues: function () {
         const that = this;
-        const {paper} = this.data;
+        const {evaluationInfo} = this.data;
         app.doAjax({
             url: "paperQues",
             method: "get",
             data: {
-                id: paper.id
+                id: evaluationInfo.evaluationId
             },
             noLoading: true,
             success: function (res) {

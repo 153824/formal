@@ -44,4 +44,5 @@
     <mask isShow="{{ loading }}" top="{{ (statusbarHeight + titleHeight)/pixelRate }}"
           height="{{ windowHeight - ( statusbarHeight + titleHeight) }}" backgroundColor="transparent" ></mask>
 </van-overlay>
-<serving mobile="{{ mobile }}" wechat="{{ wechat }}"></serving>
+<serving mobile="{{ mobile }}" wechat="{{ wechat }}" bottom="150"></serving>
+<hola-tab-bar active="{{ active }}"></hola-tab-bar>

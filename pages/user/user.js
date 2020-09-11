@@ -11,7 +11,8 @@ Page({
     showDlg2: false,
     showServing: false,
     mobile: "18559297592",
-    wechat: "haola72"
+    wechat: "haola72",
+    active: 3
   },
   onLoad: function(options) {
     var that = this;

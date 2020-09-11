@@ -1,0 +1,27 @@
+<block wx:if="{{ type === 'nineCell' }}">
+    <view class="hola-grid">
+        <view class="hola-grid-axis">
+            <text class="axis-x-text">素质</text>
+            <text class="axis-y-text">能力</text>
+            <view class="axis-data">
+                <view class="axis-data-x-2">
+                    <text>达标</text>
+                    <view class="data-recommend">二级推荐</view>
+                    <view class="data-recommend">一级推荐</view>
+                </view>
+                <view class="axis-data-x-1">
+                    <text>不达标</text>
+                    <view class="data-recommend">不级推荐</view>
+                    <view class="data-recommend">二级推荐</view>
+                </view>
+                <view>
+                    <text class="data-recommend">不达标</text>
+                    <text class="data-recommend">达标</text>
+                </view>
+            </view>
+        </view>
+    </view>
+</block>
+<block wx:elif="{{ type === 'fourCell' }}">
+
+</block>

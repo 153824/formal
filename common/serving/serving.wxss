@@ -45,7 +45,7 @@
     padding-left: 52rpx;
 }
 
-.dlg .callMobile image {
+.dlg .callMobile .callMobile-img {
     width: 36rpx;
     height: 36rpx;
     margin-right: 16rpx;
@@ -65,7 +65,7 @@
     line-height: 40rpx;
 }
 
-.dlg .callWX image {
+.dlg .callWX .wechat-img {
     width: 36rpx;
     height: 36rpx;
     margin-right: 16rpx;

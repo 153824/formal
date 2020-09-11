@@ -1,14 +1,13 @@
 <view class="use-history-detail">
     <view class="use-history-head-wrapper">
         <view class="cover">
-            <image style="height: 168rpx;width: 168rpx;border-radius: 10rpx;" src="{{ trackInfo.smallImg || cover }}"></image>
+            <image style="height: 168rpx;width: 168rpx;border-radius: 10rpx;" src="{{ cover }}"></image>
         </view>
         <view class="info">
-            <view class="title">{{ trackInfo.evaluationName }}</view>
+            <view class="title">{{ evaluationName }}</view>
             <view class="count">
-                <text>发放数量：{{ trackInfo.amount || amount }}份</text>
-                <text wx:if="{{ status === 'REVOKED' }}" style="color: rgba(255,0,0,1);"> ( 已撤回{{ trackInfo.amount -
-                    trackInfo.finished - trackInfo.examining || amount-finishList.length-examiningList.length }}份 )
+                <text>发放数量：{{ amount }}份</text>
+                <text wx:if="{{ status === 'REVOKED' }}" style="color: rgba(255,0,0,1);"> ( 已撤回{{ amount-finishList.length-examiningList.length }}份 )
                 </text>
             </view>
             <view>
@@ -23,13 +22,13 @@
                   class="{{ item.checked ? 'checked' : '' }}"
             >
                 <block wx:if="{{ item.id === 0 }}">
-                    {{ item.name }}({{ trackInfo.finished || '0' }})
+                    {{ item.name }}({{ finishList.length }})
                 </block>
                 <block wx:if="{{ item.id === 1 }}">
-                    {{ item.name }}({{ trackInfo.examining || '0' }})
+                    {{ item.name }}({{ examiningList.length }})
                 </block>
                 <block wx:if="{{ item.id === 2 }}">
-                    {{ item.name }}({{ status == "REVOKED" ? '0' : (trackInfo.available||amount-finishList.length-examiningList.length) }})
+                    {{ item.name }}({{ status == "REVOKED" ? '0' : (amount-finishList.length-examiningList.length) }})
                 </block>
             </view>
         </view>
@@ -89,11 +88,11 @@
             <!--未做答开始-->
             <block wx:if="{{ checkedItem === 2 }}">
                 <block wx:if="{{ status === 'AVAILABLE' }}">
-                    <empty type="scan" title="{{trackInfo.available}}份测评暂未被人扫码作答" paperId="{{ trackInfo.releaseRecordId || releaseRecordId }}"
+                    <empty type="scan" title="{{amount-finishList.length-examiningList.length}}份测评暂未被人扫码作答" paperId="{{ trackInfo.releaseRecordId || releaseRecordId }}"
                            subtitle="撤回测评"></empty>
                 </block>
                 <block wx:elif="{{ status == 'REVOKED' }}">
-                    <empty type="default" title="{{ trackInfo.available || amount-finishList.length-examiningList.length }}份测评已全部被撤回" subtitle="撤回测评"></empty>
+                    <empty type="default" title="{{ amount-finishList.length-examiningList.length }}份测评已全部被撤回" subtitle="撤回测评"></empty>
                 </block>
                 <block wx:else>
                     <empty type="default" title="测评已全部被领取了" subtitle="撤回测评"></empty>
@@ -103,13 +102,13 @@
         </view>
     </view>
 </view>
-<view class="press-wrapper" bindtap="gotoDetail" data-id="{{ trackInfo.evaluationId || evaluationId }}">
+<view class="press-wrapper" bindtap="gotoDetail" data-id="{{ evaluationId }}">
     <press title="继续发放本测评"></press>
 </view>
 <van-overlay show="{{ imageTrigger }}">
     <view class="qrcode-wrapper" wx:if="{{ imageTrigger }}">
         <view class="qrcode">
-            <van-image width="556rpx" height="990rpx" src="{{trackInfo.QRCode}}" lazy-load show-loading use-loading-slot
+            <van-image width="556rpx" height="990rpx" src="{{QRCode}}" lazy-load show-loading use-loading-slot
                        fill
                        show-menu-by-longpress="true">
                 <van-loading slot="loading" size="0" vertical>

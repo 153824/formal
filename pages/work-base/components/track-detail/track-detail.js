@@ -76,19 +76,18 @@ Page({
         that.setData({
           status: res.status,
           amount: res.amount,
+          available: res.available,
           QRCode: res.QRCode,
           cover: res.smallImg,
-          evaluationId: res.evaluation,
+          evaluationId: res.evaluationId,
           evaluationName: res.evaluationName,
           releaseRecordId: res.releaseRecordId,
         })
       }
     });
     this.setData({
-      trackInfo: JSON.parse(trackInfo),
       status
     });
-    console.log("JSON.parse(trackInfo): ",JSON.parse(trackInfo));
   },
   /**
    * @Description:  切换tab页
@@ -135,6 +134,7 @@ Page({
   */
   gotoDetail: function(e){
     const { id } = e.currentTarget.dataset;
+    console.log("evaluationId,",e)
     wx.redirectTo({
       url: `../../../station/components/detail/detail?id=${ id }`
     });

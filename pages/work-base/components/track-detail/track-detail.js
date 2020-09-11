@@ -39,12 +39,13 @@ Page({
     const that = this;
     const { trackId,trackInfo,status } = options;
     app.doAjax({
-      url: `release_records/${trackId}`,
+      url: `release_records/detail`,
       method: 'get',
       data: {
         type: 'finished',
         page: 1,
         pageSize: 8,
+        releaseRecordId: trackId
       },
       success: function (res=[]) {
         that.setData({
@@ -53,12 +54,13 @@ Page({
       }
     });
     app.doAjax({
-      url: `release_records/${trackId}`,
+      url: `release_records/detail`,
       method: 'get',
       data: {
         type: 'examining',
         page: 1,
         pageSize: 8,
+        releaseRecordId: trackId
       },
       success: function (res=[]) {
         that.setData({
@@ -120,7 +122,7 @@ Page({
   changePage: function (e) {
     const { id } = e.currentTarget.dataset;
     wx.navigateTo({
-      url: `../../../report/report?id=${ id }`
+      url: `../../../report/report?receiveRecordId=${ id }`
     })
   },
 

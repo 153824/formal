@@ -254,5 +254,12 @@ Page({
         wx.navigateTo({
             url: `./components/report-more/report-more`,
         })
+    },
+
+    goToReportDetail: function (e) {
+        const receiveRecordId = e.currentTarget.dataset.id;
+        wx.navigateTo({
+            url: `../report/report?receiveRecordId=${receiveRecordId}`
+        })
     }
 });

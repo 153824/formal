@@ -13,11 +13,13 @@
                 <view class="program-title">
                     <text>我的测评</text>
                 </view>
-                <view wx:for="{{ myEvaluation }}" wx:for-item="evaluationItem" wx:key="unique" wx:for-index="evaluationIndex">
+                <view wx:for="{{ myEvaluation }}" wx:for-item="evaluationItem" wx:key="unique"
+                      wx:for-index="evaluationIndex">
                     <view class="program-body" data-name="{{ evaluationItem.evaluationName }}">
                         <image src="{{ evaluationItem.smallImg || 'http://img2.luoke101.com/2020-06-17T10:10:31.391ZnormalImg.png' }}"
                                style="width: 114rpx;height: 114rpx;border-radius: 15rpx;"></image>
-                        <view class="evaluation-wrapper" bindtap="goToEvaluationDetail" data-evaluation-id="{{ evaluationItem.evaluationId }}">
+                        <view class="evaluation-wrapper" bindtap="goToEvaluationDetail"
+                              data-evaluation-id="{{ evaluationItem.evaluationId }}">
                             <view class="evaluation-name">
                                 {{evaluationItem.evaluationName}}
                             </view>
@@ -49,7 +51,8 @@
                     </view>
                     <text class="more" bindtap="goToReportMore">更多...</text>
                 </view>
-                <view class="program-body the-last-report" wx:for="{{ reportsList }}" wx:for-item="reportItem" wx:key="unique">
+                <view class="program-body the-last-report" wx:for="{{ reportsList }}" wx:for-item="reportItem"
+                      wx:key="unique">
                     <view class="report-created-time">
                         <text>{{util.getMonthAndDayByFrag(reportItem.reportGeneratedAt,"/",true)}}</text>
                         <text>{{util.getHourAndMinByFrag(reportItem.reportGeneratedAt,":",true)}}</text>
@@ -58,7 +61,9 @@
                         <view class="evaluation-name user-info-wrapper">
                             <view class="user-info">
                                 <text>{{reportItem.participant}}</text>
-                                <text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text>
+                                <text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary
+                                    }}
+                                </text>
                             </view>
                         </view>
                         <view class="user-answer-evaluation">
@@ -151,11 +156,13 @@
                 <view class="program-title">
                     <text>我的测评</text>
                 </view>
-                <view wx:for="{{ myEvaluation }}" wx:for-item="evaluationItem" wx:key="unique" wx:for-index="evaluationIndex">
+                <view wx:for="{{ myEvaluation }}" wx:for-item="evaluationItem" wx:key="unique"
+                      wx:for-index="evaluationIndex">
                     <view class="program-body" data-name="{{ evaluationItem.evaluationName }}">
                         <image src="{{ evaluationItem.smallImg || 'http://img2.luoke101.com/2020-06-17T10:10:31.391ZnormalImg.png' }}"
                                style="width: 114rpx;height: 114rpx;border-radius: 15rpx;"></image>
-                        <view class="evaluation-wrapper" bindtap="goToEvaluationDetail" data-evaluation-id="{{ evaluationItem.evaluationId }}">
+                        <view class="evaluation-wrapper" bindtap="goToEvaluationDetail"
+                              data-evaluation-id="{{ evaluationItem.evaluationId }}">
                             <view class="evaluation-name">
                                 {{evaluationItem.evaluationName}}
                             </view>
@@ -187,7 +194,9 @@
                     </view>
                     <text class="more" bindtap="goToReportMore">更多...</text>
                 </view>
-                <view class="program-body the-last-report" wx:for="{{ reportsList }}" wx:for-item="reportItem" wx:key="unique">
+                <view class="program-body the-last-report" wx:for="{{ reportsList }}" wx:for-item="reportItem"
+                      wx:key="unique" data-id="{{reportItem.receiveRecordId}}" bindtap="goToReportDetail"
+                >
                     <view class="report-created-time">
                         <text>{{util.getMonthAndDayByFrag(reportItem.reportGeneratedAt,"/",true)}}</text>
                         <text>{{util.getHourAndMinByFrag(reportItem.reportGeneratedAt,":",true)}}</text>
@@ -196,7 +205,9 @@
                         <view class="evaluation-name user-info-wrapper">
                             <view class="user-info">
                                 <text>{{reportItem.participant}}</text>
-                                <text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text>
+                                <text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary
+                                    }}
+                                </text>
                             </view>
                         </view>
                         <view class="user-answer-evaluation">

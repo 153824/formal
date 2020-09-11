@@ -68,7 +68,7 @@ Page({
                 url: 'release_records',
                 method: 'get',
                 data: {
-                    isEE: true,
+                    isEE: false,
                     page: 1,
                     pageSize: 4,
                 },
@@ -87,7 +87,51 @@ Page({
                 url: `reports`,
                 method: "get",
                 data: {
-                    isEE: true,
+                    isEE: false,
+                    page: 1,
+                    pageSize: 3
+                },
+                success: function (res) {
+                    that.setData({
+                        reportsList: res
+                    })
+                }
+            })
+        }
+        if(isWxWork && isWxWorkAdmin){
+            app.doAjax({
+                url: 'inventories',
+                method: 'get',
+                success: function (res) {
+                    that.setData({
+                        myEvaluation: res
+                    });
+                }
+            });
+            app.doAjax({
+                url: 'release_records',
+                method: 'get',
+                data: {
+                    isEE: false,
+                    page: 1,
+                    pageSize: 4,
+                },
+                success: function (res) {
+                    console.log(timeFormat);
+                    for (let i = 0; i < res.length; i++) {
+                        res[i].createdAt = timeFormat(res[i].createdAt);
+                    }
+                    console.log(res);
+                    that.setData({
+                        evaluationTrack: res
+                    });
+                }
+            });
+            app.doAjax({
+                url: `reports`,
+                method: "get",
+                data: {
+                    isEE: false,
                     page: 1,
                     pageSize: 3
                 },
@@ -183,8 +227,19 @@ Page({
     },
 
     goToSharePaper: function (e) {
+        const {available,norms,quesCount,estimatedTime,evaluationId,evaluationName,type} = this.data.myEvaluation[e.currentTarget.dataset.index];
+        const necessaryInfo = {
+            count: available,
+            norms: norms,
+            quesCount: quesCount,
+            estimatedTime: estimatedTime,
+            id: evaluationId,
+            name: evaluationName,
+            isFree: false,
+            hadBuyout: type === "BY_COUNT" ? false : true,
+        };
         wx.navigateTo({
-            url: `../station/components/sharePaper/sharePaper`,
+            url: `../station/components/sharePaper/sharePaper?necessaryInfo=${JSON.stringify(necessaryInfo)}`,
         })
     },
 

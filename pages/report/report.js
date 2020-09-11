@@ -343,7 +343,7 @@ Page({
         wx.hideShareMenu();
         var that = this;
         ctx = wx.createCanvasContext('canvasArcCir');
-        var id = that.data.id || options.id;
+        var id = that.data.id || options.receiveRecordId;
         var shareKey = options.key || "";
         var command = options.command || "";
         this.setData({
@@ -815,11 +815,15 @@ Page({
      * 进入分享报告页面
      */
     toShareReport: function () {
-        var paper = this.data.paper;
-        var userMsg = this.data.userMsg;
-
-        wx.navigateTo({
-            url: './components/shareReport/shareReport?id=' + this.data.id + "&username=" + userMsg.username + "&paperName=" + paper.name
+        const that = this;
+        app.doAjax({
+            url: 'reports/share',
+            method: 'post',
+            success: function (res) {
+                that.setData({
+                    reportShareId: res._id
+                })
+            }
         });
         wx.aldstat.sendEvent('报告详情页分享报告', {
             '触发点击': '点击数'
@@ -827,10 +831,10 @@ Page({
     },
     /**测测他人 */
     toTestOtherUser: function () {
-        var paperDetail = this.data.paper;
+        var {evaluationInfo} = this.data;
         var userPapersNum = this.data.userPapersNum;
         wx.navigateTo({
-            url: '../station/components/detail/detail?id=' + paperDetail.id,
+            url: '../station/components/detail/detail?id=' + evaluationInfo.evaluationId,
         });
         wx.aldstat.sendEvent('报告详情页测测别人', {
             '测评名称': 'name' + paperDetail.name
@@ -852,22 +856,15 @@ Page({
         });
     },
     /**
-     * 返回首页
-     */
-    back: function () {
-        wx.switchTab({
-            url: '../store/store'
-        });
-    },
-    /**
      * 分享
      */
     onShareAppMessage: function (options) {
-        const {id, userMsg, paper, sharePic} = this.data;
+        const {reportShareId, participantInfo,evaluationInfo, paper, sharePic} = this.data;
         const {globalData} = app;
+        console.log("reportShareId",reportShareId)
         return {
-            title: `${globalData.team.name}邀您看${userMsg.username}的《${paper.name}》报告`,
-            path: `pages/report/report?id=${id}`,
+            title: `${globalData.team.name}邀您看${participantInfo.username}的《${evaluationInfo.evaluationName}》报告`,
+            path: `pages/report/report?reportShareId=${reportShareId}`,
             imageUrl: sharePic,
         }
     },

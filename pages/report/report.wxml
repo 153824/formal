@@ -1047,9 +1047,8 @@
             </view>
         </view>
         <!-- 分享报告按钮--普通团队成员无法使用该按钮 -->
-        <view class="botbox flex" wx:if="{{ command !== 'close' }}">
-            <!--    bindtap="toShareReport"-->
-            <button class="sharebtn" open-type="share" bindtap="" wx:if="{{report.teamRole!=1}}">
+        <view class="botbox flex">
+            <button class="sharebtn" open-type="share" bindtap="toShareReport">
                 <image src="./images/report@icon-share.png"></image>
                 <text>分享报告</text>
             </button>

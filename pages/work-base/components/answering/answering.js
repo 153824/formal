@@ -665,6 +665,9 @@ Page({
         answer["educationName"] = educationName; //教育学历
         answer["username"] = data.username; //姓名
         answer["imgUrl"] = data.imgUrl; //头像
+        if(wx.getStorageSync("userInfo")["nickname"] && answer["username"] && answer["username"] === "好啦访客"){
+            answer["username"] = wx.getStorageSync("userInfo")["nickname"]
+        }
         app.doAjax({
             url: "receive_records/update_answer",
             method: "POST",
@@ -830,6 +833,9 @@ Page({
         if (activeChapterId != null) {
             var chapterTime = data.chapterTime || {};
             chapterTime[activeChapterId]["et"] = new Date().getTime();
+        }
+        if(wx.getStorageSync("userInfo")["nickname"] && data.username === "好啦访客"){
+            data.username = wx.getStorageSync("userInfo")["nickname"]
         }
         var draftAnswer = {
             chapter: data.chapter,

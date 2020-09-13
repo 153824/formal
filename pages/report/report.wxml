@@ -1,6 +1,6 @@
 <!--admins/report.wxml-->
 <block wx:if="{{ !(report.reportVersion || false ) }}">
-    <view wx:if="{{report.noTeamMember&&showPage}}" class="noTeamMemberView">
+    <view wx:if="{{report.noTeamMember&&report.showPage}}" class="noTeamMemberView">
         <image src="./images/report@icon-failed.png"></image>
         <view class="mind">
             <view>仅团队内部成员有权限访问该报告</view>
@@ -8,7 +8,7 @@
             <view class="back" bindtap="back">返回首页</view>
         </view>
     </view>
-    <view wx:elif="{{showPage}}">
+    <view wx:elif="{{report.showPage}}">
         <!-- 头部信息 -->
         <view class="box0" style='padding: 36rpx  60rpx 48rpx 60rpx;background: #fff;'>
             <view class="paperName">
@@ -18,7 +18,7 @@
             <text>LINWEI等5人已读</text>
           </view> -->
             <view class="time">
-                <text>报告生成时间：{{finishTime}}</text>
+                <text>报告生成时间：{{report.finishTime}}</text>
             </view>
         </view>
         <view class="spaceView" style="height:40rpx;"></view>
@@ -28,75 +28,75 @@
                 <text class="underLineBg assessor-info ">测评者信息</text>
             </view>
             <view class="people flex">
-                <image src="{{userMsg.avatar||'./images/report@icon-avatar.png'}}" class="avatar"></image>
+                <image src="{{participantInfo.avatar||'./images/report@icon-avatar.png'}}" class="avatar"></image>
                 <view class="flex-main">
-                    <view class="name">{{userMsg.username}}</view>
+                    <view class="name">{{participantInfo.username || participantInfo.nickname}}</view>
                     <view class="otherMsg">
-                        <text>年龄：{{userMsg.age}}</text>
-                        <text>学历：{{userMsg.educationName}}</text>
+                        <text>年龄：{{participantInfo.age}}</text>
+                        <text>学历：{{evaluationInfo.evaluationName}}</text>
                     </view>
                 </view>
             </view>
-            <view class="title" style="margin-top:100rpx;" wx:if="{{show}}">
-                <text class="underLineBg">{{name}}</text>
+            <view class="title" style="margin-top:100rpx;" wx:if="{{report.show}}">
+                <text class="underLineBg">{{report.name}}</text>
             </view>
-            <view class="list flex" wx:if="{{show}}">
-                <view class="item flex-main" wx:if="{{showAnswerTime}}" bindtap="showDlg"
-                      data-n="{{timeNormal==1?'':'timeDlg'}}">
-                    <view class="topView {{timeNormal==1?'':'topView1'}}"></view>
+            <view class="list flex" wx:if="{{report.show}}">
+                <view class="item flex-main" wx:if="{{report.showAnswerTime}}" bindtap="showDlg"
+                      data-n="{{report.timeNormal==1?'':'timeDlg'}}">
+                    <view class="topView {{report.timeNormal==1?'':'topView1'}}"></view>
                     <view class="name">作答时长</view>
-                    <view class="msg" wx:if="{{timeNormal==1}}">{{timeTotal}}分钟（正常）</view>
+                    <view class="msg" wx:if="{{report.timeNormal==1}}">{{report.timeTotal}}分钟（正常）</view>
                     <view class="msg msg1" wx:else>异常</view>
-                    <image src="./images/report@icon-{{timeNormal==1?'success':'thinking'}}.png"></image>
+                    <image src="./images/report@icon-{{report.timeNormal==1?'success':'thinking'}}.png"></image>
                 </view>
-                <view class="item flex-main" wx:if="{{matchArr.show}}" bindtap="showDlg"
-                      data-n="{{matchArr.type==1?'':'noMatchDlg'}}">
-                    <view class="topView {{matchArr.type==1?'':'topView1'}}"></view>
+                <view class="item flex-main" wx:if="{{report.matchArr.show}}" bindtap="showDlg"
+                      data-n="{{report.matchArr.type==1?'':'noMatchDlg'}}">
+                    <view class="topView {{report.matchArr.type==1?'':'topView1'}}"></view>
                     <view class="name">作答一致性</view>
-                    <view class="msg" wx:if="{{matchArr.type==1}}">正常</view>
+                    <view class="msg" wx:if="{{report.matchArr.type==1}}">正常</view>
                     <view class="msg msg1" wx:else>异常</view>
-                    <image src="./images/report@icon-{{matchArr.type==1?'success':'thinking'}}.png"></image>
+                    <image src="./images/report@icon-{{report.matchArr.type==1?'success':'thinking'}}.png"></image>
                 </view>
-                <view class="item flex-main" wx:if="{{optionChoose}}" bindtap="showDlg" data-n="optionChooseDlg">
-                    <view class="topView {{timeNormal==1?'':'topView1'}}"></view>
+                <view class="item flex-main" wx:if="{{report.optionChoose}}" bindtap="showDlg" data-n="optionChooseDlg">
+                    <view class="topView {{report.timeNormal==1?'':'topView1'}}"></view>
                     <view class="name">选项分布</view>
-                    <view class="msg" wx:if="{{timeNormal==1}}">{{time}}分钟（正常）</view>
+                    <view class="msg" wx:if="{{report.timeNormal==1}}">{{report.time}}分钟（正常）</view>
                     <view class="msg msg1" wx:else>异常</view>
-                    <image src="./images/report@icon-{{timeNormal==1?'success':'thinking'}}.png"></image>
+                    <image src="./images/report@icon-{{report.timeNormal==1?'success':'thinking'}}.png"></image>
                 </view>
                 <!-- <view style="opacity: 0;">1</view> -->
             </view>
-            <view class="content" wx:if="{{rule}}">{{(matchArr.type!=1||timeNormal!=1)?rule2:rule1}}</view>
-            <view class="title" style="margin-top:80rpx;" wx:if="{{ showReportUseInfo }}">
+            <view class="content" wx:if="{{rule}}">{{(report.matchArr.type!=1||report.timeNormal!=1)?rule2:rule1}}</view>
+            <view class="title" style="margin-top:80rpx;" wx:if="{{ report.showReportUseInfo }}">
                 <text class="underLineBg">报告使用说明</text>
             </view>
-            <view class="list flex" wx:if="{{ showReportUseInfo }}" style="padding-right: 54rpx;padding-left: 24rpx;">
-                <rich-text nodes="<p>{{reportUseInfoTxt||''}}</p>"></rich-text>
+            <view class="list flex" wx:if="{{ report.showReportUseInfo }}" style="padding-right: 54rpx;padding-left: 24rpx;">
+                <rich-text nodes="<p>{{report.reportUseInfoTxt||''}}</p>"></rich-text>
             </view>
         </view>
         <!-- 报告总述 -->
-        <view class="box1" wx:if="{{showSummary}}">
+        <view class="box1" wx:if="{{report.showSummary}}">
             <view class="title report-summary">
                 <text>{{summaryName}}</text>
             </view>
             <view class="flex temple"
-                  wx:if="{{showSummaryTotal||showSummaryDefinition||summaryRankOrg||summaryRankAll}}">
+                  wx:if="{{report.showSummaryTotal||report.showSummaryDefinition||report.summaryRankOrg||report.summaryRankAll}}">
                 <view class="flex-main item noramlTem"
-                      style="padding:56rpx 0;{{!summaryRankOrg&&!summaryRankAll?'':'margin-right:20rpx;'}}{{(!summaryRankOrg||!summaryRankAll)&&!showSummaryTotal?'height:230rpx;':''}}"
-                      wx:if="{{showSummaryTotal||showSummaryDefinition||summary.title}}">
+                      style="padding:56rpx 0;{{!report.summaryRankOrg&&!report.summaryRankAll?'':'margin-right:20rpx;'}}{{(!report.summaryRankOrg||!report.summaryRankAll)&&!report.showSummaryTotal?'height:230rpx;':''}}"
+                      wx:if="{{report.showSummaryTotal||report.showSummaryDefinition||report.summary.title}}">
                     <view style="width: 100%;">
-                        <view class="name" wx:if="{{showSummaryDefinition}}">{{summaryDefinitionName}}</view>
-                        <view class="lvName" wx:if="{{showSummaryDefinition}}">{{summary.title}}</view>
-                        <view class="lvNum" wx:if="{{showSummaryTotal}}">
+                        <view class="name" wx:if="{{report.showSummaryDefinition}}">{{report.summaryDefinitionName}}</view>
+                        <view class="lvName" wx:if="{{report.showSummaryDefinition}}">{{report.summary.title}}</view>
+                        <view class="lvNum" wx:if="{{report.showSummaryTotal}}">
                             <canvas class="circle" canvas-id="canvasArcCir"></canvas>
-                            <view class="num">{{total1}}分</view>
+                            <view class="num">{{report.total1}}分</view>
                         </view>
                     </view>
                 </view>
                 <view class="flex-main noramlTem" wx:if="{{summaryRankOrg||summaryRankAll}}"
-                      style="{{((summaryRankOrg&&summaryRankAll)||showSummaryTotal)?'':'height:230rpx;'}}">
-                    <view class="topView item" wx:if="{{summaryRankOrg}}"
-                          style="{{!summaryRankAll&&showSummaryTotal?'height:476rpx;':''}}">
+                      style="{{((report.summaryRankOrg&&report.summaryRankAll)||report.showSummaryTotal)?'':'height:230rpx;'}}">
+                    <view class="topView item" wx:if="{{report.summaryRankOrg}}"
+                          style="{{!report.summaryRankAll&&report.showSummaryTotal?'height:476rpx;':''}}">
                         <view>
                             <progress percent="{{main.order||0}}" border-radius="6rpx" backgroundColor="#E7E7E7"
                                       activeColor="#5960ED"></progress>
@@ -105,9 +105,9 @@
                             </view>
                         </view>
                     </view>
-                    <view style="height:16rpx;" wx:if="{{summaryRankAll&&summaryRankOrg}}"></view>
-                    <view class="bottomView item" wx:if="{{summaryRankAll}}"
-                          style="{{!summaryRankOrg&&showSummaryTotal?'height:476rpx;':''}}">
+                    <view style="height:16rpx;" wx:if="{{report.summaryRankAll&&report.summaryRankOrg}}"></view>
+                    <view class="bottomView item" wx:if="{{report.summaryRankAll}}"
+                          style="{{!report.summaryRankOrg&&report.showSummaryTotal?'height:476rpx;':''}}">
                         <view>
                             <progress percent="{{main.orderAll||32}}" border-radius="6rpx" backgroundColor="#E7E7E7"
                                       activeColor="#5960ED"></progress>
@@ -118,18 +118,18 @@
                     </view>
                 </view>
             </view>
-            <view class="content" wx:if="{{summary.txt}}">
-                <rich-text nodes="{{summary.txt}}"></rich-text>
+            <view class="content" wx:if="{{report.summary.txt}}">
+                <rich-text nodes="{{report.summary.txt}}"></rich-text>
             </view>
         </view>
         <!-- 模型介绍 -->
-        <view class="box2" wx:if="{{showModelIntroduce&&dimension['1']}}">
+        <view class="box2" wx:if="{{report.showModelIntroduce&&report.dimension['1']}}">
             <view class="title">
-                <text class="underLineBg">{{modelIntroduceName||"模型介绍"}}</text>
+                <text class="underLineBg">{{report.modelIntroduceName||"模型介绍"}}</text>
             </view>
             <view class="content">
-                <rich-text nodes="<p>{{modelIntroduceTxt||''}}</p>"></rich-text>
-                <block wx:for="{{dimension}}" wx:key="unique">
+                <rich-text nodes="<p>{{report.modelIntroduceTxt||''}}</p>"></rich-text>
+                <block wx:for="{{report.dimension}}" wx:key="unique">
                     <view class="dimensionName">
                         <text></text>
                         {{item.name}}
@@ -138,8 +138,8 @@
             </view>
         </view>
         <!-- 维度分析 -->
-        <view class="box3" wx:if="{{showDimension}}">
-            <block wx:for="{{dimension}}" wx:key="unique">
+        <view class="box3" wx:if="{{report.showDimension}}">
+            <block wx:for="{{report.dimension}}" wx:key="unique">
                 <block wx:if="{{item.show&&item.name}}">
                     <view class="spaceView" wx:if="{{index==1}}" style="height:20rpx;"></view>
                     <view class="title">
@@ -225,7 +225,7 @@
                     <view style="height:50rpx;"
                           wx:if="{{!item.lvDesc&&!item.showTotal&&!item.rankOrg&&!item.rankAll&&item.chartType==1}}"></view>
                     <!-- 维度 -->
-                    <view class="list" wx:if="{{show&&item.showScore}}">
+                    <view class="list" wx:if="{{item.show&&item.showScore}}">
                         <block wx:if="{{ item.showSubScore !== 'none' }}" wx:for="{{item.child}}" wx:key="unique"
                                wx:for-item="node" wx:for-index="i">
                             <view class="item">
@@ -283,7 +283,7 @@
                             </view>
                         </block>
                     </view>
-                    <view class="list" wx:if="{{show&&!item.showScore}}">
+                    <view class="list" wx:if="{{item.show&&!item.showScore}}">
                         <block wx:for="{{item.child}}" wx:key="unique" wx:for-item="node" wx:for-index="i">
                             <view class="item">
                                 <view class="title {{node.active}}" bindtap="activeItem" data-index="{{index}}"
@@ -307,53 +307,53 @@
                 </block>
             </block>
         </view>
-        <view class="spaceView" wx:if="{{proposalShow}}" style="height:18rpx;"></view>
+        <view class="spaceView" wx:if="{{report.proposalShow}}" style="height:18rpx;"></view>
         <!-- 建议 -->
-        <view class="box4" wx:if="{{proposalShow}}">
+        <view class="box4" wx:if="{{report.proposalShow}}">
             <scroll-view class="tabs" scroll-x>
-                <block wx:for="{{proposal}}" wx:key="unique">
+                <block wx:for="{{report.proposal}}" wx:key="unique">
                     <view wx:if="{{item.show}}" class="item {{activeProposal==index?'active':''}}"
                           bindtap="changeProposal" data-i="{{index}}">{{item.name}}
                     </view>
                 </block>
             </scroll-view>
             <view class="content">
-                <view class="stars flex" wx:if="{{proposal[activeProposal].color}}">
-                    <image src="./images/report@{{proposal[activeProposal].color>=1?'icon-star-fill':'icon-star-outline'}}.png"></image>
-                    <image src="./images/report@{{proposal[activeProposal].color>=2?'icon-star-fill':'icon-star-outline'}}.png"></image>
-                    <image src="./images/report@{{proposal[activeProposal].color>=3?'icon-star-fill':'icon-star-outline'}}.png"></image>
-                    <image src="./images/report@{{proposal[activeProposal].color>=4?'icon-star-fill':'icon-star-outline'}}.png"></image>
-                    <image src="./images/report@{{proposal[activeProposal].color>=5?'icon-star-fill':'icon-star-outline'}}.png"></image>
+                <view class="stars flex" wx:if="{{report.proposal[activeProposal].color}}">
+                    <image src="./images/report@{{report.proposal[activeProposal].color>=1?'icon-star-fill':'icon-star-outline'}}.png"></image>
+                    <image src="./images/report@{{report.proposal[activeProposal].color>=2?'icon-star-fill':'icon-star-outline'}}.png"></image>
+                    <image src="./images/report@{{report.proposal[activeProposal].color>=3?'icon-star-fill':'icon-star-outline'}}.png"></image>
+                    <image src="./images/report@{{report.proposal[activeProposal].color>=4?'icon-star-fill':'icon-star-outline'}}.png"></image>
+                    <image src="./images/report@{{report.proposal[activeProposal].color>=5?'icon-star-fill':'icon-star-outline'}}.png"></image>
                 </view>
-                <rich-text class="msg" style="{{proposal[activeProposal].color?'':'padding-top:0;'}}"
-                           nodes="<p>{{proposal[activeProposal].content}}</p>"></rich-text>
+                <rich-text class="msg" style="{{report.proposal[activeProposal].color?'':'padding-top:0;'}}"
+                           nodes="<p>{{report.proposal[activeProposal].content}}</p>"></rich-text>
             </view>
         </view>
         <!-- 分享报告按钮--普通团队成员无法使用该按钮 -->
         <view class="botbox flex" wx:if="{{ command !== 'close' }}">
-            <button class="sharebtn" open-type="share" bindtap="" wx:if="{{teamRole!=1}}">
+            <button class="sharebtn" open-type="share" bindtap="" wx:if="{{report.teamRole!=1}}">
                 <image src="./images/report@icon-share.png"></image>
                 <text>分享报告</text>
             </button>
-            <button class="toTestOther" id="TOT" bindtap="toTestOtherUser" wx:if="{{teamRole!=1}}">
+            <button class="toTestOther" id="TOT" bindtap="toTestOtherUser" wx:if="{{report.teamRole!=1}}">
                 <image src="./images/report@icon-invite.png"></image>
                 <text>测测别人</text>
             </button>
-            <button class="toTestOther" bindtap="backToHome" wx:if="{{teamRole==1}}">
+            <button class="toTestOther" bindtap="backToHome" wx:if="{{report.teamRole==1}}">
                 <image src="./images/report@icon-invite.png"></image>
                 <text>体验更多测评</text>
             </button>
         </view>
         <!-- 申请查看报告 -->
-        <view wx:if="{{(applyStatus==1||applyStatus==2)&&teamRole!=1}}" class="hasApply">
+        <view wx:if="{{(reportPermit === 'APPLYING' && report.teamRole !== 1)}}" class="hasApply">
             <view class="msg">被测者申请查看报告结果，是否同意？</view>
-            <view class="agreenBtn flex" wx:if="{{applyStatus==1}}" bindtap="applyReportAudit">
+            <view class="agreenBtn flex" wx:if="{{ reportPermit==='APPLYING' }}" bindtap="applyReportAudit">
                 <view class="flex-main"></view>
                 <image src="./images/report@icon-agreeing.png"></image>
                 同意
                 <view class="flex-main"></view>
             </view>
-            <view class="agreenBtn agreenBtn1 flex" wx:if="{{applyStatus==2}}" bindtap="applyReportAudit">
+            <view class="agreenBtn agreenBtn1 flex" wx:if="{{reportPermit==='APPROVED'}}" bindtap="applyReportAudit">
                 <view class="flex-main"></view>
                 <image src="./images/report@icon-agreed.png"></image>
                 已同意
@@ -361,7 +361,7 @@
             </view>
         </view>
         <!-- 免责声明 -->
-        <view class="bottomMsg" wx:if="{{statement}}">
+        <view class="bottomMsg" wx:if="{{report.statement}}">
             <rich-text nodes="{{statement}}"></rich-text>
         </view>
         <!-- 底部固定 -->
@@ -431,7 +431,7 @@
                       data-n="{{report.timeNormal==1?'':'timeDlg'}}">
                     <view class="topView {{report.timeNormal==1?'':'topView1'}}"></view>
                     <view class="name">作答时长</view>
-                    <view class="msg" wx:if="{{report.timeNormal==1}}">{{timeTotal}}分钟（正常）</view>
+                    <view class="msg" wx:if="{{report.timeNormal==1}}">{{report.timeTotal}}分钟（正常）</view>
                     <view class="msg msg1" wx:else>异常</view>
                     <image src="./images/report@icon-{{report.timeNormal==1?'success':'thinking'}}.png"></image>
                 </view>
@@ -439,7 +439,7 @@
                       data-n="{{report.matchArr.type==1?'':'noMatchDlg'}}">
                     <view class="topView {{report.matchArr.type==1?'':'topView1'}}"></view>
                     <view class="name">作答一致性</view>
-                    <view class="msg" wx:if="{{matchArr.type==1}}">正常</view>
+                    <view class="msg" wx:if="{{report.matchArr.type==1}}">正常</view>
                     <view class="msg msg1" wx:else>异常</view>
                     <image src="./images/report@icon-{{report.matchArr.type==1?'success':'thinking'}}.png"></image>
                 </view>
@@ -607,7 +607,7 @@
                         <rich-text nodes="<p>{{item.lvDesc||''}}</p>"></rich-text>
                     </view>
                     <!-- 柱状图 -->
-                    <view wx:if="{{ true }}" class="chartImg">
+                    <view wx:if="{{ item.chartType == 1 }}" class="chartImg">
                         <hola-histogram id="{{index}}"></hola-histogram>
                     </view>
                     <!-- 雷达图 -->
@@ -621,7 +621,7 @@
                     <view style="height:50rpx;"
                           wx:if="{{!item.lvDesc&&!item.showTotal&&!item.rankOrg&&!item.rankAll&&item.chartType==1}}"></view>
                     <!-- 维度 -->
-                    <view class="list" wx:if="{{show&&item.showScore}}">
+                    <view class="list" wx:if="{{item.show&&item.showScore}}">
                         <block wx:for="{{item.subclass}}" wx:key="unique" wx:for-item="node" wx:for-index="i">
                             <view class="item">
                                 <view class="title {{node.active}}" bindtap="activeNewItem" data-index="{{index}}"
@@ -645,6 +645,12 @@
                                             </text>
                                             <image src="./images/report@icon-arrow.png"></image>
                                         </block>
+                                        <block wx:elif="{{ item.subScale === 'stanine' }}">
+                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
+                                                }} {{util.saveDouble(node.subTotalStanine)}}分
+                                            </text>
+                                            <image src="./images/report@icon-arrow.png"></image>
+                                        </block>
                                     </block>
                                     <block wx:elif="{{ item.showSubScore === 'average' }}">
                                         <block wx:if="{{ item.subScale === 'origin' }}">
@@ -662,6 +668,12 @@
                                         <block wx:elif="{{ item.subScale === 'centesimal' }}">
                                             <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
                                                 }} {{util.saveDouble(node.average100)}}分
+                                            </text>
+                                            <image src="./images/report@icon-arrow.png"></image>
+                                        </block>
+                                        <block wx:elif="{{ item.subScale === 'stanine' }}">
+                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
+                                                }} {{util.saveDouble(node.averageStanine)}}分
                                             </text>
                                             <image src="./images/report@icon-arrow.png"></image>
                                         </block>
@@ -684,7 +696,7 @@
                             </view>
                         </block>
                     </view>
-                    <view class="list" wx:if="{{show&&!item.showScore}}">
+                    <view class="list" wx:if="{{item.show&&!item.showScore}}">
                         <block wx:for="{{item.child}}" wx:key="unique" wx:for-item="node" wx:for-index="i">
                             <view class="item">
                                 <view class="title {{node.active}}" bindtap="activeItem" data-index="{{index}}"

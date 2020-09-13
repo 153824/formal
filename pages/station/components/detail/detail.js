@@ -408,8 +408,12 @@ Page({
                         });
                     });
                     return;
+                }else{
+                    wx.navigateTo({
+                        url: `../../../replying/components/guide/guide?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`
+                    });
                 }
-                toNext(subscribePromise);
+                // toNext(subscribePromise);
             }
         });
     },

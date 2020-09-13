@@ -39,10 +39,10 @@
             </view>
         </view>
     </scroll-view>
+    <serving mobile="{{ mobile }}" wechat="{{ wechat }}" bottom="150"></serving>
 </view>
 <van-overlay show="{{ loading }}" custom-style="background-color: #fff;">
     <mask isShow="{{ loading }}" top="{{ (statusbarHeight + titleHeight)/pixelRate }}"
           height="{{ windowHeight - ( statusbarHeight + titleHeight) }}" backgroundColor="transparent" ></mask>
 </van-overlay>
-<serving mobile="{{ mobile }}" wechat="{{ wechat }}" bottom="150"></serving>
 <hola-tab-bar active="{{ active }}"></hola-tab-bar>

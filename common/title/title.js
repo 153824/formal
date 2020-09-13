@@ -13,6 +13,10 @@ Component({
         url: {
             value: "",
             type: String,
+        },
+        type: {
+            value: "status-bar",
+            type: String
         }
     },
     data: {
@@ -58,6 +62,7 @@ Component({
                 list.forEach(function (node) {
                     teamNames.push(node.name);
                 });
+                app.teamName = list[0].name;
                 that.setData({
                     teamId: app.teamId,
                     teamRole: app.teamRole,

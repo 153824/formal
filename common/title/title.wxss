@@ -43,3 +43,6 @@
 .register::after{
     border: unset !important;
 }
+.van-loading-custom{
+    margin-left: 40rpx;
+}

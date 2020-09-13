@@ -3,11 +3,12 @@ Page({
     data: {
         isWxWork: app.wxWorkInfo.isWxWork,
         isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
+        userInfo: wx.getStorageSync("userInfo") || app.globalData.userInfo || app.globalData.userMsg
     },
     onLoad: function (options) {
         const {isWxWork, isWxWorkAdmin} = this.data;
         if (!isWxWork) {
-
+            console.log("this.data.userInfo: ",this.data.userInfo)
         } else if (isWxWork && isWxWorkAdmin) {
 
         } else if (isWxWork && !isWxWorkAdmin) {

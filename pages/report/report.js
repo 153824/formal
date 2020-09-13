@@ -19,7 +19,7 @@ function getChartMsg(canvas, width, height) {
     canvas.setChart(chart);
     var option = {
         legend: {
-            data:[
+            data: [
                 {
                     name: '受测者得分',
                     textStyle: {
@@ -141,7 +141,7 @@ function getChartMsg(canvas, width, height) {
             {
                 name: "均分",
                 type: 'line',
-                data: [7,4.5,6.8,8.5,7.3],
+                data: [7, 4.5, 6.8, 8.5, 7.3],
                 itemStyle: {
                     normal: {
                         color: 'rgba(109, 212, 0, 1)',
@@ -154,7 +154,7 @@ function getChartMsg(canvas, width, height) {
             {
                 name: "达标线",
                 type: 'line',
-                data: [5.7,3.2,5.8,6,5.9],
+                data: [5.7, 3.2, 5.8, 6, 5.9],
                 itemStyle: {
                     normal: {
                         color: 'rgba(247, 181, 0, 1)',
@@ -346,40 +346,85 @@ Page({
         const id = that.data.id || options.receiveRecordId;
         var shareKey = options.key || "";
         var command = options.command || "";
-        this.verifyReportIsCanRead(options);
         this.setData({
             id: id,
             shareKey: shareKey,
             command
         });
-        app.checkUser = function () {
-            that.getReport(id);
-        };
         if (app.isLogin) {
-            that.getReport(id);
+            if (options.shareAt) {
+                that.verifyReportIsCanRead(options).then(res=>{
+                    that.getReport(id);
+                }).catch(err=>{
+                    wx.showToast({
+                        title: "该分享已过期",
+                        icon: "none",
+                        duration: 888
+                    });
+                    setTimeout(()=>{
+                        wx.switchTab({
+                            url: '/pages/home/home'
+                        })
+                    },999);
+                });
+            }else{
+                console.log("that.getReport(id)")
+                that.getReport(id);
+            }
         }
+        app.checkUser = function () {
+            if (options.shareAt) {
+                that.verifyReportIsCanRead(options).then(res=>{
+                    that.getReport(id);
+                }).catch(err=>{
+                    wx.showToast({
+                        title: "该分享已过期",
+                        icon: "none",
+                        duration: 888
+                    });
+                    setTimeout(()=>{
+                        wx.switchTab({
+                            url: '/pages/home/home'
+                        })
+                    },999);
+                });
+            }else{
+                console.log("that.getReport(id)")
+                that.getReport(id);
+            }
+        };
     },
 
-    onShow: function () {},
+    onShow: function () {
+    },
 
-    verifyReportIsCanRead: function(option){
-        const {receiveRecordId,shareAt} = option;
-        console.log("option: ",option)
-        app.doAjax({
-            url: `reports/accept`,
-            method: 'post',
-            data: {
-                receivedRecordId: receiveRecordId,
-                shareAt: shareAt
-            },
-            success: function (res) {
-                if(res.code === -1){
-                    wx.switchTab({
-                        url: '/pages/home/home'
-                    })
+    verifyReportIsCanRead: function (option) {
+        option.userId = wx.getStorageSync("userInfo")["id"];
+        return this.acceptReport(option)
+    },
+
+    acceptReport: function (option) {
+        const {receiveRecordId, shareAt, userId} = option;
+        const acceptReportPromise = new Promise((resolve, reject) => {
+            app.doAjax({
+                url: `reports/accept`,
+                method: 'post',
+                data: {
+                    receivedRecordId: receiveRecordId,
+                    shareAt: shareAt,
+                    userId: userId
+                },
+                success: function (res) {
+                    res.code = -1
+                    if (res.code !== -1) {
+                        resolve(true)
+                    } else {
+                        reject(false)
+                    }
                 }
-            }
+            })
         })
+        return acceptReportPromise;
     },
 
     onReady: function () {
@@ -530,20 +575,6 @@ Page({
                     that.setData(r);
                 }
             });
-
-            app.doAjax({
-                url: 'evaluations/outline',
-                method: 'get',
-                data: {
-                    evaluationId: res.evaluationInfo.evaluationId,
-                },
-                noLoading: true,
-                success: function (res) {
-                    that.setData({
-                        sharePic: res.evaluationInfo.smallImg,
-                    })
-                }
-            });
         }).then(res => {
             if (!res || this.isInTeams(res)) {
                 return;
@@ -614,7 +645,7 @@ Page({
                     radarIndicator: JSON.stringify(radarIndicator),
                     radarValue: JSON.stringify(radarValue)
                 });
-                console.log("report.js: ",radarIndicator,radarValue);
+                console.log("report.js: ", radarIndicator, radarValue);
                 newChild.sort(function (it1, it2) {
                     return it2.average - it1.average;
                 });
@@ -652,21 +683,7 @@ Page({
                 res.fillBlank.push("");
             }
             that.setData(res);
-            console.log("res: ",res);
-            app.doAjax({
-                url: 'evaluations/outline',
-                method: 'get',
-                data: {
-                    evaluationId: res.evaluationInfo.evaluationId
-                },
-                noLoading: true,
-                success: function (response) {
-                    that.setData({
-                        sharePic: response.smallImg,
-                        // knowledgePoints: response.evaluationInfo.knowledgePoints
-                    })
-                }
-            });
+            console.log("res: ", res);
             this.getEvaluationQues();
         });
     },
@@ -838,12 +855,12 @@ Page({
      */
     toShareReport: function () {
         const that = this;
-        const {participantInfo,evaluationInfo, paper, sharePic} = this.data;
+        const {participantInfo, evaluationInfo, paper, report} = this.data;
         const {globalData} = app;
         return {
             title: `${globalData.team.name}邀您看${participantInfo.username}的《${evaluationInfo.evaluationName}》报告`,
             path: `pages/report/report`,
-            imageUrl: sharePic,
+            imageUrl: report.smallImg,
         }
     },
     /**测测他人 */
@@ -877,12 +894,12 @@ Page({
      */
     onShareAppMessage: function (options) {
         const that = this;
-        const {participantInfo,evaluationInfo, id, sharePic} = this.data;
+        const {participantInfo, evaluationInfo, id, report} = this.data;
         const {globalData} = app;
         return {
             title: `${globalData.team.name}邀您看${participantInfo.username}的《${evaluationInfo.evaluationName}》报告`,
             path: `pages/report/report?receivedRecordId=${id}&sharedAt=${new Date().getTime()}`,
-            imageUrl: sharePic,
+            imageUrl: report.smallImg,
         }
     },
     /**

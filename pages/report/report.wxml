@@ -1000,7 +1000,7 @@
             </view>
             <scroll-view class="question-num-box" id="question-num-box" scroll-x bindscroll="scrollMove"
                          scroll-left='{{ scrollLeft }}' scroll-with-animation="true">
-                <block wx:for="{{ responseRecord }}" wx:for-index="recordIndex" wx:for-item="recordItem"
+                <block wx:for="{{ report.responseRecord }}" wx:for-index="recordIndex" wx:for-item="recordItem"
                        wx:key="unique">
                     <!--未配置对错-题号 -->
                     <block wx:if="{{ recordItem.choiceType === 'single' && recordItem.correctIdx.length <= 0 }}">

@@ -105,7 +105,7 @@
 					"id": 5,
 					"name": "分享-领取报告",
 					"pathName": "pages/report/report",
-					"query": "receiveRecordId=5f5b54ba9ed9df4f74d26bab&shareAt=",
+					"query": "receiveRecordId=5f5b54ba9ed9df4f74d26bab&shareAt=1599986731211",
 					"scene": null
 				},
 				{

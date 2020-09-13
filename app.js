@@ -57,10 +57,10 @@ App({
     isTest: false,
     qiniuUpload: qiniuUpload,
     isIphoneX: false,
-    // host: "http://192.168.0.101:3000",
+    host: "http://192.168.0.101:3000",
     // host: "https://api.luoke101.com",
     // host: 'https://h5.luoke101.com',
-    host: "http://192.168.0.225:3000",
+    // host: "http://192.168.0.225:3000",
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
         userInfo: null,
@@ -79,7 +79,7 @@ App({
         wxWorkUserId: "",
         wxWorkTeamId: "",
         isWxWork: false,
-        isWxWorkAdmin: true,
+        isWxWorkAdmin: false,
         wxWorkUserInfo: {},
     },
     onLaunch: function (options) {

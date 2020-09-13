@@ -10,7 +10,6 @@
  * myEvaluation: 我的测评列表
  * evaluationTrack: 测评跟踪列表
  * ********************************************************************************************************************/
-import {timeFormat} from "../../utils/utils";
 
 const app = getApp();
 Page({
@@ -29,7 +28,8 @@ Page({
         isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
         myEvaluation: [],
         evaluationTrack: [],
-        reportsList: []
+        reportsList: [],
+        newlyNums: 0
     },
 
     onLoad: function (option = {id: ""}) {
@@ -73,10 +73,6 @@ Page({
                     pageSize: 4,
                 },
                 success: function (res) {
-                    console.log(timeFormat);
-                    for (let i = 0; i < res.length; i++) {
-                        res[i].createdAt = timeFormat(res[i].createdAt);
-                    }
                     console.log(res);
                     that.setData({
                         evaluationTrack: res
@@ -186,6 +182,19 @@ Page({
                 }
             }
         });
+    },
+
+    getNewlyReportNums: function(e) {
+        const that = this;
+        app.doAjax({
+            url: 'reports/today_newly',
+            method: 'get',
+            success: function (res) {
+                that.setData({
+                    newlyNums: res
+                })
+            }
+        })
     },
 
     changePage: function (e) {

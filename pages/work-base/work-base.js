@@ -18,7 +18,7 @@ Page({
         active: 0,
         isLogin: false,
         loading: true,
-        maskTrigger: false,
+        maskTrigger: true,
         titleHeight: app.globalData.titleHeight,
         statusbarHeight: app.globalData.statusbarHeight,
         windowHeight: app.globalData.windowHeight,
@@ -29,7 +29,9 @@ Page({
         myEvaluation: [],
         evaluationTrack: [],
         reportsList: [],
-        newlyNums: 0
+        newlyNums: 0,
+        userInfo: app.globalData.userInfo || wx.getStorageSync("userInfo"),
+        currTeam: app.teamName
     },
 
     onLoad: function (option = {id: ""}) {
@@ -55,43 +57,82 @@ Page({
             }
         }
         if (!isWxWork) {
-            app.doAjax({
-                url: 'inventories',
-                method: 'get',
-                success: function (res) {
-                    that.setData({
-                        myEvaluation: res
-                    });
-                }
+            this.title = this.selectComponent("#title");
+            app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
+            const inventoriesPromise = new Promise((resolve, reject) => {
+                app.doAjax({
+                    url: 'inventories',
+                    method: 'get',
+                    success: function (res) {
+                        that.setData({
+                            myEvaluation: res
+                        });
+                        resolve(true)
+                    },
+                    fail: function (err) {
+                        console.error(err)
+                        reject(false)
+                    }
+                });
             });
-            app.doAjax({
-                url: 'release_records',
-                method: 'get',
-                data: {
-                    isEE: false,
-                    page: 1,
-                    pageSize: 4,
-                },
-                success: function (res) {
-                    console.log(res);
-                    that.setData({
-                        evaluationTrack: res
-                    });
-                }
+            const releaseRecordsPromise = new Promise((resolve, reject) => {
+                app.doAjax({
+                    url: 'release_records',
+                    method: 'get',
+                    data: {
+                        isEE: false,
+                        page: 1,
+                        pageSize: 4,
+                    },
+                    success: function (res) {
+                        that.setData({
+                            evaluationTrack: res
+                        });
+                        resolve(true);
+                    },
+                    fail: function (err) {
+                        console.error(err);
+                        reject(false);
+                    }
+                });
             });
-            app.doAjax({
-                url: `reports`,
-                method: "get",
-                data: {
-                    isEE: false,
-                    page: 1,
-                    pageSize: 3
-                },
-                success: function (res) {
+            const reportListPromise = new Promise((resolve, reject) => {
+                app.doAjax({
+                    url: `reports`,
+                    method: "get",
+                    data: {
+                        isEE: false,
+                        page: 1,
+                        pageSize: 3
+                    },
+                    success: function (res) {
+                        that.setData({
+                            reportsList: res
+                        })
+                        resolve(true);
+                    },
+                    fail: function (err) {
+                        reject(false);
+                        console.error(err)
+                    }
+                });
+            });
+            Promise.all([inventoriesPromise,releaseRecordsPromise,reportListPromise]).then(res=>{
+                setTimeout(()=>{
                     that.setData({
-                        reportsList: res
+                        maskTrigger: false
                     })
-                }
+                },888)
+            }).catch(err=>{
+                setTimeout(()=>{
+                    that.setData({
+                        maskTrigger: false
+                    })
+                },888)
+                console.error(err);
+            });
+            this.setData({
+                currTeam: app.teamName
             })
         }
         if(isWxWork && isWxWorkAdmin){
@@ -136,11 +177,6 @@ Page({
                         reportsList: res
                     })
                 }
-            })
-        }
-        if (option.maskTrigger) {
-            this.setData({
-                maskTrigger: true
             })
         }
     },
@@ -269,6 +305,18 @@ Page({
         const receiveRecordId = e.currentTarget.dataset.id;
         wx.navigateTo({
             url: `../report/report?receiveRecordId=${receiveRecordId}`
+        })
+    },
+
+    setChildManager: function (e) {
+        wx.navigateTo({
+            url: "/pages/user/components/myTeam/myTeam"
+        })
+    },
+
+    setCompanyCert: function (e) {
+        wx.navigateTo({
+            url: "/pages/user/components/teams/teams"
         })
     }
 });

@@ -14,22 +14,31 @@ page{
     right: 0;
     padding: 0 40rpx;
     display: flex;
-    height: 112rpx;
+    flex-direction: column;
+    height: 194rpx;
     background: #FFFFFFFF;
     box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(0,0,0,0.06);
     font-size: 36rpx;
     font-weight: 600;
     z-index: 999999999;
 }
+.company-action{
+    display: flex;
+    margin: 30rpx 0 52rpx 0;
+    color: rgba(53, 62, 232, 1);
+    font-size: 26rpx;
+    height: 36rpx;
+}
 .content{
     position: relative;
-    top: 112rpx;
-    padding: 22rpx 40rpx;
+    top: 194rpx;
+    padding-top: 22rpx;
 }
 .content-scroll-area{
 }
 .program-wrapper{
     padding: 22rpx 44rpx 22rpx 44rpx;
+    z-index: 99999999;
 }
 .program-title{
     display: flex;
@@ -59,6 +68,7 @@ page{
     padding: 40rpx 30rpx;
     border-radius: 20rpx;
     box-shadow:0rpx 2rpx 8rpx 0rpx rgba(0,0,0,0.05);
+    background-color: #fff;
 }
 .reply-track-body{
     padding: 30rpx 30rpx;

@@ -6,7 +6,7 @@
     </view>
     <view class="content">
         <scroll-view class="content-scroll-area"
-                     style="height: {{ windowHeight - (120+112+60)/pixelRate - ( statusbarHeight + titleHeight ) }}px;"
+                     style="height: {{ windowHeight*pixelRate - (112+120)/pixelRate - ( statusbarHeight + titleHeight )*pixelRate }}rpx;"
                      scroll-y>
             <!--Start: 我的测评-->
             <view class="program-wrapper">
@@ -145,11 +145,16 @@
 <block wx:elif="{{ !isWxWork }}">
     <view class="head">
         <image src="" style="width: 50rpx;height: 44rpx;"></image>
-        <text>康师傅集团</text>
+        <text>{{currTeam || userInfo.userCompany.name}}</text>
+        <view class="company-action">
+            <text bindtap="setChildManager">子管理员设置</text>
+            <text bindtap="setCompanyCert" style="margin: 0 30rpx;">企业认证</text>
+            <hola-title id="title" url="work-base/work-base" type="normal"></hola-title>
+        </view>
     </view>
     <view class="content">
         <scroll-view class="content-scroll-area"
-                     style="height: {{ windowHeight - (120+112+60)/pixelRate - ( statusbarHeight + titleHeight ) }}px;"
+                     style="height: {{ windowHeight*pixelRate - (194+130)/pixelRate - ( statusbarHeight + titleHeight )*pixelRate }}rpx;"
                      scroll-y>
             <!--Start: 我的测评-->
             <view class="program-wrapper">

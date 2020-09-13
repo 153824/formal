@@ -8,12 +8,7 @@ Component({
     active: 0,
     evaluationTask: []
   },
-  properties: {
-    reportListTrigger: {
-      type: Boolean,
-      value: false
-    }
-  },
+  properties: {},
   pageLifetimes: {
     onLoad: function (options) {
       paperId = options.id || "";
@@ -67,11 +62,8 @@ Component({
       const id = e.currentTarget.dataset.id;
       const that = this;
       app.doAjax({
-        url: "applyToMeetReport",
-        method: "post",
-        data: {
-          id: id
-        },
+        url: `reports/${id}`,
+        method: "patch",
         success: function(ret) {
           that.getList();
           that.setData({

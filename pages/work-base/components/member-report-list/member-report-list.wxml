@@ -1,4 +1,4 @@
-<view wx:if="{{ reportListTrigger }}">
+<view>
     <view wx:if="{{!evaluationTask.length}}" class="noData">
         <view class="testPaperView" wx:if="{{scene!=1035}}">
             <image src="../../images/work-base@icon-demonstrate.png" class="iconImg"></image>
@@ -32,7 +32,7 @@
                       wx:elif="{{ item.status=== 'FINISHED' &&  item.reportPermit==='APPROVED'}}">查看报告
                 </view>
                 <view class="btnView btnView3" wx:elif="{{ item.status=== 'FINISHED' &&  item.reportPermit==='APPLYING'}}">已向HR申请查看报告，请耐心等待</view>
-                <view class="btnView btnView2" bindtap="toApply" data-id="{{item.id}}" wx:else>向HR申请查看报告</view>
+                <view class="btnView btnView2" bindtap="toApply" data-id="{{item.receiveRecordId}}" wx:else>向HR申请查看报告</view>
             </view>
         </block>
     </view>

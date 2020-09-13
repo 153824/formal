@@ -72,6 +72,12 @@ var hidePartPhoneNumber = function(phone){
 var toFix = function (value,tail=2) {
   return value.toFixed(tail);
 };
+
+var isSameDays = function (date) {
+  var wxDate = getDate(date);
+  var currDate = getDate();
+  return (wxDate.setHours(0, 0, 0, 0) == currDate.setHours(0, 0, 0, 0));
+}
 /**
  * @return
  */
@@ -106,5 +112,6 @@ module.exports = {
   ASCIIToChar: ASCIIToChar,
   isIncludes: isIncludes,
   toFix: toFix,
-  richTextFilter: richTextFilter
+  richTextFilter: richTextFilter,
+  isSameDays: isSameDays
 };

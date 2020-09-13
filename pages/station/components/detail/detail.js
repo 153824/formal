@@ -235,23 +235,10 @@ Page({
                 }
             })
         })).then(res => {
-            app.doAjax({
-                url: 'release/self',
-                method: 'post',
-                data: {
-                    evaluationId: evaluation.id,
-                    normId: evaluation.generalNorms[0].normId,
-                    freeEvaluation: evaluation.freeEvaluation
-                },
-                success: function (res) {
-                    that.setData({
-                        currAnsweringStatus: res.unfinished
-                    });
-                }
-            });
+            // do nothing
         });
     },
-    inputprice: function (e) {
+    changePrice: function (e) {
         this.setData({
             count: e.detail.value * 1
         })

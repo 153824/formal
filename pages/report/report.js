@@ -341,11 +341,12 @@ Page({
     onLoad: function (options) {
         _this = this;
         wx.hideShareMenu();
-        var that = this;
+        const that = this;
         ctx = wx.createCanvasContext('canvasArcCir');
-        var id = that.data.id || options.receiveRecordId;
+        const id = that.data.id || options.receiveRecordId;
         var shareKey = options.key || "";
         var command = options.command || "";
+        this.verifyReportIsCanRead(options);
         this.setData({
             id: id,
             shareKey: shareKey,
@@ -360,6 +361,26 @@ Page({
     },
 
     onShow: function () {},
+
+    verifyReportIsCanRead: function(option){
+        const {receiveRecordId,shareAt} = option;
+        console.log("option: ",option)
+        app.doAjax({
+            url: `reports/accept`,
+            method: 'post',
+            data: {
+                receivedRecordId: receiveRecordId,
+                shareAt: shareAt
+            },
+            success: function (res) {
+                if(res.code === -1){
+                    wx.switchTab({
+                        url: '/pages/home/home'
+                    })
+                }
+            }
+        })
+    },
 
     onReady: function () {
         let that = this;
@@ -404,9 +425,9 @@ Page({
             res.report.userMsg.age = now - t + 1;
             res.report.finishTime = app.changeDate(res.report.finishTime, "yyyy/MM/dd hh:mm");
             let timeNormal = 1; //作答时长正常
-            let answeTimeSatr = +res.answeTimeSatr;
-            let answeTimeEnd = +res.answeTimeEnd;
-            let time = +res.timeTotal;
+            let answeTimeSatr = +res.report.answeTimeSatr;
+            let answeTimeEnd = +res.report.answeTimeEnd;
+            let time = +res.report.timeTotal;
             if (time <= answeTimeSatr) {
                 //作答时长偏短
                 timeNormal = 2;
@@ -415,12 +436,12 @@ Page({
                 //作答时长偏长
                 timeNormal = 3;
             }
-            res["timeNormal"] = timeNormal;
+            res.report["timeNormal"] = timeNormal;
             radarValue = {};
             radarIndicator = {};
             value_2 = {};
             indicator_2 = {};
-            var objs = res.dimension;
+            var objs = res.report.dimension;
             for (var n in objs) {
                 var arr = objs[n].child;
                 var newChild = [];
@@ -472,27 +493,27 @@ Page({
                 objs[n].child[keys[0]]["active"] = "active";
             }
             res["id"] = id;
-            var total1Full = res.total1;
-            res.total1 = +res.total1.toFixed(0);
-            var proposal = res.proposal || [];
-            var dimensions = res.dimension || {};
-            res["proposalShow"] = false;
-            res["showDimension"] = false;
+            var total1Full = res.report.total1;
+            res.report.total1 = +res.report.total1.toFixed(0);
+            var proposal = res.report.proposal || [];
+            var dimensions = res.report.dimension || {};
+            res.report["proposalShow"] = false;
+            res.report["showDimension"] = false;
             for (var i in dimensions) {
                 if (dimensions[i].show) {
-                    res["showDimension"] = true;
+                    res.report["showDimension"] = true;
                 }
             }
             proposal.forEach(function (n) {
                 if (n.show) {
-                    res["proposalShow"] = true;
+                    res.report["proposalShow"] = true;
                 }
             });
             that.drawCircle(res.total1);
-            res["statement"] = res["statement"].replace(/\n/g, "<br>").replace("<bold", "<span style='font-weight: 600;'").replace("</bold", "</span");
-            res["noTeamMember"] = false;
-            res["teamRole"] = (app.teamId == res.teamId) ? app.teamRole : 1;
-            res["showPage"] = true;
+            res.report["statement"] = res.report["statement"].replace(/\n/g, "<br>").replace("<bold", "<span style='font-weight: 600;'").replace("</bold", "</span");
+            res.report["noTeamMember"] = false;
+            res.report["teamRole"] = (app.teamId == res.teamId) ? app.teamRole : 1;
+            res.report["showPage"] = true;
             that.setData(res);
             app.doAjax({
                 url: "userOrderMsg",
@@ -687,16 +708,16 @@ Page({
         var index = d.index;
         if (index == null) return;
         var i = d.i;
-        var list = this.data.dimension;
+        var list = this.data.report;
         if (i != null) {
-            var old = list[index]["child"][i]["active"];
-            list[index]["child"][i]["active"] = old ? "" : "active";
+            var old = list.dimension[index]["child"][i]["active"];
+            list.dimension[index]["child"][i]["active"] = old ? "" : "active";
         } else {
-            var old = list[index]["active"];
-            list[index]["active"] = old ? "" : "active";
+            var old = list.dimension[index]["active"];
+            list.dimension[index]["active"] = old ? "" : "active";
         }
         this.setData({
-            dimension: list
+            report: list
         });
     },
     /**
@@ -707,16 +728,16 @@ Page({
         var index = d.index;
         if (index == null) return;
         var i = d.i;
-        var list = this.data.dimension;
+        var list = this.data.report;
         if (i != null) {
-            var old = list[index]["subclass"][i]["active"];
-            list[index]["subclass"][i]["active"] = old ? "" : "active";
+            var old = list.dimension[index]["subclass"][i]["active"];
+            list.dimension[index]["subclass"][i]["active"] = old ? "" : "active";
         } else {
-            var old = list[index]["active"];
-            list[index]["active"] = old ? "" : "active";
+            var old = list.dimension[index]["active"];
+            list.dimension[index]["active"] = old ? "" : "active";
         }
         this.setData({
-            dimension: list
+            report: list
         });
     },
     /**
@@ -760,6 +781,7 @@ Page({
      * 审核申请查看报告
      */
     applyReportAudit: function (e) {
+        const receiveRecordId = this.data.id;
         var that = this;
         wx.showModal({
             title: '确认同意',
@@ -771,8 +793,8 @@ Page({
             success: function (ret) {
                 if (ret.confirm) {
                     app.doAjax({
-                        url: "applyReportAudit",
-                        method: "post",
+                        url: `reports/${receiveRecordId}`,
+                        method: "patch",
                         noLoading: false,
                         data: {
                             id: that.data.id,
@@ -816,18 +838,13 @@ Page({
      */
     toShareReport: function () {
         const that = this;
-        app.doAjax({
-            url: 'reports/share',
-            method: 'post',
-            success: function (res) {
-                that.setData({
-                    reportShareId: res._id
-                })
-            }
-        });
-        wx.aldstat.sendEvent('报告详情页分享报告', {
-            '触发点击': '点击数'
-        });
+        const {participantInfo,evaluationInfo, paper, sharePic} = this.data;
+        const {globalData} = app;
+        return {
+            title: `${globalData.team.name}邀您看${participantInfo.username}的《${evaluationInfo.evaluationName}》报告`,
+            path: `pages/report/report`,
+            imageUrl: sharePic,
+        }
     },
     /**测测他人 */
     toTestOtherUser: function () {
@@ -859,12 +876,12 @@ Page({
      * 分享
      */
     onShareAppMessage: function (options) {
-        const {reportShareId, participantInfo,evaluationInfo, paper, sharePic} = this.data;
+        const that = this;
+        const {participantInfo,evaluationInfo, id, sharePic} = this.data;
         const {globalData} = app;
-        console.log("reportShareId",reportShareId)
         return {
             title: `${globalData.team.name}邀您看${participantInfo.username}的《${evaluationInfo.evaluationName}》报告`,
-            path: `pages/report/report?reportShareId=${reportShareId}`,
+            path: `pages/report/report?receivedRecordId=${id}&sharedAt=${new Date().getTime()}`,
             imageUrl: sharePic,
         }
     },

@@ -1,5 +1,3 @@
-import {timeFormat} from "../../../../utils/utils";
-
 const app = getApp();
 Page({
     data: {
@@ -16,13 +14,17 @@ Page({
                 pageSize: 4,
             },
             success: function (res) {
-                for (let i = 0; i < res.length; i++) {
-                    res[i].createdAt = timeFormat(res[i].createdAt);
-                }
                 that.setData({
                     moreEvaluationTrack: res
                 });
             }
+        })
+    },
+    goToTrackDetail: function (e) {
+        const { trackId,trackIndex } = e.currentTarget.dataset;
+        const trackInfo = JSON.stringify(this.data.moreEvaluationTrack[trackIndex]);
+        wx.navigateTo({
+            url: `/pages/work-base/components/track-detail/track-detail?trackId=${trackId}&trackInfo=${trackInfo}`,
         })
     }
 });

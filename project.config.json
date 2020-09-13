@@ -100,6 +100,20 @@
 					"pathName": "pages/work-base/components/guide/guide",
 					"query": "releaseRecordId=5f59e37120703638c0fd56e1",
 					"scene": null
+				},
+				{
+					"id": 5,
+					"name": "分享-领取报告",
+					"pathName": "pages/report/report",
+					"query": "receiveRecordId=5f5b54ba9ed9df4f74d26bab&shareAt=",
+					"scene": null
+				},
+				{
+					"id": 6,
+					"name": "测评详情",
+					"pathName": "pages/station/components/detail/detail",
+					"query": "id=5f5d93b80699c3608a10f090",
+					"scene": null
 				}
 			]
 		}

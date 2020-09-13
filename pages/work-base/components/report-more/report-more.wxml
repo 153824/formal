@@ -1,1 +1,1 @@
-<hola-evaluation-reports reportsList="{{ moreReportsList }}"></hola-evaluation-reports>
+<hola-evaluation-reports type="report-more"></hola-evaluation-reports>

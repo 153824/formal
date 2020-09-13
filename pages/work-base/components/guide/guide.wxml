@@ -27,7 +27,7 @@
     <view wx:elif="{{reportPermit === 'APPROVED'  && status === 'FINISHED'}}" class="begin" bindtap="toDetail">查看报告
     </view>
     <view wx:elif="{{reportPermit === 'DISABLED' && status === 'FINISHED'}}" class="begin" bindtap="toApply"
-          data-id="{{id}}">向HR申请查看报告
+          data-id="{{receiveRecordId}}">向HR申请查看报告
     </view>
     <view wx:elif="{{isTest||hasUserInfo}}" class="begin" bindtap="goToReplying">{{draftAnswer?'继续作答':'开始作答'}}</view>
     <button wx:else class="begin" open-type="getUserInfo" bindgetuserinfo="goToReplying">{{draftAnswer?'继续作答':'开始作答'}}

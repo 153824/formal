@@ -643,9 +643,9 @@ Page({
         }
         if (app.isTest) {
             wx.redirectTo({
-                url: '../done/done?status=' + that.data.status + "&reportPermit=" + that.data.reportPermit
+                url: '../done/done?id='+ that.data.receiveRecordId +'+&status=' + that.data.status + "&reportPermit=" + that.data.reportPermit
             });
-            console.log('../done/done?status=' + that.data.status + "&reportPermit=" + that.data.reportPermit);
+            console.log('../done/done?id='+that.data.receiveRecordId+'&status=' + that.data.status + "&reportPermit=" + that.data.reportPermit);
             return;
         }
         var now = new Date().getTime();

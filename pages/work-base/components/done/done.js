@@ -47,9 +47,10 @@ Page({
     }
 
     function toNext() {
+      const id = that.data;
       app.doAjax({
-        url: "applyToMeetReport",
-        method: "post",
+        url: `reports/${id}`,
+        method: "patch",
         data: {
           id: that.data.id
         },

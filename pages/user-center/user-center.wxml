@@ -2,9 +2,9 @@
     <view class="user-page-wrapper">
         <view class="head">
             <view class="user-personal-info">
-                <image src=""
+                <image src="{{userInfo.avatar}}"
                        style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;background-color: black;"></image>
-                <text>马艺娴</text>
+                <text>{{userInfo.nickname}}</text>
             </view>
         </view>
         <view class="content">
@@ -42,14 +42,14 @@
     <view class="user-page-wrapper">
         <view class="head">
             <view class="user-personal-info">
-                <image src=""
+                <image src="{{userInfo.avatar}}"
                        style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;background-color: black;"></image>
-                <text>马艺娴</text>
+                <text>{{userInfo.nickname}}</text>
             </view>
         </view>
         <view class="content">
             <scroll-view class="content-scroll-area" scroll-y>
-                <view class="user-action-item">
+                <view class="user-action-item" bindtap="goToReceiveReports">
                     <view class="title">
                         <image src="./images/user@othors-invite-to-read-report.png"
                                style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
@@ -57,7 +57,7 @@
                     </view>
                     <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                 </view>
-                <view class="user-action-item">
+                <view class="user-action-item" bindtap="goToReceiveEvaluation">
                     <view class="title">
                         <image src="./images/user@othors-invite-to-reply-report.png"
                                style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
@@ -82,14 +82,14 @@
     <view class="user-page-wrapper">
         <view class="head">
             <view class="user-personal-info">
-                <image src=""
+                <image src="{{userInfo.avatar}}"
                        style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;background-color: black;"></image>
-                <text>马艺娴</text>
+                <text>{{userInfo.nickname}}</text>
             </view>
         </view>
         <view class="content">
             <scroll-view class="content-scroll-area" scroll-y>
-                <view class="user-action-item">
+                <view class="user-action-item" bindtap="goToReceiveReports">
                     <view class="title">
                         <image src="./images/user@othors-invite-to-read-report.png"
                                style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>

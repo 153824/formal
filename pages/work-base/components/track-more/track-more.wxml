@@ -1,6 +1,7 @@
 <view class="program-wrapper">
-    <view wx:for="{{ moreEvaluationTrack }}" wx:for-item="trackItem" wx:key="unique"
-          class="program-body reply-track-body">
+    <view bindtap="goToTrackDetail" wx:for="{{ moreEvaluationTrack }}" wx:for-item="trackItem" wx:key="unique"
+          class="program-body reply-track-body" data-track-id="{{trackItem.releaseRecordId}}"
+          data-track-index="{{trackIndex}}">
         <view class="evaluation-wrapper">
             <view class="evaluation-name">
                 {{ trackItem.evaluationName }}

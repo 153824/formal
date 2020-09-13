@@ -47,7 +47,7 @@
                 <view class="program-title">
                     <view>
                         <text>最新报告</text>
-                        <text wx:if="{{ false }}" class="new-adding">今日+6</text>
+                        <text wx:if="{{newlyNums}}" class="new-adding">今日+{{newlyNums}}</text>
                     </view>
                     <text class="more" bindtap="goToReportMore">更多...</text>
                 </view>
@@ -190,7 +190,7 @@
                 <view class="program-title">
                     <view>
                         <text>最新报告</text>
-                        <text wx:if="{{ false }}" class="new-adding">今日+6</text>
+                        <text wx:if="{{newlyNums}}" class="new-adding">今日+{{newlyNums}}</text>
                     </view>
                     <text class="more" bindtap="goToReportMore">更多...</text>
                 </view>
@@ -217,7 +217,7 @@
                     <view class="send-evaluation">
                         <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
-                    <view wx:if="{{ false }}" class="new-adding-mark">
+                    <view wx:if="{{util.isSameDays(reportItem.reportGeneratedAt) && reportItem.unread}}" class="new-adding-mark">
                         <text>新</text>
                     </view>
                 </view>
@@ -245,7 +245,7 @@
                         </view>
                         <view class="reply-track-info">
                             发放时间:
-                            <text class="date" style="margin-left: 10rpx;">{{trackItem.createdAt}}</text>
+                            <text class="date" style="margin-left: 10rpx;">{{util.getFullDateByFrag(trackItem.createdAt,"/",true)}} {{util.getHourAndMinByFrag(trackItem.createdAt,":",true)}}</text>
                         </view>
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
@@ -263,7 +263,7 @@
 <!--------------------------------------------------------------------------------------------------------------------->
 <!--Start: 企业微信端非管理员页工作台-测评列表-->
 <block wx:elif="{{ isWxWork && !isWxWorkAdmin }}">
-    <hola-member-report-list reportListTrigger="{{ true }}"></hola-member-report-list>
+    <hola-member-report-list></hola-member-report-list>
 </block>
 <!--End: 企业微信端非管理员页工作台-测评列表-->
 <!--------------------------------------------------------------------------------------------------------------------->

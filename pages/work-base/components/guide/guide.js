@@ -103,14 +103,11 @@ Page({
       app.toast("已申请，请等待审核");
       return;
     }
-    const id = e.currentTarget.dataset.id;
+    const receiveRecordId = e.currentTarget.dataset.id;
     const that = this;
     app.doAjax({
-      url: "applyToMeetReport",
-      method: "post",
-      data: {
-        id: id
-      },
+      url: `reports/${receiveRecordId}`,
+      method: "patch",
       success: function(ret) {
         app.toast(ret);
         isHasApplyFor = true;

@@ -39,7 +39,7 @@ page {
   position: absolute;
   width: 248rpx;
   height: 60rpx;
-  background: rgba(89, 96, 237, 1);
+  background: rgba(53,62,232,1);
   border-radius: 30rpx;
   font-size: 28rpx;
   font-family: PingFangSC-Regular, PingFang SC;

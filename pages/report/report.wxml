@@ -12,7 +12,7 @@
         <!-- 头部信息 -->
         <view class="box0" style='padding: 36rpx  60rpx 48rpx 60rpx;background: #fff;'>
             <view class="paperName">
-                <text class="underLineBg">{{paper.name}}</text>
+                <text class="underLineBg">{{evaluationInfo.evaluationName}}</text>
             </view>
             <!-- <view class="mind">
             <text>LINWEI等5人已读</text>
@@ -33,7 +33,7 @@
                     <view class="name">{{participantInfo.username || participantInfo.nickname}}</view>
                     <view class="otherMsg">
                         <text>年龄：{{participantInfo.age}}</text>
-                        <text>学历：{{evaluationInfo.evaluationName}}</text>
+                        <text>学历：{{participantInfo.educationName}}</text>
                     </view>
                 </view>
             </view>
@@ -66,18 +66,20 @@
                 </view>
                 <!-- <view style="opacity: 0;">1</view> -->
             </view>
-            <view class="content" wx:if="{{rule}}">{{(report.matchArr.type!=1||report.timeNormal!=1)?rule2:rule1}}</view>
+            <view class="content" wx:if="{{rule}}">{{(report.matchArr.type!=1||report.timeNormal!=1)?rule2:rule1}}
+            </view>
             <view class="title" style="margin-top:80rpx;" wx:if="{{ report.showReportUseInfo }}">
                 <text class="underLineBg">报告使用说明</text>
             </view>
-            <view class="list flex" wx:if="{{ report.showReportUseInfo }}" style="padding-right: 54rpx;padding-left: 24rpx;">
+            <view class="list flex" wx:if="{{ report.showReportUseInfo }}"
+                  style="padding-right: 54rpx;padding-left: 24rpx;">
                 <rich-text nodes="<p>{{report.reportUseInfoTxt||''}}</p>"></rich-text>
             </view>
         </view>
         <!-- 报告总述 -->
         <view class="box1" wx:if="{{report.showSummary}}">
             <view class="title report-summary">
-                <text>{{summaryName}}</text>
+                <text>{{report.summaryName}}</text>
             </view>
             <view class="flex temple"
                   wx:if="{{report.showSummaryTotal||report.showSummaryDefinition||report.summaryRankOrg||report.summaryRankAll}}">
@@ -85,7 +87,8 @@
                       style="padding:56rpx 0;{{!report.summaryRankOrg&&!report.summaryRankAll?'':'margin-right:20rpx;'}}{{(!report.summaryRankOrg||!report.summaryRankAll)&&!report.showSummaryTotal?'height:230rpx;':''}}"
                       wx:if="{{report.showSummaryTotal||report.showSummaryDefinition||report.summary.title}}">
                     <view style="width: 100%;">
-                        <view class="name" wx:if="{{report.showSummaryDefinition}}">{{report.summaryDefinitionName}}</view>
+                        <view class="name" wx:if="{{report.showSummaryDefinition}}">{{report.summaryDefinitionName}}
+                        </view>
                         <view class="lvName" wx:if="{{report.showSummaryDefinition}}">{{report.summary.title}}</view>
                         <view class="lvNum" wx:if="{{report.showSummaryTotal}}">
                             <canvas class="circle" canvas-id="canvasArcCir"></canvas>
@@ -467,6 +470,9 @@
             <view class="title report-summary">
                 <text>{{report.summaryName}}</text>
             </view>
+            <view class="chartImg" style="display: flex;justify-content: center;align-items: center;margin-top: 40rpx;">
+                <hola-grid axis="{{report.graphAxis}}" area="{{report.graphQuadrants}}" coordinate="{{report.graphCoordinateIdx}}"></hola-grid>
+            </view>
             <view class="flex temple"
                   wx:if="{{report.showSummaryTotal||report.showSummaryDefinition||report.summaryRankOrg||report.summaryRankAll}}">
                 <view class="flex-main item noramlTem"
@@ -607,16 +613,14 @@
                         <rich-text nodes="<p>{{item.lvDesc||''}}</p>"></rich-text>
                     </view>
                     <!-- 柱状图 -->
-                    <view wx:if="{{ item.chartType == 1 }}" class="chartImg">
-                        <hola-histogram id="{{index}}"></hola-histogram>
+                    <view wx:if="{{ item.chartType === 3 || true }}" class="chartImg">
+                        <hola-histogram histogramIndex="{{index}}" histogramYAxis="{{histogramYAxis}}" limit="{{limit}}"
+                                        histogramValues="{{histogramValues}}" lines="{{lines}}"></hola-histogram>
                     </view>
                     <!-- 雷达图 -->
-                    <view class="chartImg" wx:if="{{ item.chartType!=1 }}">
-                        <hola-radar id="{{index}}" radarValue="{{ radarValue }}"
+                    <view class="chartImg" wx:if="{{ item.chartType!=1 || true }}">
+                        <hola-radar radarIndex="{{ index }}" radarValue="{{ radarValue }}"
                                     radarIndicator="{{ radarIndicator }}"></hola-radar>
-                    </view>
-                    <view class="chartImg" style="display: flex;justify-content: center;align-items: center;">
-                        <hola-grid></hola-grid>
                     </view>
                     <view style="height:50rpx;"
                           wx:if="{{!item.lvDesc&&!item.showTotal&&!item.rankOrg&&!item.rankAll&&item.chartType==1}}"></view>

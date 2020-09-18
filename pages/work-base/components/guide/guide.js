@@ -178,7 +178,7 @@ Page({
             app.globalData.userInfo = Object.assign(globalData,userData);
             wx.setStorageSync("userInfo", Object.assign(globalData,userData));
             wx.setStorageSync("openId", userData.openid);
-            wx.setStorageSync("unionId", userData.uid);
+            // wx.setStorageSync("unionId", userData.uid);
             if (draftAnswer) {
               var sKey = "oldAnswer" + that.data.id;
               wx.setStorageSync(sKey, draftAnswer);

@@ -130,7 +130,7 @@ Component({
                 return;
             }
             userInfo["openid"] = wx.getStorageSync("openId") || app.globalData.userMsg.openid;
-            userInfo["unionid"] = wx.getStorageSync("unionId") || app.globalData.userMsg.unionid;
+            // userInfo["unionid"] = wx.getStorageSync("unionId") || app.globalData.userMsg.unionid;
             app.doAjax({
                 url: "updateUserMsg",
                 method: "post",

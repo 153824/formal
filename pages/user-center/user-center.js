@@ -14,6 +14,12 @@ Page({
         } else if (isWxWork && !isWxWorkAdmin) {
 
         }
+
+    },
+    onShow() {
+        this.setData({
+            userInfo:  wx.getStorageSync("userInfo") || app.globalData.userInfo || app.globalData.userMsg
+        })
     },
     goToReceiveReports: function () {
         wx.navigateTo({

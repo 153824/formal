@@ -95,7 +95,7 @@ Component({
     toTestIt: function(e) {
       app.isTest = true;
       wx.navigateTo({
-        url: '../guide/guide'
+        url: '/pages/work-base/components/guide/guide'
       });
     }
   },

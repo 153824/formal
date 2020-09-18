@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "van-cell": "../../../../common/vant-weapp/dist/cell/index",
+    "van-cell-group": "../../../../common/vant-weapp/dist/cell-group/index",
+    "van-icon": "../../../../common/vant-weapp/dist/icon/index"
+  }
+}

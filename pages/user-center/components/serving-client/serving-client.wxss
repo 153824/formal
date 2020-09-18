@@ -1,0 +1,5 @@
+.van-cell-custom-class{
+    display: flex;
+    align-items: center;
+    height: 180rpx;
+}

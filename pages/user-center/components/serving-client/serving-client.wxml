@@ -1,0 +1,15 @@
+<view >
+    <van-cell-group>
+        <van-cell title="客服微信" value="{{wechat}}" bind:tap="copyWeChat" custom-class="van-cell-custom-class">
+            <view slot="icon" style="display: flex;margin-right: 10rpx;">
+                <van-icon name="friends" color="#51c332" size="40rpx"/>
+            </view>
+        </van-cell>
+        <van-cell title="客服电话" value="{{mobile}}" border="{{ false }}" bind:tap="callMobile" custom-class="van-cell-custom-class">
+            <view slot="icon" style="display: flex;margin-right: 10rpx;">
+                <van-icon name="phone" color="rgba(53, 62, 232, 1)" size="40rpx"></van-icon>
+            </view>
+        </van-cell>
+        <van-cell title="" value="点击复制客服微信，拨打客服电话" border="{{ false }}" custom-class="van-cell-custom-class"></van-cell>
+    </van-cell-group>
+</view>

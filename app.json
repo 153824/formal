@@ -38,7 +38,7 @@
     "pages/user-center/components/receive-reports/receive-reports",
     "pages/user-center/components/receive-evaluations/receive-evaluations",
     "pages/user-center/components/serving-client/serving-client",
-    "pages/user-center/components/evaluation-program/evaluation-program"
+    "pages/work-base/components/evaluation-more/evaluation-more"
   ],
   "tabBar": {
     "custom": true,

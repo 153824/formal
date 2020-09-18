@@ -22,6 +22,10 @@ page{
     font-weight: 600;
     z-index: 999999999;
 }
+.head-company{
+    display: flex;
+    align-items: baseline;
+}
 .company-action{
     display: flex;
     margin: 30rpx 0 52rpx 0;
@@ -36,6 +40,7 @@ page{
 }
 .content-scroll-area{
 }
+
 .program-wrapper{
     padding: 22rpx 44rpx 22rpx 44rpx;
     z-index: 99999999;

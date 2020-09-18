@@ -144,7 +144,7 @@ Page({
                     url: 'inventories',
                     method: 'get',
                     data: {
-                        teamId: wx.getStorageSync("GET_MY_TEAM_LIST").objectId
+                        teamId: app.teamId || wx.getStorageSync("GET_MY_TEAM_LIST").objectId
                     },
                     noLoading: true,
                     success: function (res) {
@@ -487,9 +487,11 @@ Page({
             success: function (res) {
                 // console.log("updateUserMsg",res);
                 var userData = res.data;
+                var globalData = app.globalData.userInfo;
                 if (0 == res.code) {
                     wx.hideLoading();
-                    wx.setStorageSync("userInfo", userData);
+                    app.globalData.userInfo = Object.assign(globalData,userData);
+                    wx.setStorageSync("userInfo", Object.assign(globalData,userData));
                     wx.setStorageSync("openId", userData.openid);
                     wx.setStorageSync("unionId", userData.uid);
                     that.changePage();
@@ -595,6 +597,12 @@ Page({
     setCompanyCert: function (e) {
         wx.navigateTo({
             url: "/pages/user/components/teams/teams"
+        })
+    },
+
+    goToEvaluationMore: function (e) {
+        wx.navigateTo({
+            url: "/pages/work-base/components/evaluation-more/evaluation-more"
         })
     }
 });

@@ -1,8 +1,10 @@
 <!--Start: 企业微信端管理员页工作台-->
 <view wx:if="{{ isWxWork&&isWxWorkAdmin }}" class="home-page-wrapper">
     <view class="head">
-        <image src="" style="width: 50rpx;height: 44rpx;"></image>
-        <text>康师傅集团</text>
+        <view class="head-company">
+            <image src="./images/work-base@@icon-company.png" style="width: 50rpx;height: 44rpx;margin-right: 16rpx;"></image>
+            <text>{{userInfo.userCompany.name}}</text>
+        </view>
     </view>
     <view class="content" style="height: {{ (windowHeight-tabBarHeight - safeAreaDiff)*pixelRate - 200 }}rpx;">
         <scroll-view class="content-scroll-area"
@@ -12,6 +14,7 @@
             <view class="program-wrapper">
                 <view class="program-title">
                     <text>我的测评</text>
+                    <text class="more" bindtap="goToEvaluationMore">更多...</text>
                 </view>
                 <view wx:for="{{ myEvaluation }}" wx:for-item="evaluationItem" wx:key="unique"
                       wx:for-index="evaluationIndex">
@@ -144,8 +147,10 @@
 <!--Start: 企业微信端非管理员页工作台-测评列表-->
 <block wx:elif="{{ !isWxWork }}">
     <view class="head">
-        <image src="" style="width: 50rpx;height: 44rpx;"></image>
-        <text>{{currTeam || userInfo.userCompany.name}}</text>
+        <view class="head-company">
+            <image src="./images/work-base@@icon-company.png" style="width: 50rpx;height: 44rpx;margin-right: 16rpx;"></image>
+            <text>{{currTeam || userInfo.userCompany.name}}</text>
+        </view>
         <view class="company-action">
             <text bindtap="setChildManager">子管理员设置</text>
             <text bindtap="setCompanyCert" style="margin: 0 30rpx;">企业认证</text>
@@ -160,6 +165,7 @@
             <view class="program-wrapper">
                 <view class="program-title">
                     <text>我的测评</text>
+                    <text class="more" bindtap="goToEvaluationMore">更多...</text>
                 </view>
                 <view wx:for="{{ myEvaluation }}" wx:for-item="evaluationItem" wx:key="unique"
                       wx:for-index="evaluationIndex">

@@ -455,7 +455,13 @@ Page({
         })
     },
 
-    onShow() {},
+    onShow() {
+        const {userInfo,currTeam} = this.data;
+        console.log("userInfo,currTeam: ",userInfo,currTeam)
+        this.setData({
+            userInfo: app.globalData.userInfo || wx.getStorageSync("userInfo"),
+        })
+    },
 
     onHide() {},
 

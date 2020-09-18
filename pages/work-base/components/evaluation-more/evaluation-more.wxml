@@ -1,0 +1,29 @@
+<view class="program-wrapper">
+    <view wx:for="{{ myEvaluation }}" wx:for-item="evaluationItem" wx:key="unique"
+          wx:for-index="evaluationIndex">
+        <view class="program-body" data-name="{{ evaluationItem.evaluationName }}">
+            <image src="{{ evaluationItem.smallImg || 'http://img2.luoke101.com/2020-06-17T10:10:31.391ZnormalImg.png' }}"
+                   style="width: 114rpx;height: 114rpx;border-radius: 15rpx;"></image>
+            <view class="evaluation-wrapper" bindtap="goToEvaluationDetail"
+                  data-evaluation-id="{{ evaluationItem.evaluationId }}">
+                <view class="evaluation-name">
+                    {{evaluationItem.evaluationName}}
+                </view>
+                <view class="evaluation-info">
+                    <text>{{ evaluationItem.quesCount }}题</text>
+                    <text style="margin-left: 10rpx;">{{evaluationItem.estimatedTime}}分钟</text>
+                </view>
+            </view>
+            <view style="width: 4rpx;height: 114rpx;background-color: #F4F4F4FF;margin-right: 20rpx;"></view>
+            <view class="send-evaluation" bindtap="goToSharePaper"
+                  data-evaluation-id="{{ evaluationItem.evaluationId }}"
+                  data-count="{{ evaluationItem.available }}"
+                  data-index="{{ evaluationIndex }}"
+            >
+                <image src="./images/work-base@icon-plane.png"
+                       style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
+                <text>发测评</text>
+            </view>
+        </view>
+    </view>
+</view>

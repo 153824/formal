@@ -24,5 +24,15 @@ Page({
         wx.navigateTo({
             url: './components/receive-evaluations/receive-evaluations'
         })
+    },
+    goToAddGroup: function () {
+        wx.navigateTo({
+            url: "/pages/user/components/addGroup/addGroup"
+        })
+    },
+    goToServingClient: function () {
+        wx.navigateTo({
+            url: "/pages/user-center/components/serving-client/serving-client"
+        })
     }
 });

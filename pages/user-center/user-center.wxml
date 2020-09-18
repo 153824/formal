@@ -2,9 +2,9 @@
     <view class="user-page-wrapper">
         <view class="head">
             <view class="user-personal-info">
-                <image src="{{userInfo.avatar}}"
+                <image src="{{userInfo.avatar || userInfo.avatarUrl}}"
                        style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;background-color: black;"></image>
-                <text>{{userInfo.nickname}}</text>
+                <text>{{userInfo.nickname || userInfo.nickName}}</text>
             </view>
         </view>
         <view class="content">
@@ -25,7 +25,7 @@
                     </view>
                     <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                 </view>
-                <view class="user-action-item">
+                <view class="user-action-item" bindtap="goToAddGroup">
                     <view class="title">
                         <image src="./images/user@connect-serving.png"
                                style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
@@ -42,9 +42,9 @@
     <view class="user-page-wrapper">
         <view class="head">
             <view class="user-personal-info">
-                <image src="{{userInfo.avatar}}"
+                <image src="{{userInfo.avatar || userInfo.avatarUrl}}"
                        style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;background-color: black;"></image>
-                <text>{{userInfo.nickname}}</text>
+                <text>{{userInfo.nickname || userInfo.nickName}}</text>
             </view>
         </view>
         <view class="content">
@@ -65,7 +65,7 @@
                     </view>
                     <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                 </view>
-                <view class="user-action-item">
+                <view class="user-action-item" bindtap="goToServingClient">
                     <view class="title">
                         <image src="./images/user@connect-serving.png"
                                style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
@@ -82,9 +82,9 @@
     <view class="user-page-wrapper">
         <view class="head">
             <view class="user-personal-info">
-                <image src="{{userInfo.avatar}}"
+                <image src="{{userInfo.avatar || userInfo.avatarUrl}}"
                        style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;background-color: black;"></image>
-                <text>{{userInfo.nickname}}</text>
+                <text>{{userInfo.nickname || userInfo.nickName}}</text>
             </view>
         </view>
         <view class="content">
@@ -97,7 +97,7 @@
                     </view>
                     <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                 </view>
-                <view class="user-action-item">
+                <view class="user-action-item" bindtap="goToServingClient">
                     <view class="title">
                         <image src="./images/user@connect-serving.png"
                                style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>

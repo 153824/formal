@@ -10,31 +10,33 @@
         <view class="mind">暂未收到任何公司或团队的测评邀约</view>
     </view>
     <view class="list" wx:else>
-        <block wx:for="{{evaluationTask}}" wx:key="unique">
-            <view class="item">
-                <view class="companyName">{{item.user.company.name}}</view>
-                <view class="reportMsg">
-                    <text class="paperName">《{{item.evaluationName}}》</text>
-                    <image wx:if="{{item.status === 'FINISHED'}}" class="finishImg"
-                           src="../../images/report-list@icon-done.png"></image>
-                    <text class="status" wx:else>未完成</text>
+        <scroll-view scroll-y style="height: {{ (windowHeight-60-safeAreaDiff) * pixelRate }}rpx;">
+            <block wx:for="{{evaluationTask}}" wx:key="unique">
+                <view class="item">
+                    <view class="companyName">{{item.user.company.name}}</view>
+                    <view class="reportMsg">
+                        <text class="paperName">《{{item.evaluationName}}》</text>
+                        <image wx:if="{{item.status === 'FINISHED'}}" class="finishImg"
+                               src="../../images/report-list@icon-done.png"></image>
+                        <text class="status" wx:else>未完成</text>
+                    </view>
+                    <view class="btnView btnView1" bindtap="changePage"
+                          data-url="../../../components/guide/guide?releaseRecordId={{item.releaseRecordId}}&receiveRecordId={{ item.receiveRecordId }}"
+                          wx:if="{{item.status==='FETCHED'}}">继续作答
+                    </view>
+                    <view class="btnView btnView1" bindtap="changePage"
+                          data-url="../../../components/guide/guide?releaseRecordId={{item.releaseRecordId}}&receiveRecordId={{ item.receiveRecordId }}"
+                          wx:elif="{{item.status==='FETCHED'}}">
+                        继续作答
+                    </view>
+                    <view class="btnView btnView2" bindtap="goToReportDetail" data-index="{{index}}"
+                          wx:elif="{{ item.status=== 'FINISHED' &&  item.reportPermit==='APPROVED'}}">查看报告
+                    </view>
+                    <view class="btnView btnView3" wx:elif="{{ item.status=== 'FINISHED' &&  item.reportPermit==='APPLYING'}}">已向HR申请查看报告，请耐心等待</view>
+                    <view class="btnView btnView2" bindtap="toApply" data-id="{{item.receiveRecordId}}" wx:else>向HR申请查看报告</view>
                 </view>
-                <view class="btnView btnView1" bindtap="changePage"
-                      data-url="../../../components/guide/guide?releaseRecordId={{item.releaseRecordId}}&receiveRecordId={{ item.receiveRecordId }}"
-                      wx:if="{{item.status==='FETCHED'}}">继续作答
-                </view>
-                <view class="btnView btnView1" bindtap="changePage"
-                      data-url="../../../components/guide/guide?releaseRecordId={{item.releaseRecordId}}&receiveRecordId={{ item.receiveRecordId }}"
-                      wx:elif="{{item.status==='FETCHED'}}">
-                    继续作答
-                </view>
-                <view class="btnView btnView2" bindtap="goToReportDetail" data-index="{{index}}"
-                      wx:elif="{{ item.status=== 'FINISHED' &&  item.reportPermit==='APPROVED'}}">查看报告
-                </view>
-                <view class="btnView btnView3" wx:elif="{{ item.status=== 'FINISHED' &&  item.reportPermit==='APPLYING'}}">已向HR申请查看报告，请耐心等待</view>
-                <view class="btnView btnView2" bindtap="toApply" data-id="{{item.receiveRecordId}}" wx:else>向HR申请查看报告</view>
-            </view>
-        </block>
+            </block>
+        </scroll-view>
     </view>
     <view class="coverView" wx:if="{{showDlg}}"></view>
     <view class="dlgView" wx:if="{{showDlg}}">
@@ -46,5 +48,5 @@
                 send-message-img="{{mpImg}}">关注公众号
         </button>
     </view>
-    <hola-tab-bar active="{{ active }}" morePath="../../../"></hola-tab-bar>
+    <hola-tab-bar id="hola-tab-bar" active="{{ 0 }}" morePath="../../../"></hola-tab-bar>
 </view>

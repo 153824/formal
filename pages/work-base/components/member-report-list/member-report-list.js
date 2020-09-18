@@ -1,20 +1,27 @@
 const app = getApp();
-let page = 1,
-  paperId;
+let page = 1, paperId;
 Component({
   data: {
     mpImg: "../img/mpImg.png",
     showDlg: false,
     active: 0,
-    evaluationTask: []
+    evaluationTask: [],
+    pixelRate: app.globalData.pixelRate,
+    tabBarHeight: 0,
+    windowHeight: 0,
+    isIPhoneXModel: app.isIphoneX,
+    safeAreaDiff: 0
   },
   properties: {},
   pageLifetimes: {
     onLoad: function (options) {
+      const that = this;
       paperId = options.id || "";
       page = 1;
     },
-    onShow: function() {},
+    onShow: function() {
+      const that = this;
+    },
   },
   methods: {
     /**
@@ -26,6 +33,8 @@ Component({
         url: "receive_records",
         method: "get",
         data: {
+          isEE: true,
+          teamId: app.teamId,
           page: page,
           pageSize: 12
         },
@@ -105,6 +114,19 @@ Component({
       } else {
         that.getList();
       }
+    },
+    attached() {
+      const systemInfo = wx.getSystemInfoSync();
+      const { isIPhoneXModel } = this.data;
+      console.log("systemInfo: ",systemInfo);
+      this.setData({
+        windowHeight: systemInfo.windowHeight,
+        safeAreaDiff: isIPhoneXModel  ? Math.abs(systemInfo.safeArea.height  - systemInfo.safeArea.bottom) : 0,
+      });
+      console.log("safeAreaDiff",Math.abs(systemInfo.safeArea.height  - systemInfo.safeArea.bottom));
+      // console.log(wx.createSelectorQuery().in(this).select("#hola-member-report-list").boundingClientRect(res=>{
+      //   console.log(res);
+      // }));
     }
   }
 });

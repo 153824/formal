@@ -36,8 +36,7 @@
 /*}*/
 
 .list {
-  padding: 20rpx 20rpx 60rpx;
-  margin-bottom: 130rpx;
+  /* padding: 20rpx 20rpx 60rpx; */
 }
 
 .list .item {
@@ -421,7 +420,7 @@
 .testPaperView .toTest {
   width: 436rpx;
   height: 76rpx;
-  background: rgba(89, 96, 237, 1);
+  background: rgba(53, 62, 232, 1);
   border-radius: 10rpx;
   margin: 74rpx auto 0;
   text-align: center;

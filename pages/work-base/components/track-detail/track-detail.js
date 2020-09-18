@@ -33,64 +33,187 @@ Page({
     status: "",
     amount: 0,
     QRCode: "",
+    maskTrigger: true
   },
 
   onLoad: function (options) {
     const that = this;
-    const { trackId,trackInfo,status } = options;
-    app.doAjax({
-      url: `release_records/detail`,
-      method: 'get',
-      data: {
-        type: 'finished',
-        page: 1,
-        pageSize: 8,
-        releaseRecordId: trackId
-      },
-      success: function (res=[]) {
-        that.setData({
-          finishList: res
-        });
-      }
-    });
-    app.doAjax({
-      url: `release_records/detail`,
-      method: 'get',
-      data: {
-        type: 'examining',
-        page: 1,
-        pageSize: 8,
-        releaseRecordId: trackId
-      },
-      success: function (res=[]) {
-        that.setData({
-          examiningList: res
-        });
-      }
-    });
-    app.doAjax({
-      url: `release_records/digest`,
-      method: `get`,
-      data: {
-        releaseRecordId: trackId
-      },
-      success: function (res) {
-        that.setData({
-          status: res.status,
-          amount: res.amount,
-          available: res.available,
-          QRCode: res.QRCode,
-          cover: res.smallImg,
-          evaluationId: res.evaluationId,
-          evaluationName: res.evaluationName,
-          releaseRecordId: res.releaseRecordId,
+    const { trackId,trackInfo,status,releaseRecordId,shareAt } = options;
+    const {examiningDetail,finishedDetail,digestDetail} = this;
+    if (app.isLogin){
+      if( releaseRecordId && shareAt ){
+        console.log("1")
+        this.acceptEvaluationTrack(options).then(res=>{
+          Promise.all([examiningDetail(options),finishedDetail(options),digestDetail(options)]).then(res=>{
+            that.setData({
+              maskTrigger: false
+            })
+          })
+        }).catch(err=>{
+          wx.switchTab({
+            url: "pages/work-base/work-base",
+          })
+        })
+      } else {
+        Promise.all([examiningDetail(options),finishedDetail(options),digestDetail(options)]).then(res=>{
+          that.setData({
+            maskTrigger: false
+          })
+        }).catch(err=>{
+          console.log("err: ",err);
+          that.setData({
+            maskTrigger: false
+          })
         })
       }
-    });
+    }
+    app.checkUser = ()=> {
+      if( releaseRecordId && shareAt ){
+        console.log("1")
+        this.acceptEvaluationTrack(options).then(res=>{
+          Promise.all([examiningDetail(options),finishedDetail(options),digestDetail(options)]).then(res=>{
+            that.setData({
+              maskTrigger: false
+            })
+          })
+        }).catch(err=>{
+          wx.switchTab({
+            url: "pages/work-base/work-base",
+          })
+        })
+      } else {
+        Promise.all([examiningDetail(options),finishedDetail(options),digestDetail(options)]).then(res=>{
+          that.setData({
+            maskTrigger: false
+          })
+        }).catch(err=>{
+          console.log("err: ",err);
+          that.setData({
+            maskTrigger: false
+          })
+        })
+      }
+    };
     this.setData({
       status
     });
   },
+
+  acceptEvaluationTrack: function(options){
+    const { trackId,releaseRecordId,shareAt } = options;
+    const acceptEvaluationTrackPromise = new Promise((resolve, reject) => {
+      app.doAjax({
+        url: "release_records/accept",
+        method: "post",
+        data: {
+          userId: wx.getStorageSync("userInfo").id,
+          releaseRecordId: releaseRecordId || trackId,
+          sharedAt: shareAt
+        },
+        success: function (res) {
+          if(res.code === 0){
+            wx.showToast({
+              title: "领取使用记录成功！"
+            });
+          }
+          resolve(true)
+        },
+        fail: function (err) {
+          wx.showToast({
+            title: "领取使用记录错误！"
+          });
+          reject(false);
+        }
+      })
+    });
+    return acceptEvaluationTrackPromise
+  },
+
+  examiningDetail: function(options){
+    const that = this;
+    const {trackId,releaseRecordId} = options;
+    const examiningDetailPromise = new Promise((resolve, reject) => {
+      app.doAjax({
+        url: `release_records/detail`,
+        method: 'get',
+        data: {
+          type: 'examining',
+          // page: 1,
+          // pageSize: 8,
+          releaseRecordId: releaseRecordId || trackId
+        },
+        success: function (res=[]) {
+          that.setData({
+            examiningList: res
+          });
+          resolve(true)
+        },
+        fail: function (err) {
+          reject(false)
+        }
+      });
+    })
+    return examiningDetailPromise;
+  },
+
+  finishedDetail: function(options){
+    const that = this;
+    const {trackId,releaseRecordId} = options;
+    const finishedDetailPromise = new Promise((resolve, reject) => {
+      app.doAjax({
+        url: `release_records/detail`,
+        method: 'get',
+        data: {
+          type: 'finished',
+          // page: 1,
+          // pageSize: 8,
+          releaseRecordId: releaseRecordId || trackId
+        },
+        success: function (res=[]) {
+          that.setData({
+            finishList: res
+          });
+          resolve(true);
+        },
+        fail: function (err) {
+          reject(false);
+        }
+      });
+    });
+    return finishedDetailPromise;
+  },
+
+  digestDetail: function(options){
+    const that = this;
+    const {trackId,releaseRecordId} = options;
+    const digestDetailPromise = new Promise((resolve, reject) => {
+      app.doAjax({
+        url: `release_records/digest`,
+        method: `get`,
+        data: {
+          releaseRecordId: trackId || releaseRecordId
+        },
+        success: function (res) {
+          that.setData({
+            status: res.status,
+            amount: res.amount,
+            available: res.available,
+            QRCode: res.QRCode,
+            cover: res.smallImg,
+            evaluationId: res.evaluationId,
+            evaluationName: res.evaluationName,
+            releaseRecordId: res.releaseRecordId,
+          });
+          resolve(true);
+        },
+        fail: function (err) {
+          reject(false);
+        }
+      });
+    })
+    return digestDetailPromise;
+  },
+
   /**
    * @Description:  切换tab页
    * @author: WE!D
@@ -173,5 +296,14 @@ Page({
     this.setData({
       imageTrigger: false
     })
-  }
+  },
+
+  onShareAppMessage: function () {
+    const {trackId,releaseRecordId} = this.data;
+    return {
+      title: `邀请您查看作答记录`,
+      path: `pages/user-center/components/receive-reports/receive-reports?releaseRecordId=${trackId || releaseRecordId}&shareAt=${new Date().getTime()}&tabIndex=1`,
+      imageUrl: "http://ihola.luoke101.com/wxShareImg.png"
+    };
+  },
 });

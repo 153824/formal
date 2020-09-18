@@ -102,8 +102,10 @@
         </view>
     </view>
 </view>
-<view class="press-wrapper" bindtap="gotoDetail" data-id="{{ evaluationId }}">
-    <press title="继续发放本测评"></press>
+<view class="press-wrapper">
+    <button open-type="share" style="padding: 0 0 !important;border-radius: unset !important;">
+        <press title="分享记录"></press>
+    </button>
 </view>
 <van-overlay show="{{ imageTrigger }}">
     <view class="qrcode-wrapper" wx:if="{{ imageTrigger }}">
@@ -119,4 +121,5 @@
         </view>
     </view>
 </van-overlay>
+<hola-mask isShow="{{ maskTrigger }}"></hola-mask>
 <wxs src="../../../../utils/util.wxs" module="util"></wxs>

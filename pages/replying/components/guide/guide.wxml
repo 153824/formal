@@ -1,7 +1,7 @@
 <!--test/guide.wxml-->
 <view class="container font">
   <view class="headbox flex">
-    <image src="{{userInfo.avatar}}" wx:if="{{userInfo.avatar}}"></image>
+    <image src="{{userInfo.avatar||userInfo.avatarUrl}}" wx:if="{{userInfo.avatar||userInfo.avatarUrl}}"></image>
     <view class="headtitle flex-main">
       <view>{{userInfo.userCompany.name||'好啦君'}}</view>
       <view class="invitetext">邀您参加测评</view>

@@ -3,7 +3,7 @@ const app = getApp();
 let _this;
 Component({
     properties: {
-        id: {
+        radarIndex: {
           type: Number,
           value: 0
         },
@@ -25,6 +25,7 @@ Component({
                 width: width,
                 height: height
             });
+            console.log("canvasId",canvasId);
             let {radarValue,radarIndicator} = _this.properties;
             radarValue = JSON.parse(radarValue);
             radarIndicator = JSON.parse(radarIndicator);

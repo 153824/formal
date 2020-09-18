@@ -30,7 +30,7 @@
 .toCopy {
   width: 336rpx;
   height: 92rpx;
-  background: rgba(89, 96, 237, 1);
+  background: rgba(53, 62, 232, 1);
   border-radius: 8rpx;
   font-size: 36rpx;
   font-family: PingFangSC-Regular, PingFangSC;

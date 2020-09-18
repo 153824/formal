@@ -1,0 +1,100 @@
+.program-wrapper{
+    padding: 22rpx 44rpx 22rpx 44rpx;
+}
+.program-body{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 20rpx;
+    padding: 40rpx 30rpx;
+    border-radius: 20rpx;
+    box-shadow:0rpx 4rpx 8rpx 0rpx rgba(0,0,0,0.05);
+}
+.reply-track-body{
+    padding: 30rpx 30rpx;
+    height: 146rpx;
+}
+.evaluation-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+}
+.reply-track-info{
+    font-size: 26rpx;
+    color: #B8B8B8FF;
+}
+.count,.date{
+    color: #353EE8FF;
+}
+.evaluation-name{
+    max-width: 270rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 30rpx;
+    font-weight: 500;
+}
+.evaluation-info{
+    color: #AAABB0FF;
+    font-size: 26rpx;
+    font-weight: 500;
+}
+.user-info-wrapper{
+    max-width: 200rpx;
+}
+.user-info{
+    display: flex;
+    justify-content: space-between;
+    font-size: 30rpx;
+    font-weight: 500;
+    color: #070922FF;
+}
+.recommend-grade{
+    padding: 0 14rpx;
+    height: 32rpx;
+    font-size: 22rpx;
+    border-radius: 30rpx;
+    color: #353EE8FF;
+    background-color: #353EE812;
+}
+.send-evaluation{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #353EE8FF;
+    font-size: 26rpx;
+}
+.the-last-report{
+    position: relative;
+    height: 90rpx;
+    padding: 30rpx 36rpx;
+    margin-top: 24rpx;
+}
+.new-adding-mark{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 42rpx;
+    border-radius:0rpx 20rpx 0rpx 20rpx;
+    background-color: #6DD400CC;
+    padding: 4rpx 28rpx;
+    font-size: 24rpx;
+    color: #fff;
+}
+.report-created-time{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    color: #AEAEAEFF;
+    font-size: 26rpx;
+}
+.user-answer-evaluation{
+    font-size: 26rpx;
+
+}

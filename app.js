@@ -109,11 +109,16 @@ App({
         if (sysMsg.environment === 'wxwork') {
             this.wxWorkInfo.isWxWork = true;
         }
-        if (false) {
+        if (this.wxWorkInfo.isWxWork) {
+            const that = this;
             wx.qy.login({
                 success: res => {
-                    this.wxWorkUserLogin(res.code).then(res => {
-                        wx.aldPushSendOpenid(res.openId);
+                    that.wxWorkUserLogin(res.code).then(res => {
+                        if (that.wxWorkInfo.isWxWorkAdmin) {
+                            wx.reLaunch({
+                                url: "/pages/work-base/work-base?isWxWorkAdmin=true&maskTrigger=true"
+                            })
+                        }
                     })
                 },
             })
@@ -171,16 +176,15 @@ App({
          */
         wx.getSystemInfo({
             success: (res) => {
-                let {windowHeight, screenHeight, windowWidth} = res
+                let {windowHeight, screenHeight, windowWidth} = res;
                 let statusbarHeight = res.statusBarHeight,
-                    titleHeight = menuBtnObj.height + (menuBtnObj.top - statusbarHeight) *
-                        2
-                this.globalData.statusbarHeight = statusbarHeight
-                this.globalData.titleHeight = titleHeight
-                this.globalData.windowHeight = windowHeight
-                this.globalData.windowWidth = windowWidth
-                this.globalData.screenHeight = screenHeight
-                this.globalData.pixelRate = 750 / windowWidth
+                    titleHeight = menuBtnObj.height + (menuBtnObj.top - statusbarHeight) * 2;
+                this.globalData.statusbarHeight = statusbarHeight;
+                this.globalData.titleHeight = titleHeight;
+                this.globalData.windowHeight = windowHeight;
+                this.globalData.windowWidth = windowWidth;
+                this.globalData.screenHeight = screenHeight;
+                this.globalData.pixelRate = 750 / windowWidth;
             },
             fail(err) {
                 console.error(err)
@@ -213,14 +217,15 @@ App({
                     var userData = res.data
                     wx.hideLoading()
                     if (0 === res.code) {
-                        var userMsg = that.globalData.userMsg
-                        wx.setStorageSync('userInfo', userData)
+                        var userMsg = that.globalData.userMsg;
+                        wx.setStorageSync('userInfo', userData);
                         wx.setStorageSync('openId', userData.openid || userMsg.openid)
                         wx.setStorageSync('unionId', userData.uid || userMsg.unionid)
                         that.globalData.userInfo = Object.assign(userData,
                             that.globalData.userInfo || {})
+                        that.getUserInfo();
                         that.isLogin = true
-                        that.getMyTeamList(that.checkUser)
+                        that.getMyTeamList(that.checkUser);
                         resolve({openId: userData.openid || userMsg.openid})
                     } else {
                         wx.showModal({
@@ -253,7 +258,39 @@ App({
      * @date: 2020/9/8
      */
     wxWorkUserLogin: function (code) {
-
+        const that = this;
+        const wxWorkUserLoginPromise = new Promise((resolve, reject) => {
+            that.doAjax({
+                url: `http://66e570432e17.ap.ngrok.io/wework/auth/ww2f7f6d77669a28a9/ma`,
+                method: 'get',
+                data: {
+                    code: code
+                },
+                success: function (res) {
+                    if (res.isAdmin) {
+                        that.wxWorkInfo.isWxWorkAdmin = true;
+                        wx.setStorageSync('isWxWorkAdmin', true);
+                    }
+                    console.log("wxWorkUserLogin: ", res);
+                    that.globalData.userMsg = res.userMsg || {};
+                    const userData = res;
+                    const userMsg = that.globalData.userMsg;
+                    wx.setStorageSync('userInfo', userData);
+                    wx.setStorageSync('openId', userData.openid || userMsg.openid);
+                    wx.setStorageSync('unionId', userData.uid || userMsg.unionid);
+                    that.globalData.userInfo = Object.assign(userData,
+                        that.globalData.userInfo || {});
+                    console.log("that.globalData.userInfo： ", that.globalData.userInfo);
+                    that.isLogin = true;
+                    that.getMyTeamList(that.checkUser);
+                    resolve({openId: userData.openid || userMsg.openid});
+                },
+                fail: function (err) {
+                    reject(err);
+                }
+            })
+        })
+        return wxWorkUserLoginPromise;
     },
 
     /**
@@ -275,14 +312,11 @@ App({
         if (Object.keys(LOCAL_USER_INFO).length > 0) {
             common.setUserDetail.call(this, [LOCAL_USER_INFO]);
             wx.hideLoading();
-            that.getMyTeamList(callBack)
+            that.getMyTeamList(callBack);
         } else {
             this.doAjax({
-                url: 'userDetail',
-                method: 'GET',
-                data: {
-                    openid: wx.getStorageSync('openId'),
-                },
+                url: `http://66e570432e17.ap.ngrok.io/wework/users/${this.globalData.userMsg.id || this.globalData.userInfo.id}`,
+                method: 'get',
                 noLoading: true,
                 success: function (res) {
                     wx.setStorage({
@@ -352,9 +386,16 @@ App({
                 title: '正在请求...',
             });
         }
+        console.log(params.url.indexOf('http://66e570432e17.ap.ngrok.io/wework/auth/ww2f7f6d77669a28a9/ma') !== -1);
+        if (params.url.indexOf('http://66e570432e17.ap.ngrok.io/wework/auth/ww2f7f6d77669a28a9/ma') !== -1) {
+            url = "http://66e570432e17.ap.ngrok.io/wework/auth/ww2f7f6d77669a28a9/ma";
+        }
+        if (params.url.indexOf("http://66e570432e17.ap.ngrok.io/wework/users") !== -1) {
+            url = `http://66e570432e17.ap.ngrok.io/wework/users/${that.globalData.userInfo.id}`
+        }
         params.data = params.data || {};
         params.data['userId'] = (that.globalData.userInfo || {}).id || '';
-        params.data['teamId'] = that.teamId;
+        params.data['teamId'] = params.data['teamId'] || that.teamId;
         params.data['teamRole'] = that.teamRole;
         wx.request({
             url: url,
@@ -465,15 +506,15 @@ App({
                 that.isLogin = true
             }
             LOCAL_MY_TEAM_LIST.forEach(function (n) {
-                try{
+                try {
                     if (n.role == 3 && n.createUser.objectId ==
                         that.globalData.userInfo.id) { //有我创建的团队时不进行自动新增团队
                         toAddNew = false
                     }
-                }catch (e) {
-                    console.error("At app.js 445, ",e)
+                } catch (e) {
+                    console.error("At app.js 445, ", e)
                 }
-            })
+            });
             if (LOCAL_MY_TEAM_LIST.length) {
                 var obj = LOCAL_MY_TEAM_LIST[0]
                 var teams = []
@@ -504,8 +545,8 @@ App({
                     pageSize: 12,
                 },
                 success: function (list) {
-                    var toAddNew = true
-                    list = list || []
+                    let toAddNew = true;
+                    list = list || [];
                     if (list.length) {
                         wx.setStorage({
                             key: 'GET_MY_TEAM_LIST',
@@ -513,14 +554,14 @@ App({
                         })
                     }
                     if (that.checkUser && !that.isLogin) {
-                        that.isLogin = true
+                        that.isLogin = true;
                     }
                     list.forEach(function (n) {
                         if (n.role == 3 && n.createUser.objectId ==
                             that.globalData.userInfo.id) { //有我创建的团队时不进行自动新增团队
-                            toAddNew = false
+                            toAddNew = false;
                         }
-                    })
+                    });
                     if (list.length) {
                         var obj = list[0]
                         var teams = []

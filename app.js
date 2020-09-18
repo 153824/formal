@@ -61,8 +61,8 @@ App({
     // host: "https://api.luoke101.com",
     // host: 'https://h5.luoke101.com',
     // host: "http://192.168.0.225:3000",
-    // host: "http://api.dev.luoke101.int",
-    host: "http://66e570432e17.ap.ngrok.io",
+    host: "http://api.dev.luoke101.int",
+    // host: "http://66e570432e17.ap.ngrok.io",
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
         userInfo: null,

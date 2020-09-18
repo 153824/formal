@@ -40,6 +40,11 @@
     line-height: 22px !important;
     text-decoration: unset !important;
 }
+.normal-register{
+    color: rgba(53, 62, 232, 1) !important;
+    font-size: 26rpx;
+    font-weight: 400;
+}
 .register::after{
     border: unset !important;
 }

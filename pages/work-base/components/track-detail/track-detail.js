@@ -20,6 +20,8 @@ Page({
       },
     ],
     checkedItem: 0,
+    finishedPage: 1,
+    examiningPage: 1,
     baseInfo: {},
     imageTrigger: false,
     statusbarHeight: app.globalData.statusbarHeight,
@@ -33,7 +35,7 @@ Page({
     status: "",
     amount: 0,
     QRCode: "",
-    maskTrigger: true
+    maskTrigger: true,
   },
 
   onLoad: function (options) {
@@ -97,6 +99,11 @@ Page({
     this.setData({
       status
     });
+    const systemInfo = wx.getSystemInfoSync();
+    that.setData({
+      windowHeight: systemInfo.windowHeight,
+    });
+    console.log("systemInfo: ",systemInfo);
   },
 
   acceptEvaluationTrack: function(options){
@@ -132,19 +139,20 @@ Page({
   examiningDetail: function(options){
     const that = this;
     const {trackId,releaseRecordId} = options;
+    const {examiningPage,examiningList} = this.data;
     const examiningDetailPromise = new Promise((resolve, reject) => {
       app.doAjax({
         url: `release_records/detail`,
         method: 'get',
         data: {
           type: 'examining',
-          // page: 1,
-          // pageSize: 8,
+          page: examiningPage,
+          pageSize: 8,
           releaseRecordId: releaseRecordId || trackId
         },
         success: function (res=[]) {
           that.setData({
-            examiningList: res
+            examiningList: examiningList.concat(res)
           });
           resolve(true)
         },
@@ -159,19 +167,20 @@ Page({
   finishedDetail: function(options){
     const that = this;
     const {trackId,releaseRecordId} = options;
+    const {finishedPage,finishList} = this.data;
     const finishedDetailPromise = new Promise((resolve, reject) => {
       app.doAjax({
         url: `release_records/detail`,
         method: 'get',
         data: {
           type: 'finished',
-          // page: 1,
-          // pageSize: 8,
+          page: finishedPage,
+          pageSize: 8,
           releaseRecordId: releaseRecordId || trackId
         },
         success: function (res=[]) {
           that.setData({
-            finishList: res
+            finishList: finishList.concat(res),
           });
           resolve(true);
         },
@@ -214,6 +223,25 @@ Page({
     return digestDetailPromise;
   },
 
+  getNextPage: function(e){
+    const {checkedItem,finishedPage,examiningPage} = this.data;
+    if(checkedItem === 0){
+      let finishedPage = finishedPage + 1;
+      this.setData({
+        finishedPage
+      });
+      this.finishedDetail();
+    }else if(checkedItem === 1){
+      let examiningPage = examiningPage + 1;
+      this.setData({
+        examiningPage
+      });
+      this.examiningDetail();
+    }else{
+
+    }
+  },
+
   /**
    * @Description:  切换tab页
    * @author: WE!D
@@ -230,7 +258,7 @@ Page({
     }
     this.setData({
       nav,
-      checkedItem: targetValue
+      checkedItem: targetValue,
     })
   },
 
@@ -306,4 +334,6 @@ Page({
       imageUrl: "http://ihola.luoke101.com/wxShareImg.png"
     };
   },
+
+
 });

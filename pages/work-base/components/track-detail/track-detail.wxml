@@ -32,73 +32,76 @@
                 </block>
             </view>
         </view>
-        <view class="content" style="height: {{ windowHeight - 384/pixelRate - ( statusbarHeight + titleHeight ) }}px;">
-            <!--完成测评开始-->
-            <block wx:if="{{ checkedItem === 0 }}">
-                <block wx:if="{{ finishList.length > 0 }}">
-                    <view wx:for="{{ finishList }}" wx:for-item="finishedItem" wx:key="unique"
-                          class="content-child" data-id="{{ finishedItem.receiveRecordId }}" bindtap="changePage">
-                        <view class="title">
-                            <text>{{ finishedItem.participant }}</text>
-                            <image src="../../images/manager@icon-left-arrow.png"></image>
-                        </view>
-                        <view class="rate">
-                            <view class="rate-info">
-                                <text wx:if="{{ finishedItem.showSummary }}">{{
-                                    finishedItem.summary }}
-                                </text>
-                                <text wx:if="{{ finishedItem.showGrade }}">{{
-                                    finishedItem.grade }}分
-                                </text>
+        <!--(100 + 4) = 底部按钮与borer （228) = 头部区域 （20 + 106) = tab栏目与border-->
+        <view class="content">
+            <scroll-view scroll-y bindscrolltolower="getNextPage" style="height: {{ (windowHeight * pixelRate) - 100 - 4 - 228 - 20 - 106 }}rpx;">
+                <!--完成测评开始-->
+                <block wx:if="{{ checkedItem === 0 }}">
+                    <block wx:if="{{ finishList.length > 0 }}">
+                        <view wx:for="{{ finishList }}" wx:for-item="finishedItem" wx:key="unique"
+                              class="content-child" data-id="{{ finishedItem.receiveRecordId }}" bindtap="changePage">
+                            <view class="title">
+                                <text>{{ finishedItem.participant }}</text>
+                                <image src="../../images/manager@icon-left-arrow.png"></image>
                             </view>
-                            <text>{{ util.getFullDateByFrag(finishedItem.time,"/",true) }}-{{
-                                util.getHourAndMinByFrag(finishedItem.time,":",true) }}
-                            </text>
-                        </view>
-                    </view>
-                </block>
-                <block wx:if="{{ finishList.length <= 0 }}">
-                    <empty type="default" title="暂时没有人完成测评"></empty>
-                </block>
-            </block>
-            <!--完成测评结束-->
-            <!--作答中开始-->
-            <block wx:if="{{ checkedItem === 1 }}">
-                <block wx:if="{{ examiningList.length > 0 }}">
-                    <view wx:for="{{ examiningList }}" wx:for-item="receivedItem" wx:key="unique"
-                          class="content-child">
-                        <view class="title">
-                            <text>{{ receivedItem.participant }}</text>
-                        </view>
-                        <view class="rate">
-                            <view class="rate-info">
-                                <text>作答开始时间：</text>
-                                <text>{{ util.getFullDateByFrag(receivedItem.time,"/",true) }}-{{
-                                    util.getHourAndMinByFrag(receivedItem.time,":",true) }}
+                            <view class="rate">
+                                <view class="rate-info">
+                                    <text wx:if="{{ finishedItem.showSummary }}">{{
+                                        finishedItem.summary }}
+                                    </text>
+                                    <text wx:if="{{ finishedItem.showGrade }}">{{
+                                        finishedItem.grade }}分
+                                    </text>
+                                </view>
+                                <text>{{ util.getFullDateByFrag(finishedItem.time,"/",true) }}-{{
+                                    util.getHourAndMinByFrag(finishedItem.time,":",true) }}
                                 </text>
                             </view>
                         </view>
-                    </view>
+                    </block>
+                    <block wx:if="{{ finishList.length <= 0 }}">
+                        <empty type="default" title="暂时没有人完成测评"></empty>
+                    </block>
                 </block>
-                <block wx:if="{{ examiningList.length <= 0 }}">
-                    <empty type="default" title="暂时没有人在作答"></empty>
+                <!--完成测评结束-->
+                <!--作答中开始-->
+                <block wx:if="{{ checkedItem === 1 }}">
+                    <block wx:if="{{ examiningList.length > 0 }}">
+                        <view wx:for="{{ examiningList }}" wx:for-item="receivedItem" wx:key="unique"
+                              class="content-child">
+                            <view class="title">
+                                <text>{{ receivedItem.participant }}</text>
+                            </view>
+                            <view class="rate">
+                                <view class="rate-info">
+                                    <text>作答开始时间：</text>
+                                    <text>{{ util.getFullDateByFrag(receivedItem.time,"/",true) }}-{{
+                                        util.getHourAndMinByFrag(receivedItem.time,":",true) }}
+                                    </text>
+                                </view>
+                            </view>
+                        </view>
+                    </block>
+                    <block wx:if="{{ examiningList.length <= 0 }}">
+                        <empty type="default" title="暂时没有人在作答"></empty>
+                    </block>
                 </block>
-            </block>
-            <!--作答中结束-->
-            <!--未做答开始-->
-            <block wx:if="{{ checkedItem === 2 }}">
-                <block wx:if="{{ status === 'AVAILABLE' }}">
-                    <empty type="scan" title="{{amount-finishList.length-examiningList.length}}份测评暂未被人扫码作答" paperId="{{ trackInfo.releaseRecordId || releaseRecordId }}"
-                           subtitle="撤回测评"></empty>
+                <!--作答中结束-->
+                <!--未做答开始-->
+                <block wx:if="{{ checkedItem === 2 }}">
+                    <block wx:if="{{ status === 'AVAILABLE' }}">
+                        <empty type="scan" title="{{amount-finishList.length-examiningList.length}}份测评暂未被人扫码作答" paperId="{{ trackInfo.releaseRecordId || releaseRecordId }}"
+                               subtitle="撤回测评"></empty>
+                    </block>
+                    <block wx:elif="{{ status == 'REVOKED' }}">
+                        <empty type="default" title="{{ amount-finishList.length-examiningList.length }}份测评已全部被撤回" subtitle="撤回测评"></empty>
+                    </block>
+                    <block wx:else>
+                        <empty type="default" title="测评已全部被领取了" subtitle="撤回测评"></empty>
+                    </block>
                 </block>
-                <block wx:elif="{{ status == 'REVOKED' }}">
-                    <empty type="default" title="{{ amount-finishList.length-examiningList.length }}份测评已全部被撤回" subtitle="撤回测评"></empty>
-                </block>
-                <block wx:else>
-                    <empty type="default" title="测评已全部被领取了" subtitle="撤回测评"></empty>
-                </block>
-            </block>
-            <!--未做答结束-->
+                <!--未做答结束-->
+            </scroll-view>
         </view>
     </view>
 </view>
@@ -117,7 +120,7 @@
                     <image src="../../../../images/icon/icon@icon-loading.png" class="loading"></image>
                 </van-loading>
             </van-image>
-            <image class="close-icon" src="../../images/manager@icon-close.png" bindtap="closeQrcode"></image>
+            <image class="close-icon" src="/images/icon/icon@icon-close.png" bindtap="closeQrcode"></image>
         </view>
     </view>
 </van-overlay>

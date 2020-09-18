@@ -90,7 +90,7 @@ page{
     color: #070922FF;
 }
 .rate-info {
-
+    display: flex;
 }
 .rate-info > text{
     color: #171C69;
@@ -108,6 +108,7 @@ page{
 .rate{
     display: flex;
     justify-content: space-between;
+    flex-direction: row;
     margin-top: 22rpx;
 }
 .rate > text{

@@ -1,10 +1,25 @@
+const app = getApp();
 Component({
     properties: {
         type: {
             type: String,
-            value: "nineCell"
+            value: "fourCell"
+        },
+        axis: {
+            type: Array,
+            value: []
+        },
+        area: {
+            type: Array,
+            value: []
+        },
+        coordinate: {
+            type: Array,
+            value: []
         }
     },
-    data: {},
+    data: {
+        pixelRate: app.globalData.pixelRate
+    },
     methods: {}
 });

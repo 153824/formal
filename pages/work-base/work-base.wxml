@@ -4,9 +4,9 @@
         <image src="" style="width: 50rpx;height: 44rpx;"></image>
         <text>康师傅集团</text>
     </view>
-    <view class="content">
+    <view class="content" style="height: {{ (windowHeight-tabBarHeight - safeAreaDiff)*pixelRate - 200 }}rpx;">
         <scroll-view class="content-scroll-area"
-                     style="height: {{ windowHeight*pixelRate - (112+120)/pixelRate - ( statusbarHeight + titleHeight )*pixelRate }}rpx;"
+                     style="height: 100%;"
                      scroll-y>
             <!--Start: 我的测评-->
             <view class="program-wrapper">
@@ -28,7 +28,7 @@
                                 <text style="margin-left: 10rpx;">{{evaluationItem.estimatedTime}}分钟</text>
                             </view>
                         </view>
-                        <view style="width: 4rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
+                        <view style="width: 4rpx;height: 114rpx;background-color: #F4F4F4FF;margin-right: 20rpx;"></view>
                         <view class="send-evaluation" bindtap="goToSharePaper"
                               data-evaluation-id="{{ evaluationItem.evaluationId }}"
                               data-count="{{ evaluationItem.available }}"
@@ -152,9 +152,9 @@
             <hola-title id="title" url="work-base/work-base" type="normal"></hola-title>
         </view>
     </view>
-    <view class="content">
+    <view class="content" style="height: {{ (windowHeight-tabBarHeight - safeAreaDiff)*pixelRate - 200 }}rpx;">
         <scroll-view class="content-scroll-area"
-                     style="height: {{ windowHeight*pixelRate - (194+130)/pixelRate - ( statusbarHeight + titleHeight )*pixelRate }}rpx;"
+                     style="height: 100%;"
                      scroll-y>
             <!--Start: 我的测评-->
             <view class="program-wrapper">
@@ -176,7 +176,7 @@
                                 <text style="margin-left: 10rpx;">{{evaluationItem.estimatedTime}}分钟</text>
                             </view>
                         </view>
-                        <view style="width: 4rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
+                        <view style="width: 4rpx;height: 114rpx;background-color: #F4F4F4FF;margin-right: 20rpx;"></view>
                         <view class="send-evaluation" bindtap="goToSharePaper"
                               data-evaluation-id="{{ evaluationItem.evaluationId }}"
                               data-count="{{ evaluationItem.available }}"
@@ -268,7 +268,7 @@
 <!--------------------------------------------------------------------------------------------------------------------->
 <!--Start: 企业微信端非管理员页工作台-测评列表-->
 <block wx:elif="{{ isWxWork && !isWxWorkAdmin }}">
-    <hola-member-report-list></hola-member-report-list>
+    <hola-member-report-list id="hola-member-report-list"></hola-member-report-list>
 </block>
 <!--End: 企业微信端非管理员页工作台-测评列表-->
 <!--------------------------------------------------------------------------------------------------------------------->

@@ -173,8 +173,10 @@ Page({
         },
         success: function(res) {
           var userData = res.data;
+          var globalData = app.globalData.userInfo;
           if (0 == res.code) {
-            wx.setStorageSync("userInfo", userData);
+            app.globalData.userInfo = Object.assign(globalData,userData);
+            wx.setStorageSync("userInfo", Object.assign(globalData,userData));
             wx.setStorageSync("openId", userData.openid);
             wx.setStorageSync("unionId", userData.uid);
             if (draftAnswer) {

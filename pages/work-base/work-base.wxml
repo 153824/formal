@@ -74,7 +74,7 @@
                         </view>
                     </view>
                     <view class="send-evaluation">
-                        <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
                     <view wx:if="{{ false }}" class="new-adding-mark">
                         <text>新</text>
@@ -109,7 +109,7 @@
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
                     <view class="send-evaluation">
-                        <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
                 </view>
             </view>
@@ -226,7 +226,7 @@
                         </view>
                     </view>
                     <view class="send-evaluation">
-                        <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
                     <view wx:if="{{util.isSameDays(reportItem.reportGeneratedAt) && reportItem.unread}}" class="new-adding-mark">
                         <text>新</text>
@@ -261,7 +261,7 @@
                     </view>
                     <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
                     <view class="send-evaluation">
-                        <image src="./images/work-base@icon-plane.png" style="width: 32rpx;height: 32rpx;"></image>
+                        <image src="./images/work-base@icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
                 </view>
             </view>

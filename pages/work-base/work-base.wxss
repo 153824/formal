@@ -95,10 +95,7 @@ page{
     color: #353EE8FF;
 }
 .evaluation-name{
-    max-width: 270rpx;
-    overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;
     font-size: 30rpx;
     font-weight: 500;
 }
@@ -108,16 +105,17 @@ page{
     font-weight: 500;
 }
 .user-info-wrapper{
-    max-width: 200rpx;
+    max-width: 300rpx;
 }
 .user-info{
     display: flex;
-    justify-content: space-between;
+    align-items: center;
     font-size: 30rpx;
     font-weight: 500;
     color: #070922FF;
 }
 .recommend-grade{
+    margin-left: 20rpx;
     padding: 0 14rpx;
     height: 32rpx;
     font-size: 22rpx;

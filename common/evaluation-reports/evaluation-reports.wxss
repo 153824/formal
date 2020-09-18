@@ -50,10 +50,7 @@
     color: #353EE8FF;
 }
 .evaluation-name{
-    max-width: 270rpx;
-    overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;
     font-size: 30rpx;
     font-weight: 500;
 }
@@ -63,22 +60,22 @@
     font-weight: 500;
 }
 .user-info-wrapper{
-    max-width: 200rpx;
+    max-width: 300rpx;
 }
 .user-info{
     display: flex;
-    justify-content: space-between;
+    align-items: center;
     font-size: 30rpx;
     font-weight: 500;
     color: #070922FF;
 }
 .recommend-grade{
     padding: 0 14rpx;
-    height: 32rpx;
     font-size: 22rpx;
     border-radius: 30rpx;
     color: #353EE8FF;
     background-color: #353EE812;
+    margin-left: 20rpx;
 }
 .send-evaluation{
     display: flex;

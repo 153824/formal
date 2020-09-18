@@ -128,6 +128,13 @@
 					"pathName": "pages/work-base/components/track-detail/track-detail",
 					"query": "releaseRecordId=5f62f8127b95db027d358f33&shareAt=1600336240627",
 					"scene": null
+				},
+				{
+					"id": 9,
+					"name": "work-领取测评",
+					"pathName": "pages/work-base/components/guide/guide",
+					"query": "releaseRecordId=5e6ee5e3546eaad5ca38cc34",
+					"scene": null
 				}
 			]
 		}

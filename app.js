@@ -213,17 +213,16 @@ App({
                 },
                 noLoading: true,
                 success: function (res) {
-                    that.globalData.userMsg = res.userMsg || {}
-                    var userData = res.data
-                    wx.hideLoading()
+                    that.globalData.userMsg = res.userMsg || {};
+                    var userData = res.data;
+                    wx.hideLoading();
                     if (0 === res.code) {
                         var userMsg = that.globalData.userMsg;
                         wx.setStorageSync('userInfo', userData);
-                        wx.setStorageSync('openId', userData.openid || userMsg.openid)
-                        wx.setStorageSync('unionId', userData.uid || userMsg.unionid)
+                        wx.setStorageSync('openId', userData.openid || userMsg.openid);
+                        wx.setStorageSync('unionId', userData.uid || userMsg.unionid);
                         that.globalData.userInfo = Object.assign(userData,
                             that.globalData.userInfo || {})
-                        that.getUserInfo();
                         that.isLogin = true
                         that.getMyTeamList(that.checkUser);
                         resolve({openId: userData.openid || userMsg.openid})
@@ -281,6 +280,7 @@ App({
                     that.globalData.userInfo = Object.assign(userData,
                         that.globalData.userInfo || {});
                     console.log("that.globalData.userInfo： ", that.globalData.userInfo);
+                    that.getUserInfo();
                     that.isLogin = true;
                     that.getMyTeamList(that.checkUser);
                     resolve({openId: userData.openid || userMsg.openid});
@@ -310,20 +310,22 @@ App({
         const LOCAL_USER_INFO = wx.getStorageSync('USER_DETAIL');
         this.checkUser = null;
         if (Object.keys(LOCAL_USER_INFO).length > 0) {
-            common.setUserDetail.call(this, [LOCAL_USER_INFO]);
+            common.setUserDetail.apply(that, [LOCAL_USER_INFO]);
             wx.hideLoading();
             that.getMyTeamList(callBack);
         } else {
+            console.log("getUserInfo get in!")
             this.doAjax({
-                url: `http://66e570432e17.ap.ngrok.io/wework/users/${this.globalData.userMsg.id || this.globalData.userInfo.id}`,
+                url: `http://66e570432e17.ap.ngrok.io/wework/users/${that.globalData.userMsg.id || that.globalData.userInfo.id}`,
                 method: 'get',
                 noLoading: true,
                 success: function (res) {
+                    console.log("getUserInfo： ",res);
                     wx.setStorage({
                         key: 'USER_DETAIL',
                         data: res
                     });
-                    common.setUserDetail.call(this, [res]);
+                    common.setUserDetail.apply(that, [res]);
                     wx.hideLoading();
                     that.getMyTeamList(callBack);
                 },
@@ -394,7 +396,7 @@ App({
             url = `http://66e570432e17.ap.ngrok.io/wework/users/${that.globalData.userInfo.id}`
         }
         params.data = params.data || {};
-        params.data['userId'] = (that.globalData.userInfo || {}).id || '';
+        params.data['userId'] = (that.globalData.userInfo || wx.getStorageSync("userInfo") || {}).id || '';
         params.data['teamId'] = params.data['teamId'] || that.teamId;
         params.data['teamRole'] = that.teamRole;
         wx.request({
@@ -519,6 +521,7 @@ App({
                 var obj = LOCAL_MY_TEAM_LIST[0]
                 var teams = []
                 that.teamId = obj.objectId
+                wx.setStorageSync("MY_TEAM_ID",obj.objectId);
                 that.teamName = obj.name
                 that.teamRole = obj.role
                 that.globalData.team = obj
@@ -566,6 +569,7 @@ App({
                         var obj = list[0]
                         var teams = []
                         that.teamId = obj.objectId
+                        wx.setStorageSync("MY_TEAM_ID",obj.objectId);
                         that.teamName = obj.name
                         that.teamRole = obj.role
                         that.globalData.team = obj

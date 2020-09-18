@@ -103,6 +103,16 @@ var richTextFilter = function(nodeString=""){
   return targetNode;
 };
 
+var arrayEleIsSame = function(compare=[],target=[]){
+  compare = compare.toString(),target = target.toString();
+  console.log(compare,target)
+  if(compare === target){
+    return true;
+  }else{
+    return false;
+  }
+}
+
 module.exports = {
   getMonthAndDayByFrag: getMonthAndDayByFrag,
   getHourAndMinByFrag: getHourAndMinByFrag,
@@ -113,5 +123,6 @@ module.exports = {
   isIncludes: isIncludes,
   toFix: toFix,
   richTextFilter: richTextFilter,
-  isSameDays: isSameDays
+  isSameDays: isSameDays,
+  arrayEleIsSame: arrayEleIsSame
 };

@@ -57,10 +57,11 @@ App({
     isTest: false,
     qiniuUpload: qiniuUpload,
     isIphoneX: false,
-    host: "http://192.168.0.101:3000",
+    // host: "http://192.168.0.101:3000",
     // host: "https://api.luoke101.com",
     // host: 'https://h5.luoke101.com',
     // host: "http://192.168.0.225:3000",
+    host: "http://api.dev.luoke101.int",
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
         userInfo: null,
@@ -260,7 +261,7 @@ App({
         const that = this;
         const wxWorkUserLoginPromise = new Promise((resolve, reject) => {
             that.doAjax({
-                url: `http://66e570432e17.ap.ngrok.io/wework/auth/ww2f7f6d77669a28a9/ma`,
+                url: `wework/auth/ww2f7f6d77669a28a9/ma`,
                 method: 'get',
                 data: {
                     code: code
@@ -316,7 +317,7 @@ App({
         } else {
             console.log("getUserInfo get in!")
             this.doAjax({
-                url: `http://66e570432e17.ap.ngrok.io/wework/users/${that.globalData.userMsg.id || that.globalData.userInfo.id}`,
+                url: `wework/users/${that.globalData.userMsg.id || that.globalData.userInfo.id}`,
                 method: 'get',
                 noLoading: true,
                 success: function (res) {
@@ -388,12 +389,11 @@ App({
                 title: '正在请求...',
             });
         }
-        console.log(params.url.indexOf('http://66e570432e17.ap.ngrok.io/wework/auth/ww2f7f6d77669a28a9/ma') !== -1);
-        if (params.url.indexOf('http://66e570432e17.ap.ngrok.io/wework/auth/ww2f7f6d77669a28a9/ma') !== -1) {
-            url = "http://66e570432e17.ap.ngrok.io/wework/auth/ww2f7f6d77669a28a9/ma";
+        if (params.url.indexOf('wework/auth/ww2f7f6d77669a28a9/ma') !== -1) {
+            url = `${this.host}/wework/auth/ww2f7f6d77669a28a9/ma`;
         }
-        if (params.url.indexOf("http://66e570432e17.ap.ngrok.io/wework/users") !== -1) {
-            url = `http://66e570432e17.ap.ngrok.io/wework/users/${that.globalData.userInfo.id}`
+        if (params.url.indexOf("wework/users") !== -1) {
+            url = `${this.host}/wework/users/${that.globalData.userInfo.id}`;
         }
         params.data = params.data || {};
         params.data['userId'] = (that.globalData.userInfo || wx.getStorageSync("userInfo") || {}).id || '';

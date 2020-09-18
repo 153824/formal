@@ -70,7 +70,7 @@
 					"id": 0,
 					"name": "工作台",
 					"pathName": "pages/work-base/work-base",
-					"query": "id=5f4f1035b03e4b23148078c5",
+					"query": "",
 					"scene": null
 				},
 				{
@@ -113,6 +113,20 @@
 					"name": "测评详情",
 					"pathName": "pages/station/components/detail/detail",
 					"query": "id=5f5d93b80699c3608a10f090",
+					"scene": null
+				},
+				{
+					"id": 7,
+					"name": "报告详情",
+					"pathName": "pages/report/report",
+					"query": "receiveRecordId=5f61c79aad471d56600f658e",
+					"scene": null
+				},
+				{
+					"id": 8,
+					"name": "分享-领取使用记录",
+					"pathName": "pages/work-base/components/track-detail/track-detail",
+					"query": "releaseRecordId=5f62f8127b95db027d358f33&shareAt=1600336240627",
 					"scene": null
 				}
 			]

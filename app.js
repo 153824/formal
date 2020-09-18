@@ -221,7 +221,7 @@ App({
                         var userMsg = that.globalData.userMsg;
                         wx.setStorageSync('userInfo', userData);
                         wx.setStorageSync('openId', userData.openid || userMsg.openid);
-                        wx.setStorageSync('unionId', userData.uid || userMsg.unionid);
+                        // wx.setStorageSync('unionId', userData.uid || userMsg.unionid);
                         that.globalData.userInfo = Object.assign(userData,
                             that.globalData.userInfo || {})
                         that.isLogin = true
@@ -277,7 +277,7 @@ App({
                     const userMsg = that.globalData.userMsg;
                     wx.setStorageSync('userInfo', userData);
                     wx.setStorageSync('openId', userData.openid || userMsg.openid);
-                    wx.setStorageSync('unionId', userData.uid || userMsg.unionid);
+                    // wx.setStorageSync('unionId', userData.uid || userMsg.unionid);
                     that.globalData.userInfo = Object.assign(userData,
                         that.globalData.userInfo || {});
                     console.log("that.globalData.userInfo： ", that.globalData.userInfo);
@@ -290,7 +290,7 @@ App({
                     reject(err);
                 }
             })
-        })
+        });
         return wxWorkUserLoginPromise;
     },
 

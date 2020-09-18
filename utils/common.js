@@ -7,14 +7,16 @@
  * @date: 2020/8/20
 */
 function setUserDetail(LOCAL_USER_INFO) {
-    const userData = LOCAL_USER_INFO.data;
-    if (0 === LOCAL_USER_INFO.code) {
+    console.log("LOCAL_USER_INFO: ",LOCAL_USER_INFO);
+    const userData = LOCAL_USER_INFO;
+    if (LOCAL_USER_INFO) {
+        console.log("this： ",this);
         const userMsg = this.globalData.userMsg;
-        wx.setStorageSync('userInfo', userData);
+        wx.setStorageSync('userInfo', Object.assign(userData,this.globalData.userInfo || {}));
         wx.setStorageSync('openId', userData.openid || userMsg.openid);
         wx.setStorageSync('unionId', userData.uid || userMsg.unionid);
-        this.globalData.userInfo = Object.assign(
-            this.globalData.userInfo || {}, userData)
+        this.globalData.userInfo = Object.assign(userData,this.globalData.userInfo || {});
+        console.log("Object.assign(this.globalData.userInfo || {}, userData): ",this.globalData.userInfo);
     }
 }
 /**

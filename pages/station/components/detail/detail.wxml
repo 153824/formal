@@ -82,7 +82,7 @@
                       subIcon="../../images/icon/icon@banner-ticket.gif" subtitle="立即领券 >" icon="false"></meal>
             </button>
             <view class="meal" bindtap="buyByTicket">
-                <meal isShow="{{ hasVoucher }}" icon="false"
+                <meal isShow="{{ hasVoucher && !evaluationVoucherInfo.isBeginner }}" icon="false"
                       title="您有{{ experienceTicket + officialTicket + experienceTicket + shareTicket + certificateTicket + deprecatedTicket }}张体验券可用于本测评"
                       subtitle="立即使用 >"></meal>
             </view>

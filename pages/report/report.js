@@ -335,7 +335,11 @@ Page({
         canvasLoading: true,
         radarIndicator: "",
         radarValue: "",
-        radarLoading: true
+        radarLoading: true,
+        histogramYAxis: [[]],
+        limit: [[]],
+        histogramValues: [[]],
+        referLines: [[]]
     },
 
     onLoad: function (options) {
@@ -465,9 +469,9 @@ Page({
                 return;
             }
             let now = new Date().getFullYear();
-            let userMsg = res.report.userMsg;
-            let t = new Date(userMsg.birthday).getFullYear();
-            res.report.userMsg.age = now - t + 1;
+            let participantInfo = res.participantInfo;
+            let t = new Date(participantInfo.birthday).getFullYear();
+            res.participantInfo.age = now - t + 1;
             res.report.finishTime = app.changeDate(res.report.finishTime, "yyyy/MM/dd hh:mm");
             let timeNormal = 1; //作答时长正常
             let answeTimeSatr = +res.report.answeTimeSatr;
@@ -560,6 +564,7 @@ Page({
             res.report["teamRole"] = (app.teamId == res.teamId) ? app.teamRole : 1;
             res.report["showPage"] = true;
             that.setData(res);
+            console.log("report: ",res)
             app.doAjax({
                 url: "userOrderMsg",
                 method: "get",
@@ -602,7 +607,14 @@ Page({
             value_2 = {};
             indicator_2 = {};
             var objs = res.report.dimension;
+            let histogramYAxis = [];
+            let limit = [];
+            let histogramValues = [];
+            let lines = []
             for (var n in objs) {
+                const targetHistogramYAxisArr = [];
+                const targetLimitArr = [];
+                const targetHistogramValuesArr = [];
                 var arr = objs[n].subclass;
                 var newChild = [];
                 radarValue[n] = radarValue[n] || [];
@@ -614,16 +626,23 @@ Page({
                     var node = arr[i];
                     if (showSubScore === 'average') {
                         radarValue[n].push(node.average);
+                        targetHistogramValuesArr.push(node.average);
                     } else if (!showSubScore) {
                         radarValue[n].push(node.average);
+                        targetHistogramValuesArr.push(node.average);
                     } else {
                         radarValue[n].push(node.subTotal);
+                        targetHistogramValuesArr.push(node.subTotal)
                     }
+                    targetHistogramYAxisArr.push(node.name);
+                    targetLimitArr.push(objs[n].min);
+                    targetLimitArr.push(objs[n].max);
                     radarIndicator[n].push({
                         text: node.name,
                         color: "#323541",
                         max: objs[n].max || 5
                     });
+                    console.log("targetLimitArr: ",node);
                     indicator_2[n].push({
                         value: node.name,
                         textStyle: {
@@ -641,11 +660,14 @@ Page({
                     });
                     newChild.push(node);
                 }
+                histogramYAxis.push(targetHistogramYAxisArr);
+                limit.push(targetLimitArr);
+                histogramValues.push(targetHistogramValuesArr);
+                lines.push(objs[n].scoreLinesObj);
                 that.setData({
                     radarIndicator: JSON.stringify(radarIndicator),
-                    radarValue: JSON.stringify(radarValue)
+                    radarValue: JSON.stringify(radarValue),
                 });
-                console.log("report.js: ", radarIndicator, radarValue);
                 newChild.sort(function (it1, it2) {
                     return it2.average - it1.average;
                 });
@@ -653,6 +675,12 @@ Page({
                 var keys = Object.keys(newChild);
                 objs[n].subclass[keys[0]]["active"] = "active"
             }
+            that.setData({
+                histogramYAxis: histogramYAxis,
+                limit: limit,
+                histogramValues: histogramValues,
+                lines: lines
+            })
             res["id"] = id;
             var total1Full = res.report.generalTotal100;
             try {
@@ -683,7 +711,7 @@ Page({
                 res.fillBlank.push("");
             }
             that.setData(res);
-            console.log("res: ", res);
+            // console.log("res: ", res);
             this.getEvaluationQues();
         });
     },

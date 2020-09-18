@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "hola-track": "../../../../common/track/track"
+  },
   "navigationBarTitleText": "作答追踪"
 }

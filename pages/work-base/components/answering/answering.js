@@ -643,9 +643,9 @@ Page({
         }
         if (app.isTest) {
             wx.redirectTo({
-                url: '../done/done?id='+ that.data.receiveRecordId +'+&status=' + that.data.status + "&reportPermit=" + that.data.reportPermit
+                url: '../done/done?id=' + that.data.receiveRecordId + '+&status=' + that.data.status + "&reportPermit=" + that.data.reportPermit
             });
-            console.log('../done/done?id='+that.data.receiveRecordId+'&status=' + that.data.status + "&reportPermit=" + that.data.reportPermit);
+            console.log('../done/done?id=' + that.data.receiveRecordId + '&status=' + that.data.status + "&reportPermit=" + that.data.reportPermit);
             return;
         }
         var now = new Date().getTime();
@@ -665,7 +665,7 @@ Page({
         answer["educationName"] = educationName; //教育学历
         answer["username"] = data.username; //姓名
         answer["imgUrl"] = data.imgUrl; //头像
-        if(wx.getStorageSync("userInfo")["nickname"] && answer["username"] && answer["username"] === "好啦访客"){
+        if (wx.getStorageSync("userInfo")["nickname"] && answer["username"] && answer["username"] === "好啦访客") {
             answer["username"] = wx.getStorageSync("userInfo")["nickname"]
         }
         app.doAjax({
@@ -834,7 +834,7 @@ Page({
             var chapterTime = data.chapterTime || {};
             chapterTime[activeChapterId]["et"] = new Date().getTime();
         }
-        if(wx.getStorageSync("userInfo")["nickname"] && data.username === "好啦访客"){
+        if (wx.getStorageSync("userInfo")["nickname"] && data.username === "好啦访客") {
             data.username = wx.getStorageSync("userInfo")["nickname"]
         }
         var draftAnswer = {
@@ -858,7 +858,7 @@ Page({
             url: "receive_records/update_answer",
             method: "POST",
             data: {
-                receiveRecordId: data.id,
+                receiveRecordId: data.receiveRecordId,
                 draft: draftAnswer
             },
             noLoading: true,

@@ -329,9 +329,10 @@ Page({
 
   onShareAppMessage: function () {
     const {trackId,releaseRecordId} = this.data;
+    console.log("trackId,releaseRecordId: ",trackId,releaseRecordId)
     return {
       title: `邀请您查看作答记录`,
-      path: `pages/user-center/components/receive-reports/receive-reports?releaseRecordId=${trackId || releaseRecordId}&shareAt=${new Date().getTime()}&tabIndex=1`,
+      path: `pages/work-base/components/track-detail/track-detail?releaseRecordId=${trackId || releaseRecordId}&shareAt=${new Date().getTime()}&tabIndex=1`,
       imageUrl: "http://ihola.luoke101.com/wxShareImg.png"
     };
   },

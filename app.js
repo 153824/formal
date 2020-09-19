@@ -61,8 +61,8 @@ App({
     // host: "https://api.luoke101.com",
     // host: 'https://h5.luoke101.com',
     // host: "http://192.168.0.225:3000",
-    host: "http://api.dev.luoke101.int",
-    // host: "http://66e570432e17.ap.ngrok.io",
+    // host: "http://api.dev.luoke101.int",
+    host: "http://66e570432e17.ap.ngrok.io",
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
         userInfo: null,
@@ -111,18 +111,31 @@ App({
         if (sysMsg.environment === 'wxwork') {
             this.wxWorkInfo.isWxWork = true;
         }
+        console.log("I run this.wxWorkInfo.isWxWork-0",this.wxWorkInfo.isWxWork)
         if (this.wxWorkInfo.isWxWork) {
             const that = this;
+            console.log("I run this.wxWorkInfo.isWxWork-1",this.wxWorkInfo.isWxWork)
             wx.qy.login({
                 success: res => {
-                    that.wxWorkUserLogin(res.code).then(res => {
+                    that.wxWorkUserLogin(res.code).then(data => {
                         if (that.wxWorkInfo.isWxWorkAdmin) {
-                            wx.reLaunch({
-                                url: "/pages/work-base/work-base?isWxWorkAdmin=true&maskTrigger=true"
+                            wx.switchTab({
+                                url: "/pages/work-base/work-base?isWxWorkAdmin=true&maskTrigger=true",
+                                success: function () {
+                                    let page = getCurrentPages().pop();
+                                    console.log("getCurrentPages",getCurrentPages);
+                                    if (page == undefined || page == null) return;
+                                    page.onLoad();
+                                }
                             })
                         }
+                    }).catch(err=>{
+                        console.log("that.wxWorkInfo.isWxWork: ",err);
                     })
                 },
+                fail: function (err) {
+                    console.error(err);
+                }
             })
         } else {
             /**
@@ -222,10 +235,9 @@ App({
                         var userMsg = that.globalData.userMsg;
                         wx.setStorageSync('userInfo', userData);
                         wx.setStorageSync('openId', userData.openid || userMsg.openid);
-                        // wx.setStorageSync('unionId', userData.uid || userMsg.unionid);
                         that.globalData.userInfo = Object.assign(userData,
                             that.globalData.userInfo || {})
-                        that.isLogin = true
+                        that.isLogin = true;
                         that.getMyTeamList(that.checkUser);
                         resolve({openId: userData.openid || userMsg.openid})
                     } else {
@@ -246,7 +258,7 @@ App({
                     wx.hideLoading()
                 },
             })
-        })
+        });
         return userLoginPromise
     },
 
@@ -260,9 +272,10 @@ App({
      */
     wxWorkUserLogin: function (code) {
         const that = this;
-        const wxWorkUserLoginPromise = new Promise((resolve, reject) => {
+        console.log("that: ",that);
+        return new Promise((resolve, reject) => {
             that.doAjax({
-                url: `wework/auth/ww2f7f6d77669a28a9/ma`,
+                url: `wework/auth/ww4e296f6312e1ee97/ma`,
                 method: 'get',
                 data: {
                     code: code
@@ -272,17 +285,14 @@ App({
                         that.wxWorkInfo.isWxWorkAdmin = true;
                         wx.setStorageSync('isWxWorkAdmin', true);
                     }
-                    console.log("wxWorkUserLogin: ", res);
                     that.globalData.userMsg = res.userMsg || {};
                     const userData = res;
                     const userMsg = that.globalData.userMsg;
                     wx.setStorageSync('userInfo', userData);
                     wx.setStorageSync('openId', userData.openid || userMsg.openid);
-                    // wx.setStorageSync('unionId', userData.uid || userMsg.unionid);
                     that.globalData.userInfo = Object.assign(userData,
                         that.globalData.userInfo || {});
-                    console.log("that.globalData.userInfo： ", that.globalData.userInfo);
-                    that.getUserInfo();
+                    that.teamId = res.teamId;
                     that.isLogin = true;
                     that.getMyTeamList(that.checkUser);
                     resolve({openId: userData.openid || userMsg.openid});
@@ -292,7 +302,6 @@ App({
                 }
             })
         });
-        return wxWorkUserLoginPromise;
     },
 
     /**
@@ -316,13 +325,11 @@ App({
             wx.hideLoading();
             that.getMyTeamList(callBack);
         } else {
-            console.log("getUserInfo get in!")
             this.doAjax({
                 url: `wework/users/${that.globalData.userMsg.id || that.globalData.userInfo.id}`,
                 method: 'get',
                 noLoading: true,
                 success: function (res) {
-                    console.log("getUserInfo： ",res);
                     wx.setStorage({
                         key: 'USER_DETAIL',
                         data: res
@@ -390,16 +397,16 @@ App({
                 title: '正在请求...',
             });
         }
-        if (params.url.indexOf('wework/auth/ww2f7f6d77669a28a9/ma') !== -1) {
-            url = `${this.host}/wework/auth/ww2f7f6d77669a28a9/ma`;
+        if (params.url.indexOf('wework/auth/ww4e296f6312e1ee97/ma') !== -1) {
+            url = `${this.host}/wework/auth/ww4e296f6312e1ee97/ma`;
         }
         if (params.url.indexOf("wework/users") !== -1) {
             url = `${this.host}/wework/users/${that.globalData.userInfo.id}`;
         }
         params.data = params.data || {};
-        params.data['userId'] = (that.globalData.userInfo || wx.getStorageSync("userInfo") || {}).id || '';
-        params.data['teamId'] = params.data['teamId'] || that.teamId;
-        params.data['teamRole'] = that.teamRole;
+        params.data['userId'] = (that.globalData.userInfo || wx.getStorageSync("userInfo")).id || '';
+        params.data['teamId'] = that.teamId ||wx.getStorageSync("userInfo").teamId || params.data['teamId']||"";
+        params.data['teamRole'] = that.teamRole || "";
         wx.request({
             url: url,
             method: params.method || 'POST',
@@ -409,7 +416,6 @@ App({
                 wx.hideLoading();
                 var retData = ret.data;
                 if (retData.code) {
-                    console.log("retData： ", retData);
                     if (params.error) return params.error(retData);
                     wx.showToast({
                         title: retData.msg,
@@ -422,10 +428,12 @@ App({
                     try {
                         return params.success(retData)
                     } catch (e) {
+                        console.error(e)
                     }
                 }
             },
-            error: function () {
+            error: function (err) {
+                console.error(err)
                 wx.hideLoading()
             },
         })
@@ -544,7 +552,7 @@ App({
                 method: 'get',
                 noLoading: true,
                 data: {
-                    teamId: that.teamId,
+                    teamId: that.teamId || wx.getStorageSync("userInfo").teamId,
                     page: 1,
                     pageSize: 12,
                 },

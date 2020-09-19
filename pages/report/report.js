@@ -347,9 +347,10 @@ Page({
         wx.hideShareMenu();
         const that = this;
         ctx = wx.createCanvasContext('canvasArcCir');
-        const id = that.data.id || options.receiveRecordId;
+        const id = that.data.id || options.receiveRecordId || options.receivedRecordId;
         var shareKey = options.key || "";
         var command = options.command || "";
+        console.log("verifyReportIsCanRead: ",options);
         this.setData({
             id: id,
             shareKey: shareKey,
@@ -408,18 +409,17 @@ Page({
     },
 
     acceptReport: function (option) {
-        const {receiveRecordId, shareAt, userId} = option;
+        const {receivedRecordId, shareAt, userId} = option;
         const acceptReportPromise = new Promise((resolve, reject) => {
             app.doAjax({
                 url: `reports/accept`,
                 method: 'post',
                 data: {
-                    receivedRecordId: receiveRecordId,
+                    receivedRecordId: receivedRecordId,
                     shareAt: shareAt,
                     userId: userId
                 },
                 success: function (res) {
-                    res.code = -1
                     if (res.code !== -1) {
                         resolve(true)
                     } else {

@@ -7,8 +7,7 @@ Page({
     isMp: false, //是否显示关注公众号
   },
   onLoad: function(options) {
-    app.shareId = ""; //完成答题后清除领取测评ID
-    var id = options.id;
+    const id = options.id;
     console.log("options.reportMeet: ", options);
     this.setData({
       isMp: false,
@@ -74,7 +73,7 @@ Page({
   toDetail: function(e) {
     var id = this.data.id;
     wx.navigateTo({
-      url: '../../../report/report?id=' + id
+      url: '../../../report/report?receiveRecordId=' + id
     });
   },
 })

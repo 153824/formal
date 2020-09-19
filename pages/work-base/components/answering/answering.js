@@ -221,7 +221,7 @@ Page({
         const that = this;
         console.log("wx.getStorageSync(\"openId\")", wx.getStorageSync("openId"));
         app.doAjax({
-            url: "/userDetail",
+            url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
             method: "get",
             data: {
                 openid: wx.getStorageSync("openId") || app.globalData.userInfo.openId,
@@ -230,7 +230,7 @@ Page({
                 console.log(res);
                 that.setData({
                     getphoneNum: true,
-                    phoneNumber: res.data.phone || "微信一键授权"
+                    phoneNumber: res.phone || "微信一键授权"
                 });
             }
         })
@@ -939,7 +939,7 @@ Page({
                     data: userMsg,
                     success: function (ret) {
                         app.doAjax({
-                            url: "/userDetail",
+                            url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
                             method: "get",
                             data: {
                                 openid: wx.getStorageSync("openId"),
@@ -947,7 +947,7 @@ Page({
                             success: function (res) {
                                 that.setData({
                                     getphoneNum: true,
-                                    phoneNumber: res.data.phone || '微信一键授权'
+                                    phoneNumber: res.phone || '微信一键授权'
                                 });
                             }
                         });

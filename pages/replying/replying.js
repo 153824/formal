@@ -231,7 +231,7 @@ Page({
   onShow: function () {
     const that = this;
     app.doAjax({
-      url: "/userDetail",
+      url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
       method: "get",
       data: {
         openid: wx.getStorageSync("openId") || app.globalData.userInfo.openId,
@@ -239,7 +239,7 @@ Page({
       success: function (res) {
         that.setData({
           getphoneNum: true,
-          phoneNumber: res.data.phone
+          phoneNumber: res.phone
         });
       }
     })
@@ -933,7 +933,7 @@ Page({
           data: userMsg,
           success: function (ret) {
             app.doAjax({
-              url: "/userDetail",
+              url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
               method: "get",
               data: {
                 openid: wx.getStorageSync("openId"),
@@ -941,7 +941,7 @@ Page({
               success: function (res) {
                 that.setData({
                   getphoneNum: true,
-                  phoneNumber: res.data.phone
+                  phoneNumber: res.phone
                 });
               }
             });

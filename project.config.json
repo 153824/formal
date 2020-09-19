@@ -27,13 +27,13 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.12.2",
-	"appid": "wx85cde7d3e8f3d949",
+	"appid": "wxdb1dcb4a9e212d32",
 	"projectname": "hola-new",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
 	"isGameTourist": false,
-	"simulatorType": "wechat",
+	"simulatorType": "qywx_simulator_plugin",
 	"simulatorPluginLibVersion": {
 		"qywx_simulator_plugin": "2.4.0"
 	},
@@ -70,7 +70,7 @@
 					"id": 0,
 					"name": "工作台",
 					"pathName": "pages/work-base/work-base",
-					"query": "",
+					"query": "q=https://api.luoke101.com/s/5f65c9f20f32bd1062717f18",
 					"scene": null
 				},
 				{

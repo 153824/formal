@@ -33,7 +33,7 @@ Page({
         userInfo: app.globalData.userInfo || wx.getStorageSync("userInfo"),
         currTeam: app.teamName,
         isIPhoneXModel: app.isIphoneX,
-        safeAreaDiff: 0
+        safeAreaDiff: 0,
     },
 
     onLoad: function (option = {id: "", isWxWorkAdmin: false, maskTrigger: false}) {
@@ -47,9 +47,22 @@ Page({
         let {isWxWorkAdmin, isWxWork} = this.data;
         if (optionIsWxWorkAdmin) {
             isWxWorkAdmin = optionIsWxWorkAdmin;
+            console.log("optionIsWxWorkAdmin： ",isWxWorkAdmin);
             this.setData({
                 isWxWorkAdmin: isWxWorkAdmin,
                 maskTrigger: option.maskTrigger
+            })
+        }
+        let releaseEvaluationId = "";
+        if (option.q) {
+            const q = decodeURIComponent(option.q);
+            const idArray = q.split("/");
+            releaseEvaluationId = idArray[idArray.length - 1] || "";
+            console.log("option.q,releaseEvaluationId: ",option.q,releaseEvaluationId)
+        }
+        if(releaseEvaluationId){
+            wx.navigateTo({
+                url: `/pages/work-base/components/guide/guide?releaseRecordId=${releaseEvaluationId}`,
             })
         }
         if (!isWxWork) {
@@ -228,30 +241,7 @@ Page({
                 })
             })
         }
-        if (isWxWork && !isWxWorkAdmin) {
-            setTimeout(() => {
-                that.setData({
-                    maskTrigger: false
-                })
-            }, 555);
-            if (option.id) {
-                app.shareId = option.id;
-            }
-            const userInfo = wx.getStorageSync("userInfo");
-            if (userInfo && userInfo.avatar) {
-                this.setData({
-                    isLogin: true
-                });
-                return;
-            }
-            if (app.shareId) {
-                wx.reLaunch({
-                    url: "./components/guide/guide?id=" + app.shareId
-                });
-                app.shareId = null;
-                return;
-            }
-        }
+        if (isWxWork && !isWxWorkAdmin) {}
         wx.getSystemInfo({
             success: function (res) {
                 console.log("wx.getSystemInfo: ", res);
@@ -331,23 +321,6 @@ Page({
                 })
             }
         })
-    },
-
-    changePage: function (e) {
-        var that = this;
-        app.isTest = false;
-        if (app.shareId) { //跳转到答题界面
-            wx.reLaunch({
-                url: "./components/guide/guide?id=" + app.shareId
-            });
-            app.shareId = null;
-        } else {
-            // wx.reLaunch({
-            //     url: "./components/member-report-list/member-report-list"
-            // });
-            // console.log("app.wxWorkInfo: ",app.wxWorkInfo)
-            that.onLoad();
-        }
     },
     /**
      * 进入测评模拟测试

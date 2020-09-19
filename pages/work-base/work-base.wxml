@@ -119,25 +119,6 @@
     <hola-tab-bar active="{{ 0 }}"></hola-tab-bar>
 </view>
 <!--End: 企业微信端管理员页工作台-->
-<!--------------------------------------------------------------------------------------------------------------------->
-<!--Start: 企业微信端非管理员页工作台-未登录-->
-<view wx:elif="{{ isWxWork&&!isWxWorkAdmin && !isLogin }}">
-    <view class="container font">
-        <view class="bottomView">
-            <view class="mindMsg">
-                <view>您需要授权微信登录后</view>
-                <view>才能查看到企业发给您的测评</view>
-            </view>
-            <button style="margin-top:26rpx;" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
-                <image class="btnicon" src="./images/work-base@icon-weixin.png"/>
-                微信授权登录
-            </button>
-        </view>
-    </view>
-    <hola-tab-bar active="{{ active }}"></hola-tab-bar>
-</view>
-<!--End: 企业微信端非管理员页工作台（测评任务、答题端小程序）-->
-<!--------------------------------------------------------------------------------------------------------------------->
 <!--Start: 企业微信端非管理员页工作台-测评列表-->
 <block wx:elif="{{ !isWxWork }}">
     <view class="head">

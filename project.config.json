@@ -33,7 +33,7 @@
 		"hidedInDevtools": []
 	},
 	"isGameTourist": false,
-	"simulatorType": "qywx_simulator_plugin",
+	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {
 		"qywx_simulator_plugin": "2.4.0"
 	},
@@ -131,9 +131,9 @@
 				},
 				{
 					"id": 9,
-					"name": "work-领取测评",
-					"pathName": "pages/work-base/components/guide/guide",
-					"query": "releaseRecordId=5e6ee5e3546eaad5ca38cc34",
+					"name": "扫码领取测评",
+					"pathName": "pages/work-base/work-base",
+					"query": "q=https://api.luoke101.com/s/5f65efca0f32bd1062717f22",
 					"scene": null
 				}
 			]

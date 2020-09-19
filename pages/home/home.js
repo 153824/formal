@@ -45,17 +45,18 @@ Page({
             that.setData(res);
             homePagesPromiseList = res.column.map((v, k) => {
                 return new Promise((resolve, reject) => {
-                    app.doAjax({
-                        url: `homePages/columns/${v.column_id}/evaluations`,
-                        method: "get",
-                        noLoading: true,
-                        success: function (res) {
-                            resolve({columnId: v.column_id, data: res.data});
-                        },
-                        fail: function (err) {
-                            reject(err);
-                        }
-                    });
+                    // app.doAjax({
+                    //     url: `homePages/columns/${v.column_id}/evaluations`,
+                    //     method: "get",
+                    //     noLoading: true,
+                    //     success: function (res) {
+                    //         resolve({columnId: v.column_id, data: res.data});
+                    //     },
+                    //     fail: function (err) {
+                    //         reject(err);
+                    //     }
+                    // });
+                    reject(false);
                 })
             });
             return Promise.all(homePagesPromiseList)

@@ -873,13 +873,13 @@ Page({
             }));
             updatedUserMobilePromise.then(() => {
                 app.doAjax({
-                    url: "userDetail",
+                    url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
                     method: "get",
                     data: {
                         openid: wx.getStorageSync("openId"),
                     },
                     success: function (res) {
-                        if (res.data.phone) {
+                        if (res.phone) {
                             that.getNewerTicket();
                         }
                         wx.aldstat.sendEvent('授权手机号成功', {

@@ -7,6 +7,10 @@ Page({
     },
     onLoad: function (options) {
         const {isWxWork, isWxWorkAdmin} = this.data;
+        this.setData({
+            isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
+            userInfo: wx.getStorageSync("userInfo") || app.globalData.userInfo || app.globalData.userMsg
+        });
         if (!isWxWork) {
             console.log("this.data.userInfo: ",this.data.userInfo)
         } else if (isWxWork && isWxWorkAdmin) {
@@ -17,8 +21,11 @@ Page({
 
     },
     onShow() {
+        console.log("this.data.userInfo: ",this.data.userInfo)
         this.setData({
-            userInfo:  wx.getStorageSync("userInfo") || app.globalData.userInfo || app.globalData.userMsg
+            userInfo:  wx.getStorageSync("userInfo") || app.globalData.userInfo || app.globalData.userMsg,
+            isWxWork: app.wxWorkInfo.isWxWork,
+            isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
         })
     },
     goToReceiveReports: function () {

@@ -36,11 +36,16 @@ Page({
         safeAreaDiff: 0
     },
 
-    onLoad: function (option = {id: "",isWxWorkAdmin: false,maskTrigger: false}) {
+    onLoad: function (option = {id: "", isWxWorkAdmin: false, maskTrigger: false}) {
         const that = this;
         const optionIsWxWorkAdmin = option.isWxWorkAdmin || false;
+        this.setData({
+            userInfo: app.globalData.userInfo || wx.getStorageSync("userInfo"),
+            isWxWork: app.wxWorkInfo.isWxWork,
+            isWxWorkAdmin: wx.getStorageSync('userInfo').isAdmin || app.wxWorkInfo.isWxWorkAdmin,
+        });
         let {isWxWorkAdmin, isWxWork} = this.data;
-        if(optionIsWxWorkAdmin){
+        if (optionIsWxWorkAdmin) {
             isWxWorkAdmin = optionIsWxWorkAdmin;
             this.setData({
                 isWxWorkAdmin: isWxWorkAdmin,
@@ -56,8 +61,8 @@ Page({
                     method: 'get',
                     noLoading: true,
                     success: function (res) {
-                        if(res.length > 3){
-                            res = res.slice(0,3)
+                        if (res.length > 3) {
+                            res = res.slice(0, 3)
                         }
                         that.setData({
                             myEvaluation: res
@@ -81,8 +86,8 @@ Page({
                     },
                     noLoading: true,
                     success: function (res) {
-                        if(res.length > 3){
-                            res = res.slice(0,3)
+                        if (res.length > 3) {
+                            res = res.slice(0, 3)
                         }
                         that.setData({
                             evaluationTrack: res
@@ -106,8 +111,8 @@ Page({
                     },
                     noLoading: true,
                     success: function (res) {
-                        if(res.length > 3){
-                            res = res.slice(0,3)
+                        if (res.length > 3) {
+                            res = res.slice(0, 3)
                         }
                         that.setData({
                             reportsList: res
@@ -120,25 +125,25 @@ Page({
                     }
                 });
             });
-            Promise.all([inventoriesPromise,releaseRecordsPromise,reportListPromise]).then(res=>{
-                setTimeout(()=>{
+            Promise.all([inventoriesPromise, releaseRecordsPromise, reportListPromise]).then(res => {
+                setTimeout(() => {
                     that.setData({
                         maskTrigger: false
                     })
-                },888)
-            }).catch(err=>{
-                setTimeout(()=>{
+                }, 888)
+            }).catch(err => {
+                setTimeout(() => {
                     that.setData({
                         maskTrigger: false
                     })
-                },888)
+                }, 888)
                 console.error(err);
             });
             this.setData({
                 currTeam: app.teamName
             })
         }
-        if(isWxWork && isWxWorkAdmin){
+        if (isWxWork && isWxWorkAdmin) {
             const getMyEvaluationPromise = new Promise((resolve, reject) => {
                 app.doAjax({
                     url: 'inventories',
@@ -148,10 +153,10 @@ Page({
                     },
                     noLoading: true,
                     success: function (res) {
-                        if(res.length > 3){
-                            res = res.splice(0,0,3)
+                        if (res.length > 3) {
+                            res = res.splice(0, 0, 3)
                         }
-                        console.log("res: ",res);
+                        console.log("res: ", res);
                         that.setData({
                             myEvaluation: res
                         });
@@ -176,8 +181,8 @@ Page({
                         for (let i = 0; i < res.length; i++) {
                             res[i].createdAt = timeFormat(res[i].createdAt);
                         }
-                        if(res.length > 3){
-                            res = res.slice(0,3)
+                        if (res.length > 3) {
+                            res = res.slice(0, 3)
                         }
                         that.setData({
                             evaluationTrack: res
@@ -200,8 +205,8 @@ Page({
                     },
                     noLoading: true,
                     success: function (res) {
-                        if(res.length > 3){
-                            res = res.slice(0,3)
+                        if (res.length > 3) {
+                            res = res.slice(0, 3)
                         }
                         that.setData({
                             reportsList: res
@@ -213,22 +218,22 @@ Page({
                     }
                 })
             });
-            Promise.all([getMyEvaluationPromise,getEvaluationTrack,getReportList]).then(res=>{
+            Promise.all([getMyEvaluationPromise, getEvaluationTrack, getReportList]).then(res => {
                 that.setData({
                     maskTrigger: false
                 })
-            }).catch(err=>{
+            }).catch(err => {
                 that.setData({
                     maskTrigger: false
                 })
             })
         }
         if (isWxWork && !isWxWorkAdmin) {
-            setTimeout(()=>{
+            setTimeout(() => {
                 that.setData({
                     maskTrigger: false
                 })
-            },555);
+            }, 555);
             if (option.id) {
                 app.shareId = option.id;
             }
@@ -247,223 +252,34 @@ Page({
                 return;
             }
         }
-        // if (!isWxWork) {
-        //     this.title = this.selectComponent("#title");
-        //     app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
-        //     const inventoriesPromise = new Promise((resolve, reject) => {
-        //         app.doAjax({
-        //             url: 'inventories',
-        //             method: 'get',
-        //             success: function (res) {
-        //                 if(res.length > 3){
-        //                     res = res.slice(0,3)
-        //                 }
-        //                 that.setData({
-        //                     myEvaluation: res
-        //                 });
-        //                 resolve(true)
-        //             },
-        //             fail: function (err) {
-        //                 console.error(err)
-        //                 reject(false)
-        //             }
-        //         });
-        //     });
-        //     const releaseRecordsPromise = new Promise((resolve, reject) => {
-        //         app.doAjax({
-        //             url: 'release_records',
-        //             method: 'get',
-        //             data: {
-        //                 isEE: false,
-        //                 page: 1,
-        //                 pageSize: 4,
-        //             },
-        //             success: function (res) {
-        //                 if(res.length > 3){
-        //                     res = res.slice(0,3)
-        //                 }
-        //                 that.setData({
-        //                     evaluationTrack: res
-        //                 });
-        //                 resolve(true);
-        //             },
-        //             fail: function (err) {
-        //                 console.error(err);
-        //                 reject(false);
-        //             }
-        //         });
-        //     });
-        //     const reportListPromise = new Promise((resolve, reject) => {
-        //         app.doAjax({
-        //             url: `reports`,
-        //             method: "get",
-        //             data: {
-        //                 isEE: false,
-        //                 page: 1,
-        //                 pageSize: 3
-        //             },
-        //             success: function (res) {
-        //                 if(res.length > 3){
-        //                     res = res.slice(0,3)
-        //                 }
-        //                 that.setData({
-        //                     reportsList: res
-        //                 })
-        //                 resolve(true);
-        //             },
-        //             fail: function (err) {
-        //                 reject(false);
-        //                 console.error(err)
-        //             }
-        //         });
-        //     });
-        //     Promise.all([inventoriesPromise,releaseRecordsPromise,reportListPromise]).then(res=>{
-        //         setTimeout(()=>{
-        //             that.setData({
-        //                 maskTrigger: false
-        //             })
-        //         },888)
-        //     }).catch(err=>{
-        //         setTimeout(()=>{
-        //             that.setData({
-        //                 maskTrigger: false
-        //             })
-        //         },888)
-        //         console.error(err);
-        //     });
-        //     this.setData({
-        //         currTeam: app.teamName
-        //     })
-        // }
-        // if(isWxWork && isWxWorkAdmin){
-        //     const getMyEvaluationPromise = new Promise((resolve, reject) => {
-        //         app.doAjax({
-        //             url: 'inventories',
-        //             method: 'get',
-        //             success: function (res) {
-        //                 if(res.length > 3){
-        //                     res = res.splice(0,0,3)
-        //                 }
-        //                 console.log("res: ",res);
-        //                 that.setData({
-        //                     myEvaluation: res
-        //                 });
-        //                 resolve(true);
-        //             },
-        //             fail: function (err) {
-        //                 reject(false);
-        //             }
-        //         });
-        //     });
-        //     const getEvaluationTrack = new Promise((resolve, reject) => {
-        //         app.doAjax({
-        //             url: 'release_records',
-        //             method: 'get',
-        //             data: {
-        //                 isEE: true,
-        //                 page: 1,
-        //                 pageSize: 4,
-        //             },
-        //             success: function (res) {
-        //                 for (let i = 0; i < res.length; i++) {
-        //                     res[i].createdAt = timeFormat(res[i].createdAt);
-        //                 }
-        //                 if(res.length > 3){
-        //                     res = res.slice(0,3)
-        //                 }
-        //                 that.setData({
-        //                     evaluationTrack: res
-        //                 });
-        //                 resolve(true)
-        //             },
-        //             fail: function (err) {
-        //                 reject(false)
-        //             }
-        //         });
-        //     });
-        //     const getReportList = new Promise((resolve, reject) => {
-        //         app.doAjax({
-        //             url: `reports`,
-        //             method: "get",
-        //             data: {
-        //                 isEE: true,
-        //                 page: 1,
-        //                 pageSize: 3
-        //             },
-        //             success: function (res) {
-        //                 if(res.length > 3){
-        //                     res = res.slice(0,3)
-        //                 }
-        //                 that.setData({
-        //                     reportsList: res
-        //                 })
-        //                 resolve(true);
-        //             },
-        //             fail: function (err) {
-        //                 reject(false)
-        //             }
-        //         })
-        //     });
-        //     Promise.all([getMyEvaluationPromise,getEvaluationTrack,getReportList]).then(res=>{
-        //         that.setData({
-        //             maskTrigger: false
-        //         })
-        //     }).catch(err=>{
-        //         that.setData({
-        //             maskTrigger: false
-        //         })
-        //     })
-        // }
-        // if (isWxWork && !isWxWorkAdmin) {
-        //     setTimeout(()=>{
-        //         that.setData({
-        //             maskTrigger: false
-        //         })
-        //     },555);
-        //     if (option.id) {
-        //         app.shareId = option.id;
-        //     }
-        //     const userInfo = wx.getStorageSync("userInfo");
-        //     if (userInfo && userInfo.avatar) {
-        //         this.setData({
-        //             isLogin: true
-        //         });
-        //         return;
-        //     }
-        //     if (app.shareId) {
-        //         wx.reLaunch({
-        //             url: "./components/guide/guide?id=" + app.shareId
-        //         });
-        //         app.shareId = null;
-        //         return;
-        //     }
-        // }
         wx.getSystemInfo({
             success: function (res) {
-                console.log("wx.getSystemInfo: ",res);
-                const { isIPhoneXModel } = that.data;
+                console.log("wx.getSystemInfo: ", res);
+                const {isIPhoneXModel} = that.data;
                 that.setData({
                     windowHeight: res.windowHeight,
-                    safeAreaDiff: isIPhoneXModel  ? Math.abs(res.safeArea.height  - res.safeArea.bottom) : 0,
+                    safeAreaDiff: isIPhoneXModel ? Math.abs(res.safeArea.height - res.safeArea.bottom) : 0,
                 })
             }
         });
-        const tabBarHeight =  wx.getStorageSync("TAB_BAR_HEIGHT");
-        console.log("tabBarHeight: ",tabBarHeight);
+        const tabBarHeight = wx.getStorageSync("TAB_BAR_HEIGHT");
+        console.log("tabBarHeight: ", tabBarHeight);
         this.setData({
             tabBarHeight: tabBarHeight,
         })
     },
 
     onShow() {
-        const {userInfo,currTeam} = this.data;
-        console.log("userInfo,currTeam: ",userInfo,currTeam)
+        const {userInfo, currTeam} = this.data;
         this.setData({
             userInfo: app.globalData.userInfo || wx.getStorageSync("userInfo"),
+            isWxWork: app.wxWorkInfo.isWxWork,
+            isWxWorkAdmin: wx.getStorageSync('userInfo').isAdmin || app.wxWorkInfo.isWxWorkAdmin,
         })
     },
 
-    onHide() {},
+    onHide() {
+    },
 
     getUserInfo: function (e) {
         var that = this;
@@ -491,22 +307,20 @@ Page({
                 })
             },
             success: function (res) {
-                // console.log("updateUserMsg",res);
                 var userData = res.data;
                 var globalData = app.globalData.userInfo;
                 if (0 == res.code) {
                     wx.hideLoading();
-                    app.globalData.userInfo = Object.assign(globalData,userData);
-                    wx.setStorageSync("userInfo", Object.assign(globalData,userData));
+                    app.globalData.userInfo = Object.assign(globalData, userData);
+                    wx.setStorageSync("userInfo", Object.assign(globalData, userData));
                     wx.setStorageSync("openId", userData.openid);
-                    // wx.setStorageSync("unionId", userData.uid);
                     that.changePage();
                 }
             }
         });
     },
 
-    getNewlyReportNums: function(e) {
+    getNewlyReportNums: function (e) {
         const that = this;
         app.doAjax({
             url: 'reports/today_newly',
@@ -528,9 +342,11 @@ Page({
             });
             app.shareId = null;
         } else {
-            wx.reLaunch({
-                url: "./components/member-report-list/member-report-list"
-            });
+            // wx.reLaunch({
+            //     url: "./components/member-report-list/member-report-list"
+            // });
+            // console.log("app.wxWorkInfo: ",app.wxWorkInfo)
+            that.onLoad();
         }
     },
     /**
@@ -550,7 +366,7 @@ Page({
     },
 
     goToTrackDetail: function (e) {
-        const { trackId,trackIndex } = e.currentTarget.dataset;
+        const {trackId, trackIndex} = e.currentTarget.dataset;
         const trackInfo = JSON.stringify(this.data.evaluationTrack[trackIndex]);
         wx.navigateTo({
             url: `./components/track-detail/track-detail?trackId=${trackId}&trackInfo=${trackInfo}`,
@@ -558,7 +374,7 @@ Page({
     },
 
     goToSharePaper: function (e) {
-        const {available,norms,quesCount,estimatedTime,evaluationId,evaluationName,type} = this.data.myEvaluation[e.currentTarget.dataset.index];
+        const {available, norms, quesCount, estimatedTime, evaluationId, evaluationName, type} = this.data.myEvaluation[e.currentTarget.dataset.index];
         const necessaryInfo = {
             count: available,
             norms: norms,
@@ -575,7 +391,7 @@ Page({
     },
 
     goToEvaluationDetail: function (e) {
-        const { evaluationId } = e.currentTarget.dataset;
+        const {evaluationId} = e.currentTarget.dataset;
         wx.navigateTo({
             url: `../station/components/detail/detail?id=${evaluationId}`,
         })

@@ -4,7 +4,7 @@
             <view class="user-personal-info">
                 <image src="{{userInfo.avatar || userInfo.avatarUrl}}"
                        style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;background-color: black;"></image>
-                <text>{{userInfo.nickname || userInfo.nickName}}</text>
+                <text>{{userInfo.nickname || userInfo.nickName || userInfo.info.nickName}}</text>
             </view>
         </view>
         <view class="content">
@@ -44,7 +44,7 @@
             <view class="user-personal-info">
                 <image src="{{userInfo.avatar || userInfo.avatarUrl}}"
                        style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;background-color: black;"></image>
-                <text>{{userInfo.nickname || userInfo.nickName}}</text>
+                <text>{{userInfo.nickname || userInfo.nickName || userInfo.info.nickName}}</text>
             </view>
         </view>
         <view class="content">
@@ -84,7 +84,7 @@
             <view class="user-personal-info">
                 <image src="{{userInfo.avatar || userInfo.avatarUrl}}"
                        style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;background-color: black;"></image>
-                <text>{{userInfo.nickname || userInfo.nickName}}</text>
+                <text>{{userInfo.nickname || userInfo.nickName || userInfo.info.nickName}}</text>
             </view>
         </view>
         <view class="content">

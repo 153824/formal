@@ -130,7 +130,6 @@ Component({
                 return;
             }
             userInfo["openid"] = wx.getStorageSync("openId") || app.globalData.userMsg.openid;
-            // userInfo["unionid"] = wx.getStorageSync("unionId") || app.globalData.userMsg.unionid;
             app.doAjax({
                 url: "updateUserMsg",
                 method: "post",
@@ -144,6 +143,8 @@ Component({
                 },
                 success: function (res) {
                     let info = that.data.userInfo;
+                    app.globalData.userInfo = Object.assign(app.globalData.userInfo,info,res.data);
+                    wx.setStorageSync("userInfo", Object.assign(app.globalData.userInfo,info,res.data));
                     app.globalData.userInfo.nickname = userInfo.nickName;
                     try {
                         const isBindPromise = new Promise(function (resolve, reject) {

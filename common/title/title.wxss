@@ -41,9 +41,11 @@
     text-decoration: unset !important;
 }
 .normal-register{
+    width: unset !important;
+    height: 36rpx !important;
     color: rgba(53, 62, 232, 1) !important;
-    font-size: 26rpx;
-    font-weight: 400;
+    font-size: 26rpx !important;
+    font-weight: 400 !important;
 }
 .register::after{
     border: unset !important;

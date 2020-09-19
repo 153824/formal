@@ -1,11 +1,5 @@
 <view>
     <view wx:if="{{!evaluationTask.length}}" class="noData">
-        <view class="testPaperView" wx:if="{{scene!=1035}}">
-            <image src="../../images/work-base@icon-demonstrate.png" class="iconImg"></image>
-            <view class="title">罗课（厦门）网络科技有限公司</view>
-            <view class="name">《模拟测评》</view>
-            <view class="toTest" bindtap="toTestIt">开始模拟测试</view>
-        </view>
         <image class="icon1" src="../../images/report-list@icon-empty.png" mode="widthFix"></image>
         <view class="mind">暂未收到任何公司或团队的测评邀约</view>
     </view>

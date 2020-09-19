@@ -102,9 +102,6 @@ Component({
   lifetimes: {
     created() {
       const that = this;
-      that.setData({
-        scene: app.scene || 0
-      });
       app.isTest = false;
       if (!app.globalData.userInfo || !app.globalData.userInfo.id) {
         app.checkUser = function() {

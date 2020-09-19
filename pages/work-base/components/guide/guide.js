@@ -218,7 +218,7 @@ Page({
   toDetail: function(e) {
     var id = this.data.id;
     wx.redirectTo({
-      url: '../../../report/report?id=' + id,
+      url: '../../../report/report?receiveRecordId=' + id,
     });
   },
 });

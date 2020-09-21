@@ -10,7 +10,8 @@ Component({
     tabBarHeight: 0,
     windowHeight: 0,
     isIPhoneXModel: app.isIphoneX,
-    safeAreaDiff: 0
+    safeAreaDiff: 0,
+    isWxWork: app.wxWorkInfo.isWxWork
   },
   properties: {},
   pageLifetimes: {
@@ -115,6 +116,10 @@ Component({
     attached() {
       const systemInfo = wx.getSystemInfoSync();
       const { isIPhoneXModel } = this.data;
+      this.setData({
+        isWxWork: app.wxWorkInfo.isWxWork
+      })
+      console.log("app.wxWorkInfo.isWxWork",app.wxWorkInfo.isWxWork)
       console.log("systemInfo: ",systemInfo);
       this.setData({
         windowHeight: systemInfo.windowHeight,

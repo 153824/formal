@@ -35,7 +35,7 @@ Page({
     },
     goToReceiveEvaluation: function () {
         wx.navigateTo({
-            url: './components/receive-evaluations/receive-evaluations'
+            url: '/pages/work-base/components/member-report-list/member-report-list'
         })
     },
     goToAddGroup: function () {

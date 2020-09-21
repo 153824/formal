@@ -19,18 +19,15 @@
     </view>
 </block>
 <block wx:if="{{ type === 'normal' }}">
-    <block wx:if="{{ !titleLoading }}">
+    <block>
         <block wx:if="{{ !userInfo.isBind }}">
-            <button class="register normal-register" open-type="getUserInfo" bindgetuserinfo="getUserInfo">创建团队</button>
+            <button class="register normal-register" open-type="getUserInfo" bindgetuserinfo="getUserInfo">切换企业</button>
         </block>
         <picker class="company-picker" bindchange="changeTeam" value="{{ selTeam }}" range="{{ teamNames }}" class="company-child">
             <view wx:if="{{ userInfo.isBind }}" style="display: flex;align-items: center;">
-                <text style="max-width: 406rpx;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{(nowTeam.name||userInfo.userCompany.name)}}</text><image style="display: inline-block;" wx:if="{{ teamNames.length > 1 }}" class="company-picker-image" src="../../images/icon/icon@icon-bototm-arrow.png"></image>
+                <text style="max-width: 406rpx;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">切换企业</text><image style="display: inline-block;" wx:if="{{ teamNames.length > 1 }}" class="company-picker-image" src="../../images/icon/icon@icon-bototm-arrow.png"></image>
             </view>
         </picker>
-    </block>
-    <block wx:elif="{{ titleLoading }}">
-        <van-loading color="rgba(53, 62, 232, 1)" size="36rpx;" custom-class="van-loading-custom"></van-loading>
     </block>
 </block>
 <view wx:if="{{ loading }}" style="display: flex;align-items:center;justify-content: center;height: 100vh;width: 100vw;">

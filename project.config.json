@@ -10,8 +10,8 @@
 		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
-		"coverView": true,
 		"autoAudits": false,
+		"coverView": true,
 		"showShadowRootInWxmlPanel": true,
 		"scopeDataCheck": false,
 		"uglifyFileName": false,
@@ -28,15 +28,13 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.12.2",
 	"appid": "wxdb1dcb4a9e212d32",
-	"projectname": "hola-new",
+	"projectname": "luoke-haola-wx-admin",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
 	"isGameTourist": false,
 	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {
-		"qywx_simulator_plugin": "2.4.0"
-	},
+	"simulatorPluginLibVersion": {},
 	"scripts": {
 		"beforeCompile": "",
 		"beforePreview": "",

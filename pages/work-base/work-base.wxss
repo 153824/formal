@@ -37,6 +37,7 @@ page{
     position: relative;
     top: 194rpx;
     padding-top: 22rpx;
+    background-color: rgba(247, 248, 250, 1);
 }
 .content-scroll-area{
 }

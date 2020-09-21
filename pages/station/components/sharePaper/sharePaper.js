@@ -82,7 +82,8 @@ Page({
         });
     },
     changeReportMeet: function (e) {
-        const {canRead} = +e.currentTarget.dataset;
+        const {canRead} = e.currentTarget.dataset;
+        console.log("canRead: ",e)
         this.setData({
             reportMeet: canRead
         });

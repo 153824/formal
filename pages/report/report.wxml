@@ -470,7 +470,7 @@
             <view class="title report-summary">
                 <text>{{report.summaryName}}</text>
             </view>
-            <view class="chartImg" style="display: flex;justify-content: center;align-items: center;margin-top: 40rpx;">
+            <view wx:if="{{report.showCoordinate}}" class="chartImg" style="display: flex;justify-content: center;align-items: center;margin-top: 40rpx;">
                 <hola-grid axis="{{report.graphAxis}}" area="{{report.graphQuadrants}}" coordinate="{{report.graphCoordinateIdx}}"></hola-grid>
             </view>
             <view class="flex temple"
@@ -613,12 +613,12 @@
                         <rich-text nodes="<p>{{item.lvDesc||''}}</p>"></rich-text>
                     </view>
                     <!-- 柱状图 -->
-                    <view wx:if="{{ item.chartType === 3 || true }}" class="chartImg">
+                    <view wx:if="{{ item.chartType === 2 }}" class="chartImg">
                         <hola-histogram histogramIndex="{{index}}" histogramYAxis="{{histogramYAxis}}" limit="{{limit}}"
                                         histogramValues="{{histogramValues}}" lines="{{lines}}"></hola-histogram>
                     </view>
                     <!-- 雷达图 -->
-                    <view class="chartImg" wx:if="{{ item.chartType!=1 || true }}">
+                    <view class="chartImg radar-img" wx:if="{{ item.chartType!=1 }}">
                         <hola-radar radarIndex="{{ index }}" radarValue="{{ radarValue }}"
                                     radarIndicator="{{ radarIndicator }}"></hola-radar>
                     </view>

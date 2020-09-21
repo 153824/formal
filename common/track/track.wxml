@@ -18,7 +18,6 @@
                     util.getHourAndMinByFrag(trackItem.createdAt,":",true) }}</text>
             </view>
         </view>
-        <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
         <view class="send-evaluation">
             <image src="/pages/work-base/images/work-base@icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
         </view>

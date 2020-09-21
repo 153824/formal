@@ -8,8 +8,7 @@
         <view class="evaluation-wrapper">
             <view class="evaluation-name user-info-wrapper">
                 <view class="user-info">
-                    <text>{{reportItem.participant}}</text>
-                    <text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text>
+                    <text>{{reportItem.participant}}</text><text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text><text style="font-size: 24rpx;margin-left: 10rpx;">{{reportItem.showGrade ? reportItem.grade : ""}}</text>
                 </view>
             </view>
             <view class="user-answer-evaluation">

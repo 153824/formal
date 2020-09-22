@@ -1,10 +1,9 @@
 <view>
     <view wx:if="{{!evaluationTask.length}}" class="noData">
-        <image class="icon1" src="../../images/report-list@icon-empty.png" mode="widthFix"></image>
-        <view class="mind">暂未收到任何公司或团队的测评邀约</view>
+        <hola-empty title="暂无收到测评邀约"></hola-empty>
     </view>
     <view class="list" wx:else>
-        <scroll-view scroll-y style="height: {{ (windowHeight-60-safeAreaDiff) * pixelRate }}rpx;">
+        <scroll-view scroll-y style="height: {{ isWxWork ? (windowHeight-60-safeAreaDiff) * pixelRate : '' }}rpx;">
             <block wx:for="{{evaluationTask}}" wx:key="unique">
                 <view class="item">
                     <view class="companyName">{{item.user.company.name}}</view>
@@ -31,16 +30,6 @@
                 </view>
             </block>
         </scroll-view>
-    </view>
-    <view class="coverView" wx:if="{{showDlg}}"></view>
-    <view class="dlgView" wx:if="{{showDlg}}">
-        <image class="closeImg" bindtap="hideDlg" src="../../images/work-base@icon-close.png"></image>
-        <image class="centerImg" src="../img/report/icon_check1.png"></image>
-        <view class="mindMsg">申请成功，请关注罗课学堂公众号</view>
-        <view class="mindMsg">我们将通过公众号推送HR的回复信息</view>
-        <button class="dlgView-button contact-button" open-type="contact" show-message-card="true"
-                send-message-img="{{mpImg}}">关注公众号
-        </button>
     </view>
     <block wx:if="{{isWxWork}}">
         <hola-tab-bar id="hola-tab-bar" active="{{ 0 }}" morePath="../../../"></hola-tab-bar>

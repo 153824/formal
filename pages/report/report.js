@@ -357,7 +357,7 @@ Page({
             command
         });
         if (app.isLogin) {
-            if (options.shareAt) {
+            if (options.sharedAt) {
                 that.verifyReportIsCanRead(options).then(res=>{
                     that.getReport(id);
                 }).catch(err=>{
@@ -378,7 +378,7 @@ Page({
             }
         }
         app.checkUser = function () {
-            if (options.shareAt) {
+            if (options.sharedAt) {
                 that.verifyReportIsCanRead(options).then(res=>{
                     that.getReport(id);
                 }).catch(err=>{

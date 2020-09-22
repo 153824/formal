@@ -110,7 +110,6 @@
                             <text class="date" style="margin-left: 10rpx;">{{trackItem.createdAt}}</text>
                         </view>
                     </view>
-                    <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
                     <view class="send-evaluation">
                         <image src="./images/work-base@icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
@@ -243,7 +242,6 @@
                             <text class="date" style="margin-left: 10rpx;">{{util.getFullDateByFrag(trackItem.createdAt,"/",true)}} {{util.getHourAndMinByFrag(trackItem.createdAt,":",true)}}</text>
                         </view>
                     </view>
-                    <view style="width: 2rpx;height: 114rpx;background-color: #F4F4F4FF;"></view>
                     <view class="send-evaluation">
                         <image src="./images/work-base@icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>

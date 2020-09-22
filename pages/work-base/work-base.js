@@ -391,7 +391,7 @@ Page({
 
     setCompanyCert: function (e) {
         wx.navigateTo({
-            url: "/pages/user/components/teams/teams"
+            url: "/pages/work-base/components/teams-cert/teams-cert",
         })
     },
 

@@ -34,7 +34,9 @@
 	},
 	"isGameTourist": false,
 	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
+	"simulatorPluginLibVersion": {
+		"qywx_simulator_plugin": "2.4.0"
+	},
 	"scripts": {
 		"beforeCompile": "",
 		"beforePreview": "",

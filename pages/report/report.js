@@ -621,18 +621,55 @@ Page({
                 radarIndicator[n] = radarIndicator[n] || [];
                 value_2[n] = value_2[n] || [];
                 indicator_2[n] = indicator_2[n] || [];
-                var {showSubScore} = objs[n];
+                var {showSubScore,subScale} = objs[n];
                 for (var i in arr) {
                     var node = arr[i];
-                    if (showSubScore === 'average') {
-                        radarValue[n].push(node.average);
-                        targetHistogramValuesArr.push(node.average);
-                    } else if (!showSubScore) {
-                        radarValue[n].push(node.average);
-                        targetHistogramValuesArr.push(node.average);
-                    } else {
-                        radarValue[n].push(node.subTotal);
-                        targetHistogramValuesArr.push(node.subTotal)
+                    if(showSubScore === 'average'){
+                        switch (subScale) {
+                            case 'origin':
+                                radarValue[n].push(node.average);
+                                targetHistogramValuesArr.push(node.average);
+                                break;
+                            case 'decimal':
+                                radarValue[n].push(node.average10);
+                                targetHistogramValuesArr.push(node.average10);
+                                break;
+                            case 'centesimal':
+                                radarValue[n].push(node.average100);
+                                targetHistogramValuesArr.push(node.average100);
+                                break;
+                            case 'stanine':
+                                radarValue[n].push(node.averageStanine);
+                                targetHistogramValuesArr.push(node.averageStanine);
+                                break;
+                            default:
+                                radarValue[n].push(node.subTotal);
+                                targetHistogramValuesArr.push(node.subTotal);
+                                break;
+                        }
+                    }else if (showSubScore === 'total'){
+                        switch (subScale) {
+                            case 'origin':
+                                radarValue[n].push(node.subTotal);
+                                targetHistogramValuesArr.push(node.subTotal);
+                                break;
+                            case 'decimal':
+                                radarValue[n].push(node.subTotal10);
+                                targetHistogramValuesArr.push(node.subTotal10);
+                                break;
+                            case 'centesimal':
+                                radarValue[n].push(node.subTotal100);
+                                targetHistogramValuesArr.push(node.subTotal100);
+                                break;
+                            case 'stanine':
+                                radarValue[n].push(node.subTotalStanine);
+                                targetHistogramValuesArr.push(node.subTotalStanine);
+                                break;
+                            default:
+                                radarValue[n].push(node.subTotal);
+                                targetHistogramValuesArr.push(node.subTotal);
+                                break;
+                        }
                     }
                     targetHistogramYAxisArr.push(node.name);
                     targetLimitArr.push(objs[n].min);

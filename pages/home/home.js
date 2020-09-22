@@ -15,6 +15,9 @@ Page({
         isWxWork: app.wxWorkInfo.isWxWork
     },
     onLoad: function (options,name) {
+        if(options.reLoad){
+           app.getMyTeamList(null,false);
+        }
         if( this.data.isWxWork ){
             wx.switchTab({
                 url: `../work-base/work-base`,

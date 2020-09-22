@@ -1,5 +1,7 @@
 .program-wrapper{
     padding: 22rpx 44rpx 22rpx 44rpx;
+    background-color: rgba(247, 248, 250, 1);
+    height: 100vh;
 }
 .program-body{
     display: flex;
@@ -13,6 +15,7 @@
 .reply-track-body{
     padding: 30rpx 30rpx;
     height: 146rpx;
+    background-color: #fff;
 }
 .evaluation-wrapper{
     display: flex;

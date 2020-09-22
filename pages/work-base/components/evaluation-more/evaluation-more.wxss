@@ -1,6 +1,8 @@
 .program-wrapper{
     padding: 22rpx 44rpx 22rpx 44rpx;
     z-index: 99999999;
+    background-color: rgba(247, 248, 250, 1);
+    height: 100vh;
 }
 .program-title{
     display: flex;

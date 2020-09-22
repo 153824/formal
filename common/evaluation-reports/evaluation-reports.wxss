@@ -1,5 +1,7 @@
 .program-wrapper{
     padding: 22rpx 44rpx 22rpx 44rpx;
+    height: 100vh;
+    background-color: rgba(247, 248, 250, 1);
 }
 .program-title{
     display: flex;
@@ -29,6 +31,7 @@
     padding: 40rpx 30rpx;
     border-radius: 20rpx;
     box-shadow:0rpx 2rpx 8rpx 0rpx rgba(0,0,0,0.05);
+    background-color: #fff;
 }
 .reply-track-body{
     padding: 30rpx 30rpx;

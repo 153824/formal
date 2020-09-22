@@ -105,13 +105,17 @@ Component({
         onLoad: function () {
             const {active} = this.properties;
             this.setData({
-                active
+                active,
+                isWxWork: app.wxWorkInfo.isWxWork,
+                isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
             });
         },
         onShow: function () {
             const {active} = this.properties;
             this.setData({
-                active
+                active,
+                isWxWork: app.wxWorkInfo.isWxWork,
+                isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
             });
         }
     },
@@ -129,8 +133,12 @@ Component({
                     wx.setStorageSync("TAB_BAR_HEIGHT",rect.height)
                 }).exec()
             }catch (e) {
-
+                console.error(e)
             }
+            this.setData({
+                isWxWork: app.wxWorkInfo.isWxWork,
+                isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
+            });
         }
     }
 });

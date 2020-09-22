@@ -117,8 +117,8 @@ Component({
       const systemInfo = wx.getSystemInfoSync();
       const { isIPhoneXModel } = this.data;
       this.setData({
-        isWxWork: app.wxWorkInfo.isWxWork
-      })
+        isWxWork: wx.getSystemInfoSync().environment === 'wxwork' || app.wxWorkInfo.isWxWork
+      });
       console.log("app.wxWorkInfo.isWxWork",app.wxWorkInfo.isWxWork)
       console.log("systemInfo: ",systemInfo);
       this.setData({

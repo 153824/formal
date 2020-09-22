@@ -613,7 +613,7 @@
                         <rich-text nodes="<p>{{item.lvDesc||''}}</p>"></rich-text>
                     </view>
                     <!-- 柱状图 -->
-                    <view wx:if="{{ item.chartType === 2 }}" class="chartImg">
+                    <view wx:if="{{ item.chartType === 2 }}" class="chartImg histogram-img">
                         <hola-histogram histogramIndex="{{index}}" histogramYAxis="{{histogramYAxis}}" limit="{{limit}}"
                                         histogramValues="{{histogramValues}}" lines="{{lines}}"></hola-histogram>
                     </view>

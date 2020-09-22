@@ -1,6 +1,6 @@
 <!--Start: 企业微信端管理员页工作台-->
 <view wx:if="{{ isWxWork&&isWxWorkAdmin }}" class="home-page-wrapper">
-    <view class="head">
+    <view class="head" style="height: 112rpx;">
         <view class="head-company">
             <image src="./images/work-base@@icon-company.png" style="width: 50rpx;height: 44rpx;margin-right: 16rpx;"></image>
             <text>{{userInfo.userCompany.name}}</text>
@@ -16,7 +16,7 @@
                     <text>我的测评</text>
                     <text class="more" bindtap="goToEvaluationMore">更多...</text>
                 </view>
-                <view wx:for="{{ myEvaluation }}" wx:for-item="evaluationItem" wx:key="unique"
+                <view wx:if="{{myEvaluation.length}}" wx:for="{{ myEvaluation }}" wx:for-item="evaluationItem" wx:key="unique"
                       wx:for-index="evaluationIndex">
                     <view class="program-body" data-name="{{ evaluationItem.evaluationName }}">
                         <image src="{{ evaluationItem.smallImg || 'http://img2.luoke101.com/2020-06-17T10:10:31.391ZnormalImg.png' }}"
@@ -43,6 +43,9 @@
                         </view>
                     </view>
                 </view>
+                <view>
+                    <hola-empty isShow="{{!myEvaluation.length}}"></hola-empty>
+                </view>
             </view>
             <!--End: 我的测评-->
             <!--Start: 最新报告-->
@@ -63,7 +66,7 @@
                     <view class="evaluation-wrapper">
                         <view class="evaluation-name user-info-wrapper">
                             <view class="user-info">
-                                <text>{{reportItem.participant}}</text><text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text><text style="font-size: 24rpx;margin-left: 10rpx;">{{reportItem.showGrade ? reportItem.grade : ""}}</text>
+                                <text>{{reportItem.participant}}</text><text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text><text wx:if="{{ reportItem.showGrade }}" style="font-size: 24rpx;margin-left: 10rpx;" class="recommend-grade">{{reportItem.showGrade ? reportItem.grade : ""}}</text>
                             </view>
                         </view>
                         <view class="user-answer-evaluation">
@@ -77,6 +80,9 @@
                         <text>新</text>
                     </view>
                 </view>
+                <view>
+                    <hola-empty isShow="{{!reportsList.length}}"></hola-empty>
+                </view>
             </view>
             <!--End: 最新报告-->
             <!--Start: 作答跟踪-->
@@ -85,7 +91,7 @@
                     <text>作答跟踪</text>
                     <text class="more" bindtap="goToTrackMore">更多...</text>
                 </view>
-                <view wx:for="{{ evaluationTrack }}" wx:for-item="trackItem" wx:for-index="trackIndex" wx:key="unique"
+                <view wx:if="{{evaluationTrack.length}}" wx:for="{{ evaluationTrack }}" wx:for-item="trackItem" wx:for-index="trackIndex" wx:key="unique"
                       class="program-body reply-track-body" bindtap="goToTrackDetail"
                       data-track-id="{{trackItem.releaseRecordId}}" data-track-index="{{trackIndex}}"
                 >
@@ -108,6 +114,9 @@
                     <view class="send-evaluation">
                         <image src="./images/work-base@icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
+                </view>
+                <view>
+                    <hola-empty isShow="{{!evaluationTrack.length}}" title="暂无测评发放记录"></hola-empty>
                 </view>
             </view>
             <!--End: 作答跟踪-->
@@ -139,7 +148,7 @@
                     <text>我的测评</text>
                     <text class="more" bindtap="goToEvaluationMore">更多...</text>
                 </view>
-                <view wx:for="{{ myEvaluation }}" wx:for-item="evaluationItem" wx:key="unique"
+                <view wx:if="{{myEvaluation.length}}" wx:for="{{ myEvaluation }}" wx:for-item="evaluationItem" wx:key="unique"
                       wx:for-index="evaluationIndex">
                     <view class="program-body" data-name="{{ evaluationItem.evaluationName }}">
                         <image src="{{ evaluationItem.smallImg || 'http://img2.luoke101.com/2020-06-17T10:10:31.391ZnormalImg.png' }}"
@@ -166,6 +175,9 @@
                         </view>
                     </view>
                 </view>
+                <view>
+                    <hola-empty isShow="{{!myEvaluation.length}}"></hola-empty>
+                </view>
             </view>
             <!--End: 我的测评-->
             <!--Start: 最新报告-->
@@ -177,7 +189,7 @@
                     </view>
                     <text class="more" bindtap="goToReportMore">更多...</text>
                 </view>
-                <view class="program-body the-last-report" wx:for="{{ reportsList }}" wx:for-item="reportItem"
+                <view class="program-body the-last-report" wx:if="{{reportsList.length}}" wx:for="{{ reportsList }}" wx:for-item="reportItem"
                       wx:key="unique" data-id="{{reportItem.receiveRecordId}}" bindtap="goToReportDetail"
                 >
                     <view class="report-created-time">
@@ -187,7 +199,7 @@
                     <view class="evaluation-wrapper">
                         <view class="evaluation-name user-info-wrapper">
                             <view class="user-info">
-                                <text>{{reportItem.participant}}</text><text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text><text style="font-size: 24rpx;">{{reportItem.showGrade ? reportItem.grade : ""}}</text>
+                                <text>{{reportItem.participant}}</text><text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text><text wx:if="{{ reportItem.showGrade }}" style="font-size: 24rpx;" class="recommend-grade">{{reportItem.showGrade ? reportItem.grade : ""}}</text>
                             </view>
                         </view>
                         <view class="user-answer-evaluation">
@@ -201,6 +213,9 @@
                         <text>新</text>
                     </view>
                 </view>
+                <view>
+                    <hola-empty isShow="{{!reportsList.length}}" title="暂无测评报告"></hola-empty>
+                </view>
             </view>
             <!--End: 最新报告-->
             <!--Start: 作答跟踪-->
@@ -209,7 +224,7 @@
                     <text>作答跟踪</text>
                     <text class="more" bindtap="goToTrackMore">更多...</text>
                 </view>
-                <view wx:for="{{ evaluationTrack }}" wx:for-item="trackItem" wx:for-index="trackIndex" wx:key="unique"
+                <view wx:if="{{evaluationTrack.length}}" wx:for="{{ evaluationTrack }}" wx:for-item="trackItem" wx:for-index="trackIndex" wx:key="unique"
                       class="program-body reply-track-body" bindtap="goToTrackDetail"
                       data-track-id="{{trackItem.releaseRecordId}}" data-track-index="{{trackIndex}}"
                 >
@@ -232,6 +247,9 @@
                     <view class="send-evaluation">
                         <image src="./images/work-base@icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
+                </view>
+                <view>
+                    <hola-empty isShow="{{!evaluationTrack.length}}" title="暂无测评发放记录"></hola-empty>
                 </view>
             </view>
             <!--End: 作答跟踪-->

@@ -4,7 +4,8 @@
     "hola-tab-bar": "../../common/tab-bar/tab-bar",
     "hola-member-report-list": "components/member-report-list/member-report-list",
     "hola-mask": "../../common/mask/mask",
-    "hola-title": "../../common/title/title"
+    "hola-title": "../../common/title/title",
+    "hola-empty": "../../common/empty/empty"
   },
   "navigationBarTitleText": ""
 }

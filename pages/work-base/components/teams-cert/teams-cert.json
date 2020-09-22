@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "企业认证",
+  "navigationStyle": "default",
+  "usingComponents": {
+    "hola-mask": "../../../../common/mask/mask"
+  }
+}

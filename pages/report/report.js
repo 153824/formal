@@ -964,7 +964,7 @@ Page({
         return {
             title: `${globalData.team.name}邀您看${participantInfo.username}的《${evaluationInfo.evaluationName}》报告`,
             path: `pages/report/report?receivedRecordId=${id}&sharedAt=${new Date().getTime()}`,
-            imageUrl: report.smallImg,
+            imageUrl: evaluationInfo.smallImg,
         }
     },
     /**

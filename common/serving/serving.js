@@ -23,6 +23,10 @@ Component({
     bottom: {
       type: String,
       value: "50rpx"
+    },
+    type: {
+      type: String,
+      value: "circle"
     }
   },
 

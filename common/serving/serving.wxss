@@ -4,6 +4,13 @@
     bottom: 180rpx;
     right: 50rpx;
 }
+.rectangle-serving{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    left: 0;
+}
 .dlg {
     width: 558rpx;
     background: rgba(255, 255, 255, 1);

@@ -2,7 +2,7 @@
     <view wx:if="{{!evaluationTask.length}}" class="noData">
         <hola-empty title="暂无收到测评邀约"></hola-empty>
     </view>
-    <view class="list" wx:else>
+    <view class="list" style="padding: 0 44rpx" wx:else>
         <scroll-view scroll-y style="height: {{ isWxWork ? (windowHeight-60-safeAreaDiff) * pixelRate : '' }}rpx;">
             <block wx:for="{{evaluationTask}}" wx:key="unique">
                 <view class="item">

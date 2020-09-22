@@ -1,5 +1,6 @@
 {
   "component": true,
   "usingComponents": {
+    "hola-empty": "../empty/empty"
   }
 }

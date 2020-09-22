@@ -1,4 +1,4 @@
-<view class="program-wrapper">
+<view wx:if="{{evaluationTrack.length}}" class="program-wrapper">
     <view bindtap="goToTrackDetail" wx:for="{{ evaluationTrack }}" wx:for-item="trackItem" wx:key="unique"
           class="program-body reply-track-body" data-track-id="{{trackItem.releaseRecordId}}"
           data-track-index="{{trackIndex}}">
@@ -23,4 +23,5 @@
         </view>
     </view>
 </view>
+<hola-empty isShow="{{!evaluationTrack.length}}" title="暂无记录"></hola-empty>
 <wxs module="util" src="../../utils/util.wxs"></wxs>

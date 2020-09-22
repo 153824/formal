@@ -1,4 +1,4 @@
-<view class="program-wrapper">
+<view wx:if="{{reportList.length}}" class="program-wrapper">
     <view class="program-body the-last-report" bindtap="goToReport" wx:for="{{ reportList }}" wx:for-item="reportItem"
           wx:key="unique" data-receive-record-id="{{reportItem.receiveRecordId}}">
         <view class="report-created-time">
@@ -23,4 +23,5 @@
         </view>
     </view>
 </view>
+<hola-empty isShow="{{!reportList.length}}" title="暂无记录"></hola-empty>
 <wxs src="../../utils/util.wxs" module="util"></wxs>

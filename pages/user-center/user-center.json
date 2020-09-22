@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "hola-tab-bar": "../../common/tab-bar/tab-bar"
+    "hola-tab-bar": "../../common/tab-bar/tab-bar",
+    "hola-serving": "../../common/serving/serving"
   }
 }

@@ -1,10 +1,20 @@
-<view wx:if="{{ !isWxWork }}">
+<view wx:if="{{ !isWxWork && false }}">
     <view class="user-page-wrapper">
         <view class="head">
             <view class="user-personal-info">
-                <image src="{{userInfo.avatar || userInfo.avatarUrl}}"
-                       style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;background-color: black;"></image>
-                <text>{{userInfo.nickname || userInfo.nickName || userInfo.info.nickName}}</text>
+                <block wx:if="{{userInfo.isBind&&false}}">
+                    <image src="{{userInfo.avatar || userInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                           style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                    <text></text>
+                </block>
+                <block wx:else>
+                    <button class="user-info-button" open-type="getUserInfo"
+                            bindgetuserinfo="getUserInfo">
+                        <image src="{{userInfo.avatar || userInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                               style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                        <text>{{userInfo.nickname || userInfo.nickName || userInfo.info.nickName}}</text>
+                    </button>
+                </block>
             </view>
         </view>
         <view class="content">
@@ -38,13 +48,13 @@
     </view>
     <hola-tab-bar active="{{ 3 }}"></hola-tab-bar>
 </view>
-<view wx:elif="{{ isWxWork && isWxWorkAdmin }}">
+<view wx:elif="{{ isWxWork && isWxWorkAdmin && false }}">
     <view class="user-page-wrapper">
         <view class="head">
             <view class="user-personal-info">
-                <image src="{{userInfo.avatar || userInfo.avatarUrl}}"
+                <image src="{{userInfo.avatar || userInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
                        style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;background-color: black;"></image>
-                <text>{{userInfo.nickname || userInfo.nickName || userInfo.info.nickName}}</text>
+                <text>{{userInfo.name}}</text>
             </view>
         </view>
         <view class="content">
@@ -78,13 +88,13 @@
     </view>
     <hola-tab-bar active="{{ 1 }}"></hola-tab-bar>
 </view>
-<view wx:elif="{{ isWxWork && !isWxWorkAdmin }}">
+<view wx:elif="{{ true }}">
     <view class="user-page-wrapper">
         <view class="head">
             <view class="user-personal-info">
-                <image src="{{userInfo.avatar || userInfo.avatarUrl}}"
+                <image src="{{userInfo.avatar || userInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
                        style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;background-color: black;"></image>
-                <text>{{userInfo.nickname || userInfo.nickName || userInfo.info.nickName}}</text>
+                <text>{{userInfo.userCompany.name || userInfo.company.name}}的员工</text>
             </view>
         </view>
         <view class="content">
@@ -97,8 +107,9 @@
                     </view>
                     <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                 </view>
-                <view class="user-action-item" bindtap="goToServingClient">
-                    <view class="title">
+                <view class="user-action-item" style="position: relative;">
+                    <hola-serving  type="rectangle"></hola-serving>
+                    <view class="title" style="position: absolute;">
                         <image src="./images/user@connect-serving.png"
                                style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
                         <text>联系专属客服</text>

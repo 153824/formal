@@ -22,58 +22,74 @@ Page({
     maskTrigger: true
   },
   onLoad: function(options) {
+    const that = this;
     selNewImg = false;
-    this.getCertificationInfo();
-    this.loadIndustryList();
+    Promise.all([this.getCertificationInfo(),this.loadIndustryList()]).then(res=>{
+      this.setData({
+        maskTrigger: false
+      })
+    }).catch(err=>{
+      console.error(err);
+      this.setData({
+        maskTrigger: false
+      })
+    })
   },
   /**
    * 行业列表获取
    */
   loadIndustryList: function() {
-    var that = this;
-    app.doAjax({
-      url: "industryList",
-      method: "GET",
-      prefix: "boss",
-      data: {
-        page: 1,
-        pageSize: 1000
-      },
-      success: function(ret) {
-        var list = ret.data;
-        var vocationFull = {};
-        list.forEach(function(node) {
-          var parent = node.parent;
-          if (parent) {
-            vocationFull[parent._id] = vocationFull[parent._id] || {
-              name: parent.name,
-              child: []
-            };
-            vocationFull[parent._id]["child"].push(node.name);
-          } else {
-            vocationFull[node._id] = vocationFull[node._id] || {
-              name: node.name,
-              child: []
-            };
+    const that = this;
+    return new Promise((resolve, reject) => {
+      app.doAjax({
+        url: "industryList",
+        method: "GET",
+        prefix: "boss",
+        data: {
+          page: 1,
+          pageSize: 1000
+        },
+        noLoading: true,
+        success: function(ret) {
+          var list = ret.data;
+          var vocationFull = {};
+          list.forEach(function(node) {
+            var parent = node.parent;
+            if (parent) {
+              vocationFull[parent._id] = vocationFull[parent._id] || {
+                name: parent.name,
+                child: []
+              };
+              vocationFull[parent._id]["child"].push(node.name);
+            } else {
+              vocationFull[node._id] = vocationFull[node._id] || {
+                name: node.name,
+                child: []
+              };
+            }
+          });
+          var vocationFullArr = [];
+          var vocationAry = [
+            [],
+            []
+          ];
+          for (var k in vocationFull) {
+            var n = vocationFull[k];
+            vocationAry[0].push(n.name);
+            vocationFullArr.push(n.child);
           }
-        });
-        var vocationFullArr = [];
-        var vocationAry = [
-          [],
-          []
-        ];
-        for (var k in vocationFull) {
-          var n = vocationFull[k];
-          vocationAry[0].push(n.name);
-          vocationFullArr.push(n.child);
+          var selvocation = that.data.selvocation;
+          vocationAry[1] = vocationFullArr[selvocation[1] || 0];
+          that.setData({
+            vocationAry: vocationAry,
+            vocationFullArr: vocationFullArr
+          });
+          resolve(true);
+        },
+        fail: function (err) {
+          reject(false);
         }
-        var selvocation = that.data.selvocation;
-        vocationAry[1] = vocationFullArr[selvocation[1] || 0];
-        that.setData({
-          vocationAry: vocationAry,
-          vocationFullArr: vocationFullArr
-        });
-      }
+      });
     });
   },
   getcompanyname: function(e) {
@@ -224,22 +240,22 @@ Page({
 
   getCertificationInfo: function () {
     const that = this;
-    app.doAjax({
-      url: "isCertified",
-      method: "get",
-      noLoading: true,
-      success: function (res) {
-        that.setData({
-          oldTeamMsg: res.data.certConfig,
-          isNew: false,
-          maskTrigger: false
-        })
-      },
-      fail: function (err) {
-        that.setData({
-          maskTrigger: false
-        })
-      }
-    })
+    return new Promise((resolve, reject) => {
+      app.doAjax({
+        url: "isCertified",
+        method: "get",
+        noLoading: true,
+        success: function (res) {
+          that.setData({
+            oldTeamMsg: res.data.certConfig,
+            isNew: false,
+          });
+          resolve(true);
+        },
+        fail: function (err) {
+          reject(false);
+        }
+      })
+    });
   }
 });

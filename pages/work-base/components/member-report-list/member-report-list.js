@@ -54,7 +54,7 @@ Component({
       const obj = this.data.evaluationTask[index];
       app.isTest = false;
       wx.navigateTo({
-        url: '../../../../report/report?id=' + obj.receiveRecordId + "&name=" + obj.evaluationName
+        url: '/pages/report/report?receiveRecordId=' + obj.receiveRecordId + "&name=" + obj.evaluationName
       });
     },
     /**

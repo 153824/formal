@@ -167,13 +167,17 @@ Page({
           if (that.data.reportId) {
             //进入报告详情
             wx.reLaunch({
-              url: '../../../report/report?id=' + that.data.reportId
+              url: '/pages/report/report?id=' + that.data.reportId
             });
             return;
           }
-          wx.switchTab({
-            url: '../../../home/home'
-          });
+          wx.clearStorageSync();
+          app.toast("正在为您跳转...");
+          setTimeout(()=>{
+            wx.reLaunch({
+              url: '/pages/home/home'
+            });
+          },500)
         }, 500);
       }
     });

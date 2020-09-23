@@ -290,9 +290,6 @@ Page({
                     method: 'get',
                     noLoading: true,
                     success: function (res) {
-                        if (res.length > 3) {
-                            res = res.slice(0, 3)
-                        }
                         that.setData({
                             myEvaluation: res
                         });
@@ -311,13 +308,10 @@ Page({
                     data: {
                         isEE: false,
                         page: 1,
-                        pageSize: 4,
+                        pageSize: 8,
                     },
                     noLoading: true,
                     success: function (res) {
-                        if (res.length > 3) {
-                            res = res.slice(0, 3)
-                        }
                         that.setData({
                             evaluationTrack: res
                         });
@@ -336,13 +330,10 @@ Page({
                     data: {
                         isEE: false,
                         page: 1,
-                        pageSize: 3
+                        pageSize: 8
                     },
                     noLoading: true,
                     success: function (res) {
-                        if (res.length > 3) {
-                            res = res.slice(0, 3)
-                        }
                         that.setData({
                             reportsList: res
                         })
@@ -403,13 +394,10 @@ Page({
                     data: {
                         isEE: true,
                         page: 1,
-                        pageSize: 4,
+                        pageSize: 8,
                     },
                     noLoading: true,
                     success: function (res) {
-                        if (res.length > 3) {
-                            res = res.slice(0, 3)
-                        }
                         that.setData({
                             evaluationTrack: res
                         });
@@ -427,13 +415,10 @@ Page({
                     data: {
                         isEE: true,
                         page: 1,
-                        pageSize: 3
+                        pageSize: 8
                     },
                     noLoading: true,
                     success: function (res) {
-                        if (res.length > 3) {
-                            res = res.slice(0, 3)
-                        }
                         that.setData({
                             reportsList: res
                         })

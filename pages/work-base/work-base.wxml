@@ -145,7 +145,7 @@
             <view class="program-wrapper">
                 <view class="program-title">
                     <text>我的测评</text>
-                    <text wx:if="{{myEvaluation.length > 3}}" class="more" bindtap="goToEvaluationMore">更多...</text>
+                    <text wx:if="{{myEvaluation.length >= 3}}" class="more" bindtap="goToEvaluationMore">更多...</text>
                 </view>
                 <view wx:if="{{myEvaluation.length}}" wx:for="{{ myEvaluation }}" wx:for-item="evaluationItem" wx:key="unique"
                       wx:for-index="evaluationIndex">

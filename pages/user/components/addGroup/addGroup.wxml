@@ -1,7 +1,7 @@
 <!--user/addGroup.wxml-->
 <view class="centerView">
   <view class="mind">
-    <view>成为共创用户，交流人才测评经验</view>
+    <view>企业套餐购买/定制咨询/人才测评经验交流</view>
     <view style="margin-top:20rpx;">请添加客服微信</view>
   </view>
   <view class="mind1">微信号：haola72</view>

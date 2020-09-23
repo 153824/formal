@@ -39,7 +39,7 @@
                     <view class="title">
                         <image src="./images/user@connect-serving.png"
                                style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
-                        <text>成为共创用户</text>
+                        <text>企业套餐购买/定制咨询</text>
                     </view>
                     <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                 </view>

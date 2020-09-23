@@ -4,5 +4,6 @@
     "van-tabs": "../../../../common/vant-weapp/dist/tabs/index",
     "hola-evaluation-reports": "../../../../common/evaluation-reports/evaluation-reports",
     "hola-track": "../../../../common/track/track"
-  }
+  },
+  "navigationBarTitleText": "他人分享给我的报告"
 }

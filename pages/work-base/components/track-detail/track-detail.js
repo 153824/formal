@@ -325,13 +325,13 @@ Page({
     },
 
     onShareAppMessage: function () {
-        const {trackId, releaseRecordId} = this.data;
+        const {trackId, releaseRecordId,evaluationName,cover} = this.data;
         const time = new Date().getTime();
         console.log("trackId,releaseRecordId,time: ", trackId, releaseRecordId, time)
         return {
-            title: `邀请您查看作答记录`,
+            title: `邀请您查看《${evaluationName}》的作答情况`,
             path: `pages/work-base/work-base?releaseRecordId=${trackId || releaseRecordId}&sharedAt=${time}&tabIndex=1`,
-            imageUrl: "http://ihola.luoke101.com/wxShareImg.png"
+            imageUrl: cover
         };
     },
 

@@ -108,7 +108,7 @@
 </view>
 <view class="press-wrapper">
     <button open-type="share" style="padding: 0 0 !important;border-radius: unset !important;">
-        <press title="分享记录"></press>
+        <press title="邀请同事一同关注"></press>
     </button>
 </view>
 <van-overlay show="{{ imageTrigger }}">

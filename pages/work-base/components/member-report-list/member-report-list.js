@@ -35,8 +35,9 @@ Component({
       app.doAjax({
         url: "receive_records",
         method: "get",
+        noLoading: true,
         data: {
-          isEE: true,
+          isEE: app.wxWorkInfo.isWxWork,
           teamId: app.teamId || wx.getStorageSync("userInfo").teamId || "",
           page: page,
           pageSize: 12

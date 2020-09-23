@@ -402,9 +402,6 @@ App({
         params.data['userId'] = (that.globalData.userInfo || wx.getStorageSync("userInfo")).id || '';
         params.data['teamId'] = that.teamId ||wx.getStorageSync("userInfo").teamId || params.data['teamId']||"";
         params.data['teamRole'] = that.teamRole || "";
-        console.log("doAjax teamId: ",that.teamId);
-        console.log("doAjax wx.getStorageSync(\"userInfo\").teamId: ",wx.getStorageSync("userInfo").teamId);
-        console.log("doAjax params.data['teamId']||\"\": ",params.data['teamId']||"");
         wx.request({
             url: url,
             method: params.method || 'POST',

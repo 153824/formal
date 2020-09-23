@@ -44,6 +44,19 @@ Page({
             isWxWork: app.wxWorkInfo.isWxWork,
             isWxWorkAdmin: wx.getStorageSync('userInfo').isAdmin || app.wxWorkInfo.isWxWorkAdmin,
         });
+        if(option.sharedAt&&option.releaseRecordId){
+            setTimeout(()=>{
+                console.log(option);
+                wx.navigateTo({
+                    url: `/pages/work-base/components/track-detail/track-detail?sharedAt=${option.sharedAt}&releaseRecordId=${option.releaseRecordId}`,
+                    success: function (res) {
+                        let page = getCurrentPages().pop();
+                        if (page == undefined || page == null) return;
+                        page.onLoad();
+                    }
+                });
+            },500)
+        }
         let {isWxWorkAdmin, isWxWork} = this.data;
         if (optionIsWxWorkAdmin) {
             isWxWorkAdmin = optionIsWxWorkAdmin;

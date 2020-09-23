@@ -33,7 +33,7 @@
 		"hidedInDevtools": []
 	},
 	"isGameTourist": false,
-	"simulatorType": "wechat",
+	"simulatorType": "qywx_simulator_plugin",
 	"simulatorPluginLibVersion": {
 		"qywx_simulator_plugin": "2.4.0"
 	},
@@ -68,9 +68,9 @@
 			"list": [
 				{
 					"id": 0,
-					"name": "工作台",
+					"name": "pages/work-base/work-base",
 					"pathName": "pages/work-base/work-base",
-					"query": "",
+					"query": "q=https://api.luoke101.com/s/5f6af8a433c1241d23572834",
 					"scene": null
 				},
 				{
@@ -105,7 +105,7 @@
 					"id": 5,
 					"name": "分享-领取报告",
 					"pathName": "pages/report/report",
-					"query": "receiveRecordId=5f5b54ba9ed9df4f74d26bab&shareAt=1599986731211",
+					"query": "receiveRecordId=5f6af9e833c1241d23572837&sharedAt=1600848724389",
 					"scene": null
 				},
 				{
@@ -124,9 +124,9 @@
 				},
 				{
 					"id": 8,
-					"name": "分享-领取使用记录",
-					"pathName": "pages/work-base/components/track-detail/track-detail",
-					"query": "releaseRecordId=5f62f8127b95db027d358f33&shareAt=1600336240627",
+					"name": "pages/work-base/work-base",
+					"pathName": "pages/work-base/work-base",
+					"query": "releaseRecordId=5f6af8a433c124&sharedAt=1600854643427",
 					"scene": null
 				},
 				{

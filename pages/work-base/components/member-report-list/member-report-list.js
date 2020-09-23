@@ -13,6 +13,7 @@ Component({
     safeAreaDiff: 0,
     isWxWork: app.wxWorkInfo.isWxWork,
     maskTrigger: true,
+    isIos: app.isIos
   },
   properties: {},
   pageLifetimes: {
@@ -119,10 +120,23 @@ Component({
     },
     attached() {
       const systemInfo = wx.getSystemInfoSync();
-      const { isIPhoneXModel } = this.data;
+      const { isIPhoneXModel,pixelRate } = this.data;
+      const safeAreaDiff = isIPhoneXModel  ? Math.abs(systemInfo.safeArea.height  - systemInfo.safeArea.bottom) : 0;
+      const windowHeight = systemInfo.windowHeight;
+      let height = 0;
       this.setData({
         isWxWork: wx.getSystemInfoSync().environment === 'wxwork' || app.wxWorkInfo.isWxWork
       });
+      if(wx.getSystemInfoSync().environment === 'wxwork' && isIPhoneXModel){
+        this.setData({
+          height: (windowHeight-60-safeAreaDiff) * pixelRate
+        })
+      }else if (wx.getSystemInfoSync().environment !== 'wxwork' && isIPhoneXModel){
+        this.setData({
+          height: (windowHeight-safeAreaDiff) * pixelRate
+        })
+      }
+
       this.setData({
         windowHeight: systemInfo.windowHeight,
         safeAreaDiff: isIPhoneXModel  ? Math.abs(systemInfo.safeArea.height  - systemInfo.safeArea.bottom) : 0,

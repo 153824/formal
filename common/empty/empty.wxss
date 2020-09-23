@@ -9,5 +9,17 @@
 .empty-wrapper > image{
     width: 190rpx;
     height: 246rpx;
-    margin-bottom: 64rpx;
+    margin-bottom: 116rpx;
+}
+.work-base-empty{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 60rpx;
+}
+.work-base-empty > image {
+    width: 133rpx;
+    height: 172rpx;
+    margin-bottom: 60rpx;
 }

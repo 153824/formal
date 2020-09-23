@@ -27,6 +27,10 @@ Component({
     isShow: {
       type: Boolean,
       value: true
+    },
+    customClass: {
+      type: String,
+      value: ""
     }
   },
 

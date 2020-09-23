@@ -44,7 +44,7 @@
                     </view>
                 </view>
                 <view>
-                    <hola-empty isShow="{{!myEvaluation.length}}" title="暂无测评"></hola-empty>
+                    <hola-empty customClass="work-base-empty" isShow="{{!myEvaluation.length}}" title="暂无测评"></hola-empty>
                 </view>
             </view>
             <!--End: 我的测评-->
@@ -81,7 +81,7 @@
                     </view>
                 </view>
                 <view>
-                    <hola-empty isShow="{{!reportsList.length}}" title="暂无测评报告"></hola-empty>
+                    <hola-empty  customClass="work-base-empty" isShow="{{!reportsList.length}}" title="暂无测评报告"></hola-empty>
                 </view>
             </view>
             <!--End: 最新报告-->
@@ -115,7 +115,7 @@
                     </view>
                 </view>
                 <view>
-                    <hola-empty isShow="{{!evaluationTrack.length}}" title="暂无测评发放记录"></hola-empty>
+                    <hola-empty  customClass="work-base-empty" isShow="{{!evaluationTrack.length}}" title="暂无测评发放记录"></hola-empty>
                 </view>
             </view>
             <!--End: 作答跟踪-->
@@ -175,7 +175,7 @@
                     </view>
                 </view>
                 <view>
-                    <hola-empty isShow="{{!myEvaluation.length}}"></hola-empty>
+                    <hola-empty  customClass="work-base-empty" isShow="{{!myEvaluation.length}}"></hola-empty>
                 </view>
             </view>
             <!--End: 我的测评-->
@@ -213,7 +213,7 @@
                     </view>
                 </view>
                 <view>
-                    <hola-empty isShow="{{!reportsList.length}}" title="暂无测评报告"></hola-empty>
+                    <hola-empty customClass="work-base-empty" isShow="{{!reportsList.length}}" title="暂无测评报告"></hola-empty>
                 </view>
             </view>
             <!--End: 最新报告-->
@@ -247,7 +247,7 @@
                     </view>
                 </view>
                 <view>
-                    <hola-empty isShow="{{!evaluationTrack.length}}" title="暂无测评发放记录"></hola-empty>
+                    <hola-empty customClass="work-base-empty" isShow="{{!evaluationTrack.length}}" title="暂无测评发放记录"></hola-empty>
                 </view>
             </view>
             <!--End: 作答跟踪-->

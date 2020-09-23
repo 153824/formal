@@ -27,13 +27,13 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.12.2",
-	"appid": "wxdb1dcb4a9e212d32",
+	"appid": "wx85cde7d3e8f3d949",
 	"projectname": "luoke-haola-wx-admin",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
 	"isGameTourist": false,
-	"simulatorType": "qywx_simulator_plugin",
+	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {
 		"qywx_simulator_plugin": "2.4.0"
 	},
@@ -133,7 +133,7 @@
 					"id": 9,
 					"name": "扫码领取测评",
 					"pathName": "pages/work-base/work-base",
-					"query": "q=https://api.luoke101.com/s/5f65efca0f32bd1062717f22",
+					"query": "q=https://api.luoke101.com/s/5f6b2a57d8caae1efa234a0e",
 					"scene": null
 				}
 			]

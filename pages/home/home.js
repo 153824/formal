@@ -11,24 +11,17 @@ Page({
         mobile: "18559297592",
         wechat: "haola72",
         active: 0,
-        column: [],
-        isWxWork: app.wxWorkInfo.isWxWork
+        column: []
     },
-    onLoad: function (options={reLoad: false},name) {
-        if(options.reLoad){
-           app.getMyTeamList(null,false);
-        }
-        if( this.data.isWxWork ){
-            wx.switchTab({
-                url: `../work-base/work-base`,
-            });
-            return;
-        }
+    onLoad: function (options,name) {
         if( options.loadingTrigger ){
             this.setData({
                 loading: true
             })
         }
+        wx.hideTabBar({
+            animation: true
+        });
         const that = this;
         let homePagesPromiseList = [];
         const homePagesPromise = new Promise(function (resolve, reject) {
@@ -48,18 +41,17 @@ Page({
             that.setData(res);
             homePagesPromiseList = res.column.map((v, k) => {
                 return new Promise((resolve, reject) => {
-                    // app.doAjax({
-                    //     url: `homePages/columns/${v.column_id}/evaluations`,
-                    //     method: "get",
-                    //     noLoading: true,
-                    //     success: function (res) {
-                    //         resolve({columnId: v.column_id, data: res.data});
-                    //     },
-                    //     fail: function (err) {
-                    //         reject(err);
-                    //     }
-                    // });
-                    reject(false);
+                    app.doAjax({
+                        url: `homePages/columns/${v.column_id}/evaluations`,
+                        method: "get",
+                        noLoading: true,
+                        success: function (res) {
+                            resolve({columnId: v.column_id, data: res.data});
+                        },
+                        fail: function (err) {
+                            reject(err);
+                        }
+                    });
                 })
             });
             return Promise.all(homePagesPromiseList)
@@ -77,18 +69,18 @@ Page({
                 column: targetColumn,
             });
             setTimeout(() => {
-                // wx.showTabBar({
-                //     animation: true,
-                // });
+                wx.showTabBar({
+                    animation: true,
+                });
                 that.setData({
                     loading: false
                 })
             }, 500);
         }).catch(err => {
             setTimeout(() => {
-                // wx.showTabBar({
-                //   animation: true,
-                // });
+                wx.showTabBar({
+                    animation: true,
+                });
                 that.setData({
                     loading: false
                 })
@@ -175,6 +167,7 @@ Page({
     goToReplying: function (e) {
         const { t } = e.target.dataset;
         if (t === '2') {
+            wx.setStorageSync("hideLastTestMind", true);
             this.setData({
                 oldShareInfo: ""
             });

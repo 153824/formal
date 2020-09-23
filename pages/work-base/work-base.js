@@ -548,7 +548,7 @@ Page({
             estimatedTime: estimatedTime,
             id: evaluationId,
             name: evaluationName,
-            isFree: false,
+            isFree: type === "FREE",
             hadBuyout: type === "BY_COUNT" ? false : true,
         };
         wx.navigateTo({

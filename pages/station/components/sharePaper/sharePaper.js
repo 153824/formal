@@ -92,13 +92,12 @@ Page({
         const that = this;
         let {count, evaluationName,norms,evaluationId, hadBuyout, isFree, maxCount, reportMeet,quesCount,estimatedTime} = that.data;
         let costNum = count;
-//     wx.aldstat.sendEvent('点击生成测评邀请函', {
-//         '测评名称': '名称：' + paperName
-//      });
+        wx.aldstat.sendEvent('点击生成测评邀请函', {
+            '测评名称': '名称：' + evaluationName
+        });
         if (!costNum && !hadBuyout && !isFree) {
             return;
         }
-        console.log(costNum, maxCount);
         if (costNum > maxCount && !hadBuyout && !isFree) {
             app.toast("测评可用数量不足");
             return;

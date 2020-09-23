@@ -35,7 +35,7 @@ page{
 }
 .content{
     position: relative;
-    top: 194rpx;
+    top: 122rpx;
     padding-top: 22rpx;
     background-color: rgba(247, 248, 250, 1);
 }
@@ -327,7 +327,7 @@ button {
 /**app.wxss**/
 
 page {
-    background: #fff;
+    background: rgba(247, 248, 250, 1);
 }
 
 /* .container {

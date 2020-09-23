@@ -394,9 +394,6 @@ Page({
                     },
                     noLoading: true,
                     success: function (res) {
-                        for (let i = 0; i < res.length; i++) {
-                            res[i].createdAt = timeFormat(res[i].createdAt);
-                        }
                         if (res.length > 3) {
                             res = res.slice(0, 3)
                         }
@@ -444,7 +441,11 @@ Page({
                 })
             })
         }
-        if (isWxWork && !isWxWorkAdmin) {}
+        if (isWxWork && !isWxWorkAdmin) {
+            this.setData({
+                maskTrigger: false
+            })
+        }
     },
 
     onHide() {

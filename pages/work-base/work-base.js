@@ -536,6 +536,10 @@ Page({
             isFree: type === "FREE",
             hadBuyout: type === "BY_COUNT" ? false : true,
         };
+        if (!available && !necessaryInfo.hadBuyout && !necessaryInfo.isFree) {
+            app.toast("测评可用数量不足");
+            return;
+        }
         wx.navigateTo({
             url: `../station/components/sharePaper/sharePaper?necessaryInfo=${JSON.stringify(necessaryInfo)}`,
         })

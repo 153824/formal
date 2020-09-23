@@ -35,9 +35,12 @@ page{
 }
 .content{
     position: relative;
-    top: 122rpx;
+    top: 194rpx;
     padding-top: 22rpx;
     background-color: rgba(247, 248, 250, 1);
+}
+.wxwork-content{
+    top: 122rpx;
 }
 .content-scroll-area{
 }

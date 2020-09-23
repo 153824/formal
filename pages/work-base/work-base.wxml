@@ -14,7 +14,7 @@
             <view class="program-wrapper">
                 <view class="program-title">
                     <text>我的测评</text>
-                    <text class="more" wx:if="{{myEvaluation.length > 3}}" bindtap="goToEvaluationMore">更多...</text>
+                    <text class="more" wx:if="{{myEvaluationCount > 3}}" bindtap="goToEvaluationMore">更多...</text>
                 </view>
                 <view wx:if="{{myEvaluation.length}}" wx:for="{{ myEvaluation }}" wx:for-item="evaluationItem" wx:key="unique"
                       wx:for-index="evaluationIndex">
@@ -55,7 +55,7 @@
                         <text>最新报告</text>
                         <text wx:if="{{newlyNums}}" class="new-adding">今日+{{newlyNums}}</text>
                     </view>
-                    <text wx:if="{{reportsList.length > 3}}" class="more" bindtap="goToReportMore">更多...</text>
+                    <text wx:if="{{reportsListCount > 3}}" class="more" bindtap="goToReportMore">更多...</text>
                 </view>
                 <view class="program-body the-last-report" wx:for="{{ reportsList }}" wx:for-item="reportItem"
                       wx:key="unique" data-id="{{reportItem.receiveRecordId}}" bindtap="goToReportDetail">
@@ -89,7 +89,7 @@
             <view class="program-wrapper">
                 <view class="program-title">
                     <text>作答跟踪</text>
-                    <text wx:if="{{evaluationTrack.length > 3}}" class="more" bindtap="goToTrackMore">更多...</text>
+                    <text wx:if="{{evaluationTrackCount > 3}}" class="more" bindtap="goToTrackMore">更多...</text>
                 </view>
                 <view wx:if="{{evaluationTrack.length}}" wx:for="{{ evaluationTrack }}" wx:for-item="trackItem" wx:for-index="trackIndex" wx:key="unique"
                       class="program-body reply-track-body" bindtap="goToTrackDetail"
@@ -145,7 +145,7 @@
             <view class="program-wrapper">
                 <view class="program-title">
                     <text>我的测评</text>
-                    <text wx:if="{{myEvaluation.length >= 3}}" class="more" bindtap="goToEvaluationMore">更多...</text>
+                    <text wx:if="{{myEvaluationCount > 3}}" class="more" bindtap="goToEvaluationMore">更多...</text>
                 </view>
                 <view wx:if="{{myEvaluation.length}}" wx:for="{{ myEvaluation }}" wx:for-item="evaluationItem" wx:key="unique"
                       wx:for-index="evaluationIndex">
@@ -186,7 +186,7 @@
                         <text>最新报告</text>
                         <text wx:if="{{newlyNums}}" class="new-adding">今日+{{newlyNums}}</text>
                     </view>
-                    <text wx:if="{{reportsList.length > 3}}" class="more" bindtap="goToReportMore">更多...</text>
+                    <text wx:if="{{reportsListCount > 3}}" class="more" bindtap="goToReportMore">更多...</text>
                 </view>
                 <view class="program-body the-last-report" wx:if="{{reportsList.length}}" wx:for="{{ reportsList }}" wx:for-item="reportItem"
                       wx:key="unique" data-id="{{reportItem.receiveRecordId}}" bindtap="goToReportDetail"
@@ -221,7 +221,7 @@
             <view class="program-wrapper">
                 <view class="program-title">
                     <text>作答跟踪</text>
-                    <text wx:if="{{evaluationTrack.length > 3}}" class="more" bindtap="goToTrackMore">更多...</text>
+                    <text wx:if="{{evaluationTrackCount > 3}}" class="more" bindtap="goToTrackMore">更多...</text>
                 </view>
                 <view wx:if="{{evaluationTrack.length}}" wx:for="{{ evaluationTrack }}" wx:for-item="trackItem" wx:for-index="trackIndex" wx:key="unique"
                       class="program-body reply-track-body" bindtap="goToTrackDetail"

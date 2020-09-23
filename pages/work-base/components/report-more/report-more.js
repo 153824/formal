@@ -11,7 +11,7 @@ Page({
             },
             success: function (res) {
                 that.setData({
-                    moreReportsList: res
+                    moreReportsList: res.data
                 })
             }
         })

@@ -288,15 +288,20 @@ Page({
                 app.doAjax({
                     url: 'inventories',
                     method: 'get',
+                    data: {
+                      page: 1,
+                      pageSize: 3
+                    },
                     noLoading: true,
                     success: function (res) {
                         that.setData({
-                            myEvaluation: res
+                            myEvaluation: res.data,
+                            myEvaluationCount: res.count
                         });
                         resolve(true)
                     },
                     fail: function (err) {
-                        console.error(err)
+                        console.error(err);
                         reject(false)
                     }
                 });
@@ -308,12 +313,13 @@ Page({
                     data: {
                         isEE: false,
                         page: 1,
-                        pageSize: 8,
+                        pageSize: 3,
                     },
                     noLoading: true,
                     success: function (res) {
                         that.setData({
-                            evaluationTrack: res
+                            evaluationTrack: res.data,
+                            evaluationTrackCount: res.count
                         });
                         resolve(true);
                     },
@@ -330,13 +336,14 @@ Page({
                     data: {
                         isEE: false,
                         page: 1,
-                        pageSize: 8
+                        pageSize: 3
                     },
                     noLoading: true,
                     success: function (res) {
                         that.setData({
-                            reportsList: res
-                        })
+                            reportsList: res.data,
+                            reportsListCount: res.count
+                        });
                         resolve(true);
                     },
                     fail: function (err) {
@@ -369,16 +376,16 @@ Page({
                     url: 'inventories',
                     method: 'get',
                     data: {
-                        teamId: app.teamId || wx.getStorageSync("GET_MY_TEAM_LIST").objectId
+                        teamId: app.teamId || wx.getStorageSync("GET_MY_TEAM_LIST").objectId,
+                        page: 1,
+                        pageSize: 3,
                     },
                     noLoading: true,
                     success: function (res) {
-                        if (res.length > 3) {
-                            res = res.splice(0, 0, 3)
-                        }
                         console.log("res: ", res);
                         that.setData({
-                            myEvaluation: res
+                            myEvaluation: res.data,
+                            myEvaluationCount: res.count
                         });
                         resolve(true);
                     },
@@ -394,12 +401,13 @@ Page({
                     data: {
                         isEE: true,
                         page: 1,
-                        pageSize: 8,
+                        pageSize: 3,
                     },
                     noLoading: true,
                     success: function (res) {
                         that.setData({
-                            evaluationTrack: res
+                            evaluationTrack: res.data,
+                            evaluationTrackCount: res.count
                         });
                         resolve(true)
                     },
@@ -415,12 +423,13 @@ Page({
                     data: {
                         isEE: true,
                         page: 1,
-                        pageSize: 8
+                        pageSize: 3
                     },
                     noLoading: true,
                     success: function (res) {
                         that.setData({
-                            reportsList: res
+                            reportsList: res.data,
+                            reportsListCount: res.count
                         })
                         resolve(true);
                     },

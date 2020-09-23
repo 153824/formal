@@ -13,7 +13,7 @@ Page({
                 noLoading: true,
                 success: function (res) {
                     that.setData({
-                        myEvaluation: res
+                        myEvaluation: res.data
                     });
                     resolve(true);
                 },

@@ -11,7 +11,7 @@ Page({
             },
             success: function (res) {
                 that.setData({
-                    evaluationTrack: res
+                    evaluationTrack: res.data
                 });
             }
         })

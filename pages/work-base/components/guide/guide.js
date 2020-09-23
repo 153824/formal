@@ -8,6 +8,11 @@ Page({
     loading: false
   },
   onLoad: function(option) {
+    if(option.isScan){
+      this.setData({
+        isScan: option.isScan
+      })
+    }
     if (option.releaseRecordId || option.receiveRecordId) {
       this.setData({
         id: option.releaseRecordId,
@@ -52,7 +57,7 @@ Page({
           });
           setTimeout(()=>{
             wx.redirectTo({
-              url: '../answering/answering?pid=' + res.evaluationId + '&id=' + id + '&receiveRecordId=' + res.receiveRecordId + "&reportPermit=" + res.reportPermit  + "&status=" + res.status
+              url: '../answering/answering?pid=' + res.evaluationId + '&id=' + id + '&receiveRecordId=' + res.receiveRecordId + "&reportPermit=" + res.reportPermit  + "&status=" + res.status + "&isScan" + that.data.isScan
             });
           },500);
           return;

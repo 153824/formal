@@ -46,7 +46,8 @@ Page({
             status: options.type,
             reportPermit: options.reportPermit,
             startTime: new Date().getTime(),
-            receiveRecordId: options.receiveRecordId
+            receiveRecordId: options.receiveRecordId,
+            isScan: options.isScan
         });
         if (app.isTest) {
             that.setData({
@@ -679,7 +680,7 @@ Page({
             success: function (ret) {
                 console.log('../done/done?id=' + data.receiveRecordId + "&status=" + that.data.status + "&reportPermit" + that.data.reportPermit);
                 wx.redirectTo({
-                    url: '../done/done?id=' + data.receiveRecordId + "&status=" + that.data.status + "&reportPermit=" + that.data.reportPermit
+                    url: '../done/done?id=' + data.receiveRecordId + "&status=" + that.data.status + "&reportPermit=" + that.data.reportPermit + "&isScan" + that.data.isScan
                 });
                 wx.removeStorageSync(sKey);
                 that.setData(ret);

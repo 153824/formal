@@ -13,13 +13,20 @@ Page({
       isMp: false,
       isTest: app.isTest,
       id: id,
-      reportPermit: options.reportPermit
+      reportPermit: options.reportPermit,
+      isScan: options.isScan
     });
   },
   onShow: function() {
 
   },
   onUnload() {
+    if(this.data.isScan){
+      wx.reLaunch({
+        url: "/pages/user-center/user-center"
+      });
+      return;
+    }
     wx.reLaunch({
       url: "../../pages/work-base/work-base?maskTrigger=true"
     });

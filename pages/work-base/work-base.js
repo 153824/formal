@@ -75,7 +75,7 @@ Page({
         }
         if(releaseEvaluationId){
             wx.navigateTo({
-                url: `/pages/work-base/components/guide/guide?releaseRecordId=${releaseEvaluationId}`,
+                url: `/pages/work-base/components/guide/guide?releaseRecordId=${releaseEvaluationId}&isScan=true`,
             })
         }
         // if (!isWxWork) {

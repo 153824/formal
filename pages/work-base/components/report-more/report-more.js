@@ -7,7 +7,7 @@ Page({
             url: `reports`,
             method: "get",
             data: {
-                isEE: true,
+                isEE: app.wxWorkInfo.isWxWork,
             },
             success: function (res) {
                 that.setData({

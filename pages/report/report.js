@@ -961,9 +961,11 @@ Page({
         const that = this;
         const {participantInfo, evaluationInfo, id, report} = this.data;
         const {globalData} = app;
+        const time = new Date().getTime();
+        console.log("receivedRecordId",id,"sharedAt: ",time);
         return {
             title: `${globalData.team.name}邀您看${participantInfo.username}的《${evaluationInfo.evaluationName}》报告`,
-            path: `pages/report/report?receivedRecordId=${id}&sharedAt=${new Date().getTime()}`,
+            path: `pages/report/report?receivedRecordId=${id}&sharedAt=${time}`,
             imageUrl: evaluationInfo.smallImg,
         }
     },

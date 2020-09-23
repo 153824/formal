@@ -322,6 +322,7 @@ Page({
                 var userMsg = app.globalData.userMsg || {};
                 userMsg["iv"] = iv;
                 userMsg["encryptedData"] = encryptedData;
+                userMsg["session_key"] = wx.getStorageSync("userInfo").userMsg.session_keyey;
                 app.doAjax({
                     url: "updatedUserMobile",
                     data: userMsg,

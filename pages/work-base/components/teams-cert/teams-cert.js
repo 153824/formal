@@ -44,7 +44,6 @@ Page({
       app.doAjax({
         url: "industryList",
         method: "GET",
-        prefix: "boss",
         data: {
           page: 1,
           pageSize: 1000

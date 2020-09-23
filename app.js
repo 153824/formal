@@ -61,8 +61,8 @@ App({
     // host: "https://api.luoke101.com",
     // host: 'https://h5.luoke101.com',
     // host: "http://192.168.0.225:3000",
-    // host: "http://api.dev.luoke101.int",
-    host: "http://66e570432e17.ap.ngrok.io",
+    host: "http://api.dev.luoke101.int",
+    // host: "http://24c84666cb52.ap.ngrok.io",
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
         userInfo: null,
@@ -93,7 +93,7 @@ App({
         this.isIos = false;
         this.isLogin = false;
         this.fromAppId = '';
-        this.teamId = wx.getStorageSync('MY_TEAM_ID') || '';
+        this.teamId = '';
         this.rate = sysMsg.windowWidth / 750;
         if (referrerInfo && referrerInfo.appid) {
             this.fromAppId = referrerInfo.appid
@@ -111,10 +111,8 @@ App({
         if (sysMsg.environment === 'wxwork') {
             this.wxWorkInfo.isWxWork = true;
         }
-        console.log("I run this.wxWorkInfo.isWxWork-0",this.wxWorkInfo.isWxWork)
         if (this.wxWorkInfo.isWxWork) {
             const that = this;
-            console.log("I run this.wxWorkInfo.isWxWork-1",this.wxWorkInfo.isWxWork)
             wx.qy.login({
                 success: res => {
                     that.wxWorkUserLogin(res.code).then(data => {
@@ -123,14 +121,13 @@ App({
                                 url: "/pages/work-base/work-base?isWxWorkAdmin=true&maskTrigger=true",
                                 success: function () {
                                     let page = getCurrentPages().pop();
-                                    console.log("getCurrentPages",getCurrentPages);
                                     if (page == undefined || page == null) return;
                                     page.onLoad();
                                 }
                             })
                         }
                     }).catch(err=>{
-                        console.log("that.wxWorkInfo.isWxWork: ",err);
+                        console.error("that.wxWorkInfo.isWxWork: ",err);
                     })
                 },
                 fail: function (err) {
@@ -272,10 +269,9 @@ App({
      */
     wxWorkUserLogin: function (code) {
         const that = this;
-        console.log("that: ",that);
         return new Promise((resolve, reject) => {
             that.doAjax({
-                url: `wework/auth/ww4e296f6312e1ee97/ma`,
+                url: `wework/auth/ma`,
                 method: 'get',
                 data: {
                     code: code
@@ -294,7 +290,6 @@ App({
                         that.globalData.userInfo || {});
                     that.teamId = res.teamId;
                     that.isLogin = true;
-                    that.getMyTeamList(that.checkUser);
                     resolve({openId: userData.openid || userMsg.openid});
                 },
                 fail: function (err) {
@@ -397,8 +392,8 @@ App({
                 title: '正在请求...',
             });
         }
-        if (params.url.indexOf('wework/auth/ww4e296f6312e1ee97/ma') !== -1) {
-            url = `${this.host}/wework/auth/ww4e296f6312e1ee97/ma`;
+        if (params.url.indexOf('wework/auth/ma') !== -1) {
+            url = `${this.host}/wework/auth/ma`;
         }
         if (params.url.indexOf("wework/users") !== -1) {
             url = `${this.host}/wework/users/${that.globalData.userInfo.id}`;
@@ -407,6 +402,9 @@ App({
         params.data['userId'] = (that.globalData.userInfo || wx.getStorageSync("userInfo")).id || '';
         params.data['teamId'] = that.teamId ||wx.getStorageSync("userInfo").teamId || params.data['teamId']||"";
         params.data['teamRole'] = that.teamRole || "";
+        console.log("doAjax teamId: ",that.teamId);
+        console.log("doAjax wx.getStorageSync(\"userInfo\").teamId: ",wx.getStorageSync("userInfo").teamId);
+        console.log("doAjax params.data['teamId']||\"\": ",params.data['teamId']||"");
         wx.request({
             url: url,
             method: params.method || 'POST',
@@ -509,6 +507,9 @@ App({
      */
     getMyTeamList: function (cb, cacheTrigger = true) {
         const that = this;
+        if(that.wxWorkInfo.isWxWork){
+            return;
+        }
         let LOCAL_MY_TEAM_LIST = wx.getStorageSync('GET_MY_TEAM_LIST');
         if (LOCAL_MY_TEAM_LIST.length && cacheTrigger) {
             var toAddNew = true

@@ -25,6 +25,7 @@ page{
     align-items: center;
     font-size: 36rpx;
     color: #333333FF;
+    background-color: #fff;
 }
 .content{
     margin-top: 316rpx;

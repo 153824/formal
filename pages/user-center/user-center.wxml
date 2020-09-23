@@ -1,8 +1,8 @@
-<view wx:if="{{ !isWxWork && false }}">
+<view wx:if="{{ !isWxWork }}">
     <view class="user-page-wrapper">
         <view class="head">
             <view class="user-personal-info">
-                <block wx:if="{{userInfo.isBind&&false}}">
+                <block wx:if="{{userInfo.isBind}}">
                     <image src="{{userInfo.avatar || userInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
                            style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
                     <text></text>
@@ -48,12 +48,12 @@
     </view>
     <hola-tab-bar active="{{ 3 }}"></hola-tab-bar>
 </view>
-<view wx:elif="{{ isWxWork && isWxWorkAdmin && false }}">
+<view wx:elif="{{ isWxWork && isWxWorkAdmin }}">
     <view class="user-page-wrapper">
         <view class="head">
             <view class="user-personal-info">
                 <image src="{{userInfo.avatar || userInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
-                       style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;background-color: black;"></image>
+                       style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
                 <text>{{userInfo.name}}</text>
             </view>
         </view>
@@ -88,12 +88,12 @@
     </view>
     <hola-tab-bar active="{{ 1 }}"></hola-tab-bar>
 </view>
-<view wx:elif="{{ true }}">
+<view wx:elif="{{ isWxWork && !isWxWorkAdmin }}">
     <view class="user-page-wrapper">
         <view class="head">
             <view class="user-personal-info">
                 <image src="{{userInfo.avatar || userInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
-                       style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;background-color: black;"></image>
+                       style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
                 <text>{{userInfo.userCompany.name || userInfo.company.name}}的员工</text>
             </view>
         </view>

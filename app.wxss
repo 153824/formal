@@ -151,3 +151,7 @@
 .program-body{
   background-color: #fff;
 }
+
+.van-tabbar-item__text{
+  font-weight: normal !important;
+}

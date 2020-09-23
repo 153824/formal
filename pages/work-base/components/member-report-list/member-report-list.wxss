@@ -5,7 +5,9 @@
 /*}*/
 
 
-
+page{
+  background-color: rgba(247, 248, 250, 1);
+}
 .noData {
   padding-top: 40rpx;
   position: fixed;

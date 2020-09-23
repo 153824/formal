@@ -40,10 +40,10 @@ Page({
 
   onLoad: function (options) {
     const that = this;
-    const { trackId,trackInfo,status,releaseRecordId,shareAt } = options;
+    const { trackId,trackInfo,status,releaseRecordId,sharedAt } = options;
     const {examiningDetail,finishedDetail,digestDetail} = this;
     if (app.isLogin){
-      if( releaseRecordId && shareAt ){
+      if( releaseRecordId && sharedAt ){
         console.log("1")
         this.acceptEvaluationTrack(options).then(res=>{
           Promise.all([examiningDetail(options),finishedDetail(options),digestDetail(options)]).then(res=>{
@@ -70,7 +70,7 @@ Page({
       }
     }
     app.checkUser = ()=> {
-      if( releaseRecordId && shareAt ){
+      if( releaseRecordId && sharedAt ){
         console.log("1")
         this.acceptEvaluationTrack(options).then(res=>{
           Promise.all([examiningDetail(options),finishedDetail(options),digestDetail(options)]).then(res=>{
@@ -107,7 +107,7 @@ Page({
   },
 
   acceptEvaluationTrack: function(options){
-    const { trackId,releaseRecordId,shareAt } = options;
+    const { trackId,releaseRecordId,sharedAt } = options;
     const acceptEvaluationTrackPromise = new Promise((resolve, reject) => {
       app.doAjax({
         url: "release_records/accept",
@@ -115,7 +115,7 @@ Page({
         data: {
           userId: wx.getStorageSync("userInfo").id,
           releaseRecordId: releaseRecordId || trackId,
-          sharedAt: shareAt
+          sharedAt: sharedAt
         },
         success: function (res) {
           if(res.code === 0){
@@ -329,10 +329,11 @@ Page({
 
   onShareAppMessage: function () {
     const {trackId,releaseRecordId} = this.data;
-    console.log("trackId,releaseRecordId: ",trackId,releaseRecordId)
+    const time = new Date().getTime();
+    console.log("trackId,releaseRecordId,time: ",trackId,releaseRecordId,time)
     return {
       title: `邀请您查看作答记录`,
-      path: `pages/work-base/components/track-detail/track-detail?releaseRecordId=${trackId || releaseRecordId}&shareAt=${new Date().getTime()}&tabIndex=1`,
+      path: `pages/work-base/components/track-detail/track-detail?releaseRecordId=${trackId || releaseRecordId}&sharedAt=${time}&tabIndex=1`,
       imageUrl: "http://ihola.luoke101.com/wxShareImg.png"
     };
   },

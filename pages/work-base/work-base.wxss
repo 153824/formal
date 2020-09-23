@@ -81,7 +81,7 @@ page{
 }
 .reply-track-body{
     margin-bottom: 44rpx;
-    padding: 30rpx 30rpx;
+    padding: 30rpx 36rpx;
     height: 146rpx;
 }
 .evaluation-wrapper{
@@ -91,6 +91,9 @@ page{
     flex-wrap: nowrap;
     flex: 1;
     margin-left: 36rpx;
+}
+.track-info-wrapper{
+    margin-left: 0rpx;
 }
 .reply-track-info{
     font-size: 26rpx;

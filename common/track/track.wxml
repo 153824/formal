@@ -1,27 +1,29 @@
 <view wx:if="{{evaluationTrack.length}}" class="program-wrapper">
-    <view bindtap="goToTrackDetail" wx:for="{{ evaluationTrack }}" wx:for-item="trackItem" wx:key="unique"
-          class="program-body reply-track-body" data-track-id="{{trackItem.releaseRecordId}}"
-          data-track-index="{{trackIndex}}">
-        <view class="evaluation-wrapper">
-            <view class="evaluation-name">
-                {{ trackItem.evaluationName }}
+    <scroll-view scroll-y bindscrolltolower="nextPage" style="height:{{windowHeight*pixelRate - 44}}rpx">
+        <view bindtap="goToTrackDetail" wx:for="{{ evaluationTrack }}" wx:for-item="trackItem" wx:key="unique"
+              class="program-body reply-track-body" data-track-id="{{trackItem.releaseRecordId}}"
+              data-track-index="{{trackIndex}}">
+            <view class="evaluation-wrapper">
+                <view class="evaluation-name">
+                    {{ trackItem.evaluationName }}
+                </view>
+                <view class="reply-track-info">
+                    发放数量:
+                    <text class="count" style="margin: 0 10rpx;">{{trackItem.amount}}</text>
+                    完成数量:
+                    <text class="count" style="margin-left: 10rpx;">{{trackItem.finished}}</text>
+                </view>
+                <view class="reply-track-info">
+                    发放时间:
+                    <text class="date" style="margin-left: 10rpx;">{{ util.getFullDateByFrag(trackItem.createdAt,"/",true) }}-{{
+                        util.getHourAndMinByFrag(trackItem.createdAt,":",true) }}</text>
+                </view>
             </view>
-            <view class="reply-track-info">
-                发放数量:
-                <text class="count" style="margin: 0 10rpx;">{{trackItem.amount}}</text>
-                完成数量:
-                <text class="count" style="margin-left: 10rpx;">{{trackItem.finished}}</text>
-            </view>
-            <view class="reply-track-info">
-                发放时间:
-                <text class="date" style="margin-left: 10rpx;">{{ util.getFullDateByFrag(trackItem.createdAt,"/",true) }}-{{
-                    util.getHourAndMinByFrag(trackItem.createdAt,":",true) }}</text>
+            <view class="send-evaluation">
+                <image src="/pages/work-base/images/work-base@icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
             </view>
         </view>
-        <view class="send-evaluation">
-            <image src="/pages/work-base/images/work-base@icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
-        </view>
-    </view>
+    </scroll-view>
 </view>
 <hola-empty isShow="{{!evaluationTrack.length}}" title="暂无记录"></hola-empty>
 <wxs module="util" src="../../utils/util.wxs"></wxs>

@@ -409,14 +409,14 @@ Page({
     },
 
     acceptReport: function (option) {
-        const {receivedRecordId, shareAt, userId} = option;
+        const {receivedRecordId, sharedAt, userId} = option;
         const acceptReportPromise = new Promise((resolve, reject) => {
             app.doAjax({
                 url: `reports/accept`,
                 method: 'post',
                 data: {
                     receivedRecordId: receivedRecordId,
-                    shareAt: shareAt,
+                    sharedAt: sharedAt,
                     userId: userId
                 },
                 success: function (res) {

@@ -128,7 +128,7 @@ Page({
                     sharePaperInfo: res
                 });
                 wx.aldstat.sendEvent('成功生成测评邀请函', {
-                    '测评名称': '名称：' + paperName
+                    '测评名称': '名称：' + evaluationName
                 });
             }
         })

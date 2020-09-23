@@ -14,7 +14,7 @@ Page({
         column: [],
         isWxWork: app.wxWorkInfo.isWxWork
     },
-    onLoad: function (options,name) {
+    onLoad: function (options={reLoad: false},name) {
         if(options.reLoad){
            app.getMyTeamList(null,false);
         }

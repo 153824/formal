@@ -183,52 +183,73 @@ Page({
    * 编辑子管理员
    */
   showEditMenu1: function(e) {
-    var that = this;
-    var index = e.currentTarget.dataset.index;
-    var obj = that.data.adminMember[index];
-    wx.showActionSheet({
-      itemList: ['移除成员', '降为普通成员'],
-      success(res) {
-        var tapIndex = res.tapIndex;
-        var t = "移除成员";
-        var txt = "确定将该成员从团队中移除吗";
-        var postData = {
-          id: app.teamId,
-          type: 3,
-          teamUserId: obj.objectId
-        };
-        if (tapIndex == 1) {
-          //降为普通成员
-          t = "降为普通成员";
-          txt = "确定将该成员降为普通成员吗";
-          postData = {
+    const that = this;
+    const index = e.currentTarget.dataset.index;
+    const obj = that.data.adminMember[index];
+    wx.showModal({
+      title: "移除成员",
+      content: "确定将该成员从团队中移除吗?",
+      success: function (res) {
+        if(res.confirm){
+          const postData = {
             id: app.teamId,
-            type: 2,
-            role: 1,
+            type: 3,
             teamUserId: obj.objectId
           };
-        }
-        wx.showModal({
-          title: t,
-          content: txt,
-          success: function(ret) {
-            if (ret.confirm) {
-              app.doAjax({
-                url: "updateTeamMember",
-                data: postData,
-                success: function() {
-                  app.toast("操作成功");
-                  that.onShow();
-                }
-              });
+          app.doAjax({
+            url: "updateTeamMember",
+            data: postData,
+            success: function() {
+              app.toast("操作成功");
+              that.onShow();
             }
-          }
-        });
-      },
-      fail(res) {
-        console.log(res.errMsg)
+          });
+        }
       }
     });
+    // wx.showActionSheet({
+    //   itemList: ['移除成员', '降为普通成员'],
+    //   success(res) {
+    //     var tapIndex = res.tapIndex;
+    //     var t = "移除成员";
+    //     var txt = "确定将该成员从团队中移除吗";
+    //     var postData = {
+    //       id: app.teamId,
+    //       type: 3,
+    //       teamUserId: obj.objectId
+    //     };
+    //     if (tapIndex == 1) {
+    //       //降为普通成员
+    //       t = "降为普通成员";
+    //       txt = "确定将该成员降为普通成员吗";
+    //       postData = {
+    //         id: app.teamId,
+    //         type: 2,
+    //         role: 1,
+    //         teamUserId: obj.objectId
+    //       };
+    //     }
+    //     wx.showModal({
+    //       title: t,
+    //       content: txt,
+    //       success: function(ret) {
+    //         if (ret.confirm) {
+    //           app.doAjax({
+    //             url: "updateTeamMember",
+    //             data: postData,
+    //             success: function() {
+    //               app.toast("操作成功");
+    //               that.onShow();
+    //             }
+    //           });
+    //         }
+    //       }
+    //     });
+    //   },
+    //   fail(res) {
+    //     console.log(res.errMsg)
+    //   }
+    // });
   },
   /**
    * 编辑普通成员

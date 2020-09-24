@@ -99,6 +99,7 @@ page {
   padding: 20rpx 0 20rpx 14rpx;
   box-shadow: 0px 0px 14rpx 0px rgba(167, 193, 239, 0.18);
   border-radius: 18rpx;
+  justify-content: center;
 }
 
 .list .item .headerIcon {
@@ -136,6 +137,9 @@ page {
 }
 
 .list .item .editBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   width: 136rpx;
   border-left: 1px solid #efefef;
@@ -143,9 +147,6 @@ page {
 
 .list .item .editBtn image {
   position: relative;
-  width: 32rpx;
-  height: 8rpx;
-  top: -10rpx;
 }
 
 .shareBtn:after {

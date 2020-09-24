@@ -375,17 +375,17 @@
             <view wx:if="{{dlgName=='timeDlg'}}">
                 <image src="./images/report@icon-sandglass.png"></image>
                 <view class="msgTitle">作答时长：{{report.timeTotal}}分钟</view>
-                <view class="msg">{{answerTimeTxt}}</view>
+                <view class="msg">{{report.answerTimeTxt}}</view>
             </view>
             <view wx:if="{{dlgName=='noMatchDlg'}}">
                 <image src="./images/report@icon-uniformity-unusual.png"></image>
                 <view class="msgTitle">作答一致性：异常</view>
-                <view class="msg">{{matchArr.txt}}</view>
+                <view class="msg">{{report.matchArr.txt}}</view>
             </view>
             <view wx:if="{{dlgName=='optionChooseDlg'}}">
                 <image src="./images/report@icon-spread-unusual.png"></image>
                 <view class="msgTitle">选项分布：异常</view>
-                <view class="msg">{{matchArr.txt}}</view>
+                <view class="msg">{{report.matchArr.txt}}</view>
             </view>
         </view>
     </view>
@@ -1105,17 +1105,17 @@
             <view wx:if="{{dlgName=='timeDlg'}}">
                 <image src="./images/report@icon-sandglass.png"></image>
                 <view class="msgTitle">作答时长：{{report.timeTotal}}分钟</view>
-                <view class="msg">{{answerTimeTxt}}</view>
+                <view class="msg">{{report.answerTimeTxt}}</view>
             </view>
             <view wx:if="{{dlgName=='noMatchDlg'}}">
                 <image src="./images/report@icon-uniformity-unusual.png"></image>
                 <view class="msgTitle">作答一致性：异常</view>
-                <view class="msg">{{matchArr.txt}}</view>
+                <view class="msg">{{report.matchArr.txt}}</view>
             </view>
             <view wx:if="{{dlgName=='optionChooseDlg'}}">
                 <image src="./images/report@icon-spread-unusual.png"></image>
                 <view class="msgTitle">选项分布：异常</view>
-                <view class="msg">{{matchArr.txt}}</view>
+                <view class="msg">{{report.matchArr.txt}}</view>
             </view>
         </view>
     </view>

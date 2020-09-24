@@ -248,6 +248,9 @@ Page({
   onUnload: function () {
     saveTimeOut && clearTimeout(saveTimeOut);
     answerTimeOut && clearTimeout(answerTimeOut);
+    wx.switchTab({
+      url: "/pages/work-base/work-base"
+    })
   },
   // 答题前填写个人信息部分
   userInput: function (e) {

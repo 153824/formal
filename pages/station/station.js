@@ -15,9 +15,9 @@ Page({
   },
   onLoad: function(option){
     let that = this;
-    wx.hideTabBar({
-      animation: true
-    });
+    // wx.hideTabBar({
+    //   animation: true
+    // });
     if(option.loadingTrigger){
       this.setData({
         loading: true

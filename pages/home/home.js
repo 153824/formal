@@ -14,17 +14,14 @@ Page({
         column: []
     },
     onLoad: function (options,name) {
-        wx.hideTabBar({
-            animation: true
-        });
         if( options.loadingTrigger ){
             this.setData({
                 loading: true
             })
         }
-        wx.hideTabBar({
-            animation: true
-        });
+        // wx.hideTabBar({
+        //     animation: true
+        // });
         const that = this;
         let homePagesPromiseList = [];
         const homePagesPromise = new Promise(function (resolve, reject) {
@@ -72,18 +69,18 @@ Page({
                 column: targetColumn,
             });
             setTimeout(() => {
-                wx.showTabBar({
-                    animation: true,
-                });
+                // wx.showTabBar({
+                //     animation: true,
+                // });
                 that.setData({
                     loading: false
                 })
             }, 500);
         }).catch(err => {
             setTimeout(() => {
-                wx.showTabBar({
-                    animation: true,
-                });
+                // wx.showTabBar({
+                //     animation: true,
+                // });
                 that.setData({
                     loading: false
                 })

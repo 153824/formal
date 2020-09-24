@@ -58,7 +58,7 @@ App({
     qiniuUpload: qiniuUpload,
     isIphoneX: false,
     // host: "http://192.168.0.101:3000",
-    host: "https://api.luoke101.com",
+    host: "https://api.luoke101.com/v3.0.0",
     // host: 'https://h5.luoke101.com',
     // host: "http://192.168.0.225:3000",
     // host: "http://api.dev.luoke101.int",
@@ -508,8 +508,8 @@ App({
             return;
         }
         let LOCAL_MY_TEAM_LIST = wx.getStorageSync('GET_MY_TEAM_LIST');
-        if (LOCAL_MY_TEAM_LIST.length && cacheTrigger) {
-            var toAddNew = true
+        if (LOCAL_MY_TEAM_LIST instanceof Array && cacheTrigger) {
+            var toAddNew = true;
             LOCAL_MY_TEAM_LIST = LOCAL_MY_TEAM_LIST || []
             if (that.checkUser && !that.isLogin) {
                 that.isLogin = true
@@ -524,7 +524,7 @@ App({
                     console.error("At app.js 445, ", e)
                 }
             });
-            if (LOCAL_MY_TEAM_LIST.length) {
+            if (LOCAL_MY_TEAM_LIST instanceof Array) {
                 var obj = LOCAL_MY_TEAM_LIST[0]
                 var teams = []
                 that.teamId = obj.objectId
@@ -538,10 +538,10 @@ App({
                 that.globalData.teams = teams
                 cb && cb(LOCAL_MY_TEAM_LIST)
             }
-            if (toAddNew && !LOCAL_MY_TEAM_LIST.length) {
+            if (toAddNew && !LOCAL_MY_TEAM_LIST instanceof Array) {
                 that.addNewTeam(cb)
             }
-            if (toAddNew && LOCAL_MY_TEAM_LIST.length) {
+            if (toAddNew && LOCAL_MY_TEAM_LIST instanceof Array) {
                 that.addNewTeam()
             }
         } else {

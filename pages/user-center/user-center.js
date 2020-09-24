@@ -7,9 +7,9 @@ Page({
     },
     onLoad: function (options) {
         const {isWxWork, isWxWorkAdmin} = this.data;
-        wx.hideTabBar({
-            animation: true
-        });
+        // wx.hideTabBar({
+        //     animation: true
+        // });
         this.setData({
             isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
             userInfo: wx.getStorageSync("userInfo") || wx.getStorageSync("USER_DETAIL") || app.globalData.userInfo || app.globalData.userMsg

@@ -2,7 +2,7 @@
     <view class="user-page-wrapper">
         <view class="head">
             <view class="user-personal-info">
-                <block wx:if="{{userInfo.isBind}}">
+                <block wx:if="{{!userInfo.isBind}}">
                     <image src="{{userInfo.avatar || userInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
                            style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
                     <text>点击登录</text>

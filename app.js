@@ -608,7 +608,7 @@ App({
      */
     addNewTeam: function (cb) {
         var that = this;
-        var userInfo =  wx.getStorageSync("USER_DETAIL") || wx.getStorageSync("userInfo") || {} || that.globalData.userInfo;
+        var userInfo = that.globalData.userInfo;
         that.doAjax({
             url: 'updateTeamMember',
             method: 'post',

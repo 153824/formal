@@ -365,7 +365,7 @@
         </view>
         <!-- 免责声明 -->
         <view class="bottomMsg" wx:if="{{report.statement}}">
-            <rich-text nodes="{{statement}}"></rich-text>
+            <rich-text nodes="{{report.statement}}"></rich-text>
         </view>
         <!-- 底部固定 -->
         <view class="ownerMsg">©好啦测评</view>
@@ -374,7 +374,7 @@
         <view class="dlgView" wx:if="{{showDlg}}">
             <view wx:if="{{dlgName=='timeDlg'}}">
                 <image src="./images/report@icon-sandglass.png"></image>
-                <view class="msgTitle">作答时长：{{timeTotal}}分钟</view>
+                <view class="msgTitle">作答时长：{{report.timeTotal}}分钟</view>
                 <view class="msg">{{answerTimeTxt}}</view>
             </view>
             <view wx:if="{{dlgName=='noMatchDlg'}}">
@@ -1104,7 +1104,7 @@
         <view class="dlgView" wx:if="{{showDlg}}">
             <view wx:if="{{dlgName=='timeDlg'}}">
                 <image src="./images/report@icon-sandglass.png"></image>
-                <view class="msgTitle">作答时长：{{timeTotal}}分钟</view>
+                <view class="msgTitle">作答时长：{{report.timeTotal}}分钟</view>
                 <view class="msg">{{answerTimeTxt}}</view>
             </view>
             <view wx:if="{{dlgName=='noMatchDlg'}}">

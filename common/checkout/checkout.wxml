@@ -98,7 +98,7 @@
         <view class="price-child price-child-by-buyout">
             <view class="buy">按年买断</view>
             <view wx:if="{{ data.buyoutPlans[0].price }}">联系客服获取优惠报价</view>
-            <view wx:else>即将推出，敬请期待</view>
+            <view wx:else>联系客服获取优惠报价</view>
         </view>
     </view>
     <view wx:else class="price-content-ios"

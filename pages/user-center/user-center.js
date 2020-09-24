@@ -72,7 +72,9 @@ Page({
                 }),
             },
             success: function(res) {
-                console.log("app.globalData.userInfo: ",app.globalData.userInfo)
+                res = res.data;
+                console.log("app.globalData.userInfo: res",res);
+                console.log("app.globalData.userInfo: ",app.globalData.userInfo);
                 const localUserInfo = wx.getStorageSync("userInfo");
                 const localUserDetail = wx.getStorageSync("USER_DETAIL");
                 app.globalData.userInfo = Object.assign(app.globalData.userInfo,localUserInfo,localUserDetail,res);

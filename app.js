@@ -315,7 +315,7 @@ App({
         }
         const LOCAL_USER_INFO = wx.getStorageSync('USER_DETAIL');
         this.checkUser = null;
-        if (Object.keys(LOCAL_USER_INFO).length > 0) {
+        if (LOCAL_USER_INFO.id) {
             common.setUserDetail.apply(that, [LOCAL_USER_INFO]);
             wx.hideLoading();
             that.getMyTeamList(callBack);
@@ -608,14 +608,14 @@ App({
      */
     addNewTeam: function (cb) {
         var that = this;
-        var userInfo = that.globalData.userInfo;
+        var userInfo =  wx.getStorageSync("USER_DETAIL") || wx.getStorageSync("userInfo") || {} || that.globalData.userInfo;
         that.doAjax({
             url: 'updateTeamMember',
             method: 'post',
             noLoading: true,
             data: {
                 type: 6,
-                name: userInfo.nickname + '的团队',
+                name: (userInfo.nickname || userInfo.nickName ) + '的团队',
                 remark: '自动生成的团队',
             },
             success: function () {

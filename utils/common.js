@@ -9,7 +9,7 @@
 function setUserDetail(LOCAL_USER_INFO) {
     console.log("LOCAL_USER_INFO: ",LOCAL_USER_INFO);
     const userData = LOCAL_USER_INFO;
-    if (LOCAL_USER_INFO) {
+    if (LOCAL_USER_INFO.id) {
         console.log("this： ",this);
         const userMsg = this.globalData.userMsg;
         wx.setStorageSync('userInfo', Object.assign(userData,this.globalData.userInfo || {}));

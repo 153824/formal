@@ -171,11 +171,11 @@ Page({
           quesAll: ques1,
           chapter: res.chapter || [],
           getphoneNum: getphoneNum,
-          id: options.id,
+          id: options.id || options.receiveRecordId,
           paperId: options.pid,
           showQues: showQues,
           paperList: res,
-          time: ((res.chapter || [])[0] || {}).time || ""
+          time: ((res.chapter || [])[0] || {}).time || "",
         });
         if (app.isTest) {
           that.setData({

@@ -471,7 +471,9 @@
                 <text>{{report.summaryName}}</text>
             </view>
             <view wx:if="{{report.showCoordinate}}" class="chartImg" style="display: flex;justify-content: center;align-items: center;margin-top: 40rpx;">
-                <hola-grid axis="{{report.graphAxis}}" area="{{report.graphQuadrants}}" coordinate="{{report.graphCoordinateIdx}}"></hola-grid>
+                <hola-grid axis="{{report.graphAxis}}" area="{{report.graphQuadrants}}" coordinate="{{report.graphCoordinateIdx}}" type="nineCell">
+
+                </hola-grid>
             </view>
             <view class="flex temple"
                   wx:if="{{report.showSummaryTotal||report.showSummaryDefinition||report.summaryRankOrg||report.summaryRankAll}}">

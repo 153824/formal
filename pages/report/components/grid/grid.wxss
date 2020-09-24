@@ -67,9 +67,6 @@
 .van-grid-icon-custom{
     display: none !important;
 }
-.van-grid-text-custom-first-command{
-    color: rgba(53, 62, 232, 1) !important;
-}
 .van-grid-content-custom-first-command{
     background-color: rgba(53, 62, 232, 0.1) !important;
 }
@@ -80,10 +77,21 @@
     border-radius: 10rpx;
 }
 .van-grid-text-custom{
-    margin-top: 0;
-    font-size: 30rpx;
-    font-weight: 400;
+    margin-top: 0 !important;
+    font-size: 30rpx !important;
+    font-weight: 400 !important;
     color: rgba(212, 212, 212, 1);
+}
+.van-grid-text-custom-nine-cell{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 24rpx !important;
+    font-weight: 400 !important;
+    color: rgba(212, 212, 212, 1) !important;
+}
+.van-grid-text-custom-first-command{
+    color: rgba(53, 62, 232, 1) !important;
 }
 .axis-data-x{
     display: flex;

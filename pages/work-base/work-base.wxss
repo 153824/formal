@@ -32,7 +32,7 @@ page{
     color: rgba(53, 62, 232, 1);
     font-size: 26rpx;
     height: 36rpx;
-    font-weight: 400;
+    font-weight: 600 !important;
 }
 .content{
     position: relative;

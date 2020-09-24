@@ -132,8 +132,8 @@
             <text>{{currTeam || userInfo.userCompany.name}}</text>
         </view>
         <view class="company-action">
-            <text bindtap="setChildManager">子管理员设置</text>
-            <text bindtap="setCompanyCert" style="margin: 0 30rpx;">企业认证</text>
+            <text bindtap="setChildManager" style="font-weight: 600;">子管理员设置</text>
+            <text bindtap="setCompanyCert" style="margin: 0 30rpx;font-weight: 600;">企业认证</text>
             <hola-title id="title" url="work-base/work-base" type="normal"></hola-title>
         </view>
     </view>

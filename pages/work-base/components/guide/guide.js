@@ -46,6 +46,12 @@ Page({
         releaseRecordId: id
       },
       success: function(res) {
+        if(!res.receiveRecordId){
+          app.toast("该分享已失效！");
+          wx.navigateTo({
+            url: "/pages/work-base/work-base"
+          })
+        }
         const sKey = "oldAnswer" + id;
         const oldData = wx.getStorageSync(sKey);
         that.setData({

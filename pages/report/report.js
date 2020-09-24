@@ -754,7 +754,7 @@ Page({
                 res.fillBlank.push("");
             }
             that.setData(res);
-            // console.log("res: ", res);
+            console.log("res: ", res);
             this.getEvaluationQues();
         });
     },

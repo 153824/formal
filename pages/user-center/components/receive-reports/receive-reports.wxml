@@ -3,7 +3,7 @@
         <van-tab title="测评报告">
             <hola-evaluation-reports type="receive-evaluation" reportsList="{{ moreReportsList }}"></hola-evaluation-reports>
         </van-tab>
-        <van-tab title="测评项目">
+        <van-tab title="测评作答跟踪">
             <hola-track evaluationTrack="{{evaluationTrack}}"></hola-track>
         </van-tab>
     </van-tabs>

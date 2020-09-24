@@ -12,8 +12,10 @@
             </view>
             <view>
                 <text class="send-way">发放方式：</text>
-                <text wx:if="{{type === 'self'}}">【自己测】</text>
-                <text wx:else class="code" bindtap="loadQrcode">二维码 【查看二维码】</text>
+                <text wx:if="{{type === 'self'}}">自己测</text>
+                <block wx:else>
+                    二维码 <text class="code" bindtap="loadQrcode">【查看二维码】</text>
+                </block>
             </view>
         </view>
     </view>

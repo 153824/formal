@@ -71,6 +71,9 @@ Component({
                 windowHeight: systemInfo.windowHeight
             })
             if (type === "report-more") {
+                wx.setNavigationBarTitle({
+                    title: '测评报告'
+                });
                 this.loadReportList();
             } else if (type === "receive-evaluation") {
                 app.doAjax({

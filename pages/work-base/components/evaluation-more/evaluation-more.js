@@ -52,5 +52,33 @@ Page({
         let {page} = this.data;
         page++;
         this.loadMyEvaluation(page);
-    }
+    },
+
+    goToSharePaper: function (e) {
+        const {available, norms, quesCount, estimatedTime, evaluationId, evaluationName, type} = this.data.myEvaluation[e.currentTarget.dataset.index];
+        const necessaryInfo = {
+            count: available,
+            norms: norms,
+            quesCount: quesCount,
+            estimatedTime: estimatedTime,
+            id: evaluationId,
+            name: evaluationName,
+            isFree: type === "FREE",
+            hadBuyout: type === "BY_COUNT" ? false : true,
+        };
+        if (!available && !necessaryInfo.hadBuyout && !necessaryInfo.isFree) {
+            app.toast("测评可用数量不足");
+            return;
+        }
+        wx.navigateTo({
+            url: `/pages/station/components/sharePaper/sharePaper?necessaryInfo=${JSON.stringify(necessaryInfo)}`,
+        })
+    },
+
+    goToEvaluationDetail: function (e) {
+        const {evaluationId} = e.currentTarget.dataset;
+        wx.navigateTo({
+            url: `/pages/station/components/detail/detail?id=${evaluationId}`,
+        })
+    },
 });

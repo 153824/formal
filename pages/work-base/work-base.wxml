@@ -259,7 +259,7 @@
 <!--------------------------------------------------------------------------------------------------------------------->
 <!--Start: 企业微信端非管理员页工作台-测评列表-->
 <block wx:elif="{{ isWxWork && !isWxWorkAdmin }}">
-    <hola-member-report-list id="hola-member-report-list"></hola-member-report-list>
+    <hola-member-report-list id="hola-member-report-list" navigationBarTitleText=""></hola-member-report-list>
 </block>
 <!--End: 企业微信端非管理员页工作台-测评列表-->
 <!--------------------------------------------------------------------------------------------------------------------->

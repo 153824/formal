@@ -15,9 +15,14 @@ Component({
     maskTrigger: true,
     isIos: app.isIos
   },
-  properties: {},
+  properties: {
+    navigationBarTitleText: {
+      type: String,
+      value: "他人邀请我参加的测评"
+    }
+  },
   pageLifetimes: {
-    onLoad: function (options) {
+    load: function (options) {
       const that = this;
       paperId = options.id || "";
       page = 1;
@@ -107,6 +112,9 @@ Component({
   },
   lifetimes: {
     created() {
+      wx.setNavigationBarTitle({
+        title: this.properties.navigationBarTitleText
+      });
       const that = this;
       app.isTest = false;
       if (!app.globalData.userInfo || !app.globalData.userInfo.id) {

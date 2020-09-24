@@ -39,6 +39,9 @@ Page({
     onLoad: function (option = {id: "", isWxWorkAdmin: false, maskTrigger: false}) {
         const that = this;
         const optionIsWxWorkAdmin = option.isWxWorkAdmin || false;
+        wx.hideTabBar({
+            animation: true
+        });
         this.setData({
             userInfo: app.globalData.userInfo || wx.getStorageSync("userInfo"),
             isWxWork: app.wxWorkInfo.isWxWork,

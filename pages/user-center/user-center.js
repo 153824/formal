@@ -7,6 +7,9 @@ Page({
     },
     onLoad: function (options) {
         const {isWxWork, isWxWorkAdmin} = this.data;
+        wx.hideTabBar({
+            animation: true
+        });
         this.setData({
             isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
             userInfo: wx.getStorageSync("userInfo") || wx.getStorageSync("USER_DETAIL") || app.globalData.userInfo || app.globalData.userMsg
@@ -35,7 +38,7 @@ Page({
     },
     goToReceiveEvaluation: function () {
         wx.navigateTo({
-            url: '/pages/work-base/components/member-report-list/member-report-list'
+            url: '/pages/work-base/components/member-report-list/member-report-list?navigationText=0'
         })
     },
     goToAddGroup: function () {

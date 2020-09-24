@@ -14,6 +14,9 @@ Page({
         column: []
     },
     onLoad: function (options,name) {
+        wx.hideTabBar({
+            animation: true
+        });
         if( options.loadingTrigger ){
             this.setData({
                 loading: true

@@ -72,9 +72,19 @@ Page({
                 }),
             },
             success: function(res) {
-                that.hideLoginDlg();
-                app.globalData.userInfo.nickname = userInfo.nickName;
+                console.log("app.globalData.userInfo: ",app.globalData.userInfo)
+                const localUserInfo = wx.getStorageSync("userInfo");
+                const localUserDetail = wx.getStorageSync("USER_DETAIL");
+                app.globalData.userInfo = Object.assign(app.globalData.userInfo,localUserInfo,localUserDetail,res);
+                wx.setStorageSync("userInfo",app.globalData.userInfo);
+                wx.setStorageSync("USER_DETAIL",app.globalData.userInfo);
+                const userInfo = Object.assign({},app.globalData.userInfo);
+                console.log("app.globalData.userInfo: ",app.globalData.userInfo)
+                that.setData({
+                    userInfo: wx.setStorageSync("userInfo",app.globalData.userInfo) || userInfo
+                });
                 app.addNewTeam(that.onShow);
+                that.onShow();
             }
         });
     },

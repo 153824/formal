@@ -804,6 +804,9 @@ Page({
                         openid: wx.getStorageSync("openId"),
                     },
                     success: function (res) {
+                        app.globalData.userInfo = Object.assign(app.globalData.userInfo,res);
+                        wx.setStorageSync("userInfo",app.globalData.userInfo);
+                        wx.setStorageSync("USER_DETAIL",app.globalData.userInfo);
                         if (res.phone && mark !== 'dont-get-ticket') {
                             that.getNewerTicket();
                         }

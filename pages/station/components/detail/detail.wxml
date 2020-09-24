@@ -48,38 +48,68 @@
                       subtitle="➜" align="center" subMargin="0 20rpx 0 0">
                 </meal>
             </view>
-            <button class="button-group-get-user-phone" data-mark="dont-get-ticket" open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
-                    bindgetphonenumber="getPhoneNumber">
-                <view class="button-group-child">
-                    <view class="gotoguide-btn" bindtap="{{isBindPhone ? 'goToReplyingGuide':''}}" data-name="{{ evaluation.name }}"
-                          data-answering="{{ currAnsweringStatus }}" data-id="{{ evaluation.id }}">
+            <view class="button-group-child">
+                <button class="button-group-get-user-phone"
+                        data-mark="dont-get-ticket"
+                        open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
+                        bindgetphonenumber="getPhoneNumber"
+                        data-event-name="goToReplyingGuide"
+                        data-name="{{ evaluation.name }}"
+                        data-answering="{{ currAnsweringStatus }}"
+                        data-id="{{ evaluation.id }}"
+                        bindtap="{{isBindPhone ? 'goToTransit' : ''}}"
+                >
+                    <view class="gotoguide-btn">
                         <press title="自己测" bgColor="rgba(255,255,255,1)" color="rgba(53,62,232,1)" fontSize="32"
                                fontWeight="600"></press>
                     </view>
-                    <view class="gotodati-btn" bindtap="{{isBindPhone ? 'goToDaTi' : ''}}">
+                </button>
+                <button class="button-group-get-user-phone large-button-group-get-user-phone"
+                        data-mark="dont-get-ticket"
+                        open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
+                        bindgetphonenumber="getPhoneNumber"
+                        data-event-name="goToDaTi"
+                        bindtap="{{isBindPhone ? 'goToTransit' : ''}}"
+                >
+                    <view class="gotodati-btn">
                         <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
                     </view>
-                </view>
-            </button>
+                </button>
+            </view>
         </view>
     </block>
     <block wx:else>
         <!-- 免费测评的按钮组 -->
         <view class="button-group" wx:if="{{ evaluation.freeEvaluation }}">
-            <button class="button-group-get-user-phone" data-mark="dont-get-ticket" open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
-                    bindgetphonenumber="getPhoneNumber">
-                <view class="button-group-child">
-                    <view class="gotoguide-btn" bindtap="{{isBindPhone ? 'goToReplyingGuide':''}}" data-name="{{ evaluation.name }}"
-                          data-answering="{{ currAnsweringStatus }}" data-id="{{ evaluation.id }}">
+            <view class="button-group-child">
+                <button class="button-group-get-user-phone"
+                        data-mark="dont-get-ticket"
+                        open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
+                        bindgetphonenumber="getPhoneNumber"
+                        data-name="{{ evaluation.name }}"
+                        data-answering="{{ currAnsweringStatus }}"
+                        data-id="{{ evaluation.id }}"
+                        data-event-name="goToReplyingGuide"
+                        bindtap="{{isBindPhone ? 'goToTransit' : ''}}"
+                >
+                    <view class="gotoguide-btn">
                         <press title="{{ currAnsweringStatus ? '继续体验' : '自己测'}}" bgColor="rgba(255,255,255,1)"
                                color="rgba(53,62,232,1)"
                                fontSize="32" fontWeight="600"></press>
                     </view>
-                    <view class="gotodati-btn" bindtap="{{isBindPhone ? 'goToDaTi' : ''}}">
+                </button>
+                <button class="button-group-get-user-phone large-button-group-get-user-phone"
+                        data-mark="dont-get-ticket"
+                        open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
+                        bindgetphonenumber="getPhoneNumber"
+                        data-event-name="goToDaTi"
+                        bindtap="{{isBindPhone ? 'goToTransit' : ''}}"
+                >
+                    <view class="gotodati-btn">
                         <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
                     </view>
-                </view>
-            </button>
+                </button>
+            </view>
         </view>
         <!-- 未购买过测评的按钮组且未买断 -->
         <view class="buy-group"
@@ -114,20 +144,34 @@
                       title="剩余可用份数：{{ evaluationVoucherInfo.availableCount }}"
                       subtitle="{{ isIos ? '用券继续兑换' : '购买更多 >' }}"></meal>
             </view>
-            <button class="button-group-get-user-phone" data-mark="dont-get-ticket" open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
-                    bindgetphonenumber="getPhoneNumber">
-                <view class="button-group-child">
-                    <view class="gotoguide-btn" bindtap="{{isBindPhone ? 'goToReplyingGuide' : '' }}"  data-name="{{ evaluation.name }}"
-                          data-answering="{{ currAnsweringStatus }}" data-id="{{ evaluation.id }}">
+            <view class="button-group-child">
+                <button class="button-group-get-user-phone" data-mark="dont-get-ticket"
+                        open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
+                        bindgetphonenumber="getPhoneNumber"
+                        data-name="{{ evaluation.name }}"
+                        data-answering="{{ currAnsweringStatus }}"
+                        data-id="{{ evaluation.id }}"
+                        data-event-name="goToReplyingGuide"
+                        bindtap="{{isBindPhone ? 'goToTransit' : ''}}"
+                >
+                    <view class="gotoguide-btn">
                         <press title="{{ currAnsweringStatus ? '继续体验' : '自己测'}}" bgColor="rgba(255,255,255,1)"
                                color="rgba(53,62,232,1)"
                                fontSize="32" fontWeight="600"></press>
                     </view>
-                    <view class="gotodati-btn" bindtap="{{isBindPhone ? 'goToDaTi' : '' }}">
+                </button>
+                <button class="button-group-get-user-phone large-button-group-get-user-phone"
+                        data-mark="dont-get-ticket"
+                        open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
+                        bindgetphonenumber="getPhoneNumber"
+                        data-event-name="goToDaTi"
+                        bindtap="{{isBindPhone ? 'goToTransit' : ''}}"
+                >
+                    <view class="gotodati-btn">
                         <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
                     </view>
-                </view>
-            </button>
+                </button>
+            </view>
         </view>
         <!-- 买断 -->
         <view class="button-group" wx:elif="{{ evaluationVoucherInfo.buyoutInfo.hadBuyout }}">
@@ -136,20 +180,34 @@
                       title="有效期至：{{ isIos ? util.getFullDateByFrag(evaluationVoucherInfo.buyoutInfo.expiryDate,'.',true) : util.getFullDateByFrag(evaluationVoucherInfo.buyoutInfo.expiryDate,'.',true) }}"
                       subtitle="{{ isIos ? '' : '续费' }}"></meal>
             </view>
-            <button class="button-group-get-user-phone" data-mark="dont-get-ticket" open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
-                    bindgetphonenumber="getPhoneNumber">
-                <view class="button-group-child">
-                    <view class="gotoguide-btn" bindtap="{{isBindPhone ? 'goToReplyingGuide' : ''}}" data-name="{{ evaluation.name }}"
-                          data-answering="{{ currAnsweringStatus }}" data-id="{{ evaluation.id }}">
+            <view class="button-group-child">
+                <button class="button-group-get-user-phone" data-mark="dont-get-ticket"
+                        open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
+                        bindgetphonenumber="getPhoneNumber"
+                        data-name="{{ evaluation.name }}"
+                        data-answering="{{ currAnsweringStatus }}"
+                        data-id="{{ evaluation.id }}"
+                        data-event-name="goToReplyingGuide"
+                        bindtap="{{isBindPhone ? 'goToTransit' : ''}}"
+                >
+                    <view class="gotoguide-btn">
                         <press title="{{ currAnsweringStatus ? '继续体验' : '自己测'}}" bgColor="rgba(0,0,0,1)"
                                color="rgba(53,62,232,1)"
                                fontSize="32" fontWeight="600"></press>
                     </view>
-                    <view class="gotodati-btn" bindtap="{{isBindPhone ? 'goToDaTi' : ''}}" >
+                </button>
+                <button class="button-group-get-user-phone large-button-group-get-user-phone"
+                        data-mark="dont-get-ticket"
+                        open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
+                        bindgetphonenumber="getPhoneNumber"
+                        data-event-name="goToDaTi"
+                        bindtap="{{isBindPhone ? 'goToTransit' : ''}}"
+                >
+                    <view class="gotodati-btn">
                         <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
                     </view>
-                </view>
-            </button>
+                </button>
+            </view>
         </view>
     </block>
     <block>

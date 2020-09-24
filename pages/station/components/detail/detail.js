@@ -56,7 +56,7 @@ Page({
         const isBindPhone = wx.getStorageSync("USER_DETAIL").phone ? true : false;
         this.setData({
             isBindPhone: isBindPhone
-        })
+        });
         if (app.isLogin) {
             const teamDetailPromise = new Promise((resolve, reject) => {
                 app.doAjax({
@@ -323,7 +323,7 @@ Page({
                 if (res.unfinished) {
                     const sKey = "oldAnswer" + res.receiveRecordId;
                     const oldData = wx.setStorageSync(sKey, res.draft);
-                    console.log("oldData",oldData)
+                    console.log("oldData", oldData)
                     if (oldData) {
                         wx.navigateTo({
                             url: `../../../replying/replying?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`
@@ -333,7 +333,7 @@ Page({
                     wx.navigateTo({
                         url: `../../../replying/components/guide/guide?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`
                     });
-                }else{
+                } else {
                     wx.navigateTo({
                         url: `../../../replying/components/guide/guide?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`
                     });
@@ -424,7 +424,7 @@ Page({
     payByBuyout: function () {
         var that = this;
         var {evaluation} = this.data;
-        console.log("evaluation: ",evaluation)
+        console.log("evaluation: ", evaluation)
         var dayOfPeriod = 365;
         try {
             dayOfPeriod = evaluation.buyoutPlans[0].dayOfPeriod
@@ -773,7 +773,7 @@ Page({
     },
     getPhoneNumber: function (e) {
         var that = this;
-        const {mark} = e.currentTarget.dataset;
+        const {mark, eventName} = e.currentTarget.dataset;
         var {iv, encryptedData} = e.detail;
         var {evaluation} = this.data;
         if (encryptedData) {
@@ -804,11 +804,22 @@ Page({
                         openid: wx.getStorageSync("openId"),
                     },
                     success: function (res) {
-                        app.globalData.userInfo = Object.assign(app.globalData.userInfo,res);
-                        wx.setStorageSync("userInfo",app.globalData.userInfo);
-                        wx.setStorageSync("USER_DETAIL",app.globalData.userInfo);
+                        app.globalData.userInfo = Object.assign(app.globalData.userInfo, res);
+                        wx.setStorageSync("userInfo", app.globalData.userInfo);
+                        wx.setStorageSync("USER_DETAIL", app.globalData.userInfo);
                         if (res.phone && mark !== 'dont-get-ticket') {
                             that.getNewerTicket();
+                        }
+                        if (mark === 'dont-get-ticket') {
+                            switch (eventName) {
+                                case 'goToDaTi':
+                                    that.goToDaTi(e);
+                                    break;
+                                case 'goToReplyingGuide':
+                                    that.goToReplyingGuide(e);
+                                    break;
+
+                            }
                         }
                         wx.aldstat.sendEvent('授权手机号成功', {
                             '测评名称': `名称：${evaluation.name}`
@@ -821,4 +832,18 @@ Page({
             });
         }
     },
+    goToTransit: function (e) {
+        const that = this;
+        const {mark, eventName} = e.currentTarget.dataset;
+        if (that.data.isBindPhone) {
+            switch (eventName) {
+                case 'goToDaTi':
+                    that.goToDaTi(e);
+                    break;
+                case 'goToReplyingGuide':
+                    that.goToReplyingGuide(e);
+                    break;
+            }
+        }
+    }
 });

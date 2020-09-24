@@ -96,10 +96,9 @@
   height: 100%;
 }
 .gotoguide-btn{
-  width: 30%;
+
 }
 .gotodati-btn{
-  width: 70%;
 }
 
 /*pay*/
@@ -1273,6 +1272,7 @@
   z-index: 999!important;
 }
 .button-group-get-user-phone{
+  width: 30% !important;
   position: unset !important;
   display: unset !important;
   margin-left: unset !important;
@@ -1293,4 +1293,7 @@
 }
 .button-group-get-user-phone::after{
   display: none;
+}
+.large-button-group-get-user-phone{
+  width: 70% !important;
 }

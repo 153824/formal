@@ -34,14 +34,14 @@ Page({
   goToReplying: function(e) {
     const { id,name } = e.currentTarget.dataset;
     const that = this;
-    const sKey = "oldAnswer" + this.data.evaluationId;
     const {receiveRecordId,evaluationId} = this.data;
-    console.log("id: ",receiveRecordId,evaluationId)
+    const sKey = "oldAnswer" + receiveRecordId;
+    console.log("id: ",receiveRecordId,evaluationId);
     const draftAnswer = this.data.draftAnswer;
     if (draftAnswer || !draftAnswer) {
       wx.setStorageSync(sKey, draftAnswer);
       wx.redirectTo({
-        url: '../../replying?pid=' + evaluationId + '&id=' + receiveRecordId
+        url: `../../replying?pid=${evaluationId}&id=${receiveRecordId}&evaluationId=${evaluationId}&receiveRecordId=${receiveRecordId}`
       });
       wx.aldstat.sendEvent('点击开始作答', {
         '测评名称': `名称：${ name } id：${ id }`

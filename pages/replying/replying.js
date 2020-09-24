@@ -52,16 +52,13 @@ Page({
     });
     if (app.isTest || !app.isTest ) {
       that.setData({
-
-
-
         // pathIndex: 2
         pathIndex: 3
       });
     }
     quesIdsOrder = [];
-    sKey = "oldAnswer" + options.id;
-    console.log("oldAnswer" + options.id);
+    sKey = "oldAnswer" + options.receiveRecordId || options.id;
+    console.log("replying_oldAnswer:", sKey);
     let oldData = wx.getStorageSync(sKey);
     if( oldData.pathIndex == "2" || oldData.pathIndex == "1" ){
       oldData.pathIndex = 3
@@ -87,7 +84,7 @@ Page({
       url: "paperQues",
       method: "get",
       data: {
-        id: options.pid
+        id: options.pid || options.evaluationId
       },
       success: function (res) {
         that.setData({

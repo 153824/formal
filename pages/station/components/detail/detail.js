@@ -320,10 +320,14 @@ Page({
                 that.setData({
                     releaseInfo: res
                 });
+                console.log("Evaluation: ",evaluation)
                 if (res.unfinished) {
                     const sKey = "oldAnswer" + res.receiveRecordId;
-                    const oldData = wx.setStorageSync(sKey, res.draft);
-                    console.log("oldData", oldData)
+                    console.log("const sKey = \"oldAnswer\" + res.receiveRecordId;: ",sKey)
+                    let oldData = wx.getStorageSync(sKey);
+                    if(!oldData && res.draft instanceof Object){
+                        oldData = wx.setStorageSync(sKey, res.draft);
+                    }
                     if (oldData) {
                         wx.navigateTo({
                             url: `../../../replying/replying?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`

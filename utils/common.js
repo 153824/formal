@@ -38,7 +38,7 @@ function setTeams(LOCAL_MY_TEAM_LIST,cb){
             toAddNew = false;
         }
     });
-    if (LOCAL_MY_TEAM_LIST.length) {
+    if (LOCAL_MY_TEAM_LIST instanceof Array) {
         let obj = LOCAL_MY_TEAM_LIST[0];
         let teams = [];
         this.teamId = obj.objectId;
@@ -52,10 +52,10 @@ function setTeams(LOCAL_MY_TEAM_LIST,cb){
         // this.checkUserVip(obj);
         cb && cb(LOCAL_MY_TEAM_LIST)
     }
-    if (toAddNew && !LOCAL_MY_TEAM_LIST.length) {
+    if (toAddNew && !LOCAL_MY_TEAM_LIST instanceof Array) {
         this.addNewTeam(cb)
     }
-    if (toAddNew && LOCAL_MY_TEAM_LIST.length) {
+    if (toAddNew && LOCAL_MY_TEAM_LIST instanceof Array) {
         this.addNewTeam()
     }
 }

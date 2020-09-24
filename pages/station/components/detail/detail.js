@@ -29,6 +29,7 @@ Page({
         currAnsweringStatus: false,
         releaseInfo: {}
     },
+
     onLoad: function (options) {
         var that = this;
         var {resubscribe = 'false'} = options;
@@ -52,6 +53,10 @@ Page({
     },
     onShow: function () {
         const that = this;
+        const isBindPhone = wx.getStorageSync("USER_DETAIL").phone ? true : false;
+        this.setData({
+            isBindPhone: isBindPhone
+        })
         if (app.isLogin) {
             const teamDetailPromise = new Promise((resolve, reject) => {
                 app.doAjax({
@@ -238,16 +243,19 @@ Page({
             // do nothing
         });
     },
+
     changePrice: function (e) {
         this.setData({
             count: e.detail.value * 1
         })
     },
+
     payForEvaluation: function () {
         this.setData({
             payTrigger: true
         })
     },
+
     cancelPayForEvaluation: function (e) {
         this.setData({
             payTrigger: false,
@@ -294,84 +302,7 @@ Page({
     goToReplyingGuide: function (e) {
         const that = this;
         const {evaluation} = this.data;
-        console.log("evaluation： ",evaluation)
         const {name, answering, id} = e.currentTarget.dataset;
-        const isNotFirstExperience = wx.getStorageSync("isNotFirstExperience");
-        let isFirstExperience = false;
-        if (!isNotFirstExperience) {
-            isFirstExperience = true;
-            wx.setStorage({
-                key: "isNotFirstExperience",
-                data: true
-            })
-        }
-        const subscribePromise = new Promise((resolve, reject) => {
-            try {
-                wx.aldstat.sendEvent('用户触发订阅新测评', {
-                    '测评名称': `名称: ${name} id：${id}`
-                });
-            } catch (e) {
-
-            }
-            /*无体验过,开启小神推订阅*/
-            if ((!answering && isFirstExperience) || this.data.resubscribe) {
-                wx.aldPushSubscribeMessage({
-                    eventId: app.globalData.eventId,
-                    success(res) {
-                        resolve("订阅成功");
-                        try {
-                            wx.aldstat.sendEvent('用户成功订阅新测评', {
-                                '测评名称': `名称: ${name} id：${id}`
-                            });
-                        } catch (e) {
-
-                        }
-                    },
-                    fail(res, e) {
-                        reject("订阅失败");
-                        wx.aldstat.sendEvent('用户拒绝订阅新测评', {
-                            '测评名称': `名称: ${name} id：${id}`
-                        });
-                    }
-                });
-            } else {
-                resolve("未触发订阅");
-            }
-        });
-
-        function toNext(promise) {
-            app.doAjax({
-                url: 'release/self',
-                method: 'post',
-                data: {
-                    evaluationInfo: {
-                        evaluationId: evaluation.id,
-                        normId: evaluation.generalNorms[0].normId,
-                        freeEvaluation: evaluation.freeEvaluation,
-                        evaluationName: evaluation.name,
-                        quesCount: evaluation.quesCount,
-                        estimatedTime: evaluation.estimatedTime
-                    }
-                },
-                success: function (res) {
-                    const {releaseInfo, evaluation} = that.data;
-                    console.log("toNext: ", releaseInfo);
-                    promise.then(ret => {
-                        wx.navigateTo({
-                            url: '../../../replying/components/guide/guide?evaluationId=' + evaluation.id + '&receiveRecordId=' + releaseInfo.receiveRecordId
-                        })
-                        console.log("promise: ", releaseInfo);
-                    }).catch((err) => {
-                        wx.navigateTo({
-                            url: '../../../replying/components/guide/guide?evaluationId=' + evaluation.id + '&receiveRecordId=' + releaseInfo.receiveRecordId
-                        })
-                    });
-                    wx.aldstat.sendEvent('点击体验测评', {
-                        '测评名称': `名称：${name} id：${that.data.evaluationId}`
-                    });
-                }
-            });
-        }
         app.doAjax({
             url: 'release/self',
             method: 'post',
@@ -388,32 +319,25 @@ Page({
             success: function (res) {
                 that.setData({
                     releaseInfo: res
-                })
+                });
                 if (res.unfinished) {
                     const sKey = "oldAnswer" + res.receiveRecordId;
                     const oldData = wx.setStorageSync(sKey, res.draft);
+                    console.log("oldData",oldData)
                     if (oldData) {
                         wx.navigateTo({
                             url: `../../../replying/replying?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`
                         });
                         return;
                     }
-                    subscribePromise.then(ret => {
-                        wx.navigateTo({
-                            url: `../../../replying/components/guide/guide?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`
-                        });
-                    }).catch(err => {
-                        wx.navigateTo({
-                            url: `../../../replying/components/guide/guide?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`
-                        });
+                    wx.navigateTo({
+                        url: `../../../replying/components/guide/guide?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`
                     });
-                    return;
                 }else{
                     wx.navigateTo({
                         url: `../../../replying/components/guide/guide?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`
                     });
                 }
-                // toNext(subscribePromise);
             }
         });
     },
@@ -588,7 +512,7 @@ Page({
             quesCount: evaluation.quesCount,
             estimatedTime: evaluation.estimatedTime,
 
-        }
+        };
         wx.navigateTo({
             url: `../sharePaper/sharePaper?necessaryInfo=${JSON.stringify(necessaryInfo)}`,
         });
@@ -849,6 +773,7 @@ Page({
     },
     getPhoneNumber: function (e) {
         var that = this;
+        const {mark} = e.currentTarget.dataset;
         var {iv, encryptedData} = e.detail;
         var {evaluation} = this.data;
         if (encryptedData) {
@@ -879,12 +804,15 @@ Page({
                         openid: wx.getStorageSync("openId"),
                     },
                     success: function (res) {
-                        if (res.phone) {
+                        if (res.phone && mark !== 'dont-get-ticket') {
                             that.getNewerTicket();
                         }
                         wx.aldstat.sendEvent('授权手机号成功', {
                             '测评名称': `名称：${evaluation.name}`
                         });
+                        that.setData({
+                            isBindPhone: true
+                        })
                     }
                 })
             });

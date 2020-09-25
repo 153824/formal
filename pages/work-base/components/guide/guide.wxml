@@ -23,14 +23,11 @@
         </view>
     </view>
     <view wx:if="{{text === '分享已失效'}}" class="begin">测评已失效</view>
-    <view wx:elif="{{text === '等待hr通过申请'}}" class="begin">{{text}}</view>
-    <view wx:elif="{{reportPermit === 'APPROVED'  && status === 'FINISHED'}}" class="begin" bindtap="toDetail">查看报告
-    </view>
-    <view wx:elif="{{reportPermit === 'DISABLED' && status === 'FINISHED'}}" class="begin" bindtap="toApply"
-          data-id="{{receiveRecordId}}">向HR申请查看报告
-    </view>
-    <view wx:elif="{{isTest||hasUserInfo}}" class="begin" bindtap="goToReplying">{{draftAnswer?'继续作答':'开始作答'}}</view>
-    <button wx:else class="begin" open-type="getUserInfo" bindgetuserinfo="goToReplying">{{draftAnswer?'继续作答':'开始作答'}}
+    <view wx:elif="{{text === '等待hr通过申请'}}" class="begin">等待hr通过申请</view>
+    <view wx:elif="{{text === '查看报告'}}" class="begin" bindtap="toDetail">查看报告</view>
+    <view wx:elif="{{text === '申请查看报告'}}" class="begin" bindtap="toApply" data-id="{{receiveRecordId}}">向HR申请查看报告</view>
+    <view wx:elif="{{hasUserInfo}}" class="begin" bindtap="goToReplying">{{status === 'FETCHED' ? '开始作答':'继续作答'}}</view>
+    <button wx:else class="begin" open-type="getUserInfo" bindgetuserinfo="goToReplying">{{status === 'FETCHED' ? '开始作答':'继续作答'}}
     </button>
     <text class="infotext">好啦测评提供技术支持</text>
 </view>

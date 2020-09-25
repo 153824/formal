@@ -562,8 +562,9 @@ Page({
             that.drawCircle(res.total1);
             res.report["statement"] = res.report["statement"].replace(/\n/g, "<br>").replace("<bold", "<span style='font-weight: 600;'").replace("</bold", "</span");
             res.report["noTeamMember"] = false;
-            res.report["teamRole"] = (app.teamId == res.teamId) ? app.teamRole : 1;
+            res.report["teamRole"] = (app.teamId == res.releaseTeamId.teamId) ? app.teamRole : 1;
             res.report["showPage"] = true;
+            console.log("res.report[\"teamRole\"]: ",res.report["teamRole"])
             that.setData(res);
             console.log("report: ",res)
             app.doAjax({
@@ -742,8 +743,9 @@ Page({
             that.drawCircle(res.total100);
             res.report["statement"] = res.report["statement"].replace(/\n/g, "<br>").replace("<bold", "<span style='font-weight: 600;'").replace("</bold", "</span");
             res.report["noTeamMember"] = false;
-            res.report["teamRole"] = (app.teamId == res.teamId) ? app.teamRole : 1;
+            res.report["teamRole"] = (app.teamId == res.releaseTeamId.teamId) ? app.teamRole : 1;
             res.report["showPage"] = true;
+            console.log("res.report[\"teamRole\"]: ",res.report["teamRole"]);
             res.fillBlank = [];
             for (let i = 0; i < 4; i++) {
                 res.fillBlank.push("");
@@ -877,11 +879,10 @@ Page({
                 if (ret.confirm) {
                     app.doAjax({
                         url: `reports/${receiveRecordId}`,
-                        method: "patch",
+                        method: "put",
                         noLoading: false,
                         data: {
-                            id: that.data.id,
-                            status: 2
+                            type: 'agree'
                         },
                         success: function (r) {
                             that.getReport();

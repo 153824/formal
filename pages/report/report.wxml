@@ -1080,7 +1080,7 @@
             </button>
         </view>
         <!-- 申请查看报告 -->
-        <view wx:if="{{(reportPermit === 'APPLYING' && report.teamRole !== 1)}}" class="hasApply">
+        <view wx:if="{{(reportPermit && report.teamRole !== 1)}}" class="hasApply">
             <view class="msg">被测者申请查看报告结果，是否同意？</view>
             <view class="agreenBtn flex" wx:if="{{ reportPermit==='APPLYING' }}" bindtap="applyReportAudit">
                 <view class="flex-main"></view>
@@ -1088,7 +1088,7 @@
                 同意
                 <view class="flex-main"></view>
             </view>
-            <view class="agreenBtn agreenBtn1 flex" wx:if="{{reportPermit==='APPROVED'}}" bindtap="applyReportAudit">
+            <view class="agreenBtn agreenBtn1 flex" wx:if="{{reportPermit==='APPROVED'}}" bindtap="">
                 <view class="flex-main"></view>
                 <image src="./images/report@icon-agreed.png"></image>
                 已同意

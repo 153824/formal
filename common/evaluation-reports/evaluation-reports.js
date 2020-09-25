@@ -60,7 +60,9 @@ Component({
         },
     },
     pageLifetimes: {
-        onLoad: function (options) {}
+        show: function () {
+            this.loadReportList()
+        }
     },
     lifetimes: {
         attached() {

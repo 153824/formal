@@ -65,7 +65,7 @@ Page({
             const id = that.data;
             app.doAjax({
                 url: `reports/${id}`,
-                method: "patch",
+                method: "put",
                 data: {
                     id: that.data.id
                 },

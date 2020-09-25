@@ -83,7 +83,10 @@ Component({
       const that = this;
       app.doAjax({
         url: `reports/${id}`,
-        method: "patch",
+        method: "put",
+        data: {
+          type: 'apply'
+        },
         success: function(ret) {
           that.getList();
           that.setData({

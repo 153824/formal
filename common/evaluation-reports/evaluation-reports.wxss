@@ -73,8 +73,9 @@
     color: #070922FF;
 }
 .recommend-grade{
-    padding: 0 14rpx;
+    padding: 5rpx 14rpx;
     font-size: 22rpx;
+    line-height: 22rpx;
     border-radius: 30rpx;
     color: #353EE8FF;
     background-color: #353EE812;

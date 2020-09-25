@@ -66,7 +66,7 @@
                     <view class="evaluation-wrapper">
                         <view class="evaluation-name user-info-wrapper">
                             <view class="user-info">
-                                <text>{{reportItem.participant}}</text><text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text><text wx:if="{{ reportItem.showGrade }}" style="font-size: 24rpx;line-height: 24rpx;margin-left: 10rpx;" class="recommend-grade">{{reportItem.showGrade ? reportItem.grade : ""}}</text>
+                                <text>{{reportItem.participant}}</text><text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text><text wx:if="{{ reportItem.showGrade }}" style="font-size: 22rpx;line-height: 22rpx;margin-left: 10rpx;" class="recommend-grade">{{reportItem.showGrade ? reportItem.grade : ""}}分</text>
                             </view>
                         </view>
                         <view class="user-answer-evaluation">
@@ -198,7 +198,7 @@
                     <view class="evaluation-wrapper">
                         <view class="evaluation-name user-info-wrapper">
                             <view class="user-info">
-                                <text>{{reportItem.participant}}</text><text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text><text wx:if="{{ reportItem.showGrade }}" style="font-size: 24rpx;line-height: 24rpx;" class="recommend-grade">{{reportItem.showGrade ? reportItem.grade : ""}}</text>
+                                <text>{{reportItem.participant}}</text><text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text><text wx:if="{{ reportItem.showGrade }}" style="font-size: 22rpx;line-height: 22rpx;" class="recommend-grade">{{reportItem.showGrade ? reportItem.grade : ""}}分</text>
                             </view>
                         </view>
                         <view class="user-answer-evaluation">

@@ -58,10 +58,10 @@ App({
     qiniuUpload: qiniuUpload,
     isIphoneX: false,
     // host: "http://192.168.0.101:3000",
-    host: "https://api.luoke101.com/v3.0.0",
+    // host: "https://api.luoke101.com/v3.0.0",
     // host: 'https://h5.luoke101.com',
     // host: "http://192.168.0.225:3000",
-    // host: "http://api.dev.luoke101.int",
+    host: "http://api.dev.luoke101.int",
     // host: "https://24c84666cb52.ap.ngrok.io",
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
@@ -553,8 +553,10 @@ App({
                     teamId: that.teamId || wx.getStorageSync("userInfo").teamId,
                     page: 1,
                     pageSize: 12,
+                    targetTeamId: wx.getStorageSync("TARGET_TEAM_ID") || ""
                 },
                 success: function (list) {
+                    wx.removeStorageSync("TARGET_TEAM_ID");
                     let toAddNew = true;
                     list = list || [];
                     if (list.length) {

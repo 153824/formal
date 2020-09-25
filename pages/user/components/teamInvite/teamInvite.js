@@ -158,11 +158,14 @@ Page({
         type: 1,
         role: role
       },
-      success: function () {
+      success: function (res) {
+        console.log(res);
         app.teamId = id;
         app.teamName = that.data.name;
         app.getUserInfo();
         app.toast("操作成功");
+        wx.clearStorage();
+        wx.setStorageSync('TARGET_TEAM_ID',id);
         setTimeout(function () {
           if (that.data.reportId) {
             //进入报告详情
@@ -171,7 +174,6 @@ Page({
             });
             return;
           }
-          wx.clearStorageSync();
           app.toast("正在为您跳转...");
           setTimeout(()=>{
             wx.reLaunch({

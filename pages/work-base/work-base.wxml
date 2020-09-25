@@ -66,7 +66,7 @@
                     <view class="evaluation-wrapper">
                         <view class="evaluation-name user-info-wrapper">
                             <view class="user-info">
-                                <text>{{reportItem.participant}}</text><text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text><text wx:if="{{ reportItem.showGrade }}" style="font-size: 24rpx;margin-left: 10rpx;" class="recommend-grade">{{reportItem.showGrade ? reportItem.grade : ""}}</text>
+                                <text>{{reportItem.participant}}</text><text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text><text wx:if="{{ reportItem.showGrade }}" style="font-size: 24rpx;line-height: 24rpx;margin-left: 10rpx;" class="recommend-grade">{{reportItem.showGrade ? reportItem.grade : ""}}</text>
                             </view>
                         </view>
                         <view class="user-answer-evaluation">
@@ -86,7 +86,7 @@
             </view>
             <!--End: 最新报告-->
             <!--Start: 作答跟踪-->
-            <view class="program-wrapper">
+            <view class="program-wrapper" style="margin-bottom: 44rpx;">
                 <view class="program-title">
                     <text>作答跟踪</text>
                     <text wx:if="{{evaluationTrackCount > 3}}" class="more" bindtap="goToTrackMore">更多...</text>
@@ -198,7 +198,7 @@
                     <view class="evaluation-wrapper">
                         <view class="evaluation-name user-info-wrapper">
                             <view class="user-info">
-                                <text>{{reportItem.participant}}</text><text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text><text wx:if="{{ reportItem.showGrade }}" style="font-size: 24rpx;" class="recommend-grade">{{reportItem.showGrade ? reportItem.grade : ""}}</text>
+                                <text>{{reportItem.participant}}</text><text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text><text wx:if="{{ reportItem.showGrade }}" style="font-size: 24rpx;line-height: 24rpx;" class="recommend-grade">{{reportItem.showGrade ? reportItem.grade : ""}}</text>
                             </view>
                         </view>
                         <view class="user-answer-evaluation">
@@ -218,7 +218,7 @@
             </view>
             <!--End: 最新报告-->
             <!--Start: 作答跟踪-->
-            <view class="program-wrapper">
+            <view class="program-wrapper" style="margin-bottom: 44rpx;">
                 <view class="program-title">
                     <text>作答跟踪</text>
                     <text wx:if="{{evaluationTrackCount > 3}}" class="more" bindtap="goToTrackMore">更多...</text>

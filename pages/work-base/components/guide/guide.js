@@ -9,6 +9,9 @@ Page({
   },
   onLoad: function(option) {
     if(option.isScan){
+      if(wx.canIUse('hideHomeButton')){
+        wx.hideHomeButton();
+      }
       this.setData({
         isScan: option.isScan
       })

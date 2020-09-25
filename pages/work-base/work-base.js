@@ -74,10 +74,9 @@ Page({
             const q = decodeURIComponent(option.q);
             const idArray = q.split("/");
             releaseEvaluationId = idArray[idArray.length - 1] || "";
-            console.log("option.q,releaseEvaluationId: ",option.q,releaseEvaluationId)
         }
         if(releaseEvaluationId){
-            wx.navigateTo({
+            wx.reLaunch({
                 url: `/pages/work-base/components/guide/guide?releaseRecordId=${releaseEvaluationId}&isScan=true`,
             })
         }

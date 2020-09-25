@@ -8,14 +8,6 @@ Page({
     loading: false
   },
   onLoad: function(option) {
-    if(option.isScan){
-      if(wx.canIUse('hideHomeButton')){
-        wx.hideHomeButton();
-      }
-      this.setData({
-        isScan: option.isScan
-      })
-    }
     if (option.releaseRecordId || option.receiveRecordId) {
       this.setData({
         id: option.releaseRecordId,
@@ -30,6 +22,9 @@ Page({
     }
   },
   onShow: function() {
+    if(wx.canIUse('hideHomeButton')){
+      wx.hideHomeButton();
+    }
     const that = this;
     const id = that.data.id;
     if (app.isTest && !id) {
@@ -66,7 +61,7 @@ Page({
           });
           setTimeout(()=>{
             wx.redirectTo({
-              url: '../answering/answering?pid=' + res.evaluationId + '&id=' + id + '&receiveRecordId=' + res.receiveRecordId + "&reportPermit=" + res.reportPermit  + "&status=" + res.status + "&isScan" + that.data.isScan
+              url: '../answering/answering?pid=' + res.evaluationId + '&id=' + id + '&receiveRecordId=' + res.receiveRecordId + "&reportPermit=" + res.reportPermit  + "&status=" + res.status
             });
           },500);
           return;
@@ -230,9 +225,9 @@ Page({
    * 进入报告详情
    */
   toDetail: function(e) {
-    var id = this.data.id;
+    var {receiveRecordId} = this.data;
     wx.redirectTo({
-      url: '../../../report/report?receiveRecordId=' + id,
+      url: '/pages/report/report?receiveRecordId=' + receiveRecordId,
     });
   },
 });

@@ -46,8 +46,7 @@ Page({
             status: options.type,
             reportPermit: options.reportPermit,
             startTime: new Date().getTime(),
-            receiveRecordId: options.receiveRecordId,
-            isScan: options.isScan
+            receiveRecordId: options.receiveRecordId
         });
         if (app.isTest) {
             that.setData({
@@ -159,7 +158,6 @@ Page({
                 } else {
                     res.chapter = oldChapter;
                 }
-
                 res.ques = ques;
                 that.setData({
                     quesAll: ques1,
@@ -219,8 +217,12 @@ Page({
 
     },
     onShow: function () {
+        if(wx.canIUse('hideHomeButton')){
+            wx.hideHomeButton();
+        }
         const that = this;
         console.log("wx.getStorageSync(\"openId\")", wx.getStorageSync("openId"));
+
         app.doAjax({
             url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
             method: "get",
@@ -647,7 +649,6 @@ Page({
             wx.redirectTo({
                 url: '../done/done?id=' + that.data.receiveRecordId + '+&status=' + that.data.status + "&reportPermit=" + that.data.reportPermit
             });
-            console.log('../done/done?id=' + that.data.receiveRecordId + '&status=' + that.data.status + "&reportPermit=" + that.data.reportPermit);
             return;
         }
         var now = new Date().getTime();
@@ -678,9 +679,8 @@ Page({
                 answer: answer
             },
             success: function (ret) {
-                console.log('../done/done?id=' + data.receiveRecordId + "&status=" + that.data.status + "&reportPermit" + that.data.reportPermit);
-                wx.redirectTo({
-                    url: '../done/done?id=' + data.receiveRecordId + "&status=" + that.data.status + "&reportPermit=" + that.data.reportPermit + "&isScan" + that.data.isScan
+                wx.navigateTo({
+                    url: '../done/done?id=' + data.receiveRecordId + "&status=" + that.data.status + "&reportPermit=" + that.data.reportPermit
                 });
                 wx.removeStorageSync(sKey);
                 that.setData(ret);

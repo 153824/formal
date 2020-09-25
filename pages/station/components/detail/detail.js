@@ -27,7 +27,11 @@ Page({
         evaluation: {},
         evaluationVoucherInfo: {},
         currAnsweringStatus: false,
-        releaseInfo: {}
+        releaseInfo: {},
+        experienceTicket: 0,
+        officialTicket: 0,
+        certificateTicket: 0,
+        shareTicket: 0
     },
 
     onLoad: function (options) {
@@ -125,8 +129,7 @@ Page({
                             shareTicket = 0,
                             experienceTicket = 0,
                             officialTicket = 0,
-                            certificateTicket = 0,
-                            deprecatedTicket = 0;
+                            certificateTicket = 0;
                         let {id, name} = that.data.evaluation;
                         if (Object.keys(voucherInfo).length <= 0) {
                             hasVoucher = false;
@@ -141,8 +144,6 @@ Page({
                                     experienceTicket = voucherInfo[i];
                                 } else if (i === 'CERTIFICATE') {
                                     certificateTicket = voucherInfo[i];
-                                } else if (i === 'DEPRECATED') {
-                                    deprecatedTicket = voucherInfo[i];
                                 }
                                 if (i === ' EXCLUSIVE' || i === 'GIFT') {
                                     isFreeTicket = true;
@@ -152,7 +153,11 @@ Page({
                         that.setData({
                             evaluationVoucherInfo,
                             hasVoucher,
-                            voucher
+                            voucher,
+                            officialTicket,
+                            shareTicket,
+                            experienceTicket,
+                            certificateTicket
                         });
                         resolve("success");
                     }
@@ -203,8 +208,7 @@ Page({
                         shareTicket = 0,
                         experienceTicket = 0,
                         officialTicket = 0,
-                        certificateTicket = 0,
-                        deprecatedTicket = 0;
+                        certificateTicket = 0;
                     let {id, name} = that.data.evaluation;
                     if (Object.keys(voucherInfo).length <= 0) {
                         hasVoucher = false;
@@ -219,8 +223,6 @@ Page({
                                 experienceTicket = voucherInfo[i];
                             } else if (i === 'CERTIFICATE') {
                                 certificateTicket = voucherInfo[i];
-                            } else if (i === 'DEPRECATED') {
-                                deprecatedTicket = voucherInfo[i];
                             }
                             if (i === ' EXCLUSIVE' || i === 'GIFT') {
                                 isFreeTicket = true;
@@ -231,6 +233,10 @@ Page({
                         evaluationVoucherInfo,
                         hasVoucher,
                         voucher,
+                        officialTicket,
+                        shareTicket,
+                        experienceTicket,
+                        certificateTicket,
                         payTrigger: false
                     });
                     resolve("success");

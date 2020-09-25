@@ -121,7 +121,7 @@
             </button>
             <view class="meal" bindtap="buyByTicket">
                 <meal isShow="{{ hasVoucher && !evaluationVoucherInfo.isBeginner }}" icon="false"
-                      title="您有{{ experienceTicket + officialTicket + experienceTicket + shareTicket + certificateTicket + deprecatedTicket }}张体验券可用于本测评"
+                      title="您有{{ experienceTicket + officialTicket + shareTicket + certificateTicket }}张体验券可用于本测评"
                       subtitle="立即使用 >"></meal>
             </view>
             <view wx:if="{{ isIos }}">

@@ -335,26 +335,25 @@ Page({
                 that.setData({
                     releaseInfo: res
                 });
-                console.log("Evaluation: ", evaluation)
+                const url = `../../../replying/replying?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`;
                 if (res.unfinished) {
                     const sKey = "oldAnswer" + res.receiveRecordId;
-                    console.log("const sKey = \"oldAnswer\" + res.receiveRecordId;: ", sKey)
                     let oldData = wx.getStorageSync(sKey);
                     if (!oldData && res.draft instanceof Object) {
                         oldData = wx.setStorageSync(sKey, res.draft);
                     }
                     if (oldData) {
                         wx.navigateTo({
-                            url: `../../../replying/replying?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`
+                            url: url
                         });
                         return;
                     }
                     wx.navigateTo({
-                        url: `../../../replying/components/guide/guide?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`
+                        url: url
                     });
                 } else {
                     wx.navigateTo({
-                        url: `../../../replying/components/guide/guide?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`
+                        url: url
                     });
                 }
             }

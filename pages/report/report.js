@@ -354,15 +354,13 @@ Page({
         this.setData({
             id: id,
             shareKey: shareKey,
-            command
+            command,
+            isSelf: options.isSelf
         });
         if (app.isLogin) {
             if (options.sharedAt) {
                 that.verifyReportIsCanRead(options).then(res=>{
                     that.getReport(id);
-                    this.setData({
-                        goBackToUserCenter: true
-                    });
                 }).catch(err=>{
                     wx.showToast({
                         title: "该分享已过期",
@@ -383,9 +381,6 @@ Page({
         app.checkUser = function () {
             if (options.sharedAt) {
                 that.verifyReportIsCanRead(options).then(res=>{
-                    this.setData({
-                       goBackToUserCenter: true
-                    });
                     that.getReport(id);
                 }).catch(err=>{
                     wx.showToast({
@@ -1084,12 +1079,18 @@ Page({
         }
     },
 
-    onUnload() {
-        const {goBackToUserCenter} = this.data;
-        if(goBackToUserCenter){
-            wx.redirectTo({
-                url: "/pages/user-center/components/receive-reports/receive-reports"
+    onUnload: function() {
+        const {isSelf} = this.data;
+        if(isSelf && isSelf === "SELF"){
+            wx.reLaunch({
+                url: "/pages/work-base/work-base"
             })
+        }else if(isSelf && isSelf === "SHARE"){
+            wx.reLaunch({
+                url: "/pages/work-base/components/member-report-list/member-report-list"
+            })
+        }else{
+
         }
     }
 });

@@ -716,8 +716,10 @@ Page({
         answer: answer
       },
       success: function (ret) {
-        wx.redirectTo({
-          url: './components/finish/finish?id=' + data.id + "&type=" + that.data.applyStatus + "&name=" + that.data.paperList.setting.name1
+        const {id,applyStatus,paperList} = data;
+        const url = `/pages/replying/components/finish/finish?id=${id}&type=${applyStatus}&name=${paperList.setting.name1}`;
+        wx.navigateTo({
+          url: url
         });
         wx.aldstat.sendEvent('点击提交测评作答', {
           '测评名称': '名称：' + name

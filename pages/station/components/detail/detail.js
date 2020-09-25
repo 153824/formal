@@ -31,7 +31,8 @@ Page({
         experienceTicket: 0,
         officialTicket: 0,
         certificateTicket: 0,
-        shareTicket: 0
+        shareTicket: 0,
+        deprecatedTicket: 0
     },
 
     onLoad: function (options) {
@@ -129,6 +130,7 @@ Page({
                             shareTicket = 0,
                             experienceTicket = 0,
                             officialTicket = 0,
+                            deprecatedTicket = 0,
                             certificateTicket = 0;
                         let {id, name} = that.data.evaluation;
                         if (Object.keys(voucherInfo).length <= 0) {
@@ -144,6 +146,8 @@ Page({
                                     experienceTicket = voucherInfo[i];
                                 } else if (i === 'CERTIFICATE') {
                                     certificateTicket = voucherInfo[i];
+                                } else if (i === 'DEPRECATED') {
+                                    deprecatedTicket = voucherInfo[i];
                                 }
                                 if (i === ' EXCLUSIVE' || i === 'GIFT') {
                                     isFreeTicket = true;
@@ -157,7 +161,8 @@ Page({
                             officialTicket,
                             shareTicket,
                             experienceTicket,
-                            certificateTicket
+                            certificateTicket,
+                            deprecatedTicket
                         });
                         resolve("success");
                     }
@@ -208,6 +213,7 @@ Page({
                         shareTicket = 0,
                         experienceTicket = 0,
                         officialTicket = 0,
+                        deprecatedTicket = 0,
                         certificateTicket = 0;
                     let {id, name} = that.data.evaluation;
                     if (Object.keys(voucherInfo).length <= 0) {
@@ -223,6 +229,8 @@ Page({
                                 experienceTicket = voucherInfo[i];
                             } else if (i === 'CERTIFICATE') {
                                 certificateTicket = voucherInfo[i];
+                            } else if (i === 'DEPRECATED') {
+                                deprecatedTicket = voucherInfo[i];
                             }
                             if (i === ' EXCLUSIVE' || i === 'GIFT') {
                                 isFreeTicket = true;
@@ -237,6 +245,7 @@ Page({
                         shareTicket,
                         experienceTicket,
                         certificateTicket,
+                        deprecatedTicket,
                         payTrigger: false
                     });
                     resolve("success");
@@ -326,12 +335,12 @@ Page({
                 that.setData({
                     releaseInfo: res
                 });
-                console.log("Evaluation: ",evaluation)
+                console.log("Evaluation: ", evaluation)
                 if (res.unfinished) {
                     const sKey = "oldAnswer" + res.receiveRecordId;
-                    console.log("const sKey = \"oldAnswer\" + res.receiveRecordId;: ",sKey)
+                    console.log("const sKey = \"oldAnswer\" + res.receiveRecordId;: ", sKey)
                     let oldData = wx.getStorageSync(sKey);
-                    if(!oldData && res.draft instanceof Object){
+                    if (!oldData && res.draft instanceof Object) {
                         oldData = wx.setStorageSync(sKey, res.draft);
                     }
                     if (oldData) {

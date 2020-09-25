@@ -81,9 +81,11 @@ page{
     background-color: #fff;
 }
 .reply-track-body{
-    margin-bottom: 44rpx;
     padding: 30rpx 36rpx;
     height: 146rpx;
+}
+.reply-track-body:last-child{
+    margin-bottom: 44rpx;
 }
 .evaluation-wrapper{
     display: flex;

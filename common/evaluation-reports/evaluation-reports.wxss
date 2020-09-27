@@ -121,3 +121,13 @@
     font-size: 26rpx;
 
 }
+.van-search-custom{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+}
+.report-content-wrapper{
+    margin-top: 108rpx;
+}

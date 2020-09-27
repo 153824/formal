@@ -13,8 +13,9 @@
             left-icon=""
             right-icon=""
             maxlength="8"
+            custom-class="van-search-custom"
     />
-    <scroll-view wx:if="{{!keyword}}" scroll-y bindscrolltolower="nextPage" style="height: {{windowHeight * pixelRate - 44}}rpx;">
+    <scroll-view wx:if="{{!keyword}}" class="report-content-wrapper" scroll-y bindscrolltolower="nextPage" style="height: {{windowHeight * pixelRate - 44}}rpx;">
         <view class="program-body the-last-report" bindtap="goToReport"
               wx:for="{{reportList}}"
               wx:for-item="reportItem"
@@ -43,7 +44,7 @@
             </view>
         </view>
     </scroll-view>
-    <scroll-view wx:else scroll-y bindscrolltolower="searchNextPage" data-keyword="{{keyword}}" style="height: {{windowHeight * pixelRate - 44}}rpx;">
+    <scroll-view wx:else class="report-content-wrapper" scroll-y bindscrolltolower="searchNextPage" data-keyword="{{keyword}}" style="height: {{windowHeight * pixelRate - 44}}rpx;">
         <view class="program-body the-last-report" bindtap="goToReport"
               wx:for="{{ searchReportList }}"
               wx:for-item="reportItem"

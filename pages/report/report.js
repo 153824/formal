@@ -344,7 +344,6 @@ Page({
 
     onLoad: function (options) {
         _this = this;
-        wx.hideShareMenu();
         const that = this;
         ctx = wx.createCanvasContext('canvasArcCir');
         const id = that.data.id || options.receiveRecordId || options.receivedRecordId;

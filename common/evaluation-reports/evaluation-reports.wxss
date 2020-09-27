@@ -1,6 +1,8 @@
+page{
+    background-color: rgba(247, 248, 250, 1)!important;
+}
 .program-wrapper{
-    padding: 22rpx 44rpx 22rpx 44rpx;
-    height: 100vh;
+    padding: 22rpx 44rpx 50rpx 44rpx;
     background-color: rgba(247, 248, 250, 1);
 }
 .program-title{
@@ -119,15 +121,29 @@
 }
 .user-answer-evaluation{
     font-size: 26rpx;
-
 }
 .van-search-custom{
     position: fixed;
-    top: 0;
+    top: 40rpx;
     left: 0;
     right: 0;
+    height: 80rpx;
+    padding: 0 44rpx;
+    border-radius: 20rpx;
+    background-color: rgba(247, 248, 250, 1) !important;
     z-index: 999;
 }
-.report-content-wrapper{
-    margin-top: 108rpx;
+.moer-report-wrapper{
+    position: absolute;
+    top: 148rpx;
+    width: calc(100% - 88rpx);
+}
+.van-search-custom-field{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    background-color: #fff !important;
+    border-radius: 20rpx !important;
+}
+.van-search-custom-input{
+    background-color: #fff !important;
 }

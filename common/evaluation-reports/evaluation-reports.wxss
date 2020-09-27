@@ -2,7 +2,7 @@ page{
     background-color: rgba(247, 248, 250, 1)!important;
 }
 .program-wrapper{
-    padding: 22rpx 44rpx 50rpx 44rpx;
+    padding: 0rpx 44rpx 50rpx 44rpx;
     background-color: rgba(247, 248, 250, 1);
 }
 .program-title{
@@ -127,7 +127,6 @@ page{
     top: 40rpx;
     left: 0;
     right: 0;
-    height: 80rpx;
     padding: 0 44rpx;
     border-radius: 20rpx;
     background-color: rgba(247, 248, 250, 1) !important;
@@ -139,11 +138,25 @@ page{
     width: calc(100% - 88rpx);
 }
 .van-search-custom-field{
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    padding: 0 0 !important;
+    /*padding-left: 0 !important;*/
+    /*padding-right: 0 !important;*/
     background-color: #fff !important;
     border-radius: 20rpx !important;
+    height: 100% !important;
 }
 .van-search-custom-input{
     background-color: #fff !important;
+}
+.van-search__content{
+    padding-left: 0 !important;
+}
+.field-index--van-field{
+    padding: unset !important;
+}
+.van-cell--borderless{
+    padding: unset !important;
+}
+.no-margin-top{
+    margin-top: 0 !important;
 }

@@ -3,7 +3,7 @@
             wx:if="{{search}}"
             value="{{keyword}}"
             input-align="center"
-            placeholder="搜索"
+            placeholder="按姓名搜索"
             custom-class="van-search-custom"
             field-class="van-search-field-custom"
             bind:change="searchReport"
@@ -17,11 +17,14 @@
             input-class="van-search-custom-input"
             field-class="van-search-custom-field"
     />
-    <scroll-view wx:if="{{!keyword}}" class="report-content-wrapper" scroll-y bindscrolltolower="nextPage" style="height: {{windowHeight * pixelRate - 44 - 148 - 28}}rpx;">
-        <view class="program-body the-last-report" bindtap="goToReport"
+    <scroll-view wx:if="{{!keyword}}" class="report-content-wrapper" scroll-y bindscrolltolower="nextPage" style="height: {{windowHeight * pixelRate - 50 - 148}}rpx;">
+        <view bindtap="goToReport"
               wx:for="{{reportList}}"
               wx:for-item="reportItem"
-              wx:key="unique" data-receive-record-id="{{reportItem.receiveRecordId}}">
+              wx:key="unique" data-receive-record-id="{{reportItem.receiveRecordId}}"
+              wx:for-index="reportIndex"
+              class="program-body the-last-report {{reportIndex === 0 ? 'no-margin-top' : '' }}"
+        >
             <view class="report-created-time">
                 <text>{{util.getMonthAndDayByFrag(reportItem.reportGeneratedAt,"/",true)}}</text>
                 <text>{{util.getHourAndMinByFrag(reportItem.reportGeneratedAt,":",true)}}</text>
@@ -46,11 +49,13 @@
             </view>
         </view>
     </scroll-view>
-    <scroll-view wx:else class="report-content-wrapper" scroll-y bindscrolltolower="searchNextPage" data-keyword="{{keyword}}" style="height: {{windowHeight * pixelRate - 44 - 148 - 28}}rpx;">
-        <view class="program-body the-last-report" bindtap="goToReport"
+    <scroll-view wx:else class="report-content-wrapper" scroll-y bindscrolltolower="searchNextPage" data-keyword="{{keyword}}" style="height: {{windowHeight * pixelRate - 50 - 148}}rpx;">
+        <view class="program-body the-last-report {{reportIndex === 0 ? 'no-margin-top' : '' }}" bindtap="goToReport"
               wx:for="{{ searchReportList }}"
               wx:for-item="reportItem"
-              wx:key="unique" data-receive-record-id="{{reportItem.receiveRecordId}}">
+              wx:key="unique" data-receive-record-id="{{reportItem.receiveRecordId}}"
+              wx:for-index="reportIndex"
+        >
             <view class="report-created-time">
                 <text>{{util.getMonthAndDayByFrag(reportItem.reportGeneratedAt,"/",true)}}</text>
                 <text>{{util.getHourAndMinByFrag(reportItem.reportGeneratedAt,":",true)}}</text>

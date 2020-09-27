@@ -13,15 +13,12 @@ Page({
         active: 0,
         column: []
     },
-    onLoad: function (options,name) {
+    onLoad: function (options={loadingTrigger: false},name) {
         if( options.loadingTrigger ){
             this.setData({
                 loading: true
             })
         }
-        // wx.hideTabBar({
-        //     animation: true
-        // });
         const that = this;
         let homePagesPromiseList = [];
         const homePagesPromise = new Promise(function (resolve, reject) {
@@ -69,18 +66,12 @@ Page({
                 column: targetColumn,
             });
             setTimeout(() => {
-                // wx.showTabBar({
-                //     animation: true,
-                // });
                 that.setData({
                     loading: false
                 })
             }, 500);
         }).catch(err => {
             setTimeout(() => {
-                // wx.showTabBar({
-                //     animation: true,
-                // });
                 that.setData({
                     loading: false
                 })

@@ -37,9 +37,16 @@ Page({
         tabBarHeight: 0
     },
 
-    onLoad: function (option = {id: "", isWxWorkAdmin: false, maskTrigger: false}) {
+    onLoad: function (option) {
         const that = this;
         const optionIsWxWorkAdmin = option.isWxWorkAdmin || false;
+        if(option.msg==='err'){
+            this.setData({
+                maskTrigger: true
+            });
+            return;
+        }
+        console.log("option: ",option);
         this.setData({
             userInfo: app.globalData.userInfo || wx.getStorageSync("userInfo"),
             isWxWork: app.wxWorkInfo.isWxWork,
@@ -56,7 +63,8 @@ Page({
                         page.onLoad();
                     }
                 });
-            },500)
+            },500);
+            return;
         }
         let {isWxWorkAdmin, isWxWork,isIPhoneXModel} = this.data;
         if (optionIsWxWorkAdmin) {
@@ -78,183 +86,6 @@ Page({
                 url: `/pages/work-base/components/guide/guide?releaseRecordId=${releaseEvaluationId}`,
             })
         }
-        // if (!isWxWork) {
-        //     this.title = this.selectComponent("#title");
-        //     app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
-        //     const inventoriesPromise = new Promise((resolve, reject) => {
-        //         app.doAjax({
-        //             url: 'inventories',
-        //             method: 'get',
-        //             noLoading: true,
-        //             success: function (res) {
-        //                 if (res.length > 3) {
-        //                     res = res.slice(0, 3)
-        //                 }
-        //                 that.setData({
-        //                     myEvaluation: res
-        //                 });
-        //                 resolve(true)
-        //             },
-        //             fail: function (err) {
-        //                 console.error(err)
-        //                 reject(false)
-        //             }
-        //         });
-        //     });
-        //     const releaseRecordsPromise = new Promise((resolve, reject) => {
-        //         app.doAjax({
-        //             url: 'release_records',
-        //             method: 'get',
-        //             data: {
-        //                 isEE: false,
-        //                 page: 1,
-        //                 pageSize: 4,
-        //             },
-        //             noLoading: true,
-        //             success: function (res) {
-        //                 if (res.length > 3) {
-        //                     res = res.slice(0, 3)
-        //                 }
-        //                 that.setData({
-        //                     evaluationTrack: res
-        //                 });
-        //                 resolve(true);
-        //             },
-        //             fail: function (err) {
-        //                 console.error(err);
-        //                 reject(false);
-        //             }
-        //         });
-        //     });
-        //     const reportListPromise = new Promise((resolve, reject) => {
-        //         app.doAjax({
-        //             url: `reports`,
-        //             method: "get",
-        //             data: {
-        //                 isEE: false,
-        //                 page: 1,
-        //                 pageSize: 3
-        //             },
-        //             noLoading: true,
-        //             success: function (res) {
-        //                 if (res.length > 3) {
-        //                     res = res.slice(0, 3)
-        //                 }
-        //                 that.setData({
-        //                     reportsList: res
-        //                 })
-        //                 resolve(true);
-        //             },
-        //             fail: function (err) {
-        //                 reject(false);
-        //                 console.error(err)
-        //             }
-        //         });
-        //     });
-        //     Promise.all([inventoriesPromise, releaseRecordsPromise, reportListPromise]).then(res => {
-        //         setTimeout(() => {
-        //             that.setData({
-        //                 maskTrigger: false
-        //             })
-        //         }, 888)
-        //     }).catch(err => {
-        //         setTimeout(() => {
-        //             that.setData({
-        //                 maskTrigger: false
-        //             })
-        //         }, 888)
-        //         console.error(err);
-        //     });
-        //     this.setData({
-        //         currTeam: app.teamName
-        //     })
-        // }
-        // if (isWxWork && isWxWorkAdmin) {
-        //     const getMyEvaluationPromise = new Promise((resolve, reject) => {
-        //         app.doAjax({
-        //             url: 'inventories',
-        //             method: 'get',
-        //             data: {
-        //                 teamId: app.teamId || wx.getStorageSync("GET_MY_TEAM_LIST").objectId
-        //             },
-        //             noLoading: true,
-        //             success: function (res) {
-        //                 if (res.length > 3) {
-        //                     res = res.splice(0, 0, 3)
-        //                 }
-        //                 console.log("res: ", res);
-        //                 that.setData({
-        //                     myEvaluation: res
-        //                 });
-        //                 resolve(true);
-        //             },
-        //             fail: function (err) {
-        //                 reject(false);
-        //             }
-        //         });
-        //     });
-        //     const getEvaluationTrack = new Promise((resolve, reject) => {
-        //         app.doAjax({
-        //             url: 'release_records',
-        //             method: 'get',
-        //             data: {
-        //                 isEE: true,
-        //                 page: 1,
-        //                 pageSize: 4,
-        //             },
-        //             noLoading: true,
-        //             success: function (res) {
-        //                 for (let i = 0; i < res.length; i++) {
-        //                     res[i].createdAt = timeFormat(res[i].createdAt);
-        //                 }
-        //                 if (res.length > 3) {
-        //                     res = res.slice(0, 3)
-        //                 }
-        //                 that.setData({
-        //                     evaluationTrack: res
-        //                 });
-        //                 resolve(true)
-        //             },
-        //             fail: function (err) {
-        //                 reject(false)
-        //             }
-        //         });
-        //     });
-        //     const getReportList = new Promise((resolve, reject) => {
-        //         app.doAjax({
-        //             url: `reports`,
-        //             method: "get",
-        //             data: {
-        //                 isEE: true,
-        //                 page: 1,
-        //                 pageSize: 3
-        //             },
-        //             noLoading: true,
-        //             success: function (res) {
-        //                 if (res.length > 3) {
-        //                     res = res.slice(0, 3)
-        //                 }
-        //                 that.setData({
-        //                     reportsList: res
-        //                 })
-        //                 resolve(true);
-        //             },
-        //             fail: function (err) {
-        //                 reject(false)
-        //             }
-        //         })
-        //     });
-        //     Promise.all([getMyEvaluationPromise, getEvaluationTrack, getReportList]).then(res => {
-        //         that.setData({
-        //             maskTrigger: false
-        //         })
-        //     }).catch(err => {
-        //         that.setData({
-        //             maskTrigger: false
-        //         })
-        //     })
-        // }
-        // if (isWxWork && !isWxWorkAdmin) {}
         wx.getSystemInfo({
             success: function (res) {
                 console.log("wx.getSystemInfo: ", res);

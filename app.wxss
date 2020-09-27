@@ -155,3 +155,12 @@
 .van-tabbar-item__text{
   font-weight: normal !important;
 }
+
+.recommend-grade {
+  margin-left: 20rpx;
+  padding: 5rpx 14rpx;
+  font-size: 22rpx;
+  border-radius: 30rpx;
+  color: #353EE8FF;
+  background-color: #353EE812;
+}

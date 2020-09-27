@@ -115,9 +115,6 @@ Component({
   },
   lifetimes: {
     created() {
-      wx.setNavigationBarTitle({
-        title: this.properties.navigationBarTitleText
-      });
       const that = this;
       app.isTest = false;
       if (!app.globalData.userInfo || !app.globalData.userInfo.id) {
@@ -130,6 +127,9 @@ Component({
       }
     },
     attached() {
+      wx.setNavigationBarTitle({
+        title: this.properties.navigationBarTitleText
+      });
       const systemInfo = wx.getSystemInfoSync();
       const { isIPhoneXModel,pixelRate } = this.data;
       const safeAreaDiff = isIPhoneXModel  ? Math.abs(systemInfo.safeArea.height  - systemInfo.safeArea.bottom) : 0;

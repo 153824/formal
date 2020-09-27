@@ -152,7 +152,7 @@ Component({
     },
     pageLifetimes: {
         show: function () {
-            this.loadReportList()
+            this.loadReportList();
         }
     },
     lifetimes: {
@@ -167,7 +167,7 @@ Component({
                 wx.setNavigationBarTitle({
                     title: title
                 });
-                this.loadReportList();
+                // this.loadReportList();
             } else if (type === "receive-evaluation") {
                 app.doAjax({
                     url: `reports/accepted_list`,

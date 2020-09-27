@@ -34,6 +34,7 @@ Page({
         currTeam: app.teamName,
         isIPhoneXModel: app.isIphoneX,
         safeAreaDiff: 0,
+        tabBarHeight: 0
     },
 
     onLoad: function (option = {id: "", isWxWorkAdmin: false, maskTrigger: false}) {
@@ -60,7 +61,7 @@ Page({
                 });
             },500)
         }
-        let {isWxWorkAdmin, isWxWork} = this.data;
+        let {isWxWorkAdmin, isWxWork,isIPhoneXModel} = this.data;
         if (optionIsWxWorkAdmin) {
             isWxWorkAdmin = optionIsWxWorkAdmin;
             console.log("optionIsWxWorkAdmin： ",isWxWorkAdmin);
@@ -267,10 +268,13 @@ Page({
                 })
             }
         });
-        const tabBarHeight = wx.getStorageSync("TAB_BAR_HEIGHT");
+        const {windowHeight,safeArea} = wx.getSystemInfoSync();
+        const tabBarHeight = Number(wx.getStorageSync("TAB_BAR_HEIGHT"));
         console.log("tabBarHeight: ", tabBarHeight);
         this.setData({
             tabBarHeight: tabBarHeight,
+            windowHeight,
+            safeAreaDiff: isIPhoneXModel ? Math.abs(safeArea.height - safeArea.bottom) : 0,
         })
     },
 

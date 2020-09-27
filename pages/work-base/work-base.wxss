@@ -37,6 +37,7 @@ page{
 .content{
     position: relative;
     top: 194rpx;
+    margin-bottom: 44rpx;
     padding-top: 22rpx;
     background-color: rgba(247, 248, 250, 1);
 }

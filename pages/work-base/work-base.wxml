@@ -6,7 +6,7 @@
             <text>{{userInfo.userCompany.name}}</text>
         </view>
     </view>
-    <view class="content wxwork-content" style="height: {{ (windowHeight-tabBarHeight - safeAreaDiff)*pixelRate - 200 }}rpx;">
+    <view class="content wxwork-content" style="height: {{ (windowHeight - tabBarHeight - safeAreaDiff)*pixelRate - 200 }}rpx;">
         <scroll-view class="content-scroll-area"
                      style="height: 100%;"
                      scroll-y>
@@ -144,7 +144,7 @@
             <!--Start: 我的测评-->
             <view class="program-wrapper">
                 <view class="program-title">
-                    <text>团队测评</text>
+                    <text>团队测评{{windowHeight}} - {{tabBarHeight}} - {{safeAreaDiff}} - {{pixelRate}}</text>
                     <text wx:if="{{myEvaluationCount > 3}}" class="more" bindtap="goToEvaluationMore">更多...</text>
                 </view>
                 <view wx:if="{{myEvaluation.length}}" wx:for="{{ myEvaluation }}" wx:for-item="evaluationItem" wx:key="unique"

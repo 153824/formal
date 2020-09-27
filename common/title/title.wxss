@@ -53,3 +53,12 @@
 .van-loading-custom{
     margin-left: 40rpx;
 }
+.check-company{
+    max-width: 406rpx;
+    font-size: 26rpx;
+    color: rgba(53, 62, 232, 1);
+    font-weight: 600;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

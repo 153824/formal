@@ -21,11 +21,11 @@
 <block wx:if="{{ type === 'normal' }}">
     <block>
         <block wx:if="{{ !userInfo.isBind }}">
-            <button class="register normal-register" open-type="getUserInfo" bindgetuserinfo="getUserInfo">切换企业</button>
+            <button class="register normal-register check-company" style="" open-type="getUserInfo" bindgetuserinfo="getUserInfo">切换企业</button>
         </block>
         <picker class="company-picker" bindchange="changeTeam" value="{{ selTeam }}" range="{{ teamNames }}" class="company-child">
             <view wx:if="{{ userInfo.isBind }}" style="display: flex;align-items: center;">
-                <text style="max-width: 406rpx;font-size: 26rpx;color: rgba(53, 62, 232, 1);font-weight: 600;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">切换企业</text><image style="display: inline-block;" wx:if="{{ teamNames.length > 1 }}" class="company-picker-image" src="../../images/icon/icon@icon-bototm-arrow.png"></image>
+                <text class="check-company">切换企业</text><image style="display: inline-block;" wx:if="{{ teamNames.length > 1 }}" class="company-picker-image" src="../../images/icon/icon@icon-bototm-arrow.png"></image>
             </view>
         </picker>
     </block>

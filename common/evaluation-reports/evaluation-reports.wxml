@@ -1,6 +1,51 @@
-<view wx:if="{{reportList.length}}" class="program-wrapper">
-    <scroll-view scroll-y bindscrolltolower="nextPage" style="height: {{windowHeight * pixelRate - 44}}rpx;">
-        <view class="program-body the-last-report" bindtap="goToReport" wx:for="{{ reportList }}"
+<view class="program-wrapper">
+    <van-search
+            wx:if="{{search}}"
+            value="{{keyword}}"
+            input-align="center"
+            placeholder="搜索"
+            custom-class="van-search-custom"
+            field-class="van-search-field-custom"
+            bind:change="searchReport"
+            bind:focus="clearContent"
+            bind:blur="getReportListAgain"
+            use-right-icon-slot
+            left-icon=""
+            right-icon=""
+            maxlength="8"
+    />
+    <scroll-view wx:if="{{!keyword}}" scroll-y bindscrolltolower="nextPage" style="height: {{windowHeight * pixelRate - 44}}rpx;">
+        <view class="program-body the-last-report" bindtap="goToReport"
+              wx:for="{{reportList}}"
+              wx:for-item="reportItem"
+              wx:key="unique" data-receive-record-id="{{reportItem.receiveRecordId}}">
+            <view class="report-created-time">
+                <text>{{util.getMonthAndDayByFrag(reportItem.reportGeneratedAt,"/",true)}}</text>
+                <text>{{util.getHourAndMinByFrag(reportItem.reportGeneratedAt,":",true)}}</text>
+            </view>
+            <view class="evaluation-wrapper">
+                <view class="evaluation-name user-info-wrapper">
+                    <view class="user-info">
+                        <text>{{reportItem.participant}}</text><text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text><text wx:if="{{ reportItem.showGrade }}" style="font-size: 22rpx;line-height: 22rpx;margin-left: 10rpx;" class="recommend-grade">{{reportItem.showGrade ? reportItem.grade : ""}}分</text>
+                    </view>
+                </view>
+                <view class="user-answer-evaluation">
+                    {{reportItem.evaluation}}
+                </view>
+            </view>
+            <view class="send-evaluation">
+                <image src="/pages/work-base/images/work-base@icon-arrow.png"
+                       style="width: 32rpx;height: 32rpx;"></image>
+            </view>
+            <view wx:if="{{ util.isSameDays(reportItem.reportGeneratedAt) && reportItem.unread }}"
+                  class="new-adding-mark">
+                <text>新</text>
+            </view>
+        </view>
+    </scroll-view>
+    <scroll-view wx:else scroll-y bindscrolltolower="searchNextPage" data-keyword="{{keyword}}" style="height: {{windowHeight * pixelRate - 44}}rpx;">
+        <view class="program-body the-last-report" bindtap="goToReport"
+              wx:for="{{ searchReportList }}"
               wx:for-item="reportItem"
               wx:key="unique" data-receive-record-id="{{reportItem.receiveRecordId}}">
             <view class="report-created-time">
@@ -28,5 +73,5 @@
         </view>
     </scroll-view>
 </view>
-<hola-empty isShow="{{!reportList.length}}" title="暂无记录"></hola-empty>
+<!--<hola-empty isShow="{{!reportList.length&&!searchReportList.length}}" title="暂无记录"></hola-empty>-->
 <wxs src="../../utils/util.wxs" module="util"></wxs>

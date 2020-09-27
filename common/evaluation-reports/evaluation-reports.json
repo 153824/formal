@@ -1,6 +1,7 @@
 {
   "component": true,
   "usingComponents": {
-    "hola-empty": "../empty/empty"
+    "hola-empty": "../empty/empty",
+    "van-search": "../vant-weapp/dist/search/index"
   }
 }

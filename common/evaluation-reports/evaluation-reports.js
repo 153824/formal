@@ -1,3 +1,5 @@
+import debounce from "../../utils/lodash/debounce";
+
 const app = getApp();
 Component({
     properties: {
@@ -8,12 +10,23 @@ Component({
         type: {
             type: String,
             value: "report-more" //receive-evaluation
+        },
+        title: {
+            type: String,
+            value: ""
+        },
+        search: {
+            type: String,
+            value: ""
         }
     },
     data: {
         reportList: [],
         page: 1,
-        pixelRate: app.globalData.pixelRate
+        pixelRate: app.globalData.pixelRate,
+        searchReportList: [],
+        keyword: "",
+        searchPage: 1
     },
     methods: {
         goToReport: function (e) {
@@ -24,12 +37,12 @@ Component({
         },
 
         loadReportList: function (page) {
-            if(this.properties.type === "receive-evaluation"){
+            if (this.properties.type === "receive-evaluation") {
                 return;
             }
             const that = this;
             const {reportList} = this.data;
-            if(!page){
+            if (!page) {
                 page = this.data.page;
             }
             app.doAjax({
@@ -41,11 +54,9 @@ Component({
                     pageSize: 8
                 },
                 success: function (res) {
-                    that.setData({
-                        reportList: reportList.concat(res.data),
-                    });
-                    if(res.data.length){
+                    if (res.data.length) {
                         that.setData({
+                            reportList: reportList.concat(res.data),
                             page
                         })
                     }
@@ -58,6 +69,85 @@ Component({
             page++;
             this.loadReportList(page);
         },
+
+        searchNextPage: function (e) {
+            let searchPage = this.data.searchPage;
+            searchPage++;
+            this.setData({
+                searchPage,
+            });
+            this.searchReport({detail: e.currentTarget.dataset.keyword});
+        },
+
+        clearContent: function () {
+            const {keyword} = this.data;
+            if (!keyword) {
+                this.setData({
+                    reportList: []
+                })
+            }
+        },
+
+        searchReport: debounce(function (e) {
+            console.log(e);
+            const that = this;
+            let {searchPage, searchReportList} = this.data;
+            try {
+                if (!e.detail) {
+                    that.setData({
+                        searchReportList: [],
+                        keyword: "",
+                        searchPage: 1
+                    });
+                    this.loadReportList();
+                    return;
+                } else {
+                    that.setData({
+                        keyword: e.detail
+                    });
+                }
+            } catch (e) {
+
+            }
+            app.doAjax({
+                url: `reports`,
+                method: "get",
+                data: {
+                    isEE: app.wxWorkInfo.isWxWork,
+                    page: searchPage,
+                    pageSize: 8,
+                    keyword: e.detail,
+                },
+                success: function (res) {
+                    if (!res.data.length && !searchReportList.length) {
+                        that.setData({
+                            searchReportList: [],
+                            searchPage: 1
+                        });
+                        app.toast("未搜索到相关内容");
+                    } else if (!res.data.length && searchReportList.length) {
+                        searchPage--;
+                        that.setData({
+                            searchReportList: searchReportList,
+                            searchPage: searchPage
+                        });
+                        app.toast("已为您加载所有相关内容");
+                    }else{
+                        that.setData({
+                            searchReportList: searchReportList.concat(res.data),
+                            searchPage
+                        });
+                    }
+                }
+            })
+        }, 700, {trailing: true, leading: false}),
+
+        getReportListAgain: function () {
+            const {keyword} = this.data;
+            if(!keyword){
+                this.loadReportList();
+            }
+        }
     },
     pageLifetimes: {
         show: function () {
@@ -67,14 +157,14 @@ Component({
     lifetimes: {
         attached() {
             const that = this;
-            const {type} = this.properties;
+            const {type, title} = this.properties;
             const systemInfo = wx.getSystemInfoSync();
             this.setData({
                 windowHeight: systemInfo.windowHeight
             })
             if (type === "report-more") {
                 wx.setNavigationBarTitle({
-                    title: '测评报告'
+                    title: title
                 });
                 this.loadReportList();
             } else if (type === "receive-evaluation") {

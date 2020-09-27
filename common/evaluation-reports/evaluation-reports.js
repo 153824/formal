@@ -145,7 +145,8 @@ Component({
         getReportListAgain: function () {
             const {keyword} = this.data;
             if(!keyword){
-                this.loadReportList();
+                const page = 1;
+                this.loadReportList(page);
             }
         }
     },

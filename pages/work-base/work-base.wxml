@@ -175,7 +175,7 @@
                     </view>
                 </view>
                 <view>
-                    <hola-empty  customClass="work-base-empty" isShow="{{!myEvaluation.length}}"></hola-empty>
+                    <hola-empty  customClass="work-base-empty" isShow="{{!myEvaluation.length}}" title="暂无测评，快去选购吧~"></hola-empty>
                 </view>
             </view>
             <!--End: 我的测评-->

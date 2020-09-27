@@ -127,8 +127,7 @@ page{
 }
 .recommend-grade{
     margin-left: 20rpx;
-    padding: 0 14rpx;
-    height: 32rpx;
+    padding: 5rpx 14rpx;
     font-size: 22rpx;
     border-radius: 30rpx;
     color: #353EE8FF;

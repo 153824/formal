@@ -81,10 +81,18 @@ Page({
             const idArray = q.split("/");
             releaseEvaluationId = idArray[idArray.length - 1] || "";
         }
+        if(option.scene){
+            releaseEvaluationId = decodeURIComponent(option.scene);
+            wx.redirectTo({
+                url: `/pages/work-base/components/guide/guide?releaseRecordId=${releaseEvaluationId}`,
+            });
+            return;
+        }
         if(releaseEvaluationId){
             wx.redirectTo({
                 url: `/pages/work-base/components/guide/guide?releaseRecordId=${releaseEvaluationId}`,
-            })
+            });
+            return;
         }
         wx.getSystemInfo({
             success: function (res) {

@@ -11,7 +11,8 @@
 		"minified": true,
 		"newFeature": true,
 		"coverView": true,
-		"autoAudits": false,
+		"nodeModules": true,
+		"autoAudits": true,
 		"showShadowRootInWxmlPanel": true,
 		"scopeDataCheck": false,
 		"uglifyFileName": false,
@@ -23,6 +24,7 @@
 			"disablePlugins": [],
 			"outputPath": ""
 		},
+		"bundle": true,
 		"useCompilerModule": false
 	},
 	"compileType": "miniprogram",
@@ -133,7 +135,14 @@
 					"id": 9,
 					"name": "扫码领取测评",
 					"pathName": "pages/work-base/work-base",
-					"query": "q=https://api.luoke101.com/s/5f6b2a57d8caae1efa234a0e",
+					"query": "q=https://api.luoke101.com/s/5f717e7aeb837e5b7223e87d",
+					"scene": null
+				},
+				{
+					"id": 10,
+					"name": "小程序码领取测评",
+					"pathName": "pages/work-base/work-base",
+					"query": "scene=5f7180a9eb837e5b7223e880",
 					"scene": null
 				}
 			]

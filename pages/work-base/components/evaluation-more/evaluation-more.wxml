@@ -11,8 +11,8 @@
                         {{evaluationItem.evaluationName}}
                     </view>
                     <view class="evaluation-info">
-                        <text>{{ evaluationItem.quesCount }}题</text>
-                        <text style="margin-left: 10rpx;">{{evaluationItem.estimatedTime}}分钟</text>
+                        <text wx:if="{{evaluationItem.type==='BY_COUNT'}}">可发放数量：{{evaluationItem.available}}份</text>
+                        <text wx:if="{{evaluationItem.type==='BY_TIME'||evaluationItem.type==='FREE'}}">可发放数量：不限量</text>
                     </view>
                 </view>
                 <view style="width: 4rpx;height: 114rpx;background-color: #F4F4F4FF;margin-right: 20rpx;"></view>

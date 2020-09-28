@@ -62,7 +62,7 @@ Page({
         }
 
         function toNext() {
-            const id = that.data;
+            const {id} = that.data;
             app.doAjax({
                 url: `reports/${id}`,
                 method: "put",

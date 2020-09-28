@@ -20,7 +20,7 @@
                         class="get-free-ticket"
                         open-type="share"
                         style="background: transparent;border: none !important;">
-                    <ticket image="../../images/icon/icon@icon-ticket-banner.png"></ticket>
+                    <ticket image="http://ihola.luoke101.com/icon%40icon-ticket-banner.png"></ticket>
                 </button>
             </block>
             <!--面试助手判断逻辑-->

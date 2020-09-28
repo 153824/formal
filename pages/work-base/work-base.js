@@ -65,7 +65,7 @@ Page({
                 });
             },500);
             return;
-        }
+        } 
         let {isWxWorkAdmin, isWxWork,isIPhoneXModel} = this.data;
         if (optionIsWxWorkAdmin) {
             isWxWorkAdmin = optionIsWxWorkAdmin;

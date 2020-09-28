@@ -1,0 +1,19 @@
+{
+  "name": "luoke-haola-wx-admin",
+  "version": "1.0.0",
+  "description": "好啦测评小程序",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@codeup.aliyun.com:5f214f3e5fd102f22f6b8e11/web/luoke-haola-wx-admin.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "umtrack-wx": "^2.4.6"
+  }
+}

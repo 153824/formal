@@ -57,10 +57,10 @@ App({
     isIphoneX: false,
     // host: "http://192.168.0.101:3000",
     // host: "https://api.luoke101.com/v3.0.0",
-    // host: "https://api.luoke101.com",
+    host: "https://api.luoke101.com",
     // host: 'https://h5.luoke101.com',
     // host: "http://192.168.0.225:3000",
-    host: "http://api.dev.luoke101.int",
+    // host: "http://api.dev.luoke101.int",
     // host: "https://24c84666cb52.ap.ngrok.io",
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,

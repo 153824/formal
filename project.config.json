@@ -133,9 +133,9 @@
 				},
 				{
 					"id": 9,
-					"name": "扫码领取测评",
+					"name": "pages/work-base/work-base",
 					"pathName": "pages/work-base/work-base",
-					"query": "q=https://api.luoke101.com/s/5f717e7aeb837e5b7223e87d",
+					"query": "q=https://api.luoke101.com/s/5f71c29bd9d80005bd987a74",
 					"scene": null
 				},
 				{
@@ -143,6 +143,13 @@
 					"name": "小程序码领取测评",
 					"pathName": "pages/work-base/work-base",
 					"query": "scene=5f7180a9eb837e5b7223e880",
+					"scene": null
+				},
+				{
+					"id": 11,
+					"name": "完成测评",
+					"pathName": "pages/work-base/components/done/done",
+					"query": "id=5f71abd2d9d80005bd987a45&isSelf=SHARE",
 					"scene": null
 				}
 			]

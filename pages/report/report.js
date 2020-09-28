@@ -1084,7 +1084,7 @@ Page({
             })
         }else if(isSelf && isSelf === "SHARE"){
             wx.reLaunch({
-                url: "/pages/work-base/components/member-report-list/member-report-list"
+                url: "/pages/user-center/components/receive-evaluations/receive-evaluations?targetPath=userCenter"
             })
         }else{
 

@@ -65,7 +65,7 @@ Page({
                 });
             },500);
             return;
-        } 
+        }
         let {isWxWorkAdmin, isWxWork,isIPhoneXModel} = this.data;
         if (optionIsWxWorkAdmin) {
             isWxWorkAdmin = optionIsWxWorkAdmin;
@@ -81,15 +81,15 @@ Page({
             const idArray = q.split("/");
             releaseEvaluationId = idArray[idArray.length - 1] || "";
         }
-        if(option.scene){
-            releaseEvaluationId = decodeURIComponent(option.scene);
-            wx.redirectTo({
+        if(releaseEvaluationId){
+            wx.reLaunch({
                 url: `/pages/work-base/components/guide/guide?releaseRecordId=${releaseEvaluationId}`,
             });
             return;
         }
-        if(releaseEvaluationId){
-            wx.redirectTo({
+        if(option.scene){
+            releaseEvaluationId = decodeURIComponent(option.scene);
+            wx.reLaunch({
                 url: `/pages/work-base/components/guide/guide?releaseRecordId=${releaseEvaluationId}`,
             });
             return;

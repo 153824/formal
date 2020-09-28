@@ -7,9 +7,6 @@ Page({
     },
     onLoad: function (options) {
         const {isWxWork, isWxWorkAdmin} = this.data;
-        // wx.hideTabBar({
-        //     animation: true
-        // });
         this.setData({
             isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
             userInfo: wx.getStorageSync("userInfo") || wx.getStorageSync("USER_DETAIL") || app.globalData.userInfo || app.globalData.userMsg
@@ -24,7 +21,6 @@ Page({
 
     },
     onShow() {
-        console.log("this.data.userInfo: ",this.data.userInfo)
         this.setData({
             userInfo:  wx.getStorageSync("userInfo") || wx.getStorageSync("USER_DETAIL") || app.globalData.userInfo || app.globalData.userMsg,
             isWxWork: app.wxWorkInfo.isWxWork,
@@ -37,8 +33,11 @@ Page({
         })
     },
     goToReceiveEvaluation: function () {
+        // wx.navigateTo({
+        //     url: '/pages/work-base/components/member-report-list/member-report-list?navigationText=0'
+        // })
         wx.navigateTo({
-            url: '/pages/work-base/components/member-report-list/member-report-list?navigationText=0'
+            url: '/pages/user-center/components/receive-evaluations/receive-evaluations'
         })
     },
     goToAddGroup: function () {
@@ -73,15 +72,12 @@ Page({
             },
             success: function(res) {
                 res = res.data;
-                console.log("app.globalData.userInfo: res",res);
-                console.log("app.globalData.userInfo: ",app.globalData.userInfo);
                 const localUserInfo = wx.getStorageSync("userInfo");
                 const localUserDetail = wx.getStorageSync("USER_DETAIL");
                 app.globalData.userInfo = Object.assign(app.globalData.userInfo,localUserInfo,localUserDetail,res);
                 wx.setStorageSync("userInfo",app.globalData.userInfo);
                 wx.setStorageSync("USER_DETAIL",app.globalData.userInfo);
                 const userInfo = Object.assign({},app.globalData.userInfo);
-                console.log("app.globalData.userInfo: ",app.globalData.userInfo)
                 that.setData({
                     userInfo: wx.setStorageSync("userInfo",app.globalData.userInfo) || userInfo
                 });

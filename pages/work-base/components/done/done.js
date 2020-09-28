@@ -36,7 +36,7 @@ Page({
         const {isSelf} = this.data;
         if (isSelf && isSelf === "SHARE") {
             wx.reLaunch({
-                url: "/pages/work-base/components/member-report-list/member-report-list"
+                url: "/pages/user-center/components/receive-evaluations/receive-evaluations"
             })
         }
     },
@@ -88,6 +88,7 @@ Page({
      */
     toDetail: function (e) {
         const {id, isSelf} = this.data;
+        console.log("done.js -> isSelf: ",isSelf);
         wx.navigateTo({
             url: `/pages/report/report?receiveRecordId=${id}&isSelf=${isSelf}`
         });

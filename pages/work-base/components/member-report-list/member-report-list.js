@@ -152,6 +152,6 @@ Component({
         windowHeight: systemInfo.windowHeight,
         safeAreaDiff: isIPhoneXModel  ? Math.abs(systemInfo.safeArea.height  - systemInfo.safeArea.bottom) : 0,
       });
-    }
+    },
   }
 });

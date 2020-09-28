@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "hola-member-report-list": "../../../work-base/components/member-report-list/member-report-list"
+  },
   "navigationBarTitleText": "他人分享给的测评"
 }

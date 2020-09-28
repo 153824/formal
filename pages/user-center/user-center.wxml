@@ -55,7 +55,7 @@
             <view class="user-personal-info">
                 <image src="{{userInfo.avatar || userInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
                        style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                <text>{{userInfo.nickName}}</text>
+                <text>{{userInfo.info.nickName}}</text>
             </view>
         </view>
         <view class="content">
@@ -76,8 +76,9 @@
                     </view>
                     <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                 </view>
-                <view class="user-action-item" bindtap="goToServingClient">
-                    <view class="title">
+                <view class="user-action-item" bindtap="">
+                    <hola-serving type="rectangle"></hola-serving>
+                    <view class="title" style="position: absolute;">
                         <image src="./images/user@connect-serving.png"
                                style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
                         <text>联系专属客服</text>

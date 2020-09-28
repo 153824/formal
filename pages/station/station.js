@@ -71,9 +71,6 @@ Page({
     this.setData({
       checkedId,
     });
-    wx.aldstat.sendEvent('从人岗匹配侧边栏进入查看测评列表', {
-            '侧边栏名称': '名称：' + name
-    });
   },
   changePage: function () {
     wx.navigateTo({
@@ -84,9 +81,6 @@ Page({
     var { id,name } = e.currentTarget.dataset;
     wx.navigateTo({
       url: `./components/detail/detail?id=${ id }`,
-    });
-    wx.aldstat.sendEvent('从人岗匹配进入测评详情', {
-            '测评名称': '名称：' + name + ' id：' + id
     });
   },
   onHide() {

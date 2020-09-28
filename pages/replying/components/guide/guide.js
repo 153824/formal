@@ -43,9 +43,6 @@ Page({
       wx.redirectTo({
         url: `../../replying?pid=${evaluationId}&id=${receiveRecordId}&evaluationId=${evaluationId}&receiveRecordId=${receiveRecordId}`
       });
-      wx.aldstat.sendEvent('点击开始作答', {
-        '测评名称': `名称：${ name } id：${ id }`
-      });
       return;
     }
   },

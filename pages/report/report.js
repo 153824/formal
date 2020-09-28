@@ -936,9 +936,6 @@ Page({
         wx.navigateTo({
             url: '../station/components/detail/detail?id=' + evaluationInfo.evaluationId,
         });
-        wx.aldstat.sendEvent('报告详情页测测别人', {
-            '测评名称': 'name' + paperDetail.name
-        });
     },
     /**
      * 获取团队列表，并切换到我自己的团队

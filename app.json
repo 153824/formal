@@ -28,7 +28,6 @@
     "pages/work-base/components/done/done",
     "pages/work-base/components/guide/guide",
     "pages/work-base/components/member-report-list/member-report-list",
-    "utils/ence_push/ence_push",
     "station/detail",
     "common/tab-bar/tab-bar",
     "pages/user-center/user-center",

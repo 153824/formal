@@ -331,9 +331,6 @@ Page({
       //   return;
       // }
       that.gototest();
-      wx.aldstat.sendEvent('进入答题页面', {
-        '测评名称': '名称：' + name
-      });
     }
     if (!that.data.getphoneNum) {
       let detail = e.detail;
@@ -684,9 +681,6 @@ Page({
       wx.redirectTo({
         url: './components/finish/finish?type=' + that.data.applyStatus
       });
-      // wx.aldstat.sendEvent('点击提交测评作答', {
-      //   '测评名称': '名称：' + name
-      // });
       return;
     }
     let now = new Date().getTime();
@@ -720,9 +714,6 @@ Page({
         const url = `/pages/replying/components/finish/finish?id=${id}&type=${applyStatus}&name=${paperList.setting.name1}`;
         wx.navigateTo({
           url: url
-        });
-        wx.aldstat.sendEvent('点击提交测评作答', {
-          '测评名称': '名称：' + name
         });
         wx.removeStorageSync(sKey);
         that.setData(ret);

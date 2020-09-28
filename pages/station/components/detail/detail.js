@@ -97,18 +97,7 @@ Page({
                         that.setData({
                             evaluation,
                         });
-                        wx.aldstat.sendEvent('访问测评详情', {
-                            '测评名称': `名称: ${name} id：${id}`
-                        });
-                        if (evaluation.freeEvaluation) {
-                            wx.aldstat.sendEvent('访问免费测评详情', {
-                                '测评名称': `名称: ${name} id：${id}`
-                            });
-                        } else {
-                            wx.aldstat.sendEvent('访问付费测评详情', {
-                                '测评名称': `名称: ${name} id：${id}`
-                            });
-                        }
+                        if (evaluation.freeEvaluation) {} else {}
                         resolve("success");
                     },
                     fail: function (err) {
@@ -513,9 +502,6 @@ Page({
         const {availableCount, buyoutInfo} = evaluationVoucherInfo;
         console.log(evaluation);
         console.log("this.data", this.data);
-        // wx.aldstat.sendEvent('点击发放测评', {
-        //   '测评名称': '名称：' + evaluationInfo.name
-        // });
         if (((availableCount || 0) === 0 && !evaluation.freeEvaluation) && !buyoutInfo.hadBuyout) {
             app.toast("测评可用数量不足，请先购买或用券兑换测评");
             return;
@@ -618,13 +604,6 @@ Page({
             {userInfo} = app.globalData,
             that = this;
         const {id, name} = this.data.evaluation.evaluationInfo;
-        try {
-            wx.aldstat.sendEvent('点击分享领3张券', {
-                '测评名称': `名称: ${evaluationInfo.name}`
-            });
-        } catch (e) {
-
-        }
         if (options.from !== 'button') {
             return {
                 title: `邀您体验《${evaluationInfo.name}》测评~`,
@@ -636,13 +615,6 @@ Page({
             url: `drawVoucher?paperId=${id}`,
             success: function (res) {
                 app.toast(res);
-                try {
-                    wx.aldstat.sendEvent('成功分享领3张券', {
-                        '测评名称': `名称: ${evaluationInfo.name}`
-                    });
-                } catch (e) {
-
-                }
             },
             fail: function (err) {
                 console.error(err);
@@ -685,13 +657,6 @@ Page({
     getNewerTicket: function (e) {
         var that = this;
         var {evaluationInfo} = that.data.evaluation;
-        try {
-            wx.aldstat.sendEvent('用户点击领新人5张券', {
-                '测评名称': `名称: ${evaluationInfo.name}`
-            });
-        } catch (e) {
-
-        }
         app.doAjax({
             url: "drawNoviceVoucher",
             method: "post",
@@ -701,28 +666,9 @@ Page({
                 that.setData({
                     giftTrigger: true,
                 });
-                /**
-                 * @Description: isGetInAgainst 领完5张券，再次进入测评详情页才会显示领取3张券的广告
-                 * @author: WE!D
-                 * @args:
-                 * @return:
-                 * @date: 2020/6/17
-                 */
-                if (ret.code === 0) {
-                    try {
-                        wx.aldstat.sendEvent('领新人5张券成功', {
-                            '测评名称': `名称: ${evaluationInfo.name}`
-                        });
-                    } catch (e) {
-
-                    }
-                }
             },
             error: function (res) {
                 app.toast(res.msg);
-                wx.aldstat.sendEvent('领新人5张券失败', {
-                    '测评名称': `名称: ${evaluationInfo.name}`
-                });
             }
         });
         that.onShow(false);
@@ -799,9 +745,6 @@ Page({
             var userMsg = app.globalData.userMsg || {};
             userMsg["iv"] = iv;
             userMsg["encryptedData"] = encryptedData;
-            wx.aldstat.sendEvent('授权手机号', {
-                '测评名称': `名称：${evaluation.name}`
-            });
             var updatedUserMobilePromise = new Promise(((resolve, reject) => {
                 app.doAjax({
                     url: "updatedUserMobile",
@@ -839,9 +782,6 @@ Page({
 
                             }
                         }
-                        wx.aldstat.sendEvent('授权手机号成功', {
-                            '测评名称': `名称：${evaluation.name}`
-                        });
                         that.setData({
                             isBindPhone: true
                         })

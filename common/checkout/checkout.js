@@ -50,9 +50,6 @@ Component({
       wx.navigateTo({
         url: `../report/detail?id=${ id }&command=close`
       });
-      wx.aldstat.sendEvent('查看报告模板', {
-        '测评名称': `名称：${{subtitle}} id: ${{ id }}`,
-      });
     }
   }
 });

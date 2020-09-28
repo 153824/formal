@@ -1,6 +1,5 @@
 /***********************************************************************************************************************
  * @NAME: WEID       /       @DATE: 2020/7/21      /       @DESC: 变量注释模板(新增变量务必添加)
- * ald: 阿拉丁
  * qiniuUpload: 七牛云
  * push: 小神推
  * deBug: 调试模式
@@ -34,9 +33,8 @@
  * eventId:  小神推模板ID
  * assistant 面试助手
  * ********************************************************************************************************************/
-const ald = require('./utils/ald-stat.js');
+const uma = require('umtrack-wx');
 const qiniuUpload = require("./utils/qiniuUpload");
-const push = require('./utils/push_sdk.js');
 const common = require('./utils/common.js');
 qiniuUpload.init({
     region: 'SCN',
@@ -59,6 +57,7 @@ App({
     isIphoneX: false,
     // host: "http://192.168.0.101:3000",
     // host: "https://api.luoke101.com/v3.0.0",
+    // host: "https://api.luoke101.com",
     // host: 'https://h5.luoke101.com',
     // host: "http://192.168.0.225:3000",
     host: "http://api.dev.luoke101.int",
@@ -83,6 +82,17 @@ App({
         isWxWork: false,
         isWxWorkAdmin: false,
         wxWorkUserInfo: {},
+    },
+    umengConfig: {
+        appKey: '5f6d5902906ad81117141b70', //由友盟分配的APP_KEY
+        // 使用Openid进行统计，此项为false时将使用友盟+uuid进行用户统计。
+        // 使用Openid来统计微信小程序的用户，会使统计的指标更为准确，对系统准确性要求高的应用推荐使用Openid。
+        useOpenid: true,
+        // 使用openid进行统计时，是否授权友盟自动获取Openid，
+        // 如若需要，请到友盟后台"设置管理-应用信息"(https://mp.umeng.com/setting/appset)中设置appId及secret
+        autoGetOpenid: true,
+        debug: true, //是否打开调试模式
+        uploadUserInfo: true // 自动上传用户信息，设为false取消上传，默认为false
     },
     onLaunch: function (options) {
         const that = this;
@@ -117,17 +127,24 @@ App({
                 success: res => {
                     that.wxWorkUserLogin(res.code).then(data => {
                         if (that.wxWorkInfo.isWxWorkAdmin) {
-                            wx.switchTab({
+                            wx.reLaunch({
                                 url: "/pages/work-base/work-base?isWxWorkAdmin=true&maskTrigger=true",
                                 success: function () {
                                     let page = getCurrentPages().pop();
                                     if (page == undefined || page == null) return;
-                                    page.onLoad();
+                                    page.onLoad({isWxWorkAdmin: true, maskTrigger: true});
                                 }
                             })
                         }
-                    }).catch(err=>{
-                        console.error("that.wxWorkInfo.isWxWork: ",err);
+                    }).catch(err => {
+                        wx.reLaunch({
+                            url: "/pages/work-base/work-base?msg=err&maskTrigger=true",
+                            success: function () {
+                                let page = getCurrentPages().pop();
+                                if (page == undefined || page == null) return;
+                                page.onLoad();
+                            }
+                        })
                     })
                 },
                 fail: function (err) {
@@ -146,8 +163,9 @@ App({
             wx.login({
                 success: res => {
                     this.userLogin(res.code).then(res => {
-                        wx.aldPushSendOpenid(res.openId);
-                    })
+                    }).catch(err => {
+                        console.error(err)
+                    });
                 },
             });
         }
@@ -292,7 +310,8 @@ App({
                     that.isLogin = true;
                     resolve({openId: userData.openid || userMsg.openid});
                 },
-                fail: function (err) {
+                error: function (err) {
+                    console.log("error: ", err);
                     reject(err);
                 }
             })
@@ -400,7 +419,7 @@ App({
         }
         params.data = params.data || {};
         params.data['userId'] = (that.globalData.userInfo || wx.getStorageSync("userInfo")).id || '';
-        params.data['teamId'] = that.teamId ||wx.getStorageSync("userInfo").teamId || params.data['teamId']||"";
+        params.data['teamId'] = that.teamId || wx.getStorageSync("userInfo").teamId || params.data['teamId'] || "";
         params.data['teamRole'] = that.teamRole || "";
         wx.request({
             url: url,
@@ -504,7 +523,7 @@ App({
      */
     getMyTeamList: function (cb, cacheTrigger = true) {
         const that = this;
-        if(that.wxWorkInfo.isWxWork){
+        if (that.wxWorkInfo.isWxWork) {
             return;
         }
         let LOCAL_MY_TEAM_LIST = wx.getStorageSync('GET_MY_TEAM_LIST');
@@ -528,7 +547,7 @@ App({
                 var obj = LOCAL_MY_TEAM_LIST[0]
                 var teams = []
                 that.teamId = obj.objectId
-                wx.setStorageSync("MY_TEAM_ID",obj.objectId);
+                wx.setStorageSync("MY_TEAM_ID", obj.objectId);
                 that.teamName = obj.name
                 that.teamRole = obj.role
                 that.globalData.team = obj
@@ -578,7 +597,7 @@ App({
                         var obj = list[0]
                         var teams = []
                         that.teamId = obj.objectId
-                        wx.setStorageSync("MY_TEAM_ID",obj.objectId);
+                        wx.setStorageSync("MY_TEAM_ID", obj.objectId);
                         that.teamName = obj.name
                         that.teamRole = obj.role
                         that.globalData.team = obj
@@ -617,7 +636,7 @@ App({
             noLoading: true,
             data: {
                 type: 6,
-                name: (userInfo.nickname || userInfo.nickName ) + '的团队',
+                name: (userInfo.nickname || userInfo.nickName) + '的团队',
                 remark: '自动生成的团队',
             },
             success: function () {

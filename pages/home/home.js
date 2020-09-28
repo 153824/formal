@@ -103,9 +103,6 @@ Page({
         wx.navigateTo({
             url: '../../common/webView',
         });
-        wx.aldstat.sendEvent('首页点击推荐阅读', {
-            '文章名称': '名称：' + url
-        });
     },
 
     changePage: function (e) {
@@ -138,9 +135,6 @@ Page({
                 }
                 wx.navigateTo({
                     url: url
-                });
-                wx.aldstat.sendEvent('首页进入测评详情', {
-                    '测评名称': '名称：' + name
                 });
             }
         }
@@ -176,18 +170,11 @@ Page({
             wx.navigateTo({
                 url: '../../common/webView',
             });
-            wx.aldstat.sendEvent('查看Banner详情', {
-                'Banner名称': 'id' + id
-            });
             return;
         }
         wx.navigateTo({
             url: `../station/components/detail/detail?id=${id}`,
-            success: function () {
-                wx.aldstat.sendEvent('查看Banner详情', {
-                    'Banner名称': 'id' + id
-                });
-            }
+            success: function () {}
         });
 
 
@@ -196,11 +183,7 @@ Page({
         const {id, name} = e.currentTarget.dataset;
         wx.navigateTo({
             url: `../station/components/more/more?id=${id}&title=${name}`,
-            success: () => {
-                wx.aldstat.sendEvent('导航点击', {
-                    '导航名称': '名称：' + name
-                });
-            }
+            success: () => {}
         });
     },
     callServing: function (e) {

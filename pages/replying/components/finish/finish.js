@@ -34,9 +34,6 @@ Page({
         wx.navigateTo({
             url: `/pages/report/report?receiveRecordId=${id}&isSelf=${isSelf}`,
         });
-        wx.aldstat.sendEvent('查看自己的报告', {
-            '测评名称': `名称：${name}`
-        });
     },
     onUnload: function () {
         const {isSelf} = this.data;

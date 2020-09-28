@@ -779,7 +779,11 @@ Page({
                                 case 'goToReplyingGuide':
                                     that.goToReplyingGuide(e);
                                     break;
-
+                                case 'payForEvaluation':
+                                    that.payForEvaluation();
+                                    break;
+                                default:
+                                    break;
                             }
                         }
                         that.setData({

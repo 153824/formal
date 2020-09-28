@@ -127,8 +127,15 @@
             <view wx:if="{{ isIos }}">
                 <press title="iOS暂不支持直接购买" fontSize="32" fontWeight="600"></press>
             </view>
-            <view wx:else bindtap="payForEvaluation">
-                <press title="购买测评" fontSize="32" fontWeight="600"></press>
+            <view wx:else>
+                <button class="button-group-get-user-phone" data-mark="dont-get-ticket"
+                        open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
+                        bindgetphonenumber="getPhoneNumber"
+                        data-event-name="payForEvaluation"
+                        bindtap="{{isBindPhone ? 'payForEvaluation' : ''}}"
+                >
+                    <press title="购买测评" fontSize="32" fontWeight="600"></press>
+                </button>
             </view>
         </view>
         <!-- 购买过测评券的按钮组且未买断 -->

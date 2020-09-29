@@ -3,10 +3,6 @@ import debounce from "../../utils/lodash/debounce";
 const app = getApp();
 Component({
     properties: {
-        reportList: {
-            type: Array,
-            value: []
-        },
         type: {
             type: String,
             value: "report-more" //receive-evaluation
@@ -18,7 +14,7 @@ Component({
         search: {
             type: String,
             value: ""
-        }
+        },
     },
     data: {
         reportList: [],
@@ -89,7 +85,6 @@ Component({
         },
 
         searchReport: debounce(function (e) {
-            console.log(e);
             const that = this;
             let {searchPage, searchReportList} = this.data;
             try {
@@ -152,7 +147,10 @@ Component({
     },
     pageLifetimes: {
         show: function () {
-            this.loadReportList();
+            const {type,} = this.properties;
+            if (type === "report-more"){
+                this.loadReportList();
+            }
         }
     },
     lifetimes: {
@@ -162,17 +160,17 @@ Component({
             const systemInfo = wx.getSystemInfoSync();
             this.setData({
                 windowHeight: systemInfo.windowHeight
-            })
+            });
             if (type === "report-more") {
                 wx.setNavigationBarTitle({
                     title: title
                 });
-                // this.loadReportList();
             } else if (type === "receive-evaluation") {
                 app.doAjax({
                     url: `reports/accepted_list`,
                     method: "get",
                     success: function (res) {
+                        console.log("reports/accepted_list: ",res);
                         that.setData({
                             reportList: res
                         })

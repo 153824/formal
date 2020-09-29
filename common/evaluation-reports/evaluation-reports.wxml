@@ -1,4 +1,4 @@
-<view class="program-wrapper moer-report-wrapper">
+<view class="program-wrapper {{type ==='report-more'}}moer-report-wrapper">
     <van-search
             wx:if="{{search}}"
             value="{{keyword}}"
@@ -17,7 +17,8 @@
             input-class="van-search-custom-input"
             field-class="van-search-custom-field"
     />
-    <scroll-view wx:if="{{!keyword}}" class="report-content-wrapper" scroll-y bindscrolltolower="nextPage" style="height: {{windowHeight * pixelRate - 50 - 148}}rpx;">
+    <scroll-view wx:if="{{!keyword}}" class="report-content-wrapper" scroll-y bindscrolltolower="nextPage"
+                 style="height: {{windowHeight * pixelRate - 50 - 148}}rpx;">
         <view bindtap="goToReport"
               wx:for="{{reportList}}"
               wx:for-item="reportItem"
@@ -32,7 +33,13 @@
             <view class="evaluation-wrapper">
                 <view class="evaluation-name user-info-wrapper">
                     <view class="user-info">
-                        <text>{{reportItem.participant}}</text><text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text><text wx:if="{{ reportItem.showGrade }}" style="font-size: 22rpx;line-height: 22rpx;margin-left: 10rpx;" class="recommend-grade">{{reportItem.showGrade ? reportItem.grade : ""}}分</text>
+                        <text>{{reportItem.participant}}</text>
+                        <text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}
+                        </text>
+                        <text wx:if="{{ reportItem.showGrade }}"
+                              style="font-size: 22rpx;line-height: 22rpx;margin-left: 10rpx;" class="recommend-grade">
+                            {{reportItem.showGrade ? reportItem.grade : ""}}分
+                        </text>
                     </view>
                 </view>
                 <view class="user-answer-evaluation">
@@ -48,8 +55,10 @@
                 <text>新</text>
             </view>
         </view>
+        <hola-empty isShow="{{!reportList.length}}" title="暂无测评报告"></hola-empty>
     </scroll-view>
-    <scroll-view wx:else class="report-content-wrapper" scroll-y bindscrolltolower="searchNextPage" data-keyword="{{keyword}}" style="height: {{windowHeight * pixelRate - 50 - 148}}rpx;">
+    <scroll-view wx:else class="report-content-wrapper" scroll-y bindscrolltolower="searchNextPage"
+                 data-keyword="{{keyword}}" style="height: {{windowHeight * pixelRate - 50 - 148}}rpx;">
         <view class="program-body the-last-report {{reportIndex === 0 ? 'no-margin-top' : '' }}" bindtap="goToReport"
               wx:for="{{ searchReportList }}"
               wx:for-item="reportItem"
@@ -63,7 +72,13 @@
             <view class="evaluation-wrapper">
                 <view class="evaluation-name user-info-wrapper">
                     <view class="user-info">
-                        <text>{{reportItem.participant}}</text><text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text><text wx:if="{{ reportItem.showGrade }}" style="font-size: 22rpx;line-height: 22rpx;margin-left: 10rpx;" class="recommend-grade">{{reportItem.showGrade ? reportItem.grade : ""}}分</text>
+                        <text>{{reportItem.participant}}</text>
+                        <text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}
+                        </text>
+                        <text wx:if="{{ reportItem.showGrade }}"
+                              style="font-size: 22rpx;line-height: 22rpx;margin-left: 10rpx;" class="recommend-grade">
+                            {{reportItem.showGrade ? reportItem.grade : ""}}分
+                        </text>
                     </view>
                 </view>
                 <view class="user-answer-evaluation">
@@ -81,5 +96,4 @@
         </view>
     </scroll-view>
 </view>
-<!--<hola-empty isShow="{{!reportList.length&&!searchReportList.length}}" title="暂无记录"></hola-empty>-->
 <wxs src="../../utils/util.wxs" module="util"></wxs>

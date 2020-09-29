@@ -9,10 +9,7 @@ Page({
             })
         }
     },
-    onShow() {
-        console.log("receive-evaluation->6: onShow");
-    },
-
+    onShow() {},
 })
 ;
 

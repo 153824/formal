@@ -11,7 +11,6 @@ Page({
             url: "release_records/accepted_list",
             method: 'get',
             success: function(res) {
-                console.log("doAjax： ",res);
                 that.setData({
                     evaluationTrack: res
                 })

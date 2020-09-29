@@ -105,7 +105,6 @@ var richTextFilter = function(nodeString=""){
 
 var arrayEleIsSame = function(compare=[],target=[]){
   compare = compare.toString(),target = target.toString();
-  console.log(compare,target)
   if(compare === target){
     return true;
   }else{

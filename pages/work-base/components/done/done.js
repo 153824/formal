@@ -9,7 +9,6 @@ Page({
     },
     onLoad: function (options) {
         const id = options.id;
-        console.log("options.reportMeet: ", options);
         this.setData({
             isMp: false,
             isTest: app.isTest,
@@ -44,7 +43,7 @@ Page({
      * 申请查看报告
      */
     toApply: function (e) {
-        var that = this;
+        const that = this;
         if (wx.requestSubscribeMessage) {
             wx.requestSubscribeMessage({
                 tmplIds: [
@@ -67,7 +66,7 @@ Page({
                 url: `reports/${id}`,
                 method: "put",
                 data: {
-                    id: that.data.id
+                    type: 'apply'
                 },
                 success: function (ret) {
                     that.setData({
@@ -78,19 +77,13 @@ Page({
         }
     },
     /**
-     * 返回
-     */
-    toBack: function () {
-        wx.navigateBack();
-    },
-    /**
      * 进入报告详情
      */
     toDetail: function (e) {
         const {id, isSelf} = this.data;
-        console.log("done.js -> isSelf: ",isSelf);
         wx.navigateTo({
             url: `/pages/report/report?receiveRecordId=${id}&isSelf=${isSelf}`
         });
     },
+
 })

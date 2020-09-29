@@ -40,12 +40,10 @@ Page({
 
     onLoad: function (options) {
         const that = this;
-        console.log("onLoad: function (options):", options);
         const {releaseRecordId, sharedAt} = options;
         const {examiningDetail, finishedDetail, digestDetail} = this;
         if (app.isLogin) {
             if (releaseRecordId && sharedAt) {
-                console.log("1")
                 this.acceptEvaluationTrack(options).then(res => {
                     Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
                         that.setData({
@@ -63,7 +61,7 @@ Page({
                         maskTrigger: false
                     })
                 }).catch(err => {
-                    console.log("err: ", err);
+                    console.error("err: ", err);
                     that.setData({
                         maskTrigger: false
                     })
@@ -71,7 +69,6 @@ Page({
             }
         }
         app.checkUser = function () {
-            console.log("app.checkUser", releaseRecordId, sharedAt);
             if (releaseRecordId && sharedAt) {
                 that.acceptEvaluationTrack(options).then(res => {
                     Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
@@ -90,7 +87,7 @@ Page({
                         maskTrigger: false
                     })
                 }).catch(err => {
-                    console.log("err: ", err);
+                    console.error("err: ", err);
                     that.setData({
                         maskTrigger: false
                     })
@@ -285,7 +282,6 @@ Page({
      */
     gotoDetail: function (e) {
         const {id} = e.currentTarget.dataset;
-        console.log("evaluationId,", e)
         wx.redirectTo({
             url: `../../../station/components/detail/detail?id=${id}`
         });
@@ -327,7 +323,6 @@ Page({
     onShareAppMessage: function () {
         const {trackId, releaseRecordId,evaluationName,cover} = this.data;
         const time = new Date().getTime();
-        console.log("trackId,releaseRecordId,time: ", trackId, releaseRecordId, time)
         return {
             title: `邀请您查看《${evaluationName}》的作答情况`,
             path: `pages/work-base/work-base?releaseRecordId=${trackId || releaseRecordId}&sharedAt=${time}&tabIndex=1`,

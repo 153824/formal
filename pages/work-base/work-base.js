@@ -46,7 +46,6 @@ Page({
             });
             return;
         }
-        console.log("option: ",option);
         this.setData({
             userInfo: app.globalData.userInfo || wx.getStorageSync("userInfo"),
             isWxWork: app.wxWorkInfo.isWxWork,
@@ -54,7 +53,6 @@ Page({
         });
         if(option.sharedAt&&option.releaseRecordId){
             setTimeout(()=>{
-                console.log(option);
                 wx.navigateTo({
                     url: `/pages/work-base/components/track-detail/track-detail?sharedAt=${option.sharedAt}&releaseRecordId=${option.releaseRecordId}`,
                     success: function (res) {
@@ -69,7 +67,6 @@ Page({
         let {isWxWorkAdmin, isWxWork,isIPhoneXModel} = this.data;
         if (optionIsWxWorkAdmin) {
             isWxWorkAdmin = optionIsWxWorkAdmin;
-            console.log("optionIsWxWorkAdmin： ",isWxWorkAdmin);
             this.setData({
                 isWxWorkAdmin: isWxWorkAdmin,
                 maskTrigger: option.maskTrigger
@@ -96,7 +93,6 @@ Page({
         }
         wx.getSystemInfo({
             success: function (res) {
-                console.log("wx.getSystemInfo: ", res);
                 const {isIPhoneXModel} = that.data;
                 that.setData({
                     windowHeight: res.windowHeight,
@@ -106,7 +102,6 @@ Page({
         });
         const {windowHeight,safeArea} = wx.getSystemInfoSync();
         const tabBarHeight = Number(wx.getStorageSync("TAB_BAR_HEIGHT"));
-        console.log("tabBarHeight: ", tabBarHeight);
         this.setData({
             tabBarHeight: tabBarHeight,
             windowHeight,
@@ -224,7 +219,6 @@ Page({
                     },
                     noLoading: true,
                     success: function (res) {
-                        console.log("res: ", res);
                         that.setData({
                             myEvaluation: res.data,
                             myEvaluationCount: res.count

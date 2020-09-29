@@ -107,14 +107,12 @@
           var dataObject = JSON.parse(dataString);
           //do something
           var fileUrl = config.qiniuImageURLPrefix + '/' + dataObject.key;
-          dataObject.fileUrl = fileUrl
+          dataObject.fileUrl = fileUrl;
           dataObject.imageURL = fileUrl;
-          console.log(dataObject);
           if (success) {
             success(dataObject);
           }
         } catch (e) {
-          console.log('parse JSON failed, origin String is: ' + dataString)
           if (fail) {
             fail(e);
           }

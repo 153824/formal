@@ -44,7 +44,6 @@ Page({
         },
         noLoading: true,
         success: function (res) {
-          console.log(res);
           that.setData({
             evaluationList: res,
             reportPage: 1,
@@ -250,7 +249,6 @@ Page({
         },
         noLoading: true,
         success: function (res) {
-          console.log("reports: ",res);
           that.setData({
             evaluationList: res,
             loading: false

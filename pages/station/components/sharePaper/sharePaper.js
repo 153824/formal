@@ -26,7 +26,6 @@ Page({
      */
     onLoad: function (options) {
         const {necessaryInfo} = options;
-        console.log("necessaryInfo： ",necessaryInfo);
         const {count=0, id="", name="", hadBuyout=false, isFree=false, norms="",quesCount=0,estimatedTime=7} = JSON.parse(necessaryInfo);
         this.setData({
             maxCount: count,
@@ -83,7 +82,6 @@ Page({
     },
     changeReportMeet: function (e) {
         const {canRead} = e.currentTarget.dataset;
-        console.log("canRead: ",e)
         this.setData({
             reportMeet: canRead
         });
@@ -99,7 +97,6 @@ Page({
             app.toast("测评可用数量不足");
             return;
         }
-        console.log(norms);
         app.doAjax({
             url: "release/share",
             method: "post",

@@ -123,14 +123,6 @@ Component({
 
                 }
             }
-
-
-            console.log("series: ", series);
-            console.log("lines: ", lines);
-            console.log("limit: ", limit);
-            console.log("histogramValues: ", histogramValues);
-            console.log("histogramYAxis", histogramYAxis);
-
             canvas.setChart(chart);
             const option = {
                 legend: legend,

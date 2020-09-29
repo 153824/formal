@@ -159,7 +159,6 @@ Page({
         role: role
       },
       success: function (res) {
-        console.log(res);
         app.teamId = id;
         app.teamName = that.data.name;
         app.getUserInfo();

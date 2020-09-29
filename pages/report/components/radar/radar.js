@@ -25,7 +25,6 @@ Component({
                 width: width,
                 height: height
             });
-            console.log("canvasId",canvasId);
             let {radarValue,radarIndicator} = _this.properties;
             radarValue = JSON.parse(radarValue);
             radarIndicator = JSON.parse(radarIndicator);

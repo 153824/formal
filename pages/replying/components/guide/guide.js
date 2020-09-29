@@ -7,7 +7,6 @@ Page({
     const that = this;
     const userData = wx.getStorageSync("userInfo")
     const {receiveRecordId,evaluationId} = option;
-    console.log(option);
     app.doAjax({
       url: "paperQues",
       method: "get",
@@ -36,7 +35,6 @@ Page({
     const that = this;
     const {receiveRecordId,evaluationId} = this.data;
     const sKey = "oldAnswer" + receiveRecordId;
-    console.log("id: ",receiveRecordId,evaluationId);
     const draftAnswer = this.data.draftAnswer;
     if (draftAnswer || !draftAnswer) {
       wx.setStorageSync(sKey, draftAnswer);

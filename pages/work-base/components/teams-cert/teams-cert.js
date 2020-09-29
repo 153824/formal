@@ -189,7 +189,7 @@ Page({
           icon: "none",
           duration: 3000,
         });
-        console.log("err", err);
+        console.error("err", err);
       }, {
         key: fileName
       });

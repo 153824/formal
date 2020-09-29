@@ -118,7 +118,6 @@ Page({
         }
         const receiveRecordId = e.currentTarget.dataset.id;
         const that = this;
-        console.log("https://api.luoke101.com/s/5f6db1e93510102c80d2678d");
         app.doAjax({
             url: `reports/${receiveRecordId}`,
             method: "put",
@@ -170,7 +169,6 @@ Page({
     },
 
     goToReplying: function (e) {
-        console.log(e);
         var that = this;
         var draftAnswer = that.data.draftAnswer;
         var applyStatus = that.data.applyStatus;
@@ -182,21 +180,21 @@ Page({
                 url: "updateUserMsg",
                 method: "post",
                 data: {
-                    data: JSON.stringify({
+                    data: {
                         wxUserInfo: userData,
                         userCompany: {
                             name: userData.nickName + "的团队"
                         }
-                    })
+                    }
                 },
                 success: function (res) {
                     var userData = res.data;
                     var globalData = app.globalData.userInfo;
-                    if (0 == res.code) {
+                    if (0 === res.code) {
                         app.globalData.userInfo = Object.assign(globalData, userData);
                         wx.setStorageSync("userInfo", Object.assign(globalData, userData));
+                        wx.setStorageSync("USER_DETAIL", Object.assign(globalData, userData));
                         wx.setStorageSync("openId", userData.openid);
-                        // wx.setStorageSync("unionId", userData.uid);
                         if (draftAnswer) {
                             var sKey = "oldAnswer" + that.data.id;
                             wx.setStorageSync(sKey, draftAnswer);

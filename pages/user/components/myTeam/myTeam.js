@@ -64,12 +64,10 @@ Page({
       success: function(res) {
         adminNum = res.adminMemberMax || adminNum;
         let members = res.members || [];
-        console.log(members.length)
         let memberRole = res.memberRole || {};
         let adminMember = []; //管理员
         let member = []; //普通成员
         members.forEach(function(node) {
-          console.log(node);
           if (node) {
             let id = node.objectId;
             let role = memberRole[id] || 1;
@@ -132,7 +130,6 @@ Page({
    * 邀请用户
    */
   inviteMember: function(e) {
-    console.log("inviteMember",e);
     var d = e.currentTarget.dataset;
     var n = d.n;
     var num = d.num;
@@ -298,7 +295,7 @@ Page({
         });
       },
       fail(res) {
-        console.log(res.errMsg)
+        console.error(res.errMsg)
       }
     });
   },

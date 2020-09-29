@@ -221,8 +221,6 @@ Page({
             wx.hideHomeButton();
         }
         const that = this;
-        console.log("wx.getStorageSync(\"openId\")", wx.getStorageSync("openId"));
-
         app.doAjax({
             url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
             method: "get",
@@ -230,7 +228,6 @@ Page({
                 openid: wx.getStorageSync("openId") || app.globalData.userInfo.openId,
             },
             success: function (res) {
-                console.log(res);
                 that.setData({
                     getphoneNum: true,
                     phoneNumber: res.phone || "微信一键授权"
@@ -285,7 +282,7 @@ Page({
                         icon: "none",
                         duration: 3000,
                     });
-                    console.log("err", err);
+                    console.error("err", err);
                 }, {
                     key: fileName
                 });
@@ -508,7 +505,6 @@ Page({
         var isLastQue = false;
         swiperCurrent += 1;
         if (swiperCurrent == that.data.quesAll.length) {
-            console.log("that.data.quesAll.length: ", that.data.quesAll.length);
             d["isFillAll"] = true;
         }
         if (swiperCurrent == data.quesAll.length) {
@@ -587,9 +583,7 @@ Page({
         }
         if (quesAll.length === swiperCurrent + 1) {
             const answerCopy = app.trimSpace(JSON.parse(JSON.stringify(answers[questionInfo.id])));
-            console.log("answerCopy", answerCopy);
             if (maxChoose < 2 || (answerCopy.length >= Number(minChoose) && answerCopy.length <= Number(maxChoose))) {
-                console.log("Get in?", "YES");
                 this.setData({
                     isFillAll: true
                 })
@@ -893,20 +887,16 @@ Page({
         }
         var {answers, swiperCurrent, quesAll, lastAnswer} = this.data;
         var totalScore = Number(quesAll[swiperCurrent].totalScore);
-        console.log("totalScore： ", totalScore);
         answers[obj.id] = answers[obj.id] || [];
         var answer = app.trimSpace(JSON.parse(JSON.stringify(answers[obj.id])));
         answers[obj.id][i] = userInputAnswer;
         var t = "showQues[" + index + "].slider[" + i + "]";
         var a = "answers." + obj.id + "[" + i + "]";
         var score = 0;
-        console.log("(swiperCurrent + 1) === quesAll.length: ", (swiperCurrent + 1) === quesAll.length)
         if ((swiperCurrent + 1) === quesAll.length) {
-            console.log("answers[obj.id]: ", answers[obj.id]);
             answers[obj.id].forEach((v, k) => {
                 score = score + Number(v);
             });
-            console.log(score, totalScore);
             if (score === totalScore) {
                 this.setData({
                     isFillAll: true,

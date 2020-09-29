@@ -45,7 +45,6 @@ Page({
 
   onLoad: function (options) {
     let that = this;
-    console.log(options);
     that.setData({
       applyStatus: options.type,
       startTime: new Date().getTime()
@@ -58,7 +57,6 @@ Page({
     }
     quesIdsOrder = [];
     sKey = "oldAnswer" + options.receiveRecordId || options.id;
-    console.log("replying_oldAnswer:", sKey);
     let oldData = wx.getStorageSync(sKey);
     if( oldData.pathIndex == "2" || oldData.pathIndex == "1" ){
       oldData.pathIndex = 3
@@ -298,7 +296,7 @@ Page({
             icon: "none",
             duration: 3000,
           });
-          console.log("err", err);
+          console.error("err", err);
         }, {
           key: fileName
         });
@@ -874,7 +872,6 @@ Page({
     if(wx.getStorageSync("userInfo")["nickname"] && data.username === "好啦访客"){
       data.username = wx.getStorageSync("userInfo")["nickname"]
     }
-    console.log("draftAnswer",data)
     let draftAnswer = {
       chapter: data.chapter,
       chapterTime: chapterTime,

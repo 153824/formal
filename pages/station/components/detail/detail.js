@@ -91,7 +91,6 @@ Page({
                     },
                     noLoading: true,
                     success: function (res) {
-                        console.log(res);
                         let evaluation = res;
                         let {id, name} = evaluation;
                         that.setData({
@@ -111,7 +110,6 @@ Page({
                     method: "get",
                     success: function (res) {
                         const evaluationVoucherInfo = res;
-                        console.log("evaluationVoucherInfo: ", evaluationVoucherInfo)
                         let hasVoucher = true,
                             voucher = 0,
                             {voucherInfo} = evaluationVoucherInfo,
@@ -431,7 +429,6 @@ Page({
     payByBuyout: function () {
         var that = this;
         var {evaluation} = this.data;
-        console.log("evaluation: ", evaluation)
         var dayOfPeriod = 365;
         try {
             dayOfPeriod = evaluation.buyoutPlans[0].dayOfPeriod
@@ -500,8 +497,6 @@ Page({
         const that = this;
         const {evaluation, evaluationVoucherInfo} = this.data;
         const {availableCount, buyoutInfo} = evaluationVoucherInfo;
-        console.log(evaluation);
-        console.log("this.data", this.data);
         if (((availableCount || 0) === 0 && !evaluation.freeEvaluation) && !buyoutInfo.hadBuyout) {
             app.toast("测评可用数量不足，请先购买或用券兑换测评");
             return;

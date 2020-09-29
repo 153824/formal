@@ -198,7 +198,7 @@
                         bindtap="{{isBindPhone ? 'goToTransit' : ''}}"
                 >
                     <view class="gotoguide-btn">
-                        <press title="{{ currAnsweringStatus ? '继续体验' : '自己测'}}" bgColor="rgba(0,0,0,1)"
+                        <press title="{{ currAnsweringStatus ? '继续体验' : '自己测'}}" bgColor="rgba(255,255,255,1)"
                                color="rgba(53,62,232,1)"
                                fontSize="32" fontWeight="600"></press>
                     </view>

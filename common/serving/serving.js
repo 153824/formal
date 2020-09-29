@@ -10,11 +10,11 @@ Component({
     },
     mobile: {
       type: String,
-      value: ""
+      value: "18559297592"
     },
     wechat: {
       type: String,
-      value: ""
+      value: "haola72"
     },
     right: {
       type: String,

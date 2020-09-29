@@ -6,7 +6,7 @@
             <text>{{userInfo.userCompany.name}}</text>
         </view>
     </view>
-    <view class="content wxwork-content" style="height: {{ (windowHeight - tabBarHeight - safeAreaDiff)*pixelRate - 200 }}rpx;">
+    <view class="content wxwork-content" style="height: {{ (windowHeight - tabBarHeight - safeAreaDiff)*pixelRate - 220 }}rpx;">
         <scroll-view class="content-scroll-area"
                      style="height: 100%;"
                      scroll-y>
@@ -137,7 +137,7 @@
             <hola-title id="title" url="work-base/work-base" type="normal"></hola-title>
         </view>
     </view>
-    <view class="content" style="height: {{ (windowHeight-tabBarHeight - safeAreaDiff)*pixelRate - 200 }}rpx;">
+    <view class="content" style="height: {{ (windowHeight-tabBarHeight - safeAreaDiff)*pixelRate - 220 }}rpx;">
         <scroll-view class="content-scroll-area"
                      style="height: 100%;"
                      scroll-y>

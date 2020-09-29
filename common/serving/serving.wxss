@@ -10,6 +10,8 @@
     right: 0;
     top: 0;
     left: 0;
+    z-index: 999;
+    background-color: transparent;
 }
 .dlg {
     width: 558rpx;

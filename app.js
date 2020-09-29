@@ -91,7 +91,7 @@ App({
         // 使用openid进行统计时，是否授权友盟自动获取Openid，
         // 如若需要，请到友盟后台"设置管理-应用信息"(https://mp.umeng.com/setting/appset)中设置appId及secret
         autoGetOpenid: true,
-        debug: true, //是否打开调试模式
+        debug: false, //是否打开调试模式
         uploadUserInfo: true // 自动上传用户信息，设为false取消上传，默认为false
     },
     onLaunch: function (options) {

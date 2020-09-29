@@ -349,7 +349,6 @@ Page({
         const id = that.data.id || options.receiveRecordId || options.receivedRecordId;
         var shareKey = options.key || "";
         var command = options.command || "";
-        console.log("verifyReportIsCanRead: ",options);
         this.setData({
             id: id,
             shareKey: shareKey,
@@ -373,7 +372,6 @@ Page({
                     },999);
                 });
             }else{
-                console.log("that.getReport(id)")
                 that.getReport(id);
             }
         }
@@ -394,7 +392,6 @@ Page({
                     },999);
                 });
             }else{
-                console.log("that.getReport(id)")
                 that.getReport(id);
             }
         };
@@ -561,11 +558,9 @@ Page({
             that.drawCircle(res.total1);
             res.report["statement"] = res.report["statement"].replace(/\n/g, "<br>").replace("<bold", "<span style='font-weight: 600;'").replace("</bold", "</span");
             res.report["noTeamMember"] = false;
-            res.report["teamRole"] = (app.teamId == res.releaseTeamId.teamId) ? app.teamRole : 1;
+            res.report["teamRole"] = (app.teamId == res.releaseTeamId) ? app.teamRole : 1;
             res.report["showPage"] = true;
-            console.log("res.report[\"teamRole\"]: ",res.report["teamRole"])
             that.setData(res);
-            console.log("report: ",res)
             app.doAjax({
                 url: "userOrderMsg",
                 method: "get",
@@ -680,7 +675,6 @@ Page({
                         color: "#323541",
                         max: objs[n].max || 5
                     });
-                    console.log("targetLimitArr: ",node);
                     indicator_2[n].push({
                         value: node.name,
                         textStyle: {
@@ -742,15 +736,15 @@ Page({
             that.drawCircle(res.total100);
             res.report["statement"] = res.report["statement"].replace(/\n/g, "<br>").replace("<bold", "<span style='font-weight: 600;'").replace("</bold", "</span");
             res.report["noTeamMember"] = false;
-            res.report["teamRole"] = (app.teamId == res.releaseTeamId.teamId) ? app.teamRole : 1;
+            res.report["teamRole"] = (app.teamId == res.releaseTeamId) ? app.teamRole : 1;
+            console.log("teamRole: ",res.report["teamRole"]);
+            console.log("app.teamId: ",app.teamId,"res.releaseTeamId.teamId: ",res.releaseTeamId.teamId)
             res.report["showPage"] = true;
-            console.log("res.report[\"teamRole\"]: ",res.report["teamRole"]);
             res.fillBlank = [];
             for (let i = 0; i < 4; i++) {
                 res.fillBlank.push("");
             }
             that.setData(res);
-            console.log("res: ", res);
             this.getEvaluationQues();
         });
     },
@@ -959,7 +953,6 @@ Page({
         const that = this;
         const {participantInfo, evaluationInfo, id, report} = this.data;
         const time = new Date().getTime();
-        console.log("receivedRecordId",id,"sharedAt: ",time);
         return {
             title: `邀您查看${participantInfo.username}的《${evaluationInfo.evaluationName}》报告`,
             path: `pages/report/report?receivedRecordId=${id}&sharedAt=${time}`,

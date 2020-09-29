@@ -47,7 +47,6 @@ Component({
   methods: {
     recallEvaluation: function(e) {
       const that = this;
-      console.log(that.properties.paperId);
       wx.showModal({
         title: '提示',
         content: '确认撤销该分享？',

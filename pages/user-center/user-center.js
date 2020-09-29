@@ -12,7 +12,6 @@ Page({
             userInfo: wx.getStorageSync("userInfo") || wx.getStorageSync("USER_DETAIL") || app.globalData.userInfo || app.globalData.userMsg
         });
         if (!isWxWork) {
-            console.log("this.data.userInfo: ",this.data.userInfo)
         } else if (isWxWork && isWxWorkAdmin) {
 
         } else if (isWxWork && !isWxWorkAdmin) {
@@ -53,7 +52,6 @@ Page({
     getUserInfo: function(e) {
         var that = this;
         var userInfo = e.detail.userInfo;
-        console.log("userInfo: ",userInfo);
         if (!userInfo) {
             console.error("获取用户资料失败", e);
             return;

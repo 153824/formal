@@ -170,7 +170,6 @@ Component({
                     url: `reports/accepted_list`,
                     method: "get",
                     success: function (res) {
-                        console.log("reports/accepted_list: ",res);
                         that.setData({
                             reportList: res
                         })

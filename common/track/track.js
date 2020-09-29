@@ -53,7 +53,6 @@ Component({
     },
     lifetimes: {
         attached() {
-            console.log("attached evaluationTrack");
             const systemInfo = wx.getSystemInfoSync();
             this.setData({
                 evaluationTrack: this.properties.evaluationTrack,

@@ -123,18 +123,38 @@ App({
         }
         if (this.wxWorkInfo.isWxWork) {
             const that = this;
+            this.doAjax({
+                url: 'wework/app/health',
+                method: 'get',
+                success: function (res) {
+                    console.log("app/health: ",res);
+                }
+            });
             wx.qy.login({
                 success: res => {
                     that.wxWorkUserLogin(res.code).then(data => {
                         if (that.wxWorkInfo.isWxWorkAdmin) {
-                            wx.reLaunch({
-                                url: "/pages/work-base/work-base?isWxWorkAdmin=true&maskTrigger=true",
-                                success: function () {
-                                    let page = getCurrentPages().pop();
-                                    if (page == undefined || page == null) return;
-                                    page.onLoad({isWxWorkAdmin: true, maskTrigger: true});
-                                }
-                            })
+                            setTimeout(()=>{
+                                wx.reLaunch({
+                                    url: "/pages/work-base/work-base?isWxWorkAdmin=true&maskTrigger=true",
+                                    success: function () {
+                                        let page = getCurrentPages().pop();
+                                        if (page == undefined || page == null) return;
+                                        page.onLoad({isWxWorkAdmin: true, maskTrigger: true});
+                                    }
+                                })
+                            },500)
+                        }else{
+                            setTimeout(()=>{
+                                wx.switchTab({
+                                    url: "/pages/work-base/work-base?isWxWorkAdmin=false&maskTrigger=true",
+                                    success: function () {
+                                        let page = getCurrentPages().pop();
+                                        if (page == undefined || page == null) return;
+                                        page.onLoad({isWxWorkAdmin: false, maskTrigger: true});
+                                    }
+                                })
+                            },500)
                         }
                     }).catch(err => {
                         wx.reLaunch({
@@ -416,6 +436,9 @@ App({
         }
         if (params.url.indexOf("wework/users") !== -1) {
             url = `${this.host}/wework/users/${that.globalData.userInfo.id}`;
+        }
+        if(params.url.indexOf('wework/app/health')!==-1){
+            url = `${this.host}/wework/app/health`;
         }
         params.data = params.data || {};
         params.data['userId'] = (that.globalData.userInfo || wx.getStorageSync("userInfo")).id || '';

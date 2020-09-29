@@ -84,13 +84,13 @@ Component({
                     url: `${that.data.wxWorkPage.admin[active].path}`
                 });
             } else {
-                try{
-                    wx.redirectTo({
-                        url: `${that.data.wxWorkPage.member[active].path}`
-                    });
-                }catch (e) {
-
-                }
+                // try{
+                //     wx.redirectTo({
+                //         url: `${that.data.wxWorkPage.member[active].path}`
+                //     });
+                // }catch (e) {
+                //
+                // }
                 try {
                     wx.switchTab({
                         url: `${that.data.wxWorkPage.member[active].path}`

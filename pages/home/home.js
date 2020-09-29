@@ -14,69 +14,78 @@ Page({
         column: []
     },
     onLoad: function (options={loadingTrigger: false},name) {
+        const that = this;
+        const {isWxWork} = app.wxWorkInfo;
+        if(isWxWork){
+            this.setData({
+                loading: true,
+            });
+            return;
+        }
         if( options.loadingTrigger ){
             this.setData({
                 loading: true
             })
         }
-        const that = this;
-        let homePagesPromiseList = [];
-        const homePagesPromise = new Promise(function (resolve, reject) {
-            app.doAjax({
-                url: "homePages",
-                method: "get",
-                noLoading: true,
-                success: function (res) {
-                    resolve(res.resultObject);
-                },
-                fail: function (err) {
-                    reject(err)
-                }
+        if(!isWxWork){
+            let homePagesPromiseList = [];
+            const homePagesPromise = new Promise(function (resolve, reject) {
+                app.doAjax({
+                    url: "homePages",
+                    method: "get",
+                    noLoading: true,
+                    success: function (res) {
+                        resolve(res.resultObject);
+                    },
+                    fail: function (err) {
+                        reject(err)
+                    }
+                });
             });
-        });
-        homePagesPromise.then(res => {
-            that.setData(res);
-            homePagesPromiseList = res.column.map((v, k) => {
-                return new Promise((resolve, reject) => {
-                    app.doAjax({
-                        url: `homePages/columns/${v.column_id}/evaluations`,
-                        method: "get",
-                        noLoading: true,
-                        success: function (res) {
-                            resolve({columnId: v.column_id, data: res.data});
-                        },
-                        fail: function (err) {
-                            reject(err);
+            homePagesPromise.then(res => {
+                that.setData(res);
+                homePagesPromiseList = res.column.map((v, k) => {
+                    return new Promise((resolve, reject) => {
+                        app.doAjax({
+                            url: `homePages/columns/${v.column_id}/evaluations`,
+                            method: "get",
+                            noLoading: true,
+                            success: function (res) {
+                                resolve({columnId: v.column_id, data: res.data});
+                            },
+                            fail: function (err) {
+                                reject(err);
+                            }
+                        });
+                    })
+                });
+                return Promise.all(homePagesPromiseList)
+            }).then(res => {
+                const {column} = that.data;
+                const targetColumn = column;
+                for (let i = 0; i < res.length; i++) {
+                    for (let j = 0; j < column.length; j++) {
+                        if (res[i].columnId === targetColumn[j].column_id) {
+                            targetColumn[j]["data"] = res[i].data || [];
                         }
-                    });
-                })
-            });
-            return Promise.all(homePagesPromiseList)
-        }).then(res => {
-            const {column} = that.data;
-            const targetColumn = column;
-            for (let i = 0; i < res.length; i++) {
-                for (let j = 0; j < column.length; j++) {
-                    if (res[i].columnId === targetColumn[j].column_id) {
-                        targetColumn[j]["data"] = res[i].data || [];
                     }
                 }
-            }
-            that.setData({
-                column: targetColumn,
+                that.setData({
+                    column: targetColumn,
+                });
+                setTimeout(() => {
+                    that.setData({
+                        loading: false
+                    })
+                }, 500);
+            }).catch(err => {
+                setTimeout(() => {
+                    that.setData({
+                        loading: false
+                    })
+                }, 500);
             });
-            setTimeout(() => {
-                that.setData({
-                    loading: false
-                })
-            }, 500);
-        }).catch(err => {
-            setTimeout(() => {
-                that.setData({
-                    loading: false
-                })
-            }, 500);
-        });
+        }
     },
     onShow: function () {
         const that = this;

@@ -20,6 +20,7 @@ Page({
                 loading: true
             });
         }
+
     },
     onShow: function () {
         if (wx.canIUse('hideHomeButton')) {
@@ -122,7 +123,7 @@ Page({
             url: `reports/${receiveRecordId}`,
             method: "put",
             data: {
-              type: 'apply'
+                type: 'apply'
             },
             success: function (ret) {
                 app.toast(ret);
@@ -180,16 +181,16 @@ Page({
                 url: "updateUserMsg",
                 method: "post",
                 data: {
-                    data: {
+                    data: JSON.stringify({
                         wxUserInfo: userData,
                         userCompany: {
                             name: userData.nickName + "的团队"
                         }
-                    }
+                    })
                 },
                 success: function (res) {
-                    var userData = res.data;
-                    var globalData = app.globalData.userInfo;
+                    const userData = res.data;
+                    const globalData = app.globalData.userInfo;
                     if (0 === res.code) {
                         app.globalData.userInfo = Object.assign(globalData, userData);
                         wx.setStorageSync("userInfo", Object.assign(globalData, userData));
@@ -199,13 +200,19 @@ Page({
                             var sKey = "oldAnswer" + that.data.id;
                             wx.setStorageSync(sKey, draftAnswer);
                             wx.redirectTo({
-                                url: '../answering/answering?pid=' + that.data.evaluationId + '&id=' + that.data.id + '&receiveRecordId=' + that.data.receiveRecordId + "&reportPermit=" + that.data.reportPermit + "&status=" + that.data.status
-                            });
+                                url: '../answering/answering?pid=' + that.data.evaluationId + '&id=' + that.data.id + '&receiveRecordId=' + that.data.receiveRecordId + "&reportPermit=" + that.data.reportPermit + "&status=" + that.data.status,
+                                success: res => {
+                                    app.otherPageReLaunchTrigger = false;
+                                }
+                            })
                             return;
                         } else {
                             wx.redirectTo({
-                                url: '../answering/answering?pid=' + that.data.evaluationId + '&id=' + that.data.id + '&receiveRecordId=' + that.data.receiveRecordId + "&reportPermit=" + that.data.reportPermit + "&status=" + that.data.status
-                            });
+                                url: '../answering/answering?pid=' + that.data.evaluationId + '&id=' + that.data.id + '&receiveRecordId=' + that.data.receiveRecordId + "&reportPermit=" + that.data.reportPermit + "&status=" + that.data.status,
+                                success: res => {
+                                    app.otherPageReLaunchTrigger = false;
+                                }
+                            })
                         }
                         that.setData({
                             hasUserInfo: true,

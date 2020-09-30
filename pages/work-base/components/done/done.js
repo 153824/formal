@@ -34,7 +34,7 @@ Page({
     onUnload() {
         const {isSelf} = this.data;
         if (isSelf && isSelf === "SHARE") {
-            wx.reLaunch({
+            wx.navigateTo({
                 url: "/pages/user-center/components/receive-evaluations/receive-evaluations"
             })
         }

@@ -57,8 +57,6 @@ Component({
                 },
             ]
         },
-        isWxWork: app.wxWorkInfo.isWxWork,
-        isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
     },
     properties: {
         active: {
@@ -68,6 +66,14 @@ Component({
         morePath: {
             type: "String",
             value: ""
+        },
+        isWxWork: {
+            type: Boolean,
+            value: app.wxWorkInfo.isWxWork
+        },
+        isWxWorkAdmin: {
+            type: Boolean,
+            value: app.wxWorkInfo.isWxWorkAdmin,
         }
     },
     methods: {
@@ -76,10 +82,17 @@ Component({
             const {isWxWork, isWxWorkAdmin} = this.data;
             const active = Number(event.detail);
             if (!isWxWork) {
+                console.log("work-base");
                 wx.switchTab({
                     url: `${that.data.wxPage[active].path}`
                 });
+                try {
+                    wx.uma.trackEvent("1601368351375",{"导航栏名称":`${that.data.wxPage[active].text}`});
+                }catch (e) {
+                    console.error("tab-bar.js -> 85",e);
+                }
             } else if (isWxWorkAdmin) {
+                console.log("work-base");
                 wx.switchTab({
                     url: `${that.data.wxWorkPage.admin[active].path}`
                 });
@@ -92,6 +105,7 @@ Component({
                 //
                 // }
                 try {
+                    console.log("work-base");
                     wx.switchTab({
                         url: `${that.data.wxWorkPage.member[active].path}`
                     });
@@ -128,10 +142,10 @@ Component({
         },
         attached() {
             try{
-                const selector = wx.createSelectorQuery().in(this);
-                selector.select("#tabbar").boundingClientRect(rect=>{
-                    wx.setStorageSync("TAB_BAR_HEIGHT",rect.height)
-                }).exec()
+                // const selector = wx.createSelectorQuery().in(this);
+                // selector.select("#tabbar").boundingClientRect(rect=>{
+                //     wx.setStorageSync("TAB_BAR_HEIGHT",rect.height)
+                // }).exec()
             }catch (e) {
                 console.error(e)
             }

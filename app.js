@@ -228,6 +228,7 @@ App({
     onShow: function () {
         const that = this;
         const currentPage = getCurrentPages();
+        console.log("currentPage: ",currentPage);
         if (this.wxWorkInfo.isWxWork && this.isReLaunch && (this.quitPage === "pages/home/home" || currentPage === "pages/home/home")) {
             console.log("onShow wx.reLaunch");
             wx.reLaunch({
@@ -245,9 +246,11 @@ App({
     },
 
     onHide() {
+        console.log("App is going to background!");
         if (this.wxWorkInfo.isWxWork) {
             this.isReLaunch = true;
             this.quitPage = getCurrentPages()[getCurrentPages().length - 1].route;
+            console.log("quitPage: ",this.quitPage)
         }
     },
 

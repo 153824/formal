@@ -135,7 +135,7 @@
 					"id": 9,
 					"name": "扫码领取测评",
 					"pathName": "pages/work-base/work-base",
-					"query": "q=https://api.luoke101.com/s/5f73fbdfd9d79d3c986c2bda",
+					"query": "q=https://api.luoke101.com/s/5f7426dcd9d79d3c986c2bf4",
 					"scene": null
 				},
 				{

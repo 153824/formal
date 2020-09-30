@@ -132,7 +132,7 @@ page{
     background-color: rgba(247, 248, 250, 1) !important;
     z-index: 999;
 }
-.moer-report-wrapper{
+.more-report-wrapper{
     position: absolute;
     top: 148rpx;
     width: calc(100% - 88rpx);

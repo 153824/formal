@@ -1,4 +1,4 @@
-<view class="program-wrapper {{type ==='report-more'}}moer-report-wrapper">
+<view class="program-wrapper {{type ==='report-more' ? 'more-report-wrapper' : ''}}">
     <van-search
             wx:if="{{search}}"
             value="{{keyword}}"

@@ -342,17 +342,13 @@ Page({
         referLines: [[]]
     },
 
-    onLoad: function (options) {
+    onLoad: function (options={isSelf: ""}) {
         _this = this;
         const that = this;
         ctx = wx.createCanvasContext('canvasArcCir');
         const id = that.data.id || options.receiveRecordId || options.receivedRecordId;
-        var shareKey = options.key || "";
-        var command = options.command || "";
         this.setData({
             id: id,
-            shareKey: shareKey,
-            command,
             isSelf: options.isSelf
         });
         if (app.isLogin) {
@@ -402,6 +398,7 @@ Page({
 
     verifyReportIsCanRead: function (option) {
         option.userId = wx.getStorageSync("userInfo")["id"];
+        console.log(wx.getStorageSync("userInfo"))
         return this.acceptReport(option)
     },
 
@@ -953,6 +950,7 @@ Page({
         const that = this;
         const {participantInfo, evaluationInfo, id, report} = this.data;
         const time = new Date().getTime();
+        console.log("pages/report/report?receivedRecordId=${id}&sharedAt=${time}: ",`pages/report/report?receivedRecordId=${id}&sharedAt=${time}`)
         return {
             title: `邀您查看${participantInfo.username}的《${evaluationInfo.evaluationName}》报告`,
             path: `pages/report/report?receivedRecordId=${id}&sharedAt=${time}`,
@@ -1072,17 +1070,17 @@ Page({
     onUnload: function() {
         const {isSelf} = this.data;
         if(isSelf && isSelf === "SELF"){
-            console.log("work-base");
             wx.reLaunch({
                 url: "/pages/work-base/work-base"
             })
         }else if(isSelf && isSelf === "SHARE"){
-            console.log("work-base");
             wx.reLaunch({
                 url: "/pages/user-center/components/receive-evaluations/receive-evaluations?targetPath=userCenter"
             })
         }else{
-
+            wx.navigateBack({
+                delta: 1
+            });
         }
     }
 });

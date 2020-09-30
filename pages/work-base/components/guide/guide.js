@@ -14,6 +14,7 @@ Page({
                 receiveRecordId: option.receiveRecordId
             });
         }
+        console.log("option,",option)
         if (option.maskTrigger) {
             this.setData({
                 maskTrigger: option.maskTrigger,
@@ -31,15 +32,12 @@ Page({
         if (app.isTest && !id) {
             return that.getPaperMsg()
         }
-        ;
-        if (!app.globalData.userInfo) {
+        if (!(app.globalData.userInfo||wx.getStorageSync("userInfo"))) {
             setTimeout(function () {
                 that.onShow();
             }, 500);
             return;
         }
-        ;
-
         app.doAjax({
             url: "release/fetch",
             method: "post",
@@ -47,6 +45,7 @@ Page({
                 releaseRecordId: id
             },
             success: function (res) {
+                console.log("release/fetch: ",res)
                 if (!res.receiveRecordId) {
                     app.toast("该分享已失效！");
                     wx.navigateTo({

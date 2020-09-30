@@ -37,16 +37,16 @@ Page({
         tabBarHeight: 0
     },
 
-    onLoad: function (option) {
+    onLoad: function (option={isWxWorkAdmin: false}) {
         const that = this;
         const optionIsWxWorkAdmin = option.isWxWorkAdmin || false;
 
-        if(option.maskTrigger){
+        if (option.maskTrigger) {
             this.setData({
                 maskTrigger: option.maskTrigger
             })
         }
-        if(option.msg==='err'){
+        if (option.msg === 'err') {
             this.setData({
                 maskTrigger: true
             });
@@ -57,20 +57,18 @@ Page({
             isWxWork: app.wxWorkInfo.isWxWork,
             isWxWorkAdmin: optionIsWxWorkAdmin || wx.getStorageSync('userInfo').isAdmin || app.wxWorkInfo.isWxWorkAdmin,
         });
-        if(option.sharedAt&&option.releaseRecordId){
-            setTimeout(()=>{
-                wx.navigateTo({
-                    url: `/pages/work-base/components/track-detail/track-detail?sharedAt=${option.sharedAt}&releaseRecordId=${option.releaseRecordId}`,
-                    success: function (res) {
-                        let page = getCurrentPages().pop();
-                        if (page == undefined || page == null) return;
-                        page.onLoad();
-                    }
-                });
-            },500);
+        if (option.sharedAt && option.releaseRecordId) {
+            wx.navigateTo({
+                url: `/pages/work-base/components/track-detail/track-detail?sharedAt=${option.sharedAt}&releaseRecordId=${option.releaseRecordId}`,
+                success: function (res) {
+                    let page = getCurrentPages().pop();
+                    if (page == undefined || page == null) return;
+                    page.onLoad();
+                }
+            });
             return;
         }
-        let {isWxWorkAdmin, isWxWork,isIPhoneXModel} = this.data;
+        let {isWxWorkAdmin, isWxWork, isIPhoneXModel} = this.data;
         if (optionIsWxWorkAdmin) {
             isWxWorkAdmin = optionIsWxWorkAdmin;
             this.setData({
@@ -84,14 +82,21 @@ Page({
             const idArray = q.split("/");
             releaseEvaluationId = idArray[idArray.length - 1] || "";
         }
-        if(releaseEvaluationId){
-            console.log("work-base");
-            wx.reLaunch({
+        if (releaseEvaluationId) {
+            console.log("releaseEvaluationId: ", releaseEvaluationId);
+            console.log("option.sharedAt&&option.releaseRecordId: ")
+            wx.navigateTo({
                 url: `/pages/work-base/components/guide/guide?releaseRecordId=${releaseEvaluationId}`,
+                success: result => {
+                    console.log("wx.navigateTo: ", result);
+                },
+                fail: err => {
+                    console.log("wx.navigateTo: ", err);
+                }
             });
             return;
         }
-        if(option.scene){
+        if (option.scene) {
             releaseEvaluationId = decodeURIComponent(option.scene);
             console.log("work-base");
             wx.reLaunch({
@@ -108,7 +113,7 @@ Page({
                 })
             }
         });
-        const {windowHeight,safeArea} = wx.getSystemInfoSync();
+        const {windowHeight, safeArea} = wx.getSystemInfoSync();
         const tabBarHeight = Number(wx.getStorageSync("TAB_BAR_HEIGHT"));
         this.setData({
             tabBarHeight: tabBarHeight,
@@ -134,8 +139,8 @@ Page({
                     url: 'inventories',
                     method: 'get',
                     data: {
-                      page: 1,
-                      pageSize: 3
+                        page: 1,
+                        pageSize: 3
                     },
                     noLoading: true,
                     success: function (res) {
@@ -299,7 +304,8 @@ Page({
         }
     },
 
-    onHide() {},
+    onHide() {
+    },
 
     getUserInfo: function (e) {
         var that = this;

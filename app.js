@@ -87,7 +87,7 @@ App({
         wxWorkUserInfo: {},
     },
     umengConfig: {
-        appKey: '', //由友盟分配的APP_KEY
+        appKey: 'sd5as5d4a5s4d5asd', //由友盟分配的APP_KEY
         // 使用Openid进行统计，此项为false时将使用友盟+uuid进行用户统计。
         // 使用Openid来统计微信小程序的用户，会使统计的指标更为准确，对系统准确性要求高的应用推荐使用Openid。
         useOpenid: true,
@@ -135,20 +135,7 @@ App({
             });
             wx.qy.login({
                 success: res => {
-                    that.wxWorkUserLogin(res.code).then(data => {
-
-                    }).catch(err => {
-                        console.log("err: ", err);
-                        wx.reLaunch({
-                            url: "/pages/work-base/work-base?msg=err&maskTrigger=true",
-                            success: function () {
-                                let page = getCurrentPages().pop();
-                                if (page == undefined || page == null) return;
-                                console.log("work-base");
-                                page.onLoad();
-                            }
-                        })
-                    })
+                    that.wxWorkUserLogin(res.code).then(data => {}).catch(err => {})
                 },
                 fail: function (err) {
                     console.error(err);
@@ -226,12 +213,17 @@ App({
     },
 
     onShow: function () {
-        const that = this;
-        const currentPage = getCurrentPages();
-        console.log("currentPage: ",currentPage);
-        if (this.wxWorkInfo.isWxWork && this.isReLaunch && (this.quitPage === "pages/home/home" || currentPage === "pages/home/home")) {
+        const pages = ["pages/home/home", "pages/work-base/work-base", "pages/user-center/user-center"];
+        let currentPage = "";
+        try{
+            currentPage = getCurrentPages()[getCurrentPages().length - 1].route || "";
+        }catch (e) {
+
+        }
+        if (this.wxWorkInfo.isWxWork && this.isReLaunch && (pages.includes(this.quitPage) || pages.includes(currentPage))) {
+            const that = this;
             console.log("onShow wx.reLaunch");
-            wx.reLaunch({
+            wx.switchTab({
                 url: '/pages/work-base/work-base?maskTrigger=true',
                 success: res => {
                     console.log(res);
@@ -250,7 +242,7 @@ App({
         if (this.wxWorkInfo.isWxWork) {
             this.isReLaunch = true;
             this.quitPage = getCurrentPages()[getCurrentPages().length - 1].route;
-            console.log("quitPage: ",this.quitPage)
+            console.log("quitPage: ", this.quitPage)
         }
     },
 

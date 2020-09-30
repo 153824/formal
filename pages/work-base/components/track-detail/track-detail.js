@@ -42,62 +42,106 @@ Page({
         const that = this;
         const {releaseRecordId, sharedAt} = options;
         const {examiningDetail, finishedDetail, digestDetail} = this;
-        if (app.isLogin) {
-            if (releaseRecordId && sharedAt) {
-                this.acceptEvaluationTrack(options).then(res => {
-                    Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
-                        that.setData({
-                            maskTrigger: false
-                        })
-                    })
-                }).catch(err => {
-                    wx.switchTab({
-                        url: "pages/work-base/work-base",
-                    })
-                })
-            } else {
-                Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
-                    that.setData({
-                        maskTrigger: false
-                    })
-                }).catch(err => {
-                    console.error("err: ", err);
-                    that.setData({
-                        maskTrigger: false
-                    })
-                })
-            }
+        this.setData({
+            releaseRecordId, sharedAt
+        });
+        if (!app.isLogin) {
+            console.log("app.isLogin: ", app.isLogin);
+            that.onLoad();
+            return;
         }
-        app.checkUser = function () {
-            if (releaseRecordId && sharedAt) {
-                that.acceptEvaluationTrack(options).then(res => {
-                    Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
-                        that.setData({
-                            maskTrigger: false
-                        })
-                    })
-                }).catch(err => {
-                    wx.switchTab({
-                        url: "/pages/work-base/work-base",
-                    })
-                })
-            } else {
+
+        if (releaseRecordId && sharedAt) {
+            this.acceptEvaluationTrack(options).then(res => {
                 Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
                     that.setData({
                         maskTrigger: false
                     })
-                }).catch(err => {
-                    console.error("err: ", err);
-                    that.setData({
-                        maskTrigger: false
-                    })
                 })
-            }
-        };
+            }).catch(err => {
+                wx.switchTab({
+                    url: "pages/work-base/work-base",
+                })
+            })
+        } else {
+            Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
+                that.setData({
+                    maskTrigger: false
+                })
+            }).catch(err => {
+                console.error("err: ", err);
+                that.setData({
+                    maskTrigger: false
+                })
+            })
+        }
+        // app.checkUser = function () {
+        //     if (releaseRecordId && sharedAt) {
+        //         that.acceptEvaluationTrack(options).then(res => {
+        //             Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
+        //                 that.setData({
+        //                     maskTrigger: false
+        //                 })
+        //             })
+        //         }).catch(err => {
+        //             wx.switchTab({
+        //                 url: "/pages/work-base/work-base",
+        //             })
+        //         })
+        //     } else {
+        //         Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
+        //             that.setData({
+        //                 maskTrigger: false
+        //             })
+        //         }).catch(err => {
+        //             console.error("err: ", err);
+        //             that.setData({
+        //                 maskTrigger: false
+        //             })
+        //         })
+        //     }
+        // };
         const systemInfo = wx.getSystemInfoSync();
         that.setData({
             windowHeight: systemInfo.windowHeight,
         });
+    },
+
+    onShow() {
+        setInterval(()=>{
+            if(!app.isLogin){
+                that.onShow();
+                return;
+            }
+        },500);
+        const that = this;
+        const {releaseRecordId,sharedAt} = this.data;
+        const {examiningDetail, finishedDetail, digestDetail} = this;
+        const options = {releaseRecordId,sharedAt};
+        if (releaseRecordId && sharedAt) {
+            this.acceptEvaluationTrack(options).then(res => {
+                Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
+                    that.setData({
+                        maskTrigger: false
+                    })
+                })
+            }).catch(err => {
+                wx.switchTab({
+                    url: "pages/work-base/work-base",
+                })
+            })
+        } else {
+            Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
+                that.setData({
+                    maskTrigger: false
+                })
+            }).catch(err => {
+                console.error("err: ", err);
+                that.setData({
+                    maskTrigger: false
+                })
+            })
+        }
     },
 
     acceptEvaluationTrack: function (options) {
@@ -321,8 +365,9 @@ Page({
     },
 
     onShareAppMessage: function () {
-        const {trackId, releaseRecordId,evaluationName,cover} = this.data;
+        const {trackId, releaseRecordId, evaluationName, cover} = this.data;
         const time = new Date().getTime();
+        console.log(`pages/work-base/work-base?releaseRecordId=${trackId || releaseRecordId}&sharedAt=${time}&tabIndex=1`);
         return {
             title: `邀请您查看《${evaluationName}》的作答情况`,
             path: `pages/work-base/work-base?releaseRecordId=${trackId || releaseRecordId}&sharedAt=${time}&tabIndex=1`,

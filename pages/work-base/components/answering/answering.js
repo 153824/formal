@@ -291,7 +291,6 @@ Page({
     },
     submit: function (e) {
         var that = this;
-
         function doNext() {
             var data = that.data;
             var imgUrl = data.imgUrl;
@@ -915,38 +914,45 @@ Page({
 
     },
     getPhoneNumber: function (e) {
-        const {name} = e.currentTarget.dataset;
-        var that = this;
-        if (!that.data.getphoneNum || that.data.getphoneNum) {
-            var detail = e.detail;
-            var iv = detail.iv;
-            var encryptedData = detail.encryptedData;
-            if (encryptedData) {
-                //用户授权手机号
-                var userMsg = app.globalData.userMsg || {};
-                userMsg["iv"] = iv;
-                userMsg["encryptedData"] = encryptedData;
-                app.doAjax({
-                    url: "updatedUserMobile",
-                    data: userMsg,
-                    success: function (ret) {
-                        app.doAjax({
-                            url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
-                            method: "get",
-                            data: {
-                                openid: wx.getStorageSync("openId"),
-                            },
-                            success: function (res) {
-                                that.setData({
-                                    getphoneNum: true,
-                                    phoneNumber: res.phone || '微信一键授权'
-                                });
-                            }
-                        });
-                    }
-                });
+        const that = this;
+        if(app.wxWorkInfo.isWxWork){
+            that.setData({
+                getphoneNum: true,
+                phoneNumber: '18188888888'
+            });
+        }else{
+            const {name} = e.currentTarget.dataset;
+            if (!that.data.getphoneNum || that.data.getphoneNum) {
+                var detail = e.detail;
+                var iv = detail.iv;
+                var encryptedData = detail.encryptedData;
+                if (encryptedData) {
+                    //用户授权手机号
+                    var userMsg = app.globalData.userMsg || {};
+                    userMsg["iv"] = iv;
+                    userMsg["encryptedData"] = encryptedData;
+                    app.doAjax({
+                        url: "updatedUserMobile",
+                        data: userMsg,
+                        success: function (ret) {
+                            app.doAjax({
+                                url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
+                                method: "get",
+                                data: {
+                                    openid: wx.getStorageSync("openId"),
+                                },
+                                success: function (res) {
+                                    that.setData({
+                                        getphoneNum: true,
+                                        phoneNumber: res.phone || '微信一键授权'
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+                return;
             }
-            return;
         }
     },
     notFillAll: function (e) {

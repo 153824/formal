@@ -37,7 +37,8 @@
     "pages/user-center/components/receive-reports/receive-reports",
     "pages/user-center/components/receive-evaluations/receive-evaluations",
     "pages/user-center/components/serving-client/serving-client",
-    "pages/work-base/components/evaluation-more/evaluation-more"
+    "pages/work-base/components/evaluation-more/evaluation-more",
+    "pages/forbidden/forbidden"
   ],
   "tabBar": {
     "custom": true,

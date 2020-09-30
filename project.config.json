@@ -4,7 +4,7 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"postcss": true,
 		"preloadBackgroundData": false,
@@ -37,7 +37,7 @@
 	"isGameTourist": false,
 	"simulatorType": "qywx_simulator_plugin",
 	"simulatorPluginLibVersion": {
-		"qywx_simulator_plugin": "2.4.0"
+		"qywx_simulator_plugin": "2.10.1"
 	},
 	"scripts": {
 		"beforeCompile": "",
@@ -133,9 +133,9 @@
 				},
 				{
 					"id": 9,
-					"name": "pages/work-base/work-base",
+					"name": "扫码领取测评",
 					"pathName": "pages/work-base/work-base",
-					"query": "q=https://api.luoke101.com/s/5f71c29bd9d80005bd987a74",
+					"query": "q=https://api.luoke101.com/s/5f73fbdfd9d79d3c986c2bda",
 					"scene": null
 				},
 				{

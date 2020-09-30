@@ -57,6 +57,8 @@ Component({
                 },
             ]
         },
+        isWxWork: app.wxWorkInfo.isWxWork,
+        isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
     },
     properties: {
         active: {
@@ -66,14 +68,6 @@ Component({
         morePath: {
             type: "String",
             value: ""
-        },
-        isWxWork: {
-            type: Boolean,
-            value: app.wxWorkInfo.isWxWork
-        },
-        isWxWorkAdmin: {
-            type: Boolean,
-            value: app.wxWorkInfo.isWxWorkAdmin,
         }
     },
     methods: {

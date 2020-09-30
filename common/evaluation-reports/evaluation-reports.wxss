@@ -77,7 +77,6 @@ page{
 .recommend-grade{
     padding: 5rpx 14rpx;
     font-size: 22rpx;
-    line-height: 22rpx;
     border-radius: 30rpx;
     color: #353EE8FF;
     background-color: #353EE812;
@@ -159,4 +158,12 @@ page{
 }
 .no-margin-top{
     margin-top: 0 !important;
+}
+.recommend-score{
+    padding: 5rpx 14rpx;
+    font-size: 22rpx;
+    border-radius: 30rpx;
+    color: #353EE8FF;
+    background-color: #353EE812;
+    margin-left: 10rpx;
 }

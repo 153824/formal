@@ -134,6 +134,14 @@ page{
     color: #353EE8FF;
     background-color: #353EE812;
 }
+.recommend-score{
+    padding: 5rpx 14rpx;
+    font-size: 22rpx;
+    border-radius: 30rpx;
+    color: #353EE8FF;
+    background-color: #353EE812;
+    margin-left: 10rpx;
+}
 .send-evaluation{
     display: flex;
     flex-direction: column;

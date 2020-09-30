@@ -176,6 +176,11 @@ Component({
                     }
                 })
             }
+        },
+        detached() {
+            this.setData({
+                reportList: []
+            })
         }
     }
 });

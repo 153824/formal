@@ -40,6 +40,12 @@ Page({
     onLoad: function (option) {
         const that = this;
         const optionIsWxWorkAdmin = option.isWxWorkAdmin || false;
+
+        if(option.maskTrigger){
+            this.setData({
+                maskTrigger: option.maskTrigger
+            })
+        }
         if(option.msg==='err'){
             this.setData({
                 maskTrigger: true
@@ -49,7 +55,7 @@ Page({
         this.setData({
             userInfo: app.globalData.userInfo || wx.getStorageSync("userInfo"),
             isWxWork: app.wxWorkInfo.isWxWork,
-            isWxWorkAdmin: wx.getStorageSync('userInfo').isAdmin || app.wxWorkInfo.isWxWorkAdmin,
+            isWxWorkAdmin: optionIsWxWorkAdmin || wx.getStorageSync('userInfo').isAdmin || app.wxWorkInfo.isWxWorkAdmin,
         });
         if(option.sharedAt&&option.releaseRecordId){
             setTimeout(()=>{
@@ -79,6 +85,7 @@ Page({
             releaseEvaluationId = idArray[idArray.length - 1] || "";
         }
         if(releaseEvaluationId){
+            console.log("work-base");
             wx.reLaunch({
                 url: `/pages/work-base/components/guide/guide?releaseRecordId=${releaseEvaluationId}`,
             });
@@ -86,6 +93,7 @@ Page({
         }
         if(option.scene){
             releaseEvaluationId = decodeURIComponent(option.scene);
+            console.log("work-base");
             wx.reLaunch({
                 url: `/pages/work-base/components/guide/guide?releaseRecordId=${releaseEvaluationId}`,
             });
@@ -291,8 +299,7 @@ Page({
         }
     },
 
-    onHide() {
-    },
+    onHide() {},
 
     getUserInfo: function (e) {
         var that = this;

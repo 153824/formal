@@ -6,7 +6,7 @@
             <text>{{userInfo.userCompany.name}}</text>
         </view>
     </view>
-    <view class="content wxwork-content" style="height: {{ (windowHeight - tabBarHeight - safeAreaDiff)*pixelRate - 240 }}rpx;">
+    <view class="content wxwork-content" style="height: {{ (windowHeight - tabBarHeight - safeAreaDiff)*pixelRate - 200 }}rpx;">
         <scroll-view class="content-scroll-area"
                      style="height: 100%;"
                      scroll-y>
@@ -86,7 +86,7 @@
             </view>
             <!--End: 最新报告-->
             <!--Start: 作答跟踪-->
-            <view class="program-wrapper" style="margin-bottom: 44rpx;">
+            <view class="program-wrapper" style="margin-bottom: 99rpx;">
                 <view class="program-title">
                     <text>作答跟踪</text>
                     <text wx:if="{{evaluationTrackCount > 3}}" class="more" bindtap="goToTrackMore">更多...</text>
@@ -121,7 +121,7 @@
             <!--End: 作答跟踪-->
         </scroll-view>
     </view>
-    <hola-tab-bar active="{{ 0 }}"></hola-tab-bar>
+    <hola-tab-bar active="{{ 0 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{isWxWorkAdmin}}"></hola-tab-bar>
 </view>
 <!--End: 企业微信端管理员页工作台-->
 <!--Start: 企业微信端非管理员页工作台-测评列表-->
@@ -137,7 +137,7 @@
             <hola-title id="title" url="work-base/work-base" type="normal"></hola-title>
         </view>
     </view>
-    <view class="content" style="height: {{ (windowHeight-tabBarHeight - safeAreaDiff)*pixelRate - 240 }}rpx;">
+    <view class="content" style="height: {{ (windowHeight-tabBarHeight - safeAreaDiff)*pixelRate - 200 }}rpx;">
         <scroll-view class="content-scroll-area"
                      style="height: 100%;"
                      scroll-y>
@@ -218,7 +218,7 @@
             </view>
             <!--End: 最新报告-->
             <!--Start: 作答跟踪-->
-            <view class="program-wrapper" style="margin-bottom: 44rpx;">
+            <view class="program-wrapper" style="margin-bottom: 99rpx;">
                 <view class="program-title">
                     <text>作答跟踪</text>
                     <text wx:if="{{evaluationTrackCount > 3}}" class="more" bindtap="goToTrackMore">更多...</text>
@@ -253,13 +253,13 @@
             <!--End: 作答跟踪-->
         </scroll-view>
     </view>
-    <hola-tab-bar active="{{ 2 }}"></hola-tab-bar>
+    <hola-tab-bar active="{{ 2 }}" isWxWork="{{!isWxWork}}"></hola-tab-bar>
 </block>
 <!--End: 企业微信端非管理员页工作台-测评列表-->
 <!--------------------------------------------------------------------------------------------------------------------->
 <!--Start: 企业微信端非管理员页工作台-测评列表-->
 <block wx:elif="{{ isWxWork && !isWxWorkAdmin }}">
-    <hola-member-report-list id="hola-member-report-list" navigationBarTitleText=""></hola-member-report-list>
+    <hola-member-report-list id="hola-member-report-list" navigationBarTitleText="" tabBarTrigger="true"></hola-member-report-list>
 </block>
 <!--End: 企业微信端非管理员页工作台-测评列表-->
 <!--------------------------------------------------------------------------------------------------------------------->

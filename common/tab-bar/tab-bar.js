@@ -76,30 +76,20 @@ Component({
             const {isWxWork, isWxWorkAdmin} = this.data;
             const active = Number(event.detail);
             if (!isWxWork) {
-                console.log("work-base");
                 wx.switchTab({
                     url: `${that.data.wxPage[active].path}`
                 });
                 try {
                     wx.uma.trackEvent("1601368351375",{"导航栏名称":`${that.data.wxPage[active].text}`});
                 }catch (e) {
-                    console.error("tab-bar.js -> 85",e);
+                    console.error("tab-bar.js -> 85",e)
                 }
             } else if (isWxWorkAdmin) {
-                console.log("work-base");
                 wx.switchTab({
                     url: `${that.data.wxWorkPage.admin[active].path}`
                 });
             } else {
-                // try{
-                //     wx.redirectTo({
-                //         url: `${that.data.wxWorkPage.member[active].path}`
-                //     });
-                // }catch (e) {
-                //
-                // }
                 try {
-                    console.log("work-base");
                     wx.switchTab({
                         url: `${that.data.wxWorkPage.member[active].path}`
                     });
@@ -110,7 +100,7 @@ Component({
         },
     },
     pageLifetimes: {
-        onLoad: function () {
+        load: function () {
             const {active} = this.properties;
             this.setData({
                 active,
@@ -118,8 +108,9 @@ Component({
                 isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
             });
         },
-        onShow: function () {
+        show: function () {
             const {active} = this.properties;
+            console.log("app.wxWorkInfo.isWxWork, app.wxWorkInfo.isWxWorkAdmin: ",app.wxWorkInfo.isWxWork,app.wxWorkInfo.isWxWorkAdmin);
             this.setData({
                 active,
                 isWxWork: app.wxWorkInfo.isWxWork,
@@ -136,10 +127,10 @@ Component({
         },
         attached() {
             try{
-                // const selector = wx.createSelectorQuery().in(this);
-                // selector.select("#tabbar").boundingClientRect(rect=>{
-                //     wx.setStorageSync("TAB_BAR_HEIGHT",rect.height)
-                // }).exec()
+                const selector = wx.createSelectorQuery().in(this);
+                selector.select("#tabbar").boundingClientRect(rect=>{
+                    wx.setStorageSync("TAB_BAR_HEIGHT",rect.height)
+                }).exec()
             }catch (e) {
                 console.error(e)
             }

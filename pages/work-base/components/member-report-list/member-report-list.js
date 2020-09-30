@@ -19,6 +19,10 @@ Component({
     navigationBarTitleText: {
       type: String,
       value: "他人邀请我参加的测评"
+    },
+    tabBarTrigger: {
+      type: Boolean,
+      value: false
     }
   },
   pageLifetimes: {
@@ -153,5 +157,11 @@ Component({
         safeAreaDiff: isIPhoneXModel  ? Math.abs(systemInfo.safeArea.height  - systemInfo.safeArea.bottom) : 0,
       });
     },
+
+    detached() {
+      wx.switchTab({
+        url: "/pages/user-center/user-center"
+      })
+    }
   }
 });

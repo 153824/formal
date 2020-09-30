@@ -1072,10 +1072,12 @@ Page({
     onUnload: function() {
         const {isSelf} = this.data;
         if(isSelf && isSelf === "SELF"){
+            console.log("work-base");
             wx.reLaunch({
                 url: "/pages/work-base/work-base"
             })
         }else if(isSelf && isSelf === "SHARE"){
+            console.log("work-base");
             wx.reLaunch({
                 url: "/pages/user-center/components/receive-evaluations/receive-evaluations?targetPath=userCenter"
             })

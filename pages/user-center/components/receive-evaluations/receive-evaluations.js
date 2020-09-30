@@ -10,6 +10,9 @@ Page({
         }
     },
     onShow() {},
+    onUnload() {
+
+    }
 })
 ;
 

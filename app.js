@@ -55,6 +55,9 @@ App({
     isTest: false,
     qiniuUpload: qiniuUpload,
     isIphoneX: false,
+    isReLaunch: false,
+    otherPageReLaunchTrigger: true,
+    quitPage: "",
     // host: "http://192.168.0.101:3000",
     // host: "https://api.luoke101.com/v3.0.0",
     host: "https://api.luoke101.com",
@@ -84,7 +87,7 @@ App({
         wxWorkUserInfo: {},
     },
     umengConfig: {
-        appKey: '5f6d5902906ad81117141b70', //由友盟分配的APP_KEY
+        appKey: '', //由友盟分配的APP_KEY
         // 使用Openid进行统计，此项为false时将使用友盟+uuid进行用户统计。
         // 使用Openid来统计微信小程序的用户，会使统计的指标更为准确，对系统准确性要求高的应用推荐使用Openid。
         useOpenid: true,
@@ -127,41 +130,21 @@ App({
                 url: 'wework/app/health',
                 method: 'get',
                 success: function (res) {
-                    console.log("app/health: ",res);
+                    console.log("app/health: ", res);
                 }
             });
             wx.qy.login({
                 success: res => {
                     that.wxWorkUserLogin(res.code).then(data => {
-                        if (that.wxWorkInfo.isWxWorkAdmin) {
-                            setTimeout(()=>{
-                                wx.reLaunch({
-                                    url: "/pages/work-base/work-base?isWxWorkAdmin=true&maskTrigger=true",
-                                    success: function () {
-                                        let page = getCurrentPages().pop();
-                                        if (page == undefined || page == null) return;
-                                        page.onLoad({isWxWorkAdmin: true, maskTrigger: true});
-                                    }
-                                })
-                            },500)
-                        }else{
-                            setTimeout(()=>{
-                                wx.switchTab({
-                                    url: "/pages/work-base/work-base?isWxWorkAdmin=false&maskTrigger=true",
-                                    success: function () {
-                                        let page = getCurrentPages().pop();
-                                        if (page == undefined || page == null) return;
-                                        page.onLoad({isWxWorkAdmin: false, maskTrigger: true});
-                                    }
-                                })
-                            },500)
-                        }
+
                     }).catch(err => {
+                        console.log("err: ", err);
                         wx.reLaunch({
                             url: "/pages/work-base/work-base?msg=err&maskTrigger=true",
                             success: function () {
                                 let page = getCurrentPages().pop();
                                 if (page == undefined || page == null) return;
+                                console.log("work-base");
                                 page.onLoad();
                             }
                         })
@@ -240,6 +223,32 @@ App({
                 console.error(err)
             },
         })
+    },
+
+    onShow: function () {
+        const that = this;
+        const currentPage = getCurrentPages();
+        if (this.wxWorkInfo.isWxWork && this.isReLaunch && (this.quitPage === "pages/home/home" || currentPage === "pages/home/home")) {
+            console.log("onShow wx.reLaunch");
+            wx.reLaunch({
+                url: '/pages/work-base/work-base?maskTrigger=true',
+                success: res => {
+                    console.log(res);
+                    console.log("work-base");
+                    that.isReLaunch = false;
+                },
+                fail: function (err) {
+                    console.log(err);
+                }
+            })
+        }
+    },
+
+    onHide() {
+        if (this.wxWorkInfo.isWxWork) {
+            this.isReLaunch = true;
+            this.quitPage = getCurrentPages()[getCurrentPages().length - 1].route;
+        }
     },
 
     /**
@@ -437,7 +446,7 @@ App({
         if (params.url.indexOf("wework/users") !== -1) {
             url = `${this.host}/wework/users/${that.globalData.userInfo.id}`;
         }
-        if(params.url.indexOf('wework/app/health')!==-1){
+        if (params.url.indexOf('wework/app/health') !== -1) {
             url = `${this.host}/wework/app/health`;
         }
         params.data = params.data || {};
@@ -451,6 +460,11 @@ App({
             header: params.header || {},
             success: function (ret) {
                 wx.hideLoading();
+                if (url.indexOf('wework/auth/ma') !== -1 && ret.statusCode === 403) {
+                    wx.reLaunch({
+                        url: "/pages/forbidden/forbidden"
+                    })
+                }
                 var retData = ret.data;
                 if (retData.code) {
                     if (params.error) return params.error(retData);

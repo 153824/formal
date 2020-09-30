@@ -26,7 +26,7 @@ Page({
      */
     onLoad: function (options) {
         const {necessaryInfo} = options;
-        const {count=0, id="", name="", hadBuyout=false, isFree=false, norms="",quesCount=0,estimatedTime=7} = JSON.parse(necessaryInfo);
+        const {count = 0, id = "", name = "", hadBuyout = false, isFree = false, norms = "", quesCount = 0, estimatedTime = 7} = JSON.parse(necessaryInfo);
         this.setData({
             maxCount: count,
             evaluationId: id,
@@ -49,7 +49,10 @@ Page({
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function () {},
+    onShow: function () {
+        console.log("getSystemInfoSync: ", wx.getSystemInfoSync())
+        console.log("wx.canIUse: ", wx.canIUse("image.show-menu-by-longpress"));
+    },
     changeCount: function (e) {
         const that = this;
         const t = e.currentTarget.dataset.t;
@@ -88,7 +91,7 @@ Page({
     },
     toSharePaper: function () {
         const that = this;
-        let {count, evaluationName,norms,evaluationId, hadBuyout, isFree, maxCount, reportMeet,quesCount,estimatedTime} = that.data;
+        let {count, evaluationName, norms, evaluationId, hadBuyout, isFree, maxCount, reportMeet, quesCount, estimatedTime} = that.data;
         let costNum = count;
         if (!costNum && !hadBuyout && !isFree) {
             return;
@@ -112,7 +115,7 @@ Page({
                 },
                 releaseInfo: {
                     permitSetting: reportMeet === 1 ? "LOOSE" : "STRICT",
-                    teamName: app.teamName,
+                    teamName: app.wxWorkInfo.isWxWork && app.wxWorkInfo.isWxWorkAdmin ? wx.getStorageSync("userInfo").userCompany.name : app.teamName,
                     releaseCount: costNum
                 }
             },
@@ -130,6 +133,13 @@ Page({
         const that = this;
         wx.redirectTo({
             url: `../../../work-base/components/track-detail/track-detail?trackId=${that.data.sharePaperInfo.releaseRecordId}`
+        })
+    },
+
+    saveImage: function () {
+        const {sharePaperInfo} = this.data;
+        wx.previewImage({
+            urls: [sharePaperInfo.img]
         })
     }
 })

@@ -45,4 +45,4 @@
     <mask isShow="{{ loading }}" top="{{ (statusbarHeight + titleHeight)/pixelRate }}"
           height="{{ windowHeight - ( statusbarHeight + titleHeight) }}" backgroundColor="transparent" ></mask>
 </van-overlay>
-<hola-tab-bar active="{{ active }}"></hola-tab-bar>
+<hola-tab-bar active="{{ active }}" isWxWork="false"></hola-tab-bar>

@@ -20,7 +20,10 @@ Page({
             this.setData({
                 loading: true,
             });
-            return;
+            console.log("work-base");
+            wx.reLaunch({
+                url: "/pages/work-base/work-base"
+            });
         }
         if( options.loadingTrigger ){
             this.setData({
@@ -85,10 +88,25 @@ Page({
                     })
                 }, 500);
             });
+            try {
+                wx.uma.trackEvent("1601368297264")
+            }catch (e) {
+                console.error("home.js -> 91",e);
+            }
         }
     },
     onShow: function () {
         const that = this;
+        const {isWxWork} = app.wxWorkInfo;
+        if(isWxWork){
+            this.setData({
+                loading: true,
+            });
+            console.log("onShow work-base");
+            wx.reLaunch({
+                url: "/pages/work-base/work-base"
+            });
+        }
         app.freeTickId = "";
         if (!app.isLogin) {
             app.checkUser = function () {
@@ -107,7 +125,12 @@ Page({
     },
 
     navWebView: function (e) {
-        const url = e.currentTarget.dataset.url;
+        const {url,name} = e.currentTarget.dataset;
+        try{
+            wx.uma.trackEvent('1601368427999',{"文章名称":name})
+        }catch (e) {
+            console.error('home.js -> 134',e)
+        }
         wx.setStorageSync("webView_Url", url);
         wx.navigateTo({
             url: '../../common/webView',
@@ -124,6 +147,12 @@ Page({
                 });
             } else {
                 const { detail } = e;
+                try{
+                    console.log("name: ",name);
+                    wx.uma.trackEvent('1601368400960',{"测评名称":name})
+                }catch (e) {
+                    console.error('home.js -> 136',e)
+                }
                 if ((!detail || !detail.encryptedData) && n == "getPhoneNumber") return;
                 if (detail && detail.encryptedData) {
                     const iv = detail.iv;

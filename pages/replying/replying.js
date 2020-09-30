@@ -246,6 +246,7 @@ Page({
   onUnload: function () {
     saveTimeOut && clearTimeout(saveTimeOut);
     answerTimeOut && clearTimeout(answerTimeOut);
+    console.log("work-base");
     wx.switchTab({
       url: "/pages/work-base/work-base"
     })

@@ -47,7 +47,7 @@
             </scroll-view>
         </view>
     </view>
-    <hola-tab-bar active="{{ 3 }}"></hola-tab-bar>
+    <hola-tab-bar active="{{ 3 }}" isWxWork="{{!isWxWork}}"></hola-tab-bar>
 </view>
 <view wx:elif="{{ isWxWork && isWxWorkAdmin }}">
     <view class="user-page-wrapper">
@@ -88,7 +88,7 @@
             </scroll-view>
         </view>
     </view>
-    <hola-tab-bar active="{{ 1 }}"></hola-tab-bar>
+    <hola-tab-bar active="{{ 1 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{isWxWorkAdmin}}"></hola-tab-bar>
 </view>
 <view wx:elif="{{ isWxWork && !isWxWorkAdmin }}">
     <view class="user-page-wrapper">
@@ -121,5 +121,5 @@
             </scroll-view>
         </view>
     </view>
-    <hola-tab-bar active="{{ 1 }}"></hola-tab-bar>
+    <hola-tab-bar active="{{ 1 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{!isWxWorkAdmin}}"></hola-tab-bar>
 </view>

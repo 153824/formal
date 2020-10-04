@@ -98,13 +98,11 @@ App({
         uploadUserInfo: true // 自动上传用户信息，设为false取消上传，默认为false
     },
     onLaunch: function (options) {
-        const that = this;
         const referrerInfo = options.referrerInfo;
         const menuBtnObj = wx.getMenuButtonBoundingClientRect();
         const sysMsg = wx.getSystemInfoSync();
         this.isIphoneX = false;
         this.isIos = false;
-        this.isLogin = false;
         this.fromAppId = '';
         this.teamId = '';
         this.rate = sysMsg.windowWidth / 750;
@@ -215,9 +213,9 @@ App({
     onShow: function () {
         const pages = ["pages/home/home", "pages/work-base/work-base", "pages/user-center/user-center"];
         let currentPage = "";
-        try{
+        try {
             currentPage = getCurrentPages()[getCurrentPages().length - 1].route || "";
-        }catch (e) {
+        } catch (e) {
 
         }
         if (this.wxWorkInfo.isWxWork && this.isReLaunch && (pages.includes(this.quitPage) || pages.includes(currentPage))) {
@@ -271,12 +269,16 @@ App({
                     var userData = res.data;
                     wx.hideLoading();
                     if (0 === res.code) {
-                        var userMsg = that.globalData.userMsg;
+                        const userMsg = that.globalData.userMsg;
                         wx.setStorageSync('userInfo', userData);
                         wx.setStorageSync('openId', userData.openid || userMsg.openid);
                         that.globalData.userInfo = Object.assign(userData,
                             that.globalData.userInfo || {})
                         that.isLogin = true;
+                        if(that.checkUserInfo){
+                            res.teamId = that.teamId;
+                            that.checkUserInfo(res.data);
+                        }
                         that.getMyTeamList(that.checkUser);
                         resolve({openId: userData.openid || userMsg.openid})
                     } else {
@@ -288,7 +290,7 @@ App({
                             confirmColor: '#0099ff',
                             success: function (e) {
                             },
-                        })
+                        });
                         reject({openId: ''})
                     }
 
@@ -323,6 +325,9 @@ App({
                         that.wxWorkInfo.isWxWorkAdmin = true;
                         wx.setStorageSync('isWxWorkAdmin', true);
                     }
+                    if(that.checkUserInfo){
+                        that.checkUserInfo(res);
+                    }
                     that.globalData.userMsg = res.userMsg || {};
                     const userData = res;
                     const userMsg = that.globalData.userMsg;
@@ -352,7 +357,7 @@ App({
      */
     getUserInfo: function (callBack) {
         const that = this;
-        if (!wx.getStorageSync('openId') || !this.isLogin) {
+        if (!wx.getStorageSync('openId') || !that.isLogin) {
             callBack && callBack();
             return;
         }
@@ -445,8 +450,8 @@ App({
             url = `${this.host}/wework/app/health`;
         }
         params.data = params.data || {};
-        params.data['userId'] = (that.globalData.userInfo || wx.getStorageSync("userInfo")).id || '';
-        params.data['teamId'] = that.teamId || wx.getStorageSync("userInfo").teamId || params.data['teamId'] || "";
+        params.data['userId'] = params.data['userId'] || (that.globalData.userInfo || wx.getStorageSync("userInfo")).id || '';
+        params.data['teamId'] = params.data['teamId'] || that.teamId || wx.getStorageSync("userInfo").teamId || params.data['teamId'] || "";
         params.data['teamRole'] = that.teamRole || "";
         wx.request({
             url: url,

@@ -25,7 +25,8 @@
 			"outputPath": ""
 		},
 		"bundle": true,
-		"useCompilerModule": false
+		"useCompilerModule": false,
+		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.12.2",
@@ -37,7 +38,7 @@
 	"isGameTourist": false,
 	"simulatorType": "qywx_simulator_plugin",
 	"simulatorPluginLibVersion": {
-		"qywx_simulator_plugin": "2.10.1"
+		"qywx_simulator_plugin": "2.4.0"
 	},
 	"scripts": {
 		"beforeCompile": "",
@@ -83,7 +84,7 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 2,
 					"name": "报告详情",
 					"pathName": "pages/report/report",
 					"query": "id=5f4f6cf094dbb6144681a465",
@@ -97,20 +98,6 @@
 					"scene": null
 				},
 				{
-					"id": 4,
-					"name": "pages/work-base/work-base",
-					"pathName": "pages/work-base/work-base",
-					"query": "releaseRecordId=5f745844d9d79d3c986c2c17&sharedAt=1601461953932&tabIndex=1",
-					"scene": null
-				},
-				{
-					"id": 5,
-					"name": "pages/work-base/work-base",
-					"pathName": "pages/work-base/work-base",
-					"query": "receivedRecordId=5f73fbf4d9d79d3c986c2bdb&sharedAt=1601452296711",
-					"scene": null
-				},
-				{
 					"id": 6,
 					"name": "测评详情",
 					"pathName": "pages/station/components/detail/detail",
@@ -118,31 +105,24 @@
 					"scene": null
 				},
 				{
-					"id": 7,
-					"name": "报告详情",
+					"id": 5,
+					"name": "分享-报告详情",
 					"pathName": "pages/report/report",
 					"query": "receiveRecordId=5f61c79aad471d56600f658e",
 					"scene": null
 				},
 				{
-					"id": 8,
-					"name": "pages/work-base/work-base",
-					"pathName": "pages/work-base/work-base",
-					"query": "releaseRecordId=5f6af8a433c124&sharedAt=1600854643427",
+					"id": 6,
+					"name": "二维码领取测评",
+					"pathName": "pages/replying/components/guide/guide",
+					"query": "q=https://api.luoke101.com/s/5f7448e0d9d79d3c986c2c0b",
 					"scene": null
 				},
 				{
-					"id": 9,
-					"name": "pages/work-base/work-base",
-					"pathName": "pages/work-base/work-base",
-					"query": "q=https://api.luoke101.com/s/5f744906d9d79d3c986c2c0d",
-					"scene": null
-				},
-				{
-					"id": 10,
-					"name": "小程序码领取测评",
-					"pathName": "pages/work-base/work-base",
-					"query": "scene=5f743412d9d79d3c986c2c00",
+					"id": 7,
+					"name": "二维码领取测评",
+					"pathName": "pages/work-base/components/guide/guide",
+					"query": "q=https://api.luoke101.com/s/5f7448e0d9d79d3c986c2c0b",
 					"scene": null
 				},
 				{
@@ -150,6 +130,20 @@
 					"name": "完成测评",
 					"pathName": "pages/work-base/components/done/done",
 					"query": "id=5f71abd2d9d80005bd987a45&isSelf=SHARE",
+					"scene": null
+				},
+				{
+					"id": 9,
+					"name": "领取报告",
+					"pathName": "pages/report/report",
+					"query": "receivedRecordId=5f74507cd9d79d3c986c2c12&sharedAt=1601612953307",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "小层序码领取测评",
+					"pathName": "pages/work-base/components/guide/guide",
+					"query": "scene=5f7448e0d9d79d3c986c2c0b",
 					"scene": null
 				}
 			]

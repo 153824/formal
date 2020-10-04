@@ -57,17 +57,6 @@ Page({
             isWxWork: app.wxWorkInfo.isWxWork,
             isWxWorkAdmin: optionIsWxWorkAdmin || wx.getStorageSync('userInfo').isAdmin || app.wxWorkInfo.isWxWorkAdmin,
         });
-        if (option.sharedAt && option.releaseRecordId) {
-            wx.navigateTo({
-                url: `/pages/work-base/components/track-detail/track-detail?sharedAt=${option.sharedAt}&releaseRecordId=${option.releaseRecordId}`,
-                success: function (res) {
-                    let page = getCurrentPages().pop();
-                    if (page == undefined || page == null) return;
-                    page.onLoad();
-                }
-            });
-            return;
-        }
         let {isWxWorkAdmin, isWxWork, isIPhoneXModel} = this.data;
         if (optionIsWxWorkAdmin) {
             isWxWorkAdmin = optionIsWxWorkAdmin;
@@ -75,34 +64,6 @@ Page({
                 isWxWorkAdmin: isWxWorkAdmin,
                 maskTrigger: option.maskTrigger
             })
-        }
-        let releaseEvaluationId = "";
-        if (option.q) {
-            const q = decodeURIComponent(option.q);
-            const idArray = q.split("/");
-            releaseEvaluationId = idArray[idArray.length - 1] || "";
-        }
-        if (releaseEvaluationId) {
-            console.log("releaseEvaluationId: ", releaseEvaluationId);
-            console.log("option.sharedAt&&option.releaseRecordId: ")
-            wx.navigateTo({
-                url: `/pages/work-base/components/guide/guide?releaseRecordId=${releaseEvaluationId}`,
-                success: result => {
-                    console.log("wx.navigateTo: ", result);
-                },
-                fail: err => {
-                    console.log("wx.navigateTo: ", err);
-                }
-            });
-            return;
-        }
-        if (option.scene) {
-            releaseEvaluationId = decodeURIComponent(option.scene);
-            console.log("work-base");
-            wx.reLaunch({
-                url: `/pages/work-base/components/guide/guide?releaseRecordId=${releaseEvaluationId}`,
-            });
-            return;
         }
         wx.getSystemInfo({
             success: function (res) {

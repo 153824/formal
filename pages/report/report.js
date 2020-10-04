@@ -339,66 +339,70 @@ Page({
         histogramYAxis: [[]],
         limit: [[]],
         histogramValues: [[]],
-        referLines: [[]]
+        referLines: [[]],
+        maskTrigger: true
     },
 
-    onLoad: function (options={isSelf: ""}) {
-        _this = this;
+    onLoad: function (options = {isSelf: ""}) {
         const that = this;
         ctx = wx.createCanvasContext('canvasArcCir');
         const id = that.data.id || options.receiveRecordId || options.receivedRecordId;
+        if(options.isSelf){
+            this.setData({
+                isSelf: options.isSelf
+            });
+        }
         this.setData({
             id: id,
-            isSelf: options.isSelf
         });
-        if (app.isLogin) {
-            if (options.sharedAt) {
-                that.verifyReportIsCanRead(options).then(res=>{
+        if(!app.globalData.userInfo && !wx.getStorageSync('userInfo')){
+            app.checkUserInfo = userInfo => {
+                if (options.sharedAt) {
+                    options.userId = userInfo.id || wx.getStorageSync("userInfo")["id"];
+                    that.verifyReportIsCanRead(options).then(res => {
+                        that.getReport(id);
+                    }).catch(err => {
+                        wx.showToast({
+                            title: "该分享已过期",
+                            icon: "none",
+                            duration: 888
+                        });
+                        setTimeout(() => {
+                            wx.switchTab({
+                                url: '/pages/home/home'
+                            })
+                        }, 999);
+                    });
+                } else {
                     that.getReport(id);
-                }).catch(err=>{
+                }
+            };
+        }else{
+            if (options.sharedAt) {
+                options.userId = userInfo.id || wx.getStorageSync("userInfo")["id"];
+                that.verifyReportIsCanRead(options).then(res => {
+                    that.getReport(id);
+                }).catch(err => {
                     wx.showToast({
                         title: "该分享已过期",
                         icon: "none",
                         duration: 888
                     });
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         wx.switchTab({
                             url: '/pages/home/home'
                         })
-                    },999);
+                    }, 999);
                 });
-            }else{
+            } else {
                 that.getReport(id);
             }
         }
-        app.checkUser = function () {
-            if (options.sharedAt) {
-                that.verifyReportIsCanRead(options).then(res=>{
-                    that.getReport(id);
-                }).catch(err=>{
-                    wx.showToast({
-                        title: "该分享已过期",
-                        icon: "none",
-                        duration: 888
-                    });
-                    setTimeout(()=>{
-                        wx.switchTab({
-                            url: '/pages/home/home'
-                        })
-                    },999);
-                });
-            }else{
-                that.getReport(id);
-            }
-        };
     },
 
-    onShow: function () {
-    },
+    onShow: function () {},
 
     verifyReportIsCanRead: function (option) {
-        option.userId = wx.getStorageSync("userInfo")["id"];
-        console.log(wx.getStorageSync("userInfo"))
         return this.acceptReport(option)
     },
 
@@ -557,6 +561,7 @@ Page({
             res.report["noTeamMember"] = false;
             res.report["teamRole"] = (app.teamId == res.releaseTeamId) ? app.teamRole : 1;
             res.report["showPage"] = true;
+            res.maskTrigger = false;
             that.setData(res);
             app.doAjax({
                 url: "userOrderMsg",
@@ -614,10 +619,10 @@ Page({
                 radarIndicator[n] = radarIndicator[n] || [];
                 value_2[n] = value_2[n] || [];
                 indicator_2[n] = indicator_2[n] || [];
-                var {showSubScore,subScale} = objs[n];
+                var {showSubScore, subScale} = objs[n];
                 for (var i in arr) {
                     var node = arr[i];
-                    if(showSubScore === 'average'){
+                    if (showSubScore === 'average') {
                         switch (subScale) {
                             case 'origin':
                                 radarValue[n].push(node.average);
@@ -640,7 +645,7 @@ Page({
                                 targetHistogramValuesArr.push(node.subTotal);
                                 break;
                         }
-                    }else if (showSubScore === 'total'){
+                    } else if (showSubScore === 'total') {
                         switch (subScale) {
                             case 'origin':
                                 radarValue[n].push(node.subTotal);
@@ -734,13 +739,14 @@ Page({
             res.report["statement"] = res.report["statement"].replace(/\n/g, "<br>").replace("<bold", "<span style='font-weight: 600;'").replace("</bold", "</span");
             res.report["noTeamMember"] = false;
             res.report["teamRole"] = (app.teamId == res.releaseTeamId) ? app.teamRole : 1;
-            console.log("teamRole: ",res.report["teamRole"]);
-            console.log("app.teamId: ",app.teamId,"res.releaseTeamId.teamId: ",res.releaseTeamId.teamId)
+            console.log("teamRole: ", res.report["teamRole"]);
+            console.log("app.teamId: ", app.teamId, "res.releaseTeamId.teamId: ", res.releaseTeamId.teamId)
             res.report["showPage"] = true;
             res.fillBlank = [];
             for (let i = 0; i < 4; i++) {
                 res.fillBlank.push("");
             }
+            res.maskTrigger = false;
             that.setData(res);
             this.getEvaluationQues();
         });
@@ -950,7 +956,7 @@ Page({
         const that = this;
         const {participantInfo, evaluationInfo, id, report} = this.data;
         const time = new Date().getTime();
-        console.log("pages/report/report?receivedRecordId=${id}&sharedAt=${time}: ",`pages/report/report?receivedRecordId=${id}&sharedAt=${time}`)
+        console.log("pages/report/report?receivedRecordId=${id}&sharedAt=${time}: ", `pages/report/report?receivedRecordId=${id}&sharedAt=${time}`)
         return {
             title: `邀您查看${participantInfo.username}的《${evaluationInfo.evaluationName}》报告`,
             path: `pages/report/report?receivedRecordId=${id}&sharedAt=${time}`,
@@ -1067,17 +1073,17 @@ Page({
         }
     },
 
-    onUnload: function() {
+    onUnload: function () {
         const {isSelf} = this.data;
-        if(isSelf && isSelf === "SELF"){
+        if (isSelf && isSelf === "SELF") {
             wx.reLaunch({
                 url: "/pages/work-base/work-base"
             })
-        }else if(isSelf && isSelf === "SHARE"){
+        } else if (isSelf && isSelf === "SHARE") {
             wx.reLaunch({
                 url: "/pages/user-center/components/receive-evaluations/receive-evaluations?targetPath=userCenter"
             })
-        }else{
+        } else {
             wx.navigateBack({
                 delta: 1
             });

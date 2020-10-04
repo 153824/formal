@@ -8,20 +8,21 @@ Page({
         loading: false
     },
     onLoad: function (option) {
-        if (option.releaseRecordId || option.receiveRecordId) {
+        let releaseEvaluationId = "";
+        if (option.q) {
+            const q = decodeURIComponent(option.q);
+            const idArray = q.split("/");
+            releaseEvaluationId = idArray[idArray.length - 1] || "";
+        }
+        if (option.scene) {
+            releaseEvaluationId = decodeURIComponent(option.scene);
+        }
+        if (option.releaseRecordId || option.receiveRecordId || releaseEvaluationId) {
             this.setData({
-                id: option.releaseRecordId,
-                receiveRecordId: option.receiveRecordId
+                id: option.releaseRecordId || releaseEvaluationId,
+                receiveRecordId: option.receiveRecordId || ""
             });
         }
-        console.log("option,",option)
-        if (option.maskTrigger) {
-            this.setData({
-                maskTrigger: option.maskTrigger,
-                loading: true
-            });
-        }
-
     },
     onShow: function () {
         if (wx.canIUse('hideHomeButton')) {
@@ -32,81 +33,15 @@ Page({
         if (app.isTest && !id) {
             return that.getPaperMsg()
         }
-        if (!(app.globalData.userInfo||wx.getStorageSync("userInfo"))) {
-            setTimeout(function () {
-                that.onShow();
-            }, 500);
-            return;
-        }
-        app.doAjax({
-            url: "release/fetch",
-            method: "post",
-            data: {
-                releaseRecordId: id
-            },
-            success: function (res) {
-                console.log("release/fetch: ",res)
-                if (!res.receiveRecordId) {
-                    app.toast("该分享已失效！");
-                    wx.navigateTo({
-                        url: "/pages/work-base/work-base"
-                    })
-                }
-                const sKey = "oldAnswer" + id;
-                const oldData = wx.getStorageSync(sKey);
-                that.setData({
-                    reportPermit: res.reportPermit
-                });
-                if (oldData && res.status !== 'FINISHED') {
-                    that.setData({
-                        loading: true
-                    });
-                    setTimeout(() => {
-                        wx.redirectTo({
-                            url: '../answering/answering?pid=' + res.evaluationId + '&id=' + id + '&receiveRecordId=' + res.receiveRecordId + "&reportPermit=" + res.reportPermit + "&status=" + res.status
-                        });
-                    }, 500);
-                    return;
-                }
-                const oldPeopleMsg = res.participantInfo;
-                if (oldPeopleMsg && oldPeopleMsg.username) {
-                    wx.setStorageSync("oldPeopleMsg", oldPeopleMsg);
-                }
-                let text = "";
-                switch (res.msg) {
-                    case 'continue examining':
-                        text = "继续作答";
-                        break;
-                    case 'show report':
-                        text = "查看报告";
-                        break;
-                    case 'apply to view report':
-                        text = "申请查看报告";
-                        break;
-                    case 'wait for approving view report':
-                        text = "等待hr通过申请";
-                        break;
-                    case 'not available':
-                        text = "分享已失效";
-                        break;
-                }
-                that.getPaperMsg({
-                    status: res.status,
-                    reportPermit: res.reportPermit,
-                    draftAnswer: res.draft,
-                    evaluationId: res.evaluationId,
-                    userInfo: res.participantInfo,
-                    id: id,
-                    receiveRecordId: res.receiveRecordId,
-                    triggerText: res.msg
-                });
-                that.setData({
-                    avatar: res.avatar,
-                    teamName: res.teamName,
-                    text: text
-                })
+        if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
+            app.checkUser = (userInfo) => {
+                this.fetchEvaluation(userInfo);
             }
-        });
+        } else {
+            console.log("this.fetchEvaluation()")
+            that.fetchEvaluation();
+        }
+
     },
     /**
      * 申请查看报告
@@ -243,4 +178,84 @@ Page({
             url: '/pages/report/report?receiveRecordId=' + receiveRecordId,
         });
     },
+
+    fetchEvaluation: function (userInfo) {
+        const that = this;
+        const id = that.data.id;
+        if(!userInfo){
+            userInfo = {
+                id: ""
+            };
+        }
+        console.log('this.data: ',this.data)
+        app.doAjax({
+            url: "release/fetch",
+            method: "post",
+            data: {
+                releaseRecordId: id,
+                userId: userInfo.id
+            },
+            success: function (res) {
+                if (!res.receiveRecordId) {
+                    app.toast("该分享已失效！");
+                    wx.navigateTo({
+                        url: "/pages/work-base/work-base"
+                    })
+                }
+                const sKey = "oldAnswer" + id;
+                const oldData = wx.getStorageSync(sKey);
+                that.setData({
+                    reportPermit: res.reportPermit
+                });
+                if (oldData && res.status !== 'FINISHED') {
+                    that.setData({
+                        loading: true
+                    });
+                    setTimeout(() => {
+                        wx.redirectTo({
+                            url: '../answering/answering?pid=' + res.evaluationId + '&id=' + id + '&receiveRecordId=' + res.receiveRecordId + "&reportPermit=" + res.reportPermit + "&status=" + res.status
+                        });
+                    }, 500);
+                    return;
+                }
+                const oldPeopleMsg = res.participantInfo;
+                if (oldPeopleMsg && oldPeopleMsg.username) {
+                    wx.setStorageSync("oldPeopleMsg", oldPeopleMsg);
+                }
+                let text = "";
+                switch (res.msg) {
+                    case 'continue examining':
+                        text = "继续作答";
+                        break;
+                    case 'show report':
+                        text = "查看报告";
+                        break;
+                    case 'apply to view report':
+                        text = "申请查看报告";
+                        break;
+                    case 'wait for approving view report':
+                        text = "等待hr通过申请";
+                        break;
+                    case 'not available':
+                        text = "分享已失效";
+                        break;
+                }
+                that.getPaperMsg({
+                    status: res.status,
+                    reportPermit: res.reportPermit,
+                    draftAnswer: res.draft,
+                    evaluationId: res.evaluationId,
+                    userInfo: res.participantInfo,
+                    id: id,
+                    receiveRecordId: res.receiveRecordId,
+                    triggerText: res.msg
+                });
+                that.setData({
+                    avatar: res.avatar,
+                    teamName: res.teamName,
+                    text: text
+                })
+            }
+        });
+    }
 });

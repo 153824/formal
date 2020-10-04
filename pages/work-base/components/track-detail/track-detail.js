@@ -45,113 +45,79 @@ Page({
         this.setData({
             releaseRecordId, sharedAt
         });
-        if (!app.isLogin) {
-            console.log("app.isLogin: ", app.isLogin);
-            that.onLoad();
-            return;
-        }
-
-        if (releaseRecordId && sharedAt) {
-            this.acceptEvaluationTrack(options).then(res => {
+        options.userId = "";
+        options.teamId = "";
+        if (!app.globalData.userInfo && !wx.getStorageSync('userInfo')) {
+            if (releaseRecordId && sharedAt) {
+                this.acceptEvaluationTrack(options).then(res => {
+                    Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
+                        that.setData({
+                            maskTrigger: false
+                        })
+                    })
+                }).catch(err => {
+                    wx.switchTab({
+                        url: "pages/work-base/work-base",
+                    })
+                })
+            } else {
                 Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
                     that.setData({
                         maskTrigger: false
                     })
+                }).catch(err => {
+                    console.error("err: ", err);
+                    that.setData({
+                        maskTrigger: false
+                    })
                 })
-            }).catch(err => {
-                wx.switchTab({
-                    url: "pages/work-base/work-base",
-                })
-            })
+            }
         } else {
-            Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
-                that.setData({
-                    maskTrigger: false
-                })
-            }).catch(err => {
-                console.error("err: ", err);
-                that.setData({
-                    maskTrigger: false
-                })
-            })
+            app.checkUserInfo = (userInfo) => {
+                options.teamId = userInfo.teamId;
+                options.userId = userInfo.id;
+                if (releaseRecordId && sharedAt) {
+                    this.acceptEvaluationTrack(options).then(res => {
+                        Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
+                            that.setData({
+                                maskTrigger: false
+                            })
+                        })
+                    }).catch(err => {
+                        wx.switchTab({
+                            url: "pages/work-base/work-base",
+                        })
+                    })
+                } else {
+                    Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
+                        that.setData({
+                            maskTrigger: false
+                        })
+                    }).catch(err => {
+                        console.error("err: ", err);
+                        that.setData({
+                            maskTrigger: false
+                        })
+                    })
+                }
+            }
         }
-        // app.checkUser = function () {
-        //     if (releaseRecordId && sharedAt) {
-        //         that.acceptEvaluationTrack(options).then(res => {
-        //             Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
-        //                 that.setData({
-        //                     maskTrigger: false
-        //                 })
-        //             })
-        //         }).catch(err => {
-        //             wx.switchTab({
-        //                 url: "/pages/work-base/work-base",
-        //             })
-        //         })
-        //     } else {
-        //         Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
-        //             that.setData({
-        //                 maskTrigger: false
-        //             })
-        //         }).catch(err => {
-        //             console.error("err: ", err);
-        //             that.setData({
-        //                 maskTrigger: false
-        //             })
-        //         })
-        //     }
-        // };
         const systemInfo = wx.getSystemInfoSync();
         that.setData({
             windowHeight: systemInfo.windowHeight,
         });
     },
 
-    onShow() {
-        setInterval(()=>{
-            if(!app.isLogin){
-                that.onShow();
-                return;
-            }
-        },500);
-        const that = this;
-        const {releaseRecordId,sharedAt} = this.data;
-        const {examiningDetail, finishedDetail, digestDetail} = this;
-        const options = {releaseRecordId,sharedAt};
-        if (releaseRecordId && sharedAt) {
-            this.acceptEvaluationTrack(options).then(res => {
-                Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
-                    that.setData({
-                        maskTrigger: false
-                    })
-                })
-            }).catch(err => {
-                wx.switchTab({
-                    url: "pages/work-base/work-base",
-                })
-            })
-        } else {
-            Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
-                that.setData({
-                    maskTrigger: false
-                })
-            }).catch(err => {
-                console.error("err: ", err);
-                that.setData({
-                    maskTrigger: false
-                })
-            })
-        }
-    },
+    onShow() {},
 
     acceptEvaluationTrack: function (options) {
-        const {trackId, releaseRecordId, sharedAt} = options;
+        const {trackId, releaseRecordId, sharedAt, userId} = options;
         const acceptEvaluationTrackPromise = new Promise((resolve, reject) => {
             app.doAjax({
                 url: "release_records/accept",
                 method: "post",
                 data: {
-                    userId: wx.getStorageSync("userInfo").id,
+                    userId: wx.getStorageSync("userInfo").id || userId,
                     releaseRecordId: releaseRecordId || trackId,
                     sharedAt: sharedAt
                 },
@@ -186,7 +152,9 @@ Page({
                     type: 'examining',
                     page: examiningPage,
                     pageSize: 8,
-                    releaseRecordId: releaseRecordId || trackId
+                    releaseRecordId: releaseRecordId || trackId,
+                    userId: options.userId,
+                    teamId: options.teamId,
                 },
                 success: function (res = []) {
                     that.setData({
@@ -214,7 +182,9 @@ Page({
                     type: 'finished',
                     page: finishedPage,
                     pageSize: 8,
-                    releaseRecordId: releaseRecordId || trackId
+                    releaseRecordId: releaseRecordId || trackId,
+                    userId: options.userId,
+                    teamId: options.teamId,
                 },
                 success: function (res = []) {
                     that.setData({
@@ -238,7 +208,9 @@ Page({
                 url: `release_records/digest`,
                 method: `get`,
                 data: {
-                    releaseRecordId: trackId || releaseRecordId
+                    releaseRecordId: trackId || releaseRecordId,
+                    userId: options.userId,
+                    teamId: options.teamId,
                 },
                 success: function (res) {
                     that.setData({

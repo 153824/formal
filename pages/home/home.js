@@ -16,12 +16,18 @@ Page({
     onLoad: function (options={loadingTrigger: false},name) {
         const that = this;
         const {isWxWork} = app.wxWorkInfo;
+        if(options.sharedAt){
+            wx.navigateTo({
+                url: `pages/report/report?receivedRecordId=5f74507cd9d79d3c986c2c12&sharedAt=1601612953307`
+            });
+            return;
+        }
         if(isWxWork){
             this.setData({
                 loading: true,
             });
             console.log("work-base");
-            wx.reLaunch({
+            wx.switchTab({
                 url: "/pages/work-base/work-base"
             });
         }

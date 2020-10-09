@@ -42,9 +42,12 @@ Page({
         const that = this;
         const {releaseRecordId, sharedAt} = options;
         const {examiningDetail, finishedDetail, digestDetail} = this;
-        this.setData({
-            releaseRecordId, sharedAt
-        });
+        if(releaseRecordId && sharedAt){
+            this.setData({
+                releaseRecordId,
+                sharedAt
+            });
+        }
         options.userId = "";
         options.teamId = "";
         if (!app.globalData.userInfo && !wx.getStorageSync('userInfo')) {
@@ -61,6 +64,7 @@ Page({
                     })
                 })
             } else {
+                console.log("releaseRecordId",releaseRecordId)
                 Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
                     that.setData({
                         maskTrigger: false
@@ -346,6 +350,4 @@ Page({
             imageUrl: cover
         };
     },
-
-
 });

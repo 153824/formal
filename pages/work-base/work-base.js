@@ -265,8 +265,7 @@ Page({
         }
     },
 
-    onHide() {
-    },
+    onHide() {},
 
     getUserInfo: function (e) {
         var that = this;

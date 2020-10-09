@@ -56,7 +56,8 @@ function setTeams(LOCAL_MY_TEAM_LIST,cb){
         this.addNewTeam()
     }
 }
+
 module.exports = {
     setUserDetail: setUserDetail,
-    setTeams: setTeams
+    setTeams: setTeams,
 };

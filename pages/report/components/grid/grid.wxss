@@ -148,3 +148,10 @@
     left: -11rpx;
     border-bottom: 20rpx solid rgba(53, 62, 232, 1);
 }
+.van-grid-text-custom{
+    width: 135%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}

@@ -379,7 +379,7 @@ Page({
             };
         }else{
             if (options.sharedAt) {
-                options.userId = userInfo.id || wx.getStorageSync("userInfo")["id"];
+                options.userId = wx.getStorageSync("userInfo")["id"];
                 that.verifyReportIsCanRead(options).then(res => {
                     that.getReport(id);
                 }).catch(err => {

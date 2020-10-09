@@ -41,7 +41,7 @@ Page({
     onLoad: function (options) {
         const that = this;
         const {releaseRecordId, sharedAt} = options;
-        console.log("options: ",options);
+        console.log("options: ", options);
         const {examiningDetail, finishedDetail, digestDetail} = this;
         if (releaseRecordId && sharedAt) {
             this.setData({
@@ -112,7 +112,8 @@ Page({
         });
     },
 
-    onShow() {},
+    onShow() {
+    },
 
     acceptEvaluationTrack: function (options) {
         const {trackId, releaseRecordId, sharedAt, userId} = options;
@@ -351,7 +352,7 @@ Page({
         }
         return {
             title: `邀请您查看《${evaluationName}》的作答情况`,
-            path: `pages/work-base/work-base?releaseRecordId=${trackId || releaseRecordId}&sharedAt=${time}&tabIndex=1`,
+            path: `pages/work-base/components/track-detail/track-detail?releaseRecordId=${trackId || releaseRecordId}&sharedAt=${time}&tabIndex=1`,
             imageUrl: cover
         };
     },

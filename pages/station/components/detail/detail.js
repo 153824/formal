@@ -92,11 +92,34 @@ Page({
                     noLoading: true,
                     success: function (res) {
                         let evaluation = res;
-                        let {id, name} = evaluation;
+                        let {id, name, freeEvaluation} = evaluation;
+                        if (freeEvaluation) {
+                            // 	访问免费测评
+                            try {
+                                wx.uma.trackEvent('1602211030236', {name: name})
+                            } catch (e) {
+
+                            }
+                        } else {
+                            // 	访问付费测评
+                            try {
+                                wx.uma.trackEvent('1602211124861', {name: name})
+                            } catch (e) {
+
+                            }
+                        }
+                        // 访问测评详情
+                        try {
+                            wx.uma.trackEvent('1602210780126', {name: name})
+                        } catch (e) {
+
+                        }
                         that.setData({
                             evaluation,
                         });
-                        if (evaluation.freeEvaluation) {} else {}
+                        if (evaluation.freeEvaluation) {
+                        } else {
+                        }
                         resolve("success");
                     },
                     fail: function (err) {
@@ -253,9 +276,15 @@ Page({
     },
 
     payForEvaluation: function () {
+        const {evaluation} = this.data;
         this.setData({
             payTrigger: true
-        })
+        });
+        try {
+            wx.uma.trackEvent('1602213155213',{name: evaluation.name,})
+        } catch (e) {
+
+        }
     },
 
     cancelPayForEvaluation: function (e) {
@@ -651,7 +680,7 @@ Page({
     },
     getNewerTicket: function (e) {
         var that = this;
-        var {evaluationInfo} = that.data.evaluation;
+        var {name} = that.data.evaluation;
         app.doAjax({
             url: "drawNoviceVoucher",
             method: "post",
@@ -666,6 +695,7 @@ Page({
                 app.toast(res.msg);
             }
         });
+        wx.uma.trackEvent('1602211291284', {name: name});
         that.onShow(false);
     },
     goToUserCenter: function () {
@@ -731,10 +761,44 @@ Page({
         })
     },
     getPhoneNumber: function (e) {
-        var that = this;
+        const that = this;
         const {mark, eventName} = e.currentTarget.dataset;
-        var {iv, encryptedData} = e.detail;
-        var {evaluation} = this.data;
+        const {iv, encryptedData} = e.detail;
+        const {evaluation} = this.data;
+        if (mark !== 'dont-get-ticket') {
+            try {
+                wx.uma.trackEvent('1602211711933', {name: evaluation.name});
+            } catch (e) {
+
+            }
+        }
+        if (mark === 'dont-get-ticket') {
+            switch (eventName) {
+                case 'goToDaTi':
+                    try {
+                        wx.uma.trackEvent('1602211801893', {name: evaluation.name});
+                    } catch (e) {
+
+                    }
+                    break;
+                case 'goToReplyingGuide':
+                    try {
+                        wx.uma.trackEvent('1602211853957', {name: evaluation.name});
+                    } catch (e) {
+
+                    }
+                    break;
+                case 'payForEvaluation':
+                    try {
+                        wx.uma.trackEvent('1602211886750', {name: evaluation.name});
+                    } catch (e) {
+
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
         if (encryptedData) {
             //用户授权手机号
             var userMsg = app.globalData.userMsg || {};
@@ -765,16 +829,36 @@ Page({
                         wx.setStorageSync("USER_DETAIL", app.globalData.userInfo);
                         if (res.phone && mark !== 'dont-get-ticket') {
                             that.getNewerTicket();
+                            try {
+                                wx.uma.trackEvent('1602211933140', {name: evaluation.name});
+                            } catch (e) {
+
+                            }
                         }
                         if (mark === 'dont-get-ticket') {
                             switch (eventName) {
                                 case 'goToDaTi':
+                                    try {
+                                        wx.uma.trackEvent('1602212015300', {name: evaluation.name});
+                                    } catch (e) {
+
+                                    }
                                     that.goToDaTi(e);
                                     break;
                                 case 'goToReplyingGuide':
+                                    try {
+                                        wx.uma.trackEvent('1602212048924', {name: evaluation.name});
+                                    } catch (e) {
+
+                                    }
                                     that.goToReplyingGuide(e);
                                     break;
                                 case 'payForEvaluation':
+                                    try {
+                                        wx.uma.trackEvent('1602212078917', {name: evaluation.name});
+                                    } catch (e) {
+
+                                    }
                                     that.payForEvaluation();
                                     break;
                                 default:
@@ -792,12 +876,15 @@ Page({
     goToTransit: function (e) {
         const that = this;
         const {mark, eventName} = e.currentTarget.dataset;
+        const {evaluation} = this.data;
         if (that.data.isBindPhone) {
             switch (eventName) {
                 case 'goToDaTi':
+                    wx.uma.trackEvent('1602212461556', {name: evaluation.name, isFree: evaluation.freeEvaluation});
                     that.goToDaTi(e);
                     break;
                 case 'goToReplyingGuide':
+                    wx.uma.trackEvent('1602212336204', {name: evaluation.name, isFree: evaluation.freeEvaluation});
                     that.goToReplyingGuide(e);
                     break;
             }

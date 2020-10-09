@@ -29,7 +29,6 @@
                     <view class="btnView btnView2" bindtap="toApply" data-id="{{item.receiveRecordId}}" wx:else>向HR申请查看报告</view>
                 </view>
             </block>
-            <view style="width: 200px;height: 50px;background-color: #4AAA1A" bindtap="tapTrack">sadsa</view>
         </scroll-view>
     </view>
     <block wx:if="{{isWxWork&&tabBarTrigger}}">

@@ -13,16 +13,10 @@ Page({
         active: 0,
         column: []
     },
-    onLoad: function (options={loadingTrigger: false},name) {
+    onLoad: function (options = {loadingTrigger: false}, name) {
         const that = this;
         const {isWxWork} = app.wxWorkInfo;
-        if(options.sharedAt){
-            wx.navigateTo({
-                url: `pages/report/report?receivedRecordId=5f74507cd9d79d3c986c2c12&sharedAt=1601612953307`
-            });
-            return;
-        }
-        if(isWxWork){
+        if (isWxWork) {
             this.setData({
                 loading: true,
             });
@@ -31,12 +25,12 @@ Page({
                 url: "/pages/work-base/work-base"
             });
         }
-        if( options.loadingTrigger ){
+        if (options.loadingTrigger) {
             this.setData({
                 loading: true
             })
         }
-        if(!isWxWork){
+        if (!isWxWork) {
             let homePagesPromiseList = [];
             const homePagesPromise = new Promise(function (resolve, reject) {
                 app.doAjax({
@@ -94,25 +88,11 @@ Page({
                     })
                 }, 500);
             });
-            try {
-                wx.uma.trackEvent("1601368297264")
-            }catch (e) {
-                console.error("home.js -> 91",e);
-            }
         }
     },
     onShow: function () {
         const that = this;
         const {isWxWork} = app.wxWorkInfo;
-        if(isWxWork){
-            this.setData({
-                loading: true,
-            });
-            console.log("onShow work-base");
-            wx.reLaunch({
-                url: "/pages/work-base/work-base"
-            });
-        }
         app.freeTickId = "";
         if (!app.isLogin) {
             app.checkUser = function () {
@@ -123,6 +103,11 @@ Page({
         }
         this.title = this.selectComponent("#title");
         app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
+        try {
+            wx.uma.trackEvent("1601368297264")
+        } catch (e) {
+            console.error("home.js -> 109", e);
+        }
     },
     onHide: function () {},
 
@@ -131,11 +116,11 @@ Page({
     },
 
     navWebView: function (e) {
-        const {url,name} = e.currentTarget.dataset;
-        try{
-            wx.uma.trackEvent('1601368427999',{"文章名称":name})
-        }catch (e) {
-            console.error('home.js -> 134',e)
+        const {url, name} = e.currentTarget.dataset;
+        try {
+            wx.uma.trackEvent('1601368427999', {"文章名称": name})
+        } catch (e) {
+            console.error('home.js -> 134', e)
         }
         wx.setStorageSync("webView_Url", url);
         wx.navigateTo({
@@ -144,7 +129,7 @@ Page({
     },
 
     changePage: function (e) {
-        const { name,url,tab,n } = e.currentTarget.dataset;
+        const {name, url, tab, n} = e.currentTarget.dataset;
         if (url) {
             if (url.indexOf('http') != -1) {
                 wx.setStorageSync("webView_Url", url);
@@ -152,12 +137,12 @@ Page({
                     url: '../common/webView',
                 });
             } else {
-                const { detail } = e;
-                try{
-                    console.log("name: ",name);
-                    wx.uma.trackEvent('1601368400960',{"测评名称":name})
-                }catch (e) {
-                    console.error('home.js -> 136',e)
+                const {detail} = e;
+                try {
+                    console.log("name: ", name);
+                    wx.uma.trackEvent('1601368400960', {"测评名称": name})
+                } catch (e) {
+                    console.error('home.js -> 136', e)
                 }
                 if ((!detail || !detail.encryptedData) && n == "getPhoneNumber") return;
                 if (detail && detail.encryptedData) {
@@ -194,7 +179,7 @@ Page({
     },
     /**继续体验 */
     goToReplying: function (e) {
-        const { t } = e.target.dataset;
+        const {t} = e.target.dataset;
         if (t === '2') {
             wx.setStorageSync("hideLastTestMind", true);
             this.setData({
@@ -202,13 +187,13 @@ Page({
             });
             return;
         }
-        const { id } = this.data.oldShareInfo;
+        const {id} = this.data.oldShareInfo;
         wx.navigateTo({
             url: '../test/guide?id=' + id
         });
     },
     gotoDetail: function (e) {
-        const { id } = e.currentTarget.dataset;
+        const {id} = e.currentTarget.dataset;
         if (id.startsWith("http")) {
             wx.setStorageSync("webView_Url", id);
             wx.navigateTo({
@@ -218,7 +203,8 @@ Page({
         }
         wx.navigateTo({
             url: `../station/components/detail/detail?id=${id}`,
-            success: function () {}
+            success: function () {
+            }
         });
 
 
@@ -227,7 +213,8 @@ Page({
         const {id, name} = e.currentTarget.dataset;
         wx.navigateTo({
             url: `../station/components/more/more?id=${id}&title=${name}`,
-            success: () => {}
+            success: () => {
+            }
         });
     },
     callServing: function (e) {
@@ -241,10 +228,11 @@ Page({
         });
     },
     copyIt: function () {
-        const { wechat } = this.data;
+        const {wechat} = this.data;
         wx.setClipboardData({
             data: wechat,
-            success(res) {}
+            success(res) {
+            }
         });
     },
 });

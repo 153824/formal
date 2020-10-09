@@ -956,7 +956,11 @@ Page({
         const that = this;
         const {participantInfo, evaluationInfo, id, report} = this.data;
         const time = new Date().getTime();
-        console.log("pages/report/report?receivedRecordId=${id}&sharedAt=${time}: ", `pages/report/report?receivedRecordId=${id}&sharedAt=${time}`)
+        try{
+            wx.uma.trackEvent('1602216644404');
+        }catch (e) {
+
+        }
         return {
             title: `邀您查看${participantInfo.username}的《${evaluationInfo.evaluationName}》报告`,
             path: `pages/report/report?receivedRecordId=${id}&sharedAt=${time}`,

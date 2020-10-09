@@ -125,7 +125,7 @@
                       subtitle="立即使用 >"></meal>
             </view>
             <view wx:if="{{ isIos }}">
-                <press title="iOS暂不支持" fontSize="32" fontWeight="600"></press>
+                <press title="由于相关规范，ios功能暂不可用" fontSize="32" fontWeight="600"></press>
             </view>
             <view wx:else>
                 <button class="button-group-get-user-phone" data-mark="dont-get-ticket"

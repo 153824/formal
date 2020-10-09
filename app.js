@@ -87,7 +87,7 @@ App({
         wxWorkUserInfo: {},
     },
     umengConfig: {
-        appKey: 'sd5as5d4a5s4d5asd', //由友盟分配的APP_KEY
+        appKey: '5f6d5902906ad81117141b70', //由友盟分配的APP_KEY
         // 使用Openid进行统计，此项为false时将使用友盟+uuid进行用户统计。
         // 使用Openid来统计微信小程序的用户，会使统计的指标更为准确，对系统准确性要求高的应用推荐使用Openid。
         useOpenid: true,

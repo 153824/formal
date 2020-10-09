@@ -98,7 +98,7 @@
         </view>
     </view>
     <!--  <mask isShow="{{ loading1 }}"></mask>-->
-    <serving mobile="{{ mobile }}" wechat="{{ wechat }}" bottom="150"></serving>
+    <serving mobile="{{ mobile }}" wechat="{{ wechat }}" bottom="150" area="home"></serving>
     <hola-tab-bar active="{{ active }}" isWxWork="false"></hola-tab-bar>
 </block>
 <view wx:if="{{ loading }}" class="skeleton-index-page-wrapper"

@@ -41,8 +41,9 @@ Page({
     onLoad: function (options) {
         const that = this;
         const {releaseRecordId, sharedAt} = options;
+        console.log("options: ",options);
         const {examiningDetail, finishedDetail, digestDetail} = this;
-        if(releaseRecordId && sharedAt){
+        if (releaseRecordId && sharedAt) {
             this.setData({
                 releaseRecordId,
                 sharedAt
@@ -50,7 +51,7 @@ Page({
         }
         options.userId = "";
         options.teamId = "";
-        if (!app.globalData.userInfo && !wx.getStorageSync('userInfo')) {
+        if (app.globalData.userInfo && wx.getStorageSync('userInfo')) {
             if (releaseRecordId && sharedAt) {
                 this.acceptEvaluationTrack(options).then(res => {
                     Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
@@ -64,7 +65,6 @@ Page({
                     })
                 })
             } else {
-                console.log("releaseRecordId",releaseRecordId)
                 Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
                     that.setData({
                         maskTrigger: false
@@ -161,6 +161,7 @@ Page({
                     teamId: options.teamId,
                 },
                 success: function (res = []) {
+                    console.log(res);
                     that.setData({
                         examiningList: examiningList.concat(res)
                     });
@@ -343,7 +344,11 @@ Page({
     onShareAppMessage: function () {
         const {trackId, releaseRecordId, evaluationName, cover} = this.data;
         const time = new Date().getTime();
-        console.log(`pages/work-base/work-base?releaseRecordId=${trackId || releaseRecordId}&sharedAt=${time}&tabIndex=1`);
+        try {
+            wx.uma.trackEvent('1602216690926')
+        } catch (e) {
+
+        }
         return {
             title: `邀请您查看《${evaluationName}》的作答情况`,
             path: `pages/work-base/work-base?releaseRecordId=${trackId || releaseRecordId}&sharedAt=${time}&tabIndex=1`,

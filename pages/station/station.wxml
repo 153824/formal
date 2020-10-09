@@ -39,7 +39,7 @@
             </view>
         </view>
     </scroll-view>
-    <serving mobile="{{ mobile }}" wechat="{{ wechat }}" bottom="150"></serving>
+    <serving mobile="{{ mobile }}" wechat="{{ wechat }}" bottom="150" area="station"></serving>
 </view>
 <van-overlay show="{{ loading }}" custom-style="background-color: #fff;">
     <mask isShow="{{ loading }}" top="{{ (statusbarHeight + titleHeight)/pixelRate }}"

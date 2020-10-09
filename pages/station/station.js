@@ -15,13 +15,16 @@ Page({
   },
   onLoad: function(option){
     let that = this;
-    // wx.hideTabBar({
-    //   animation: true
-    // });
     if(option.loadingTrigger){
       this.setData({
         loading: true
       })
+    }
+    try{
+      // 访问人岗匹配
+      wx.uma.trackEvent('1602210186839');
+    }catch (e) {
+
     }
     app.doAjax({
       url: "positionTags",
@@ -56,6 +59,13 @@ Page({
     const checkedId = e.currentTarget.id,
           { name } = e.currentTarget.dataset,
           { menu } = this.data;
+    // 点击人岗匹配左侧导航
+    try{
+      console.log("name: ",name)
+      wx.uma.trackEvent('1602210335412',{name: name});
+    }catch (e) {
+
+    }
     for( let i = 0;i < menu.length;i++ ){
       if( checkedId === menu[i].objectId ){
         this.setData({
@@ -82,6 +92,11 @@ Page({
     wx.navigateTo({
       url: `./components/detail/detail?id=${ id }`,
     });
+    try {
+      wx.uma.trackEvent('1602210474316',{name: name});
+    }catch (e) {
+
+    }
   },
   onHide() {
 

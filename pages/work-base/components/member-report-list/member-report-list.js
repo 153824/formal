@@ -121,17 +121,6 @@ Component({
       });
     },
 
-    tapTrack: function(){
-      wx.navigateTo({
-        url: '/pages/work-base/work-base?releaseRecordId=5f745844d9d79d3c986c2c17&sharedAt=1601461953932&tabIndex=1',
-        success: result => {
-          console.log(result)
-        },
-        fail: err=>{
-          console.log(err)
-        }
-      })
-    },
   },
   lifetimes: {
     created() {

@@ -2,7 +2,7 @@ page{
     background-color: rgba(247, 248, 250, 1)!important;
 }
 .program-wrapper{
-    padding: 0rpx 44rpx 50rpx 44rpx;
+    padding: 44rpx 44rpx 50rpx 44rpx;
     background-color: rgba(247, 248, 250, 1);
 }
 .program-title{

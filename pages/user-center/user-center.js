@@ -32,9 +32,6 @@ Page({
         })
     },
     goToReceiveEvaluation: function () {
-        // wx.navigateTo({
-        //     url: '/pages/work-base/components/member-report-list/member-report-list?navigationText=0'
-        // })
         wx.navigateTo({
             url: '/pages/user-center/components/receive-evaluations/receive-evaluations'
         })
@@ -84,4 +81,7 @@ Page({
             }
         });
     },
+    showServing: function () {
+        this.selectComponent('#serving').callServing();
+    }
 });

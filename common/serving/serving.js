@@ -31,6 +31,10 @@ Component({
         area: {
             type: String,
             value: "home"
+        },
+        visibility: {
+            type: String,
+            value: 'visible'
         }
     },
 

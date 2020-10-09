@@ -1,9 +1,8 @@
 <!--common/serving/serving.wxml-->
-<view wx:if="{{ type === 'circle'}}" class="serving" bindtap="callServing" style="bottom:{{ bottom }};right: {{ right }}">
+<view wx:if="{{ type === 'circle'}}" class="serving" bindtap="callServing" style="bottom:{{ bottom }};right: {{ right }};visibility: {{visibility === 'visible' ? 'visible' : 'hidden' }}">
     <image src="{{ image }}" style="height: 50px;width: 50px;"></image>
 <!--    showDlg-->
 </view>
-<view wx:elif="{{ type === 'rectangle'}}" class="serving rectangle-serving" bindtap="callServing"></view>
 <view class="coverView" wx:if="{{ showServing }}" bindtap="hideServing"></view>
 <view class="dlg" wx:if="{{ showServing }}">
     <view class="title">客服联系方式</view>

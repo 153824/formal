@@ -350,6 +350,7 @@ Page({
         } catch (e) {
 
         }
+        console.log("evaluation: ", `pages/work-base/components/track-detail/track-detail?releaseRecordId=${trackId || releaseRecordId}&sharedAt=${time}&tabIndex=1`,)
         return {
             title: `邀请您查看《${evaluationName}》的作答情况`,
             path: `pages/work-base/components/track-detail/track-detail?releaseRecordId=${trackId || releaseRecordId}&sharedAt=${time}&tabIndex=1`,

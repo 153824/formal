@@ -218,7 +218,8 @@ App({
         } catch (e) {
 
         }
-        if (this.wxWorkInfo.isWxWork && this.isReLaunch && (pages.includes(this.quitPage) || pages.includes(currentPage))) {
+        console.log("currentPage: ",currentPage);
+        if (this.wxWorkInfo.isWxWork && this.isReLaunch && (pages.includes(this.quitPage) && pages.includes(currentPage))) {
             const that = this;
             console.log("onShow wx.reLaunch");
             wx.switchTab({
@@ -236,7 +237,6 @@ App({
     },
 
     onHide() {
-        console.log("App is going to background!");
         if (this.wxWorkInfo.isWxWork) {
             this.isReLaunch = true;
             this.quitPage = getCurrentPages()[getCurrentPages().length - 1].route;

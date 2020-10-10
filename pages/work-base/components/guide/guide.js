@@ -34,7 +34,7 @@ Page({
             return that.getPaperMsg()
         }
         if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
-            app.checkUser = (userInfo) => {
+            app.checkUserInfo = (userInfo) => {
                 this.fetchEvaluation(userInfo);
             }
         } else {

@@ -36,7 +36,7 @@
 		"hidedInDevtools": []
 	},
 	"isGameTourist": false,
-	"simulatorType": "qywx_simulator_plugin",
+	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {
 		"qywx_simulator_plugin": "2.10.1"
 	},
@@ -87,7 +87,7 @@
 					"id": 2,
 					"name": "报告详情",
 					"pathName": "pages/report/report",
-					"query": "id=5f4f6cf094dbb6144681a465",
+					"query": "receiveRecordId=5f4f6cf094dbb6144681a465",
 					"scene": null
 				},
 				{
@@ -115,7 +115,7 @@
 					"id": 6,
 					"name": "二维码领取测评",
 					"pathName": "pages/replying/components/guide/guide",
-					"query": "q=https://api.luoke101.com/s/5f7448e0d9d79d3c986c2c0b",
+					"query": "q=https://api.luoke101.com/s/5f81521bd5a972193142e471",
 					"scene": null
 				},
 				{

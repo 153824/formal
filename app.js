@@ -129,6 +129,7 @@ App({
             this.doAjax({
                 url: 'wework/app/health',
                 method: 'get',
+                noLoading: true,
                 success: function (res) {
                     console.log("app/health: ", res);
                 }
@@ -325,6 +326,7 @@ App({
                 data: {
                     code: code
                 },
+                noLoading: true,
                 success: function (res) {
                     if (res.isAdmin) {
                         that.wxWorkInfo.isWxWorkAdmin = true;

@@ -1122,6 +1122,6 @@
         </view>
     </view>
 </block>
-<!--<hola-mask isShow="{{maskTrigger}}"></hola-mask>-->
+<hola-mask isShow="{{maskTrigger}}"></hola-mask>
 <wxs src="../../utils/util.wxs" module="util"></wxs>
 

@@ -417,6 +417,7 @@ Page({
                     sharedAt: sharedAt,
                     userId: userId
                 },
+                noLoading: true,
                 success: function (res) {
                     if (res.code !== -1) {
                         resolve(true)
@@ -445,7 +446,7 @@ Page({
             app.doAjax({
                 url: "reports/detail",
                 method: "get",
-                noLoading: false,
+                noLoading: true,
                 data: {
                     receiveRecordId: id
                 },
@@ -563,6 +564,11 @@ Page({
             res.report["showPage"] = true;
             res.maskTrigger = false;
             that.setData(res);
+            setTimeout(()=>{
+                that.setData({
+                    maskTrigger: false
+                })
+            },500)
             app.doAjax({
                 url: "userOrderMsg",
                 method: "get",
@@ -746,9 +752,16 @@ Page({
             for (let i = 0; i < 4; i++) {
                 res.fillBlank.push("");
             }
-            res.maskTrigger = false;
             that.setData(res);
+            setTimeout(()=>{
+                that.setData({
+                    maskTrigger: false
+                })
+            },500)
             this.getEvaluationQues();
+        }).catch(err=>{
+            console.error(err);
+            app.toast("获取测评错误")
         });
     },
     /**

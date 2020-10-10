@@ -36,7 +36,7 @@
 		"hidedInDevtools": []
 	},
 	"isGameTourist": false,
-	"simulatorType": "wechat",
+	"simulatorType": "qywx_simulator_plugin",
 	"simulatorPluginLibVersion": {
 		"qywx_simulator_plugin": "2.10.1"
 	},
@@ -94,7 +94,7 @@
 					"id": 3,
 					"name": "作答記錄",
 					"pathName": "pages/work-base/components/track-detail/track-detail",
-					"query": "releaseRecordId=5f72eae08dd3a004d2e9d6a3&sharedAt=1602238015689&tabIndex=1",
+					"query": "releaseRecordId=5f813067d5a972193142e46e&sharedAt=1602310089498&tabIndex=1",
 					"scene": null
 				},
 				{
@@ -108,7 +108,7 @@
 					"id": 5,
 					"name": "分享-报告详情",
 					"pathName": "pages/report/report",
-					"query": "receiveRecordId=5f61c79aad471d56600f658e",
+					"query": "receiveRecordId=5f812fe89511751230f99fce",
 					"scene": null
 				},
 				{

@@ -211,6 +211,7 @@ App({
     },
 
     onShow: function () {
+        const that = this;
         const pages = ["pages/home/home", "pages/work-base/work-base", "pages/user-center/user-center"];
         let currentPage = "";
         try {
@@ -219,14 +220,16 @@ App({
 
         }
         console.log("currentPage: ",currentPage);
-        if (this.wxWorkInfo.isWxWork && this.isReLaunch && (pages.includes(this.quitPage) && pages.includes(currentPage))) {
+        if (this.wxWorkInfo.isWxWork && this.isReLaunch && pages.includes(this.quitPage) && pages.includes(currentPage)) {
+            wx.showModal({
+                title: `${that.wxWorkInfo.isWxWork}-${that.isReLaunch}-${pages.includes(this.quitPage)}-${pages.includes(currentPage)}`,
+                icon: "none"
+            })
             const that = this;
             console.log("onShow wx.reLaunch");
             wx.switchTab({
                 url: '/pages/work-base/work-base?maskTrigger=true',
                 success: res => {
-                    console.log(res);
-                    console.log("work-base");
                     that.isReLaunch = false;
                 },
                 fail: function (err) {

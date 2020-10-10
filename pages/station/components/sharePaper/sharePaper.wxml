@@ -40,7 +40,9 @@
     <view class="daticenterbox">
         <van-image width="556rpx" height="990rpx" src="{{sharePaperInfo.img}}" lazy-load show-loading use-loading-slot
                    fill
-                   show-menu-by-longpress="true">
+                   show-menu-by-longpress="{{isWxWork ? false : true}}"
+                   bindlongpress="{{isWxWork ? 'saveToAlbum' : ''}}"
+        >
             <van-loading slot="loading" type="spinner" size="88" vertical>
                 <image src="../../../../images/icon/icon@icon-loading.png" class="loading"></image>
             </van-loading>

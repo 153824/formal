@@ -37,6 +37,9 @@ Page({
             quesCount: quesCount,
             estimatedTime: estimatedTime
         });
+        this.setData({
+            isWxWork: app.wxWorkInfo.isWxWork
+        })
     },
 
     /**
@@ -145,6 +148,36 @@ Page({
         const {sharePaperInfo} = this.data;
         wx.previewImage({
             urls: [sharePaperInfo.img]
+        })
+    },
+
+    saveToAlbum: function () {
+        let {img} = this.data.sharePaperInfo;
+        wx.downloadFile({
+            url: img,
+            success: res=>{
+                wx.saveImageToPhotosAlbum({
+                    filePath: res.tempFilePath,
+                    success: res=>{
+                        wx.showModal({
+                            title: "保存成功",
+                            icon: "none"
+                        })
+                    },
+                    fail: err=>{
+                        wx.showModal({
+                            title: "保存失败",
+                            icon: "none"
+                        })
+                    }
+                });
+            },
+            fail: err=>{
+                wx.showModal({
+                    title: "下载图片失败",
+                    icon: "none"
+                })
+            }
         })
     }
 })

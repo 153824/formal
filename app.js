@@ -136,7 +136,9 @@ App({
             });
             wx.qy.login({
                 success: res => {
-                    that.wxWorkUserLogin(res.code).then(data => {}).catch(err => {})
+                    that.wxWorkUserLogin(res.code).then(data => {
+                    }).catch(err => {
+                    })
                 },
                 fail: function (err) {
                     console.error(err);
@@ -216,7 +218,7 @@ App({
     onShow: function () {
         const that = this;
         const pages = ["pages/home/home", "pages/work-base/work-base", "pages/user-center/user-center"];
-        const scenes = [1007, 1008, 1011, 1012, 1013, 1036, 1047, 1048, 1049,];
+        const scenes = [1007, 1008, 1011, 1012, 1013, 1036, 1037, 1038, 1044, 1047, 1048, 1049,1096,1107];
         let currentPage = "";
         const sceneOption = wx.getLaunchOptionsSync();
         try {
@@ -225,6 +227,8 @@ App({
 
         }
         console.log("currentPage: ", currentPage);
+        console.log("sceneOption: ", sceneOption);
+        console.log("scenes.includes(sceneOption.scene): ", scenes.includes(sceneOption.scene));
         if (this.wxWorkInfo.isWxWork && this.isReLaunch && pages.includes(this.quitPage) && pages.includes(currentPage) && !scenes.includes(sceneOption.scene)) {
             const that = this;
             console.log("onShow wx.reLaunch");

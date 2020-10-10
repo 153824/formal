@@ -35,7 +35,7 @@ Page({
         }
         if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
             app.checkUserInfo = (userInfo) => {
-                this.fetchEvaluation(userInfo);
+                that.fetchEvaluation(userInfo);
             }
         } else {
             that.fetchEvaluation();
@@ -183,6 +183,7 @@ Page({
     fetchEvaluation: function (userInfo) {
         const that = this;
         const id = that.data.id;
+        console.log("userInfo: ",userInfo);
         if(!userInfo){
             userInfo = {
                 id: ""

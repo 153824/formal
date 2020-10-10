@@ -136,8 +136,9 @@ App({
             });
             wx.qy.login({
                 success: res => {
-                    that.wxWorkUserLogin(res.code).then(data => {
-                    }).catch(err => {
+                    that.wxWorkUserLogin(res.code).then(data => {}).catch(err => {});
+                    wx.setBackgroundFetchToken({
+                        token: res.code
                     })
                 },
                 fail: function (err) {
@@ -286,7 +287,7 @@ App({
                         if (that.checkUserInfo) {
                             res.teamId = that.teamId;
                             res.isWxWork = false;
-                            res.isAdmin = false
+                            res.isAdmin = false;
                             that.checkUserInfo(res.data);
                         }
                         that.getMyTeamList(that.checkUser);

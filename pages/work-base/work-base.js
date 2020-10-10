@@ -51,13 +51,9 @@ Page({
             });
             return;
         }
-        if (!app.globalData.userInfo && wx.getStorageSync("userInfo")) {
+        if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
             app.checkUserInfo = (userInfo) => {
                 console.log("work-base userInfo: ",userInfo)
-                wx.showToast({
-                    title: JSON.stringify(userInfo),
-                    duration: 10000
-                })
                 that.setData({
                     userInfo: userInfo,
                     isWxWork: userInfo.isWxWork,
@@ -65,10 +61,11 @@ Page({
                 })
             };
         } else {
+            console.log("app.wxWorkInfo,app.globalData.userInfo: ",app.wxWorkInfo.isWxWorkAdmin,app.globalData.userInfo,wx.getStorageSync('userInfo').isAdmin);
             that.setData({
                 userInfo: app.globalData.userInfo || wx.getStorageSync("userInfo"),
                 isWxWork: app.wxWorkInfo.isWxWork,
-                isWxWorkAdmin: wx.getStorageSync('userInfo').isAdmin || app.wxWorkInfo.isWxWorkAdmin,
+                isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin || wx.getStorageSync('userInfo').isAdmin,
             });
         }
         let {isWxWorkAdmin, isWxWork, isIPhoneXModel} = this.data;
@@ -99,12 +96,6 @@ Page({
 
     onShow() {
         const that = this;
-        const {userInfo, currTeam} = this.data;
-        this.setData({
-            userInfo: app.globalData.userInfo || wx.getStorageSync("userInfo"),
-            isWxWork: app.wxWorkInfo.isWxWork,
-            isWxWorkAdmin: wx.getStorageSync('userInfo').isAdmin || app.wxWorkInfo.isWxWorkAdmin,
-        });
         let {isWxWorkAdmin, isWxWork} = this.data;
         if (!isWxWork) {
             this.title = this.selectComponent("#title");

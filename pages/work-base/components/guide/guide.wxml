@@ -31,4 +31,4 @@
     </button>
     <text class="infotext">好啦测评提供技术支持</text>
 </view>
-<hola-mask isShow="{{ loading }}"></hola-mask>
+<hola-mask isShow="{{ maskTrigger }}"></hola-mask>

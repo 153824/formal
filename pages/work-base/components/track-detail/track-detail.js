@@ -55,9 +55,11 @@ Page({
             if (releaseRecordId && sharedAt) {
                 this.acceptEvaluationTrack(options).then(res => {
                     Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
-                        that.setData({
-                            maskTrigger: false
-                        })
+                        setTimeout(()=>{
+                            that.setData({
+                                maskTrigger: false
+                            })
+                        },500)
                     })
                 }).catch(err => {
                     wx.switchTab({
@@ -66,9 +68,11 @@ Page({
                 })
             } else {
                 Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
-                    that.setData({
-                        maskTrigger: false
-                    })
+                    setTimeout(()=>{
+                        that.setData({
+                            maskTrigger: false
+                        })
+                    },500)
                 }).catch(err => {
                     console.error("err: ", err);
                     that.setData({
@@ -83,9 +87,11 @@ Page({
                 if (releaseRecordId && sharedAt) {
                     this.acceptEvaluationTrack(options).then(res => {
                         Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
-                            that.setData({
-                                maskTrigger: false
-                            })
+                            setTimeout(()=>{
+                                that.setData({
+                                    maskTrigger: false
+                                })
+                            },500)
                         })
                     }).catch(err => {
                         wx.switchTab({
@@ -94,14 +100,18 @@ Page({
                     })
                 } else {
                     Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
-                        that.setData({
-                            maskTrigger: false
-                        })
+                        setTimeout(()=>{
+                            that.setData({
+                                maskTrigger: false
+                            })
+                        },500)
                     }).catch(err => {
                         console.error("err: ", err);
-                        that.setData({
-                            maskTrigger: false
-                        })
+                        setTimeout(()=>{
+                            that.setData({
+                                maskTrigger: false
+                            })
+                        },500)
                     })
                 }
             }
@@ -121,17 +131,13 @@ Page({
             app.doAjax({
                 url: "release_records/accept",
                 method: "post",
+                noLoading: true,
                 data: {
                     userId: wx.getStorageSync("userInfo").id || userId,
                     releaseRecordId: releaseRecordId || trackId,
                     sharedAt: sharedAt
                 },
                 success: function (res) {
-                    if (res.code === 0) {
-                        wx.showToast({
-                            title: "领取使用记录成功！"
-                        });
-                    }
                     resolve(true)
                 },
                 fail: function (err) {
@@ -153,6 +159,7 @@ Page({
             app.doAjax({
                 url: `release_records/detail`,
                 method: 'get',
+                noLoading: true,
                 data: {
                     type: 'examining',
                     page: examiningPage,
@@ -184,6 +191,7 @@ Page({
             app.doAjax({
                 url: `release_records/detail`,
                 method: 'get',
+                noLoading: true,
                 data: {
                     type: 'finished',
                     page: finishedPage,
@@ -213,6 +221,7 @@ Page({
             app.doAjax({
                 url: `release_records/digest`,
                 method: `get`,
+                noLoading: true,
                 data: {
                     releaseRecordId: trackId || releaseRecordId,
                     userId: options.userId,

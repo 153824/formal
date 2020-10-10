@@ -5,7 +5,7 @@ Page({
     data: {
         hasUserInfo: false,
         isTest: false,
-        loading: false
+        maskTrigger: true
     },
     onLoad: function (option) {
         let releaseEvaluationId = "";
@@ -76,6 +76,7 @@ Page({
         app.doAjax({
             url: "paperQues",
             method: "get",
+            noLoading: true,
             data: {
                 id: params.evaluationId || "",
                 isTest: app.isTest
@@ -114,6 +115,7 @@ Page({
             app.doAjax({
                 url: "updateUserMsg",
                 method: "post",
+                noLoading: true,
                 data: {
                     data: JSON.stringify({
                         wxUserInfo: userData,
@@ -191,6 +193,7 @@ Page({
         app.doAjax({
             url: "release/fetch",
             method: "post",
+            noLoading: true,
             data: {
                 releaseRecordId: id,
                 userId: userInfo.id
@@ -207,10 +210,12 @@ Page({
                 that.setData({
                     reportPermit: res.reportPermit
                 });
-                if (oldData && res.status !== 'FINISHED') {
+                setTimeout(()=>{
                     that.setData({
-                        loading: true
-                    });
+                        maskTrigger: false
+                    })
+                },500);
+                if (oldData && res.status !== 'FINISHED') {
                     setTimeout(() => {
                         wx.redirectTo({
                             url: '../answering/answering?pid=' + res.evaluationId + '&id=' + id + '&receiveRecordId=' + res.receiveRecordId + "&reportPermit=" + res.reportPermit + "&status=" + res.status
@@ -255,6 +260,13 @@ Page({
                     teamName: res.teamName,
                     text: text
                 })
+            },
+            fail: function (err) {
+                setTimeout(()=>{
+                    that.setData({
+                        maskTrigger: false
+                    })
+                },500);
             }
         });
     }

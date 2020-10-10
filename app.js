@@ -122,6 +122,8 @@ App({
         if (sysMsg.environment === 'wxwork') {
             this.wxWorkInfo.isWxWork = true;
         }
+        const scene = wx.getLaunchOptionsSync();
+        console.log("scene: ", scene);
         if (this.wxWorkInfo.isWxWork) {
             const that = this;
             this.doAjax({
@@ -133,7 +135,9 @@ App({
             });
             wx.qy.login({
                 success: res => {
-                    that.wxWorkUserLogin(res.code).then(data => {}).catch(err => {})
+                    that.wxWorkUserLogin(res.code).then(data => {
+                    }).catch(err => {
+                    })
                 },
                 fail: function (err) {
                     console.error(err);
@@ -213,18 +217,16 @@ App({
     onShow: function () {
         const that = this;
         const pages = ["pages/home/home", "pages/work-base/work-base", "pages/user-center/user-center"];
+        const scenes = [1007, 1008, 1011, 1012, 1013, 1036, 1047, 1048, 1049,];
         let currentPage = "";
+        const sceneOption = wx.getLaunchOptionsSync();
         try {
             currentPage = getCurrentPages()[getCurrentPages().length - 1].route || "";
         } catch (e) {
 
         }
-        console.log("currentPage: ",currentPage);
-        if (this.wxWorkInfo.isWxWork && this.isReLaunch && pages.includes(this.quitPage) && pages.includes(currentPage)) {
-            wx.showModal({
-                title: `${that.wxWorkInfo.isWxWork}-${that.isReLaunch}-${pages.includes(this.quitPage)}-${pages.includes(currentPage)}`,
-                icon: "none"
-            })
+        console.log("currentPage: ", currentPage);
+        if (this.wxWorkInfo.isWxWork && this.isReLaunch && pages.includes(this.quitPage) && pages.includes(currentPage) && !scenes.includes(sceneOption.scene)) {
             const that = this;
             console.log("onShow wx.reLaunch");
             wx.switchTab({
@@ -278,7 +280,7 @@ App({
                         that.globalData.userInfo = Object.assign(userData,
                             that.globalData.userInfo || {})
                         that.isLogin = true;
-                        if(that.checkUserInfo){
+                        if (that.checkUserInfo) {
                             res.teamId = that.teamId;
                             that.checkUserInfo(res.data);
                         }
@@ -328,7 +330,7 @@ App({
                         that.wxWorkInfo.isWxWorkAdmin = true;
                         wx.setStorageSync('isWxWorkAdmin', true);
                     }
-                    if(that.checkUserInfo){
+                    if (that.checkUserInfo) {
                         that.checkUserInfo(res);
                     }
                     that.globalData.userMsg = res.userMsg || {};

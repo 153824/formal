@@ -81,9 +81,9 @@ Component({
                     url: `${that.data.wxPage[active].path}`
                 });
                 try {
-                    wx.uma.trackEvent("1601368351375",{"导航栏名称":`${that.data.wxPage[active].text}`});
-                }catch (e) {
-                    console.error("tab-bar.js -> 85",e)
+                    wx.uma.trackEvent("1601368351375", {"导航栏名称": `${that.data.wxPage[active].text}`});
+                } catch (e) {
+                    console.error("tab-bar.js -> 85", e)
                 }
             } else if (isWxWorkAdmin) {
                 wx.switchTab({
@@ -94,7 +94,7 @@ Component({
                     wx.switchTab({
                         url: `${that.data.wxWorkPage.member[active].path}`
                     });
-                }catch (e) {
+                } catch (e) {
 
                 }
             }
@@ -116,10 +116,15 @@ Component({
                 isWxWork: app.wxWorkInfo.isWxWork,
                 isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
             });
+            wx.createSelectorQuery().in(this).select("#tabbar").boundingClientRect().exec(res => {
+                console.log(res)
+                wx.setStorageSync("TAB_BAR_HEIGHT",res[0].height)
+            });
         }
     },
     lifetimes: {
-        ready() {},
+        ready() {
+        },
         created() {
 
         },
@@ -128,6 +133,9 @@ Component({
                 isWxWork: app.wxWorkInfo.isWxWork,
                 isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
             });
+            // wx.createSelectorQuery().in(this).select("#tabbar").boundingClientRect().exec(res => {
+            //     console.log(res);
+            // });
         }
     }
 });

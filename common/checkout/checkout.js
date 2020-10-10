@@ -48,7 +48,7 @@ Component({
     changePage: function (e) {
       const { id,subtitle } = e.currentTarget.dataset;
       wx.navigateTo({
-        url: `../report/detail?id=${ id }&command=close`
+        url: `/pages/report/report?receiveRecordId=${ id }&command=close`
       });
     }
   }

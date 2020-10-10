@@ -101,36 +101,23 @@ Component({
         },
     },
     pageLifetimes: {
-        load: function () {
-            const that = this;
-            if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
-                app.checkUserInfo = (userInfo) => {
-                    that.setData({
-                        isWxWork: userInfo.isWxWork,
-                        isWxWorkAdmin: userInfo.isAdmin,
-                    });
-                }
-            } else {
-                that.setData({
-                    isWxWork: app.wxWorkInfo.isWxWork,
-                    isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
-                });
-            }
-        },
         show: function () {
             const that = this;
             const {active} = this.properties;
             this.setData({
                 active,
             });
+            console.log("tabbar-pageLifetimes-show")
             if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
                 app.checkUserInfo = (userInfo) => {
+                    console.log("tab-bar userInfo",userInfo);
                     that.setData({
                         isWxWork: userInfo.isWxWork,
                         isWxWorkAdmin: userInfo.isAdmin,
                     });
                 }
             } else {
+                console.log("tab-bar wxWorkInfo",app.wxWorkInfo);
                 that.setData({
                     isWxWork: app.wxWorkInfo.isWxWork,
                     isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
@@ -152,12 +139,14 @@ Component({
             const that = this;
             if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
                 app.checkUserInfo = (userInfo) => {
+                    console.log("attached: userInfo",userInfo)
                     that.setData({
                         isWxWork: userInfo.isWxWork,
                         isWxWorkAdmin: userInfo.isAdmin,
                     });
                 }
             } else {
+                console.log("attached: app.wxWorkInfo",app.wxWorkInfo)
                 that.setData({
                     isWxWork: app.wxWorkInfo.isWxWork,
                     isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,

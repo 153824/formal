@@ -37,8 +37,8 @@ page{
 .content{
     position: relative;
     top: 194rpx;
-    padding-top: 22rpx;
-    padding-bottom: 30rpx;
+    padding-top: 0rpx;
+    padding-bottom: 0rpx;
     background-color: rgba(247, 248, 250, 1);
 }
 .wxwork-content{

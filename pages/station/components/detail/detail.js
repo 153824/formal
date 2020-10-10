@@ -351,7 +351,9 @@ Page({
                 that.setData({
                     releaseInfo: res
                 });
-                const url = `../../../replying/replying?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`;
+                const replyingURL = `/pages/replying/replying?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`;
+                const guideURL = `/pages/replying/components/guide/guide?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`;
+                console.log("goToReplyingGuide: ",res);
                 if (res.unfinished) {
                     const sKey = "oldAnswer" + res.receiveRecordId;
                     let oldData = wx.getStorageSync(sKey);
@@ -360,16 +362,16 @@ Page({
                     }
                     if (oldData) {
                         wx.navigateTo({
-                            url: url
+                            url: replyingURL
                         });
                         return;
                     }
                     wx.navigateTo({
-                        url: url
+                        url: replyingURL
                     });
                 } else {
                     wx.navigateTo({
-                        url: url
+                        url: guideURL
                     });
                 }
             }

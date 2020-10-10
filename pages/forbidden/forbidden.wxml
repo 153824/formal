@@ -1,3 +1,8 @@
-<view>
-    请使用微信小程序（好啦人才测评）领取
+<view class="forbidden-wrapper">
+    <image src="/images/icon/icon@icon-wechat-forbidden.png" style="width: 200rpx;height: 200rpx;"/>
+    <view class="forbidden-text">
+        <view >您是企业外部人员</view>
+        <view>请使用【微信】扫码作答</view>
+    </view>
 </view>
+

@@ -1,0 +1,19 @@
+.forbidden-wrapper{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.forbidden-text{
+    margin-top: 70rpx;
+    font-size: 32rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #18263C;
+}
+.forbidden-text view{
+    margin-bottom: 30rpx;
+    text-align: center;
+}

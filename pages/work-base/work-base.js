@@ -37,10 +37,9 @@ Page({
         tabBarHeight: 0
     },
 
-    onLoad: function (option={isWxWorkAdmin: false}) {
+    onLoad: function (option = {isWxWorkAdmin: false}) {
         const that = this;
-        const optionIsWxWorkAdmin = option.isWxWorkAdmin || false;
-
+        // const optionIsWxWorkAdmin = option.isWxWorkAdmin || false;
         if (option.maskTrigger) {
             this.setData({
                 maskTrigger: option.maskTrigger
@@ -52,19 +51,34 @@ Page({
             });
             return;
         }
-        this.setData({
-            userInfo: app.globalData.userInfo || wx.getStorageSync("userInfo"),
-            isWxWork: app.wxWorkInfo.isWxWork,
-            isWxWorkAdmin: optionIsWxWorkAdmin || wx.getStorageSync('userInfo').isAdmin || app.wxWorkInfo.isWxWorkAdmin,
-        });
-        let {isWxWorkAdmin, isWxWork, isIPhoneXModel} = this.data;
-        if (optionIsWxWorkAdmin) {
-            isWxWorkAdmin = optionIsWxWorkAdmin;
-            this.setData({
-                isWxWorkAdmin: isWxWorkAdmin,
-                maskTrigger: option.maskTrigger
-            })
+        if (!app.globalData.userInfo && wx.getStorageSync("userInfo")) {
+            app.checkUserInfo = (userInfo) => {
+                console.log("work-base userInfo: ",userInfo)
+                wx.showToast({
+                    title: JSON.stringify(userInfo),
+                    duration: 10000
+                })
+                that.setData({
+                    userInfo: userInfo,
+                    isWxWork: userInfo.isWxWork,
+                    isWxWorkAdmin: userInfo.isAdmin,
+                })
+            };
+        } else {
+            that.setData({
+                userInfo: app.globalData.userInfo || wx.getStorageSync("userInfo"),
+                isWxWork: app.wxWorkInfo.isWxWork,
+                isWxWorkAdmin: wx.getStorageSync('userInfo').isAdmin || app.wxWorkInfo.isWxWorkAdmin,
+            });
         }
+        let {isWxWorkAdmin, isWxWork, isIPhoneXModel} = this.data;
+        // if (optionIsWxWorkAdmin) {
+        //     isWxWorkAdmin = optionIsWxWorkAdmin;
+        //     this.setData({
+        //         isWxWorkAdmin: isWxWorkAdmin,
+        //         maskTrigger: option.maskTrigger
+        //     })
+        // }
         wx.getSystemInfo({
             success: function (res) {
                 const {isIPhoneXModel} = that.data;
@@ -265,7 +279,8 @@ Page({
         }
     },
 
-    onHide() {},
+    onHide() {
+    },
 
     getUserInfo: function (e) {
         var that = this;
@@ -358,7 +373,7 @@ Page({
             app.toast("测评可用数量不足");
             return;
         }
-        wx.uma.trackEvent('1602212565156',{name: evaluationName,isFree: type === "FREE"})
+        wx.uma.trackEvent('1602212565156', {name: evaluationName, isFree: type === "FREE"})
         wx.navigateTo({
             url: `../station/components/sharePaper/sharePaper?necessaryInfo=${JSON.stringify(necessaryInfo)}`,
         })

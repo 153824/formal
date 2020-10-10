@@ -136,9 +136,7 @@ App({
             });
             wx.qy.login({
                 success: res => {
-                    that.wxWorkUserLogin(res.code).then(data => {
-                    }).catch(err => {
-                    })
+                    that.wxWorkUserLogin(res.code).then(data => {}).catch(err => {})
                 },
                 fail: function (err) {
                     console.error(err);
@@ -283,6 +281,8 @@ App({
                         that.isLogin = true;
                         if (that.checkUserInfo) {
                             res.teamId = that.teamId;
+                            res.isWxWork = false;
+                            res.isAdmin = false
                             that.checkUserInfo(res.data);
                         }
                         that.getMyTeamList(that.checkUser);
@@ -333,6 +333,7 @@ App({
                         wx.setStorageSync('isWxWorkAdmin', true);
                     }
                     if (that.checkUserInfo) {
+                        res.isWxWork = true;
                         that.checkUserInfo(res);
                     }
                     that.globalData.userMsg = res.userMsg || {};

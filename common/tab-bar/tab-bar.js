@@ -102,23 +102,43 @@ Component({
     },
     pageLifetimes: {
         load: function () {
-            const {active} = this.properties;
-            this.setData({
-                active,
-                isWxWork: app.wxWorkInfo.isWxWork,
-                isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
-            });
+            const that = this;
+            if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
+                app.checkUserInfo = (userInfo) => {
+                    that.setData({
+                        isWxWork: userInfo.isWxWork,
+                        isWxWorkAdmin: userInfo.isAdmin,
+                    });
+                }
+            } else {
+                that.setData({
+                    isWxWork: app.wxWorkInfo.isWxWork,
+                    isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
+                });
+            }
         },
         show: function () {
+            const that = this;
             const {active} = this.properties;
             this.setData({
                 active,
-                isWxWork: app.wxWorkInfo.isWxWork,
-                isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
             });
+            if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
+                app.checkUserInfo = (userInfo) => {
+                    that.setData({
+                        isWxWork: userInfo.isWxWork,
+                        isWxWorkAdmin: userInfo.isAdmin,
+                    });
+                }
+            } else {
+                that.setData({
+                    isWxWork: app.wxWorkInfo.isWxWork,
+                    isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
+                });
+            }
             wx.createSelectorQuery().in(this).select("#tabbar").boundingClientRect().exec(res => {
                 console.log(res)
-                wx.setStorageSync("TAB_BAR_HEIGHT",res[0].height)
+                wx.setStorageSync("TAB_BAR_HEIGHT", res[0].height)
             });
         }
     },
@@ -129,13 +149,20 @@ Component({
 
         },
         attached() {
-            this.setData({
-                isWxWork: app.wxWorkInfo.isWxWork,
-                isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
-            });
-            // wx.createSelectorQuery().in(this).select("#tabbar").boundingClientRect().exec(res => {
-            //     console.log(res);
-            // });
+            const that = this;
+            if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
+                app.checkUserInfo = (userInfo) => {
+                    that.setData({
+                        isWxWork: userInfo.isWxWork,
+                        isWxWorkAdmin: userInfo.isAdmin,
+                    });
+                }
+            } else {
+                that.setData({
+                    isWxWork: app.wxWorkInfo.isWxWork,
+                    isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
+                });
+            }
         }
     }
 });

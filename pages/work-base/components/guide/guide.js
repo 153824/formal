@@ -38,7 +38,6 @@ Page({
                 this.fetchEvaluation(userInfo);
             }
         } else {
-            console.log("this.fetchEvaluation()")
             that.fetchEvaluation();
         }
 

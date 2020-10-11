@@ -20,10 +20,12 @@ Page({
             this.setData({
                 loading: true,
             });
-            console.log("work-base");
-            wx.switchTab({
-                url: "/pages/work-base/work-base"
-            });
+            setTimeout(()=>{
+                wx.switchTab({
+                    url: "/pages/work-base/work-base"
+                });
+            },4000);
+            return;
         }
         if (options.loadingTrigger) {
             this.setData({

@@ -37,21 +37,10 @@ Page({
         tabBarHeight: 0
     },
 
-    onLoad: function (option = {isWxWorkAdmin: false}) {
+    onLoad: function (option) {
         const that = this;
-        // const optionIsWxWorkAdmin = option.isWxWorkAdmin || false;
-        if (option.maskTrigger) {
-            this.setData({
-                maskTrigger: option.maskTrigger
-            })
-        }
-        if (option.msg === 'err') {
-            this.setData({
-                maskTrigger: true
-            });
-            return;
-        }
         if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
+            console.log("first");
             app.checkUserInfo = (userInfo) => {
                 console.log("work-base userInfo: ",userInfo)
                 that.setData({
@@ -61,21 +50,15 @@ Page({
                 })
             };
         } else {
+            console.log("second");
             console.log("app.wxWorkInfo,app.globalData.userInfo: ",app.wxWorkInfo.isWxWorkAdmin,app.globalData.userInfo,wx.getStorageSync('userInfo').isAdmin);
             that.setData({
-                userInfo: app.globalData.userInfo || wx.getStorageSync("userInfo"),
+                userInfo: wx.getStorageSync("userInfo") || app.globalData.userInfo,
                 isWxWork: app.wxWorkInfo.isWxWork,
-                isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin || wx.getStorageSync('userInfo').isAdmin,
+                isWxWorkAdmin: wx.getStorageSync('userInfo').isAdmin || app.wxWorkInfo.isWxWorkAdmin,
             });
         }
-        let {isWxWorkAdmin, isWxWork, isIPhoneXModel} = this.data;
-        // if (optionIsWxWorkAdmin) {
-        //     isWxWorkAdmin = optionIsWxWorkAdmin;
-        //     this.setData({
-        //         isWxWorkAdmin: isWxWorkAdmin,
-        //         maskTrigger: option.maskTrigger
-        //     })
-        // }
+        let {isIPhoneXModel} = this.data;
         wx.getSystemInfo({
             success: function (res) {
                 const {isIPhoneXModel} = that.data;

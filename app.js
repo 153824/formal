@@ -101,6 +101,7 @@ App({
         const referrerInfo = options.referrerInfo;
         const menuBtnObj = wx.getMenuButtonBoundingClientRect();
         const sysMsg = wx.getSystemInfoSync();
+        console.log("sysMsg: ",sysMsg);
         this.isIphoneX = false;
         this.isIos = false;
         this.fromAppId = '';
@@ -137,9 +138,6 @@ App({
             wx.qy.login({
                 success: res => {
                     that.wxWorkUserLogin(res.code).then(data => {}).catch(err => {});
-                    wx.setBackgroundFetchToken({
-                        token: res.code
-                    })
                 },
                 fail: function (err) {
                     console.error(err);
@@ -234,7 +232,7 @@ App({
             const that = this;
             console.log("onShow wx.reLaunch");
             wx.switchTab({
-                url: '/pages/work-base/work-base?maskTrigger=true',
+                url: '/pages/work-base/work-base',
                 success: res => {
                     that.isReLaunch = false;
                 },
@@ -340,6 +338,9 @@ App({
                     if (that.checkUserInfo) {
                         res.isWxWork = true;
                         that.checkUserInfo(res);
+                    }
+                    if (getCurrentPages().length != 0) {
+                        getCurrentPages()[getCurrentPages().length - 1].onLoad()
                     }
                     that.globalData.userMsg = res.userMsg || {};
                     const userData = res;

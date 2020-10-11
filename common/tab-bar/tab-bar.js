@@ -85,7 +85,7 @@ Component({
                 } catch (e) {
                     console.error("tab-bar.js -> 85", e)
                 }
-            } else if (isWxWorkAdmin) {
+            } else if (isWxWork && isWxWorkAdmin) {
                 wx.switchTab({
                     url: `${that.data.wxWorkPage.admin[active].path}`
                 });
@@ -120,7 +120,7 @@ Component({
                 console.log("tab-bar wxWorkInfo",app.wxWorkInfo);
                 that.setData({
                     isWxWork: app.wxWorkInfo.isWxWork,
-                    isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
+                    isWxWorkAdmin: wx.getStorageSync("userInfo").isAdmin || app.wxWorkInfo.isWxWorkAdmin,
                 });
             }
             wx.createSelectorQuery().in(this).select("#tabbar").boundingClientRect().exec(res => {
@@ -146,10 +146,10 @@ Component({
                     });
                 }
             } else {
-                console.log("attached: app.wxWorkInfo",app.wxWorkInfo)
+                console.log("attached: app.wxWorkInfo",app.wxWorkInfo,wx.getStorageSync("userInfo").isAdmin)
                 that.setData({
                     isWxWork: app.wxWorkInfo.isWxWork,
-                    isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
+                    isWxWorkAdmin: wx.getStorageSync("userInfo").isAdmin || app.wxWorkInfo.isWxWorkAdmin,
                 });
             }
         }

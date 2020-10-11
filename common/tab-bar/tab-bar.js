@@ -103,10 +103,11 @@ Component({
     pageLifetimes: {
         show: function () {
             const that = this;
-            const {active} = this.properties;
-            this.setData({
-                active,
-            });
+            // const {active} = this.properties;
+            // console.log("active: ",active)
+            // this.setData({
+            //     active,
+            // });
             console.log("tabbar-pageLifetimes-show")
             if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
                 app.checkUserInfo = (userInfo) => {

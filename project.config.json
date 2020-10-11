@@ -25,7 +25,7 @@
 			"outputPath": ""
 		},
 		"bundle": true,
-		"useCompilerModule": true,
+		"useCompilerModule": false,
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
@@ -36,9 +36,9 @@
 		"hidedInDevtools": []
 	},
 	"isGameTourist": false,
-	"simulatorType": "wechat",
+	"simulatorType": "qywx_simulator_plugin",
 	"simulatorPluginLibVersion": {
-		"qywx_simulator_plugin": "2.10.1"
+		"qywx_simulator_plugin": "2.4.0"
 	},
 	"scripts": {
 		"beforeCompile": "",

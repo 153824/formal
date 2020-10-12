@@ -291,7 +291,7 @@ Page({
     },
     submit: function (e) {
         const that = this;
-        const receiveRecordId = this.data;
+        const {receiveRecordId} = this.data;
         function doNext() {
             const data = that.data;
             const username = data.username;

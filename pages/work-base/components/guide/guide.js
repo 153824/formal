@@ -199,6 +199,7 @@ Page({
                 userId: userInfo.id
             },
             success: function (res) {
+                console.log("res receiveRecordId",res);
                 if (!res.receiveRecordId) {
                     app.toast("该分享已失效！");
                     wx.navigateTo({

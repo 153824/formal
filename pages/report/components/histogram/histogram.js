@@ -32,7 +32,8 @@ Component({
             const index = canvasId.replace("mychartcanvas", "");
             const chart = echarts.init(canvas, null, {
                 width: width,
-                height: height
+                height: height,
+                devicePixelRatio: 2
             });
             const {histogramYAxis, limit, histogramValues, lines} = that.properties;
             console.log("histogramValues[index]: ",histogramValues[index]);
@@ -95,7 +96,7 @@ Component({
                 const line = {
                     name: key,
                     type: 'line',
-                    data: lines[index][key].data,
+                    data: lines[index][key].data.reverse(),
                     itemStyle: {
                         normal: {
                             color: lines[index][key].color || color,

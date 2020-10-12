@@ -101,7 +101,7 @@ App({
         const referrerInfo = options.referrerInfo;
         const menuBtnObj = wx.getMenuButtonBoundingClientRect();
         const sysMsg = wx.getSystemInfoSync();
-        console.log("sysMsg: ",sysMsg);
+        console.log("sysMsg: ", sysMsg);
         this.isIphoneX = false;
         this.isIos = false;
         this.fromAppId = '';
@@ -137,7 +137,9 @@ App({
             });
             wx.qy.login({
                 success: res => {
-                    that.wxWorkUserLogin(res.code).then(data => {}).catch(err => {});
+                    that.wxWorkUserLogin(res.code).then(data => {
+                    }).catch(err => {
+                    });
                 },
                 fail: function (err) {
                     console.error(err);
@@ -217,7 +219,7 @@ App({
     onShow: function () {
         const that = this;
         const pages = ["pages/home/home", "pages/work-base/work-base", "pages/user-center/user-center"];
-        const scenes = [1007, 1008, 1011, 1012, 1013, 1014, 1017, 1036, 1037, 1038, 1044, 1047, 1048, 1049,1096,1107];
+        const scenes = [1007, 1008, 1011, 1012, 1013, 1014, 1017, 1036, 1037, 1038, 1044, 1047, 1048, 1049, 1073, 1074, 1088, 1096, 1107, 1113, 1114, 1119];
         let currentPage = "";
         const sceneOption = wx.getLaunchOptionsSync();
         try {
@@ -227,11 +229,6 @@ App({
         }
         console.log("currentPage: ", currentPage);
         console.log("sceneOption: ", sceneOption);
-        wx.showToast({
-            title: sceneOption.scene.toString(),
-            icon: 'none',
-            duration: 2000,
-        });
         console.log("scenes.includes(sceneOption.scene): ", scenes.includes(sceneOption.scene));
         if (this.wxWorkInfo.isWxWork && this.isReLaunch && pages.includes(this.quitPage) && pages.includes(currentPage) && !scenes.includes(sceneOption.scene)) {
             const that = this;
@@ -343,9 +340,6 @@ App({
                     if (that.checkUserInfo) {
                         res.isWxWork = true;
                         that.checkUserInfo(res);
-                    }
-                    if (getCurrentPages().length != 0) {
-                        getCurrentPages()[getCurrentPages().length - 1].onLoad()
                     }
                     that.globalData.userMsg = res.userMsg || {};
                     const userData = res;

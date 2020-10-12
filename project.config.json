@@ -36,7 +36,7 @@
 		"hidedInDevtools": []
 	},
 	"isGameTourist": false,
-	"simulatorType": "wechat",
+	"simulatorType": "qywx_simulator_plugin",
 	"simulatorPluginLibVersion": {
 		"qywx_simulator_plugin": "2.10.1"
 	},
@@ -113,16 +113,16 @@
 				},
 				{
 					"id": 6,
-					"name": "二维码领取测评",
-					"pathName": "pages/replying/components/guide/guide",
-					"query": "q=https://api.luoke101.com/s/5f81521bd5a972193142e471",
+					"name": "小程序领取测评",
+					"pathName": "pages/work-base/components/guide/guide",
+					"query": "scene=5f8428e5164cf1025532e138",
 					"scene": null
 				},
 				{
 					"id": 7,
 					"name": "二维码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "q=https://api.luoke101.com/s/5f7448e0d9d79d3c986c2c0b",
+					"query": "q=https://api.luoke101.com/s/5f8428e5164cf1025532e138",
 					"scene": null
 				},
 				{
@@ -140,10 +140,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 10,
 					"name": "小层序码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=5f7448e0d9d79d3c986c2c0b",
+					"query": "scene=5f842ab5164cf1025532e142",
 					"scene": null
 				}
 			]

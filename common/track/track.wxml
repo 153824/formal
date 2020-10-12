@@ -25,5 +25,7 @@
         </view>
     </scroll-view>
 </view>
-<hola-empty isShow="{{!evaluationTrack.length}}" title="暂无记录"></hola-empty>
+<view wx:if="{{!evaluationTrack.length}}" class="program-wrapper" style="padding-top: 44rpx;">
+    <hola-empty title="暂无记录"></hola-empty>
+</view>
 <wxs module="util" src="../../utils/util.wxs"></wxs>

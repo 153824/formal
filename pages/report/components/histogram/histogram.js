@@ -35,11 +35,12 @@ Component({
                 height: height
             });
             const {histogramYAxis, limit, histogramValues, lines} = that.properties;
+            console.log("histogramValues[index]: ",histogramValues[index]);
             const series = [
                 {
                     name: "受测者得分",
                     type: 'bar',
-                    data: histogramValues[index],
+                    data: histogramValues[index].reverse(),
                     label: {
                         show: true,
                         position: "right",
@@ -153,7 +154,7 @@ Component({
                         },
                         type: 'category',
                         boundaryGap: true,
-                        data: histogramYAxis[index],
+                        data: histogramYAxis[index].reverse(),
                     }
                 ],
                 xAxis: {

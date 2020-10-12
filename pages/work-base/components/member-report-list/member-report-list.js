@@ -163,12 +163,6 @@ Component({
       });
     },
 
-    detached() {
-      if(this.properties.backToUserCenter){
-        wx.switchTab({
-          url: "/pages/user-center/user-center"
-        })
-      }
-    }
+    detached() {}
   }
 });

@@ -11,7 +11,9 @@ Page({
     },
     onShow() {},
     onUnload() {
-
+        wx.switchTab({
+            url: "/pages/user-center/user-center"
+        })
     }
 })
 ;

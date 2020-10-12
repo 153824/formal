@@ -44,11 +44,16 @@ Page({
      */
     toApply: function (e) {
         const that = this;
+        const appId = wx.getAccountInfoSync().miniProgram.appId;
+        let tmplIds = ['hw3Sa5T2AsPgHudjlhOIbFuA7Wn9pFyOFYAJAl0vdu8'];
+        if (appId === 'wx85cde7d3e8f3d949') {
+            tmplIds = ['TbdAz-JlO7o1Vw7J_iCznnkhUViAobPvyEz--L9WLRQ']
+        }
         if (wx.requestSubscribeMessage) {
             wx.requestSubscribeMessage({
-                tmplIds: [
-                    "Aw5JEz2yLyNc_opz2W6ketKPTlEC_q0fA2eQAYVPC4k"
-                ],
+                // hw3Sa5T2AsPgHudjlhOIbFuA7Wn9pFyOFYAJAl0vdu8 - 悠悠测评
+                // TbdAz-JlO7o1Vw7J_iCznnkhUViAobPvyEz--L9WLRQ - 好啦测评
+                tmplIds,
                 success: function () {
                     toNext();
                 },

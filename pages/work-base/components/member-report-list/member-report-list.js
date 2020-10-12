@@ -26,7 +26,7 @@ Component({
     },
     backToUserCenter: {
       type: Boolean,
-      value: true
+      value: false
     }
   },
   pageLifetimes: {

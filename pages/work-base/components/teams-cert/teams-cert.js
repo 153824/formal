@@ -183,6 +183,7 @@ Page({
         imgurl = "http://" + file.imageURL;
         toNext();
       }, function(err) {
+        console.log("qiniuUpload.upload: ",err)
         wx.hideLoading();
         wx.showToast({
           title: '图片上传失败，请重试！',
@@ -220,9 +221,12 @@ Page({
             });
             return;
           }
+          wx.clearStorageSync();
           app.toast("操作成功");
           setTimeout(function() {
-            wx.navigateBack();
+            wx.reLaunch({
+              url: "/pages/home/home"
+            });
           }, 1000);
         }
       });

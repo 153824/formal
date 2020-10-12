@@ -1,5 +1,5 @@
 <!--admins/report.wxml-->
-<block wx:if="{{ !(report.reportVersion || false ) }}">
+<block wx:if="{{ !report.reportVersion }}">
     <view wx:if="{{report.noTeamMember&&report.showPage}}" class="noTeamMemberView">
         <image src="./images/report@icon-failed.png"></image>
         <view class="mind">
@@ -205,6 +205,12 @@
                                 <view class="name">得分</view>
                                 <view class="lv">{{ util.saveDouble(item.total2) }}</view>
                             </view>
+                            <view class="flex-main" wx:if="{{item.showLevel}}">
+                                <block>
+                                    <view class="name">等级</view>
+                                    <view class="lv">{{ item.lvName }}</view>
+                                </block>
+                            </view>
                             <view class="flex-main" wx:if="{{item.rankOrg}}">
                                 <view class="name">组织排名</view>
                                 <view class="lv" wx:if="{{index==0}}">{{d1.order||0}}%</view>
@@ -221,7 +227,7 @@
                         <rich-text nodes="<p>{{item.lvDesc||''}}</p>"></rich-text>
                     </view>
                     <!-- 雷达图 -->
-                    <view class="chartImg" wx:if="{{item.chartType!=1}}">
+                    <view class="chartImg" wx:if="{{item.chartType == 3}}">
                         <hola-radar id="{{index}}" radarValue="{{ radarValue }}"
                                     radarIndicator="{{ radarIndicator }}"></hola-radar>
                     </view>
@@ -529,7 +535,7 @@
                 <block wx:for="{{report.dimension}}" wx:key="unique">
                     <view class="dimensionName">
                         <text></text>
-                        {{item.name}}
+                        {{item.name}}-{{item.name}}
                     </view>
                 </block>
             </view>
@@ -599,6 +605,12 @@
                                 <view class="name">得分</view>
                                 <view class="lv">{{ util.saveDouble(item.total2) }}</view>
                             </view>
+                            <view class="flex-main" wx:if="{{item.showLevel}}">
+                                <block>
+                                    <view class="name">等级</view>
+                                    <view class="lv">{{ item.lvName }}</view>
+                                </block>
+                            </view>
                             <view class="flex-main" wx:if="{{item.rankOrg}}">
                                 <view class="name">组织排名</view>
                                 <view class="lv" wx:if="{{index==0}}">{{d1.order||0}}%</view>
@@ -615,12 +627,12 @@
                         <rich-text nodes="<p>{{item.lvDesc||''}}</p>"></rich-text>
                     </view>
                     <!-- 柱状图 -->
-                    <view wx:if="{{ item.chartType === 2 }}" class="chartImg histogram-img">
+                    <view wx:if="{{ item.chartType == 2 }}" class="chartImg histogram-img">
                         <hola-histogram histogramIndex="{{index}}" histogramYAxis="{{histogramYAxis}}" limit="{{limit}}"
                                         histogramValues="{{histogramValues}}" lines="{{lines}}"></hola-histogram>
                     </view>
                     <!-- 雷达图 -->
-                    <view class="chartImg radar-img" wx:if="{{ item.chartType!=1 }}">
+                    <view class="chartImg radar-img" wx:if="{{ item.chartType == 3 }}">
                         <hola-radar radarIndex="{{ index }}" radarValue="{{ radarValue }}"
                                     radarIndicator="{{ radarIndicator }}"></hola-radar>
                     </view>

@@ -32,14 +32,16 @@ Component({
             const index = canvasId.replace("mychartcanvas", "");
             const chart = echarts.init(canvas, null, {
                 width: width,
-                height: height
+                height: height,
+                devicePixelRatio: wx.getSystemInfoSync().pixelRatio
             });
             const {histogramYAxis, limit, histogramValues, lines} = that.properties;
+            console.log("histogramValues[index]: ",histogramValues[index]);
             const series = [
                 {
                     name: "受测者得分",
                     type: 'bar',
-                    data: histogramValues[index],
+                    data: histogramValues[index].reverse(),
                     label: {
                         show: true,
                         position: "right",
@@ -94,7 +96,7 @@ Component({
                 const line = {
                     name: key,
                     type: 'line',
-                    data: lines[index][key].data,
+                    data: lines[index][key].data.reverse(),
                     itemStyle: {
                         normal: {
                             color: lines[index][key].color || color,
@@ -153,7 +155,7 @@ Component({
                         },
                         type: 'category',
                         boundaryGap: true,
-                        data: histogramYAxis[index],
+                        data: histogramYAxis[index].reverse(),
                     }
                 ],
                 xAxis: {

@@ -50,6 +50,7 @@ Component({
                     pageSize: 8
                 },
                 success: function (res) {
+                    console.log("loadReportList: ",reportList.concat(res.data));
                     if (res.data.length) {
                         that.setData({
                             reportList: reportList.concat(res.data),
@@ -151,6 +152,12 @@ Component({
             if (type === "report-more"){
                 this.loadReportList();
             }
+        },
+        hide() {
+            this.setData({
+                reportList: [],
+                page: 1
+            })
         }
     },
     lifetimes: {

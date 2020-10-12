@@ -290,13 +290,14 @@ Page({
         })
     },
     submit: function (e) {
-        var that = this;
+        const that = this;
+        const receiveRecordId = this.data;
         function doNext() {
-            var data = that.data;
-            var imgUrl = data.imgUrl;
-            var username = data.username;
-            var birthday = data.birthday;
-            var education = data.education;
+            const data = that.data;
+            const username = data.username;
+            const birthday = data.birthday;
+            const education = data.education;
+            const phone = data.phoneNumber;
             if (!username || !(/^[\u4E00-\u9FA5A-Za-z]+$/.test(username))) {
                 app.toast("请输入正确的姓名！");
                 return;
@@ -309,6 +310,23 @@ Page({
                 app.toast("请选择出生年月！");
                 return;
             }
+            app.doAjax({
+                url: 'release/qualification',
+                method: 'post',
+                data: {
+                    isVerify: false,
+                    receiveRecordId: receiveRecordId,
+                    participantInfo: {
+                        username,
+                        birthday,
+                        educationName: education,
+                        phone
+                    }
+                },
+                success: function (res) {
+                    console.log("上传用户信息成功")
+                }
+            })
             that.gotoallready();
         }
 
@@ -916,10 +934,23 @@ Page({
     getPhoneNumber: function (e) {
         const that = this;
         if(app.wxWorkInfo.isWxWork){
-            that.setData({
-                getphoneNum: true,
-                phoneNumber: '18188888888'
-            });
+            app.doAjax({
+                url: 'wework/auth/mobile',
+                method: "post",
+                data: {
+                    userId: wx.getStorageSync("userInfo").id,
+                    teamId: wx.getStorageSync("userInfo").teamId,
+                },
+                success: function (res) {
+                    that.setData({
+                        getphoneNum: true,
+                        phoneNumber: res.phone || '微信一键授权'
+                    });
+                },
+                fail: function (err) {
+                    app.toast(err.msg)
+                }
+            })
         }else{
             const {name} = e.currentTarget.dataset;
             if (!that.data.getphoneNum || that.data.getphoneNum) {

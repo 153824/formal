@@ -24,7 +24,7 @@ Component({
             const chart = echarts.init(canvas, null, {
                 width: width,
                 height: height,
-                devicePixelRatio: 2
+                devicePixelRatio: wx.getSystemInfoSync().pixelRatio
             });
             let {radarValue,radarIndicator} = _this.properties;
             radarValue = JSON.parse(radarValue);

@@ -33,7 +33,7 @@ Component({
             const chart = echarts.init(canvas, null, {
                 width: width,
                 height: height,
-                devicePixelRatio: 2
+                devicePixelRatio: wx.getSystemInfoSync().pixelRatio
             });
             const {histogramYAxis, limit, histogramValues, lines} = that.properties;
             console.log("histogramValues[index]: ",histogramValues[index]);

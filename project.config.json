@@ -30,7 +30,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.12.2",
-	"appid": "wx85cde7d3e8f3d949",
+	"appid": "wxdb1dcb4a9e212d32",
 	"projectname": "luoke-haola-wx-admin",
 	"debugOptions": {
 		"hidedInDevtools": []
@@ -98,10 +98,10 @@
 					"scene": null
 				},
 				{
-					"id": 6,
+					"id": 4,
 					"name": "测评详情",
 					"pathName": "pages/station/components/detail/detail",
-					"query": "id=5f5d93b80699c3608a10f090",
+					"query": "id=5f715d3cd9d80005bd987a11",
 					"scene": null
 				},
 				{

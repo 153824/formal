@@ -625,11 +625,12 @@ Page({
         });
     },
     onShareAppMessage(options) {
-        const {evaluationInfo} = this.data.evaluation;
+        const evaluationInfo = this.data.evaluation;
         const {teamId} = app,
             {userInfo} = app.globalData,
             that = this;
-        const {id, name} = this.data.evaluation.evaluationInfo;
+        const {id, name} = this.data.evaluation;
+        console.log("this.data.evaluation.id: ",id);
         if (options.from !== 'button') {
             return {
                 title: `邀您体验《${evaluationInfo.name}》测评~`,

@@ -217,7 +217,7 @@ App({
     onShow: function () {
         const that = this;
         const pages = ["pages/home/home", "pages/work-base/work-base", "pages/user-center/user-center"];
-        const scenes = [1007, 1008, 1011, 1012, 1013, 1036, 1037, 1038, 1044, 1047, 1048, 1049,1096,1107];
+        const scenes = [1007, 1008, 1011, 1012, 1013, 1014, 1017, 1036, 1037, 1038, 1044, 1047, 1048, 1049,1096,1107];
         let currentPage = "";
         const sceneOption = wx.getLaunchOptionsSync();
         try {
@@ -227,6 +227,11 @@ App({
         }
         console.log("currentPage: ", currentPage);
         console.log("sceneOption: ", sceneOption);
+        wx.showToast({
+            title: sceneOption.scene.toString(),
+            icon: 'none',
+            duration: 2000,
+        });
         console.log("scenes.includes(sceneOption.scene): ", scenes.includes(sceneOption.scene));
         if (this.wxWorkInfo.isWxWork && this.isReLaunch && pages.includes(this.quitPage) && pages.includes(currentPage) && !scenes.includes(sceneOption.scene)) {
             const that = this;
@@ -462,6 +467,9 @@ App({
         }
         if (params.url.indexOf('wework/app/health') !== -1) {
             url = `${this.host}/wework/app/health`;
+        }
+        if (params.url.indexOf('wework/auth/mobile') !== -1) {
+            url = `${this.host}/wework/auth/mobile`;
         }
         params.data = params.data || {};
         params.data['userId'] = params.data['userId'] || (that.globalData.userInfo || wx.getStorageSync("userInfo")).id || '';

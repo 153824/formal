@@ -16,14 +16,15 @@
                     </block>
                 </van-grid>
                 <view class="axis-data-x">
-                    <text class="not-reach-the-standard">低</text>
-                    <text class="not-reach-the-standard">中</text>
-                    <text class="reach-the-standard">高</text>
+                    <text class="{{coordinate[0] === 0 ? 'reach-the-standard': 'not-reach-the-standard'}}">低</text>
+                    <text class="{{coordinate[0] === 1 ? 'reach-the-standard': 'not-reach-the-standard'}}">中</text>
+                    <text class="{{coordinate[0] === 2 ? 'reach-the-standard': 'not-reach-the-standard'}}">高</text>
                 </view>
+                <!--                reach-the-standard-->
                 <view class="axis-data-y">
-                    <text class="not-reach-the-standard">低</text>
-                    <text class="not-reach-the-standard">中</text>
-                    <text class="reach-the-standard">高</text>
+                    <text class="{{coordinate[1] === 0 ? 'reach-the-standard': 'not-reach-the-standard'}}">低</text>
+                    <text class="{{coordinate[1] === 1 ? 'reach-the-standard': 'not-reach-the-standard'}}">中</text>
+                    <text class="{{coordinate[1] === 2 ? 'reach-the-standard': 'not-reach-the-standard'}}">高</text>
                 </view>
             </view>
             <view class="axis-row axis-x-row"></view>

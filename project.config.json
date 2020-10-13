@@ -87,7 +87,7 @@
 					"id": 2,
 					"name": "报告详情",
 					"pathName": "pages/report/report",
-					"query": "receiveRecordId=5f4f6cf094dbb6144681a465",
+					"query": "receiveRecordId=5f843913164cf1025532e153",
 					"scene": null
 				},
 				{
@@ -122,7 +122,7 @@
 					"id": 7,
 					"name": "二维码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "q=https://api.luoke101.com/s/5f8428e5164cf1025532e138",
+					"query": "q=https://api.luoke101.com/s/5f85257b61aa0d680064e9f0",
 					"scene": null
 				},
 				{

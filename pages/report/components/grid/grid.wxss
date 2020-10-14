@@ -96,22 +96,31 @@
 .axis-data-x{
     display: flex;
     justify-content: space-around;
+    align-items: center;
     height: 40rpx;
     font-size: 24rpx;
     transform-origin: left top;
     transform: rotate(-90deg) translateY(-55rpx) translateX(-35rpx);
 }
 .axis-data-x .reach-the-standard{
-    padding: 2rpx 30rpx;
+    padding: 30rpx 2rpx;
+    height: 30rpx;
+    width: 40rpx;
     color: #fff;
     border-radius: 20rpx;
+    text-align: center;
     background-color: rgba(53, 62, 232, 1);
+    transform: rotate(90deg);
 }
 .axis-data-x .not-reach-the-standard{
-    padding: 2rpx 30rpx;
+    padding: 30rpx 2rpx;
+    height: 30rpx;
+    width: 40rpx;
+    text-align: center;
     color: rgba(200, 200, 200, 1);
     background-color: rgba(0, 0, 0, 0);
     border-radius: 20rpx;
+    transform: rotate(90deg);
 }
 .axis-data-y{
     display: flex;
@@ -122,6 +131,9 @@
 }
 .axis-data-y .reach-the-standard{
     padding: 2rpx 30rpx;
+    width: 30rpx;
+    height: 40rpx;
+    line-height: 40rpx;
     color: #fff;
     border-radius: 20rpx;
     background-color: rgba(53, 62, 232, 1);

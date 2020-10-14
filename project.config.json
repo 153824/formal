@@ -145,6 +145,13 @@
 					"pathName": "pages/work-base/components/guide/guide",
 					"query": "scene=5f842ab5164cf1025532e142",
 					"scene": null
+				},
+				{
+					"id": 11,
+					"name": "分享图片",
+					"pathName": "common/webView",
+					"query": "img=https://ihola.luoke101.com/holateam/tmp1602645968770.png&title=true",
+					"scene": null
 				}
 			]
 		}

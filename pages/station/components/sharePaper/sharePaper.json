@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "press": "../../../../common/press/press",
-    "van-image": "../../../../common/vant-weapp/dist/image/index"
+    "van-image": "../../../../common/vant-weapp/dist/image/index",
+    "van-button": "../../../../common/vant-weapp/dist/button/index"
   }
 }

@@ -31,7 +31,7 @@
     color: #353EE8FF;
 }
 .evaluation-name{
-    max-width: 270rpx;
+    max-width: 555rpx;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

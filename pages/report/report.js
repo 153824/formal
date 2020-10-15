@@ -546,9 +546,9 @@ Page({
                     radarIndicator: JSON.stringify(radarIndicator),
                     radarValue: JSON.stringify(radarValue)
                 })
-                // newChild.sort(function (it1, it2) {
-                //     return it2.average - it1.average;
-                // });
+                newChild.sort(function (it1, it2) {
+                    return it2.average - it1.average;
+                });
                 objs[n].child = newChild;
                 var keys = Object.keys(newChild);
                 objs[n].child[keys[0]]["active"] = "active";
@@ -721,9 +721,9 @@ Page({
                     radarIndicator: JSON.stringify(radarIndicator),
                     radarValue: JSON.stringify(radarValue),
                 });
-                // newChild.sort(function (it1, it2) {
-                //     return it2.average - it1.average;
-                // });
+                newChild.sort(function (it1, it2) {
+                    return it2.average - it1.average;
+                });
                 objs[n].subclass = newChild;
                 var keys = Object.keys(newChild);
                 objs[n].subclass[keys[0]]["active"] = "active"

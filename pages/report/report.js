@@ -340,7 +340,8 @@ Page({
         limit: [[]],
         histogramValues: [[]],
         referLines: [[]],
-        maskTrigger: true
+        maskTrigger: true,
+        isSelf: "SELF"
     },
 
     onLoad: function (options = {isSelf: ""}) {
@@ -442,6 +443,18 @@ Page({
     getReport: function (id) {
         let that = this;
         id = id || that.data.id;
+        app.doAjax({
+            url: 'reports/check_type',
+            method: 'get',
+            data: {
+                receiveRecordId: id
+            },
+            success: function (res) {
+                that.setData({
+                    isSelf: res.data.type
+                })
+            }
+        })
         let getReportPromise = new Promise((resolve, reject) => {
             app.doAjax({
                 url: "reports/detail",

@@ -269,7 +269,7 @@
             <view class="operator-wrapper">
                 <view class="operator">
                     <view class="ticket-sub" bindtap="subTicket">-</view>
-                    <input class="ticket-display" type="text" value="{{ ticketCount }}"/>
+                    <input class="ticket-display" type="text" value="{{ ticketCount }}" bindinput="changeTicketCount"/>
                     <view class="ticket-add" bindtap="addTicket">+</view>
                 </view>
             </view>

@@ -179,5 +179,15 @@ Page({
                 })
             }
         })
+    },
+
+    onShareAppMessage(options) {
+        const {evaluationName} = this.data;
+        const {img,smallImg=""} = this.data.sharePaperInfo;
+        return {
+            title: `您有一个测评邀请，请尽快作答`,
+            path: `/common/webView?img=${img}&title=true`,
+            imageUrl: smallImg,
+        }
     }
 })

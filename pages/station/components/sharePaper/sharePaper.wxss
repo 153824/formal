@@ -216,6 +216,20 @@
   height: 44rpx;
   animation: loading 1s infinite;
 }
+.button-group{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  padding: 0 86rpx;
+}
+.van-button-custom{
+  font-size: 32rpx !important;
+  font-weight: 400;
+}
 @keyframes loading {
   from{
     transform: rotate(0deg);

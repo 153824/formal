@@ -340,7 +340,8 @@ Page({
         limit: [[]],
         histogramValues: [[]],
         referLines: [[]],
-        maskTrigger: true
+        maskTrigger: true,
+        isSelf: "SELF"
     },
 
     onLoad: function (options = {isSelf: ""}) {
@@ -442,6 +443,18 @@ Page({
     getReport: function (id) {
         let that = this;
         id = id || that.data.id;
+        app.doAjax({
+            url: 'reports/check_type',
+            method: 'get',
+            data: {
+                receiveRecordId: id
+            },
+            success: function (res) {
+                that.setData({
+                    isSelf: res.data.type
+                })
+            }
+        })
         let getReportPromise = new Promise((resolve, reject) => {
             app.doAjax({
                 url: "reports/detail",
@@ -533,9 +546,9 @@ Page({
                     radarIndicator: JSON.stringify(radarIndicator),
                     radarValue: JSON.stringify(radarValue)
                 })
-                // newChild.sort(function (it1, it2) {
-                //     return it2.average - it1.average;
-                // });
+                newChild.sort(function (it1, it2) {
+                    return it2.average - it1.average;
+                });
                 objs[n].child = newChild;
                 var keys = Object.keys(newChild);
                 objs[n].child[keys[0]]["active"] = "active";
@@ -708,9 +721,9 @@ Page({
                     radarIndicator: JSON.stringify(radarIndicator),
                     radarValue: JSON.stringify(radarValue),
                 });
-                // newChild.sort(function (it1, it2) {
-                //     return it2.average - it1.average;
-                // });
+                newChild.sort(function (it1, it2) {
+                    return it2.average - it1.average;
+                });
                 objs[n].subclass = newChild;
                 var keys = Object.keys(newChild);
                 objs[n].subclass[keys[0]]["active"] = "active"

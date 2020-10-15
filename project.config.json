@@ -25,7 +25,7 @@
 			"outputPath": ""
 		},
 		"bundle": true,
-		"useCompilerModule": false,
+		"useCompilerModule": true,
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
@@ -87,7 +87,7 @@
 					"id": 2,
 					"name": "报告详情",
 					"pathName": "pages/report/report",
-					"query": "receiveRecordId=5f843913164cf1025532e153",
+					"query": "receiveRecordId=5f8445733696807032e340e3",
 					"scene": null
 				},
 				{

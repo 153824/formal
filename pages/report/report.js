@@ -908,6 +908,7 @@ Page({
                         },
                         success: function (r) {
                             that.getReport();
+                            app.toast("您已经同意~");
                         }
                     });
                 }

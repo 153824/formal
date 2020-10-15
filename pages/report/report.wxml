@@ -344,6 +344,10 @@
                 <image src="./images/report@icon-share.png"></image>
                 <text>分享报告</text>
             </button>
+            <button class="sharebtn apply-button" bindtap="applyReportAudit">
+                <image src="./images/report@icon-share.png"></image>
+                <text>同意被测者查看报告</text>
+            </button>
             <button class="toTestOther" id="TOT" bindtap="toTestOtherUser" wx:if="{{report.teamRole!=1}}">
                 <image src="./images/report@icon-invite.png"></image>
                 <text>测测别人</text>
@@ -354,21 +358,25 @@
             </button>
         </view>
         <!-- 申请查看报告 -->
-        <view wx:if="{{(reportPermit === 'APPLYING' && report.teamRole !== 1 && isSelf === 'SHARE')}}" class="hasApply">
-            <view class="msg">被测者申请查看报告结果，是否同意？</view>
-            <view class="agreenBtn flex" wx:if="{{ reportPermit==='APPLYING' }}" bindtap="applyReportAudit">
-                <view class="flex-main"></view>
-                <image src="./images/report@icon-agreeing.png"></image>
-                同意
-                <view class="flex-main"></view>
-            </view>
-            <view class="agreenBtn agreenBtn1 flex" wx:if="{{reportPermit==='APPROVED'}}" bindtap="applyReportAudit">
-                <view class="flex-main"></view>
-                <image src="./images/report@icon-agreed.png"></image>
-                已同意
-                <view class="flex-main"></view>
-            </view>
-        </view>
+        <!--wx:if="{{(reportPermit === 'APPLYING' && isSelf === 'SHARE')}}"-->
+        <!--<view class="hasApply">-->
+            <!--<button class="apply-button">-->
+                <!--同意被测者查看报告-->
+            <!--</button>-->
+            <!--<view class="msg">被测者申请查看报告结果，是否同意？</view>-->
+            <!--<view class="agreenBtn flex" wx:if="{{ reportPermit==='APPLYING' }}" bindtap="applyReportAudit">-->
+                <!--<view class="flex-main"></view>-->
+                <!--<image src="./images/report@icon-agreeing.png"></image>-->
+                <!--同意-->
+                <!--<view class="flex-main"></view>-->
+            <!--</view>-->
+            <!--<view class="agreenBtn agreenBtn1 flex" wx:if="{{reportPermit==='APPROVED'}}" bindtap="applyReportAudit">-->
+                <!--<view class="flex-main"></view>-->
+                <!--<image src="./images/report@icon-agreed.png"></image>-->
+                <!--已同意-->
+                <!--<view class="flex-main"></view>-->
+            <!--</view>-->
+        <!--</view>-->
         <!-- 免责声明 -->
         <view class="bottomMsg" wx:if="{{report.statement}}">
             <rich-text nodes="{{report.statement}}"></rich-text>
@@ -1082,6 +1090,10 @@
                 <image src="./images/report@icon-share.png"></image>
                 <text>分享报告</text>
             </button>
+            <button class="sharebtn apply-button" bindtap="applyReportAudit">
+                <image src="./images/report@icon-share.png"></image>
+                <text>同意被测者查看报告</text>
+            </button>
             <button class="toTestOther" id="TOT" bindtap="toTestOtherUser" wx:if="{{report.teamRole!=1}}">
                 <image src="./images/report@icon-invite.png"></image>
                 <text>测测别人</text>
@@ -1092,21 +1104,21 @@
             </button>
         </view>
         <!-- 申请查看报告 -->
-        <view wx:if="{{(reportPermit && report.teamRole !== 1 && isSelf === 'SHARE')}}" class="hasApply">
-            <view class="msg">被测者申请查看报告结果，是否同意？</view>
-            <view class="agreenBtn flex" wx:if="{{ reportPermit==='APPLYING' }}" bindtap="applyReportAudit">
-                <view class="flex-main"></view>
-                <image src="./images/report@icon-agreeing.png"></image>
-                同意
-                <view class="flex-main"></view>
-            </view>
-            <view class="agreenBtn agreenBtn1 flex" wx:if="{{reportPermit==='APPROVED'}}" bindtap="">
-                <view class="flex-main"></view>
-                <image src="./images/report@icon-agreed.png"></image>
-                已同意
-                <view class="flex-main"></view>
-            </view>
-        </view>
+        <!--wx:if="{{(reportPermit && report.teamRole !== 1 && isSelf === 'SHARE')}}"-->
+        <!--<view  class="hasApply">-->
+            <!--<view class="agreenBtn flex" wx:if="{{ reportPermit==='APPLYING' }}" bindtap="applyReportAudit">-->
+                <!--<view class="flex-main"></view>-->
+                <!--<image src="./images/report@icon-agreeing.png"></image>-->
+                <!--同意-->
+                <!--<view class="flex-main"></view>-->
+            <!--</view>-->
+            <!--<view class="agreenBtn agreenBtn1 flex" wx:if="{{reportPermit==='APPROVED'}}" bindtap="">-->
+                <!--<view class="flex-main"></view>-->
+                <!--<image src="./images/report@icon-agreed.png"></image>-->
+                <!--已同意-->
+                <!--<view class="flex-main"></view>-->
+            <!--</view>-->
+        <!--</view>-->
         <!-- 免责声明 -->
         <view class="bottomMsg" wx:if="{{report.statement}}">
             <rich-text nodes="{{report.statement}}"></rich-text>

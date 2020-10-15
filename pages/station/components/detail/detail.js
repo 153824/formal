@@ -802,11 +802,23 @@ Page({
                     break;
             }
         }
+        try {
+            // 唤起手机授权
+            wx.uma.trackEvent('1602747468531')
+        }catch (e) {
+
+        }
         if (encryptedData) {
             //用户授权手机号
             var userMsg = app.globalData.userMsg || {};
             userMsg["iv"] = iv;
             userMsg["encryptedData"] = encryptedData;
+            try {
+                // 成功授权手机号
+                wx.uma.trackEvent('1602747651175')
+            }catch (e) {
+
+            }
             var updatedUserMobilePromise = new Promise(((resolve, reject) => {
                 app.doAjax({
                     url: "updatedUserMobile",

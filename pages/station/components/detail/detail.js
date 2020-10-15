@@ -904,5 +904,11 @@ Page({
                     break;
             }
         }
+    },
+    changeTicketCount: function (e) {
+        console.log("changeTicketCount: ",e)
+        this.setData({
+            ticketCount: Number(e.detail.value)
+        })
     }
 });

@@ -50,7 +50,7 @@
         </van-image>
         <!--    <image class="daticenterboximg" src="{{sharePaperInfo.img}}" show-menu-by-longpress="true"></image>-->
         <image class="daticlosebtn" bindtap="closeQrCode" src="../../images/sharePaper@icon-close.png"></image>
-        <view class="button-group">
+        <view wx:if="{{isWxWork}}" class="button-group">
             <van-button custom-style="padding-left: 83rpx;"
                         custom-class="van-button-custom"
                         type="default" color="transparent"
@@ -67,7 +67,7 @@
                         open-type="share"
                         bind:tap="share"
             >
-                邀请同时参加测评
+                邀请同事参加测评
             </van-button>
         </view>
     </view>

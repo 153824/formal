@@ -38,7 +38,7 @@
 	"isGameTourist": false,
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {
-		"qywx_simulator_plugin": "2.10.1"
+		"qywx_simulator_plugin": "2.4.0"
 	},
 	"scripts": {
 		"beforeCompile": "",
@@ -87,7 +87,7 @@
 					"id": 2,
 					"name": "报告详情",
 					"pathName": "pages/report/report",
-					"query": "receiveRecordId=5f843913164cf1025532e153",
+					"query": "receiveRecordId=5f8445733696807032e340e3",
 					"scene": null
 				},
 				{

@@ -58,9 +58,9 @@ App({
     isReLaunch: false,
     otherPageReLaunchTrigger: true,
     quitPage: "",
-    host: "https://api.luoke101.com/b",
+    // host: "https://api.luoke101.com/b",
     // host: "http://api.dev.luoke101.int",
-    // host: 'https://api.uat.luoke101.com',
+    host: 'https://api.uat.luoke101.com',
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
         userInfo: null,

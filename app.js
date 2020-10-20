@@ -58,9 +58,9 @@ App({
     isReLaunch: false,
     otherPageReLaunchTrigger: true,
     quitPage: "",
-    // host: "https://api.luoke101.com/b",
+    host: "https://api.luoke101.com/b",
     // host: "http://api.dev.luoke101.int",
-    host: 'https://api.uat.luoke101.com',
+    // host: 'https://api.uat.luoke101.com',
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
         userInfo: null,
@@ -228,6 +228,7 @@ App({
         console.log("currentPage: ", currentPage);
         console.log("sceneOption: ", sceneOption);
         console.log("scenes.includes(sceneOption.scene): ", scenes.includes(sceneOption.scene));
+        console.log("this.wxWorkInfo.isWxWork: ",this.wxWorkInfo.isWxWork)
         if (this.wxWorkInfo.isWxWork && this.isReLaunch && pages.includes(this.quitPage) && pages.includes(currentPage) && !scenes.includes(sceneOption.scene)) {
             const that = this;
             console.log("onShow wx.reLaunch");

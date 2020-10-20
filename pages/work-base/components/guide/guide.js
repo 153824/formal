@@ -199,12 +199,21 @@ Page({
                 userId: userInfo.id
             },
             success: function (res) {
-                console.log("res receiveRecordId",res);
-                if (!res.receiveRecordId) {
+                let text = "";
+                res.receiveRecordId = "";
+                res.msg = 'qualification needed';
+                if (!res.receiveRecordId && res.msg !== 'qualification needed') {
                     app.toast("该分享已失效！");
                     wx.navigateTo({
                         url: "/pages/work-base/work-base"
-                    })
+                    });
+                    return;
+                }else if(!res.receiveRecordId && res.msg === 'qualification needed'){
+                    app.toast("您将被带往用户信息验证页面");
+                    wx.redirectTo({
+                        url: `/pages/work-base/components/answering/answering?verify=true&releaseRecordId=${id}`
+                    });
+                    return;
                 }
                 const sKey = "oldAnswer" + id;
                 const oldData = wx.getStorageSync(sKey);
@@ -228,7 +237,6 @@ Page({
                 if (oldPeopleMsg && oldPeopleMsg.username) {
                     wx.setStorageSync("oldPeopleMsg", oldPeopleMsg);
                 }
-                let text = "";
                 switch (res.msg) {
                     case 'continue examining':
                         text = "继续作答";
@@ -244,6 +252,9 @@ Page({
                         break;
                     case 'not available':
                         text = "分享已失效";
+                        break;
+                    case 'qualification needed':
+                        text = "立即验证";
                         break;
                 }
                 that.getPaperMsg({

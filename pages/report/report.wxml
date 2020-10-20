@@ -666,7 +666,7 @@
                                             <image src="./images/report@icon-arrow.png"></image>
                                         </block>
                                         <block wx:elif="{{ item.subScale === 'decimal' }}">
-                                            <text style="color:{{node.lvArr[node.lv].color}};">{{ item.showSubLevel ?
+                                            <text style="color:{{node.color}};">{{ item.showSubLevel ?
                                                 node.lvName : "" }} {{util.saveDouble(node.average10)}}分
                                             </text>
                                             <image src="./images/report@icon-arrow.png"></image>

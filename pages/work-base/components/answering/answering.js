@@ -36,14 +36,19 @@ Page({
         isok: false,
         sex: ["男", "女"],
         checkedSex: 0,
-        getphoneNum: false,
-        phoneNumber: "微信一键授权",
+        getphoneNum: true,
+        phoneNumber: "18000000000" || "微信一键授权",
         theFinalQuestionAnswer: [],
         verify: false
     },
     onLoad: function (options) {
-        var that = this;
-        that.setData({
+        const that = this;
+        if(options.pathIndex){
+            this.setData({
+                pathIndex: options.pathIndex
+            })
+        }
+        this.setData({
             status: options.type,
             reportPermit: options.reportPermit,
             startTime: new Date().getTime(),
@@ -332,9 +337,10 @@ Page({
                         }
                     },
                     success: function (res) {
+                        console.log(res);
                         if (res.code === 0) {
                             wx.navigateTo({
-                                url: `pages/work-base/components/guide/guide?releaseRecordId=${releaseRecordId}`
+                                url: `/pages/work-base/components/guide/guide?releaseRecordId=${releaseRecordId}`
                             })
                         } else {
                             app.toast("信息错误，请重新录入！")

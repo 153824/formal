@@ -5,7 +5,8 @@ Page({
     data: {
         hasUserInfo: false,
         isTest: false,
-        maskTrigger: true
+        maskTrigger: true,
+        verified: false
     },
     onLoad: function (option) {
         let releaseEvaluationId = "";
@@ -18,6 +19,7 @@ Page({
             releaseEvaluationId = decodeURIComponent(option.scene);
         }
         if (option.releaseRecordId || option.receiveRecordId || releaseEvaluationId) {
+            console.log("option.releaseRecordId: ",option.releaseRecordId)
             this.setData({
                 id: option.releaseRecordId || releaseEvaluationId,
                 receiveRecordId: option.receiveRecordId || ""
@@ -104,10 +106,10 @@ Page({
     },
 
     goToReplying: function (e) {
-        var that = this;
-        var draftAnswer = that.data.draftAnswer;
-        var applyStatus = that.data.applyStatus;
-        var userData = e.detail.userInfo;
+        const {evaluationId,id,receiveRecordId,reportPermit,status,verified} = this.data;
+        const that = this;
+        const draftAnswer = that.data.draftAnswer;
+        const userData = e.detail.userInfo;
         if (!userData && !that.data.hasUserInfo && !app.isTest) return;
         if (userData) {
             userData.openid = wx.getStorageSync("openId");
@@ -159,10 +161,15 @@ Page({
             return;
         }
         if (draftAnswer || !draftAnswer) {
-            var sKey = "oldAnswer" + that.data.id;
+            const sKey = "oldAnswer" + that.data.id;
+            let pathIndex = "";
+            if(verified){
+                pathIndex = "3";
+            }
+            const url = `/pages/work-base/components/answering/answering?pid=${evaluationId}&id=${id}&receiveRecordId=${receiveRecordId}&reportPermit=${reportPermit}&status=${status}&pathIndex=${pathIndex}`;
             wx.setStorageSync(sKey, draftAnswer);
             wx.redirectTo({
-                url: '../answering/answering?pid=' + that.data.evaluationId + '&id=' + that.data.id + '&receiveRecordId=' + that.data.receiveRecordId + "&reportPermit=" + that.data.reportPermit + "&status=" + that.data.status
+                url: url
             });
             return;
         }
@@ -200,8 +207,6 @@ Page({
             },
             success: function (res) {
                 let text = "";
-                res.receiveRecordId = "";
-                res.msg = 'qualification needed';
                 if (!res.receiveRecordId && res.msg !== 'qualification needed') {
                     app.toast("该分享已失效！");
                     wx.navigateTo({
@@ -217,8 +222,13 @@ Page({
                 }
                 const sKey = "oldAnswer" + id;
                 const oldData = wx.getStorageSync(sKey);
+                if(res.verified){
+                    that.setData({
+                        verified: res.verified,
+                    });
+                }
                 that.setData({
-                    reportPermit: res.reportPermit
+                    reportPermit: res.reportPermit,
                 });
                 setTimeout(()=>{
                     that.setData({
@@ -255,6 +265,9 @@ Page({
                         break;
                     case 'qualification needed':
                         text = "立即验证";
+                        break;
+                    case 'fetch success':
+                        text = "开始作答";
                         break;
                 }
                 that.getPaperMsg({

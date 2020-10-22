@@ -30,7 +30,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.12.2",
-	"appid": "wx85cde7d3e8f3d949",
+	"appid": "wxdb1dcb4a9e212d32",
 	"projectname": "luoke-haola-wx-admin",
 	"debugOptions": {
 		"hidedInDevtools": []
@@ -38,7 +38,7 @@
 	"isGameTourist": false,
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {
-		"qywx_simulator_plugin": "2.4.0"
+		"qywx_simulator_plugin": "2.10.1"
 	},
 	"scripts": {
 		"beforeCompile": "",
@@ -115,14 +115,14 @@
 					"id": 6,
 					"name": "小程序领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=5f8428e5164cf1025532e138",
+					"query": "scene=5f9100a1bd78033d848c5773",
 					"scene": null
 				},
 				{
 					"id": 7,
 					"name": "二维码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "q=https://api.luoke101.com/s/5f853c6a61aa0d680064e9f2",
+					"query": "q=https://api.luoke101.com/s/5f6d687a835f23111468ce56",
 					"scene": null
 				},
 				{
@@ -151,6 +151,13 @@
 					"name": "分享图片",
 					"pathName": "common/webView",
 					"query": "img=https://ihola.luoke101.com/holateam/tmp1602645968770.png&title=true",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/forbidden/forbidden",
+					"pathName": "pages/forbidden/forbidden",
+					"query": "scene=5f8428e5164cf1025532e138",
 					"scene": null
 				}
 			]

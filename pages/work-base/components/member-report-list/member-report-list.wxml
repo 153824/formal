@@ -11,6 +11,7 @@
                         <text class="paperName">《{{item.evaluationName}}》</text>
                         <image wx:if="{{item.status === 'FINISHED'}}" class="finishImg"
                                src="../../images/report-list@icon-done.png"></image>
+                        <text class="status" wx:elif="{{item.status === 'REVOKED'}}">已失效</text>
                         <text class="status" wx:else>未完成</text>
                     </view>
                     <view class="btnView btnView1" bindtap="changePage"
@@ -21,6 +22,11 @@
                           data-url="/pages/replying/components/guide/guide?releaseRecordId={{item.releaseRecordId}}&receiveRecordId={{ item.receiveRecordId }}&evaluationId={{item.evaluationId}}"
                           wx:elif="{{item.status==='FETCHED'}}">
                         继续作答
+                    </view>
+                    <view class="btnView btnView1" bindtap="changePage"
+                          data-url="/pages/replying/components/guide/guide?releaseRecordId={{item.releaseRecordId}}&receiveRecordId={{ item.receiveRecordId }}&evaluationId={{item.evaluationId}}"
+                          wx:elif="{{item.status==='UNCLAIMED'}}">
+                        开始作答
                     </view>
                     <view class="btnView btnView2" bindtap="goToReportDetail" data-index="{{index}}"
                           wx:elif="{{ item.status=== 'FINISHED' &&  item.reportPermit==='APPROVED'}}">查看报告

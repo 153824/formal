@@ -36,17 +36,25 @@ Page({
         isok: false,
         sex: ["男", "女"],
         checkedSex: 0,
-        getphoneNum: false,
-        phoneNumber: "微信一键授权",
-        theFinalQuestionAnswer: []
+        getphoneNum: true,
+        phoneNumber: "18000000000" || "微信一键授权",
+        theFinalQuestionAnswer: [],
+        verify: false
     },
     onLoad: function (options) {
-        var that = this;
-        that.setData({
+        const that = this;
+        if(options.pathIndex){
+            this.setData({
+                pathIndex: options.pathIndex
+            })
+        }
+        this.setData({
             status: options.type,
             reportPermit: options.reportPermit,
             startTime: new Date().getTime(),
-            receiveRecordId: options.receiveRecordId
+            receiveRecordId: options.receiveRecordId,
+            verify: options.verify || false,
+            releaseRecordId: options.releaseRecordId || ""
         });
         if (app.isTest) {
             that.setData({
@@ -76,148 +84,150 @@ Page({
             oldPeopleMsg["education"] = that.data.array.indexOf(oldPeopleMsg.educationName);
             that.setData(oldPeopleMsg);
         }
-        app.doAjax({
-            url: "paperQues",
-            method: "get",
-            data: {
-                id: options.pid
-            },
-            success: function (res) {
-                if (oldData) {
-                    quesIdsOrder = oldData.quesIdsOrder || [];
-                }
-                var ques = [];
-                var ques1 = [];
-                var showQues = [];
-                var oldChapter = oldData.chapter;
+        if (!options.verify) {
+            app.doAjax({
+                url: "paperQues",
+                method: "get",
+                data: {
+                    id: options.pid
+                },
+                success: function (res) {
+                    if (oldData) {
+                        quesIdsOrder = oldData.quesIdsOrder || [];
+                    }
+                    var ques = [];
+                    var ques1 = [];
+                    var showQues = [];
+                    var oldChapter = oldData.chapter;
 
-                res.ques.forEach(function (node) {
-                    node.stem = node.stem.replace(/<img/g, "<img style='max-width:100%;'");
-                    node.stem = node.stem.replace(/\n/g, "<br>");
-                    node.options = node.options.join("&&|").replace(/<img/g, "<img style='max-width:100%;'").split("&&|");
-                    if (!oldData || !oldData.quesIdsOrder) {
-                        quesIdsOrder.push(node.id);
-                        ques.push(node);
-                        if (node.type == 3) {
-                            node.slider = new Array(node.options.length).fill(0);
-                            node.totalScore = node.totalScore;
-                            node.step = Math.floor(node.totalScore / 5);
-                            node.stepArr = [];
-                            if (node.totalScore < 5) {
-                                node.step = 1;
-                                for (let i = 0; i < node.totalScore; i++) {
-                                    node.stepArr.push(Math.floor(i * node.step));
-                                }
-                            } else {
-                                for (let i = 0; i < 5; i++) {
-                                    node.stepArr.push(Math.floor(i * node.step));
+                    res.ques.forEach(function (node) {
+                        node.stem = node.stem.replace(/<img/g, "<img style='max-width:100%;'");
+                        node.stem = node.stem.replace(/\n/g, "<br>");
+                        node.options = node.options.join("&&|").replace(/<img/g, "<img style='max-width:100%;'").split("&&|");
+                        if (!oldData || !oldData.quesIdsOrder) {
+                            quesIdsOrder.push(node.id);
+                            ques.push(node);
+                            if (node.type == 3) {
+                                node.slider = new Array(node.options.length).fill(0);
+                                node.totalScore = node.totalScore;
+                                node.step = Math.floor(node.totalScore / 5);
+                                node.stepArr = [];
+                                if (node.totalScore < 5) {
+                                    node.step = 1;
+                                    for (let i = 0; i < node.totalScore; i++) {
+                                        node.stepArr.push(Math.floor(i * node.step));
+                                    }
+                                } else {
+                                    for (let i = 0; i < 5; i++) {
+                                        node.stepArr.push(Math.floor(i * node.step));
+                                    }
                                 }
                             }
+                            ques1.push(node);
+                            if (showQues.length < 5) {
+                                showQues.push(node);
+                            }
+                        } else {
+                            var i = quesIdsOrder.indexOf(node.id);
+                            ques[i] = node;
+                            if (node.type == 3) {
+                                node.slider = new Array(node.options.length).fill(0);
+                                node.totalScore = node.totalScore;
+                                node.step = Math.floor(node.totalScore / 5);
+                                node.stepArr = [];
+                                if (node.totalScore < 5) {
+                                    node.step = 1;
+                                    for (let i = 0; i < node.totalScore; i++) {
+                                        node.stepArr.push(Math.floor(i * node.step));
+                                    }
+                                } else {
+                                    for (let i = 0; i < 5; i++) {
+                                        node.stepArr.push(Math.floor(i * node.step));
+                                    }
+                                }
+                            }
+                            ques1[i] = node;
+                            var oldswiperCurrent = oldData.swiperCurrent;
+                            var i1 = oldswiperCurrent - i;
+                            if (i1 > -3 && i1 < 3) {
+                                showQues[i] = node;
+                            }
                         }
-                        ques1.push(node);
-                        if (showQues.length < 5) {
-                            showQues.push(node);
+                    });
+                    if (!oldChapter) {
+                        if (res.chapter && res.chapter.length) {
+                            //有分章节
+                            res.chapter.forEach(function (node, index) {
+                                node.status = 1;
+                                if (index > 0) {
+                                    node.status = 2;
+                                }
+                            });
                         }
                     } else {
-                        var i = quesIdsOrder.indexOf(node.id);
-                        ques[i] = node;
-                        if (node.type == 3) {
-                            node.slider = new Array(node.options.length).fill(0);
-                            node.totalScore = node.totalScore;
-                            node.step = Math.floor(node.totalScore / 5);
-                            node.stepArr = [];
-                            if (node.totalScore < 5) {
-                                node.step = 1;
-                                for (let i = 0; i < node.totalScore; i++) {
-                                    node.stepArr.push(Math.floor(i * node.step));
-                                }
-                            } else {
-                                for (let i = 0; i < 5; i++) {
-                                    node.stepArr.push(Math.floor(i * node.step));
-                                }
-                            }
-                        }
-                        ques1[i] = node;
-                        var oldswiperCurrent = oldData.swiperCurrent;
-                        var i1 = oldswiperCurrent - i;
-                        if (i1 > -3 && i1 < 3) {
-                            showQues[i] = node;
-                        }
+                        res.chapter = oldChapter;
                     }
-                });
-                if (!oldChapter) {
-                    if (res.chapter && res.chapter.length) {
-                        //有分章节
-                        res.chapter.forEach(function (node, index) {
-                            node.status = 1;
-                            if (index > 0) {
-                                node.status = 2;
-                            }
-                        });
-                    }
-                } else {
-                    res.chapter = oldChapter;
-                }
-                res.ques = ques;
-                that.setData({
-                    quesAll: ques1,
-                    chapter: res.chapter || [],
-                    getphoneNum: getphoneNum,
-                    id: options.id,
-                    paperId: options.pid,
-                    showQues: showQues,
-                    paperList: res,
-                    time: ((res.chapter || [])[0] || {}).time || ""
-                });
-                if (app.isTest) {
+                    res.ques = ques;
                     that.setData({
-                        imgUrl: "123",
-                        username: "AA",
-                        birthday: "2019",
-                        education: "1",
-                        pathIndex: 3
+                        quesAll: ques1,
+                        chapter: res.chapter || [],
+                        getphoneNum: getphoneNum,
+                        id: options.id,
+                        paperId: options.pid,
+                        showQues: showQues,
+                        paperList: res,
+                        time: ((res.chapter || [])[0] || {}).time || ""
                     });
-                    that.toTimeDown();
-                }
-                if (oldData) {
-                    wx.showToast({
-                        icon: 'none',
-                        title: '已为您恢复上次作答'
-                    });
-                    that.setData(oldData);
-                    that.toAnswerIt(null, oldData);
-                    var startTime = oldData.startTime;
-                    // var endTime = oldData.endTime;
-                    var now = new Date().getTime();
-
-                    // oldData["startTime"] = startTime + (now - endTime);
-                    if ((now - startTime) > (6 * 60 * 60 * 1000)) {
-                        //答题时长超过6小时
-                        wx.showModal({
-                            title: '作答提示',
-                            content: '答题时长超过6小时，已自动提交',
-                            showCancel: false,
-                            success: function () {
-                                that.formSubmit();
-                            }
+                    if (app.isTest) {
+                        that.setData({
+                            imgUrl: "123",
+                            username: "AA",
+                            birthday: "2019",
+                            education: "1",
+                            pathIndex: 3
                         });
-                        return;
-                    }
-                    if (oldData.pathIndex == 2) {
                         that.toTimeDown();
                     }
-                } else if (res.chapter[0] && that.data.pathIndex == 3) {
-                    that.toAnswerIt();
+                    if (oldData) {
+                        wx.showToast({
+                            icon: 'none',
+                            title: '已为您恢复上次作答'
+                        });
+                        that.setData(oldData);
+                        that.toAnswerIt(null, oldData);
+                        var startTime = oldData.startTime;
+                        // var endTime = oldData.endTime;
+                        var now = new Date().getTime();
+
+                        // oldData["startTime"] = startTime + (now - endTime);
+                        if ((now - startTime) > (6 * 60 * 60 * 1000)) {
+                            //答题时长超过6小时
+                            wx.showModal({
+                                title: '作答提示',
+                                content: '答题时长超过6小时，已自动提交',
+                                showCancel: false,
+                                success: function () {
+                                    that.formSubmit();
+                                }
+                            });
+                            return;
+                        }
+                        if (oldData.pathIndex == 2) {
+                            that.toTimeDown();
+                        }
+                    } else if (res.chapter[0] && that.data.pathIndex == 3) {
+                        that.toAnswerIt();
+                    }
+                    saveTimeOut = setTimeout(that.saveDraftAnswer, 30000);
                 }
-                saveTimeOut = setTimeout(that.saveDraftAnswer, 30000);
-            }
-        });
+            });
+        }
     },
     pageTouch: function () {
 
     },
     onShow: function () {
-        if(wx.canIUse('hideHomeButton')){
+        if (wx.canIUse('hideHomeButton')) {
             wx.hideHomeButton();
         }
         const that = this;
@@ -291,13 +301,15 @@ Page({
     },
     submit: function (e) {
         const that = this;
-        const {receiveRecordId} = this.data;
+        const {receiveRecordId, releaseRecordId} = this.data;
+
         function doNext() {
             const data = that.data;
             const username = data.username;
             const birthday = data.birthday;
             const education = data.education;
             const phone = data.phoneNumber;
+            console.log("releaseRecordId: ", releaseRecordId);
             if (!username || !(/^[\u4E00-\u9FA5A-Za-z]+$/.test(username))) {
                 app.toast("请输入正确的姓名！");
                 return;
@@ -310,24 +322,51 @@ Page({
                 app.toast("请选择出生年月！");
                 return;
             }
-            app.doAjax({
-                url: 'release/qualification',
-                method: 'post',
-                data: {
-                    isVerify: false,
-                    receiveRecordId: receiveRecordId,
-                    participantInfo: {
-                        username,
-                        birthday,
-                        educationName: education,
-                        phone
+            if (data.verify) {
+                app.doAjax({
+                    url: 'release/qualification',
+                    method: 'post',
+                    data: {
+                        isVerify: true,
+                        releaseRecordId: releaseRecordId,
+                        participantInfo: {
+                            username,
+                            birthday,
+                            educationName: education,
+                            phone,
+                        }
+                    },
+                    success: function (res) {
+                        console.log(res);
+                        if (res.code === 0) {
+                            wx.navigateTo({
+                                url: `/pages/work-base/components/guide/guide?releaseRecordId=${releaseRecordId}`
+                            })
+                        } else {
+                            app.toast("信息错误，请重新录入！")
+                        }
                     }
-                },
-                success: function (res) {
-                    console.log("上传用户信息成功")
-                }
-            })
-            that.gotoallready();
+                })
+            } else {
+                app.doAjax({
+                    url: 'release/qualification',
+                    method: 'post',
+                    data: {
+                        isVerify: false,
+                        receiveRecordId: receiveRecordId,
+                        participantInfo: {
+                            username,
+                            birthday,
+                            educationName: education,
+                            phone
+                        }
+                    },
+                    success: function (res) {
+                        console.log("上传用户信息成功")
+                    }
+                });
+                that.gotoallready();
+            }
         }
 
         if (!that.data.getphoneNum) {
@@ -933,7 +972,7 @@ Page({
     },
     getPhoneNumber: function (e) {
         const that = this;
-        if(app.wxWorkInfo.isWxWork){
+        if (app.wxWorkInfo.isWxWork) {
             app.doAjax({
                 url: 'wework/auth/mobile',
                 method: "post",
@@ -951,7 +990,7 @@ Page({
                     app.toast(err.msg)
                 }
             })
-        }else{
+        } else {
             const {name} = e.currentTarget.dataset;
             if (!that.data.getphoneNum || that.data.getphoneNum) {
                 var detail = e.detail;

@@ -543,15 +543,15 @@
                                 <block wx:if="{{ item.showScore === 'total' }}">
                                     <block wx:if="{{ item.scale === 'origin' }}">
                                         <view class="name">得分</view>
-                                        <view class="lv">{{ util.saveDouble(item.originTotal) }}</view>
+                                        <view class="lv">{{ util.saveDouble(item.total) }}</view>
                                     </block>
                                     <block wx:if="{{ item.scale === 'decimal' }}">
                                         <view class="name">得分</view>
-                                        <view class="lv">{{ util.saveDouble(item.decimalTotal) }}</view>
+                                        <view class="lv">{{ util.saveDouble(item.total10) }}</view>
                                     </block>
                                     <block wx:elif="{{ item.scale === 'centesimal' }}">
                                         <view class="name">得分</view>
-                                        <view class="lv">{{ util.saveDouble(item.centesimalTotal) }}</view>
+                                        <view class="lv">{{ util.saveDouble(item.total100) }}</view>
                                     </block>
                                 </block>
                                 <block wx:if="{{ item.showScore === 'average' }}">
@@ -684,7 +684,7 @@
                                             <image src="./images/report@icon-arrow.png"></image>
                                         </block>
                                     </block>
-                                    <block wx:elif="{{ item.showSubScore !== 'none' }}">
+                                    <block wx:elif="{{ item.showSubScore === 'none' }}">
                                         <text style="color:{{node.color}};">
                                             {{ item.showSubLevel ? node.lvName : "" }}
                                         </text>

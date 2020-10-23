@@ -309,6 +309,7 @@ Page({
             const birthday = data.birthday;
             const education = data.education;
             const phone = data.phoneNumber;
+            const educationName = data.array[education];
             console.log("releaseRecordId: ", releaseRecordId);
             if (!username || !(/^[\u4E00-\u9FA5A-Za-z]+$/.test(username))) {
                 app.toast("请输入正确的姓名！");
@@ -332,7 +333,7 @@ Page({
                         participantInfo: {
                             username,
                             birthday,
-                            educationName: education,
+                            educationName: educationName,
                             phone,
                         }
                     },
@@ -357,7 +358,7 @@ Page({
                         participantInfo: {
                             username,
                             birthday,
-                            educationName: education,
+                            educationName: educationName,
                             phone
                         }
                     },

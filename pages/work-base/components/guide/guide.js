@@ -6,7 +6,8 @@ Page({
         hasUserInfo: false,
         isTest: false,
         maskTrigger: true,
-        verified: false
+        verified: false,
+        isEmail: false
     },
     onLoad: function (option) {
         let releaseEvaluationId = "";
@@ -105,8 +106,16 @@ Page({
         });
     },
 
+    verifyUserInfo: function(e) {
+        const {evaluationId,id,receiveRecordId,reportPermit,status,verified,isEmail} = this.data;
+        const url = `/pages/work-base/components/answering/answering?pid=${evaluationId}&id=${id}&reportPermit=${reportPermit}&status=${status}&verify=true`;
+        wx.redirectTo({
+            url: url
+        });
+    },
+
     goToReplying: function (e) {
-        const {evaluationId,id,receiveRecordId,reportPermit,status,verified} = this.data;
+        const {evaluationId,id,receiveRecordId,reportPermit,status,verified,isEmail} = this.data;
         const that = this;
         const draftAnswer = that.data.draftAnswer;
         const userData = e.detail.userInfo;
@@ -141,7 +150,7 @@ Page({
                                 success: res => {
                                     app.otherPageReLaunchTrigger = false;
                                 }
-                            })
+                            });
                             return;
                         } else {
                             wx.redirectTo({
@@ -163,9 +172,9 @@ Page({
         if (draftAnswer || !draftAnswer) {
             const sKey = "oldAnswer" + that.data.id;
             let pathIndex = "";
-            if(verified){
-                pathIndex = "3";
-            }
+            // if(verified){
+            //     pathIndex = "3";
+            // }
             const url = `/pages/work-base/components/answering/answering?pid=${evaluationId}&id=${id}&receiveRecordId=${receiveRecordId}&reportPermit=${reportPermit}&status=${status}&pathIndex=${pathIndex}`;
             wx.setStorageSync(sKey, draftAnswer);
             wx.redirectTo({
@@ -213,20 +222,18 @@ Page({
                         url: "/pages/work-base/work-base"
                     });
                     return;
-                }else if(!res.receiveRecordId && res.msg === 'qualification needed'){
-                    app.toast("您将被带往用户信息验证页面");
-                    wx.redirectTo({
-                        url: `/pages/work-base/components/answering/answering?verify=true&releaseRecordId=${id}`
-                    });
-                    return;
+                } else if(!res.receiveRecordId && res.msg === 'qualification needed') {
+                    that.setData({
+                        isEmail: true,
+                    })
                 }
                 const sKey = "oldAnswer" + id;
                 const oldData = wx.getStorageSync(sKey);
-                if(res.verified){
-                    that.setData({
-                        verified: res.verified,
-                    });
-                }
+                // if(res.verified){
+                //     that.setData({
+                //         verified: res.verified,
+                //     });
+                // }
                 that.setData({
                     reportPermit: res.reportPermit,
                 });

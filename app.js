@@ -60,8 +60,8 @@ App({
     quitPage: "",
     // host: "https://api.luoke101.com/b",
     // host: "http://api.dev.luoke101.int",
-    host: 'https://api.uat.luoke101.com',
-    // host: "http://192.168.0.225:3000",
+    // host: 'https://api.uat.luoke101.com',
+    host: "http://192.168.0.225:3000",
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
         userInfo: null,
@@ -441,7 +441,7 @@ App({
      * @return: none
      * @date: 2020/7/21
      */
-    doAjax: function (params = {noLoading: true}) {
+    doAjax: function (params = {noLoading: true,toastTrigger: true}) {
         const that = this;
         const {prefix = ''} = params;
         let url = this.host + '/hola/' + params.url;
@@ -452,6 +452,9 @@ App({
             wx.showLoading({
                 title: '正在请求...',
             });
+        }
+        if(!params.toastTrigger){
+            params.toastTrigger = false;
         }
         if (params.url.indexOf('wework/auth/ma') !== -1) {
             url = `${this.host}/wework/auth/ma`;
@@ -484,11 +487,13 @@ App({
                 var retData = ret.data;
                 if (retData.code) {
                     if (params.error) return params.error(retData);
-                    wx.showToast({
-                        title: retData.msg,
-                        icon: 'none',
-                        duration: 2000,
-                    });
+                    if(params.toastTrigger){
+                        wx.showToast({
+                            title: retData.msg,
+                            icon: 'none',
+                            duration: 2000,
+                        });
+                    }
                     return;
                 }
                 if (params.success) {

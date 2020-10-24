@@ -36,8 +36,8 @@ Page({
         isok: false,
         sex: ["男", "女"],
         checkedSex: 0,
-        getphoneNum: true,
-        phoneNumber: "18000000000" || "微信一键授权",
+        getphoneNum: false,
+        phoneNumber: "微信一键授权",
         theFinalQuestionAnswer: [],
         verify: false
     },
@@ -46,7 +46,7 @@ Page({
         if(options.pathIndex){
             this.setData({
                 pathIndex: options.pathIndex
-            })
+            });
         }
         this.setData({
             status: options.type,

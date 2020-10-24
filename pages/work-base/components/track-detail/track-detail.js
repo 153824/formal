@@ -36,17 +36,24 @@ Page({
         amount: 0,
         QRCode: "",
         maskTrigger: true,
+        finishCount: 0,
+        examiningCount: 0
     },
 
     onLoad: function (options) {
         const that = this;
-        const {releaseRecordId, sharedAt} = options;
+        const {releaseRecordId, sharedAt,trackId} = options;
         console.log("options: ", options);
         const {examiningDetail, finishedDetail, digestDetail} = this;
-        if (releaseRecordId && sharedAt) {
+        if (sharedAt) {
             this.setData({
                 releaseRecordId,
                 sharedAt
+            });
+        }
+        if(releaseRecordId || trackId) {
+            this.setData({
+                releaseRecordId: releaseRecordId || trackId,
             });
         }
         options.userId = "";
@@ -125,7 +132,7 @@ Page({
     onShow() {
     },
 
-    acceptEvaluationTrack: function (options) {
+    acceptEvaluationTrack: function (options={trackId: "", releaseRecordId: "", sharedAt: "", userId: ""}) {
         const {trackId, releaseRecordId, sharedAt, userId} = options;
         const acceptEvaluationTrackPromise = new Promise((resolve, reject) => {
             app.doAjax({
@@ -134,7 +141,7 @@ Page({
                 noLoading: true,
                 data: {
                     userId: wx.getStorageSync("userInfo").id || userId,
-                    releaseRecordId: releaseRecordId || trackId,
+                    releaseRecordId: releaseRecordId || trackId || this.data.releaseRecordId,
                     sharedAt: sharedAt
                 },
                 success: function (res) {
@@ -151,10 +158,10 @@ Page({
         return acceptEvaluationTrackPromise
     },
 
-    examiningDetail: function (options) {
+    examiningDetail: function (options={trackId: "", releaseRecordId: "", sharedAt: "", userId: ""}) {
         const that = this;
         const {trackId, releaseRecordId} = options;
-        const {examiningPage, examiningList} = this.data;
+        let {examiningPage, examiningList} = this.data;
         const examiningDetailPromise = new Promise((resolve, reject) => {
             app.doAjax({
                 url: `release_records/detail`,
@@ -164,14 +171,20 @@ Page({
                     type: 'examining',
                     page: examiningPage,
                     pageSize: 8,
-                    releaseRecordId: releaseRecordId || trackId,
+                    releaseRecordId: releaseRecordId || trackId || this.data.releaseRecordId,
                     userId: options.userId,
                     teamId: options.teamId,
                 },
                 success: function (res = []) {
-                    console.log(res);
+                    let {examiningCount} = that.data;
+                    if(res.data.length){
+                        examiningPage = examiningPage+1;
+                        examiningCount = res.count;
+                    }
                     that.setData({
-                        examiningList: examiningList.concat(res)
+                        examiningList: examiningList.concat(res.data),
+                        examiningPage,
+                        examiningCount
                     });
                     resolve(true)
                 },
@@ -183,10 +196,10 @@ Page({
         return examiningDetailPromise;
     },
 
-    finishedDetail: function (options) {
+    finishedDetail: function (options={trackId: "", releaseRecordId: "", sharedAt: "", userId: ""}) {
         const that = this;
         const {trackId, releaseRecordId} = options;
-        const {finishedPage, finishList} = this.data;
+        let {finishedPage, finishList} = this.data;
         const finishedDetailPromise = new Promise((resolve, reject) => {
             app.doAjax({
                 url: `release_records/detail`,
@@ -196,13 +209,20 @@ Page({
                     type: 'finished',
                     page: finishedPage,
                     pageSize: 8,
-                    releaseRecordId: releaseRecordId || trackId,
+                    releaseRecordId: releaseRecordId || trackId || this.data.releaseRecordId,
                     userId: options.userId,
                     teamId: options.teamId,
                 },
                 success: function (res = []) {
+                    let {finishCount} = that.data;
+                    if(res.data.length){
+                        finishedPage = finishedPage+1;
+                        finishCount = res.count
+                    }
                     that.setData({
-                        finishList: finishList.concat(res),
+                        finishList: finishList.concat(res.data),
+                        finishedPage,
+                        finishCount
                     });
                     resolve(true);
                 },
@@ -214,7 +234,7 @@ Page({
         return finishedDetailPromise;
     },
 
-    digestDetail: function (options) {
+    digestDetail: function (options={trackId: "", releaseRecordId: "", sharedAt: "", userId: ""}) {
         const that = this;
         const {trackId, releaseRecordId} = options;
         const digestDetailPromise = new Promise((resolve, reject) => {
@@ -223,7 +243,7 @@ Page({
                 method: `get`,
                 noLoading: true,
                 data: {
-                    releaseRecordId: trackId || releaseRecordId,
+                    releaseRecordId: trackId || releaseRecordId || this.data.releaseRecordId,
                     userId: options.userId,
                     teamId: options.teamId,
                 },
@@ -250,18 +270,10 @@ Page({
     },
 
     getNextPage: function (e) {
-        const {checkedItem, finishedPage, examiningPage} = this.data;
+        let {checkedItem, finishedPage, examiningPage} = this.data;
         if (checkedItem === 0) {
-            let finishedPage = finishedPage + 1;
-            this.setData({
-                finishedPage
-            });
             this.finishedDetail();
         } else if (checkedItem === 1) {
-            let examiningPage = examiningPage + 1;
-            this.setData({
-                examiningPage
-            });
             this.examiningDetail();
         } else {
 

@@ -768,6 +768,12 @@ Page({
         const {mark, eventName} = e.currentTarget.dataset;
         const {iv, encryptedData} = e.detail;
         const {evaluation} = this.data;
+        try {
+            // 唤起手机授权
+            wx.uma.trackEvent('1602747468531');
+        }catch (e) {
+            throw e
+        }
         if (mark !== 'dont-get-ticket') {
             try {
                 wx.uma.trackEvent('1602211711933', {name: evaluation.name});
@@ -801,12 +807,6 @@ Page({
                 default:
                     break;
             }
-        }
-        try {
-            // 唤起手机授权
-            wx.uma.trackEvent('1602747468531')
-        }catch (e) {
-
         }
         if (encryptedData) {
             //用户授权手机号

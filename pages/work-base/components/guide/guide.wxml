@@ -29,8 +29,8 @@
     <view wx:elif="{{text === '立即验证'}}" class="begin" bindtap="verifyUserInfo">立即验证</view>
     <view wx:elif="{{text === '继续作答' && hasUserInfo}}" class="begin" bindtap="goToReplying">继续作答</view>
     <button wx:elif="{{text === '继续作答' && !hasUserInfo}}" class="begin" open-type="getUserInfo" bindgetuserinfo="goToReplying">继续作答</button>
-    <view wx:elif="{{text === '开始作答' && hasUserInfo}}" class="begin" bindtap="goToReplying">开始作答</view>
-    <button wx:elif="{{text === '开始作答' && !hasUserInfo}}" class="begin" open-type="getUserInfo" bindgetuserinfo="goToReplying">开始作答</button>
+    <view wx:elif="{{text === '开始作答' && hasUserInfo}}" class="begin" bindtap="goToReplying" data-mark="begin">开始作答</view>
+    <button wx:elif="{{text === '开始作答' && !hasUserInfo}}" class="begin" open-type="getUserInfo" data-mark="begin" bindgetuserinfo="goToReplying">开始作答</button>
     <text class="infotext">好啦测评提供技术支持</text>
 </view>
 <hola-mask isShow="{{ maskTrigger }}"></hola-mask>

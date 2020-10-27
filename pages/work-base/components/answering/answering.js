@@ -36,10 +36,11 @@ Page({
         isok: false,
         sex: ["男", "女"],
         checkedSex: 0,
-        getphoneNum: true,
-        phoneNumber: '18100000000' || "微信一键授权",
+        getphoneNum: false,
+        phoneNumber: "微信一键授权",
         theFinalQuestionAnswer: [],
         verify: false,
+        isSelf: ""
     },
     onLoad: function (options) {
         const that = this;
@@ -79,7 +80,18 @@ Page({
             oldPeopleMsg["education"] = that.data.array.indexOf(oldPeopleMsg.educationName);
             that.setData(oldPeopleMsg);
         }
-
+        app.doAjax({
+            url: 'reports/check_type',
+            method: 'get',
+            data: {
+                receiveRecordId: options.receiveRecordId || this.data.receiveRecordId
+            },
+            success: function (res) {
+                that.setData({
+                    isSelf: res.data.type
+                });
+            }
+        });
         app.doAjax({
             url: "paperQues",
             method: "get",
@@ -216,7 +228,6 @@ Page({
                 saveTimeOut = setTimeout(that.saveDraftAnswer, 30000);
             }
         });
-
     },
     pageTouch: function () {
 
@@ -297,7 +308,13 @@ Page({
     submit: function (e) {
         const that = this;
         const {receiveRecordId, releaseRecordId} = this.data;
+        if (that.data.isSelf === "SHARE") {
+            try {
+                wx.uma.trackEvent('1602216442285')
+            } catch (e) {
 
+            }
+        }
         function doNext() {
             const data = that.data;
             const username = data.username;
@@ -721,6 +738,13 @@ Page({
         if (wx.getStorageSync("userInfo")["nickname"] && answer["username"] && answer["username"] === "好啦访客") {
             answer["username"] = wx.getStorageSync("userInfo")["nickname"]
         }
+        if (data.isSelf === 'SELF') {
+            try {
+                wx.uma.trackEvent('1602214552285', {name: data.paperList.setting.name1})
+            } catch (e) {
+
+            }
+        }
         app.doAjax({
             url: "receive_records/update_answer",
             method: "POST",
@@ -736,6 +760,19 @@ Page({
                 that.setData(ret);
             }
         });
+        if (that.data.isSelf === "SHARE") {
+            try {
+                wx.uma.trackEvent('1602216509662', {name: that.data.paperList.setting.name1});
+            } catch (e) {
+
+            }
+        } else {
+            try {
+                wx.uma.trackEvent('1602214552285', {name: that.data.paperList.setting.name1});
+            } catch (e) {
+
+            }
+        }
     },
     saveAnswerStorageSync: function () {
         var data = this.data;
@@ -768,6 +805,7 @@ Page({
      */
     toAnswerIt: function (e, oldData) {
         var that = this;
+        const {name1} = this.data.paperList.setting;
         if (answerTimeOut) {
             clearTimeout(answerTimeOut);
         }
@@ -972,6 +1010,13 @@ Page({
     },
     getPhoneNumber: function (e) {
         const that = this;
+        if (this.data.isSelf === 'SHARE') {
+            try {
+                wx.uma.trackEvent('1602215557718')
+            } catch (e) {
+
+            }
+        }
         if (app.wxWorkInfo.isWxWork) {
             app.doAjax({
                 url: 'wework/auth/mobile',
@@ -1005,6 +1050,13 @@ Page({
                         url: "updatedUserMobile",
                         data: userMsg,
                         success: function (ret) {
+                            if (that.data.isSelf === 'SHARE') {
+                                try {
+                                    wx.uma.trackEvent('1602216242156')
+                                } catch (e) {
+
+                                }
+                            }
                             app.doAjax({
                                 url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
                                 method: "get",

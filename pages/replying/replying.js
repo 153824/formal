@@ -230,7 +230,6 @@ Page({
                 });
             }
         });
-        wx.cloud.init();
     },
     pageTouch: function () {
 

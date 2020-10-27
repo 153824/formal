@@ -287,7 +287,7 @@
         <view class="mask" bindtap="closeGift"></view>
     </view>
     <!-- 新用户 || 有券 || (未买断&&买过测评) || 买断 以上这种情况出现均会出现小黄条 -->
-    <serving id="serving" mobile="{{ mobile }}" wechat="{{ wechat }}"
+    <serving id="serving" mobile="{{ mobile }}" wechat="{{ wechat }}" area="detail"
              bottom="{{ evaluationVoucherInfo.isBeginner || hasVoucher || (!evaluationVoucherInfo.buyoutInfo.hadBuyout&&evaluationVoucherInfo.hadConsumed) || evaluationVoucherInfo.buyoutInfo.hadBuyout ? '240rpx' : '180rpx'}}"></serving>
 
 </block>

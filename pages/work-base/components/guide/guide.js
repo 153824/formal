@@ -7,7 +7,8 @@ Page({
         isTest: false,
         maskTrigger: true,
         verified: false,
-        isEmail: false
+        isEmail: false,
+        isSelf: "SHARE"
     },
     onLoad: function (option) {
         let releaseEvaluationId = "";
@@ -24,6 +25,20 @@ Page({
             this.setData({
                 id: option.releaseRecordId || releaseEvaluationId,
                 receiveRecordId: option.receiveRecordId || ""
+            });
+        }
+        if(option.receiveRecordId){
+            app.doAjax({
+                url: 'reports/check_type',
+                method: 'get',
+                data: {
+                    receiveRecordId: option.receiveRecordId || ""
+                },
+                success: function (res) {
+                    that.setData({
+                        isSelf: res.data.type
+                    });
+                }
             });
         }
     },
@@ -89,6 +104,7 @@ Page({
                 if (userInfo && userInfo.avatar || params.userInfo.hasParticipantInfo) {
                     hasUserInfo = true;
                 }
+                console.log("paperQues: ",res)
                 that.setData({
                     hasUserInfo: hasUserInfo,
                     status: params.status,
@@ -115,8 +131,23 @@ Page({
     },
 
     goToReplying: function (e) {
-        const {evaluationId,id,receiveRecordId,reportPermit,status,verified,isEmail} = this.data;
         const that = this;
+        const {name1} = that.data.evaluationList.setting;
+        const {mark=""} = e.currentTarget.dataset;
+        if (that.data.isSelf !== 'SHARE' && mark) {
+            try {
+                wx.uma.trackEvent('1602214318372', {name: name1})
+            } catch (e) {
+                console.error(e);
+            }
+        } else if (that.data.isSelf === 'SHARE' && mark) {
+            try {
+                wx.uma.trackEvent('1602215501397', {name: name1})
+            } catch (e) {
+                console.error(e);
+            }
+        }
+        const {evaluationId,id,receiveRecordId,reportPermit,status,verified,isEmail} = this.data;
         const draftAnswer = that.data.draftAnswer;
         const userData = e.detail.userInfo;
         if (!userData && !that.data.hasUserInfo && !app.isTest) return;

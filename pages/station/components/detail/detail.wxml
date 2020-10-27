@@ -26,18 +26,21 @@
             <!--面试助手判断逻辑-->
             <block wx:if="{{ util.isIncludes(assistant,evaluation.evaluationInfo.id) }}">
                 <checkout title="测评简介" type="introduction" info="{{ evaluation.synopsis }}"></checkout>
-                <checkout title="例题" type="assistant" list="{{ evaluation.quesExamples }}"></checkout>
+                <checkout title="例题" type="assistant" list="{{ evaluation.quesExamples }}" isShow="{{evaluation.quesExamples.length}}"></checkout>
             </block>
             <block wx:else>
                 <checkout title="报价方案" type="price" isShow="{{ !evaluation.freeEvaluation }}"
                           data="{{ evaluation }}"></checkout>
                 <checkout title="测评简介" type="introduction" info="{{ evaluation.synopsis }}"></checkout>
-                <checkout title="测量维度" type="dimension" list="{{ evaluation.measureDimension }}"></checkout>
-                <checkout title="适用场景" type="scenarios" list="{{ evaluation.scenario }}"></checkout>
+                <checkout title="测量维度" type="dimension" list="{{ evaluation.measureDimension }}"
+                          isShow="{{evaluation.measureDimension.length}}"></checkout>
+                <checkout title="适用场景" type="scenarios" list="{{ evaluation.scenario }}"
+                          isShow="{{evaluation.scenario.length}}">
+                </checkout>
                 <checkout title="报告示例" type="report" isShow="{{ evaluation.reportExample }}"
                           info="{{ evaluation.reportExample }}"
                           subtitle="{{ evaluation.name }}"></checkout>
-                <checkout title="例题" type="example" list="{{ evaluation.quesExamples }}"></checkout>
+                <checkout title="例题" type="example" list="{{ evaluation.quesExamples }}" isShow="{{evaluation.quesExamples.length}}"></checkout>
             </block>
         </view>
     </scroll-view>

@@ -36,7 +36,7 @@
 		"hidedInDevtools": []
 	},
 	"isGameTourist": false,
-	"simulatorType": "wechat",
+	"simulatorType": "qywx_simulator_plugin",
 	"simulatorPluginLibVersion": {
 		"qywx_simulator_plugin": "2.10.1"
 	},
@@ -113,9 +113,9 @@
 				},
 				{
 					"id": 6,
-					"name": "小程序领取测评",
+					"name": "小程序码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=5f9401e44b5d908bb43552e5",
+					"query": "scene=5f97b97122d363662e75a6f7",
 					"scene": null
 				},
 				{

@@ -11,6 +11,7 @@ Page({
         isSelf: "SHARE"
     },
     onLoad: function (option) {
+        const that = this;
         let releaseEvaluationId = "";
         if (option.q) {
             const q = decodeURIComponent(option.q);

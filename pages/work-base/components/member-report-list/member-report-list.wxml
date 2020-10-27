@@ -15,16 +15,16 @@
                         <text class="status" wx:else>未完成</text>
                     </view>
                     <view class="btnView btnView1" bindtap="changePage"
-                          data-url="/pages/replying/components/guide/guide?releaseRecordId={{item.releaseRecordId}}&receiveRecordId={{ item.receiveRecordId }}&evaluationId={{item.evaluationId}}"
+                          data-url="/pages/work-base/components/guide/guide?releaseRecordId={{item.releaseRecordId}}&receiveRecordId={{ item.receiveRecordId }}&evaluationId={{item.evaluationId}}"
                           wx:if="{{item.status==='FETCHED'}}">继续作答
                     </view>
                     <view class="btnView btnView1" bindtap="changePage"
-                          data-url="/pages/replying/components/guide/guide?releaseRecordId={{item.releaseRecordId}}&receiveRecordId={{ item.receiveRecordId }}&evaluationId={{item.evaluationId}}"
+                          data-url="/pages/work-base/components/guide/guide?releaseRecordId={{item.releaseRecordId}}&receiveRecordId={{ item.receiveRecordId }}&evaluationId={{item.evaluationId}}"
                           wx:elif="{{item.status==='FETCHED'}}">
                         继续作答
                     </view>
                     <view class="btnView btnView1" bindtap="changePage"
-                          data-url="/pages/replying/components/guide/guide?releaseRecordId={{item.releaseRecordId}}&receiveRecordId={{ item.receiveRecordId }}&evaluationId={{item.evaluationId}}"
+                          data-url="/pages/work-base/components/guide/guide?releaseRecordId={{item.releaseRecordId}}&receiveRecordId={{ item.receiveRecordId }}&evaluationId={{item.evaluationId}}"
                           wx:elif="{{item.status==='UNCLAIMED'}}">
                         开始作答
                     </view>

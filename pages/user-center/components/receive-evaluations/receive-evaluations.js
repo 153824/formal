@@ -2,20 +2,30 @@ import debounce from "../../../../utils/lodash/debounce";
 
 const app = getApp();
 Page({
-    onLoad(options) {
-        console.log("options: ",options);
-        if (options.targetPath) {
+    data: {
+        redirect: ""
+    },
+    onLoad(options={redirect: ""}) {
+        if(options.redirect){
             this.setData({
-                targetPath: options.targetPath
+                redirect: options.redirect
             })
         }
     },
-    onShow() {
-    },
+    onShow() {},
     onUnload() {
-        // wx.switchTab({
-        //     url: "/pages/user-center/user-center"
-        // })
+        const {redirect} = this.data;
+        if(redirect){
+            switch (redirect) {
+                case "user-center":
+                    wx.switchTab({
+                        url: "/pages/user-center/user-center"
+                    });
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 })
 ;

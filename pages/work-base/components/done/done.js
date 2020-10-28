@@ -35,7 +35,7 @@ Page({
         const {isSelf} = this.data;
         if (isSelf && isSelf === "SHARE") {
             wx.navigateTo({
-                url: "/pages/user-center/components/receive-evaluations/receive-evaluations"
+                url: "/pages/user-center/components/receive-evaluations/receive-evaluations?redirect=user-center"
             })
         }
     },

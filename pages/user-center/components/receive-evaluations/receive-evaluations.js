@@ -3,6 +3,7 @@ import debounce from "../../../../utils/lodash/debounce";
 const app = getApp();
 Page({
     onLoad(options) {
+        console.log("options: ",options);
         if (options.targetPath) {
             this.setData({
                 targetPath: options.targetPath
@@ -12,9 +13,9 @@ Page({
     onShow() {
     },
     onUnload() {
-        wx.switchTab({
-            url: "/pages/user-center/user-center"
-        })
+        // wx.switchTab({
+        //     url: "/pages/user-center/user-center"
+        // })
     }
 })
 ;

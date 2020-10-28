@@ -136,9 +136,7 @@ App({
             });
             wx.qy.login({
                 success: res => {
-                    that.wxWorkUserLogin(res.code).then(data => {
-                    }).catch(err => {
-                    });
+                    that.wxWorkUserLogin(res.code).then(data => {}).catch(err => {});
                 },
                 fail: function (err) {
                     console.error(err);
@@ -233,6 +231,7 @@ App({
         if (this.wxWorkInfo.isWxWork && this.isReLaunch && pages.includes(this.quitPage) && pages.includes(currentPage) && !scenes.includes(sceneOption.scene)) {
             const that = this;
             console.log("onShow wx.reLaunch");
+            this.toast("app.js -> 234")
             wx.switchTab({
                 url: '/pages/work-base/work-base',
                 success: res => {

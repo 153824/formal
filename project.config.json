@@ -115,7 +115,7 @@
 					"id": 6,
 					"name": "小程序码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=5f97b97122d363662e75a6f7",
+					"query": "scene=5f9807cd7ace56260f12bbce",
 					"scene": null
 				},
 				{
@@ -143,7 +143,7 @@
 					"id": 10,
 					"name": "小层序码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=5f842ab5164cf1025532e142",
+					"query": "scene=5f97dcbcc6a086132c230d85",
 					"scene": null
 				},
 				{

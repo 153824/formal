@@ -21,6 +21,7 @@ Page({
                 loading: true,
             });
             setTimeout(()=>{
+                app.toast("home.js -> 24");
                 wx.switchTab({
                     url: "/pages/work-base/work-base"
                 });
@@ -237,4 +238,12 @@ Page({
             }
         });
     },
+    onUnload() {
+        const {isWxWork} = app.wxWorkInfo;
+        if (isWxWork) {
+            this.setData({
+                loading: true,
+            });
+        }
+    }
 });

@@ -58,9 +58,9 @@ App({
     isReLaunch: false,
     otherPageReLaunchTrigger: true,
     quitPage: "",
-    host: "https://api.luoke101.com/b",
+    // host: "https://api.luoke101.com/b",
     // host: "http://api.dev.luoke101.int",
-    // host: 'https://api.uat.luoke101.com',
+    host: 'https://api.uat.luoke101.com',
     // host: "http://192.168.0.225:3000",
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
@@ -231,7 +231,6 @@ App({
         if (this.wxWorkInfo.isWxWork && this.isReLaunch && pages.includes(this.quitPage) && pages.includes(currentPage) && !scenes.includes(sceneOption.scene)) {
             const that = this;
             console.log("onShow wx.reLaunch");
-            this.toast("app.js -> 234")
             wx.switchTab({
                 url: '/pages/work-base/work-base',
                 success: res => {

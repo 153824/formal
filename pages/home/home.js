@@ -11,21 +11,25 @@ Page({
         mobile: "18559297592",
         wechat: "haola72",
         active: 0,
-        column: []
+        column: [],
+        trigger: true
     },
     onLoad: function (options = {loadingTrigger: false}, name) {
         const that = this;
         const {isWxWork} = app.wxWorkInfo;
         if (isWxWork) {
+            const {trigger} = this.data;
             this.setData({
                 loading: true,
             });
-            setTimeout(()=>{
-                app.toast("home.js -> 24");
-                wx.switchTab({
-                    url: "/pages/work-base/work-base"
-                });
-            },4000);
+            if(trigger){
+                setTimeout(()=>{
+                    console.log("home.js -> 24");
+                    wx.switchTab({
+                        url: "/pages/work-base/work-base"
+                    });
+                },4000);
+            }
             return;
         }
         if (options.loadingTrigger) {
@@ -243,6 +247,7 @@ Page({
         if (isWxWork) {
             this.setData({
                 loading: true,
+                trigger: false
             });
         }
     }

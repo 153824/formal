@@ -13,8 +13,11 @@
             <view>
                 <text class="send-way">发放方式：</text>
                 <text wx:if="{{type === 'self'}}">自己测</text>
-                <block wx:else>
-                    二维码 <text class="code" bindtap="loadQrcode">【查看二维码】</text>
+                <text wx:elif="{{type === 'contacts'}}">通讯录</text>
+                <text wx:elif="{{type === 'email'}}">邮件</text>
+                <text wx:elif="{{type === 'qrcode'}}">二维码</text>
+                <block wx:if="{{type === 'qrcode'||type === 'email'}}">
+                    <text class="code" bindtap="loadQrcode">【查看二维码】</text>
                 </block>
             </view>
         </view>

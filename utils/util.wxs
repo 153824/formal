@@ -110,7 +110,13 @@ var arrayEleIsSame = function(compare=[],target=[]){
   }else{
     return false;
   }
-}
+};
+
+var subString = function(string,start,end){
+  if(string.length > end){
+    return string.substring(start,end);
+  }
+};
 
 module.exports = {
   getMonthAndDayByFrag: getMonthAndDayByFrag,
@@ -123,5 +129,6 @@ module.exports = {
   toFix: toFix,
   richTextFilter: richTextFilter,
   isSameDays: isSameDays,
-  arrayEleIsSame: arrayEleIsSame
+  arrayEleIsSame: arrayEleIsSame,
+  subString: subString
 };

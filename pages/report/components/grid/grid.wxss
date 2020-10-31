@@ -3,8 +3,6 @@
     height: 660rpx;
     padding: 60rpx 84rpx 80rpx 84rpx;
     background: #FFFFFF;
-    box-shadow: 0rpx 0rpx 10rpx 0rpx rgba(200, 200, 200, 0.34);
-    border-radius: 20rpx;
 }
 .hola-grid-axis{
     position: relative;
@@ -44,7 +42,7 @@
     justify-content: flex-end;
     width: 100%;
     height: 100%;
-    padding: 0 0 20rpx 80rpx;
+    padding: 0 0 30rpx 90rpx;
 }
 .axis-data-x-2{
     display: flex;
@@ -101,6 +99,9 @@
     font-size: 24rpx;
     transform-origin: left top;
     transform: rotate(-90deg) translateY(-55rpx) translateX(-35rpx);
+}
+.reach-the-standard,.not-reach-the-standard{
+    z-index: 9999;
 }
 .axis-data-x .reach-the-standard{
     padding: 30rpx 2rpx;

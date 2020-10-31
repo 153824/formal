@@ -10,7 +10,7 @@
                           gutter="{{ 10/pixelRate }}" border="{{false}}">
                     <block wx:for="{{area}}" wx:for-item="areaItem" wx:for-index="areaIndex">
                         <van-grid-item wx:for="{{areaItem}}" wx:for-item="areaChildItem" wx:for-index="areaChildIndex"
-                                       text="{{areaChildItem}}"
+                                       text="{{areaChildItem.length >= 5 ? util.subString(areaChildItem,0,4) : areaChildItem}}"
                                        content-class="van-grid-content-custom {{ util.arrayEleIsSame(coordinate,[areaIndex,areaChildIndex]) ? 'van-grid-content-custom-first-command' : '' }}"
                                        icon-class="van-grid-icon-custom" text-class="van-grid-text-custom van-grid-text-custom-nine-cell {{ util.arrayEleIsSame(coordinate,[areaIndex,areaChildIndex]) ? 'van-grid-text-custom-first-command' : '' }}"/>
                     </block>
@@ -20,7 +20,6 @@
                     <text class="{{coordinate[0] === 1 ? 'reach-the-standard': 'not-reach-the-standard'}}">中</text>
                     <text class="{{coordinate[0] === 2 ? 'reach-the-standard': 'not-reach-the-standard'}}">高</text>
                 </view>
-                <!--                reach-the-standard-->
                 <view class="axis-data-y">
                     <text class="{{coordinate[1] === 0 ? 'reach-the-standard': 'not-reach-the-standard'}}">低</text>
                     <text class="{{coordinate[1] === 1 ? 'reach-the-standard': 'not-reach-the-standard'}}">中</text>

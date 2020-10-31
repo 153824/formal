@@ -6,6 +6,12 @@ page, page > view {
     overflow-x: hidden;
 }
 
+.grid-chart-wrapper{
+    box-shadow: 0px 4rpx 16rpx 0px rgba(207, 216, 240, 0.79);
+    border-radius: 20rpx;
+    background-color: #fff;
+}
+
 .noTeamMemberView {
     position: fixed;
     top: 50%;
@@ -288,7 +294,7 @@ assessor-info
 /* box1 */
 
 .box1 {
-    padding: 40rpx 40rpx 20rpx 40rpx;
+    padding: 40rpx 40rpx 50rpx 40rpx;
     background-color: #f7f8fa;
 }
 
@@ -310,7 +316,7 @@ assessor-info
 }
 
 .box1 .temple {
-    margin-top: 40rpx;
+    margin-top: 20rpx;
     position: relative;
 }
 

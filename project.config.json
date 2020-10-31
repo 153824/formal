@@ -87,7 +87,7 @@
 					"id": 2,
 					"name": "报告详情",
 					"pathName": "pages/report/report",
-					"query": "receiveRecordId=5f8445733696807032e340e3",
+					"query": "receiveRecordId=5f9be50d731e776415189784",
 					"scene": null
 				},
 				{
@@ -115,7 +115,7 @@
 					"id": 6,
 					"name": "小程序码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=5f99071a89f7486caa2e8c2b",
+					"query": "scene=5f9bc3c0731e776415189779",
 					"scene": null
 				},
 				{

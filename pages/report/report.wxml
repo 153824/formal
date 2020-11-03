@@ -626,6 +626,83 @@
                     </view>
                     <view style="height:50rpx;"
                           wx:if="{{!item.lvDesc&&!item.showTotal&&!item.rankOrg&&!item.rankAll&&item.chartType==1}}"></view>
+                    <view class="dimension-conclu-wrapper">
+                        <view class="power first-wrapper" wx:if="{{incentives.top3 && incentives.top3.length}}">
+                            <text class="title">本阶段对您最重要的驱动因素是：</text>
+                            <view class="power-content-wrapper">
+                                <block wx:for="{{incentives.top3}}" wx:for-item="top3Item" wx:for-index="top3Index" wx:key="unique">
+                                    <view class="power-item-wrapper" style="transition: {{detailTrigger ? 'all .5s': ''}}">
+                                        <view class="power-item" data-mark="top-{{top3Index}}" bindtap="callDetail">
+                                            <view class="power-item-content">
+                                                <view class="conclusion-wrapper">
+                                                    <text>{{top3Item.name}}：</text>
+                                                    <text class="score blue">{{top3Item.score}}分</text>
+                                                </view>
+                                                <view class="score-wrapper green" wx:if="{{top3Item.aboveGroup}}">
+                                                    远高于群体水平
+                                                </view>
+                                            </view>
+                                            <image class="arrow" src="./images/report@icon-right-arrow.png"/>
+                                        </view>
+                                        <view wx:if="{{top3Item.lvTexts.length && 'top-'+top3Index === currentActive}}"
+                                              class="power-item-detail-wrapper {{opacityTrigger ? 'power-item-detail-wrapper-opacity' : ''}}">
+                                            <text style="font-weight: 600;">{{top3Item.lvTexts[0].title}}:</text>{{top3Item.lvTexts[0].content}}
+                                        </view>
+                                    </view>
+                                </block>
+                            </view>
+                        </view>
+                        <view class="power second-wrapper" wx:if="{{incentives.belowLowLevelLines && incentives.belowLowLevelLines.length}}">
+                            <text class="title">本阶段对您影响不明显的驱动因素是：</text>
+                            <view class="power-content-wrapper">
+                                <block wx:for="{{incentives.belowLowLevelLines}}" wx:for-item="belowItem" wx:for-index="belowIndex" wx:key="unique">
+                                    <view class="power-item-wrapper" style="transition: {{detailTrigger ? 'all .5s': ''}}">
+                                        <view class="power-item" data-mark="below-{{belowIndex}}" bindtap="callDetail">
+                                            <view class="power-item-content">
+                                                <view class="conclusion-wrapper">
+                                                    <text>{{belowItem.name}}：</text>
+                                                    <text class="score blue">{{belowItem.score}}分</text>
+                                                </view>
+                                                <view class="score-wrapper orange" wx:if="{{belowItem.belowGroup}}">
+                                                    远低于群体水平
+                                                </view>
+                                            </view>
+                                            <image class="arrow" src="./images/report@icon-right-arrow.png"/>
+                                        </view>
+                                        <view wx:if="{{belowItem.lvTexts.length && 'below-'+belowIndex === currentActive}}"
+                                              class="power-item-detail-wrapper {{opacityTrigger ? 'power-item-detail-wrapper-opacity' : ''}}">
+                                            <text style="font-weight: 600;">{{belowItem.lvTexts[0].title}}:</text>{{belowItem.lvTexts[0].content}}
+                                        </view>
+                                    </view>
+                                </block>
+                            </view>
+                        </view>
+                        <view class="power third-wrapper" wx:if="{{incentives.others && incentives.others.length}}">
+                            <text class="title">其他驱动因素得分：</text>
+                            <view class="power-content-wrapper">
+                                <block wx:for="{{incentives.others}}" wx:for-item="othersItem" wx:for-index="othersIndex" wx:key="unique">
+                                    <view class="power-item-wrapper" style="transition: {{detailTrigger ? 'all .5s': ''}}">
+                                        <view class="power-item" data-mark="others-{{othersIndex}}" bindtap="callDetail">
+                                            <view class="power-item-content">
+                                                <view class="conclusion-wrapper">
+                                                    <text>{{othersItem.name}}：</text>
+                                                    <text class="score blue">{{othersItem.score}}分</text>
+                                                </view>
+                                                <view class="score-wrapper orange" wx:if="{{othersItem.belowGroup}}">
+                                                    远低于群体水平
+                                                </view>
+                                            </view>
+                                            <image class="arrow" src="./images/report@icon-right-arrow.png"/>
+                                        </view>
+                                        <view wx:if="{{othersItem.lvTexts.length && 'others-'+othersIndex === currentActive}}"
+                                              class="power-item-detail-wrapper {{opacityTrigger ? 'power-item-detail-wrapper-opacity' : ''}}">
+                                            <text style="font-weight: 600;">{{othersItem.lvTexts[0].title}}:</text>{{othersItem.lvTexts[0].content}}
+                                        </view>
+                                    </view>
+                                </block>
+                            </view>
+                        </view>
+                    </view>
                     <!-- 维度 -->
                     <view class="list" wx:if="{{item.show&&item.showScore}}">
                         <block wx:for="{{item.subclass}}" wx:key="unique" wx:for-item="node" wx:for-index="i">

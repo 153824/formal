@@ -341,6 +341,10 @@ Page({
         histogramValues: [[]],
         referLines: [[]],
         maskTrigger: true,
+        detailTrigger: false,
+        opacityTrigger: true,
+        incentives: {},
+        currentActive: ""
     },
 
     onLoad: function (options = {isSelf: ""}) {
@@ -1091,6 +1095,23 @@ Page({
         }
     },
 
+    callDetail: function(e) {
+        const {detailTrigger,opacityTrigger,incentives,currentActive} = this.data;
+        let {mark} = e.currentTarget.dataset;
+        if(currentActive === mark){
+            mark = ""
+        }
+        this.setData({
+            detailTrigger: !detailTrigger,
+            currentActive: mark
+        });
+        // setTimeout(()=>{
+        //     this.setData({
+        //         opacityTrigger: !opacityTrigger
+        //     })
+        // },200)
+    },
+
     onUnload: function () {
         const {isSelf} = this.data;
         if (isSelf && isSelf === "SELF") {
@@ -1105,9 +1126,6 @@ Page({
             })
         } else {
             console.log("3")
-            // wx.reLaunch({
-            //     url:
-            // });
         }
     }
 });

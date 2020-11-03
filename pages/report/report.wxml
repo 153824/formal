@@ -626,7 +626,106 @@
                     </view>
                     <view style="height:50rpx;"
                           wx:if="{{!item.lvDesc&&!item.showTotal&&!item.rankOrg&&!item.rankAll&&item.chartType==1}}"></view>
-                    <view class="dimension-conclu-wrapper">
+                    <!-- 维度 -->
+                    <block wx:if="{{!(incentives && (incentives.top3 || incentives.others || incentives.belowLowLevelLines))}}">
+                        <view class="list" wx:if="{{item.show&&item.showScore}}">
+                            <block wx:for="{{item.subclass}}" wx:key="unique" wx:for-item="node" wx:for-index="i">
+                                <view class="item">
+                                    <view class="title {{node.active}}" bindtap="activeNewItem" data-index="{{index}}"
+                                          data-i="{{i}}">{{node.name}}：
+                                        <block wx:if="{{ item.showSubScore === 'total' }}">
+                                            <block wx:if="{{ item.subScale === 'origin' }}">
+                                                <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
+                                                    }} {{util.saveDouble(node.subTotal)}}分
+                                                </text>
+                                                <image src="./images/report@icon-arrow.png"></image>
+                                            </block>
+                                            <block wx:elif="{{ item.subScale === 'decimal' }}">
+                                                <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
+                                                    }} {{util.saveDouble(node.subTotal10)}}分
+                                                </text>
+                                                <image src="./images/report@icon-arrow.png"></image>
+                                            </block>
+                                            <block wx:elif="{{ item.subScale === 'centesimal' }}">
+                                                <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
+                                                    }} {{util.saveDouble(node.subTotal100)}}分
+                                                </text>
+                                                <image src="./images/report@icon-arrow.png"></image>
+                                            </block>
+                                            <block wx:elif="{{ item.subScale === 'stanine' }}">
+                                                <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
+                                                    }} {{util.saveDouble(node.subTotalStanine)}}分
+                                                </text>
+                                                <image src="./images/report@icon-arrow.png"></image>
+                                            </block>
+                                        </block>
+                                        <block wx:elif="{{ item.showSubScore === 'average' }}">
+                                            <block wx:if="{{ item.subScale === 'origin' }}">
+                                                <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
+                                                    }} {{util.saveDouble(node.average)}}分
+                                                </text>
+                                                <image src="./images/report@icon-arrow.png"></image>
+                                            </block>
+                                            <block wx:elif="{{ item.subScale === 'decimal' }}">
+                                                <text style="color:{{node.color}};">{{ item.showSubLevel ?
+                                                    node.lvName : "" }} {{util.saveDouble(node.average10)}}分
+                                                </text>
+                                                <image src="./images/report@icon-arrow.png"></image>
+                                            </block>
+                                            <block wx:elif="{{ item.subScale === 'centesimal' }}">
+                                                <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
+                                                    }} {{util.saveDouble(node.average100)}}分
+                                                </text>
+                                                <image src="./images/report@icon-arrow.png"></image>
+                                            </block>
+                                            <block wx:elif="{{ item.subScale === 'stanine' }}">
+                                                <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
+                                                    }} {{util.saveDouble(node.averageStanine)}}分
+                                                </text>
+                                                <image src="./images/report@icon-arrow.png"></image>
+                                            </block>
+                                        </block>
+                                        <block wx:elif="{{ item.showSubScore === 'none' }}">
+                                            <text style="color:{{node.color}};">
+                                                {{ item.showSubLevel ? node.lvName : "" }}
+                                            </text>
+                                            <image src="./images/report@icon-arrow.png"></image>
+                                        </block>
+                                    </view>
+                                    <view class="contentMsg" wx:if="{{node.active}}">
+                                        <block wx:for="{{node.lvTexts}}" wx:key="unique" wx:for-item="n" wx:for-index="j">
+                                            <view class="title1">
+                                                <text class="underLineBg">{{n.title}}：</text>
+                                            </view>
+                                            <rich-text class="msg" nodes="<p>{{n.content}}</p>"></rich-text>
+                                        </block>
+                                    </view>
+                                </view>
+                            </block>
+                        </view>
+                        <view class="list" wx:if="{{item.show&&!item.showScore}}">
+                            <block wx:for="{{item.child}}" wx:key="unique" wx:for-item="node" wx:for-index="i">
+                                <view class="item">
+                                    <view class="title {{node.active}}" bindtap="activeItem" data-index="{{index}}"
+                                          data-i="{{i}}">{{node.name}}：
+                                        <text style="color:{{node.color}};">{{node.lvName}}
+                                            {{util.saveDouble(node.av10)}}分
+                                        </text>
+                                        <image src="./images/report@icon-arrow.png"></image>
+                                    </view>
+                                    <view class="contentMsg" wx:if="{{node.active}}">
+                                        <block wx:for="{{node.lvTexts}}" wx:key="unique" wx:for-item="n" wx:for-index="j">
+                                            <view class="title1">
+                                                <text class="underLineBg">{{n.title}}：</text>
+                                            </view>
+                                            <rich-text class="msg" nodes="<p>{{n.content}}</p>"></rich-text>
+                                        </block>
+                                    </view>
+                                </view>
+                            </block>
+                        </view>
+                    </block>
+                    <view wx:else class="dimension-conclu-wrapper">
                         <view class="power first-wrapper" wx:if="{{incentives.top3 && incentives.top3.length}}">
                             <text class="title">本阶段对您最重要的驱动因素是：</text>
                             <view class="power-content-wrapper">
@@ -702,103 +801,6 @@
                                 </block>
                             </view>
                         </view>
-                    </view>
-                    <!-- 维度 -->
-                    <view class="list" wx:if="{{item.show&&item.showScore}}">
-                        <block wx:for="{{item.subclass}}" wx:key="unique" wx:for-item="node" wx:for-index="i">
-                            <view class="item">
-                                <view class="title {{node.active}}" bindtap="activeNewItem" data-index="{{index}}"
-                                      data-i="{{i}}">{{node.name}}：
-                                    <block wx:if="{{ item.showSubScore === 'total' }}">
-                                        <block wx:if="{{ item.subScale === 'origin' }}">
-                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
-                                                }} {{util.saveDouble(node.subTotal)}}分
-                                            </text>
-                                            <image src="./images/report@icon-arrow.png"></image>
-                                        </block>
-                                        <block wx:elif="{{ item.subScale === 'decimal' }}">
-                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
-                                                }} {{util.saveDouble(node.subTotal10)}}分
-                                            </text>
-                                            <image src="./images/report@icon-arrow.png"></image>
-                                        </block>
-                                        <block wx:elif="{{ item.subScale === 'centesimal' }}">
-                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
-                                                }} {{util.saveDouble(node.subTotal100)}}分
-                                            </text>
-                                            <image src="./images/report@icon-arrow.png"></image>
-                                        </block>
-                                        <block wx:elif="{{ item.subScale === 'stanine' }}">
-                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
-                                                }} {{util.saveDouble(node.subTotalStanine)}}分
-                                            </text>
-                                            <image src="./images/report@icon-arrow.png"></image>
-                                        </block>
-                                    </block>
-                                    <block wx:elif="{{ item.showSubScore === 'average' }}">
-                                        <block wx:if="{{ item.subScale === 'origin' }}">
-                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
-                                                }} {{util.saveDouble(node.average)}}分
-                                            </text>
-                                            <image src="./images/report@icon-arrow.png"></image>
-                                        </block>
-                                        <block wx:elif="{{ item.subScale === 'decimal' }}">
-                                            <text style="color:{{node.color}};">{{ item.showSubLevel ?
-                                                node.lvName : "" }} {{util.saveDouble(node.average10)}}分
-                                            </text>
-                                            <image src="./images/report@icon-arrow.png"></image>
-                                        </block>
-                                        <block wx:elif="{{ item.subScale === 'centesimal' }}">
-                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
-                                                }} {{util.saveDouble(node.average100)}}分
-                                            </text>
-                                            <image src="./images/report@icon-arrow.png"></image>
-                                        </block>
-                                        <block wx:elif="{{ item.subScale === 'stanine' }}">
-                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
-                                                }} {{util.saveDouble(node.averageStanine)}}分
-                                            </text>
-                                            <image src="./images/report@icon-arrow.png"></image>
-                                        </block>
-                                    </block>
-                                    <block wx:elif="{{ item.showSubScore === 'none' }}">
-                                        <text style="color:{{node.color}};">
-                                            {{ item.showSubLevel ? node.lvName : "" }}
-                                        </text>
-                                        <image src="./images/report@icon-arrow.png"></image>
-                                    </block>
-                                </view>
-                                <view class="contentMsg" wx:if="{{node.active}}">
-                                    <block wx:for="{{node.lvTexts}}" wx:key="unique" wx:for-item="n" wx:for-index="j">
-                                        <view class="title1">
-                                            <text class="underLineBg">{{n.title}}：</text>
-                                        </view>
-                                        <rich-text class="msg" nodes="<p>{{n.content}}</p>"></rich-text>
-                                    </block>
-                                </view>
-                            </view>
-                        </block>
-                    </view>
-                    <view class="list" wx:if="{{item.show&&!item.showScore}}">
-                        <block wx:for="{{item.child}}" wx:key="unique" wx:for-item="node" wx:for-index="i">
-                            <view class="item">
-                                <view class="title {{node.active}}" bindtap="activeItem" data-index="{{index}}"
-                                      data-i="{{i}}">{{node.name}}：
-                                    <text style="color:{{node.color}};">{{node.lvName}}
-                                        {{util.saveDouble(node.av10)}}分
-                                    </text>
-                                    <image src="./images/report@icon-arrow.png"></image>
-                                </view>
-                                <view class="contentMsg" wx:if="{{node.active}}">
-                                    <block wx:for="{{node.lvTexts}}" wx:key="unique" wx:for-item="n" wx:for-index="j">
-                                        <view class="title1">
-                                            <text class="underLineBg">{{n.title}}：</text>
-                                        </view>
-                                        <rich-text class="msg" nodes="<p>{{n.content}}</p>"></rich-text>
-                                    </block>
-                                </view>
-                            </view>
-                        </block>
                     </view>
                 </block>
             </block>

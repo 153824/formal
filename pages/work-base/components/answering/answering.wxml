@@ -6,7 +6,7 @@
     <text class="smalltitle">请准确填写以确认您的身份</text>
     <form bindsubmit="submit">
         <text class="inputtext">姓名</text>
-        <input name="username" value="{{username}}" bindinput="userInput" data-n="username"></input>
+        <input name="username" value="{{username}}" bindinput="userInput" data-n="username" placeholder="请填写姓名"/>
         <picker name="birthday" fields="month" mode="date" value="{{birthday == '' ? '1995-01': birthday}}"
                 bindchange="userInput" data-n="birthday">
             <view class="picker">

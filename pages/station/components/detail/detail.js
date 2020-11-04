@@ -32,7 +32,8 @@ Page({
         officialTicket: 0,
         certificateTicket: 0,
         shareTicket: 0,
-        deprecatedTicket: 0
+        deprecatedTicket: 0,
+        customNorms: []
     },
 
     onLoad: function (options) {
@@ -172,7 +173,8 @@ Page({
                             shareTicket,
                             experienceTicket,
                             certificateTicket,
-                            deprecatedTicket
+                            deprecatedTicket,
+                            customNorms: res.customNorms
                         });
                         resolve("success");
                     }
@@ -332,7 +334,7 @@ Page({
     /** 体验测评 */
     goToReplyingGuide: function (e) {
         const that = this;
-        const {evaluation} = this.data;
+        const {evaluation,customNorms} = this.data;
         const {name, answering, id} = e.currentTarget.dataset;
         app.doAjax({
             url: 'release/self',
@@ -340,7 +342,7 @@ Page({
             data: {
                 evaluationInfo: {
                     evaluationId: evaluation.id,
-                    normId: evaluation.generalNorms[0].normId,
+                    normId: evaluation.generalNorms.length ? evaluation.generalNorms[0].normId : customNorms[0].normId,
                     freeEvaluation: evaluation.freeEvaluation,
                     evaluationName: evaluation.name,
                     quesCount: evaluation.quesCount,
@@ -526,7 +528,7 @@ Page({
     goToDaTi: function () {
         //发放测评
         const that = this;
-        const {evaluation, evaluationVoucherInfo} = this.data;
+        const {evaluation, evaluationVoucherInfo,customNorms} = this.data;
         const {availableCount, buyoutInfo} = evaluationVoucherInfo;
         if (((availableCount || 0) === 0 && !evaluation.freeEvaluation) && !buyoutInfo.hadBuyout) {
             app.toast("测评可用数量不足，请先购买或用券兑换测评");
@@ -538,7 +540,7 @@ Page({
             name: evaluation.name,
             isFree: evaluation.freeEvaluation,
             hadBuyout: buyoutInfo.hadBuyout,
-            norms: evaluation.generalNorms,
+            norms: evaluation.generalNorms.length ? evaluation.generalNorms : customNorms,
             quesCount: evaluation.quesCount,
             estimatedTime: evaluation.estimatedTime,
 

@@ -66,7 +66,7 @@
                 </view>
                 <!-- <view style="opacity: 0;">1</view> -->
             </view>
-            <view class="content" wx:if="{{report.rule}}">{{(report.matchArr.type!=1||report.timeNormal!=1)?report.rule2:report.rule1}}
+            <view class="content" wx:if="{{report.rule}}">{{((report.matchArr.type && report.matchArr.type!=1)||report.timeNormal!=1)?report.rule2:report.rule1}}
             </view>
             <view class="title" style="margin-top:80rpx;" wx:if="{{ report.showReportUseInfo }}">
                 <text class="underLineBg assessor-info">报告使用说明</text>
@@ -449,7 +449,7 @@
                 </view>
             </view>
             <view class="content" wx:if="{{report.rule}}">
-                {{(report.matchArr.type!=1||report.timeNormal!=1)?report.rule2:report.rule1}}
+                {{((report.matchArr.type && report.matchArr.type !== 1) || report.timeNormal!=1 )?report.rule2:report.rule1}}
             </view>
             <view class="title" style="margin-top:80rpx;" wx:if="{{ report.showReportUseInfo }}">
                 <text class="underLineBg assessor-info">报告使用说明</text>

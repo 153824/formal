@@ -489,6 +489,7 @@ Page({
                 timeNormal = 3;
             }
             res.report["timeNormal"] = timeNormal;
+            console.log("res.report[\"timeNormal\"]:",timeNormal)
             radarValue = {};
             radarIndicator = {};
             value_2 = {};
@@ -610,6 +611,8 @@ Page({
                 timeNormal = 3;
             }
             res.report["timeNormal"] = timeNormal;
+            res.report["timeNormal"] = timeNormal;
+            console.log("res.report[\"timeNormal\"]:",timeNormal)
             radarValue = {};
             radarIndicator = {};
             value_2 = {};

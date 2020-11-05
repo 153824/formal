@@ -744,7 +744,7 @@
                                         </view>
                                         <view wx:if="{{top3Item.lvTexts.length && 'top-'+top3Index === currentActive}}"
                                               class="power-item-detail-wrapper {{opacityTrigger ? 'power-item-detail-wrapper-opacity' : ''}}">
-                                            <text style="font-weight: 600;">{{top3Item.lvTexts[0].title}}:</text>{{top3Item.lvTexts[0].content}}
+                                            {{top3Item.lvTexts[0].content}}
                                         </view>
                                     </view>
                                 </block>
@@ -769,7 +769,7 @@
                                         </view>
                                         <view wx:if="{{belowItem.lvTexts.length && 'below-'+belowIndex === currentActive}}"
                                               class="power-item-detail-wrapper {{opacityTrigger ? 'power-item-detail-wrapper-opacity' : ''}}">
-                                            <text style="font-weight: 600;">{{belowItem.lvTexts[0].title}}:</text>{{belowItem.lvTexts[0].content}}
+                                            {{belowItem.lvTexts[0].content}}
                                         </view>
                                     </view>
                                 </block>
@@ -794,7 +794,7 @@
                                         </view>
                                         <view wx:if="{{othersItem.lvTexts.length && 'others-'+othersIndex === currentActive}}"
                                               class="power-item-detail-wrapper {{opacityTrigger ? 'power-item-detail-wrapper-opacity' : ''}}">
-                                            <text style="font-weight: 600;">{{othersItem.lvTexts[0].title}}:</text>{{othersItem.lvTexts[0].content}}
+                                            {{othersItem.lvTexts[0].content}}
                                         </view>
                                     </view>
                                 </block>
@@ -819,6 +819,7 @@
                                 <rich-text class="question-stem-rich-text"
                                            wx:if="{{recordItem.choiceType === 'multiple'}}"
                                            nodes="<p><span style='font-size: 30rpx;font-weight: 600;color: #353EE8;'>【多选题】</span>{{ index+1 }}.{{ util.richTextFilter(recordItem.stem) }}</p>"></rich-text>
+
                                 <rich-text wx:else class="question-stem-rich-text"
                                            nodes="<p>{{ index+1 }}.{{ util.richTextFilter(recordItem.stem) }}</p>"></rich-text>
                             </view>

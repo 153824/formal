@@ -116,15 +116,6 @@ Component({
                 series.push(line);
                 legend.data.push(legendData);
             }
-
-            const di = {
-                "顾问式销售素质": {
-
-                },
-                "顾问式销售能力": {
-
-                }
-            }
             canvas.setChart(chart);
             const option = {
                 legend: legend,
@@ -150,7 +141,7 @@ Component({
                         axisLabel: {
                             textStyle: {
                                 color: 'rgba(53, 62, 232, 1)',
-                                fontSize: +(24 * app.rate).toFixed(0),
+                                fontSize: +(28 * app.rate).toFixed(0),
                             }
                         },
                         type: 'category',
@@ -189,64 +180,6 @@ Component({
                     }
                 },
                 series: series,
-                // test: [
-                //     {
-                //         name: "受测者得分",
-                //         type: 'bar',
-                //         data: histogramValues[index],
-                //         label: {
-                //             show: true,
-                //             position: "right",
-                //             textStyle: {
-                //                 color: 'rgba(53, 62, 232, 0.43)',
-                //                 fontSize: +(22 * app.rate).toFixed(0),
-                //             }
-                //         },
-                //         barWidth: (28 * app.rate).toFixed(0),
-                //         itemStyle: {
-                //             normal: {
-                //                 color: function () {
-                //                     return {
-                //                         colorStops: [
-                //                             {
-                //                                 offset: 1, color: "rgba(154, 161, 244, 1)"
-                //                             },
-                //                             {
-                //                                 offset: 0, color: "rgba(109, 115, 229, 1)"
-                //                             },
-                //                         ]
-                //                     }
-                //                 }(),
-                //             }
-                //         },
-                //     },
-                //     {
-                //         name: "均分",
-                //         type: 'line',
-                //         data: [7, 4.5, 6.8, 8.5, 7.3],
-                //         itemStyle: {
-                //             normal: {
-                //                 color: 'rgba(109, 212, 0, 1)',
-                //                 lineStyle: {
-                //                     color: 'rgba(109, 212, 0, 1)'
-                //                 }
-                //             }
-                //         }
-                //     },
-                //     {
-                //         name: "达标线",
-                //         type: 'line',
-                //         data: [5.7, 3.2, 5.8, 6, 5.9],
-                //         itemStyle: {
-                //             normal: {
-                //                 color: 'rgba(247, 181, 0, 1)',
-                //                 lineStyle: {
-                //                     color: 'rgba(247, 181, 0, 1)'
-                //                 }
-                //             }
-                //         }
-                //     }
-                // ]
             };
             chart.setOption(option);
             return chart;

@@ -1340,7 +1340,7 @@ swiper, swiper-item {
 
 .power-item-detail-wrapper{
     line-height: 44rpx;
-    padding: 30rpx 40rpx;
+    padding: 0rpx 40rpx 30rpx 40rpx;
     opacity: 0;
     font-size: 30rpx;
     transition: all .4s;

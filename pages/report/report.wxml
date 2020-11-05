@@ -536,9 +536,8 @@
                     <view class="title">
                         <text class="underLineBg assessor-info">{{item.name}}</text>
                     </view>
-                    <block wx:if="{{ item.showScore }}">
-                        <view class="flex total"
-                              wx:if="{{item.showTotal || item.rankOrg || item.rankAll || item.showScore !='none'}}">
+                    <block wx:if="{{ item.showScore && (item.showTotal || item.rankOrg || item.rankAll || item.showScore !='none') }}">
+                        <view class="flex total">
                             <view class="flex-main" wx:if="{{item.showTotal || item.showScore !='none'}}">
                                 <block wx:if="{{ item.showScore === 'total' }}">
                                     <block wx:if="{{ item.scale === 'origin' }}">
@@ -587,8 +586,8 @@
                             </view>
                         </view>
                     </block>
-                    <block wx:else>
-                        <view class="flex total" wx:if="{{item.showTotal||item.rankOrg||item.rankAll}}">
+                    <block wx:elif="{{item.showTotal||item.rankOrg||item.rankAll}}">
+                        <view class="flex total">
                             <view class="flex-main" wx:if="{{item.showTotal}}">
                                 <view class="name">得分</view>
                                 <view class="lv">{{ util.saveDouble(item.total2) }}</view>
@@ -615,7 +614,7 @@
                         <rich-text nodes="<p>{{item.lvDesc||''}}</p>"></rich-text>
                     </view>
                     <!-- 柱状图 -->
-                    <view wx:if="{{ item.chartType == 2 }}" class="chartImg histogram-img">
+                    <view wx:if="{{ item.chartType == 2 }}" class="chartImg histogram-img {{(incentives && (incentives.top3 || incentives.others || incentives.belowLowLevelLines)) ? 'no-margin':''}}">
                         <hola-histogram histogramIndex="{{index}}" histogramYAxis="{{histogramYAxis}}" limit="{{limit}}"
                                         histogramValues="{{histogramValues}}" lines="{{lines}}"></hola-histogram>
                     </view>

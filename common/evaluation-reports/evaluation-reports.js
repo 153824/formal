@@ -147,18 +147,8 @@ Component({
         }
     },
     pageLifetimes: {
-        show: function () {
-            const {type,} = this.properties;
-            if (type === "report-more"){
-                this.loadReportList();
-            }
-        },
-        hide() {
-            this.setData({
-                reportList: [],
-                page: 1
-            })
-        }
+        show: function () {},
+        hide() {}
     },
     lifetimes: {
         attached() {
@@ -169,6 +159,7 @@ Component({
                 windowHeight: systemInfo.windowHeight
             });
             if (type === "report-more") {
+                this.loadReportList();
                 wx.setNavigationBarTitle({
                     title: title
                 });

@@ -5,7 +5,7 @@
     <text class="smalltitle">个人信息将在报告中呈现给用人企业，请如实填写</text>
     <form bindsubmit="submit">
         <text class="inputtext">姓名</text>
-        <input name="username" value="{{username}}" bindinput="userInput" data-n="username"></input>
+        <input name="username" value="{{username}}" bindinput="userInput" data-n="username" placeholder="请填写真实姓名"/>
         <picker name="birthday" fields="month" mode="date" value="{{birthday == '' ? '1995-01': birthday}}"
                 bindchange="userInput" data-n="birthday">
             <view class="picker">

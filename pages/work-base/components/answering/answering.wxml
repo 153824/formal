@@ -35,7 +35,7 @@
             </button>
         </view>
         <block wx:if="{{verify}}">
-            <view wx:if="{{!username||!birthday||(!education&&education!=0)}}" class="graybtn">立即验证</view>
+            <view wx:if="{{!username||!birthday||(education < 0)}}" class="graybtn">立即验证</view>
             <block wx:else>
                 <block wx:if="{{ username && (education != -1) && getphoneNum && phoneNumber.length > 6 }}">
                     <button form-type="submit" data-name="{{ paperList.setting.name1 }}">立即验证</button>
@@ -47,6 +47,7 @@
             <view wx:if="{{!username||!birthday||(!education&&education!=0)}}" class="graybtn">确认无误，开始作答</view>
             <block wx:else>
                 <block wx:if="{{ username && (education != -1) && getphoneNum && phoneNumber.length > 6 }}">
+                    {{education}}
                     <button form-type="submit" data-name="{{ paperList.setting.name1 }}">确认无误，开始作答</button>
                 </block>
                 <view wx:else class="graybtn">确认无误，开始作答</view>
@@ -188,5 +189,4 @@
             </button>
         </view>
     </form>
-
 </view>

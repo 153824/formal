@@ -865,8 +865,8 @@ Page({
         var chapterTimeDown = obj.time * 60;
         if (oldData && oldData.chapterTime && oldData.chapterTime[i]) {
             chapterTime[i] = oldData.chapterTime[i];
-            // chapterTime[i]["st"] = chapterTime[i]["st"] + (new Date().getTime() - chapterTime[i]["et"]);
-            // chapterTimeDown = oldData.chapterTimeDown;
+            chapterTime[i]["st"] = chapterTime[i]["st"] + (new Date().getTime() - chapterTime[i]["et"]);
+            chapterTimeDown = oldData.chapterTimeDown;
             chapterTimeDown = parseInt(chapterTimeDown - (new Date().getTime() - chapterTime[i]["st"]) / 1000);
         } else {
             chapterTime[i] = {

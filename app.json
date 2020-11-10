@@ -39,7 +39,9 @@
     "pages/user-center/components/serving-client/serving-client",
     "pages/work-base/components/evaluation-more/evaluation-more",
     "pages/forbidden/forbidden",
-    "common/webView"
+    "common/webView",
+    "pages/home/components/more/more",
+    "pages/preload/preload"
   ],
   "tabBar": {
     "custom": true,

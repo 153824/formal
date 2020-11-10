@@ -17,18 +17,26 @@ Page({
     onLoad: function (options = {loadingTrigger: false}, name) {
         const that = this;
         const {isWxWork} = app.wxWorkInfo;
+        app.checkUserInfo = (userInfo) => {
+            if(!userInfo.isBiginner){
+                wx.redirectTo({
+                    url: "/pages/preload/preload"
+                });
+                return;
+            }
+        };
         if (isWxWork) {
             const {trigger} = this.data;
             this.setData({
                 loading: true,
             });
-            if(trigger){
-                setTimeout(()=>{
+            if (trigger) {
+                setTimeout(() => {
                     console.log("home.js -> 24");
                     wx.switchTab({
                         url: "/pages/work-base/work-base"
                     });
-                },4000);
+                }, 4000);
             }
             return;
         }
@@ -116,7 +124,8 @@ Page({
             console.error("home.js -> 109", e);
         }
     },
-    onHide: function () {},
+    onHide: function () {
+    },
 
     onShareAppMessage(options) {
         return app.defaultShareObj;
@@ -219,7 +228,7 @@ Page({
     gotoMore: function (e) {
         const {id, name} = e.currentTarget.dataset;
         wx.navigateTo({
-            url: `../station/components/more/more?id=${id}&title=${name}`,
+            url: `/pages/home/components/more`,
             success: () => {
             }
         });

@@ -17,6 +17,10 @@ Component({
         type: {
             value: "status-bar",
             type: String
+        },
+        liner: {
+            value: "liner-lightgreen",
+            type: String,
         }
     },
     data: {

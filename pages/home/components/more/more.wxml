@@ -1,0 +1,172 @@
+<hola-title type="colorful" liner="{{liner}}"></hola-title>
+<!--校招选材-->
+<block wx:if="{{type==='school'}}">
+    <view class="content-wrapper" style="top: {{statusbarHeight+titleHeight}}px;">
+        <view class="header-wrapper school-header-wrapper liner-green">
+            <view>
+                <view class="title">
+                    <text>校招选才——选有潜力的人才</text>
+                </view>
+                <view class="detail">
+                    是校园招聘中最为看重的因素，华为从2006年开始，便在招聘中引入了“五项素质”评价法，这五项素质被认为是：
+                </view>
+            </view>
+            <view class="header-bottom-wrapper school-header-bottom-wrapper">
+                <view>
+                    <image src="https://ihola.luoke101.com/school-banner.png" style="width: 715rpx;height: 303rpx;"/>
+                </view>
+                <button class="orange-btn orange-btn-all-radius">一键获取您企业的人才基因密码</button>
+            </view>
+        </view>
+        <view class="body-wrapper">
+            <view class="tools-item">
+                <view class="tools-title">
+                    <text class="tools-title-text school-tools-title">校招评估工具</text>
+                </view>
+                <view class="tools-item-content risk-tools-location">
+                    <image src="https://ihola.luoke101.com/school-brain-item-1.png" style="width: 648rpx;height: 866rpx;"></image>
+                    <button class="orange-btn border-radius-none-top risk-tools-location-btn">免费体验</button>
+                </view>
+            </view>
+            <view class="tools-item">
+                <view class="tools-item-content risk-tools-location">
+                    <image src="https://ihola.luoke101.com/school-brain-item-2.png" style="width: 100%;height: 362rpx;"></image>
+                    <button class="orange-btn border-radius-none-top risk-tools-location-btn">免费体验</button>
+                </view>
+            </view>
+        </view>
+    </view>
+</block>
+<!--风险识别-->
+<block wx:if="{{type==='risk'}}">
+    <view class="content-wrapper" style="top: {{statusbarHeight+titleHeight}}px;">
+        <view class="header-wrapper liner-orange risk-content-wrapper">
+            <view>
+                <view class="title">
+                    <text>风险识别</text>
+                </view>
+                <view class="detail">
+                    帮助企业评估员工心理健康水平和组织所面临的用人风险挑战，提升组织健康度
+                </view>
+            </view>
+            <view class="header-bottom-wrapper risk-bottom-wrapper">
+                <view>
+                    <image src="https://ihola.luoke101.com/risk-start.png" style="width: 608rpx;height: 384rpx;"/>
+                </view>
+            </view>
+            <view class="risk-btn orange-arrow-btn">
+                <view class="risk-btn-text">
+                    <text>一键联系评估顾问</text><text>获取专属【风险识别落地方案】</text>
+                </view>
+                <view class="arrow-wrapper">
+                    <image src="" style="width: 64rpx;height: 54rpx;"></image>
+                </view>
+            </view>
+        </view>
+        <view class="body-wrapper">
+            <view class="tools-item risk-tools-location">
+                <view class="tools-title">
+                    <text class="tools-title-text risk-tools-title">评估工具体验</text>
+                </view>
+                <view class="tools-item-content">
+                    <image src="https://ihola.luoke101.com/risk-test-item.png" style="width: 648rpx;height: 540rpx;"></image>
+                    <button class="orange-btn border-radius-none-top risk-orange-btn risk-tools-location-btn">自定义考察项，体验候选人风险识别测评</button>
+                </view>
+            </view>
+            <view class="tools-item">
+                <view class="tools-item-content risk-tools-location">
+                    <image src="https://ihola.luoke101.com/risk-nice.png" style="width: 648rpx;height: 778rpx;"></image>
+                    <button class="orange-btn border-radius-none-top risk-orange-btn risk-tools-location-btn">免费体验</button>
+                </view>
+            </view>
+        </view>
+    </view>
+</block>
+<!--人才盘点-->
+<block wx:if="{{type==='brain'}}">
+    <view class="content-wrapper" style="top: {{statusbarHeight+titleHeight}}px;">
+        <view class="header-wrapper liner-blue brain-content-wrapper">
+            <view>
+                <view class="title">
+                    <text>人才盘点</text>
+                </view>
+                <view class="detail">
+                    提供全方位人才评估工具组合，一键盘点解决方案，五大步骤助力企业快速实施盘点
+                </view>
+            </view>
+            <view class="header-bottom-wrapper brain-header-bottom-wrapper">
+                <view>
+                    <image src="https://ihola.luoke101.com/brain-line.png" style="width: 614rpx;height: 176rpx;"/>
+                </view>
+                <view class="brain-detail-content-wrapper">
+                    <text>请选择您的盘点目标，获取盘点方案</text>
+                    <view class="detail-block">
+                        <view>
+                            <image src="../../images/more@icon-nice.png" style="width: 40rpx;height: 40rpx;"></image>
+                            优化人才
+                        </view>
+                        <view>
+                            <image src="../../images/more@icon-up.png" style="width: 40rpx;height: 40rpx;"></image>
+                            晋升选拔
+                        </view>
+                        <view>
+                            <image src="../../images/more@icon-try.png" style="width: 40rpx;height: 40rpx;"></image>
+                            培养发展
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="body-wrapper">
+            <view class="tools-item">
+                <view class="tools-title">
+                    <text class="tools-title-text brain-tools-title">盘点评估工具体验</text>
+                </view>
+                <view class="tools-item-content risk-tools-location">
+                    <image src="https://ihola.luoke101.com/brain-item.png" style="width: 648rpx;height: 530rpx;"></image>
+                    <button class="orange-btn border-radius-none-top liner-blue risk-tools-location-btn">免费体验</button>
+                </view>
+            </view>
+        </view>
+    </view>
+</block>
+<!--社招选才-->
+<block wx:if="{{type==='social'}}">
+    <view class="content-wrapper" style="top: {{statusbarHeight+titleHeight}}px;">
+        <view class="header-wrapper social-header-wrapper liner-pink">
+            <view>
+                <view class="title">
+                    <text>社招选才</text>
+                </view>
+                <view class="detail">
+                    <view>您是否经常被候选人放鸽子？</view>
+                    <view>候选人的到面率和到岗率难以提升？</view>
+                    <view>这很可能是因为</view>
+                </view>
+            </view>
+            <view class="ques">
+                双方在一开始的意愿匹配上就出了问题
+            </view>
+            <view class="header-bottom-wrapper header-social-bottom-wrapper">
+                <view>
+                    <image src="https://ihola.luoke101.com/social-banner.png" style="width: 715rpx;height: 794rpx;"/>
+                </view>
+            </view>
+        </view>
+        <view class="body-wrapper">
+            <view class="tools-item">
+                <view class="tools-title">
+                    <text class="tools-title-text social-tools-title">社招评估工具</text>
+                </view>
+                <view class="tools-item-content risk-tools-location">
+                    <image src="https://ihola.luoke101.com/social-item.png" style="width: 650rpx;height: 672rpx;"></image>
+                    <button class="orange-btn border-radius-none-top liner-pink risk-tools-location-btn">免费体验</button>
+                </view>
+            </view>
+        </view>
+    </view>
+</block>
+<view class="footer" bindtap="goBack">
+    <text>返回首页体验其他测评</text>
+    <image src="../../images/more@icon-back.png" style="width: 52rpx;height: 52rpx;"/>
+</view>

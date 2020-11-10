@@ -62,3 +62,21 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+.colorful{
+    background: linear-gradient(90deg, #128BA0 0%, #94CBC3 100%);
+}
+.colorful-bg{
+    background: transparent;
+}
+.liner-lightgreen{
+    background: linear-gradient(90deg, #128BA0 0%, #94CBC3 100%);
+}
+.liner-lightpink{
+    background: linear-gradient(90deg, #FD4351 0%, #F55A98 100%);
+}
+.liner-lightblue{
+    background: linear-gradient(90deg, #1E67D1 0%, #5C9EE1 100%);
+}
+.liner-lightorange{
+    background: linear-gradient(90deg, #E35E4C 0%, #F48D5B 100%);
+}

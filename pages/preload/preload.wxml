@@ -1,0 +1,18 @@
+<view class="preload">
+    <view class="header">
+        <image style="width: 60rpx;height: 60rpx;"></image>
+        <view class="welcome">欢迎使用好啦人才测评</view>
+        <view class="choose">
+            <text>请选择您需要的内容，</text>
+            <text>领取免费体验券</text>
+        </view>
+    </view>
+    <view class="content">
+        <view wx:for="{{choose}}" wx:key="unique" bindtap="goToBrainStore" data-type="{{item.type}}">
+            {{item.text}}
+        </view>
+    </view>
+    <view class="footer">
+        随便看看
+    </view>
+</view>

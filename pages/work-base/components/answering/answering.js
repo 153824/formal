@@ -40,7 +40,8 @@ Page({
         phoneNumber: "微信一键授权",
         theFinalQuestionAnswer: [],
         verify: false,
-        isSelf: ""
+        isSelf: "",
+        chapterTimeDownFull: ""
     },
     onLoad: function (options) {
         const that = this;
@@ -106,7 +107,6 @@ Page({
                 var ques1 = [];
                 var showQues = [];
                 var oldChapter = oldData.chapter;
-
                 res.ques.forEach(function (node) {
                     node.stem = node.stem.replace(/<img/g, "<img style='max-width:100%;'");
                     node.stem = node.stem.replace(/\n/g, "<br>");
@@ -222,7 +222,7 @@ Page({
                     if (oldData.pathIndex == 2) {
                         that.toTimeDown();
                     }
-                } else if (res.chapter[0] && that.data.pathIndex == 3) {
+                } else if (res.chapter[0]) {
                     that.toAnswerIt();
                 }
                 saveTimeOut = setTimeout(that.saveDraftAnswer, 30000);
@@ -428,7 +428,6 @@ Page({
     toTimeDown(timeKey, callBack) {
         var that = this;
         timeKey = timeKey || "count";
-
         function timeDown() {
             var time = that.data[timeKey];
             time = time - 1
@@ -722,6 +721,7 @@ Page({
         var data = this.data;
         var startTime = data.startTime;
         var chapterTime = data.chapterTime || {};
+        console.log("chapterTime: ",chapterTime)
         var answerTimes = {};
         for (var i in chapterTime) {
             var o = chapterTime[i];
@@ -827,7 +827,7 @@ Page({
         }
         var chapter = data.chapter || [];
         var obj = chapter[i] || {};
-        if (obj.status != 1) return; //非可作答
+        // if (obj.status != 1) return; //非可作答
         var ques = obj.ques;
         if (!ques.length) return;
         var type = obj.type;
@@ -863,6 +863,7 @@ Page({
             }
         });
         var chapterTimeDown = obj.time * 60;
+        console.log("chapterTimeDown:",chapterTimeDown);
         if (oldData && oldData.chapterTime && oldData.chapterTime[i]) {
             chapterTime[i] = oldData.chapterTime[i];
             chapterTime[i]["st"] = chapterTime[i]["st"] + (new Date().getTime() - chapterTime[i]["et"]);
@@ -927,6 +928,7 @@ Page({
         if (wx.getStorageSync("userInfo")["nickname"] && data.username === "好啦访客") {
             data.username = wx.getStorageSync("userInfo")["nickname"]
         }
+        console.log("data.chapterTimeDown: ",data.chapterTimeDown);
         var draftAnswer = {
             chapter: data.chapter,
             chapterTime: chapterTime,

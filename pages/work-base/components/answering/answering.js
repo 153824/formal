@@ -222,7 +222,7 @@ Page({
                     if (oldData.pathIndex == 2) {
                         that.toTimeDown();
                     }
-                } else if (res.chapter[0]) {
+                } else if (res.chapter[0] && that.data.pathIndex == 3) {
                     that.toAnswerIt();
                 }
                 saveTimeOut = setTimeout(that.saveDraftAnswer, 30000);
@@ -356,7 +356,7 @@ Page({
                         if (res.code === 0) {
                             app.toast("领取成功！");
                             setTimeout(()=>{
-                                that.gotoallready()
+                                that.toAnswerIt();
                             },555);
                         }
                     },
@@ -379,10 +379,10 @@ Page({
                         }
                     },
                     success: function (res) {
+                        that.toAnswerIt();
                         console.log("上传用户信息成功")
                     }
                 });
-                that.gotoallready();
             }
         }
 

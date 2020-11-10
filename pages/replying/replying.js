@@ -792,6 +792,7 @@ Page({
     toAnswerIt: function (e, oldData) {
         const that = this;
         const {name1} = this.data.paperList.setting;
+        const receiveRecordId = this.data.id;
         if (that.data.isSelf !== 'SHARE') {
             try {
                 wx.uma.trackEvent('1602214318372', {name: name1})
@@ -866,8 +867,16 @@ Page({
             chapterTime[i] = oldData.chapterTime[i];
             // chapterTime[i]["st"] = chapterTime[i]["st"] + (new Date().getTime() - chapterTime[i]["et"]);
             // chapterTimeDown = oldData.chapterTimeDown;
-            chapterTimeDown = parseInt(chapterTimeDown - (new Date().getTime() - chapterTime[i]["st"]) / 1000);
+            chapterTimeDown = new Date().getTime() - chapterTime[i]["st"] > obj.time * 60 ? -1 : new Date().getTime() - chapterTime[i]["st"];
         } else {
+            let st = new Date().getTime();
+            if(wx.getStorageSync(receiveRecordId+"_st")){
+                st = wx.getStorageSync(receiveRecordId+"_st")
+            }
+            console.log("obj.time * 60: ",obj.time * 60)
+            console.log("res: ",obj.time * 60 - (new Date().getTime()-st)/1000)
+
+            chapterTimeDown =  obj.time * 60 - ((new Date().getTime() - st)/1000) > obj.time * 60 ? -1 : parseInt(obj.time * 60 - ((new Date().getTime() - st)/1000));
             chapterTime[i] = {
                 time: obj.time * 60,
                 st: new Date().getTime(),

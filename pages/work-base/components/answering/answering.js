@@ -357,6 +357,7 @@ Page({
                             app.toast("领取成功！");
                             setTimeout(()=>{
                                 that.toAnswerIt();
+                                wx.setStorageSync("st",new Date().getTime())
                             },555);
                         }
                     },
@@ -380,6 +381,7 @@ Page({
                     },
                     success: function (res) {
                         that.toAnswerIt();
+                        wx.setStorageSync("st",new Date().getTime())
                         console.log("上传用户信息成功")
                     }
                 });
@@ -756,6 +758,7 @@ Page({
                 wx.navigateTo({
                     url: '../done/done?id=' + data.receiveRecordId + "&status=" + that.data.status + "&reportPermit=" + that.data.reportPermit
                 });
+                wx.removeStorageSync(`${data.receiveRecordId}_st`);
                 wx.removeStorageSync(sKey);
                 that.setData(ret);
             }
@@ -774,7 +777,8 @@ Page({
             }
         }
     },
-    saveAnswerStorageSync: function () {
+    saveAnswerStorageSync: function (test) {
+        console.log()
         var data = this.data;
         var activeChapterId = data.activeChapterId;
         if (activeChapterId != null) {
@@ -864,12 +868,16 @@ Page({
         });
         var chapterTimeDown = obj.time * 60;
         console.log("chapterTimeDown:",chapterTimeDown);
-        if (oldData && oldData.chapterTime && oldData.chapterTime[i]) {
-            chapterTime[i] = oldData.chapterTime[i];
-            chapterTime[i]["st"] = chapterTime[i]["st"] + (new Date().getTime() - chapterTime[i]["et"]);
-            chapterTimeDown = oldData.chapterTimeDown;
-            chapterTimeDown = parseInt(chapterTimeDown - (new Date().getTime() - chapterTime[i]["st"]) / 1000);
+        const st = wx.getStorageSync("st");
+        if ((oldData && oldData.chapterTime && oldData.chapterTime[i])) {
+            chapterTime[i]["st"] = st;
+            // chapterTime[i] = oldData.chapterTime[i];
+            // chapterTime[i]["st"] = chapterTime[i]["st"] + (new Date().getTime() - chapterTime[i]["et"]);
+            // chapterTimeDown = oldData.chapterTimeDown;
+            // chapterTimeDown = parseInt(chapterTimeDown - (new Date().getTime() - chapterTime[i]["st"]) / 1000);
+            chapterTimeDown  = new Date().getTime() - chapterTime[i]["st"] > obj.time * 60 ? -1 : new Date().getTime() - chapterTime[i]["st"];
         } else {
+            chapterTimeDown = new Date().getTime() - st > obj.time * 60 ? -1 : new Date().getTime() - st;
             chapterTime[i] = {
                 time: obj.time * 60,
                 st: new Date().getTime(),
@@ -914,6 +922,7 @@ Page({
                 chapterTimeDownFull: ""
             });
         }
+        that.saveAnswerStorageSync("sad");
     },
     //定时保存作答
     saveDraftAnswer: function () {

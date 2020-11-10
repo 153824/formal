@@ -356,8 +356,8 @@ Page({
                 const replyingURL = `/pages/replying/replying?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`;
                 const guideURL = `/pages/replying/components/guide/guide?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`;
                 console.log("goToReplyingGuide: ",res);
+                const sKey = "oldAnswer" + res.receiveRecordId;
                 if (res.unfinished) {
-                    const sKey = "oldAnswer" + res.receiveRecordId;
                     let oldData = wx.getStorageSync(sKey);
                     if (!oldData && res.draft instanceof Object) {
                         oldData = wx.setStorageSync(sKey, res.draft);
@@ -372,6 +372,9 @@ Page({
                         url: replyingURL
                     });
                 } else {
+                    console.log(sKey);
+                    wx.setStorageSync(res.receiveRecordId+"_st",new Date().getTime());
+                    console.log()
                     wx.navigateTo({
                         url: guideURL
                     });

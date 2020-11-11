@@ -452,17 +452,8 @@ App({
         if(!params.toastTrigger){
             params.toastTrigger = false;
         }
-        if (params.url.indexOf('wework/auth/ma') !== -1) {
-            url = `${this.host}/wework/auth/ma`;
-        }
-        if (params.url.indexOf("wework/users") !== -1) {
-            url = `${this.host}/wework/users/${that.globalData.userInfo.id}`;
-        }
-        if (params.url.indexOf('wework/app/health') !== -1) {
-            url = `${this.host}/wework/app/health`;
-        }
-        if (params.url.indexOf('wework/auth/mobile') !== -1) {
-            url = `${this.host}/wework/auth/mobile`;
+        if (params.url.indexOf('wework') !== -1) {
+            url = `${this.host1}/${params.url}`;
         }
         params.data = params.data || {};
         params.data['userId'] = params.data['userId'] || (that.globalData.userInfo || wx.getStorageSync("userInfo")).id || '';

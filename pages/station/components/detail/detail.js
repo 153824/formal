@@ -283,7 +283,7 @@ Page({
             payTrigger: true
         });
         try {
-            wx.uma.trackEvent('1602213155213',{name: evaluation.name,})
+            wx.uma.trackEvent('1602213155213', {name: evaluation.name,})
         } catch (e) {
 
         }
@@ -334,53 +334,62 @@ Page({
     /** 体验测评 */
     goToReplyingGuide: function (e) {
         const that = this;
-        const {evaluation,customNorms} = this.data;
-        const {name, answering, id} = e.currentTarget.dataset;
-        app.doAjax({
-            url: 'release/self',
-            method: 'post',
-            data: {
-                evaluationInfo: {
-                    evaluationId: evaluation.id,
-                    normId: evaluation.generalNorms.length ? evaluation.generalNorms[0].normId : customNorms[0].normId,
-                    freeEvaluation: evaluation.freeEvaluation,
-                    evaluationName: evaluation.name,
-                    quesCount: evaluation.quesCount,
-                    estimatedTime: evaluation.estimatedTime
-                }
-            },
-            success: function (res) {
-                that.setData({
-                    releaseInfo: res
-                });
-                const replyingURL = `/pages/replying/replying?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`;
-                const guideURL = `/pages/replying/components/guide/guide?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`;
-                console.log("goToReplyingGuide: ",res);
-                const sKey = "oldAnswer" + res.receiveRecordId;
-                if (res.unfinished) {
-                    let oldData = wx.getStorageSync(sKey);
-                    if (!oldData && res.draft instanceof Object) {
-                        oldData = wx.setStorageSync(sKey, res.draft);
-                    }
-                    if (oldData) {
-                        wx.navigateTo({
-                            url: replyingURL
-                        });
-                        return;
-                    }
-                    wx.navigateTo({
-                        url: replyingURL
-                    });
-                } else {
-                    console.log(sKey);
-                    wx.setStorageSync(res.receiveRecordId+"_st",new Date().getTime());
-                    console.log()
-                    wx.navigateTo({
-                        url: guideURL
-                    });
-                }
-            }
+        const {evaluation, customNorms} = this.data;
+        const evaluationInfo = {
+            evaluationId: evaluation.id,
+            normId: evaluation.generalNorms.length ? evaluation.generalNorms[0].normId : customNorms[0].normId,
+            freeEvaluation: evaluation.freeEvaluation,
+            evaluationName: evaluation.name,
+            quesCount: evaluation.quesCount,
+            estimatedTime: evaluation.estimatedTime
+        };
+        const guideURL = `/pages/replying/components/guide/guide?evaluationId=${evaluation.id}&evaluationInfo=${JSON.stringify(evaluationInfo)}`;
+        console.log("evaluationInfo: ",evaluationInfo)
+        wx.navigateTo({
+            url: guideURL
         });
+        // app.doAjax({
+        //     url: 'release/self',
+        //     method: 'post',
+        //     data: {
+        //         evaluationInfo: {
+        //             evaluationId: evaluation.id,
+        //             normId: evaluation.generalNorms.length ? evaluation.generalNorms[0].normId : customNorms[0].normId,
+        //             freeEvaluation: evaluation.freeEvaluation,
+        //             evaluationName: evaluation.name,
+        //             quesCount: evaluation.quesCount,
+        //             estimatedTime: evaluation.estimatedTime
+        //         }
+        //     },
+        //     success: function (res) {
+        //         that.setData({
+        //             releaseInfo: res
+        //         });
+        //         const replyingURL = `/pages/replying/replying?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`;
+        //         console.log("goToReplyingGuide: ", res);
+        //         const sKey = "oldAnswer" + res.receiveRecordId;
+        //         if (res.unfinished) {
+        //             wx.setStorageSync("st", res.createdAt);
+        //             let oldData = wx.getStorageSync(sKey);
+        //             if (!oldData && res.draft instanceof Object) {
+        //                 oldData = wx.setStorageSync(sKey, res.draft);
+        //             }
+        //             if (oldData) {
+        //                 wx.navigateTo({
+        //                     url: replyingURL
+        //                 });
+        //                 return;
+        //             }
+        //             wx.navigateTo({
+        //                 url: replyingURL
+        //             });
+        //         } else {
+        //             wx.navigateTo({
+        //                 url: guideURL
+        //             });
+        //         }
+        //     }
+        // });
     },
 
     /**购买数量+1 */
@@ -531,7 +540,7 @@ Page({
     goToDaTi: function () {
         //发放测评
         const that = this;
-        const {evaluation, evaluationVoucherInfo,customNorms} = this.data;
+        const {evaluation, evaluationVoucherInfo, customNorms} = this.data;
         const {availableCount, buyoutInfo} = evaluationVoucherInfo;
         if (((availableCount || 0) === 0 && !evaluation.freeEvaluation) && !buyoutInfo.hadBuyout) {
             app.toast("测评可用数量不足，请先购买或用券兑换测评");
@@ -635,7 +644,7 @@ Page({
             {userInfo} = app.globalData,
             that = this;
         const {id, name} = this.data.evaluation;
-        console.log("this.data.evaluation.id: ",id);
+        console.log("this.data.evaluation.id: ", id);
         if (options.from !== 'button') {
             return {
                 title: `邀您体验《${evaluationInfo.name}》测评~`,
@@ -776,7 +785,7 @@ Page({
         try {
             // 唤起手机授权
             wx.uma.trackEvent('1602747468531');
-        }catch (e) {
+        } catch (e) {
             throw e
         }
         if (mark !== 'dont-get-ticket') {
@@ -821,7 +830,7 @@ Page({
             try {
                 // 成功授权手机号
                 wx.uma.trackEvent('1602747651175')
-            }catch (e) {
+            } catch (e) {
 
             }
             var updatedUserMobilePromise = new Promise(((resolve, reject) => {
@@ -837,59 +846,60 @@ Page({
                 })
             }));
             updatedUserMobilePromise.then(() => {
-                app.doAjax({
-                    url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
-                    method: "get",
-                    data: {
-                        openid: wx.getStorageSync("openId"),
-                    },
-                    success: function (res) {
-                        app.globalData.userInfo = Object.assign(app.globalData.userInfo, res);
-                        wx.setStorageSync("userInfo", app.globalData.userInfo);
-                        wx.setStorageSync("USER_DETAIL", app.globalData.userInfo);
-                        if (res.phone && mark !== 'dont-get-ticket') {
-                            that.getNewerTicket();
+                // app.doAjax({
+                //     url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
+                //     method: "get",
+                //     data: {
+                //         openid: wx.getStorageSync("openId"),
+                //     },
+                //     success: function (res) {
+                const res = {}
+                app.globalData.userInfo = Object.assign(app.globalData.userInfo, res);
+                wx.setStorageSync("userInfo", app.globalData.userInfo);
+                wx.setStorageSync("USER_DETAIL", app.globalData.userInfo);
+                if (res.phone && mark !== 'dont-get-ticket') {
+                    that.getNewerTicket();
+                    try {
+                        wx.uma.trackEvent('1602211933140', {name: evaluation.name});
+                    } catch (e) {
+
+                    }
+                }
+                if (mark === 'dont-get-ticket') {
+                    switch (eventName) {
+                        case 'goToDaTi':
                             try {
-                                wx.uma.trackEvent('1602211933140', {name: evaluation.name});
+                                wx.uma.trackEvent('1602212015300', {name: evaluation.name});
                             } catch (e) {
 
                             }
-                        }
-                        if (mark === 'dont-get-ticket') {
-                            switch (eventName) {
-                                case 'goToDaTi':
-                                    try {
-                                        wx.uma.trackEvent('1602212015300', {name: evaluation.name});
-                                    } catch (e) {
+                            that.goToDaTi(e);
+                            break;
+                        case 'goToReplyingGuide':
+                            try {
+                                wx.uma.trackEvent('1602212048924', {name: evaluation.name});
+                            } catch (e) {
 
-                                    }
-                                    that.goToDaTi(e);
-                                    break;
-                                case 'goToReplyingGuide':
-                                    try {
-                                        wx.uma.trackEvent('1602212048924', {name: evaluation.name});
-                                    } catch (e) {
-
-                                    }
-                                    that.goToReplyingGuide(e);
-                                    break;
-                                case 'payForEvaluation':
-                                    try {
-                                        wx.uma.trackEvent('1602212078917', {name: evaluation.name});
-                                    } catch (e) {
-
-                                    }
-                                    that.payForEvaluation();
-                                    break;
-                                default:
-                                    break;
                             }
-                        }
-                        that.setData({
-                            isBindPhone: true
-                        })
+                            that.goToReplyingGuide(e);
+                            break;
+                        case 'payForEvaluation':
+                            try {
+                                wx.uma.trackEvent('1602212078917', {name: evaluation.name});
+                            } catch (e) {
+
+                            }
+                            that.payForEvaluation();
+                            break;
+                        default:
+                            break;
                     }
+                }
+                that.setData({
+                    isBindPhone: true
                 })
+                //     }
+                // })
             });
         }
     },
@@ -911,7 +921,7 @@ Page({
         }
     },
     changeTicketCount: function (e) {
-        console.log("changeTicketCount: ",e)
+        console.log("changeTicketCount: ", e)
         this.setData({
             ticketCount: Number(e.detail.value)
         })

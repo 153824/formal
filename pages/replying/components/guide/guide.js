@@ -6,7 +6,13 @@ Page({
   onLoad: function(option) {
     const that = this;
     const userData = wx.getStorageSync("userInfo")
-    const {receiveRecordId,evaluationId} = option;
+    const {evaluationId,evaluationInfo} = option;
+    if(evaluationInfo){
+      this.setData({
+        evaluationInfo: JSON.parse(evaluationInfo),
+        evaluationId: evaluationId,
+      })
+    }
     app.doAjax({
       url: "paperQues",
       method: "get",
@@ -14,13 +20,8 @@ Page({
         id: evaluationId
       },
       success: function(res) {
-        const sKey = "oldAnswer" + receiveRecordId;
-        const draftAnswer = wx.getStorageSync(sKey);
         that.setData({
-          draftAnswer: draftAnswer,
           userInfo: userData,
-          evaluationId: evaluationId,
-          receiveRecordId: receiveRecordId,
           paperList: res
         });
       }
@@ -31,17 +32,27 @@ Page({
 
   },
   goToReplying: function(e) {
-    const { id,name } = e.currentTarget.dataset;
-    const that = this;
-    const {receiveRecordId,evaluationId} = this.data;
-    const sKey = "oldAnswer" + receiveRecordId;
-    const draftAnswer = this.data.draftAnswer;
-    if (draftAnswer || !draftAnswer) {
-      wx.setStorageSync(sKey, draftAnswer);
-      wx.redirectTo({
-        url: `../../replying?pid=${evaluationId}&id=${receiveRecordId}&evaluationId=${evaluationId}&receiveRecordId=${receiveRecordId}`
-      });
-      return;
-    }
+    const {evaluationInfo} = this.data;
+    app.doAjax({
+      url: 'release/self',
+      method: 'post',
+      data: {
+        evaluationInfo: evaluationInfo
+      },
+      success: function (res) {
+        const {receiveRecordId} = res;
+        const {evaluationId,evaluationInfo} = this.data;
+        console.log("evaluationId: ",evaluationId);
+        const sKey = "oldAnswer" + receiveRecordId;
+        const draftAnswer = wx.getStorageSync(sKey);
+        if (draftAnswer) {
+          wx.setStorageSync(sKey, draftAnswer);
+        }
+        wx.setStorageSync("st",res.createdAt);
+        wx.redirectTo({
+          url: `../../replying?pid=${evaluationInfo.evaluationId}&id=${receiveRecordId}&evaluationId=${evaluationInfo.evaluationId}&receiveRecordId=${receiveRecordId}`
+        });
+      }
+    });
   },
 })

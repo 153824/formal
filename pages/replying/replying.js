@@ -248,7 +248,14 @@ Page({
                     phoneNumber: res.phone
                 });
             }
-        })
+        });
+        try{
+            if(wx.getStorageSync("st")){
+                that.keepTimeDown();
+            }
+        }catch (e) {
+
+        }
     },
     onHide: function () {
         saveTimeOut && clearTimeout(saveTimeOut);
@@ -789,10 +796,50 @@ Page({
     /**
      * 进入章节作答
      */
+
+    keepTimeDown: function(){
+        let chapter = data.chapter || [];
+        let i = 0;
+        let obj = chapter[i] || {};
+        let chapterTimeDown = obj.time * 60;
+        const st = wx.getStorageSync("st");
+        chapterTimeDown  = parseInt(chapterTimeDown - (new Date().getTime() - st) / 1000);
+        this.setData({
+            chapterTimeDown
+        })
+        if (obj.type == 2) {
+            if (chapterTimeDown <= 0) {
+                wx.showModal({
+                    title: '作答提示',
+                    content: '答题时间到，已自动提交',
+                    showCancel: false,
+                    success: function () {
+                        that.formSubmit();
+                    }
+                });
+                return;
+            }
+            that.toTimeDown("chapterTimeDown", function () {
+                //作答限时--自动提交
+                wx.showModal({
+                    title: '作答提示',
+                    content: '答题时间到，已自动提交',
+                    showCancel: false,
+                    success: function () {
+                        that.formSubmit();
+                    }
+                });
+            });
+        } else {
+            that.setData({
+                chapterTimeDownFull: ""
+            });
+        }
+    },
+
     toAnswerIt: function (e, oldData) {
         const that = this;
         const {name1} = this.data.paperList.setting;
-        const receiveRecordId = this.data.id;
         if (that.data.isSelf !== 'SHARE') {
             try {
                 wx.uma.trackEvent('1602214318372', {name: name1})
@@ -863,20 +910,16 @@ Page({
             }
         });
         let chapterTimeDown = obj.time * 60;
-        if (oldData && oldData.chapterTime && oldData.chapterTime[i]) {
-            chapterTime[i] = oldData.chapterTime[i];
+        const st = wx.getStorageSync("st");
+        if ((oldData && oldData.chapterTime && oldData.chapterTime[i])) {
+            chapterTime[i]["st"] = st;
+            // chapterTime[i] = oldData.chapterTime[i];
             // chapterTime[i]["st"] = chapterTime[i]["st"] + (new Date().getTime() - chapterTime[i]["et"]);
             // chapterTimeDown = oldData.chapterTimeDown;
-            chapterTimeDown = new Date().getTime() - chapterTime[i]["st"] > obj.time * 60 ? -1 : new Date().getTime() - chapterTime[i]["st"];
+            // chapterTimeDown = parseInt(chapterTimeDown - (new Date().getTime() - chapterTime[i]["st"]) / 1000);
+            chapterTimeDown  = parseInt(chapterTimeDown - (new Date().getTime() - st) / 1000);
         } else {
-            let st = new Date().getTime();
-            if(wx.getStorageSync(receiveRecordId+"_st")){
-                st = wx.getStorageSync(receiveRecordId+"_st")
-            }
-            console.log("obj.time * 60: ",obj.time * 60)
-            console.log("res: ",obj.time * 60 - (new Date().getTime()-st)/1000)
-
-            chapterTimeDown =  obj.time * 60 - ((new Date().getTime() - st)/1000) > obj.time * 60 ? -1 : parseInt(obj.time * 60 - ((new Date().getTime() - st)/1000));
+            chapterTimeDown  = parseInt(chapterTimeDown - (new Date().getTime() - st) / 1000);
             chapterTime[i] = {
                 time: obj.time * 60,
                 st: new Date().getTime(),

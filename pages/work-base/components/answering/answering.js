@@ -36,8 +36,8 @@ Page({
         isok: false,
         sex: ["男", "女"],
         checkedSex: 0,
-        getphoneNum: false,
-        phoneNumber: "微信一键授权",
+        getphoneNum: true,
+        phoneNumber: "18155555555",
         theFinalQuestionAnswer: [],
         verify: false,
         isSelf: "",
@@ -233,10 +233,10 @@ Page({
 
     },
     onShow: function () {
+        const that = this;
         if (wx.canIUse('hideHomeButton')) {
             wx.hideHomeButton();
         }
-        const that = this;
         app.doAjax({
             url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
             method: "get",
@@ -250,6 +250,9 @@ Page({
                 });
             }
         })
+        if(wx.getStorageSync("st")){
+            that.keepTimeDown()
+        }
     },
     onHide: function () {
         saveTimeOut && clearTimeout(saveTimeOut);
@@ -305,6 +308,46 @@ Page({
             }
         })
     },
+    keepTimeDown: function(){
+        const that = this;
+        let chapter = this.data.chapter || [];
+        let i = 0;
+        let obj = chapter[i] || {};
+        let chapterTimeDown = obj.time * 60;
+        const st = wx.getStorageSync("st");
+        chapterTimeDown  = parseInt(chapterTimeDown - (new Date().getTime() - st) / 1000);
+        this.setData({
+            chapterTimeDown
+        })
+        if (obj.type == 2) {
+            if (chapterTimeDown <= 0) {
+                wx.showModal({
+                    title: '作答提示',
+                    content: '答题时间到，已自动提交',
+                    showCancel: false,
+                    success: function () {
+                        that.formSubmit();
+                    }
+                });
+                return;
+            }
+            that.toTimeDown("chapterTimeDown", function () {
+                //作答限时--自动提交
+                wx.showModal({
+                    title: '作答提示',
+                    content: '答题时间到，已自动提交',
+                    showCancel: false,
+                    success: function () {
+                        that.formSubmit();
+                    }
+                });
+            });
+        } else {
+            that.setData({
+                chapterTimeDownFull: ""
+            });
+        }
+    },
     submit: function (e) {
         const that = this;
         const {receiveRecordId, releaseRecordId} = this.data;
@@ -355,10 +398,8 @@ Page({
                         console.log(res.code);
                         if (res.code === 0) {
                             app.toast("领取成功！");
-                            setTimeout(()=>{
-                                that.toAnswerIt();
-                                wx.setStorageSync("st",new Date().getTime())
-                            },555);
+                            wx.setStorageSync("st",res.fetchedAt);
+                            that.toAnswerIt();
                         }
                     },
                     error: function (err) {
@@ -380,9 +421,8 @@ Page({
                         }
                     },
                     success: function (res) {
+                        wx.setStorageSync("st",res.fetchedAt);
                         that.toAnswerIt();
-                        wx.setStorageSync("st",new Date().getTime())
-                        console.log("上传用户信息成功")
                     }
                 });
             }
@@ -758,7 +798,6 @@ Page({
                 wx.navigateTo({
                     url: '../done/done?id=' + data.receiveRecordId + "&status=" + that.data.status + "&reportPermit=" + that.data.reportPermit
                 });
-                wx.removeStorageSync(`${data.receiveRecordId}_st`);
                 wx.removeStorageSync(sKey);
                 that.setData(ret);
             }
@@ -866,8 +905,7 @@ Page({
                 }
             }
         });
-        var chapterTimeDown = obj.time * 60;
-        console.log("chapterTimeDown:",chapterTimeDown);
+        let chapterTimeDown = obj.time * 60;
         const st = wx.getStorageSync("st");
         if ((oldData && oldData.chapterTime && oldData.chapterTime[i])) {
             chapterTime[i]["st"] = st;
@@ -875,9 +913,9 @@ Page({
             // chapterTime[i]["st"] = chapterTime[i]["st"] + (new Date().getTime() - chapterTime[i]["et"]);
             // chapterTimeDown = oldData.chapterTimeDown;
             // chapterTimeDown = parseInt(chapterTimeDown - (new Date().getTime() - chapterTime[i]["st"]) / 1000);
-            chapterTimeDown  = new Date().getTime() - chapterTime[i]["st"] > obj.time * 60 ? -1 : new Date().getTime() - chapterTime[i]["st"];
+            chapterTimeDown  = parseInt(chapterTimeDown - (new Date().getTime() - st) / 1000);
         } else {
-            chapterTimeDown = new Date().getTime() - st > obj.time * 60 ? -1 : new Date().getTime() - st;
+            chapterTimeDown  = parseInt(chapterTimeDown - (new Date().getTime() - st) / 1000);
             chapterTime[i] = {
                 time: obj.time * 60,
                 st: new Date().getTime(),

@@ -453,7 +453,8 @@ App({
             params.toastTrigger = false;
         }
         if (params.url.indexOf('wework') !== -1) {
-            url = `${this.host1}/${params.url}`;
+            // url = `${this.host1}/${params.url}`;
+            url = `${this.host}/${params.url}`;
         }
         params.data = params.data || {};
         params.data['userId'] = params.data['userId'] || (that.globalData.userInfo || wx.getStorageSync("userInfo")).id || '';

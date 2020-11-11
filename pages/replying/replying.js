@@ -798,8 +798,10 @@ Page({
      */
 
     keepTimeDown: function(){
-        let chapter = data.chapter || [];
+        const that = this;
+        let chapter = this.data.chapter || [];
         let i = 0;
+        console.log("chapter: ",chapter);
         let obj = chapter[i] || {};
         let chapterTimeDown = obj.time * 60;
         const st = wx.getStorageSync("st");
@@ -917,9 +919,9 @@ Page({
             // chapterTime[i]["st"] = chapterTime[i]["st"] + (new Date().getTime() - chapterTime[i]["et"]);
             // chapterTimeDown = oldData.chapterTimeDown;
             // chapterTimeDown = parseInt(chapterTimeDown - (new Date().getTime() - chapterTime[i]["st"]) / 1000);
-            chapterTimeDown  = parseInt(chapterTimeDown - (new Date().getTime() - st) / 1000);
+            chapterTimeDown  = parseInt(chapterTimeDown+1 - (new Date().getTime() - st) / 1000);
         } else {
-            chapterTimeDown  = parseInt(chapterTimeDown - (new Date().getTime() - st) / 1000);
+            chapterTimeDown  = parseInt(chapterTimeDown+1 - (new Date().getTime() - st) / 1000);
             chapterTime[i] = {
                 time: obj.time * 60,
                 st: new Date().getTime(),

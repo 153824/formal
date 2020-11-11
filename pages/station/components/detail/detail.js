@@ -335,61 +335,49 @@ Page({
     goToReplyingGuide: function (e) {
         const that = this;
         const {evaluation, customNorms} = this.data;
-        const evaluationInfo = {
-            evaluationId: evaluation.id,
-            normId: evaluation.generalNorms.length ? evaluation.generalNorms[0].normId : customNorms[0].normId,
-            freeEvaluation: evaluation.freeEvaluation,
-            evaluationName: evaluation.name,
-            quesCount: evaluation.quesCount,
-            estimatedTime: evaluation.estimatedTime
-        };
-        const guideURL = `/pages/replying/components/guide/guide?evaluationId=${evaluation.id}&evaluationInfo=${JSON.stringify(evaluationInfo)}`;
-        console.log("evaluationInfo: ",evaluationInfo)
-        wx.navigateTo({
-            url: guideURL
+        app.doAjax({
+            url: 'release/self',
+            method: 'post',
+            data: {
+                evaluationInfo: {
+                    evaluationId: evaluation.id,
+                    normId: evaluation.generalNorms.length ? evaluation.generalNorms[0].normId : customNorms[0].normId,
+                    freeEvaluation: evaluation.freeEvaluation,
+                    evaluationName: evaluation.name,
+                    quesCount: evaluation.quesCount,
+                    estimatedTime: evaluation.estimatedTime
+                }
+            },
+            success: function (res) {
+                that.setData({
+                    releaseInfo: res
+                });
+                const guideURL = `/pages/replying/components/guide/guide?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`;
+                const replyingURL = `/pages/replying/replying?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`;
+                console.log("goToReplyingGuide: ", res);
+                const sKey = "oldAnswer" + res.receiveRecordId;
+                if (res.unfinished) {
+                    wx.setStorageSync("st", res.fetchedAt);
+                    let oldData = wx.getStorageSync(sKey);
+                    if (!oldData && res.draft instanceof Object) {
+                        oldData = wx.setStorageSync(sKey, res.draft);
+                    }
+                    if (oldData) {
+                        wx.navigateTo({
+                            url: replyingURL
+                        });
+                        return;
+                    }
+                    wx.navigateTo({
+                        url: replyingURL
+                    });
+                } else {
+                    wx.navigateTo({
+                        url: guideURL
+                    });
+                }
+            }
         });
-        // app.doAjax({
-        //     url: 'release/self',
-        //     method: 'post',
-        //     data: {
-        //         evaluationInfo: {
-        //             evaluationId: evaluation.id,
-        //             normId: evaluation.generalNorms.length ? evaluation.generalNorms[0].normId : customNorms[0].normId,
-        //             freeEvaluation: evaluation.freeEvaluation,
-        //             evaluationName: evaluation.name,
-        //             quesCount: evaluation.quesCount,
-        //             estimatedTime: evaluation.estimatedTime
-        //         }
-        //     },
-        //     success: function (res) {
-        //         that.setData({
-        //             releaseInfo: res
-        //         });
-        //         const replyingURL = `/pages/replying/replying?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`;
-        //         console.log("goToReplyingGuide: ", res);
-        //         const sKey = "oldAnswer" + res.receiveRecordId;
-        //         if (res.unfinished) {
-        //             wx.setStorageSync("st", res.createdAt);
-        //             let oldData = wx.getStorageSync(sKey);
-        //             if (!oldData && res.draft instanceof Object) {
-        //                 oldData = wx.setStorageSync(sKey, res.draft);
-        //             }
-        //             if (oldData) {
-        //                 wx.navigateTo({
-        //                     url: replyingURL
-        //                 });
-        //                 return;
-        //             }
-        //             wx.navigateTo({
-        //                 url: replyingURL
-        //             });
-        //         } else {
-        //             wx.navigateTo({
-        //                 url: guideURL
-        //             });
-        //         }
-        //     }
-        // });
     },
 
     /**购买数量+1 */

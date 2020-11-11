@@ -36,8 +36,8 @@ Page({
         isok: false,
         sex: ["男", "女"],
         checkedSex: 0,
-        getphoneNum: true,
-        phoneNumber: "18155555555",
+        getphoneNum: false,
+        phoneNumber: "微信一键授权",
         theFinalQuestionAnswer: [],
         verify: false,
         isSelf: "",
@@ -348,6 +348,25 @@ Page({
             });
         }
     },
+    handleUserInfo: function(){
+        const data = this.data;
+        const username = data.username;
+        const birthday = data.birthday;
+        const education = data.education;
+        if (!username || !(/^[\u4E00-\u9FA5A-Za-z]+$/.test(username))) {
+            app.toast("请输入正确的姓名！");
+            return false;
+        }
+        if (education == -1) {
+            app.toast("请选择学历信息！");
+            return false;
+        }
+        if (!birthday) {
+            app.toast("请选择出生年月！");
+            return false;
+        }
+        return true;
+    },
     submit: function (e) {
         const that = this;
         const {receiveRecordId, releaseRecordId} = this.data;
@@ -365,16 +384,7 @@ Page({
             const education = data.education;
             const phone = data.phoneNumber;
             const educationName = data.array[education];
-            if (!username || !(/^[\u4E00-\u9FA5A-Za-z]+$/.test(username))) {
-                app.toast("请输入正确的姓名！");
-                return;
-            }
-            if (education == -1) {
-                app.toast("请选择学历信息！");
-                return;
-            }
-            if (!birthday) {
-                app.toast("请选择出生年月！");
+            if(!that.handleUserInfo()){
                 return;
             }
             if (data.verify) {
@@ -913,9 +923,9 @@ Page({
             // chapterTime[i]["st"] = chapterTime[i]["st"] + (new Date().getTime() - chapterTime[i]["et"]);
             // chapterTimeDown = oldData.chapterTimeDown;
             // chapterTimeDown = parseInt(chapterTimeDown - (new Date().getTime() - chapterTime[i]["st"]) / 1000);
-            chapterTimeDown  = parseInt(chapterTimeDown - (new Date().getTime() - st) / 1000);
+            chapterTimeDown  = parseInt(chapterTimeDown+1 - (new Date().getTime() - st) / 1000);
         } else {
-            chapterTimeDown  = parseInt(chapterTimeDown - (new Date().getTime() - st) / 1000);
+            chapterTimeDown  = parseInt(chapterTimeDown+1 - (new Date().getTime() - st) / 1000);
             chapterTime[i] = {
                 time: obj.time * 60,
                 st: new Date().getTime(),
@@ -964,6 +974,10 @@ Page({
     },
     //定时保存作答
     saveDraftAnswer: function () {
+        const {phoneNumber,getphoneNum,pathIndex} = this.data;
+        if((!this.handleUserInfo() || !getphoneNum || phoneNumber.length < 11) && pathIndex == 3){
+            return;
+        }
         var that = this;
         saveTimeOut && clearTimeout(saveTimeOut);
         var data = that.data;

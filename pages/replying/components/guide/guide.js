@@ -6,13 +6,7 @@ Page({
   onLoad: function(option) {
     const that = this;
     const userData = wx.getStorageSync("userInfo")
-    const {evaluationId,evaluationInfo} = option;
-    if(evaluationInfo){
-      this.setData({
-        evaluationInfo: JSON.parse(evaluationInfo),
-        evaluationId: evaluationId,
-      })
-    }
+    const {receiveRecordId,evaluationId} = option;
     app.doAjax({
       url: "paperQues",
       method: "get",
@@ -20,8 +14,13 @@ Page({
         id: evaluationId
       },
       success: function(res) {
+        const sKey = "oldAnswer" + receiveRecordId;
+        const draftAnswer = wx.getStorageSync(sKey);
         that.setData({
+          draftAnswer: draftAnswer,
           userInfo: userData,
+          evaluationId: evaluationId,
+          receiveRecordId: receiveRecordId,
           paperList: res
         });
       }
@@ -32,25 +31,20 @@ Page({
 
   },
   goToReplying: function(e) {
-    const {evaluationInfo} = this.data;
+    const {receiveRecordId,evaluationId} = this.data;
+    const sKey = "oldAnswer" + receiveRecordId;
+    const draftAnswer = this.data.draftAnswer;
     app.doAjax({
-      url: 'release/self',
+      url: 'release/self/start',
       method: 'post',
       data: {
-        evaluationInfo: evaluationInfo
+        receiveRecordId: receiveRecordId
       },
       success: function (res) {
-        const {receiveRecordId} = res;
-        const {evaluationId,evaluationInfo} = this.data;
-        console.log("evaluationId: ",evaluationId);
-        const sKey = "oldAnswer" + receiveRecordId;
-        const draftAnswer = wx.getStorageSync(sKey);
-        if (draftAnswer) {
-          wx.setStorageSync(sKey, draftAnswer);
-        }
-        wx.setStorageSync("st",res.createdAt);
+        wx.setStorageSync('st',res.fetchedAt);
+        wx.setStorageSync(sKey, draftAnswer);
         wx.redirectTo({
-          url: `../../replying?pid=${evaluationInfo.evaluationId}&id=${receiveRecordId}&evaluationId=${evaluationInfo.evaluationId}&receiveRecordId=${receiveRecordId}`
+          url: `../../replying?pid=${evaluationId}&id=${receiveRecordId}&evaluationId=${evaluationId}&receiveRecordId=${receiveRecordId}`
         });
       }
     });

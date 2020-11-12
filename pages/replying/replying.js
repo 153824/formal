@@ -4,6 +4,7 @@ let sKey = "";
 let quesIdsOrder = [];
 let answerTimeOut;
 let saveTimeOut;
+let count = 0;
 Page({
     data: {
         isChangeQue: false,
@@ -198,13 +199,19 @@ Page({
 
                     // oldData["startTime"] = startTime + (now - endTime);
                     if ((now - startTime) > (6 * 60 * 60 * 1000)) {
+                        if(count > 1){
+                            return;
+                        }
+                        count = count + 1;
                         //答题时长超过6小时
                         wx.showModal({
                             title: '作答提示',
                             content: '答题时长超过6小时，已自动提交',
                             showCancel: false,
                             success: function () {
+                                wx.removeStorageSync("st");
                                 that.formSubmit(null, true);
+                                count = count - 1;
                             }
                         });
                         return;
@@ -248,7 +255,14 @@ Page({
                     phoneNumber: res.phone
                 });
             }
-        })
+        });
+        try{
+            if(wx.getStorageSync("st")){
+                that.keepTimeDown();
+            }
+        }catch (e) {
+
+        }
     },
     onHide: function () {
         saveTimeOut && clearTimeout(saveTimeOut);
@@ -789,6 +803,63 @@ Page({
     /**
      * 进入章节作答
      */
+
+    keepTimeDown: function(){
+        const that = this;
+        let chapter = this.data.chapter || [];
+        let i = 0;
+        console.log("chapter: ",chapter);
+        let obj = chapter[i] || {};
+        let chapterTimeDown = obj.time * 60;
+        const st = wx.getStorageSync("st");
+        chapterTimeDown  = parseInt(chapterTimeDown - (new Date().getTime() - st) / 1000);
+        this.setData({
+            chapterTimeDown
+        })
+        if (obj.type == 2) {
+            if (chapterTimeDown <= 0) {
+                if(count > 1){
+                    return;
+                }
+                count = count + 1;
+                wx.showModal({
+                    title: '作答提示',
+                    content: '答题时间到，已自动提交',
+                    showCancel: false,
+                    success: function () {
+                        console.log(0)
+                        wx.removeStorageSync("st");
+                        that.formSubmit();
+                        count = count - 1;
+                    }
+                });
+                return;
+            }
+            that.toTimeDown("chapterTimeDown", function () {
+                //作答限时--自动提交
+                if(count > 1){
+                    return;
+                }
+                count = count + 1;
+                wx.showModal({
+                    title: '作答提示',
+                    content: '答题时间到，已自动提交',
+                    showCancel: false,
+                    success: function () {
+                        console.log(1)
+                        wx.removeStorageSync("st");
+                        that.formSubmit();
+                        count = count - 1;
+                    }
+                });
+            });
+        } else {
+            that.setData({
+                chapterTimeDownFull: ""
+            });
+        }
+    },
+
     toAnswerIt: function (e, oldData) {
         const that = this;
         const {name1} = this.data.paperList.setting;
@@ -862,12 +933,16 @@ Page({
             }
         });
         let chapterTimeDown = obj.time * 60;
-        if (oldData && oldData.chapterTime && oldData.chapterTime[i]) {
-            chapterTime[i] = oldData.chapterTime[i];
+        const st = wx.getStorageSync("st");
+        if ((oldData && oldData.chapterTime && oldData.chapterTime[i])) {
+            chapterTime[i]["st"] = st;
+            // chapterTime[i] = oldData.chapterTime[i];
             // chapterTime[i]["st"] = chapterTime[i]["st"] + (new Date().getTime() - chapterTime[i]["et"]);
             // chapterTimeDown = oldData.chapterTimeDown;
-            chapterTimeDown = parseInt(chapterTimeDown - (new Date().getTime() - chapterTime[i]["st"]) / 1000);
+            // chapterTimeDown = parseInt(chapterTimeDown - (new Date().getTime() - chapterTime[i]["st"]) / 1000);
+            chapterTimeDown  = parseInt(chapterTimeDown+1 - (new Date().getTime() - st) / 1000);
         } else {
+            chapterTimeDown  = parseInt(chapterTimeDown+1 - (new Date().getTime() - st) / 1000);
             chapterTime[i] = {
                 time: obj.time * 60,
                 st: new Date().getTime(),
@@ -886,24 +961,38 @@ Page({
         });
         if (obj.type == 2) {
             if (chapterTimeDown <= 0) {
+                if(count > 1){
+                    return;
+                }
+                count = count + 1;
                 wx.showModal({
                     title: '作答提示',
                     content: '答题时间到，已自动提交',
                     showCancel: false,
                     success: function () {
+                        console.log(2)
+                        wx.removeStorageSync("st");
                         that.formSubmit();
+                        count = count - 1;
                     }
                 });
                 return;
             }
             that.toTimeDown("chapterTimeDown", function () {
                 //作答限时--自动提交
+                if(count > 1){
+                    return;
+                }
+                count = count + 1;
                 wx.showModal({
                     title: '作答提示',
                     content: '答题时间到，已自动提交',
                     showCancel: false,
                     success: function () {
+                        console.log(3)
+                        wx.removeStorageSync("st");
                         that.formSubmit();
+                        count = count - 1;
                     }
                 });
             });

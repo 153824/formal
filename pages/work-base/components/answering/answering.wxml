@@ -35,7 +35,7 @@
             </button>
         </view>
         <block wx:if="{{verify}}">
-            <view wx:if="{{!username||!birthday||(!education&&education!=0)}}" class="graybtn">立即验证</view>
+            <view wx:if="{{!username||!birthday||(education < 0)}}" class="graybtn">立即验证</view>
             <block wx:else>
                 <block wx:if="{{ username && (education != -1) && getphoneNum && phoneNumber.length > 6 }}">
                     <button form-type="submit" data-name="{{ paperList.setting.name1 }}">立即验证</button>
@@ -53,41 +53,6 @@
             </block>
         </block>
     </form>
-</view>
-<!-- 答题前说明 -->
-<view class="container2 font" wx:if="{{pathIndex==2}}">
-    <view class="bigtitle">测评即将开始</view>
-    <block wx:for="{{paperList.setting.reminds}}" wx:key="unique">
-        <text class="smalltitle">{{index + 1}}、{{item}}</text>
-    </block>
-    <view class="quernum">共{{paperList.ques.length}}题，平均用时{{paperList.setting.time}}分钟</view>
-    <view class="count" wx:if="{{count}}">({{count}}s)</view>
-    <view class="testbtn {{isok ? 'btnactive':''}}" bindtap="gototest">进入答题</view>
-</view>
-<!-- 章节选择 -->
-<view class="chooseChapter" wx:if="{{pathIndex==4}}">
-    <view class="paperTitle">
-        <view class="name">{{paperList.setting.name1}}</view>
-        <view class="mind">请依次作答每个部分，并注意作答时限</view>
-    </view>
-    <view class="chapterList">
-        <view class="item" wx:for="{{chapter}}" wx:key="unique">
-            <view class="name">第{{numArr[index]}}部分：{{item.title}}</view>
-            <view class="flex">
-                <view class="flex flex-main">
-                    <image src="../img/guide/icon3.png"></image>
-                    <text>题量：{{item.ques.length}}题</text>
-                </view>
-                <view class="flex flex-main">
-                    <image src="../img/guide/icon2.png"></image>
-                    <text>作答限时：{{item.type==2?(item.time+'分钟'):'不限时'}}</text>
-                </view>
-            </view>
-            <view class="btn " wx:if="{{item.status==1}}" bindtap="toAnswerIt" data-index="{{index}}">开始作答</view>
-            <view class="btn btn1" wx:if="{{item.status==2}}">完成上一部分作答后，解锁此部分</view>
-            <view class="btn btn1" wx:if="{{item.status==3}}">作答已完成，请继续其他部分作答</view>
-        </view>
-    </view>
 </view>
 <!-- 答题页面 -->
 <view class="coverView" style="background-color:transparent;" wx:if="{{isChangeQue}}"></view>
@@ -188,5 +153,4 @@
             </button>
         </view>
     </form>
-
 </view>

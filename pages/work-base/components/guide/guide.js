@@ -204,9 +204,6 @@ Page({
         if (draftAnswer || !draftAnswer) {
             const sKey = "oldAnswer" + that.data.id;
             let pathIndex = "";
-            // if(verified){
-            //     pathIndex = "3";
-            // }
             const url = `/pages/work-base/components/answering/answering?pid=${evaluationId}&id=${id}&receiveRecordId=${receiveRecordId}&reportPermit=${reportPermit}&status=${status}&pathIndex=${pathIndex}`;
             wx.setStorageSync(sKey, draftAnswer);
             wx.redirectTo({
@@ -237,7 +234,6 @@ Page({
                 id: ""
             };
         }
-        console.log('this.data: ',this.data)
         app.doAjax({
             url: "release/fetch",
             method: "post",
@@ -261,11 +257,6 @@ Page({
                 }
                 const sKey = "oldAnswer" + id;
                 const oldData = wx.getStorageSync(sKey);
-                // if(res.verified){
-                //     that.setData({
-                //         verified: res.verified,
-                //     });
-                // }
                 that.setData({
                     reportPermit: res.reportPermit,
                 });
@@ -289,6 +280,7 @@ Page({
                 switch (res.msg) {
                     case 'continue examining':
                         text = "继续作答";
+                        wx.setStorageSync("st",res.fetchedAt);
                         break;
                     case 'show report':
                         text = "查看报告";

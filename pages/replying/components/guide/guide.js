@@ -31,17 +31,22 @@ Page({
 
   },
   goToReplying: function(e) {
-    const { id,name } = e.currentTarget.dataset;
-    const that = this;
     const {receiveRecordId,evaluationId} = this.data;
     const sKey = "oldAnswer" + receiveRecordId;
     const draftAnswer = this.data.draftAnswer;
-    if (draftAnswer || !draftAnswer) {
-      wx.setStorageSync(sKey, draftAnswer);
-      wx.redirectTo({
-        url: `../../replying?pid=${evaluationId}&id=${receiveRecordId}&evaluationId=${evaluationId}&receiveRecordId=${receiveRecordId}`
-      });
-      return;
-    }
+    app.doAjax({
+      url: 'release/self/start',
+      method: 'post',
+      data: {
+        receiveRecordId: receiveRecordId
+      },
+      success: function (res) {
+        wx.setStorageSync('st',res.fetchedAt);
+        wx.setStorageSync(sKey, draftAnswer);
+        wx.redirectTo({
+          url: `../../replying?pid=${evaluationId}&id=${receiveRecordId}&evaluationId=${evaluationId}&receiveRecordId=${receiveRecordId}`
+        });
+      }
+    });
   },
 })

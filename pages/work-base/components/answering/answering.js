@@ -4,6 +4,7 @@ var sKey = "";
 var quesIdsOrder = [];
 var answerTimeOut;
 var saveTimeOut;
+let count = 0;
 Page({
     data: {
         isChangeQue: false,
@@ -209,11 +210,17 @@ Page({
                     // oldData["startTime"] = startTime + (now - endTime);
                     if ((now - startTime) > (6 * 60 * 60 * 1000)) {
                         //答题时长超过6小时
+                        if(count > 1){
+                            return;
+                        }
+                        count = count + 1;
                         wx.showModal({
                             title: '作答提示',
                             content: '答题时长超过6小时，已自动提交',
                             showCancel: false,
                             success: function () {
+                                wx.removeStorageSync("st");
+                                count = count -1;
                                 that.formSubmit();
                             }
                         });
@@ -321,11 +328,17 @@ Page({
         })
         if (obj.type == 2) {
             if (chapterTimeDown <= 0) {
+                if(count > 1){
+                    return;
+                }
+                count = count + 1;
                 wx.showModal({
                     title: '作答提示',
                     content: '答题时间到，已自动提交',
                     showCancel: false,
                     success: function () {
+                        wx.removeStorageSync("st");
+                        count = count -1;
                         that.formSubmit();
                     }
                 });
@@ -333,11 +346,17 @@ Page({
             }
             that.toTimeDown("chapterTimeDown", function () {
                 //作答限时--自动提交
+                if(count > 1){
+                    return;
+                }
+                count = count + 1;
                 wx.showModal({
                     title: '作答提示',
                     content: '答题时间到，已自动提交',
                     showCancel: false,
                     success: function () {
+                        wx.removeStorageSync("st");
+                        count = count -1;
                         that.formSubmit();
                     }
                 });
@@ -944,11 +963,17 @@ Page({
         });
         if (obj.type == 2) {
             if (chapterTimeDown <= 0) {
+                if(count > 1){
+                    return;
+                }
+                count = count + 1;
                 wx.showModal({
                     title: '作答提示',
                     content: '答题时间到，已自动提交',
                     showCancel: false,
                     success: function () {
+                        wx.removeStorageSync("st");
+                        count = count -1;
                         that.formSubmit();
                     }
                 });
@@ -956,11 +981,17 @@ Page({
             }
             that.toTimeDown("chapterTimeDown", function () {
                 //作答限时--自动提交
+                if(count > 1){
+                    return;
+                }
+                count = count + 1;
                 wx.showModal({
                     title: '作答提示',
                     content: '答题时间到，已自动提交',
                     showCancel: false,
                     success: function () {
+                        wx.removeStorageSync("st");
+                        count = count -1;
                         that.formSubmit();
                     }
                 });

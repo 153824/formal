@@ -3,12 +3,14 @@ page{
 }
 .content-wrapper{
     position: relative;
+    overflow-x: hidden;
 }
 .header-wrapper{
     height: 774rpx;
     padding: 0 50rpx 60rpx 50rpx;
 }
 .social-header-wrapper{
+    position: relative;
     height: 1082rpx;
 }
 .title,.detail{
@@ -89,6 +91,7 @@ page{
     height: 374rpx;
 }
 .brain-content-wrapper{
+    position: relative;
     height: 811rpx;
 }
 .brain-header-bottom-wrapper{
@@ -232,6 +235,47 @@ page{
     position: absolute;
     bottom: -45rpx;
 }
+.risk-bg-wrapper,.brain-bg-wrapper,.social-bg-wrapper{
+    position: absolute;
+    top: 130rpx;
+    right: 0;
+}
+.brain-bg-wrapper,.social-bg-wrapper{
+    right: 75rpx;
+}
+.brain-bg,.social-bg{
+    position: absolute;
+}
+.circle-normal{
+    position: absolute;
+    width: 168rpx;
+    height: 168rpx;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+}
+.circle-small{
+    top: -20px;
+    right: -230rpx;
+    z-index: 99;
+}
+.circle-medium{
+    top: -28rpx;
+    right: -190rpx;
+}
+.across{
+    position: relative;
+}
+.flash-across {
+    position:absolute;
+    animation:changeImg 3s ease 0s;
+    top:0;
+    width:30%;
+    height:100%;
+    content:"";
+    background:linear-gradient(to right,rgba(255,255,255,0) 0,rgba(255,255,255,.4) 50%,rgba(255,255,255,0) 100%);
+    transform:skewX(-45deg);
+    animation-iteration-count:infinite;
+}
 .liner-orange{
     background: linear-gradient(90deg, #E35E4C 0%, #F48D5B 100%);
 }
@@ -243,4 +287,12 @@ page{
 }
 .liner-pink{
     background: linear-gradient(90deg, #FD4351 0%, #F55A98 100%);
+}
+@keyframes changeImg {
+    from {
+        left:-100%;
+    }
+    100% {
+        left:150%;
+    }
 }

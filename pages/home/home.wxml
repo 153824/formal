@@ -24,11 +24,21 @@
                     </block>
                 </swiper>
             </view>
-            <view class="function-set" wx:if="{{ navigation.isShow }}">
-                <view wx:for="{{ navigation.data }}" wx:key="unique" class="function-set-child"
-                      data-id="{{ item.columnId }}"
-                      data-name="{{ item.name }}" bindtap="gotoMore">
-                    <image src="{{item.picture}}"></image>
+<!--            <view class="function-set" wx:if="{{ navigation.isShow }}">-->
+<!--                <view wx:for="{{ navigation.data }}" wx:key="unique" class="function-set-child"-->
+<!--                      data-id="{{ item.columnId }}"-->
+<!--                      data-name="{{ item.name }}" bindtap="gotoMore">-->
+<!--                    <image src="{{item.picture}}"></image>-->
+<!--                    <text>{{item.name}}</text>-->
+<!--                </view>-->
+<!--            </view>-->
+            <view class="function-set">
+                <view wx:for="{{ navigationList }}" wx:key="unique" class="function-set-child"
+                      data-name="{{ item.name }}" data-type="{{item.type}}"
+                      bindtap="gotoMore">
+                    <view class="icon-wrapper liner-{{item.liner}}">
+                        <image src="{{item.picture}}" class="function-icon"/>
+                    </view>
                     <text>{{item.name}}</text>
                 </view>
             </view>

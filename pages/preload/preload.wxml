@@ -8,11 +8,13 @@
         </view>
     </view>
     <view class="content">
-        <view wx:for="{{choose}}" wx:key="unique" bindtap="goToBrainStore" data-type="{{item.type}}">
-            {{item.text}}
+        <view wx:for="{{choose}}" wx:key="unique" class="{{item.type === active ? 'active' : ''}}">
+            <button class="preload-btn" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" data-type="{{item.type}}">
+                {{item.text}}
+            </button>
         </view>
     </view>
-    <view class="footer">
+    <view class="footer" bindtap="goToHome">
         随便看看
     </view>
 </view>

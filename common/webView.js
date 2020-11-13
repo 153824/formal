@@ -11,11 +11,11 @@ Page({
                 title: "测评邀请函"
             })
         }
-        wx.removeStorageSync("webView_Url");
         console.log(options);
         this.setData({
             url: options.img || url
-        })
+        });
+        // wx.removeStorageSync("webView_Url");
     },
     onReady: function () {
 

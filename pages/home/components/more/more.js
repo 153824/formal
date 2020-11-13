@@ -27,11 +27,131 @@ Page({
                 type: options.type,
                 liner: liner
             })
+            this._loadURLs(options.type);
         }
     },
     goBack() {
+        const {type} = this.data;
+        switch (type) {
+            case "school":
+                try {
+                    wx.uma.trackEvent('1605250635728');
+                } catch (e) {
+                    console.error(e);
+                }
+                break;
+            case "social":
+                try {
+                    wx.uma.trackEvent('1605250635731');
+                } catch (e) {
+                    console.error(e);
+                }
+                break;
+            case "brain":
+                try {
+                    wx.uma.trackEvent('1605250635734');
+                } catch (e) {
+                    console.error(e);
+                }
+                break;
+            case "risk":
+                try {
+                    wx.uma.trackEvent('1605250635737');
+                } catch (e) {
+                    console.error(e);
+                }
+                break;
+        }
         wx.switchTab({
             url: "/pages/home/home"
         })
+    },
+    _loadURLs: function (type) {
+        const that = this;
+        app.doAjax({
+            method: "get",
+            url: "guidance/urls",
+            data: {
+                type: type,
+            },
+            success: (res) => {
+                const {general, url} = res;
+                that.setData({
+                    general: general,
+                    url: url
+                })
+            }
+        })
+    },
+    goToWebView: function (e) {
+        const {general, url, type} = this.data;
+        const targetURL = e.currentTarget.dataset.url;
+        const isGeneral = targetURL === general ? true : false;
+        switch (type) {
+            case "school":
+                if (isGeneral) {
+                    try {
+                        wx.uma.trackEvent('1605250635726');
+                    } catch (e) {
+                        console.error(e);
+                    }
+                } else {
+                    try {
+                        wx.uma.trackEvent('1605250635727');
+                    } catch (e) {
+                        console.error(e);
+                    }
+                }
+                break;
+            case "social":
+                if (isGeneral) {
+                    try {
+                        wx.uma.trackEvent('1605250635729');
+                    } catch (e) {
+                        console.error(e);
+                    }
+                } else {
+                    try {
+                        wx.uma.trackEvent('1605250635730');
+                    } catch (e) {
+                        console.error(e);
+                    }
+                }
+                break;
+            case "brain":
+                if (isGeneral) {
+                    try {
+                        wx.uma.trackEvent('1605250635732');
+                    } catch (e) {
+                        console.error(e);
+                    }
+                } else {
+                    try {
+                        wx.uma.trackEvent('1605250635733');
+                    } catch (e) {
+                        console.error(e);
+                    }
+                }
+                break;
+            case "risk":
+                if (isGeneral) {
+                    try {
+                        wx.uma.trackEvent('1605250635735');
+                    } catch (e) {
+                        console.error(e);
+                    }
+                } else {
+                    try {
+                        wx.uma.trackEvent('1605250635736');
+                    } catch (e) {
+                        console.error(e);
+                    }
+                }
+                break;
+        }
+        wx.setStorageSync("webView_Url", targetURL);
+        wx.navigateTo({
+            url: '/common/webView',
+        });
     }
 });

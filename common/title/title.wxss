@@ -45,7 +45,6 @@
     height: 36rpx !important;
     color: rgba(53, 62, 232, 1) !important;
     font-size: 26rpx !important;
-    font-weight: 400 !important;
 }
 .register::after{
     border: unset !important;
@@ -57,7 +56,7 @@
     max-width: 406rpx;
     font-size: 26rpx;
     color: rgba(53, 62, 232, 1);
-    font-weight: 600;
+    font-weight: 600 !important;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

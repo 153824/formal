@@ -11,7 +11,7 @@ page{
 }
 .social-header-wrapper{
     position: relative;
-    height: 1082rpx;
+    height: 1125rpx;
 }
 .title,.detail{
     font-size: 40rpx;
@@ -66,11 +66,11 @@ page{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 40rpx;
+    margin-top: 15rpx;
     margin-bottom: 80rpx;
 }
 .school-header-wrapper{
-    height: 770rpx;
+    height: 830rpx;
 }
 .header-bottom-content{
     width: 570rpx;
@@ -92,10 +92,10 @@ page{
 }
 .brain-content-wrapper{
     position: relative;
-    height: 811rpx;
+    height: 800rpx;
 }
 .brain-header-bottom-wrapper{
-    height: 615rpx;
+    height: 515rpx;
 }
 .brain-detail-content-wrapper{
     display: flex;
@@ -200,11 +200,12 @@ page{
     justify-content: center;
     padding-bottom: 15rpx;
     height: 104rpx;
-    margin-top: 150rpx;
+    margin-top: 115rpx;
     font-size: 26rpx;
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 500;
     color: #787777;
+    margin-bottom: 10px;
 }
 .footer > image {
     margin-top: 16rpx;

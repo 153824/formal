@@ -8,7 +8,7 @@
                     <text>校招选才——寻找优质潜力股</text>
                 </view>
                 <view class="detail">
-                    是校园招聘中最为看重的两大因素，为什么华为良奖如云？他们是如何做到的？从2006年开始，华为便在招聘中引入了“领军人才五项素质”评价法，这被认为是：
+                    是校园招聘中最为看重的两大因素，为什么华为良奖如云？他们是如何做到的？从2006年开始，华为便在招聘中引入了“领军人才五项素质”评价法，这被认为是：华为人才基因的真正密码
                 </view>
             </view>
             <view class="header-bottom-wrapper school-header-bottom-wrapper">
@@ -26,18 +26,18 @@
                 <view class="tools-title">
                     <text class="tools-title-text school-tools-title">校招评估工具</text>
                 </view>
-                <view class="tools-item-content risk-tools-location">
+                <view class="tools-item-content risk-tools-location" data-url="{{general}}" bindtap="goToWebView">
                     <image src="https://ihola.luoke101.com/school-brain-item-1.png" style="width: 648rpx;height: 866rpx;"></image>
-                    <button class="orange-btn border-radius-none-top risk-tools-location-btn across" data-url="{{general}}" bindtap="goToWebView">
+                    <button class="orange-btn border-radius-none-top risk-tools-location-btn across">
                         <i class="flash-across"></i>
                         免费体验
                     </button>
                 </view>
             </view>
             <view class="tools-item">
-                <view class="tools-item-content risk-tools-location">
-                    <image src="https://ihola.luoke101.com/school-brain-item-2.png" style="width: 100%;height: 362rpx;"></image>
-                    <button class="orange-btn border-radius-none-top risk-tools-location-btn across" data-url="{{general}}" bindtap="goToWebView">
+                <view class="tools-item-content risk-tools-location" data-url="{{general}}" bindtap="goToWebView">
+                    <image src="https://ihola.luoke101.com/school-brain-item-2.png" style="width: 100%;height: 425rpx;"></image>
+                    <button class="orange-btn border-radius-none-top risk-tools-location-btn across">
                         <i class="flash-across"></i>
                         免费体验
                     </button>
@@ -63,13 +63,14 @@
                     <image src="https://ihola.luoke101.com/risk-start.png" style="width: 608rpx;height: 384rpx;"/>
                 </view>
             </view>
-            <view class="risk-btn orange-arrow-btn" data-url="{{url}}" bindtap="goToWebView">
+            <view class="risk-btn orange-arrow-btn across" data-url="{{url}}" bindtap="goToWebView">
                 <view class="risk-btn-text">
                     <text>一键联系评估顾问</text><text>获取专属【风险识别落地方案】</text>
                 </view>
                 <view class="arrow-wrapper">
                     <image src="/images/icon/icon@arrow.png" style="width: 64rpx;height: 54rpx;"></image>
                 </view>
+                <i class="flash-across"></i>
             </view>
             <view class="risk-bg-wrapper">
                 <image src="/pages/home/images/more@risk-bg.png" style="height: 452rpx;width: 290rpx;"/>
@@ -80,18 +81,18 @@
                 <view class="tools-title">
                     <text class="tools-title-text risk-tools-title">评估工具体验</text>
                 </view>
-                <view class="tools-item-content">
+                <view class="tools-item-content" data-url="{{general}}" bindtap="goToWebView">
                     <image src="https://ihola.luoke101.com/risk-test-item.png" style="width: 648rpx;height: 540rpx;"></image>
-                    <button class="orange-btn border-radius-none-top risk-orange-btn risk-tools-location-btn across" data-url="{{general}}" bindtap="goToWebView">
+                    <button class="orange-btn border-radius-none-top risk-orange-btn risk-tools-location-btn across">
                         <i class="flash-across"></i>
-                        自定义考察项，体验候选人风险识别测评
+                        免费体验
                     </button>
                 </view>
             </view>
             <view class="tools-item">
-                <view class="tools-item-content risk-tools-location">
+                <view class="tools-item-content risk-tools-location" data-url="{{general}}" bindtap="goToWebView">
                     <image src="https://ihola.luoke101.com/risk-nice.png" style="width: 648rpx;height: 778rpx;"></image>
-                    <button class="orange-btn border-radius-none-top risk-orange-btn risk-tools-location-btn across" data-url="{{general}}" bindtap="goToWebView">
+                    <button class="orange-btn border-radius-none-top risk-orange-btn risk-tools-location-btn across">
                         <i class="flash-across"></i>
                         免费体验
                     </button>
@@ -147,9 +148,9 @@
                 <view class="tools-title">
                     <text class="tools-title-text brain-tools-title">盘点评估工具体验</text>
                 </view>
-                <view class="tools-item-content risk-tools-location">
+                <view class="tools-item-content risk-tools-location" data-url="{{general}}" bindtap="goToWebView">
                     <image src="https://ihola.luoke101.com/brain-item.png" style="width: 648rpx;height: 530rpx;"></image>
-                    <button class="orange-btn border-radius-none-top liner-blue risk-tools-location-btn across" data-url="{{general}}" bindtap="goToWebView">
+                    <button class="orange-btn border-radius-none-top liner-blue risk-tools-location-btn across">
                         <i class="flash-across"></i>
                         免费体验
                     </button>
@@ -193,9 +194,9 @@
                 <view class="tools-title">
                     <text class="tools-title-text social-tools-title">社招评估工具</text>
                 </view>
-                <view class="tools-item-content risk-tools-location">
+                <view class="tools-item-content risk-tools-location" data-url="{{general}}" bindtap="goToWebView">
                     <image src="https://ihola.luoke101.com/social-item.png" style="width: 650rpx;height: 672rpx;"></image>
-                    <button class="orange-btn border-radius-none-top liner-pink risk-tools-location-btn" data-url="{{general}}" bindtap="goToWebView">
+                    <button class="orange-btn border-radius-none-top liner-pink risk-tools-location-btn">
                         <i class="flash-across"></i>
                         免费体验
                     </button>

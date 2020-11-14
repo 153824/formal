@@ -159,6 +159,13 @@
 					"pathName": "pages/forbidden/forbidden",
 					"query": "scene=5f8428e5164cf1025532e138",
 					"scene": null
+				},
+				{
+					"id": 13,
+					"name": "引流页",
+					"pathName": "pages/home/components/more/more",
+					"query": "type=school",
+					"scene": null
 				}
 			]
 		}

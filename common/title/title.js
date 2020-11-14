@@ -180,6 +180,12 @@ Component({
          */
         _this: function () {
             return this;
+        },
+
+        goToBack: function () {
+            wx.switchTab({
+                url: "/pages/home/home"
+            })
         }
     },
 

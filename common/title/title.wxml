@@ -33,7 +33,9 @@
 <block wx:if="{{ type === 'colorful' }}">
     <view class="bar-wrapper colorful {{liner}}" style="height: {{ statusbarHeight + titleHeight }}px;">
         <view class="statusbar colorful-bg" style="height: {{ statusbarHeight }}px;"></view>
-        <view class="title-bar colorful-bg" style="height: {{ titleHeight }}px;top: {{ statusbarHeight }}px;"></view>
+        <view class="title-bar colorful-bg" style="height: {{ titleHeight }}px;top: {{ statusbarHeight }}px;">
+            <van-icon name="arrow-left" size="20" color="#fff" bind:click="goToBack"/>
+        </view>
     </view>
 </block>
 <view wx:if="{{ loading }}" style="display: flex;align-items:center;justify-content: center;height: 100vh;width: 100vw;">

@@ -70,7 +70,7 @@ page{
     margin-bottom: 80rpx;
 }
 .school-header-wrapper{
-    height: 670rpx;
+    height: 770rpx;
 }
 .header-bottom-content{
     width: 570rpx;
@@ -81,7 +81,7 @@ page{
     border-radius: 20rpx;
 }
 .school-header-bottom-wrapper{
-    height: 400rpx;
+    /* height: 400rpx; */
 }
 .risk-content-wrapper{
     position: relative;
@@ -118,7 +118,7 @@ page{
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    width: 192rpx;
+    width: 175rpx;
     height: 154rpx;
     background: #3CA1A4;
     box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(0, 0, 0, 0.15);
@@ -263,7 +263,7 @@ page{
     right: -190rpx;
 }
 .across{
-    position: relative;
+    /* position: relative; */
 }
 .flash-across {
     position:absolute;

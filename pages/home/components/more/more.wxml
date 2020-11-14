@@ -5,17 +5,20 @@
         <view class="header-wrapper school-header-wrapper liner-green">
             <view>
                 <view class="title">
-                    <text>校招选才——选有潜力的人才</text>
+                    <text>校招选才——寻找优质潜力股</text>
                 </view>
                 <view class="detail">
-                    是校园招聘中最为看重的因素，华为从2006年开始，便在招聘中引入了“五项素质”评价法，这五项素质被认为是：
+                    是校园招聘中最为看重的两大因素，为什么华为良奖如云？他们是如何做到的？从2006年开始，华为便在招聘中引入了“领军人才五项素质”评价法，这被认为是：
                 </view>
             </view>
             <view class="header-bottom-wrapper school-header-bottom-wrapper">
                 <view>
-                    <image src="https://ihola.luoke101.com/school-banner.png" style="width: 715rpx;height: 303rpx;"/>
+                    <image src="https://ihola.luoke101.com/school-banner.png" style="width: 711rpx;height: 354rpx;"/>
                 </view>
-                <button class="orange-btn orange-btn-all-radius" data-url="{{url}}" bindtap="goToWebView">一键获取您企业的人才基因密码</button>
+                <button class="orange-btn orange-btn-all-radius" data-url="{{url}}" bindtap="goToWebView">
+                    <i class="flash-across"></i>
+                    一键获取您企业的人才基因密码
+                </button>
             </view>
         </view>
         <view class="body-wrapper">

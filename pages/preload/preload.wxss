@@ -8,6 +8,7 @@
     justify-content: center;
 }
 .welcome{
+    margin-top: 40rpx;
     font-size: 36rpx;
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 500;
@@ -38,11 +39,20 @@
     margin-bottom: 40rpx;
 }
 .footer{
+    position: fixed;
+    bottom: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100vw;
+    height: 60rpx;
+    padding-bottom: 50rpx;
     font-size: 26rpx;
     color: #767676;
+}
+.decoration{
+    text-decoration: underline;
+    padding-bottom: 5rpx;
 }
 .active{
     color: rgba(53, 62, 232, 1) !important;

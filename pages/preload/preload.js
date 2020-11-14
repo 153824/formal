@@ -28,11 +28,12 @@ Page({
         } catch (e) {
             console.error(e);
         }
-        wx.navigateTo({
+        wx.switchTab({
             url: "/pages/home/home"
         })
     },
     getPhoneNumber: function (e) {
+        const that = this;
         const {type} = e.currentTarget.dataset;
         let url = `/pages/home/components/more/more?type=${type}`;
         this.setData({
@@ -54,6 +55,7 @@ Page({
                 url: "updatedUserMobile",
                 data: userMsg,
                 success: function (res) {
+                    that.getNewerTicket();
                     try {
                         wx.uma.trackEvent('1605250635744');
                     } catch (e) {
@@ -94,7 +96,10 @@ Page({
                     });
                 }
             });
-        }else{
+        } else {
+            this.setData({
+                active: ""
+            });
             try {
                 wx.uma.trackEvent('1605250635745');
             } catch (e) {
@@ -102,4 +107,19 @@ Page({
             }
         }
     },
+
+    getNewerTicket: function (e) {
+        app.doAjax({
+            url: "drawNoviceVoucher",
+            method: "post",
+            data: {},
+            success: function (ret) {
+                app.getUserInfo();
+                app.toast("恭喜！成功领取新人券");
+            },
+            error: function (res) {
+                app.toast(res.msg);
+            }
+        });
+    }
 });

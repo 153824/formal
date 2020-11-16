@@ -25,7 +25,7 @@
 			"outputPath": ""
 		},
 		"bundle": true,
-		"useCompilerModule": true,
+		"useCompilerModule": false,
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
@@ -38,7 +38,7 @@
 	"isGameTourist": false,
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {
-		"qywx_simulator_plugin": "2.10.1"
+		"qywx_simulator_plugin": "2.4.0"
 	},
 	"scripts": {
 		"beforeCompile": "",
@@ -115,7 +115,7 @@
 					"id": 6,
 					"name": "小程序码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=5facd15a0f149c173dac37cc",
+					"query": "scene=5fb25d4eb3ee12146116f548",
 					"scene": null
 				},
 				{

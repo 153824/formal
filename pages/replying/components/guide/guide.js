@@ -41,7 +41,7 @@ Page({
         receiveRecordId: receiveRecordId
       },
       success: function (res) {
-        wx.setStorageSync('st',res.fetchedAt);
+        wx.setStorageSync(`${receiveRecordId}-st`,res.fetchedAt);
         wx.setStorageSync(sKey, draftAnswer);
         wx.redirectTo({
           url: `../../replying?pid=${evaluationId}&id=${receiveRecordId}&evaluationId=${evaluationId}&receiveRecordId=${receiveRecordId}`

@@ -16,7 +16,7 @@ Page({
         navigationList: (() => {
             const data = [
                 {
-                    name: "校招选材",
+                    name: "校招选才",
                     type: "school",
                     picture: "/pages/home/images/home@icon-school.png",
                     liner: "yellow",

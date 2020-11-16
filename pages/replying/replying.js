@@ -203,13 +203,14 @@ Page({
                             return;
                         }
                         count = count + 1;
+                        const {id} = that.data;
                         //答题时长超过6小时
                         wx.showModal({
                             title: '作答提示',
                             content: '答题时长超过6小时，已自动提交',
                             showCancel: false,
                             success: function () {
-                                wx.removeStorageSync("st");
+                                wx.removeStorageSync(`${id}-st`);
                                 that.formSubmit(null, true);
                                 count = count - 1;
                             }
@@ -257,7 +258,8 @@ Page({
             }
         });
         try{
-            if(wx.getStorageSync("st")){
+            const {id} = that.data;
+            if(wx.getStorageSync(`${id}-st`)){
                 that.keepTimeDown();
             }
         }catch (e) {
@@ -811,7 +813,8 @@ Page({
         console.log("chapter: ",chapter);
         let obj = chapter[i] || {};
         let chapterTimeDown = obj.time * 60;
-        const st = wx.getStorageSync("st");
+        const {id} = that.data;
+        const st = wx.getStorageSync(`${id}-st`);
         chapterTimeDown  = parseInt(chapterTimeDown - (new Date().getTime() - st) / 1000);
         this.setData({
             chapterTimeDown
@@ -828,7 +831,8 @@ Page({
                     showCancel: false,
                     success: function () {
                         console.log(0)
-                        wx.removeStorageSync("st");
+                        const {id} = that.data;
+                        wx.removeStorageSync(`${id}-st`);
                         that.formSubmit();
                         count = count - 1;
                     }
@@ -847,7 +851,8 @@ Page({
                     showCancel: false,
                     success: function () {
                         console.log(1)
-                        wx.removeStorageSync("st");
+                        const {id} = that.data;
+                        wx.removeStorageSync(`${id}-st`);
                         that.formSubmit();
                         count = count - 1;
                     }
@@ -933,7 +938,8 @@ Page({
             }
         });
         let chapterTimeDown = obj.time * 60;
-        const st = wx.getStorageSync("st");
+        const {id} = that.data;
+        const st = wx.getStorageSync(`${id}-st`);
         if ((oldData && oldData.chapterTime && oldData.chapterTime[i])) {
             chapterTime[i]["st"] = st;
             // chapterTime[i] = oldData.chapterTime[i];
@@ -970,8 +976,9 @@ Page({
                     content: '答题时间到，已自动提交',
                     showCancel: false,
                     success: function () {
+                        const {id} = that.data;
                         console.log(2)
-                        wx.removeStorageSync("st");
+                        wx.removeStorageSync(`${id}-st`);
                         that.formSubmit();
                         count = count - 1;
                     }
@@ -990,7 +997,8 @@ Page({
                     showCancel: false,
                     success: function () {
                         console.log(3)
-                        wx.removeStorageSync("st");
+                        const {id} = that.data;
+                        wx.removeStorageSync(`${id}-st`);
                         that.formSubmit();
                         count = count - 1;
                     }

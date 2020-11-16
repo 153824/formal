@@ -201,8 +201,15 @@ Page({
                         icon: 'none',
                         title: '已为您恢复上次作答'
                     });
+                    const {receiveRecordId} = that.data;
+                    if(wx.getStorageSync(`${receiveRecordId}-is-fill-all`)){
+                        that.setData({
+                            isFillAll: true
+                        })
+                    }
                     that.setData(oldData);
                     that.toAnswerIt(null, oldData);
+                    const {swiperCurrent,quesAll} = that.data;
                     var startTime = oldData.startTime;
                     // var endTime = oldData.endTime;
                     var now = new Date().getTime();
@@ -219,7 +226,7 @@ Page({
                             content: '答题时长超过6小时，已自动提交',
                             showCancel: false,
                             success: function () {
-                                wx.removeStorageSync("st");
+                                wx.removeStorageSync(`${receiveRecordId}-st`);
                                 count = count -1;
                                 that.formSubmit();
                             }
@@ -257,7 +264,8 @@ Page({
                 });
             }
         })
-        if(wx.getStorageSync("st")){
+        const {receiveRecordId} = that.data;
+        if(wx.getStorageSync(`${receiveRecordId}-st`)){
             that.keepTimeDown()
         }
     },
@@ -321,7 +329,8 @@ Page({
         let i = 0;
         let obj = chapter[i] || {};
         let chapterTimeDown = obj.time * 60;
-        const st = wx.getStorageSync("st");
+        const {receiveRecordId} = this.data;
+        const st = wx.getStorageSync(`${receiveRecordId}-st`);
         chapterTimeDown  = parseInt(chapterTimeDown - (new Date().getTime() - st) / 1000);
         this.setData({
             chapterTimeDown
@@ -337,7 +346,8 @@ Page({
                     content: '答题时间到，已自动提交',
                     showCancel: false,
                     success: function () {
-                        wx.removeStorageSync("st");
+                        const {receiveRecordId} = that.data;
+                        wx.removeStorageSync(`${receiveRecordId}-st`);
                         count = count -1;
                         that.formSubmit();
                     }
@@ -355,7 +365,8 @@ Page({
                     content: '答题时间到，已自动提交',
                     showCancel: false,
                     success: function () {
-                        wx.removeStorageSync("st");
+                        const {receiveRecordId} = that.data;
+                        wx.removeStorageSync(`${receiveRecordId}-st`);
                         count = count -1;
                         that.formSubmit();
                     }
@@ -427,7 +438,8 @@ Page({
                         console.log(res.code);
                         if (res.code === 0) {
                             app.toast("领取成功！");
-                            wx.setStorageSync("st",res.fetchedAt);
+                            const {receiveRecordId} = that.data;
+                            wx.setStorageSync(`${receiveRecordId}-st`,res.fetchedAt);
                             that.toAnswerIt();
                         }
                     },
@@ -450,7 +462,8 @@ Page({
                         }
                     },
                     success: function (res) {
-                        wx.setStorageSync("st",res.fetchedAt);
+                        const {receiveRecordId} = that.data;
+                        wx.setStorageSync(`${receiveRecordId}-st`,res.fetchedAt);
                         that.toAnswerIt();
                     }
                 });
@@ -604,7 +617,9 @@ Page({
             theFinalQuestionAnswer.forEach(((value, index) => {
                 score = value + score;
             }));
+            const {receiveRecordId} = this.data;
             if (score === finalTotalScore) {
+                wx.setStorageSync(`${receiveRecordId}-is-fill-all`,true);
                 this.setData({
                     isFillAll: true,
                 });
@@ -648,7 +663,9 @@ Page({
         var isLastQue = false;
         swiperCurrent += 1;
         if (swiperCurrent == that.data.quesAll.length) {
+            const {receiveRecordId} = that.data;
             d["isFillAll"] = true;
+            wx.setStorageSync(`${receiveRecordId}-is-fill-all`,true);
         }
         if (swiperCurrent == data.quesAll.length) {
             swiperCurrent = data.quesAll.length - 1;
@@ -725,12 +742,15 @@ Page({
             }
         }
         if (quesAll.length === swiperCurrent + 1) {
+            const {receiveRecordId} = this.data;
             const answerCopy = app.trimSpace(JSON.parse(JSON.stringify(answers[questionInfo.id])));
             if (maxChoose < 2 || (answerCopy.length >= Number(minChoose) && answerCopy.length <= Number(maxChoose))) {
+                wx.setStorageSync(`${receiveRecordId}-is-fill-all`,true);
                 this.setData({
                     isFillAll: true
                 })
             } else {
+                wx.setStorageSync(`${receiveRecordId}-is-fill-all`,false);
                 this.setData({
                     isFillAll: false
                 })
@@ -935,7 +955,8 @@ Page({
             }
         });
         let chapterTimeDown = obj.time * 60;
-        const st = wx.getStorageSync("st");
+        const {receiveRecordId} = that.data;
+        const st = wx.getStorageSync(`${receiveRecordId}-st`);
         if ((oldData && oldData.chapterTime && oldData.chapterTime[i])) {
             chapterTime[i]["st"] = st;
             // chapterTime[i] = oldData.chapterTime[i];
@@ -972,7 +993,8 @@ Page({
                     content: '答题时间到，已自动提交',
                     showCancel: false,
                     success: function () {
-                        wx.removeStorageSync("st");
+                        const {receiveRecordId} = that.data;
+                        wx.removeStorageSync(`${receiveRecordId}-st`);
                         count = count -1;
                         that.formSubmit();
                     }
@@ -990,7 +1012,8 @@ Page({
                     content: '答题时间到，已自动提交',
                     showCancel: false,
                     success: function () {
-                        wx.removeStorageSync("st");
+                        const {receiveRecordId} = that.data;
+                        wx.removeStorageSync(`${receiveRecordId}-st`);
                         count = count -1;
                         that.formSubmit();
                     }
@@ -1085,12 +1108,15 @@ Page({
             answers[obj.id].forEach((v, k) => {
                 score = score + Number(v);
             });
-            if (score === totalScore) {
+            const {receiveRecordId} = this.data;
+            if (score == totalScore) {
+                wx.setStorageSync(`${receiveRecordId}-is-fill-all`,true);
                 this.setData({
                     isFillAll: true,
                     theFinalQuestionAnswer: answers[obj.id]
                 });
             } else {
+                wx.setStorageSync(`${receiveRecordId}-is-fill-all`,false);
                 this.setData({
                     isFillAll: false,
                 });

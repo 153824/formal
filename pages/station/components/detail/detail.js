@@ -357,7 +357,7 @@ Page({
                 console.log("goToReplyingGuide: ", res);
                 const sKey = "oldAnswer" + res.receiveRecordId;
                 if (res.unfinished) {
-                    wx.setStorageSync("st", res.fetchedAt);
+                    wx.setStorageSync(`${res.receiveRecordId}-st`, res.fetchedAt);
                     let oldData = wx.getStorageSync(sKey);
                     if (!oldData && res.draft instanceof Object) {
                         oldData = wx.setStorageSync(sKey, res.draft);

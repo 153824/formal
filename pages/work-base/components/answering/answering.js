@@ -61,7 +61,7 @@ Page({
             });
         }
         quesIdsOrder = [];
-        sKey = "oldAnswer" + options.id;
+        sKey = "oldAnswer" + options.receiveRecordId;
         var oldData = wx.getStorageSync(sKey);
         if (oldData.pathIndex == 2) {
             oldData.pathIndex = 3;
@@ -471,6 +471,9 @@ Page({
                     }
                 });
             }
+            that.setData({
+                startTime: new Date().getTime()
+            })
         }
 
         if (!that.data.getphoneNum) {

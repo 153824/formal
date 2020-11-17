@@ -8,7 +8,11 @@ Page({
         maskTrigger: true,
         verified: false,
         isEmail: false,
-        isSelf: "SHARE"
+        isSelf: "SHARE",
+        receiveRecordId: "",
+        evaluationStatus: "",
+        demonstrateInfo: {},
+        evaluationStatusText: ""
     },
     onLoad: function (option) {
         const that = this;
@@ -22,13 +26,13 @@ Page({
             releaseEvaluationId = decodeURIComponent(option.scene);
         }
         if (option.releaseRecordId || option.receiveRecordId || releaseEvaluationId) {
-            console.log("option.releaseRecordId: ",option.releaseRecordId)
+            console.log("option.releaseRecordId: ", option.releaseRecordId)
             this.setData({
-                id: option.releaseRecordId || releaseEvaluationId,
+                releaseRecordId: option.releaseRecordId || releaseEvaluationId,
                 receiveRecordId: option.receiveRecordId || ""
             });
         }
-        if(option.receiveRecordId){
+        if (option.receiveRecordId) {
             app.doAjax({
                 url: 'reports/check_type',
                 method: 'get',
@@ -48,16 +52,20 @@ Page({
             wx.hideHomeButton();
         }
         const that = this;
-        const id = that.data.id;
-        if (app.isTest && !id) {
+        const {releaseRecordId} = that.data;
+        if (app.isTest && !releaseRecordId) {
             return that.getPaperMsg()
         }
         if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
             app.checkUserInfo = (userInfo) => {
                 that.fetchEvaluation(userInfo);
+                that.getTemptation(userInfo);
+                that.getParticipantInfo(userInfo.id);
             }
         } else {
             that.fetchEvaluation();
+            that.getTemptation();
+            that.getParticipantInfo();
         }
 
     },
@@ -105,7 +113,7 @@ Page({
                 if (userInfo && userInfo.avatar || params.userInfo.hasParticipantInfo) {
                     hasUserInfo = true;
                 }
-                console.log("paperQues: ",res)
+                console.log("paperQues: ", res)
                 that.setData({
                     hasUserInfo: hasUserInfo,
                     status: params.status,
@@ -113,7 +121,7 @@ Page({
                     userInfo: params.userInfo,
                     draftAnswer: params.draftAnswer,
                     reportPermit: params.reportPermit,
-                    id: params.id || "",
+                    releaseRecordId: params.releaseRecordId || "",
                     evaluationId: params.evaluationId || "",
                     evaluationList: res,
                     msg: params.msg,
@@ -123,9 +131,9 @@ Page({
         });
     },
 
-    verifyUserInfo: function(e) {
-        const {evaluationId,id,receiveRecordId,reportPermit,status,verified,isEmail} = this.data;
-        const url = `/pages/work-base/components/answering/answering?pid=${evaluationId}&id=${id}&reportPermit=${reportPermit}&status=${status}&verify=true`;
+    verifyUserInfo: function (e) {
+        const {evaluationId, releaseRecordId, receiveRecordId, reportPermit, status, verified, isEmail} = this.data;
+        const url = `/pages/work-base/components/answering/answering?pid=${evaluationId}&releaseRecordId=${releaseRecordId}&reportPermit=${reportPermit}&status=${status}&verify=true`;
         wx.redirectTo({
             url: url
         });
@@ -134,7 +142,7 @@ Page({
     goToReplying: function (e) {
         const that = this;
         const {name1} = that.data.evaluationList.setting;
-        const {mark=""} = e.currentTarget.dataset;
+        const {mark = ""} = e.currentTarget.dataset;
         if (that.data.isSelf !== 'SHARE' && mark) {
             try {
                 wx.uma.trackEvent('1602214318372', {name: name1})
@@ -148,7 +156,7 @@ Page({
                 console.error(e);
             }
         }
-        const {evaluationId,id,receiveRecordId,reportPermit,status,verified,isEmail} = this.data;
+        const {evaluationId, releaseRecordId, receiveRecordId, reportPermit, status, verified, isEmail} = this.data;
         const draftAnswer = that.data.draftAnswer;
         const userData = e.detail.userInfo;
         if (!userData && !that.data.hasUserInfo && !app.isTest) return;
@@ -169,16 +177,17 @@ Page({
                 success: function (res) {
                     const userData = res.data;
                     const globalData = app.globalData.userInfo;
+                    const url = `../answering/answering?pid=${evaluationId}&releaseRecordId=${releaseRecordId}&receiveRecordId=${receiveRecordId}&reportPermit=${reportPermit}&status=${status}`;
                     if (0 === res.code) {
                         app.globalData.userInfo = Object.assign(globalData, userData);
                         wx.setStorageSync("userInfo", Object.assign(globalData, userData));
                         wx.setStorageSync("USER_DETAIL", Object.assign(globalData, userData));
                         wx.setStorageSync("openId", userData.openid);
                         if (draftAnswer) {
-                            var sKey = "oldAnswer" + that.data.id;
+                            const sKey = `oldAnswer${receiveRecordId}`;
                             wx.setStorageSync(sKey, draftAnswer);
                             wx.redirectTo({
-                                url: '../answering/answering?pid=' + that.data.evaluationId + '&id=' + that.data.id + '&receiveRecordId=' + that.data.receiveRecordId + "&reportPermit=" + that.data.reportPermit + "&status=" + that.data.status,
+                                url: url,
                                 success: res => {
                                     app.otherPageReLaunchTrigger = false;
                                 }
@@ -186,7 +195,7 @@ Page({
                             return;
                         } else {
                             wx.redirectTo({
-                                url: '../answering/answering?pid=' + that.data.evaluationId + '&id=' + that.data.id + '&receiveRecordId=' + that.data.receiveRecordId + "&reportPermit=" + that.data.reportPermit + "&status=" + that.data.status,
+                                url: url,
                                 success: res => {
                                     app.otherPageReLaunchTrigger = false;
                                 }
@@ -202,9 +211,9 @@ Page({
             return;
         }
         if (draftAnswer || !draftAnswer) {
-            const sKey = "oldAnswer" + that.data.id;
+            const sKey = `oldAnswer${receiveRecordId}`;
             let pathIndex = "";
-            const url = `/pages/work-base/components/answering/answering?pid=${evaluationId}&id=${id}&receiveRecordId=${receiveRecordId}&reportPermit=${reportPermit}&status=${status}&pathIndex=${pathIndex}`;
+            const url = `/pages/work-base/components/answering/answering?pid=${evaluationId}&releaseRecordId=${releaseRecordId}&receiveRecordId=${receiveRecordId}&reportPermit=${reportPermit}&status=${status}&pathIndex=${pathIndex}`;
             wx.setStorageSync(sKey, draftAnswer);
             wx.redirectTo({
                 url: url
@@ -227,9 +236,9 @@ Page({
 
     fetchEvaluation: function (userInfo) {
         const that = this;
-        const id = that.data.id;
-        console.log("userInfo: ",userInfo);
-        if(!userInfo){
+        const {releaseRecordId} = this.data;
+        console.log("userInfo: ", userInfo);
+        if (!userInfo) {
             userInfo = {
                 id: ""
             };
@@ -239,10 +248,11 @@ Page({
             method: "post",
             noLoading: true,
             data: {
-                releaseRecordId: id,
+                releaseRecordId: releaseRecordId,
                 userId: userInfo.id
             },
             success: function (res) {
+                const {evaluationId, receiveRecordId, reportPermit, status} = res;
                 let text = "";
                 if (!res.receiveRecordId && res.msg !== 'qualification needed') {
                     app.toast("该分享已失效！");
@@ -250,26 +260,27 @@ Page({
                         url: "/pages/work-base/work-base"
                     });
                     return;
-                } else if(!res.receiveRecordId && res.msg === 'qualification needed') {
+                } else if (!res.receiveRecordId && res.msg === 'qualification needed') {
                     that.setData({
                         isEmail: true,
                     })
                 }
-                const sKey = "oldAnswer" + id;
+                const sKey = "oldAnswer" + res.receiveRecordId;
                 const oldData = wx.getStorageSync(sKey);
                 that.setData({
                     reportPermit: res.reportPermit,
                 });
-                setTimeout(()=>{
+                setTimeout(() => {
                     that.setData({
                         maskTrigger: false
                     })
-                },500);
+                }, 500);
                 if (oldData && res.status !== 'FINISHED') {
-                    wx.setStorageSync(`${res.receiveRecordId}-st`,res.fetchedAt);
+                    wx.setStorageSync(`${res.receiveRecordId}-st`, res.fetchedAt);
                     setTimeout(() => {
+                        const url = `../answering/answering?pid=${evaluationId}&releaseRecordId=${releaseRecordId}&receiveRecordId=${receiveRecordId}&reportPermit=${reportPermit}&status=${status}`;
                         wx.redirectTo({
-                            url: '../answering/answering?pid=' + res.evaluationId + '&id=' + id + '&receiveRecordId=' + res.receiveRecordId + "&reportPermit=" + res.reportPermit + "&status=" + res.status
+                            url: url,
                         });
                     }, 500);
                     return;
@@ -281,7 +292,7 @@ Page({
                 switch (res.msg) {
                     case 'continue examining':
                         text = "继续作答";
-                        wx.setStorageSync(`${res.receiveRecordId}-st`,res.fetchedAt);
+                        wx.setStorageSync(`${res.receiveRecordId}-st`, res.fetchedAt);
                         break;
                     case 'show report':
                         text = "查看报告";
@@ -294,6 +305,9 @@ Page({
                         break;
                     case 'not available':
                         text = "分享已失效";
+                        wx.switchTab({
+                            url: "/pages/home/home"
+                        })
                         break;
                     case 'qualification needed':
                         text = "立即验证";
@@ -308,7 +322,7 @@ Page({
                     draftAnswer: res.draft,
                     evaluationId: res.evaluationId,
                     userInfo: res.participantInfo,
-                    id: id,
+                    releaseRecordId: releaseRecordId,
                     receiveRecordId: res.receiveRecordId,
                     triggerText: res.msg
                 });
@@ -319,12 +333,107 @@ Page({
                 })
             },
             fail: function (err) {
-                setTimeout(()=>{
+                setTimeout(() => {
                     that.setData({
                         maskTrigger: false
                     })
-                },500);
+                }, 500);
             }
         });
+    },
+
+    getTemptation: function (userInfo = {id: ""}) {
+        const _this = this;
+        console.log("userInfo: ", userInfo);
+        const {releaseRecordId} = this.data;
+        app.doAjax({
+            url: "wework/evaluations/fetch/temptation",
+            method: "post",
+            data: {
+                releaseRecordId: releaseRecordId,
+                userId: userInfo.id
+            },
+            success: function (res) {
+                let text = "";
+                let {msg} = res;
+                const {receiveRecordId=""} = res;
+                switch (msg) {
+                    case 'UNCLAIMED':
+                        text = "开始作答";
+                        break;
+                    case "UNAVAILABLE":
+                        text = "分享已失效";
+                        break;
+                    case "FETCHED":
+                        text = "继续作答";
+                        break;
+                    case "APPLYING":
+                        text = "等待hr通过申请";
+                        break;
+                    case "DISABLE":
+                        text = "申请查看报告";
+                        break;
+                    case "VERIFY":
+                        text = "立即验证";
+                        break;
+                    case "APPROVED":
+                        text = "查看报告";
+                        break;
+                }
+                _this.setData({
+                    demonstrateInfo: res.demonstrateInfo,
+                    evaluationStatus: msg,
+                    evaluationStatusText: text,
+                    receiveRecordId: receiveRecordId
+                });
+            }
+        })
+    },
+
+    goToTransit: function () {
+        const {evaluationStatus} = this.data;
+        if(evaluationStatus){
+            switch (evaluationStatus) {
+                case 'UNCLAIMED':
+
+                    break;
+                case "UNAVAILABLE":
+                    text = "分享已失效";
+                    break;
+                case "FETCHED":
+                    text = "继续作答";
+                    break;
+                case "APPLYING":
+                    text = "等待hr通过申请";
+                    break;
+                case "DISABLE":
+                    text = "申请查看报告";
+                    break;
+                case "VERIFY":
+                    text = "立即验证";
+                    break;
+                case "APPROVED":
+                    text = "查看报告";
+                    break;
+            }
+        }
+    },
+
+    getParticipantInfo: function (userId) {
+        const {receiveRecordId=""} = this.data;
+        if(!userId){
+            console.log("app.globalData.userInfo: ",app.globalData.userInfo);
+            userId = (wx.getStorageSync("userInfo")||app.globalData.userInfo||app.globalData.userMsg).id;
+        }
+        app.doAjax({
+            url: `wework/evaluations/fetch/info/participant/${userId}`,
+            method: "get",
+            data: {
+                receiveRecordId: receiveRecordId
+            },
+            success: function (res) {
+                console.log("wework/evaluations/fetch/info/participant: ",res);
+            }
+        })
     }
 });

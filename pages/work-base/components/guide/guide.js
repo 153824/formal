@@ -280,7 +280,7 @@ Page({
                 switch (res.msg) {
                     case 'continue examining':
                         text = "继续作答";
-                        wx.setStorageSync("st",res.fetchedAt);
+                        wx.setStorageSync(`${that.data.receiveRecordId}`,res.fetchedAt);
                         break;
                     case 'show report':
                         text = "查看报告";

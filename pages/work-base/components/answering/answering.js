@@ -42,7 +42,8 @@ Page({
         theFinalQuestionAnswer: [],
         verify: false,
         isSelf: "",
-        chapterTimeDownFull: ""
+        chapterTimeDownFull: "",
+        sandGlass: "",
     },
     onLoad: function (options) {
         const that = this;
@@ -441,6 +442,7 @@ Page({
                             const {receiveRecordId} = that.data;
                             wx.setStorageSync(`${receiveRecordId}-st`,res.fetchedAt);
                             that.toAnswerIt();
+                            that.saveDraftAnswer();
                         }
                     },
                     error: function (err) {
@@ -465,6 +467,7 @@ Page({
                         const {receiveRecordId} = that.data;
                         wx.setStorageSync(`${receiveRecordId}-st`,res.fetchedAt);
                         that.toAnswerIt();
+                        that.saveDraftAnswer();
                     }
                 });
             }

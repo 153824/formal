@@ -266,6 +266,7 @@ Page({
                     })
                 },500);
                 if (oldData && res.status !== 'FINISHED') {
+                    wx.setStorageSync(`${res.receiveRecordId}-st`,res.fetchedAt);
                     setTimeout(() => {
                         wx.redirectTo({
                             url: '../answering/answering?pid=' + res.evaluationId + '&id=' + id + '&receiveRecordId=' + res.receiveRecordId + "&reportPermit=" + res.reportPermit + "&status=" + res.status
@@ -280,7 +281,7 @@ Page({
                 switch (res.msg) {
                     case 'continue examining':
                         text = "继续作答";
-                        wx.setStorageSync(`${that.data.receiveRecordId}`,res.fetchedAt);
+                        wx.setStorageSync(`${res.receiveRecordId}-st`,res.fetchedAt);
                         break;
                     case 'show report':
                         text = "查看报告";

@@ -87,7 +87,7 @@
 					"id": 2,
 					"name": "报告详情",
 					"pathName": "pages/report/report",
-					"query": "receiveRecordId=5f9be50d731e776415189784",
+					"query": "receiveRecordId=5fb35611b3ee12146116f5b6",
 					"scene": null
 				},
 				{
@@ -101,7 +101,7 @@
 					"id": 4,
 					"name": "测评详情",
 					"pathName": "pages/station/components/detail/detail",
-					"query": "id=5f715d3cd9d80005bd987a11",
+					"query": "id=5fb365eab3ee12146116f5cf",
 					"scene": null
 				},
 				{
@@ -115,14 +115,14 @@
 					"id": 6,
 					"name": "小程序码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=5fb25d4eb3ee12146116f548",
+					"query": "scene=5fb36a3db3ee12146116f5df",
 					"scene": null
 				},
 				{
 					"id": 7,
 					"name": "二维码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "q=https://api.luoke101.com/s/5f6d687a835f23111468ce56",
+					"query": "q=https://api.luoke101.com/s/5fb33f4ab3ee12146116f5ab",
 					"scene": null
 				},
 				{
@@ -165,6 +165,13 @@
 					"name": "引流页",
 					"pathName": "pages/home/components/more/more",
 					"query": "type=school",
+					"scene": null
+				},
+				{
+					"id": 14,
+					"name": "二维码领取测评-2",
+					"pathName": "pages/work-base/components/guide/guide",
+					"query": "q=https://api.luoke101.com/s/5fb34b8db3ee12146116f5b3",
 					"scene": null
 				}
 			]

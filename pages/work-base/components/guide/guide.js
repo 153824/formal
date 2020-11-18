@@ -3,7 +3,7 @@ const app = getApp();
 var isHasApplyFor = false;
 Page({
     data: {
-        hasUserInfo: false,
+        isGetUserInfo: false,
         isTest: false,
         maskTrigger: true,
         verified: false,
@@ -58,16 +58,13 @@ Page({
         }
         if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
             app.checkUserInfo = (userInfo) => {
-                that.fetchEvaluation(userInfo);
+                // that.fetchEvaluation(userInfo);
                 that.getTemptation(userInfo);
-                that.getParticipantInfo(userInfo.id);
             }
         } else {
-            that.fetchEvaluation();
+            // that.fetchEvaluation();
             that.getTemptation();
-            that.getParticipantInfo();
         }
-
     },
     /**
      * 申请查看报告
@@ -97,7 +94,7 @@ Page({
      */
     getPaperMsg: function (params) {
         params = params || {};
-        var that = this;
+        const that = this;
         app.shareId = null;
         app.doAjax({
             url: "paperQues",
@@ -108,23 +105,14 @@ Page({
                 isTest: app.isTest
             },
             success: function (res) {
-                let hasUserInfo = false;
-                const userInfo = wx.getStorageSync("userInfo");
-                if (userInfo && userInfo.avatar || params.userInfo.hasParticipantInfo) {
-                    hasUserInfo = true;
-                }
-                console.log("paperQues: ", res)
                 that.setData({
-                    hasUserInfo: hasUserInfo,
                     status: params.status,
                     isTest: app.isTest,
-                    userInfo: params.userInfo,
                     draftAnswer: params.draftAnswer,
                     reportPermit: params.reportPermit,
                     releaseRecordId: params.releaseRecordId || "",
                     evaluationId: params.evaluationId || "",
                     evaluationList: res,
-                    msg: params.msg,
                     receiveRecordId: params.receiveRecordId
                 });
             }
@@ -132,97 +120,33 @@ Page({
     },
 
     verifyUserInfo: function (e) {
-        const {evaluationId, releaseRecordId, receiveRecordId, reportPermit, status, verified, isEmail} = this.data;
-        const url = `/pages/work-base/components/answering/answering?pid=${evaluationId}&releaseRecordId=${releaseRecordId}&reportPermit=${reportPermit}&status=${status}&verify=true`;
+        const {evaluationId,} = this.data.demonstrateInfo;
+        const {releaseRecordId, reportPermit, status,} = this.data;
+        const url = `/pages/work-base/components/answering/answering?evaluationId=${evaluationId}&releaseRecordId=${releaseRecordId}&reportPermit=${reportPermit}&status=${status}&verify=true`;
         wx.redirectTo({
             url: url
         });
     },
 
     goToReplying: function (e) {
-        const that = this;
-        const {name1} = that.data.evaluationList.setting;
-        const {mark = ""} = e.currentTarget.dataset;
-        if (that.data.isSelf !== 'SHARE' && mark) {
-            try {
-                wx.uma.trackEvent('1602214318372', {name: name1})
-            } catch (e) {
-                console.error(e);
+        const {receiveRecordId} = this.data;
+        const {evaluationId,releaseRecordId,reportPermit,status} = this.data.demonstrateInfo;
+        app.doAjax({
+            url: "wework/evaluations/fetch/relay",
+            method: 'post',
+            data: {
+                receiveRecordId: receiveRecordId,
+            },
+            success: function (res) {
+                const sKey = `oldAnswer${receiveRecordId}`;
+                const url = `/pages/work-base/components/answering/answering?evaluationId=${evaluationId}&releaseRecordId=${releaseRecordId}&receiveRecordId=${receiveRecordId}&reportPermit=${reportPermit}&status=${status}`;
+                wx.setStorageSync(sKey, res.draft);
+                wx.setStorageSync(`${receiveRecordId}-st`,res.fetched);
+                wx.navigateTo({
+                    url: url
+                })
             }
-        } else if (that.data.isSelf === 'SHARE' && mark) {
-            try {
-                wx.uma.trackEvent('1602215501397', {name: name1})
-            } catch (e) {
-                console.error(e);
-            }
-        }
-        const {evaluationId, releaseRecordId, receiveRecordId, reportPermit, status, verified, isEmail} = this.data;
-        const draftAnswer = that.data.draftAnswer;
-        const userData = e.detail.userInfo;
-        if (!userData && !that.data.hasUserInfo && !app.isTest) return;
-        if (userData) {
-            userData.openid = wx.getStorageSync("openId");
-            app.doAjax({
-                url: "updateUserMsg",
-                method: "post",
-                noLoading: true,
-                data: {
-                    data: JSON.stringify({
-                        wxUserInfo: userData,
-                        userCompany: {
-                            name: userData.nickName + "的团队"
-                        }
-                    })
-                },
-                success: function (res) {
-                    const userData = res.data;
-                    const globalData = app.globalData.userInfo;
-                    const url = `../answering/answering?pid=${evaluationId}&releaseRecordId=${releaseRecordId}&receiveRecordId=${receiveRecordId}&reportPermit=${reportPermit}&status=${status}`;
-                    if (0 === res.code) {
-                        app.globalData.userInfo = Object.assign(globalData, userData);
-                        wx.setStorageSync("userInfo", Object.assign(globalData, userData));
-                        wx.setStorageSync("USER_DETAIL", Object.assign(globalData, userData));
-                        wx.setStorageSync("openId", userData.openid);
-                        if (draftAnswer) {
-                            const sKey = `oldAnswer${receiveRecordId}`;
-                            wx.setStorageSync(sKey, draftAnswer);
-                            wx.redirectTo({
-                                url: url,
-                                success: res => {
-                                    app.otherPageReLaunchTrigger = false;
-                                }
-                            });
-                            return;
-                        } else {
-                            wx.redirectTo({
-                                url: url,
-                                success: res => {
-                                    app.otherPageReLaunchTrigger = false;
-                                }
-                            })
-                        }
-                        that.setData({
-                            hasUserInfo: true,
-                            isok: false
-                        });
-                    }
-                }
-            });
-            return;
-        }
-        if (draftAnswer || !draftAnswer) {
-            const sKey = `oldAnswer${receiveRecordId}`;
-            let pathIndex = "";
-            const url = `/pages/work-base/components/answering/answering?pid=${evaluationId}&releaseRecordId=${releaseRecordId}&receiveRecordId=${receiveRecordId}&reportPermit=${reportPermit}&status=${status}&pathIndex=${pathIndex}`;
-            wx.setStorageSync(sKey, draftAnswer);
-            wx.redirectTo({
-                url: url
-            });
-            return;
-        }
-        this.setData({
-            isok: false
-        })
+        });
     },
     /**
      * 进入报告详情
@@ -278,7 +202,7 @@ Page({
                 if (oldData && res.status !== 'FINISHED') {
                     wx.setStorageSync(`${res.receiveRecordId}-st`, res.fetchedAt);
                     setTimeout(() => {
-                        const url = `../answering/answering?pid=${evaluationId}&releaseRecordId=${releaseRecordId}&receiveRecordId=${receiveRecordId}&reportPermit=${reportPermit}&status=${status}`;
+                        const url = `../answering/answering?evaluationId=${evaluationId}&releaseRecordId=${releaseRecordId}&receiveRecordId=${receiveRecordId}&reportPermit=${reportPermit}&status=${status}`;
                         wx.redirectTo({
                             url: url,
                         });
@@ -305,9 +229,10 @@ Page({
                         break;
                     case 'not available':
                         text = "分享已失效";
+                        app.toast("该分享已失效！")
                         wx.switchTab({
                             url: "/pages/home/home"
-                        })
+                        });
                         break;
                     case 'qualification needed':
                         text = "立即验证";
@@ -321,10 +246,8 @@ Page({
                     reportPermit: res.reportPermit,
                     draftAnswer: res.draft,
                     evaluationId: res.evaluationId,
-                    userInfo: res.participantInfo,
                     releaseRecordId: releaseRecordId,
                     receiveRecordId: res.receiveRecordId,
-                    triggerText: res.msg
                 });
                 that.setData({
                     avatar: res.avatar,
@@ -384,56 +307,54 @@ Page({
                     demonstrateInfo: res.demonstrateInfo,
                     evaluationStatus: msg,
                     evaluationStatusText: text,
-                    receiveRecordId: receiveRecordId
+                    receiveRecordId: receiveRecordId,
+                    maskTrigger: false
                 });
             }
         })
     },
 
-    goToTransit: function () {
-        const {evaluationStatus} = this.data;
-        if(evaluationStatus){
-            switch (evaluationStatus) {
-                case 'UNCLAIMED':
-
-                    break;
-                case "UNAVAILABLE":
-                    text = "分享已失效";
-                    break;
-                case "FETCHED":
-                    text = "继续作答";
-                    break;
-                case "APPLYING":
-                    text = "等待hr通过申请";
-                    break;
-                case "DISABLE":
-                    text = "申请查看报告";
-                    break;
-                case "VERIFY":
-                    text = "立即验证";
-                    break;
-                case "APPROVED":
-                    text = "查看报告";
-                    break;
-            }
+    getUserInfo(e){
+        const that = this;
+        const userData = e.detail.userInfo;
+        const {isGetUserInfo} = this.data;
+        if (!userData && !isGetUserInfo) return;
+        if (userData) {
+            userData.openid = wx.getStorageSync("openId");
+            app.doAjax({
+                url: "updateUserMsg",
+                method: "post",
+                noLoading: true,
+                data: {
+                    data: JSON.stringify({
+                        wxUserInfo: userData,
+                        userCompany: {
+                            name: userData.nickName + "的团队"
+                        }
+                    })
+                },
+                success: function (res) {
+                    const updatedUserData = {}||res.data;
+                    const globalData = app.globalData.userInfo;
+                    if (0 === res.code) {
+                        app.globalData.userInfo = Object.assign(globalData, updatedUserData);
+                        wx.setStorageSync("userInfo", Object.assign(globalData, updatedUserData));
+                        wx.setStorageSync("USER_DETAIL", Object.assign(globalData, updatedUserData));
+                        wx.setStorageSync("openId", updatedUserData.openid);
+                        that.setData({
+                            isGetUserInfo: true,
+                        });
+                    }
+                    that.goToRecorder();
+                }
+            });
         }
     },
 
-    getParticipantInfo: function (userId) {
-        const {receiveRecordId=""} = this.data;
-        if(!userId){
-            console.log("app.globalData.userInfo: ",app.globalData.userInfo);
-            userId = (wx.getStorageSync("userInfo")||app.globalData.userInfo||app.globalData.userMsg).id;
-        }
-        app.doAjax({
-            url: `wework/evaluations/fetch/info/participant/${userId}`,
-            method: "get",
-            data: {
-                receiveRecordId: receiveRecordId
-            },
-            success: function (res) {
-                console.log("wework/evaluations/fetch/info/participant: ",res);
-            }
-        })
+    goToRecorder: function () {
+        const {releaseRecordId} = this.data;
+        wx.navigateTo({
+            url: `/pages/recorder/recorder?releaseRecordId=${releaseRecordId}`
+        });
     }
 });

@@ -1,0 +1,53 @@
+<view class="container1 font">
+    <view class="bigtitle">请填写以下信息</view>
+    <text class="smalltitle">请准确填写以确认您的身份</text>
+    <form bindsubmit="submit">
+        <text class="inputtext">姓名</text>
+        <input name="username" value="{{username}}" data-n="username" bindinput="userInput" placeholder="请填写真实姓名"/>
+        <picker name="birthday" fields="month" mode="date" value="{{birthday == '' ? '1995-01': birthday}}"
+                bindchange="userInput" data-n="birthday">
+            <view class="picker">
+                <text>出生年月</text>
+                {{birthday}}
+            </view>
+        </picker>
+        <picker name="sex" mode="selector" bindchange="sexInput" value="{{ checkedSex }}" range="{{ sex }}">
+            <view class="picker">
+                <text>选择性别</text>
+                {{ sex[checkedSex] }}
+            </view>
+        </picker>
+        <picker name="education" mode="selector" bindchange="userInput" value="{{education == -1 ? '5' : education}}"
+                range="{{eduArr}}" data-n="education">
+            <view class="picker">
+                <text>选择学历</text>
+                {{eduArr[education] || ''}}
+            </view>
+        </picker>
+        <view class="get-user-phone-wrapper">
+            <text>联系电话</text>
+            <button class="get-user-phone" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"
+                    data-name="{{ paperList.setting.name1 }}">
+                {{ phoneNumber }}
+            </button>
+        </view>
+        <block wx:if="{{verify}}">
+            <view wx:if="{{!username||!birthday||(education < 0)}}" class="graybtn">立即验证</view>
+            <block wx:else>
+                <block wx:if="{{ username && (education != -1) && isGetPhone && phoneNumber.length > 6 }}">
+                    <button form-type="submit" data-name="{{ paperList.setting.name1 }}">立即验证</button>
+                </block>
+                <view wx:else class="graybtn">立即验证</view>
+            </block>
+        </block>
+        <block wx:else>
+            <view wx:if="{{!username||!birthday||(!education&&education!=0)}}" class="graybtn">确认无误，开始作答</view>
+            <block wx:else>
+                <block wx:if="{{ username && (education != -1) && isGetPhone && phoneNumber.length > 6 }}">
+                    <button form-type="submit" data-name="{{ paperList.setting.name1 }}">确认无误，开始作答</button>
+                </block>
+                <view wx:else class="graybtn">确认无误，开始作答</view>
+            </block>
+        </block>
+    </form>
+</view>

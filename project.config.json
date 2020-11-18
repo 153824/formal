@@ -38,7 +38,7 @@
 	"isGameTourist": false,
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {
-		"qywx_simulator_plugin": "2.4.0"
+		"qywx_simulator_plugin": "2.10.1"
 	},
 	"scripts": {
 		"beforeCompile": "",
@@ -115,14 +115,14 @@
 					"id": 6,
 					"name": "小程序码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=5fb36a3db3ee12146116f5df",
+					"query": "scene=5fb4d28dca59954c1c193035",
 					"scene": null
 				},
 				{
 					"id": 7,
 					"name": "二维码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "q=https://api.luoke101.com/s/5fb33f4ab3ee12146116f5ab",
+					"query": "q=https://api.luoke101.com/s/5fb37a8fb3ee12146116f5ee",
 					"scene": null
 				},
 				{
@@ -172,6 +172,13 @@
 					"name": "二维码领取测评-2",
 					"pathName": "pages/work-base/components/guide/guide",
 					"query": "q=https://api.luoke101.com/s/5fb34b8db3ee12146116f5b3",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "用户信息录入",
+					"pathName": "pages/recorder/recorder",
+					"query": "",
 					"scene": null
 				}
 			]

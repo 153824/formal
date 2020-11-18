@@ -11,8 +11,7 @@
               style="top:{{chapterTimeDownFull?84:32}}rpx;">
             <swiper current="{{swiperCurrent1}}">
                 <block wx:for="{{showQues}}" wx:for-index="quesindex" wx:for-item="quesitem" wx:key="unique">
-                    <swiper-item catchtouchmove="pageTouch"
-                                 wx:if="{{quesindex<(swiperCurrent+3)&&quesindex>(swiperCurrent-3)}}">
+                    <swiper-item wx:if="{{quesindex<(swiperCurrent+3)&&quesindex>(swiperCurrent-3)}}">
                         <scroll-view scroll-y="true" wx:if="{{quesitem}}">
                             <view class="question-number-group">
                                 <view class="current-question">

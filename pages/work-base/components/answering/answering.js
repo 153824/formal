@@ -58,30 +58,13 @@ Page({
         quesIdsOrder = [];
         sKey = "oldAnswer" + options.receiveRecordId;
         const oldData = wx.getStorageSync(sKey);
-        var storages = wx.getStorageInfoSync().keys;
-        storages.forEach(function (n) {
+        const storage = wx.getStorageInfoSync().keys;
+        storage.forEach(function (n) {
             if (n.indexOf("oldAnswer") == 0 && n != sKey) {
                 wx.removeStorageSync(n);
             }
         });
-        var oldPeopleMsg = wx.getStorageSync("oldPeopleMsg");
-        wx.removeStorageSync("oldPeopleMsg");
-        if (oldPeopleMsg) {
-            oldPeopleMsg["education"] = that.data.array.indexOf(oldPeopleMsg.educationName);
-            that.setData(oldPeopleMsg);
-        }
-        app.doAjax({
-            url: 'reports/check_type',
-            method: 'get',
-            data: {
-                receiveRecordId: options.receiveRecordId || this.data.receiveRecordId
-            },
-            success: function (res) {
-                that.setData({
-                    isSelf: res.data.type
-                });
-            }
-        });
+        this._checkType(options);
         app.doAjax({
             url: "paperQues",
             method: "get",
@@ -188,10 +171,7 @@ Page({
                     that.toAnswerIt(null, oldData);
                     const {swiperCurrent, quesAll} = that.data;
                     var startTime = oldData.startTime;
-                    // var endTime = oldData.endTime;
                     var now = new Date().getTime();
-
-                    // oldData["startTime"] = startTime + (now - endTime);
                     if ((now - startTime) > (6 * 60 * 60 * 1000)) {
                         //答题时长超过6小时
                         if (count > 1) {
@@ -210,16 +190,14 @@ Page({
                         });
                         return;
                     }
-                } else if (res.chapter[0] && that.data.pathIndex == 3) {
+                } else if (res.chapter[0]) {
                     that.toAnswerIt();
                 }
                 saveTimeOut = setTimeout(that.saveDraftAnswer, 30000);
             }
         });
     },
-    pageTouch: function () {
 
-    },
     onShow: function () {
         const that = this;
         if (wx.canIUse('hideHomeButton')) {
@@ -309,7 +287,7 @@ Page({
     handleUserInfo: function () {
         const that = this;
         const data = that.data;
-        const {username,birthday,education} = data;
+        const {username, birthday, education} = data;
         if (!username || !(/^[\u4E00-\u9FA5A-Za-z]+$/.test(username))) {
             app.toast("请输入正确的姓名！");
             return false;
@@ -882,7 +860,7 @@ Page({
         });
     },
     //比重题
-    changeslider(e) {
+    changeSlider(e) {
         var d = e.currentTarget.dataset;
         var index = d.index;
         var i = d.i;
@@ -1007,5 +985,20 @@ Page({
         var que = data.quesAll[swiperCurrent];
         return app.toast("各项分数之和必须等于" + que.totalScore + "分");
     },
+    _checkType: function (options) {
+        const _this = this;
+        app.doAjax({
+            url: 'reports/check_type',
+            method: 'get',
+            data: {
+                receiveRecordId: options.receiveRecordId || _this.data.receiveRecordId
+            },
+            success: function (res) {
+                that.setData({
+                    isSelf: res.data.type
+                });
+            }
+        });
+    }
 
 });

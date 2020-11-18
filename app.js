@@ -61,7 +61,7 @@ App({
     host: "http://api.dev.luoke101.int",
     // host: 'https://api.uat.luoke101.com',
     // host: "http://192.168.0.101:3000",
-    dev: "http://api.dev.luoke101.int",
+    // dev: "http://api.dev.luoke101.int",
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
         userInfo: null,

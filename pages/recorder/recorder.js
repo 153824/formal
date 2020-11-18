@@ -146,10 +146,12 @@ Page({
             },
             success: function (res) {
                 const {phone} = res;
-                _this.setData({
-                    isGetPhone: true,
-                    phoneNumber: phone
-                })
+                if(phone){
+                    _this.setData({
+                        isGetPhone: true,
+                        phoneNumber: phone
+                    })
+                }
             }
         })
     },

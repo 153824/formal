@@ -1,9 +1,9 @@
 <!--test/guide.wxml-->
 <view class="container font">
     <view class="headbox flex">
-        <image src="{{avatar}}" wx:if="{{avatar}}"></image>
+        <image src="{{demonstrateInfo.avatar}}" wx:if="{{demonstrateInfo.avatar}}"></image>
         <view class="headtitle flex-main">
-            <view>{{teamName}}</view>
+            <view>{{demonstrateInfo.teamName}}</view>
             <view class="invitetext">邀您参加测评</view>
         </view>
     </view>
@@ -11,26 +11,25 @@
     <view class="bodybox">
         <view class="topic">
             <text class="bodytitle">测评名称</text>
-            <view class="bigtext">{{evaluationList.setting.name1}}</view>
+            <view class="bigtext">{{demonstrateInfo.evaluationName}}</view>
         </view>
         <view class="topicnum">
             <text class="bodytitle">题量</text>
-            <view class="smalltext">本测评共{{evaluationList.quesCount}}题</view>
+            <view class="smalltext">本测评共{{demonstrateInfo.quesCount}}题</view>
         </view>
         <view class="topictime">
             <text class="bodytitle">用时</text>
-            <view class="smalltext">平均用时{{evaluationList.setting.time}}分钟</view>
+            <view class="smalltext">平均用时{{demonstrateInfo.estimatedTime}}分钟</view>
         </view>
     </view>
-    <view wx:if="{{text === '分享已失效'}}" class="begin">测评已失效</view>
-    <view wx:elif="{{text === '等待hr通过申请'}}" class="begin">等待hr通过申请</view>
-    <view wx:elif="{{text === '查看报告'}}" class="begin" bindtap="toDetail">查看报告</view>
-    <view wx:elif="{{text === '申请查看报告'}}" class="begin" bindtap="toApply" data-id="{{receiveRecordId}}">向HR申请查看报告</view>
-    <view wx:elif="{{text === '立即验证'}}" class="begin" bindtap="verifyUserInfo">立即验证</view>
-    <view wx:elif="{{text === '继续作答' && hasUserInfo}}" class="begin" bindtap="goToReplying">继续作答</view>
-    <button wx:elif="{{text === '继续作答' && !hasUserInfo}}" class="begin" open-type="getUserInfo" bindgetuserinfo="goToReplying">继续作答</button>
-    <view wx:elif="{{text === '开始作答' && hasUserInfo}}" class="begin" bindtap="goToReplying" data-mark="begin">开始作答</view>
-    <button wx:elif="{{text === '开始作答' && !hasUserInfo}}" class="begin" open-type="getUserInfo" data-mark="begin" bindgetuserinfo="goToReplying">开始作答</button>
+    <view wx:if="{{evaluationStatusText === '分享已失效'}}" class="begin">测评已失效</view>
+    <view wx:elif="{{evaluationStatusText === '等待hr通过申请'}}" class="begin">等待hr通过申请</view>
+    <view wx:elif="{{evaluationStatusText === '查看报告'}}" class="begin" bindtap="toDetail">查看报告</view>
+    <view wx:elif="{{evaluationStatusText === '申请查看报告'}}" class="begin" bindtap="toApply" data-id="{{receiveRecordId}}">向HR申请查看报告</view>
+    <view wx:elif="{{evaluationStatusText === '立即验证'}}" class="begin" bindtap="verifyUserInfo">立即验证</view>
+    <view wx:elif="{{evaluationStatusText === '继续作答'}}" class="begin" bindtap="goToReplying">继续作答</view>
+    <view wx:elif="{{evaluationStatusText === '开始作答' && isGetUserInfo}}" class="begin" bindtap="goToRecorder" data-mark="begin">开始作答</view>
+    <button wx:elif="{{evaluationStatusText === '开始作答' && !isGetUserInfo}}" class="begin" open-type="getUserInfo" data-mark="begin" bindgetuserinfo="getUserInfo">开始作答</button>
     <text class="infotext">好啦测评提供技术支持</text>
 </view>
 <hola-mask isShow="{{ maskTrigger }}"></hola-mask>

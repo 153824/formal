@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "好啦测评",
-  "usingComponents": {}
+  "usingComponents": {
+    "van-count-down": "/common/vant-weapp/dist/count-down/index"
+  }
 }

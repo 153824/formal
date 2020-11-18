@@ -352,30 +352,35 @@ Page({
                 that.setData({
                     releaseInfo: res
                 });
-                const guideURL = `/pages/replying/components/guide/guide?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`;
-                const replyingURL = `/pages/replying/replying?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`;
+                const replyingURL = `/pages/work-base/components/answering/answering?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`;
                 console.log("goToReplyingGuide: ", res);
                 const sKey = "oldAnswer" + res.receiveRecordId;
                 if (res.unfinished) {
-                    wx.setStorageSync(`${res.receiveRecordId}-st`, res.fetchedAt);
                     let oldData = wx.getStorageSync(sKey);
                     if (!oldData && res.draft instanceof Object) {
-                        oldData = wx.setStorageSync(sKey, res.draft);
+                        wx.setStorageSync(sKey, res.draft);
                     }
-                    if (oldData) {
-                        wx.navigateTo({
-                            url: replyingURL
-                        });
-                        return;
-                    }
-                    wx.navigateTo({
-                        url: replyingURL
-                    });
                 } else {
-                    wx.navigateTo({
-                        url: guideURL
-                    });
+                    that._selfStart(res.receiveRecordId)
                 }
+                wx.navigateTo({
+                    url: replyingURL
+                });
+            }
+        });
+    },
+
+    _selfStart: function (receiveRecordId = "") {
+        app.doAjax({
+            url: 'release/self/start',
+            method: 'post',
+            data: {
+                receiveRecordId: receiveRecordId
+            },
+            success: function (res) {
+            },
+            fail: function (err) {
+                throw err;
             }
         });
     },

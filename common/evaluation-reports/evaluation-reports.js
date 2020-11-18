@@ -88,6 +88,7 @@ Component({
         searchReport: debounce(function (e) {
             const that = this;
             let {searchPage, searchReportList} = this.data;
+            // searchReportList = [];
             try {
                 if (!e.detail) {
                     that.setData({

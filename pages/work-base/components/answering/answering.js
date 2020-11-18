@@ -1,5 +1,5 @@
 // test/index.js
-var app = getApp();
+const app = getApp();
 var sKey = "";
 var quesIdsOrder = [];
 var answerTimeOut;
@@ -28,7 +28,6 @@ Page({
         education: -1,
         imgUrl: '',
         selImg: "",
-        pathIndex: 1,
         optionsAry: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
         swiperCurrent: 0,
         paperList: "",
@@ -43,8 +42,9 @@ Page({
         verify: false,
         isSelf: "",
         chapterTimeDownFull: "",
-        sandGlass: "",
+        sandGlass: 0,
     },
+
     onLoad: function (options) {
         const that = this;
         this.setData({
@@ -55,51 +55,21 @@ Page({
             verify: options.verify || false,
             releaseRecordId: options.releaseRecordId || options.id || ""
         });
-        if (app.isTest) {
-            that.setData({
-                pathIndex: 3
-            });
-        }
         quesIdsOrder = [];
-        sKey = "oldAnswer" + options.id;
-        var oldData = wx.getStorageSync(sKey);
-        if (oldData.pathIndex == 2) {
-            oldData.pathIndex = 3;
-        }
-        var storages = wx.getStorageInfoSync().keys;
-        storages.forEach(function (n) {
+        sKey = "oldAnswer" + options.receiveRecordId;
+        const oldData = wx.getStorageSync(sKey);
+        const storage = wx.getStorageInfoSync().keys;
+        storage.forEach(function (n) {
             if (n.indexOf("oldAnswer") == 0 && n != sKey) {
                 wx.removeStorageSync(n);
             }
         });
-        var getphoneNum = false;
-        var userPhone = (app.globalData.userInfo || {}).phone;
-        if (userPhone) {
-            getphoneNum = true;
-        }
-        var oldPeopleMsg = wx.getStorageSync("oldPeopleMsg");
-        wx.removeStorageSync("oldPeopleMsg");
-        if (oldPeopleMsg) {
-            oldPeopleMsg["education"] = that.data.array.indexOf(oldPeopleMsg.educationName);
-            that.setData(oldPeopleMsg);
-        }
-        app.doAjax({
-            url: 'reports/check_type',
-            method: 'get',
-            data: {
-                receiveRecordId: options.receiveRecordId || this.data.receiveRecordId
-            },
-            success: function (res) {
-                that.setData({
-                    isSelf: res.data.type
-                });
-            }
-        });
+        this._checkType(options);
         app.doAjax({
             url: "paperQues",
             method: "get",
             data: {
-                id: options.pid
+                id: options.evaluationId
             },
             success: function (res) {
                 if (oldData) {
@@ -180,45 +150,29 @@ Page({
                 that.setData({
                     quesAll: ques1,
                     chapter: res.chapter || [],
-                    getphoneNum: getphoneNum,
                     id: options.id,
-                    paperId: options.pid,
+                    evaluationId: options.evaluationId,
                     showQues: showQues,
                     paperList: res,
                     time: ((res.chapter || [])[0] || {}).time || ""
                 });
-                if (app.isTest) {
-                    that.setData({
-                        imgUrl: "123",
-                        username: "AA",
-                        birthday: "2019",
-                        education: "1",
-                        pathIndex: 3
-                    });
-                    that.toTimeDown();
-                }
                 if (oldData) {
                     wx.showToast({
                         icon: 'none',
                         title: '已为您恢复上次作答'
                     });
                     const {receiveRecordId} = that.data;
-                    if(wx.getStorageSync(`${receiveRecordId}-is-fill-all`)){
+                    if (wx.getStorageSync(`${receiveRecordId}-is-fill-all`)) {
                         that.setData({
                             isFillAll: true
                         })
                     }
                     that.setData(oldData);
                     that.toAnswerIt(null, oldData);
-                    const {swiperCurrent,quesAll} = that.data;
-                    var startTime = oldData.startTime;
-                    // var endTime = oldData.endTime;
-                    var now = new Date().getTime();
-
-                    // oldData["startTime"] = startTime + (now - endTime);
+                    const startTime = oldData.startTime;
+                    const now = new Date().getTime();
                     if ((now - startTime) > (6 * 60 * 60 * 1000)) {
-                        //答题时长超过6小时
-                        if(count > 1){
+                        if (count > 1) {
                             return;
                         }
                         count = count + 1;
@@ -228,293 +182,43 @@ Page({
                             showCancel: false,
                             success: function () {
                                 wx.removeStorageSync(`${receiveRecordId}-st`);
-                                count = count -1;
+                                count = count - 1;
                                 that.formSubmit();
                             }
                         });
                         return;
                     }
-                    if (oldData.pathIndex == 2) {
-                        that.toTimeDown();
-                    }
-                } else if (res.chapter[0] && that.data.pathIndex == 3) {
+                } else if (res.chapter[0]) {
                     that.toAnswerIt();
                 }
+                that.saveDraftAnswer();
                 saveTimeOut = setTimeout(that.saveDraftAnswer, 30000);
             }
         });
     },
-    pageTouch: function () {
 
-    },
     onShow: function () {
         const that = this;
         if (wx.canIUse('hideHomeButton')) {
             wx.hideHomeButton();
         }
-        app.doAjax({
-            url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
-            method: "get",
-            data: {
-                openid: wx.getStorageSync("openId") || app.globalData.userInfo.openId,
-            },
-            success: function (res) {
-                that.setData({
-                    getphoneNum: true,
-                    phoneNumber: res.phone || "微信一键授权"
-                });
-            }
-        })
-        const {receiveRecordId} = that.data;
-        if(wx.getStorageSync(`${receiveRecordId}-st`)){
-            that.keepTimeDown()
-        }
+        this._checkReceiveInfo();
     },
+
     onHide: function () {
         saveTimeOut && clearTimeout(saveTimeOut);
         answerTimeOut && clearTimeout(answerTimeOut);
     },
+
     onUnload: function () {
         saveTimeOut && clearTimeout(saveTimeOut);
         answerTimeOut && clearTimeout(answerTimeOut);
     },
-    // 答题前填写个人信息部分
-    userInput: function (e) {
-        var value = e.detail.value;
-        var name = e.currentTarget.dataset.n;
-        var obj = {};
-        obj[name] = value;
-        this.setData(obj);
-    },
-    takePhoto: function () {
-        var that = this;
-        wx.chooseImage({
-            count: 1,
-            sizeType: ['compressed'],
-            sourceType: ['camera'],
-            success(res) {
-                // wx.showLoading({
-                //   title: '上传图片...',
-                // });
-                // tempFilePath可以作为img标签的src属性显示图片
-                var imgUrl = res.tempFilePaths[0];
-                that.setData({
-                    selImg: imgUrl
-                });
-                var imgType = imgUrl.split(".");
-                imgType = imgType[imgType.length - 1];
-                var fileName = app.globalData.userInfo.id + "/" + (new Date().getTime()) + "." + imgType;
-                app.qiniuUpload.upload(imgUrl, function (file) {
-                    wx.hideLoading();
-                    //成功
-                    that.setData({
-                        imgUrl: "http://" + file.imageURL
-                    });
-                }, function (err) {
-                    wx.hideLoading();
-                    wx.showToast({
-                        title: '图片上传失败，请重试！',
-                        icon: "none",
-                        duration: 3000,
-                    });
-                    console.error("err", err);
-                }, {
-                    key: fileName
-                });
-            }
-        })
-    },
-    keepTimeDown: function(){
-        const that = this;
-        let chapter = this.data.chapter || [];
-        let i = 0;
-        let obj = chapter[i] || {};
-        let chapterTimeDown = obj.time * 60;
-        const {receiveRecordId} = this.data;
-        const st = wx.getStorageSync(`${receiveRecordId}-st`);
-        chapterTimeDown  = parseInt(chapterTimeDown - (new Date().getTime() - st) / 1000);
-        this.setData({
-            chapterTimeDown
-        })
-        if (obj.type == 2) {
-            if (chapterTimeDown <= 0) {
-                if(count > 1){
-                    return;
-                }
-                count = count + 1;
-                wx.showModal({
-                    title: '作答提示',
-                    content: '答题时间到，已自动提交',
-                    showCancel: false,
-                    success: function () {
-                        const {receiveRecordId} = that.data;
-                        wx.removeStorageSync(`${receiveRecordId}-st`);
-                        count = count -1;
-                        that.formSubmit();
-                    }
-                });
-                return;
-            }
-            that.toTimeDown("chapterTimeDown", function () {
-                //作答限时--自动提交
-                if(count > 1){
-                    return;
-                }
-                count = count + 1;
-                wx.showModal({
-                    title: '作答提示',
-                    content: '答题时间到，已自动提交',
-                    showCancel: false,
-                    success: function () {
-                        const {receiveRecordId} = that.data;
-                        wx.removeStorageSync(`${receiveRecordId}-st`);
-                        count = count -1;
-                        that.formSubmit();
-                    }
-                });
-            });
-        } else {
-            that.setData({
-                chapterTimeDownFull: ""
-            });
-        }
-    },
-    handleUserInfo: function(){
-        const data = this.data;
-        const username = data.username;
-        const birthday = data.birthday;
-        const education = data.education;
-        if (!username || !(/^[\u4E00-\u9FA5A-Za-z]+$/.test(username))) {
-            app.toast("请输入正确的姓名！");
-            return false;
-        }
-        if (education == -1) {
-            app.toast("请选择学历信息！");
-            return false;
-        }
-        if (!birthday) {
-            app.toast("请选择出生年月！");
-            return false;
-        }
-        return true;
-    },
-    submit: function (e) {
-        const that = this;
-        const {receiveRecordId, releaseRecordId} = this.data;
-        if (that.data.isSelf === "SHARE") {
-            try {
-                wx.uma.trackEvent('1602216442285')
-            } catch (e) {
 
-            }
-        }
-        function doNext() {
-            const data = that.data;
-            const username = data.username;
-            const birthday = data.birthday;
-            const education = data.education;
-            const phone = data.phoneNumber;
-            const educationName = data.array[education];
-            if(!that.handleUserInfo()){
-                return;
-            }
-            if (data.verify) {
-                console.log("releaseRecordId: ", releaseRecordId);
-                app.doAjax({
-                    url: 'release/qualification',
-                    method: 'post',
-                    data: {
-                        isVerify: true,
-                        releaseRecordId: releaseRecordId,
-                        participantInfo: {
-                            username,
-                            birthday,
-                            educationName: educationName,
-                            phone,
-                        }
-                    },
-                    toastTrigger: false,
-                    noLoading: true,
-                    success: function (res) {
-                        console.log(res.code);
-                        if (res.code === 0) {
-                            app.toast("领取成功！");
-                            const {receiveRecordId} = that.data;
-                            wx.setStorageSync(`${receiveRecordId}-st`,res.fetchedAt);
-                            that.toAnswerIt();
-                            that.saveDraftAnswer();
-                        }
-                    },
-                    error: function (err) {
-                        app.toast("信息错误，请重新录入！")
-                    }
-                })
-            } else {
-                app.doAjax({
-                    url: 'release/qualification',
-                    method: 'post',
-                    data: {
-                        isVerify: false,
-                        receiveRecordId: receiveRecordId,
-                        participantInfo: {
-                            username,
-                            birthday,
-                            educationName: educationName,
-                            phone
-                        }
-                    },
-                    success: function (res) {
-                        const {receiveRecordId} = that.data;
-                        wx.setStorageSync(`${receiveRecordId}-st`,res.fetchedAt);
-                        that.toAnswerIt();
-                        that.saveDraftAnswer();
-                    }
-                });
-            }
-        }
-
-        if (!that.data.getphoneNum) {
-            var detail = e.detail;
-            var iv = detail.iv;
-            var encryptedData = detail.encryptedData;
-            if (encryptedData) {
-                //用户授权手机号
-                var userMsg = app.globalData.userMsg || {};
-                userMsg["iv"] = iv;
-                userMsg["encryptedData"] = encryptedData;
-                userMsg["session_key"] = wx.getStorageSync("userInfo").userMsg.session_keyey;
-                app.doAjax({
-                    url: "updatedUserMobile",
-                    data: userMsg,
-                    success: function (ret) {
-                        that.setData({
-                            getphoneNum: true
-                        });
-                        doNext();
-                    }
-                });
-            }
-            return;
-        } else {
-            doNext();
-        }
-    },
-    gotoallready: function () {
-        //进入答题前说明
-        var that = this;
-        that.setData({
-            count: 5,
-            pathIndex: 3
-        });
-        that.saveAnswerStorageSync();
-        that.toTimeDown();
-    },
-    /**
-     * 倒计时
-     */
     toTimeDown(timeKey, callBack) {
         var that = this;
         timeKey = timeKey || "count";
+
         function timeDown() {
             var time = that.data[timeKey];
             time = time - 1
@@ -557,26 +261,9 @@ Page({
 
         answerTimeOut = setTimeout(timeDown, 1000);
     },
-    //答题前信息展示部分
-    gototest: function () {
-        // if (!this.data.isok) return;
-        var pathIndex = 3;
-        if (this.data.chapter && this.data.chapter.length > 1) {
-            pathIndex = 4;
-        }
-        if (pathIndex == 3 && this.data.chapter[0]) {
-            this.toAnswerIt();
-        }
-        this.setData({
-            startTime: new Date().getTime(),
-            pathIndex: pathIndex
-        });
-        this.saveAnswerStorageSync();
-    },
-    //正式答题部分
+
     prev: function (e) {
-        //上一题
-        var that = this;
+        const that = this;
         that.setData({
             isChangeQue: true
         });
@@ -606,12 +293,12 @@ Page({
                     swiperCurrent: swiperCurrent
                 });
                 that.saveAnswerStorageSync();
+                that.saveDraftAnswer();
             }, 350);
         });
     },
 
     next: function (e, oldIndex, newD) {
-        //下一题
         var that = this;
         var {swiperCurrent, quesAll, theFinalQuestionAnswer} = this.data;
         var finalTotalScore = quesAll[quesAll.length - 1].totalScore;
@@ -622,7 +309,7 @@ Page({
             }));
             const {receiveRecordId} = this.data;
             if (score === finalTotalScore) {
-                wx.setStorageSync(`${receiveRecordId}-is-fill-all`,true);
+                wx.setStorageSync(`${receiveRecordId}-is-fill-all`, true);
                 this.setData({
                     isFillAll: true,
                 });
@@ -668,7 +355,7 @@ Page({
         if (swiperCurrent == that.data.quesAll.length) {
             const {receiveRecordId} = that.data;
             d["isFillAll"] = true;
-            wx.setStorageSync(`${receiveRecordId}-is-fill-all`,true);
+            wx.setStorageSync(`${receiveRecordId}-is-fill-all`, true);
         }
         if (swiperCurrent == data.quesAll.length) {
             swiperCurrent = data.quesAll.length - 1;
@@ -709,6 +396,7 @@ Page({
                     d["isChangeQue"] = false;
                     that.setData(d);
                     that.saveAnswerStorageSync();
+                    that.saveDraftAnswer();
                     if (e && e.currentTarget.dataset.n == "finish") {
                         that.formSubmit();
                     }
@@ -748,12 +436,12 @@ Page({
             const {receiveRecordId} = this.data;
             const answerCopy = app.trimSpace(JSON.parse(JSON.stringify(answers[questionInfo.id])));
             if (maxChoose < 2 || (answerCopy.length >= Number(minChoose) && answerCopy.length <= Number(maxChoose))) {
-                wx.setStorageSync(`${receiveRecordId}-is-fill-all`,true);
+                wx.setStorageSync(`${receiveRecordId}-is-fill-all`, true);
                 this.setData({
                     isFillAll: true
                 })
             } else {
-                wx.setStorageSync(`${receiveRecordId}-is-fill-all`,false);
+                wx.setStorageSync(`${receiveRecordId}-is-fill-all`, false);
                 this.setData({
                     isFillAll: false
                 })
@@ -771,9 +459,7 @@ Page({
         }
         this.saveAnswerStorageSync();
     },
-    /**
-     * 答题提交
-     */
+
     formSubmit: function (e) {
         var that = this;
         var chapter = that.data.chapter;
@@ -801,13 +487,12 @@ Page({
                 swiperCurrent: 0,
                 swiperCurrent1: 0,
                 chapter: chapter,
-                pathIndex: 4
             });
             return;
         }
         if (app.isTest) {
             wx.redirectTo({
-                url: '../done/done?id=' + that.data.receiveRecordId + '+&status=' + that.data.status + "&reportPermit=" + that.data.reportPermit
+                url: '../done/done?receiveRecordId=' + that.data.receiveRecordId,
             });
             return;
         }
@@ -815,7 +500,6 @@ Page({
         var data = this.data;
         var startTime = data.startTime;
         var chapterTime = data.chapterTime || {};
-        console.log("chapterTime: ",chapterTime)
         var answerTimes = {};
         for (var i in chapterTime) {
             var o = chapterTime[i];
@@ -825,10 +509,6 @@ Page({
         var educationName = data.array[data.education];
         answer["time"] = answerTimes || {}; //各个章节答题用时
         answer["timeTotal"] = now - startTime; //答题总用时
-        answer["birthday"] = data.birthday; //生日
-        answer["educationName"] = educationName; //教育学历
-        answer["username"] = data.username; //姓名
-        answer["imgUrl"] = data.imgUrl; //头像
         if (wx.getStorageSync("userInfo")["nickname"] && answer["username"] && answer["username"] === "好啦访客") {
             answer["username"] = wx.getStorageSync("userInfo")["nickname"]
         }
@@ -841,14 +521,14 @@ Page({
         }
         app.doAjax({
             url: "receive_records/update_answer",
-            method: "POST",
+            method: "post",
             data: {
                 receiveRecordId: data.receiveRecordId,
                 answer: answer
             },
             success: function (ret) {
                 wx.navigateTo({
-                    url: '../done/done?id=' + data.receiveRecordId + "&status=" + that.data.status + "&reportPermit=" + that.data.reportPermit
+                    url: '../done/done?receiveRecordId=' + data.receiveRecordId,
                 });
                 wx.removeStorageSync(sKey);
                 that.setData(ret);
@@ -868,8 +548,8 @@ Page({
             }
         }
     },
-    saveAnswerStorageSync: function (test) {
-        console.log()
+
+    saveAnswerStorageSync: function () {
         var data = this.data;
         var activeChapterId = data.activeChapterId;
         if (activeChapterId != null) {
@@ -879,10 +559,8 @@ Page({
         var d = {
             chapter: data.chapter,
             chapterTime: chapterTime,
-            pathIndex: data.pathIndex,
             answers: data.answers,
             quesIdsOrder: quesIdsOrder,
-            chapterTimeDown: data.chapterTimeDown,
             startTime: data.startTime,
             endTime: new Date().getTime(),
             educationName: data.educationName,
@@ -895,16 +573,13 @@ Page({
         };
         wx.setStorageSync(sKey, d);
     },
-    /**
-     * 进入章节作答
-     */
+
     toAnswerIt: function (e, oldData) {
-        var that = this;
-        const {name1} = this.data.paperList.setting;
+        const that = this;
         if (answerTimeOut) {
             clearTimeout(answerTimeOut);
         }
-        var i = 0;
+        let i = 0;
         var data = that.data;
         var chapterTime = data.chapterTime || {};
         if (oldData) {
@@ -922,7 +597,6 @@ Page({
         }
         var chapter = data.chapter || [];
         var obj = chapter[i] || {};
-        // if (obj.status != 1) return; //非可作答
         var ques = obj.ques;
         if (!ques.length) return;
         var type = obj.type;
@@ -937,10 +611,6 @@ Page({
                 quesAll[qI] = node;
             }
         });
-        if (oldData && oldData.pathIndex == 4) {
-            oldData.swiperCurrent = 0;
-            oldData.swiperCurrent1 = 0;
-        }
         quesAll = app.trimSpace(quesAll);
         quesAll.forEach(function (node, i2) {
             if (!oldData || !oldData.quesIdsOrder) {
@@ -957,18 +627,13 @@ Page({
                 }
             }
         });
-        let chapterTimeDown = obj.time * 60;
         const {receiveRecordId} = that.data;
         const st = wx.getStorageSync(`${receiveRecordId}-st`);
         if ((oldData && oldData.chapterTime && oldData.chapterTime[i])) {
             chapterTime[i]["st"] = st;
-            // chapterTime[i] = oldData.chapterTime[i];
-            // chapterTime[i]["st"] = chapterTime[i]["st"] + (new Date().getTime() - chapterTime[i]["et"]);
-            // chapterTimeDown = oldData.chapterTimeDown;
-            // chapterTimeDown = parseInt(chapterTimeDown - (new Date().getTime() - chapterTime[i]["st"]) / 1000);
-            chapterTimeDown  = parseInt(chapterTimeDown+1 - (new Date().getTime() - st) / 1000);
+            chapterTime[i] = oldData.chapterTime[i];
+            chapterTime[i]["st"] = chapterTime[i]["st"] + (new Date().getTime() - chapterTime[i]["et"]);
         } else {
-            chapterTimeDown  = parseInt(chapterTimeDown+1 - (new Date().getTime() - st) / 1000);
             chapterTime[i] = {
                 time: obj.time * 60,
                 st: new Date().getTime(),
@@ -976,9 +641,7 @@ Page({
             };
         }
         that.setData({
-            pathIndex: 3,
             activeChapterId: i,
-            chapterTimeDown: chapterTimeDown,
             chapterTime: chapterTime,
             swiperCurrent: swiperCurrent,
             swiperCurrent1: swiperCurrent1,
@@ -986,58 +649,20 @@ Page({
             quesAll: quesAll
         });
         if (obj.type == 2) {
-            if (chapterTimeDown <= 0) {
-                if(count > 1){
-                    return;
-                }
-                count = count + 1;
-                wx.showModal({
-                    title: '作答提示',
-                    content: '答题时间到，已自动提交',
-                    showCancel: false,
-                    success: function () {
-                        const {receiveRecordId} = that.data;
-                        wx.removeStorageSync(`${receiveRecordId}-st`);
-                        count = count -1;
-                        that.formSubmit();
-                    }
-                });
-                return;
-            }
-            that.toTimeDown("chapterTimeDown", function () {
-                //作答限时--自动提交
-                if(count > 1){
-                    return;
-                }
-                count = count + 1;
-                wx.showModal({
-                    title: '作答提示',
-                    content: '答题时间到，已自动提交',
-                    showCancel: false,
-                    success: function () {
-                        const {receiveRecordId} = that.data;
-                        wx.removeStorageSync(`${receiveRecordId}-st`);
-                        count = count -1;
-                        that.formSubmit();
-                    }
-                });
-            });
+            that._checkReceiveInfo();
         } else {
             that.setData({
                 chapterTimeDownFull: ""
             });
         }
-        that.saveAnswerStorageSync("sad");
+        that.saveAnswerStorageSync();
     },
-    //定时保存作答
+
     saveDraftAnswer: function () {
-        const {phoneNumber,getphoneNum,pathIndex} = this.data;
-        if((!this.handleUserInfo() || !getphoneNum || phoneNumber.length < 11) && pathIndex == 3){
-            return;
-        }
-        var that = this;
+        const that = this;
+        const data = this.data;
         saveTimeOut && clearTimeout(saveTimeOut);
-        var data = that.data;
+        let {chapter,answers,startTime,swiperCurrent,swiperCurrent1,receiveRecordId} = this.data;
         var activeChapterId = data.activeChapterId;
         if (activeChapterId != null) {
             var chapterTime = data.chapterTime || {};
@@ -1046,29 +671,21 @@ Page({
         if (wx.getStorageSync("userInfo")["nickname"] && data.username === "好啦访客") {
             data.username = wx.getStorageSync("userInfo")["nickname"]
         }
-        console.log("data.chapterTimeDown: ",data.chapterTimeDown);
         var draftAnswer = {
-            chapter: data.chapter,
+            chapter: chapter,
             chapterTime: chapterTime,
-            pathIndex: data.pathIndex,
-            answers: data.answers,
+            answers: answers,
             quesIdsOrder: quesIdsOrder,
-            chapterTimeDown: data.chapterTimeDown,
-            startTime: data.startTime,
+            startTime: startTime,
             endTime: new Date().getTime(),
-            educationName: data.educationName,
-            username: data.username,
-            education: data.education,
-            birthday: data.birthday,
-            imgUrl: data.imgUrl,
-            swiperCurrent: data.swiperCurrent,
-            swiperCurrent1: data.swiperCurrent1
+            swiperCurrent: swiperCurrent,
+            swiperCurrent1: swiperCurrent1
         };
         app.doAjax({
             url: "receive_records/update_answer",
-            method: "POST",
+            method: "post",
             data: {
-                receiveRecordId: data.receiveRecordId,
+                receiveRecordId: receiveRecordId,
                 draft: draftAnswer
             },
             noLoading: true,
@@ -1081,8 +698,8 @@ Page({
             }
         });
     },
-    //比重题
-    changeslider(e) {
+
+    changeSlider(e) {
         var d = e.currentTarget.dataset;
         var index = d.index;
         var i = d.i;
@@ -1113,13 +730,13 @@ Page({
             });
             const {receiveRecordId} = this.data;
             if (score == totalScore) {
-                wx.setStorageSync(`${receiveRecordId}-is-fill-all`,true);
+                wx.setStorageSync(`${receiveRecordId}-is-fill-all`, true);
                 this.setData({
                     isFillAll: true,
                     theFinalQuestionAnswer: answers[obj.id]
                 });
             } else {
-                wx.setStorageSync(`${receiveRecordId}-is-fill-all`,false);
+                wx.setStorageSync(`${receiveRecordId}-is-fill-all`, false);
                 this.setData({
                     isFillAll: false,
                 });
@@ -1131,6 +748,7 @@ Page({
         });
 
     },
+
     getPhoneNumber: function (e) {
         const that = this;
         if (this.data.isSelf === 'SHARE') {
@@ -1200,6 +818,7 @@ Page({
             }
         }
     },
+
     notFillAll: function (e) {
         var that = this;
         var data = that.data;
@@ -1207,11 +826,64 @@ Page({
         var que = data.quesAll[swiperCurrent];
         return app.toast("各项分数之和必须等于" + que.totalScore + "分");
     },
-    sexInput: function (e) {
-        const {value} = e.detail;
-        // const checkedSex = value === 0 ? ;
-        this.setData({
-            checkedSex: value,
+
+    _checkType: function (options) {
+        const _this = this;
+        app.doAjax({
+            url: 'reports/check_type',
+            method: 'get',
+            data: {
+                receiveRecordId: options.receiveRecordId || _this.data.receiveRecordId
+            },
+            success: function (res) {
+                _this.setData({
+                    isSelf: res.data.type
+                });
+            }
+        });
+    },
+
+    _checkReceiveInfo: function () {
+        const _this = this;
+        const {receiveRecordId} = this.data;
+        const {chapter} = this.data;
+        if(!chapter){
+            return;
+        }
+        if(chapter && chapter[0].type != 2){
+            return;
+        }
+        app.doAjax({
+            url: `wework/evaluations/receive_info/${receiveRecordId}`,
+            method: "get",
+            success: function (res) {
+                console.log("receive_info:",res);
+                const sandGlass = chapter[0].time*60*1000 - (new Date().getTime() - res.fetchedAt);
+                console.log("sandGlass: ",sandGlass);
+                _this.setData({
+                    sandGlass: sandGlass
+                })
+            },
+            fail: function (err) {
+                throw err
+            }
         })
     },
+
+    submitAnswerForce: function () {
+        const _this = this;
+        if(count >= 1){
+            return;
+        }
+        count = 1;
+        wx.showModal({
+            title: '作答提示',
+            content: '作答时间到，已自动提交',
+            showCancel: false,
+            success: function () {
+                _this.formSubmit(null,true);
+                count = 1
+            }
+        });
+    }
 });

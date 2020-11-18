@@ -4,7 +4,8 @@ Page({
         statusbarHeight: app.globalData.statusbarHeight,
         titleHeight: app.globalData.titleHeight,
         type: "",
-        liner: ""
+        liner: "",
+        startTime: 0
     },
     onLoad: function (options) {
         if (options && options.type) {
@@ -25,9 +26,17 @@ Page({
             }
             this.setData({
                 type: options.type,
-                liner: liner
-            })
+                liner: liner,
+                startTime: new Date().getTime()
+            });
             this._loadURLs(options.type);
+        }
+    },
+    onShow() {
+        try {
+            wx.uma.trackEvent('1605666642970');
+        } catch (e) {
+            console.error(e);
         }
     },
     goBack() {
@@ -153,5 +162,9 @@ Page({
         wx.navigateTo({
             url: '/common/webView',
         });
+    },
+
+    onUnload() {
+
     }
 });

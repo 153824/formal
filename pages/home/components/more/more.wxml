@@ -1,4 +1,4 @@
-<hola-title type="colorful" liner="{{liner}}"></hola-title>
+<hola-title type="colorful" liner="{{liner}}" time="{{startTime}}" moreType="{{type}}"></hola-title>
 <!--校招选材-->
 <block wx:if="{{type==='school'}}">
     <view class="content-wrapper" style="top: {{statusbarHeight+titleHeight}}px;">

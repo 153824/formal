@@ -5,31 +5,21 @@ Page({
         mpImg: "../img/mpImg.png",
         isTest: false,
         isMp: false, //是否显示关注公众号
-        isSelf: ""
+        isSelf: "",
+        reportPermit: ""
     },
     onLoad: function (options) {
-        const id = options.id;
+        const receiveRecordId = options.receiveRecordId;
         this.setData({
             isMp: false,
             isTest: app.isTest,
-            id: id,
-            reportPermit: options.reportPermit,
+            receiveRecordId: receiveRecordId,
         });
+        this._checkedReceiveInfo(receiveRecordId);
     },
     onShow: function () {
-        const that = this;
-        app.doAjax({
-            url: 'reports/check_type',
-            method: 'get',
-            data: {
-                receiveRecordId: that.data.id
-            },
-            success: function (res) {
-                that.setData({
-                    isSelf: res.data.type
-                })
-            }
-        })
+        const {receiveRecordId} = this.data;
+        this._checkType(receiveRecordId);
     },
     onUnload() {
         const {isSelf} = this.data;
@@ -90,5 +80,34 @@ Page({
             url: `/pages/report/report?receiveRecordId=${id}&isSelf=${isSelf}`
         });
     },
+
+    _checkedReceiveInfo: function(receiveRecordId) {
+        const _this = this;
+        app.doAjax({
+            url: `wework/evaluations/receive_info/${receiveRecordId}`,
+            method: "get",
+            success: function (res) {
+                _this.setData({
+                    reportPermit: res.reportPermit
+                });
+            }
+        })
+    },
+
+    _checkType: function(receiveRecordId) {
+        const _this = this;
+        app.doAjax({
+            url: 'reports/check_type',
+            method: 'get',
+            data: {
+                receiveRecordId: receiveRecordId
+            },
+            success: function (res) {
+                _this.setData({
+                    isSelf: res.data.type
+                })
+            }
+        })
+    }
 
 })

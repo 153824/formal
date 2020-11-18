@@ -48,22 +48,26 @@ Page({
         }
     },
     onShow: function () {
-        if (wx.canIUse('hideHomeButton')) {
-            wx.hideHomeButton();
-        }
-        const that = this;
-        const {releaseRecordId} = that.data;
-        if (app.isTest && !releaseRecordId) {
-            return that.getPaperMsg()
-        }
-        if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
-            app.checkUserInfo = (userInfo) => {
-                // that.fetchEvaluation(userInfo);
-                that.getTemptation(userInfo);
+        try{
+            if (wx.canIUse('hideHomeButton')) {
+                wx.hideHomeButton();
             }
-        } else {
-            // that.fetchEvaluation();
-            that.getTemptation();
+            const that = this;
+            const {releaseRecordId} = that.data;
+            if (app.isTest && !releaseRecordId) {
+                return that.getPaperMsg()
+            }
+            if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
+                app.checkUserInfo = (userInfo) => {
+                    // that.fetchEvaluation(userInfo);
+                    that.getTemptation(userInfo);
+                }
+            } else {
+                // that.fetchEvaluation();
+                that.getTemptation();
+            }
+        }catch (e) {
+            console.error(e)
         }
     },
     /**
@@ -310,6 +314,12 @@ Page({
                     receiveRecordId: receiveRecordId,
                     maskTrigger: false
                 });
+            },
+            complete: function () {
+                console.log("complete")
+            },
+            fail: function (err) {
+                console.error(err);
             }
         })
     },

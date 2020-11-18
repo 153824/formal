@@ -115,14 +115,14 @@
 					"id": 6,
 					"name": "小程序码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=5fb4db6cca59954c1c193049",
+					"query": "scene=5fb5046dca59954c1c19308a",
 					"scene": null
 				},
 				{
 					"id": 7,
 					"name": "二维码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "q=https://api.luoke101.com/s/5fb37a8fb3ee12146116f5ee",
+					"query": "q=https://api.luoke101.com/s/5fb4e4e8ca59954c1c19305e",
 					"scene": null
 				},
 				{
@@ -143,7 +143,7 @@
 					"id": 10,
 					"name": "小层序码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=5fab49ac58f0b61791299b38",
+					"query": "scene=5fb4eb6dca59954c1c193067",
 					"scene": null
 				},
 				{

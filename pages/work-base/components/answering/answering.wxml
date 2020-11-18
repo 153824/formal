@@ -5,10 +5,12 @@
 <!-- 答题页面 -->
 <view class="coverView" style="background-color:transparent;" wx:if="{{isChangeQue}}"></view>
 <view class="container font">
-    <view class="timebox" wx:if="{{chapterTimeDownFull}}">剩余时间：{{chapterTimeDownFull}}</view>
+    <view class="timebox sand-glass-wrapper" wx:if="{{sandGlass}}">剩余时间：
+        <van-count-down time="{{sandGlass}}" bind:finish="submitAnswerForce"></van-count-down>
+    </view>
     <form bindsubmit="formSubmit">
         <view class="paper {{phoneModel ? 'isiphoneXpaper':'notiphoneXpaper'}}"
-              style="top:{{chapterTimeDownFull?84:32}}rpx;">
+              style="top:{{sandGlass?84:32}}rpx;">
             <swiper current="{{swiperCurrent1}}">
                 <block wx:for="{{showQues}}" wx:for-index="quesindex" wx:for-item="quesitem" wx:key="unique">
                     <swiper-item wx:if="{{quesindex<(swiperCurrent+3)&&quesindex>(swiperCurrent-3)}}">
@@ -48,10 +50,10 @@
                                             <view>
                                                 <input class="number_input" type="number"
                                                        value="{{answers[quesitem.id][i]!=null?answers[quesitem.id][i]:0}}"
-                                                       bindconfirm="changeslider" bindinput="changeslider"
+                                                       bindconfirm="changeSlider" bindinput="changeSlider"
                                                        data-i="{{i}}" data-index="{{quesindex}}"/>
                                                 <view class="number_slider_wrap">
-                                                    <slider bindchanging="changeslider" bindchange="changeslider"
+                                                    <slider bindchanging="changeSlider" bindchange="changeSlider"
                                                             data-i="{{i}}" data-index="{{quesindex}}"
                                                             class="number_slider" min="0" max="{{quesitem.totalScore}}"
                                                             step="{{quesitem.step}}"

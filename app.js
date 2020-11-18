@@ -57,8 +57,8 @@ App({
     isReLaunch: false,
     otherPageReLaunchTrigger: true,
     quitPage: "",
-    // host: "https://api.luoke101.com/b",
-    host: "http://api.dev.luoke101.int",
+    host: "https://api.luoke101.com/b",
+    // host: "http://api.dev.luoke101.int",
     // host: 'https://api.uat.luoke101.com',
     // host: "http://192.168.0.101:3000",
     // dev: "http://api.dev.luoke101.int",
@@ -454,8 +454,7 @@ App({
             params.toastTrigger = false;
         }
         if (params.url.indexOf('wework') !== -1) {
-            // url = `${this.host1}/${params.url}`;
-            url = `${this.dev}/${params.url}`;
+            url = `${this.host}/${params.url}`;
         }
         params.data = params.data || {};
         params.data['userId'] = params.data['userId'] || (that.globalData.userInfo || wx.getStorageSync("userInfo")).id || '';

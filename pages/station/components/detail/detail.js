@@ -834,60 +834,59 @@ Page({
                 })
             }));
             updatedUserMobilePromise.then(() => {
-                // app.doAjax({
-                //     url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
-                //     method: "get",
-                //     data: {
-                //         openid: wx.getStorageSync("openId"),
-                //     },
-                //     success: function (res) {
-                const res = {}
-                app.globalData.userInfo = Object.assign(app.globalData.userInfo, res);
-                wx.setStorageSync("userInfo", app.globalData.userInfo);
-                wx.setStorageSync("USER_DETAIL", app.globalData.userInfo);
-                if (res.phone && mark !== 'dont-get-ticket') {
-                    that.getNewerTicket();
-                    try {
-                        wx.uma.trackEvent('1602211933140', {name: evaluation.name});
-                    } catch (e) {
+                app.doAjax({
+                    url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
+                    method: "get",
+                    data: {
+                        openid: wx.getStorageSync("openId"),
+                    },
+                    success: function (res) {
+                        app.globalData.userInfo = Object.assign(app.globalData.userInfo, res);
+                        wx.setStorageSync("userInfo", app.globalData.userInfo);
+                        wx.setStorageSync("USER_DETAIL", app.globalData.userInfo);
+                        if (res.phone && mark !== 'dont-get-ticket') {
+                            that.getNewerTicket();
+                            try {
+                                wx.uma.trackEvent('1602211933140', {name: evaluation.name});
+                            } catch (e) {
 
+                            }
+                        }
+                        if (mark === 'dont-get-ticket') {
+                            switch (eventName) {
+                                case 'goToDaTi':
+                                    try {
+                                        wx.uma.trackEvent('1602212015300', {name: evaluation.name});
+                                    } catch (e) {
+
+                                    }
+                                    that.goToDaTi(e);
+                                    break;
+                                case 'goToReplyingGuide':
+                                    try {
+                                        wx.uma.trackEvent('1602212048924', {name: evaluation.name});
+                                    } catch (e) {
+
+                                    }
+                                    that.goToReplyingGuide(e);
+                                    break;
+                                case 'payForEvaluation':
+                                    try {
+                                        wx.uma.trackEvent('1602212078917', {name: evaluation.name});
+                                    } catch (e) {
+
+                                    }
+                                    that.payForEvaluation();
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        that.setData({
+                            isBindPhone: true
+                        })
                     }
-                }
-                if (mark === 'dont-get-ticket') {
-                    switch (eventName) {
-                        case 'goToDaTi':
-                            try {
-                                wx.uma.trackEvent('1602212015300', {name: evaluation.name});
-                            } catch (e) {
-
-                            }
-                            that.goToDaTi(e);
-                            break;
-                        case 'goToReplyingGuide':
-                            try {
-                                wx.uma.trackEvent('1602212048924', {name: evaluation.name});
-                            } catch (e) {
-
-                            }
-                            that.goToReplyingGuide(e);
-                            break;
-                        case 'payForEvaluation':
-                            try {
-                                wx.uma.trackEvent('1602212078917', {name: evaluation.name});
-                            } catch (e) {
-
-                            }
-                            that.payForEvaluation();
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                that.setData({
-                    isBindPhone: true
                 })
-                //     }
-                // })
             });
         }
     },

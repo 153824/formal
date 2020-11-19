@@ -227,6 +227,16 @@ Page({
                     phone: phoneNumber,
                 },
                 success: function (res) {
+                    const {msg} = res;
+                    if(msg === "MISMATCHED"){
+                        app.toast("该名字不在邀请名单中");
+                    }
+                    if(msg === "UNAVAILABLE"){
+                        app.toast("分享已失效");
+                        wx.switchTab({
+                            url: "/pages/home/home"
+                        })
+                    }
                     const {evaluationId} = res;
                     const receiveRecordId = res.receiveRecordId || _this.data.receiveRecordId;
                     const url = `/pages/work-base/components/answering/answering?evaluationId=${evaluationId}&receiveRecordId=${receiveRecordId}`;
@@ -238,9 +248,18 @@ Page({
                         url: url
                     })
                 },
-                fail: function () {
+                fail: function (err) {
+                    const {msg} = err;
+                    if(msg === "MISMATCHED"){
+                        app.toast("该名字不在邀请名单中");
+                    }
+                    if(msg === "UNAVAILABLE"){
+                        app.toast("分享已失效");
+                        wx.switchTab({
+                            url: "/pages/home/home"
+                        })
+                    }
                     reject({receiveRecordId: ""});
-                    app.toast("领取失败！")
                 }
             });
         }));

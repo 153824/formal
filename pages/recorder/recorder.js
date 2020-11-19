@@ -147,7 +147,7 @@ Page({
             },
             success: function (res) {
                 const {phone} = res;
-                if(phone){
+                if (phone) {
                     _this.setData({
                         isGetPhone: true,
                         phoneNumber: phone
@@ -157,7 +157,7 @@ Page({
         })
     },
 
-    _handleUserInfo: function () {
+    _checkUserInfo: function () {
         const that = this;
         const data = that.data;
         const {username, birthday, education, phoneNumber, isGetPhone} = data;
@@ -184,14 +184,37 @@ Page({
         return true;
     },
 
-    submit: function () {
+    _pushMessagesFetched: function (receiveRecordId) {
+        if (!receiveRecordId) {
+            console.error("消息推送，缺少receiveRecordId");
+            return;
+        }
+        const messagesPromise = new Promise(((resolve, reject) => {
+            app.doAjax({
+                url: "messages/fetched",
+                method: "post",
+                data: {
+                    receiveRecordId: receiveRecordId
+                },
+                success: function (res) {
+                    resolve({status: true});
+                    console.log("消息推送成功！");
+                },
+                fail: function (err) {
+                    resolve({status: false});
+                    console.error("消息推送失败", err);
+                }
+            })
+        }));
+        return messagesPromise;
+    },
+
+    _fetchVerify: function () {
         const _this = this;
         const {releaseRecordId, username, birthday, sex, phoneNumber, checkedSex, eduArr, education} = this.data;
         const educationName = eduArr[education];
         const gender = sex[checkedSex];
-        if (!this._handleUserInfo) {
-            return;
-        } else {
+        const verifyPromise = new Promise(((resolve, reject) => {
             app.doAjax({
                 url: "wework/evaluations/fetch/verify",
                 method: "post",
@@ -210,12 +233,25 @@ Page({
                     _this.setData({
                         receiveRecordId: res.receiveRecordId
                     });
+                    resolve({receiveRecordId});
                     wx.redirectTo({
                         url: url
                     })
+                },
+                fail: function () {
+                    reject({receiveRecordId: ""});
+                    app.toast("领取失败！")
                 }
             });
-        }
+        }));
+        return verifyPromise;
+    },
 
+    submit: function () {
+        if (!this._checkUserInfo) {
+            return;
+        } else {
+            this._fetchVerify().then(res=>{this._pushMessagesFetched(res.receiveRecordId)}).catch(err=>{throw err});
+        }
     }
 });

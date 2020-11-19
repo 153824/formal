@@ -847,9 +847,11 @@ Page({
         const {receiveRecordId} = this.data;
         const {chapter} = this.data;
         if (!chapter) {
+            console.warn("无章节信息！");
             return;
         }
         if (chapter && chapter[0].type != 2) {
+            console.warn("章节类型错误！");
             return;
         }
         app.doAjax({

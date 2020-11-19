@@ -145,7 +145,6 @@ Page({
                 const sKey = `oldAnswer${receiveRecordId}`;
                 const url = `/pages/work-base/components/answering/answering?evaluationId=${evaluationId}&releaseRecordId=${releaseRecordId}&receiveRecordId=${receiveRecordId}&reportPermit=${reportPermit}&status=${status}`;
                 wx.setStorageSync(sKey, res.draft);
-                wx.setStorageSync(`${receiveRecordId}-st`,res.fetched);
                 wx.navigateTo({
                     url: url
                 })
@@ -204,7 +203,6 @@ Page({
                     })
                 }, 500);
                 if (oldData && res.status !== 'FINISHED') {
-                    wx.setStorageSync(`${res.receiveRecordId}-st`, res.fetchedAt);
                     setTimeout(() => {
                         const url = `../answering/answering?evaluationId=${evaluationId}&releaseRecordId=${releaseRecordId}&receiveRecordId=${receiveRecordId}&reportPermit=${reportPermit}&status=${status}`;
                         wx.redirectTo({
@@ -220,7 +218,6 @@ Page({
                 switch (res.msg) {
                     case 'continue examining':
                         text = "继续作答";
-                        wx.setStorageSync(`${res.receiveRecordId}-st`, res.fetchedAt);
                         break;
                     case 'show report':
                         text = "查看报告";

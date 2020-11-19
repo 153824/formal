@@ -43,6 +43,7 @@ Page({
         isSelf: "",
         chapterTimeDownFull: "",
         sandGlass: 0,
+        fetchedAt: 0
     },
 
     onLoad: function (options) {
@@ -53,7 +54,8 @@ Page({
             startTime: new Date().getTime(),
             receiveRecordId: options.receiveRecordId,
             verify: options.verify || false,
-            releaseRecordId: options.releaseRecordId || options.id || ""
+            releaseRecordId: options.releaseRecordId || options.id || "",
+            evaluationId: options.evaluationId
         });
         quesIdsOrder = [];
         sKey = "oldAnswer" + options.receiveRecordId;
@@ -172,17 +174,11 @@ Page({
                     const startTime = oldData.startTime;
                     const now = new Date().getTime();
                     if ((now - startTime) > (6 * 60 * 60 * 1000)) {
-                        if (count > 1) {
-                            return;
-                        }
-                        count = count + 1;
                         wx.showModal({
                             title: '作答提示',
                             content: '答题时长超过6小时，已自动提交',
                             showCancel: false,
                             success: function () {
-                                wx.removeStorageSync(`${receiveRecordId}-st`);
-                                count = count - 1;
                                 that.formSubmit();
                             }
                         });
@@ -508,7 +504,8 @@ Page({
         var answer = data.answers;
         var educationName = data.array[data.education];
         answer["time"] = answerTimes || {}; //各个章节答题用时
-        answer["timeTotal"] = now - startTime; //答题总用时
+        answer["timeTotal"] = now - data.fetchedAt; //答题总用时
+        console.log("data.fetchedAt: ",now,data.fetchedAt,now - data.fetchedAt);
         if (wx.getStorageSync("userInfo")["nickname"] && answer["username"] && answer["username"] === "好啦访客") {
             answer["username"] = wx.getStorageSync("userInfo")["nickname"]
         }
@@ -519,18 +516,20 @@ Page({
 
             }
         }
+        const {evaluationId, receiveRecordId} = data;
         app.doAjax({
             url: "receive_records/update_answer",
             method: "post",
             data: {
-                receiveRecordId: data.receiveRecordId,
+                receiveRecordId: receiveRecordId,
                 answer: answer
             },
             success: function (ret) {
-                wx.navigateTo({
-                    url: '../done/done?receiveRecordId=' + data.receiveRecordId,
+                wx.redirectTo({
+                    url: `../done/done?receiveRecordId=${receiveRecordId}&evaluationId=${evaluationId}`,
                 });
                 wx.removeStorageSync(sKey);
+                wx.removeStorageSync(`${receiveRecordId}-is-fill-all`);
                 that.setData(ret);
             }
         });
@@ -662,7 +661,7 @@ Page({
         const that = this;
         const data = this.data;
         saveTimeOut && clearTimeout(saveTimeOut);
-        let {chapter,answers,startTime,swiperCurrent,swiperCurrent1,receiveRecordId} = this.data;
+        let {chapter, answers, startTime, swiperCurrent, swiperCurrent1, receiveRecordId} = this.data;
         var activeChapterId = data.activeChapterId;
         if (activeChapterId != null) {
             var chapterTime = data.chapterTime || {};
@@ -847,21 +846,22 @@ Page({
         const _this = this;
         const {receiveRecordId} = this.data;
         const {chapter} = this.data;
-        if(!chapter){
+        if (!chapter) {
             return;
         }
-        if(chapter && chapter[0].type != 2){
+        if (chapter && chapter[0].type != 2) {
             return;
         }
         app.doAjax({
             url: `wework/evaluations/receive_info/${receiveRecordId}`,
             method: "get",
             success: function (res) {
-                console.log("receive_info:",res);
-                const sandGlass = chapter[0].time*60*1000 - (new Date().getTime() - res.fetchedAt);
-                console.log("sandGlass: ",sandGlass);
+                console.log("receive_info:", res);
+                const sandGlass = chapter[0].time * 60 * 1000 - (new Date().getTime() - res.fetchedAt);
+                console.log("sandGlass: ", sandGlass);
                 _this.setData({
-                    sandGlass: sandGlass
+                    sandGlass: sandGlass,
+                    fetchedAt: res.fetchedAt
                 })
             },
             fail: function (err) {
@@ -870,9 +870,13 @@ Page({
         })
     },
 
+    _checkTime: function () {
+
+    },
+
     submitAnswerForce: function () {
         const _this = this;
-        if(count >= 1){
+        if (count >= 1) {
             return;
         }
         count = 1;
@@ -881,7 +885,7 @@ Page({
             content: '作答时间到，已自动提交',
             showCancel: false,
             success: function () {
-                _this.formSubmit(null,true);
+                _this.formSubmit(null, true);
                 count = 1
             }
         });

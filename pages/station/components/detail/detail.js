@@ -352,7 +352,7 @@ Page({
                 that.setData({
                     releaseInfo: res
                 });
-                const replyingURL = `/pages/work-base/components/answering/answering?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`;
+                const answeringURL = `/pages/work-base/components/answering/answering?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`;
                 console.log("goToReplyingGuide: ", res);
                 const sKey = "oldAnswer" + res.receiveRecordId;
                 if (res.unfinished) {
@@ -363,8 +363,8 @@ Page({
                 } else {
                     that._selfStart(res.receiveRecordId)
                 }
-                wx.navigateTo({
-                    url: replyingURL
+                wx.redirectTo({
+                    url: answeringURL
                 });
             }
         });

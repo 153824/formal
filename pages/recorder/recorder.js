@@ -116,6 +116,7 @@ Page({
     },
 
     _checkEvaluationType: function () {
+        const _this = this;
         const {receiveRecordId} = this.data;
         app.doAjax({
             url: 'reports/check_type',
@@ -124,7 +125,7 @@ Page({
                 receiveRecordId: receiveRecordId
             },
             success: function (res) {
-                that.setData({
+                _this.setData({
                     isSelf: res.data.type
                 });
             }
@@ -209,8 +210,7 @@ Page({
                     _this.setData({
                         receiveRecordId: res.receiveRecordId
                     });
-                    wx.setStorageSync(`${receiveRecordId}-st`, res.fetchedAt);
-                    wx.navigateTo({
+                    wx.redirectTo({
                         url: url
                     })
                 }

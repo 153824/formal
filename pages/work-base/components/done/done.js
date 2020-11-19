@@ -6,26 +6,31 @@ Page({
         isTest: false,
         isMp: false, //是否显示关注公众号
         isSelf: "",
-        reportPermit: ""
+        reportPermit: "",
+        receiveRecordId: "",
+        evaluationId: ""
     },
     onLoad: function (options) {
-        const receiveRecordId = options.receiveRecordId;
+        const {receiveRecordId,evaluationId} = options;
         this.setData({
             isMp: false,
             isTest: app.isTest,
             receiveRecordId: receiveRecordId,
+            evaluationId: evaluationId
         });
         this._checkedReceiveInfo(receiveRecordId);
-    },
-    onShow: function () {
-        const {receiveRecordId} = this.data;
         this._checkType(receiveRecordId);
     },
+    onShow: function () {},
     onUnload() {
-        const {isSelf} = this.data;
+        const {isSelf,evaluationId} = this.data;
         if (isSelf && isSelf === "SHARE") {
             wx.navigateTo({
                 url: "/pages/user-center/components/receive-evaluations/receive-evaluations?redirect=user-center"
+            })
+        } else {
+            wx.redirectTo({
+                url: `/pages/station/components/detail/detail?id=${evaluationId}`
             })
         }
     },
@@ -56,9 +61,9 @@ Page({
         }
 
         function toNext() {
-            const {id} = that.data;
+            const {receiveRecordId} = that.data;
             app.doAjax({
-                url: `reports/${id}`,
+                url: `reports/${receiveRecordId}`,
                 method: "put",
                 data: {
                     type: 'apply'
@@ -75,18 +80,19 @@ Page({
      * 进入报告详情
      */
     toDetail: function (e) {
-        const {id, isSelf} = this.data;
+        const {receiveRecordId, isSelf} = this.data;
         wx.navigateTo({
-            url: `/pages/report/report?receiveRecordId=${id}&isSelf=${isSelf}`
+            url: `/pages/report/report?receiveRecordId=${receiveRecordId}&isSelf=${isSelf}`
         });
     },
 
-    _checkedReceiveInfo: function(receiveRecordId) {
+    _checkedReceiveInfo: function (receiveRecordId) {
         const _this = this;
         app.doAjax({
             url: `wework/evaluations/receive_info/${receiveRecordId}`,
             method: "get",
             success: function (res) {
+                console.log("_checkedReceiveInfo: ",res)
                 _this.setData({
                     reportPermit: res.reportPermit
                 });
@@ -94,7 +100,7 @@ Page({
         })
     },
 
-    _checkType: function(receiveRecordId) {
+    _checkType: function (receiveRecordId) {
         const _this = this;
         app.doAjax({
             url: 'reports/check_type',

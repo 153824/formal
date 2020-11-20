@@ -104,7 +104,7 @@
     <view wx:else class="price-content-ios"
           style="background-image: url('http://ihola.luoke101.com/ios-buyout-img.png')">
         <view>由于相关政策规定</view>
-        <view>由于相关规范，ios功能暂不可用</view>
+        <view>ios暂不支持显示报价方案，请联系客服</view>
     </view>
 </view>
 

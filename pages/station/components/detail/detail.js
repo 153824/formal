@@ -59,7 +59,7 @@ Page({
     },
     onShow: function () {
         const that = this;
-        const isBindPhone = wx.getStorageSync("USER_DETAIL").phone ? true : false;
+        const isBindPhone = (app.globalData.userInfo || wx.getStorageSync("userInfo")).phone ? true : false;
         this.setData({
             isBindPhone: isBindPhone
         });

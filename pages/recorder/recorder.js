@@ -1,3 +1,5 @@
+import throttle from "../../utils/lodash/throttle";
+
 const app = getApp();
 Page({
     data: {
@@ -146,13 +148,28 @@ Page({
                 receiveRecordId: receiveRecordId
             },
             success: function (res) {
-                const {phone} = res;
-                if (phone) {
-                    _this.setData({
-                        isGetPhone: true,
-                        phoneNumber: phone
+                let isGetPhone = false;
+                const {educationName, username, phone} = res;
+                const {eduArr} = _this.data;
+                if (educationName) {
+                    eduArr.forEach((item, key) => {
+                        if (item === educationName) {
+                            res.education = key;
+                        }
                     })
                 }
+                if(phone){
+                    isGetPhone = true
+                }
+                _this.setData({
+                    isGetPhone: isGetPhone,
+                    phoneNumber: phone || "微信一键授权",
+                    ...res
+                })
+            },
+            fail: function (err) {
+                app.toast(err);
+                throw err;
             }
         })
     },
@@ -228,10 +245,10 @@ Page({
                 },
                 success: function (res) {
                     const {msg} = res;
-                    if(msg === "MISMATCHED"){
+                    if (msg === "MISMATCHED") {
                         app.toast("该名字不在邀请名单中");
                     }
-                    if(msg === "UNAVAILABLE"){
+                    if (msg === "UNAVAILABLE") {
                         app.toast("分享已失效");
                         wx.switchTab({
                             url: "/pages/home/home"
@@ -250,10 +267,10 @@ Page({
                 },
                 fail: function (err) {
                     const {msg} = err;
-                    if(msg === "MISMATCHED"){
+                    if (msg === "MISMATCHED") {
                         app.toast("该名字不在邀请名单中");
                     }
-                    if(msg === "UNAVAILABLE"){
+                    if (msg === "UNAVAILABLE") {
                         app.toast("分享已失效");
                         wx.switchTab({
                             url: "/pages/home/home"
@@ -266,11 +283,57 @@ Page({
         return verifyPromise;
     },
 
+    _preloadUserInfo: function () {
+        const userId = app.globalData.userInfo.id || wx.getStorageSync("userInfo").id;
+        const preloadInfo = new Promise((resolve, reject) => {
+            const _this = this;
+            app.doAjax({
+                url: `wework/evaluations/fetch/info/participant/${userId}`,
+                data: {
+                    receiveRecordId: ""
+                },
+                success: function (res) {
+                    const result = res;
+                    const {educationName, username} = res;
+                    const {eduArr} = _this.data;
+                    const copy = {
+                        username: "",
+                        phone: "",
+                        birthday: "",
+                        educationName: "",
+                        gender: "",
+                        education: -1
+                    };
+                    if (!username) {
+                        reject(copy);
+                        return;
+                    }
+                    if (educationName) {
+                        eduArr.forEach((item, key) => {
+                            if (item === educationName) {
+                                result.education = key;
+                            }
+                        })
+                    }
+                    resolve(result);
+                },
+                fail: function (err) {
+                    reject(err);
+                }
+            })
+        });
+        return preloadInfo;
+    },
+
     submit: function () {
         if (!this._checkUserInfo) {
             return;
         } else {
-            this._fetchVerify().then(res=>{this._pushMessagesFetched(res.receiveRecordId)}).catch(err=>{throw err});
+            this._fetchVerify().then(res => {
+                this._pushMessagesFetched(res.receiveRecordId)
+            }).catch(err => {
+                throw err
+            });
         }
     }
 });

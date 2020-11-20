@@ -363,7 +363,7 @@ Page({
                 } else {
                     that._selfStart(res.receiveRecordId)
                 }
-                wx.redirectTo({
+                wx.navigateTo({
                     url: answeringURL
                 });
             }

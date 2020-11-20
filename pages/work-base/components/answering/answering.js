@@ -3,7 +3,6 @@ const app = getApp();
 var sKey = "";
 var quesIdsOrder = [];
 var answerTimeOut;
-var saveTimeOut;
 let count = 0;
 Page({
     data: {
@@ -13,20 +12,6 @@ Page({
         percentQuesHTML: "<span style='display: inline-block;box-sizing: border-box;height: 20px;font-size: 15px;font-weight: 600;color: #353EE8;line-height: 20px;margin-right: 10px;'>【分数分配题】</span>",
         isFillAll: false,
         count: 5,
-        array: [
-            '小学',
-            '初中',
-            '高中',
-            '中技（中专 / 技校 / 职高）',
-            '大专',
-            '本科',
-            '硕士研究生',
-            'MBA',
-            '博士研究生'
-        ],
-        birthday: '1995-01',
-        education: -1,
-        imgUrl: '',
         selImg: "",
         optionsAry: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
         swiperCurrent: 0,
@@ -34,14 +19,8 @@ Page({
         phoneModel: app.isIphoneX,
         answers: {},
         isok: false,
-        sex: ["男", "女"],
-        checkedSex: 0,
-        getphoneNum: false,
-        phoneNumber: "微信一键授权",
         theFinalQuestionAnswer: [],
-        verify: false,
         isSelf: "",
-        chapterTimeDownFull: "",
         sandGlass: 0,
         fetchedAt: 0
     },
@@ -49,11 +28,8 @@ Page({
     onLoad: function (options) {
         const that = this;
         this.setData({
-            status: options.type,
-            reportPermit: options.reportPermit,
             startTime: new Date().getTime(),
             receiveRecordId: options.receiveRecordId,
-            verify: options.verify || false,
             releaseRecordId: options.releaseRecordId || options.id || "",
             evaluationId: options.evaluationId
         });
@@ -188,7 +164,6 @@ Page({
                     that.toAnswerIt();
                 }
                 that.saveDraftAnswer();
-                saveTimeOut = setTimeout(that.saveDraftAnswer, 30000);
             }
         });
     },
@@ -202,12 +177,10 @@ Page({
     },
 
     onHide: function () {
-        saveTimeOut && clearTimeout(saveTimeOut);
         answerTimeOut && clearTimeout(answerTimeOut);
     },
 
     onUnload: function () {
-        saveTimeOut && clearTimeout(saveTimeOut);
         answerTimeOut && clearTimeout(answerTimeOut);
     },
 
@@ -502,7 +475,6 @@ Page({
             answerTimes[i] = now - o.st;
         }
         var answer = data.answers;
-        var educationName = data.array[data.education];
         answer["time"] = answerTimes || {}; //各个章节答题用时
         answer["timeTotal"] = now - data.fetchedAt; //答题总用时
         console.log("data.fetchedAt: ",now,data.fetchedAt,now - data.fetchedAt);
@@ -649,10 +621,6 @@ Page({
         });
         if (obj.type == 2) {
             that._checkReceiveInfo();
-        } else {
-            that.setData({
-                chapterTimeDownFull: ""
-            });
         }
         that.saveAnswerStorageSync();
     },
@@ -660,7 +628,6 @@ Page({
     saveDraftAnswer: function () {
         const that = this;
         const data = this.data;
-        saveTimeOut && clearTimeout(saveTimeOut);
         let {chapter, answers, startTime, swiperCurrent, swiperCurrent1, receiveRecordId} = this.data;
         var activeChapterId = data.activeChapterId;
         if (activeChapterId != null) {
@@ -689,11 +656,9 @@ Page({
             },
             noLoading: true,
             success: function (ret) {
-                saveTimeOut = setTimeout(that.saveDraftAnswer, 30000);
             },
             error: function (err) {
                 console.error(err);
-                saveTimeOut = setTimeout(that.saveDraftAnswer, 30000);
             }
         });
     },
@@ -748,76 +713,6 @@ Page({
 
     },
 
-    getPhoneNumber: function (e) {
-        const that = this;
-        if (this.data.isSelf === 'SHARE') {
-            try {
-                wx.uma.trackEvent('1602215557718')
-            } catch (e) {
-
-            }
-        }
-        if (app.wxWorkInfo.isWxWork) {
-            app.doAjax({
-                url: 'wework/auth/mobile',
-                method: "post",
-                data: {
-                    userId: wx.getStorageSync("userInfo").id,
-                    teamId: wx.getStorageSync("userInfo").teamId,
-                },
-                success: function (res) {
-                    that.setData({
-                        getphoneNum: true,
-                        phoneNumber: res.phone || '微信一键授权'
-                    });
-                },
-                fail: function (err) {
-                    app.toast(err.msg)
-                }
-            })
-        } else {
-            const {name} = e.currentTarget.dataset;
-            if (!that.data.getphoneNum || that.data.getphoneNum) {
-                var detail = e.detail;
-                var iv = detail.iv;
-                var encryptedData = detail.encryptedData;
-                if (encryptedData) {
-                    //用户授权手机号
-                    var userMsg = app.globalData.userMsg || {};
-                    userMsg["iv"] = iv;
-                    userMsg["encryptedData"] = encryptedData;
-                    app.doAjax({
-                        url: "updatedUserMobile",
-                        data: userMsg,
-                        success: function (ret) {
-                            if (that.data.isSelf === 'SHARE') {
-                                try {
-                                    wx.uma.trackEvent('1602216242156')
-                                } catch (e) {
-
-                                }
-                            }
-                            app.doAjax({
-                                url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
-                                method: "get",
-                                data: {
-                                    openid: wx.getStorageSync("openId"),
-                                },
-                                success: function (res) {
-                                    that.setData({
-                                        getphoneNum: true,
-                                        phoneNumber: res.phone || '微信一键授权'
-                                    });
-                                }
-                            });
-                        }
-                    });
-                }
-                return;
-            }
-        }
-    },
-
     notFillAll: function (e) {
         var that = this;
         var data = that.data;
@@ -859,7 +754,7 @@ Page({
             method: "get",
             success: function (res) {
                 console.log("receive_info:", res);
-                const sandGlass = chapter[0].time * 60 * 1000 - (new Date().getTime() - res.fetchedAt);
+                let sandGlass = chapter[0].time * 60 * 1000 - (new Date().getTime() - res.fetchedAt);
                 console.log("sandGlass: ", sandGlass);
                 _this.setData({
                     sandGlass: sandGlass,
@@ -872,23 +767,14 @@ Page({
         })
     },
 
-    _checkTime: function () {
-
-    },
-
     submitAnswerForce: function () {
         const _this = this;
-        if (count >= 1) {
-            return;
-        }
-        count = 1;
         wx.showModal({
             title: '作答提示',
             content: '作答时间到，已自动提交',
             showCancel: false,
             success: function () {
                 _this.formSubmit(null, true);
-                count = 1
             }
         });
     }

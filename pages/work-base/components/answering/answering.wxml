@@ -5,7 +5,7 @@
 <!-- 答题页面 -->
 <view class="coverView" style="background-color:transparent;" wx:if="{{isChangeQue}}"></view>
 <view class="container font">
-    <view class="timebox sand-glass-wrapper" wx:if="{{sandGlass}}">剩余时间：
+    <view class="timebox sand-glass-wrapper" wx:if="{{sandGlass !== 0}}">剩余时间：
         <van-count-down time="{{sandGlass}}" bind:finish="submitAnswerForce"></van-count-down>
     </view>
     <form bindsubmit="formSubmit">

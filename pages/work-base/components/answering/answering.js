@@ -3,7 +3,6 @@ const app = getApp();
 var sKey = "";
 var quesIdsOrder = [];
 var answerTimeOut;
-let count = 0;
 Page({
     data: {
         isChangeQue: false,

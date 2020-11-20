@@ -713,11 +713,7 @@ Page({
     },
 
     notFillAll: function (e) {
-        var that = this;
-        var data = that.data;
-        var swiperCurrent = +data.swiperCurrent;
-        var que = data.quesAll[swiperCurrent];
-        return app.toast("各项分数之和必须等于" + que.totalScore + "分");
+        return;
     },
 
     _checkType: function (options) {

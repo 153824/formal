@@ -166,7 +166,7 @@
 
 .function-set-child > text{
   display: block;
-  width: 112rpx;
+  min-width: 112rpx;
   margin-top: 20rpx;
   font-size: 28rpx;
   font-family: PingFangSC-Semibold,PingFang SC;

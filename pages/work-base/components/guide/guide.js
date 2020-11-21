@@ -295,7 +295,7 @@ Page({
                         text = "申请查看报告";
                         break;
                     case "VERIFY":
-                        text = "立即验证";
+                        text = "开始作答";
                         break;
                     case "APPROVED":
                         text = "查看报告";

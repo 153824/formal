@@ -769,5 +769,9 @@ Page({
                 _this.formSubmit(null, true);
             }
         });
+    },
+
+    pageTouch(){
+
     }
 });

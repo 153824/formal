@@ -148,8 +148,11 @@ Page({
             },
             success: function (res) {
                 let isGetPhone = false;
-                const {educationName, username, phone} = res;
+                const {educationName, username, phone,birthday} = res;
                 const {eduArr} = _this.data;
+                if(!birthday){
+                    res.birthday = "1995-01"
+                }
                 if (educationName) {
                     eduArr.forEach((item, key) => {
                         if (item === educationName) {

@@ -8,7 +8,8 @@ Page({
         isSelf: "",
         reportPermit: "",
         receiveRecordId: "",
-        evaluationId: ""
+        evaluationId: "",
+        targetURL: ""
     },
     onLoad: function (options) {
         const {receiveRecordId,evaluationId} = options;
@@ -22,17 +23,9 @@ Page({
         this._checkType(receiveRecordId);
     },
     onShow: function () {},
+    onHide() {},
     onUnload() {
-        const {isSelf,evaluationId} = this.data;
-        if (isSelf && isSelf === "SHARE") {
-            wx.navigateTo({
-                url: "/pages/user-center/components/receive-evaluations/receive-evaluations?redirect=user-center"
-            })
-        } else {
-            wx.redirectTo({
-                url: `/pages/station/components/detail/detail?id=${evaluationId}`
-            })
-        }
+
     },
     /**
      * 申请查看报告
@@ -92,7 +85,6 @@ Page({
             url: `wework/evaluations/receive_info/${receiveRecordId}`,
             method: "get",
             success: function (res) {
-                console.log("_checkedReceiveInfo: ",res)
                 _this.setData({
                     reportPermit: res.reportPermit
                 });
@@ -101,7 +93,9 @@ Page({
     },
 
     _checkType: function (receiveRecordId) {
+        let targetURL = "";
         const _this = this;
+        const {isSelf,evaluationId} = this.data;
         app.doAjax({
             url: 'reports/check_type',
             method: 'get',
@@ -109,8 +103,14 @@ Page({
                 receiveRecordId: receiveRecordId
             },
             success: function (res) {
+                if (isSelf && isSelf === "SHARE") {
+                    targetURL = "/pages/user-center/components/receive-evaluations/receive-evaluations?redirect=user-center";
+                } else {
+                    targetURL = `/pages/station/components/detail/detail?id=${evaluationId}`;
+                }
                 _this.setData({
-                    isSelf: res.data.type
+                    isSelf: res.data.type,
+                    targetURL: targetURL
                 })
             }
         })

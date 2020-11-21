@@ -1,4 +1,5 @@
 <!--test/finish.wxml-->
+<hola-title type="navigator" url="{{targetURL}}"/>
 <view class="fullPage" style="{{isMp?'background:#fff;':''}}">
 	<view wx:if="{{isTest}}" class="pageView">
 		<image src="../../images/done@icon-done.png"></image>

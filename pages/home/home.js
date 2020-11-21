@@ -61,7 +61,6 @@ Page({
             });
             if (trigger) {
                 setTimeout(() => {
-                    console.log("home.js -> 24");
                     wx.switchTab({
                         url: "/pages/work-base/work-base"
                     });
@@ -184,7 +183,6 @@ Page({
             } else {
                 const {detail} = e;
                 try {
-                    console.log("name: ", name);
                     wx.uma.trackEvent('1601368400960', {"测评名称": name})
                 } catch (e) {
                     console.error('home.js -> 136', e)

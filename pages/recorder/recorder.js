@@ -138,7 +138,6 @@ Page({
         const _this = this;
         const {receiveRecordId = ""} = this.data;
         if (!userId) {
-            console.log("app.globalData.userInfo: ", app.globalData.userInfo);
             userId = (wx.getStorageSync("userInfo") || app.globalData.userInfo || app.globalData.userMsg).id;
         }
         app.doAjax({

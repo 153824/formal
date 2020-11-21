@@ -36,7 +36,6 @@ Component({
                 devicePixelRatio: wx.getSystemInfoSync().pixelRatio
             });
             const {histogramYAxis, limit, histogramValues, lines} = that.properties;
-            console.log("histogramValues[index]: ",histogramValues[index]);
             const series = [
                 {
                     name: "受测者得分",

@@ -75,7 +75,6 @@ Component({
             const that = this;
             const {isWxWork, isWxWorkAdmin} = this.data;
             const active = Number(event.detail);
-            console.log("tabbar-bar-onChange")
             if (!isWxWork) {
                 wx.switchTab({
                     url: `${that.data.wxPage[active].path}`
@@ -103,29 +102,20 @@ Component({
     pageLifetimes: {
         show: function () {
             const that = this;
-            // const {active} = this.properties;
-            // console.log("active: ",active)
-            // this.setData({
-            //     active,
-            // });
-            console.log("tabbar-pageLifetimes-show")
             if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
                 app.checkUserInfo = (userInfo) => {
-                    console.log("tab-bar userInfo",userInfo);
                     that.setData({
                         isWxWork: userInfo.isWxWork,
                         isWxWorkAdmin: userInfo.isAdmin,
                     });
                 }
             } else {
-                console.log("tab-bar wxWorkInfo",app.wxWorkInfo);
                 that.setData({
                     isWxWork: app.wxWorkInfo.isWxWork,
                     isWxWorkAdmin: wx.getStorageSync("userInfo").isAdmin || app.wxWorkInfo.isWxWorkAdmin,
                 });
             }
             wx.createSelectorQuery().in(this).select("#tabbar").boundingClientRect().exec(res => {
-                console.log(res)
                 wx.setStorageSync("TAB_BAR_HEIGHT", res[0].height)
             });
         }
@@ -140,14 +130,12 @@ Component({
             const that = this;
             if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
                 app.checkUserInfo = (userInfo) => {
-                    console.log("attached: userInfo",userInfo)
                     that.setData({
                         isWxWork: userInfo.isWxWork,
                         isWxWorkAdmin: userInfo.isAdmin,
                     });
                 }
             } else {
-                console.log("attached: app.wxWorkInfo",app.wxWorkInfo,wx.getStorageSync("userInfo").isAdmin)
                 that.setData({
                     isWxWork: app.wxWorkInfo.isWxWork,
                     isWxWorkAdmin: wx.getStorageSync("userInfo").isAdmin || app.wxWorkInfo.isWxWorkAdmin,

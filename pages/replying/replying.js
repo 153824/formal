@@ -269,7 +269,6 @@ Page({
     onUnload: function () {
         saveTimeOut && clearTimeout(saveTimeOut);
         answerTimeOut && clearTimeout(answerTimeOut);
-        console.log("work-base");
         wx.switchTab({
             url: "/pages/work-base/work-base"
         })
@@ -806,7 +805,6 @@ Page({
         const that = this;
         let chapter = this.data.chapter || [];
         let i = 0;
-        console.log("chapter: ",chapter);
         let obj = chapter[i] || {};
         let chapterTimeDown = obj.time * 60;
         const {id} = that.data;

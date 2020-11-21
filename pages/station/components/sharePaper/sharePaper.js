@@ -52,10 +52,7 @@ Page({
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function () {
-        console.log("getSystemInfoSync: ", wx.getSystemInfoSync())
-        console.log("wx.canIUse: ", wx.canIUse("image.show-menu-by-longpress"));
-    },
+    onShow: function () {},
     changeCount: function (e) {
         const that = this;
         const t = e.currentTarget.dataset.t;

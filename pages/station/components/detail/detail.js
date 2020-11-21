@@ -353,7 +353,6 @@ Page({
                     releaseInfo: res
                 });
                 const answeringURL = `/pages/work-base/components/answering/answering?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`;
-                console.log("goToReplyingGuide: ", res);
                 const sKey = "oldAnswer" + res.receiveRecordId;
                 if (res.unfinished) {
                     let oldData = wx.getStorageSync(sKey);
@@ -637,7 +636,6 @@ Page({
             {userInfo} = app.globalData,
             that = this;
         const {id, name} = this.data.evaluation;
-        console.log("this.data.evaluation.id: ", id);
         if (options.from !== 'button') {
             return {
                 title: `邀您体验《${evaluationInfo.name}》测评~`,
@@ -913,7 +911,6 @@ Page({
         }
     },
     changeTicketCount: function (e) {
-        console.log("changeTicketCount: ", e)
         this.setData({
             ticketCount: Number(e.detail.value)
         })

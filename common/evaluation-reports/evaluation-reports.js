@@ -50,7 +50,6 @@ Component({
                     pageSize: 8
                 },
                 success: function (res) {
-                    console.log("loadReportList: ",reportList.concat(res.data));
                     if (res.data.length) {
                         that.setData({
                             reportList: reportList.concat(res.data),

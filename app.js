@@ -57,9 +57,9 @@ App({
     isReLaunch: false,
     otherPageReLaunchTrigger: true,
     quitPage: "",
-    // host: "https://api.luoke101.com/b",
+    host: "https://api.luoke101.com/b",
     // host: "http://api.dev.luoke101.int",
-    host: 'https://api.uat.luoke101.com',
+    // host: 'https://api.uat.luoke101.com',
     // host: "http://192.168.0.101:3000",
     // dev: "http://api.dev.luoke101.int",
     globalData: {
@@ -99,7 +99,6 @@ App({
         const referrerInfo = options.referrerInfo;
         const menuBtnObj = wx.getMenuButtonBoundingClientRect();
         const sysMsg = wx.getSystemInfoSync();
-        console.log("sysMsg: ", sysMsg);
         this.isIphoneX = false;
         this.isIos = false;
         this.fromAppId = '';
@@ -109,7 +108,7 @@ App({
             this.fromAppId = referrerInfo.appid
         }
         wx.onMemoryWarning(function (res) {
-            console.log('onMemoryWarningReceive', res)
+            console.warn('onMemoryWarningReceive', res)
         });
         /*获取机型 **/
         if (sysMsg.model.indexOf('iPhone X') !== -1) {
@@ -122,16 +121,13 @@ App({
             this.wxWorkInfo.isWxWork = true;
         }
         const scene = wx.getLaunchOptionsSync();
-        console.log("scene: ", scene);
         if (this.wxWorkInfo.isWxWork) {
             const that = this;
             this.doAjax({
                 url: 'wework/app/health',
                 method: 'get',
                 noLoading: true,
-                success: function (res) {
-                    console.log("app/health: ", res);
-                }
+                success: function (res) {}
             });
             wx.qy.login({
                 success: res => {
@@ -223,20 +219,15 @@ App({
         } catch (e) {
 
         }
-        console.log("currentPage: ", currentPage);
-        console.log("sceneOption: ", sceneOption);
-        console.log("scenes.includes(sceneOption.scene): ", scenes.includes(sceneOption.scene));
-        console.log("this.wxWorkInfo.isWxWork: ",this.wxWorkInfo.isWxWork)
         if (this.wxWorkInfo.isWxWork && this.isReLaunch && pages.includes(this.quitPage) && pages.includes(currentPage) && !scenes.includes(sceneOption.scene)) {
             const that = this;
-            console.log("onShow wx.reLaunch");
             wx.switchTab({
                 url: '/pages/work-base/work-base',
                 success: res => {
                     that.isReLaunch = false;
                 },
                 fail: function (err) {
-                    console.log(err);
+                    console.error(err);
                 }
             })
         }
@@ -246,7 +237,6 @@ App({
         if (this.wxWorkInfo.isWxWork) {
             this.isReLaunch = true;
             this.quitPage = getCurrentPages()[getCurrentPages().length - 1].route;
-            console.log("quitPage: ", this.quitPage)
         }
     },
 
@@ -350,7 +340,7 @@ App({
                     resolve({openId: userData.openid || userMsg.openid});
                 },
                 error: function (err) {
-                    console.log("error: ", err);
+                    console.error("error: ", err);
                     reject(err);
                 }
             })

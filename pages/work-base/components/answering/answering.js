@@ -476,7 +476,6 @@ Page({
         var answer = data.answers;
         answer["time"] = answerTimes || {}; //各个章节答题用时
         answer["timeTotal"] = now - data.fetchedAt; //答题总用时
-        console.log("data.fetchedAt: ",now,data.fetchedAt,now - data.fetchedAt);
         if (wx.getStorageSync("userInfo")["nickname"] && answer["username"] && answer["username"] === "好啦访客") {
             answer["username"] = wx.getStorageSync("userInfo")["nickname"]
         }
@@ -748,9 +747,7 @@ Page({
             url: `wework/evaluations/receive_info/${receiveRecordId}`,
             method: "get",
             success: function (res) {
-                console.log("receive_info:", res);
                 let sandGlass = chapter[0].time * 60 * 1000 - (new Date().getTime() - res.fetchedAt);
-                console.log("sandGlass: ", sandGlass);
                 _this.setData({
                     sandGlass: sandGlass,
                     fetchedAt: res.fetchedAt

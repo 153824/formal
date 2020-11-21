@@ -26,7 +26,6 @@ Page({
             releaseEvaluationId = decodeURIComponent(option.scene);
         }
         if (option.releaseRecordId || option.receiveRecordId || releaseEvaluationId) {
-            console.log("option.releaseRecordId: ", option.releaseRecordId)
             this.setData({
                 releaseRecordId: option.releaseRecordId || releaseEvaluationId,
                 receiveRecordId: option.receiveRecordId || ""
@@ -164,7 +163,6 @@ Page({
     fetchEvaluation: function (userInfo) {
         const that = this;
         const {releaseRecordId} = this.data;
-        console.log("userInfo: ", userInfo);
         if (!userInfo) {
             userInfo = {
                 id: ""
@@ -268,7 +266,6 @@ Page({
 
     getTemptation: function (userInfo = {id: ""}) {
         const _this = this;
-        console.log("userInfo: ", userInfo);
         const {releaseRecordId} = this.data;
         app.doAjax({
             url: "wework/evaluations/fetch/temptation",
@@ -312,9 +309,7 @@ Page({
                     maskTrigger: false
                 });
             },
-            complete: function () {
-                console.log("complete")
-            },
+            complete: function () {},
             fail: function (err) {
                 console.error(err);
             }

@@ -30,7 +30,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.12.2",
-	"appid": "wxdb1dcb4a9e212d32",
+	"appid": "wx85cde7d3e8f3d949",
 	"projectname": "luoke-haola-wx-admin",
 	"debugOptions": {
 		"hidedInDevtools": []
@@ -115,7 +115,7 @@
 					"id": 6,
 					"name": "小程序码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=5fb766146537b72c23dc7c8e",
+					"query": "scene=5fb8c0218d9ae558e72c4cad",
 					"scene": null
 				},
 				{
@@ -178,6 +178,13 @@
 					"id": -1,
 					"name": "用户信息录入",
 					"pathName": "pages/recorder/recorder",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "完成页面",
+					"pathName": "pages/work-base/components/done/done",
 					"query": "",
 					"scene": null
 				}

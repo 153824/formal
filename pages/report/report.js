@@ -489,7 +489,6 @@ Page({
                 timeNormal = 3;
             }
             res.report["timeNormal"] = timeNormal;
-            console.log("res.report[\"timeNormal\"]:",timeNormal)
             radarValue = {};
             radarIndicator = {};
             value_2 = {};
@@ -612,7 +611,6 @@ Page({
             }
             res.report["timeNormal"] = timeNormal;
             res.report["timeNormal"] = timeNormal;
-            console.log("res.report[\"timeNormal\"]:",timeNormal)
             radarValue = {};
             radarIndicator = {};
             value_2 = {};
@@ -752,8 +750,6 @@ Page({
             res.report["statement"] = res.report["statement"].replace(/\n/g, "<br>").replace("<bold", "<span style='font-weight: 600;'").replace("</bold", "</span");
             res.report["noTeamMember"] = false;
             res.report["teamRole"] = (app.teamId == res.releaseTeamId) ? app.teamRole : 1;
-            console.log("teamRole: ", res.report["teamRole"]);
-            console.log("app.teamId: ", app.teamId, "res.releaseTeamId.teamId: ", res.releaseTeamId.teamId)
             res.report["showPage"] = true;
             res.fillBlank = [];
             for (let i = 0; i < 4; i++) {
@@ -1118,17 +1114,15 @@ Page({
     onUnload: function () {
         const {isSelf} = this.data;
         if (isSelf && isSelf === "SELF") {
-            console.log("1")
             wx.reLaunch({
                 url: "/pages/work-base/work-base"
             })
         } else if (isSelf && isSelf === "SHARE") {
-            console.log("2")
             wx.reLaunch({
                 url: "/pages/user-center/components/receive-evaluations/receive-evaluations?targetPath=userCenter"
             })
         } else {
-            console.log("3")
+
         }
     }
 });

@@ -45,7 +45,6 @@ Page({
     onUnload: function () {
         const {isSelf} = this.data;
         if (isSelf && isSelf === "SELF") {
-            console.log("work-base");
             wx.reLaunch({
                 url: `/pages/work-base/work-base`,
             });

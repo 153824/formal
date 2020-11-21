@@ -183,7 +183,6 @@ Page({
         imgurl = "http://" + file.imageURL;
         toNext();
       }, function(err) {
-        console.log("qiniuUpload.upload: ",err)
         wx.hideLoading();
         wx.showToast({
           title: '图片上传失败，请重试！',

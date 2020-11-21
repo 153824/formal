@@ -40,9 +40,7 @@ Page({
     onLoad: function (option) {
         const that = this;
         if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
-            console.log("first");
             app.checkUserInfo = (userInfo) => {
-                console.log("work-base userInfo: ",userInfo)
                 that.setData({
                     userInfo: userInfo,
                     isWxWork: userInfo.isWxWork,
@@ -50,8 +48,6 @@ Page({
                 })
             };
         } else {
-            console.log("second");
-            console.log("app.wxWorkInfo,app.globalData.userInfo: ",app.wxWorkInfo.isWxWorkAdmin,app.globalData.userInfo,wx.getStorageSync('userInfo').isAdmin);
             that.setData({
                 userInfo: wx.getStorageSync("userInfo") || app.globalData.userInfo,
                 isWxWork: app.wxWorkInfo.isWxWork,

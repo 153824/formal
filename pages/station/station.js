@@ -61,7 +61,6 @@ Page({
           { menu } = this.data;
     // 点击人岗匹配左侧导航
     try{
-      console.log("name: ",name)
       wx.uma.trackEvent('1602210335412',{name: name});
     }catch (e) {
 

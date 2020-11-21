@@ -38,6 +38,14 @@
         </view>
     </view>
 </block>
+<block wx:if="{{ type === 'navigator' }}">
+    <view class="bar-wrapper" style="height: {{ statusbarHeight + titleHeight }}px;">
+        <view class="statusbar colorful-bg" style="height: {{ statusbarHeight }}px;"></view>
+        <view class="title-bar colorful-bg" style="height: {{ titleHeight }}px;top: {{ statusbarHeight }}px;">
+            <van-icon name="arrow-left" size="20" color="rgb(0,0,0)" bind:click="goToPage"/>
+        </view>
+    </view>
+</block>
 <view wx:if="{{ loading }}" style="display: flex;align-items:center;justify-content: center;height: 100vh;width: 100vw;">
     <van-loading type="spinner" color="rgba(53, 62, 232, 1)"/>
 </view>

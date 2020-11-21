@@ -169,7 +169,7 @@ Component({
                             });
                             that.getMyTeamList(false, true);
                         }).catch((err) => {
-                            console.log(err);
+                            console.error(err);
                         })
                     } catch (e) {
                         console.error("At common/title/title 140, ", e);
@@ -238,6 +238,13 @@ Component({
             }
             wx.switchTab({
                 url: "/pages/home/home"
+            })
+        },
+
+        goToPage: function () {
+            const {url} = this.properties;
+            wx.reLaunch({
+                url
             })
         }
     },

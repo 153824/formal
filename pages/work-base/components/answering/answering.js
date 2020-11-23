@@ -617,9 +617,7 @@ Page({
             showQues: showQues,
             quesAll: quesAll
         });
-        if (obj.type == 2) {
-            that._checkReceiveInfo();
-        }
+        that._checkReceiveInfo();
         that.saveAnswerStorageSync();
     },
 
@@ -735,21 +733,17 @@ Page({
         const _this = this;
         const {receiveRecordId} = this.data;
         const {chapter} = this.data;
-        if (!chapter) {
-            console.warn("无章节信息！");
-            return;
-        }
-        if (chapter && chapter[0].type != 2) {
-            console.warn("章节类型错误！");
-            return;
-        }
         app.doAjax({
             url: `wework/evaluations/receive_info/${receiveRecordId}`,
             method: "get",
             success: function (res) {
                 let sandGlass = chapter[0].time * 60 * 1000 - (new Date().getTime() - res.fetchedAt);
+                if (chapter && chapter[0].type == 2) {
+                    _this.setData({
+                        sandGlass: sandGlass,
+                    })
+                }
                 _this.setData({
-                    sandGlass: sandGlass,
                     fetchedAt: res.fetchedAt
                 })
             },

@@ -41,9 +41,13 @@ Page({
     },
     onHide() {
         const {type} = this.data;
-        wx.uma.trackEvent("1606288433288",{
-            type: type,
-        });
+        try{
+            wx.uma.trackEvent("1606288433288",{
+                type: type,
+            });
+        }catch (e) {
+            console.error(e);
+        }
     },
     goBack() {
         const {type} = this.data;

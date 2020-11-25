@@ -193,8 +193,8 @@ Component({
         goToBack: function () {
             let text = "";
             let time = 0;
-            const {type,startTime} = this.properties;
-            switch (type) {
+            const {moreType,startTime} = this.properties;
+            switch (moreType) {
                 case "school":
                     text = "校招选才";
                     try {

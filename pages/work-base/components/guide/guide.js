@@ -58,11 +58,9 @@ Page({
             }
             if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
                 app.checkUserInfo = (userInfo) => {
-                    // that.fetchEvaluation(userInfo);
                     that.getTemptation(userInfo);
                 }
             } else {
-                // that.fetchEvaluation();
                 that.getTemptation();
             }
         }catch (e) {
@@ -354,7 +352,12 @@ Page({
     },
 
     goToRecorder: function () {
-        const {releaseRecordId} = this.data;
+        const {releaseRecordId,demonstrateInfo} = this.data;
+        try {
+            wx.uma.trackEvent('1602215501397', {name: demonstrateInfo.evaluationName})
+        } catch (e) {
+
+        }
         wx.navigateTo({
             url: `/pages/recorder/recorder?releaseRecordId=${releaseRecordId}`
         });

@@ -479,13 +479,6 @@ Page({
         if (wx.getStorageSync("userInfo")["nickname"] && answer["username"] && answer["username"] === "好啦访客") {
             answer["username"] = wx.getStorageSync("userInfo")["nickname"]
         }
-        if (data.isSelf === 'SELF') {
-            try {
-                wx.uma.trackEvent('1602214552285', {name: data.paperList.setting.name1})
-            } catch (e) {
-
-            }
-        }
         const {evaluationId, receiveRecordId} = data;
         app.doAjax({
             url: "receive_records/update_answer",
@@ -737,15 +730,22 @@ Page({
             url: `wework/evaluations/receive_info/${receiveRecordId}`,
             method: "get",
             success: function (res) {
-                let sandGlass = chapter[0].time * 60 * 1000 - (new Date().getTime() - res.fetchedAt);
-                if (chapter && chapter[0].type == 2) {
-                    _this.setData({
-                        sandGlass: sandGlass,
-                    })
+                if(!chapter){
+                    return;
                 }
-                _this.setData({
-                    fetchedAt: res.fetchedAt
-                })
+                try{
+                    let sandGlass = chapter[0].time * 60 * 1000 - (new Date().getTime() - res.fetchedAt);
+                    if (chapter && chapter[0].type == 2) {
+                        _this.setData({
+                            sandGlass: sandGlass,
+                        })
+                    }
+                    _this.setData({
+                        fetchedAt: res.fetchedAt
+                    })
+                }catch (e) {
+                    console.error(e);
+                }
             },
             fail: function (err) {
                 throw err

@@ -22,6 +22,9 @@ Page({
     },
     onLoad: function (options) {
     },
+    onHide() {
+        wx.uma.trackEvent("1606213423182")
+    },
     goToHome: function () {
         try {
             wx.uma.trackEvent('1605250635742');
@@ -121,5 +124,6 @@ Page({
                 app.toast(res.msg);
             }
         });
-    }
+    },
+
 });

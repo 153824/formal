@@ -9,10 +9,11 @@ Page({
         reportPermit: "",
         receiveRecordId: "",
         evaluationId: "",
-        targetURL: ""
+        targetURL: "",
+        evaluationName: ""
     },
     onLoad: function (options) {
-        const {receiveRecordId,evaluationId} = options;
+        const {receiveRecordId, evaluationId} = options;
         this.setData({
             isMp: false,
             isTest: app.isTest,
@@ -22,8 +23,10 @@ Page({
         this._checkedReceiveInfo(receiveRecordId);
         this._checkType(receiveRecordId);
     },
-    onShow: function () {},
-    onHide() {},
+    onShow: function () {
+    },
+    onHide() {
+    },
     onUnload() {
 
     },
@@ -73,7 +76,16 @@ Page({
      * 进入报告详情
      */
     toDetail: function (e) {
-        const {receiveRecordId, isSelf} = this.data;
+        const {receiveRecordId, isSelf, evaluationName} = this.data;
+        if (isSelf && isSelf === "SELF") {
+            try {
+                wx.uma.trackEvent('1602214791798', {name: evaluationName})
+            } catch (e) {
+
+            }
+        } else {
+
+        }
         wx.navigateTo({
             url: `/pages/report/report?receiveRecordId=${receiveRecordId}&isSelf=${isSelf}`
         });
@@ -95,7 +107,7 @@ Page({
     _checkType: function (receiveRecordId) {
         let targetURL = "";
         const _this = this;
-        const {isSelf,evaluationId} = this.data;
+        const {evaluationId} = this.data;
         app.doAjax({
             url: 'reports/check_type',
             method: 'get',
@@ -103,14 +115,16 @@ Page({
                 receiveRecordId: receiveRecordId
             },
             success: function (res) {
+                const isSelf = res.data.type;
                 if (isSelf && isSelf === "SHARE") {
                     targetURL = "/pages/user-center/components/receive-evaluations/receive-evaluations?redirect=user-center";
                 } else {
                     targetURL = `/pages/station/components/detail/detail?id=${evaluationId}`;
                 }
                 _this.setData({
-                    isSelf: res.data.type,
-                    targetURL: targetURL
+                    isSelf: isSelf,
+                    targetURL: targetURL,
+                    evaluationName: res.data.evaluationName
                 })
             }
         })

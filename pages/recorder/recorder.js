@@ -94,7 +94,7 @@ Page({
                                 try {
                                     wx.uma.trackEvent('1602216242156')
                                 } catch (e) {
-
+                                    console.error(e);
                                 }
                             }
                             app.doAjax({
@@ -332,6 +332,11 @@ Page({
             return;
         } else {
             this._fetchVerify().then(res => {
+                try{
+                    wx.uma.trackEvent('1602216442285');
+                }catch (e) {
+                    console.error(e)
+                }
                 this._pushMessagesFetched(res.receiveRecordId)
             }).catch(err => {
                 throw err

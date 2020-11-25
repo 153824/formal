@@ -271,6 +271,9 @@ App({
                         that.globalData.userInfo = Object.assign(userData,
                             that.globalData.userInfo || {})
                         that.isLogin = true;
+                        if(res.data.isNew){
+                            wx.uma.trackEvent("1606212682385");
+                        }
                         if (that.checkUserInfo) {
                             res.teamId = that.teamId;
                             res.isWxWork = false;

@@ -39,6 +39,12 @@ Page({
             console.error(e);
         }
     },
+    onHide() {
+        const {type} = this.data;
+        wx.uma.trackEvent("1606288433288",{
+            type: type,
+        });
+    },
     goBack() {
         const {type} = this.data;
         switch (type) {
@@ -163,8 +169,4 @@ Page({
             url: '/common/webView',
         });
     },
-
-    onUnload() {
-
-    }
 });

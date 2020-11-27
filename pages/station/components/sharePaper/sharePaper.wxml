@@ -30,6 +30,14 @@
                 <text>允许</text>
             </view>
         </view>
+        <view class="department-wrapper">
+            <text class="title">被测者归属部门</text>
+            <view class="depart">
+                <van-dropdown-menu bind:open="open" direction="down" overlay="{{false}}" active-color="rgba(53, 62, 232, 1)">
+                    <van-dropdown-item title="被测者归属部门" value="{{ dropdownValue }}" options="{{ dropDownOps }}" />
+                </van-dropdown-menu>
+            </view>
+        </view>
     </view>
     <view class="inviteBtn" bindtap="toSharePaper">生成测评邀请函</view>
 </view>

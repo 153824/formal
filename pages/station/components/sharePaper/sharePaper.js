@@ -19,6 +19,11 @@ Page({
         statusbarHeight: app.globalData.statusbarHeight,
         titleHeight: app.globalData.titleHeight,
         loading: "loading...",
+        dropDownOps: [
+            { text: '全部商品', value: 0 },
+            { text: '新款商品', value: 1 },
+            { text: '活动商品', value: 2 },
+        ],
     },
 
     /**
@@ -175,6 +180,12 @@ Page({
                     icon: "none"
                 })
             }
+        })
+    },
+
+    open: function () {
+        wx.qy.selectEnterpriseContact({},res=>{
+            console.log(res)
         })
     },
 

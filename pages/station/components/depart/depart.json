@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "van-tabs": "/common/vant-weapp/dist/tabs/index",
+    "van-tab": "/common/vant-weapp/dist/tab/index",
+    "van-radio": "/common/vant-weapp/dist/radio/index",
+    "van-radio-group": "/common/vant-weapp/dist/radio-group/index",
+    "hola-press": "/common/press/press"
+  },
+  "navigationBarTitleText": "选择所属组织节点"
+}

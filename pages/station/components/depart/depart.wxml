@@ -1,0 +1,37 @@
+<view class="depart-wrapper">
+    <view>
+        <view class="scroll-wrapper">
+            <scroll-view class="scroll-item" scroll-x="{{true}}" scroll-y="{{false}}">
+                <block wx:for="{{routeMap}}" wx:key="unique">
+                    <text bindtap="loadTargetDepart" data-index="{{index}}" data-depart="{{item}}">{{item.label}}</text>
+                    <image wx:if="{{index+1 !== routeMap.length}}" src="/images/icon/icon@icon-right-arrow.png"
+                           class="char-icon"></image>
+                </block>
+            </scroll-view>
+        </view>
+        <view class="display-wrapper">
+            <scroll-view class="display-scroll-item" scroll-x="{{false}}" scroll-y="{{true}}">
+                <van-radio-group value="{{checkedDepart}}" catch:change="changeDepart">
+                    <view wx:for="{{childDepart}}" wx:key="unique" class="depart-item">
+                        <view>
+                            <van-radio checked-color="rgba(53, 62, 232, 1)" name="{{item.value}}"
+                                          icon-class="custom-icon">
+                                <view class="depart-name" data-depart="{{item}}"
+                                      catchtap="{{ item.leaf ? '' : 'loadChildDepart' }}">
+                                    {{item.label}}
+                                </view>
+                            </van-radio>
+                        </view>
+                        <block wx:if="{{!item.leaf}}">
+                            <image src="/images/icon/icon@icon-right-arrow.png" style="width: 14rpx;height: 19rpx;"/>
+                        </block>
+                    </view>
+                </van-radio-group>
+            </scroll-view>
+        </view>
+    </view>
+    <view class="submit-wrapper" bindtap="submit">
+        <hola-press title="确认选择" fontSize="32" fontWeight="600" height="108"></hola-press>
+    </view>
+</view>
+<wxs src="../../../../utils/util.wxs" module="util"></wxs>

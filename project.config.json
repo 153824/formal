@@ -87,7 +87,7 @@
 					"id": 2,
 					"name": "报告详情",
 					"pathName": "pages/report/report",
-					"query": "receiveRecordId=5fb35611b3ee12146116f5b6",
+					"query": "receiveRecordId=5fb0b870b3ee12146116f2fe",
 					"scene": null
 				},
 				{
@@ -185,6 +185,13 @@
 					"id": -1,
 					"name": "完成页面",
 					"pathName": "pages/work-base/components/done/done",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "选取部门",
+					"pathName": "pages/station/components/depart/depart",
 					"query": "",
 					"scene": null
 				}

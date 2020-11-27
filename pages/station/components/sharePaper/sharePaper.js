@@ -19,11 +19,8 @@ Page({
         statusbarHeight: app.globalData.statusbarHeight,
         titleHeight: app.globalData.titleHeight,
         loading: "loading...",
-        dropDownOps: [
-            { text: '全部商品', value: 0 },
-            { text: '新款商品', value: 1 },
-            { text: '活动商品', value: 2 },
-        ],
+        dropDownOps: [],
+        dropdownValue: 0
     },
 
     /**
@@ -44,7 +41,15 @@ Page({
         });
         this.setData({
             isWxWork: app.wxWorkInfo.isWxWork
-        })
+        });
+        let storageInfo = wx.getStorageInfoSync().keys;
+        let departInfo = wx.getStorageSync(`checked-depart-info-${id}`);
+        const reg = /^checked-depart-info-.*/ig;
+        storageInfo.forEach((item,key)=>{
+            if(reg.test(item) && !departInfo){
+                wx.removeStorageSync(item);
+            }
+        });
     },
 
     /**
@@ -57,7 +62,16 @@ Page({
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function () {},
+    onShow: function () {
+        const {evaluationId} = this.data;
+        const dropDownOps = wx.getStorageSync(`checked-depart-info-${evaluationId}`);
+        if(dropDownOps){
+            this.setData({
+                dropDownOps: [dropDownOps],
+                dropdownValue: dropDownOps.value
+            })
+        }
+    },
     changeCount: function (e) {
         const that = this;
         const t = e.currentTarget.dataset.t;
@@ -106,8 +120,8 @@ Page({
             return;
         }
         try {
-            wx.uma.trackEvent('1602212964270',{name: evaluationName,isFree: isFree})
-        }catch (e) {
+            wx.uma.trackEvent('1602212964270', {name: evaluationName, isFree: isFree})
+        } catch (e) {
 
         }
         app.doAjax({
@@ -157,16 +171,16 @@ Page({
         let {img} = this.data.sharePaperInfo;
         wx.downloadFile({
             url: img,
-            success: res=>{
+            success: res => {
                 wx.saveImageToPhotosAlbum({
                     filePath: res.tempFilePath,
-                    success: res=>{
+                    success: res => {
                         wx.showModal({
                             title: "保存成功",
                             icon: "none"
                         })
                     },
-                    fail: err=>{
+                    fail: err => {
                         wx.showModal({
                             title: "保存失败",
                             icon: "none"
@@ -174,7 +188,7 @@ Page({
                     }
                 });
             },
-            fail: err=>{
+            fail: err => {
                 wx.showModal({
                     title: "下载图片失败",
                     icon: "none"
@@ -184,14 +198,15 @@ Page({
     },
 
     open: function () {
-        wx.qy.selectEnterpriseContact({},res=>{
-            console.log(res)
+        const {evaluationId} = this.data;
+        wx.navigateTo({
+            url: `/pages/station/components/depart/depart?evaluationId=${evaluationId}`
         })
     },
 
     onShareAppMessage(options) {
         const {evaluationName} = this.data;
-        const {img,smallImg=""} = this.data.sharePaperInfo;
+        const {img, smallImg = ""} = this.data.sharePaperInfo;
         return {
             title: `您有一个测评邀请，请尽快作答`,
             path: `/common/webView?img=${img}&title=true`,

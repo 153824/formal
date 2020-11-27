@@ -10,9 +10,16 @@ Page({
             }
         ],
         checkedDepart: "",
-        routeMap: []
+        routeMap: [],
+        evaluationId: ""
     },
     onLoad: function (options) {
+        const {evaluationId} = options;
+        if(evaluationId){
+            this.setData({
+                evaluationId: evaluationId
+            })
+        }
         this._loadRootDepart().then(res => {
             this.setData({
                 childDepart: res.data,
@@ -98,7 +105,7 @@ Page({
         const {checkedDepart} = this.data;
         const departInfo = new Promise((resolve, reject) => {
            app.doAjax({
-               url: '',
+               url: 'departments/by_id',
                method: 'get',
                data: {
                    deptId: checkedDepart
@@ -111,8 +118,20 @@ Page({
                }
            })
         });
+        return departInfo;
     },
     submit(e) {
-        wx.setStorageSync("checked-depart-info", {})
+        const {evaluationId} = this.data;
+        this._loadDepartInfo().then(res=>{
+            console.log("_loadDepartInfo: ",res);
+            const {deptName,deptId} = res.data;
+            wx.setStorageSync(`checked-depart-info-${evaluationId}`, {
+                text: deptName,
+                value: deptId
+            });
+            wx.navigateBack();
+        }).catch(err=>{
+            throw err;
+        });
     }
 });

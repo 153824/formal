@@ -87,7 +87,7 @@
 					"id": 2,
 					"name": "报告详情",
 					"pathName": "pages/report/report",
-					"query": "receiveRecordId=5fb0b870b3ee12146116f2fe",
+					"query": "receiveRecordId=5faa018758f0b61791299903",
 					"scene": null
 				},
 				{
@@ -189,10 +189,17 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 17,
 					"name": "选取部门",
 					"pathName": "pages/station/components/depart/depart",
-					"query": "",
+					"query": "evaluationId=5e6ee5e3546eaad5ca38cc34",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "发放测评",
+					"pathName": "pages/station/components/sharePaper/sharePaper",
+					"query": "evaluationId=5e6ee5e3546eaad5ca38cc34",
 					"scene": null
 				}
 			]

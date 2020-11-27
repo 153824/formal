@@ -553,7 +553,7 @@
                                         <view class="lv">{{ util.saveDouble(item.total100) }}</view>
                                     </block>
                                     <block wx:elif="{{ item.scale === 'stanine' }}">
-                                        <view class="name">得分</view>
+                                        <view class="name">得分(满分：9分)</view>
                                         <view class="lv">{{ util.saveDouble(item.totalStanine) }}</view>
                                     </block>
                                 </block>
@@ -571,7 +571,7 @@
                                         <view class="lv">{{ util.saveDouble(item.sumOfAverage100) }}</view>
                                     </block>
                                     <block wx:elif="{{ item.scale === 'stanine' }}">
-                                        <view class="name">得分</view>
+                                        <view class="name">得分(满分：9分)</view>
                                         <view class="lv">{{ util.saveDouble(item.sumOfAverageStanine) }}</view>
                                     </block>
                                 </block>

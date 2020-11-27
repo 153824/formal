@@ -552,6 +552,10 @@
                                         <view class="name">得分</view>
                                         <view class="lv">{{ util.saveDouble(item.total100) }}</view>
                                     </block>
+                                    <block wx:elif="{{ item.scale === 'stanine' }}">
+                                        <view class="name">得分</view>
+                                        <view class="lv">{{ util.saveDouble(item.totalStanine) }}</view>
+                                    </block>
                                 </block>
                                 <block wx:if="{{ item.showScore === 'average' }}">
                                     <block wx:if="{{ item.scale === 'origin' }}">
@@ -565,6 +569,10 @@
                                     <block wx:elif="{{ item.scale === 'centesimal' }}">
                                         <view class="name">得分</view>
                                         <view class="lv">{{ util.saveDouble(item.sumOfAverage100) }}</view>
+                                    </block>
+                                    <block wx:elif="{{ item.scale === 'stanine' }}">
+                                        <view class="name">得分</view>
+                                        <view class="lv">{{ util.saveDouble(item.sumOfAverageStanine) }}</view>
                                     </block>
                                 </block>
                             </view>

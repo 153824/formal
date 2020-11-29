@@ -19,6 +19,7 @@ Page({
         statusbarHeight: app.globalData.statusbarHeight,
         titleHeight: app.globalData.titleHeight,
         loading: "loading...",
+        smallImg: ""
     },
 
     /**
@@ -40,6 +41,7 @@ Page({
         this.setData({
             isWxWork: app.wxWorkInfo.isWxWork
         })
+        this._loadEvaluationDetail(id);
     },
 
     /**
@@ -52,7 +54,8 @@ Page({
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function () {},
+    onShow: function () {
+    },
     changeCount: function (e) {
         const that = this;
         const t = e.currentTarget.dataset.t;
@@ -101,8 +104,8 @@ Page({
             return;
         }
         try {
-            wx.uma.trackEvent('1602212964270',{name: evaluationName,isFree: isFree})
-        }catch (e) {
+            wx.uma.trackEvent('1602212964270', {name: evaluationName, isFree: isFree})
+        } catch (e) {
 
         }
         app.doAjax({
@@ -152,16 +155,16 @@ Page({
         let {img} = this.data.sharePaperInfo;
         wx.downloadFile({
             url: img,
-            success: res=>{
+            success: res => {
                 wx.saveImageToPhotosAlbum({
                     filePath: res.tempFilePath,
-                    success: res=>{
+                    success: res => {
                         wx.showModal({
                             title: "保存成功",
                             icon: "none"
                         })
                     },
-                    fail: err=>{
+                    fail: err => {
                         wx.showModal({
                             title: "保存失败",
                             icon: "none"
@@ -169,7 +172,7 @@ Page({
                     }
                 });
             },
-            fail: err=>{
+            fail: err => {
                 wx.showModal({
                     title: "下载图片失败",
                     icon: "none"
@@ -178,13 +181,29 @@ Page({
         })
     },
 
+    _loadEvaluationDetail(evaluationId) {
+        const _this = this;
+        app.doAjax({
+            url: "evaluations/outline",
+            method: "get",
+            data: {
+                evaluationId: evaluationId
+            },
+            success: res => {
+                _this.setData({
+                    smallImg: res.smallImg
+                });
+            }
+        })
+    },
+
     onShareAppMessage(options) {
-        const {evaluationName} = this.data;
-        const {img,smallImg=""} = this.data.sharePaperInfo;
+        const {evaluationName,smallImg,sharePaperInfo} = this.data;
+        const {releaseRecordId} = sharePaperInfo;
         return {
-            title: `您有一个测评邀请，请尽快作答`,
-            path: `/common/webView?img=${img}&title=true`,
+            title: `邀您参加《${evaluationName}》`,
+            path: `pages/work-base/components/guide/guide?releaseRecordId=${releaseRecordId}`,
             imageUrl: smallImg,
         }
     }
-})
+});

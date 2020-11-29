@@ -14,7 +14,7 @@
 		<block wx:if="{{ reportPermit == 'APPROVED' }}">
 			<button style="width:260px;" class="reportBtn" bindtap="toDetail">查看报告</button>
 		</block>
-		<view class="reportBtn" bindtap="toApply" wx:if="{{ reportPermit == 'DISABLED' }}">向HR申请查看报告</view>
+		<view class="reportBtn" bindtap="toApply" wx:if="{{ reportPermit == 'DISABLE' }}">向HR申请查看报告</view>
 	</view>
 	<view class="mpView" wx:else>
 		<image src="../../images/done@icon-checked.png"></image>

@@ -59,7 +59,7 @@
 .van-grid-custom{
     margin-bottom: -25rpx;
     padding-left: 35rpx;
-    transform: rotate(-90deg);
+    /*transform: rotate(-90deg);*/
     transform-origin: center center;
 }
 .van-grid-icon-custom{
@@ -70,7 +70,7 @@
 }
 .van-grid-content-custom{
     transform-origin: center center;
-    transform: rotate(90deg);
+    /*transform: rotate(90deg);*/
     background-color: rgba(251, 251, 251, 1);
     border-radius: 10rpx;
 }
@@ -121,7 +121,7 @@
     color: rgba(200, 200, 200, 1);
     background-color: rgba(0, 0, 0, 0);
     border-radius: 20rpx;
-    transform: rotate(90deg);
+    /*transform: rotate(90deg);*/
 }
 .axis-data-y{
     display: flex;

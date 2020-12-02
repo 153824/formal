@@ -480,11 +480,11 @@ Page({
             let answeTimeSatr = +res.report.answeTimeSatr;
             let answeTimeEnd = +res.report.answeTimeEnd;
             let time = +res.report.timeTotal;
-            if (time <= answeTimeSatr) {
+            if (time < answeTimeSatr) {
                 //作答时长偏短
                 timeNormal = 2;
             }
-            if (time >= answeTimeEnd) {
+            if (time > answeTimeEnd) {
                 //作答时长偏长
                 timeNormal = 3;
             }
@@ -601,15 +601,14 @@ Page({
             let answeTimeSatr = +res.report.answeTimeSatr;
             let answeTimeEnd = +res.report.answeTimeEnd;
             let time = +res.report.timeTotal;
-            if (time <= answeTimeSatr) {
+            if (time < answeTimeSatr) {
                 //作答时长偏短
                 timeNormal = 2;
             }
-            if (time >= answeTimeEnd) {
+            if (time > answeTimeEnd) {
                 //作答时长偏长
                 timeNormal = 3;
             }
-            res.report["timeNormal"] = timeNormal;
             res.report["timeNormal"] = timeNormal;
             radarValue = {};
             radarIndicator = {};

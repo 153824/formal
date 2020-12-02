@@ -18,7 +18,7 @@
             <text>LINWEI等5人已读</text>
           </view> -->
             <view class="time">
-                <text>报告生成时间：{{report.finishTime}}</text>
+                <text>报告生成时间：{{report.reportGeneratedAt}}</text>
             </view>
         </view>
         <view class="spaceView" style="height:40rpx;"></view>
@@ -400,7 +400,7 @@
                 <text class="underLineBg">{{evaluationInfo.evaluationName}}</text>
             </view>
             <view class="time">
-                <text>报告生成时间：{{report.finishTime}}</text>
+                <text>报告生成时间：{{report.reportGeneratedAt}}</text>
             </view>
         </view>
         <view class="spaceView" style="height:40rpx;"></view>

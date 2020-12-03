@@ -1,14 +1,7 @@
 const app = getApp();
 Page({
     data: {
-        childDepart: [
-            {
-                value: "5f9a66d5e128c35a1d28ab5d",
-                label: "罗课",
-                leaf: false,
-                parentId: null
-            }
-        ],
+        childDepart: [],
         checkedDepart: "",
         routeMap: [],
         evaluationId: ""

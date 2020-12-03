@@ -72,7 +72,7 @@ Component({
             this.setData({
                 searchPage,
             });
-            this.searchReport({detail: e.currentTarget.dataset.keyword});
+            this.searchReport({detail: e.currentTarget.dataset.keyword},false);
         },
 
         clearContent: function () {
@@ -84,10 +84,12 @@ Component({
             }
         },
 
-        searchReport: debounce(function (e) {
+        searchReport: debounce(function (e,clean=true) {
             const that = this;
             let {searchPage, searchReportList} = this.data;
-            // searchReportList = [];
+            if(clean){
+                searchReportList = [];
+            }
             try {
                 if (!e.detail) {
                     that.setData({
@@ -103,7 +105,7 @@ Component({
                     });
                 }
             } catch (e) {
-
+                throw e;
             }
             app.doAjax({
                 url: `reports`,
@@ -128,7 +130,7 @@ Component({
                             searchPage: searchPage
                         });
                         app.toast("已为您加载所有相关内容");
-                    }else{
+                    } else {
                         that.setData({
                             searchReportList: searchReportList.concat(res.data),
                             searchPage
@@ -140,15 +142,17 @@ Component({
 
         getReportListAgain: function () {
             const {keyword} = this.data;
-            if(!keyword){
+            if (!keyword) {
                 const page = 1;
                 this.loadReportList(page);
             }
         }
     },
     pageLifetimes: {
-        show: function () {},
-        hide() {}
+        show: function () {
+        },
+        hide() {
+        }
     },
     lifetimes: {
         attached() {

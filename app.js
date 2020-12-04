@@ -123,12 +123,6 @@ App({
         const scene = wx.getLaunchOptionsSync();
         if (this.wxWorkInfo.isWxWork) {
             const that = this;
-            this.doAjax({
-                url: 'wework/app/health',
-                method: 'get',
-                noLoading: true,
-                success: function (res) {}
-            });
             wx.qy.login({
                 success: res => {
                     that.wxWorkUserLogin(res.code).then(data => {}).catch(err => {});

@@ -247,6 +247,18 @@
   font-weight: 500;
   color: #12132F;
 }
+.dispatch-info-wrapper{
+  display: flex;
+  justify-content: center;
+  margin: 60rpx 0 0 0;
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #12132F;
+}
+.dispatch-count{
+  color: rgba(53, 62, 232, 1);
+}
 @keyframes loading {
   from{
     transform: rotate(0deg);

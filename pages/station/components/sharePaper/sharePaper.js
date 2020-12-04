@@ -21,7 +21,8 @@ Page({
         loading: "loading...",
         dropDownOps: [],
         dropdownValue: 0,
-        isWxWork: false
+        isWxWork: false,
+        dispatchInfo: {}
     },
 
     /**
@@ -64,13 +65,15 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-        const {evaluationId} = this.data;
+        const {evaluationId,isWxWork} = this.data;
         const dropDownOps = wx.getStorageSync(`checked-depart-info-${evaluationId}`);
-        if (dropDownOps) {
+        if (dropDownOps && isWxWork) {
+            this.selectComponent("#drop-item").toggle(false);
+            this.loadDispatchInfo(dropDownOps.value);
             this.setData({
                 dropDownOps: [dropDownOps],
                 dropdownValue: dropDownOps.value
-            })
+            });
         }
     },
     changeCount: function (e) {
@@ -199,9 +202,28 @@ Page({
     },
 
     open: function () {
+        this.selectComponent("#drop-item").toggle(false);
         const {evaluationId} = this.data;
         wx.navigateTo({
-            url: `/pages/station/components/depart/depart?evaluationId=${evaluationId}`
+            url: `/pages/station/components/depart/depart?evaluationId=${evaluationId}`,
+        })
+    },
+
+    loadDispatchInfo(departmentId){
+        const _this = this;
+        const {evaluationId} = this.data;
+        app.doAjax({
+            url: `wework/evaluations/${evaluationId}/inventory/available/ma`,
+            method: "get",
+            data: {
+                evaluationId: evaluationId,
+                departmentId: departmentId
+            },
+            success: (res)=>{
+                _this.setData({
+                    dispatchInfo: res
+                })
+            }
         })
     },
 

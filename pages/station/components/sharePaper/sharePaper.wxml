@@ -35,13 +35,17 @@
             <view class="depart">
                 <van-dropdown-menu direction="down" overlay="{{false}}" active-color="rgba(53, 62, 232, 1)">
                     <block wx:if="{{dropdownValue !== 0}}">
-                        <van-dropdown-item bind:open="open" value="{{ dropdownValue }}" options="{{ dropDownOps }}" />
+                        <van-dropdown-item id="drop-item" bind:open="open" value="{{ dropdownValue }}" options="{{ dropDownOps }}" toggle="{{false}}"/>
                     </block>
                     <block wx:else>
-                        <van-dropdown-item bind:open="open" title="被测者归属部门" value="{{ dropdownValue }}" options="{{ dropDownOps }}" />
+                        <van-dropdown-item id="drop-item" bind:open="open" title="被测者归属部门" value="{{ dropdownValue }}" options="{{ dropDownOps }}" />
                     </block>
                 </van-dropdown-menu>
             </view>
+        </view>
+        <view class="dispatch-info-wrapper" wx:if="{{isWxWork}}">
+            可用数量：
+            <text class="{{dispatchInfo.deptId ? 'dispatch-count' : ''}}">{{dispatchInfo.deptId ? dispatchInfo.inventory : "选取部门后显示"}}</text>
         </view>
     </view>
     <view class="inviteBtn" bindtap="toSharePaper">生成测评邀请函</view>

@@ -87,12 +87,12 @@
 					"id": 2,
 					"name": "报告详情",
 					"pathName": "pages/report/report",
-					"query": "receiveRecordId=5fc076e5b6cbf63b3487e663",
+					"query": "receiveRecordId=5fb63e85c06a1367b213c044",
 					"scene": null
 				},
 				{
 					"id": 3,
-					"name": "作答记录",
+					"name": "作答記錄",
 					"pathName": "pages/work-base/components/track-detail/track-detail",
 					"query": "releaseRecordId=5f813067d5a972193142e46e&sharedAt=1602310089498&tabIndex=1",
 					"scene": null
@@ -101,7 +101,7 @@
 					"id": 4,
 					"name": "测评详情",
 					"pathName": "pages/station/components/detail/detail",
-					"query": "id=5ee03a90423a630006718718",
+					"query": "id=5fb365eab3ee12146116f5cf",
 					"scene": null
 				},
 				{
@@ -115,7 +115,7 @@
 					"id": 6,
 					"name": "小程序码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=5fc3634a47f7b514a7496d4c",
+					"query": "scene=5fbc6bcbf3656a76c711a4b8",
 					"scene": null
 				},
 				{
@@ -143,7 +143,7 @@
 					"id": 10,
 					"name": "小层序码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=5fc35e571722f612eb5ef3cd",
+					"query": "scene=5fb4eb6dca59954c1c193067",
 					"scene": null
 				},
 				{
@@ -186,20 +186,6 @@
 					"name": "完成页面",
 					"pathName": "pages/work-base/components/done/done",
 					"query": "",
-					"scene": null
-				},
-				{
-					"id": 17,
-					"name": "选取部门",
-					"pathName": "pages/station/components/depart/depart",
-					"query": "evaluationId=5e6ee5e3546eaad5ca38cc34",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "发放测评",
-					"pathName": "pages/station/components/sharePaper/sharePaper",
-					"query": "evaluationId=5e6ee5e3546eaad5ca38cc34",
 					"scene": null
 				}
 			]

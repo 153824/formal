@@ -288,7 +288,7 @@ App({
                             content: '网络故障，请退出重新进入小程序。',
                             showCancel: !1,
                             confirmText: '确定',
-                            confirmColor: '#0099ff',
+                            confirmColor: 'rgb(0,153,255)',
                             success: function (e) {
                             },
                         });

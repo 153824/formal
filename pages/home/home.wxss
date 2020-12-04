@@ -4,7 +4,7 @@
 .topTestView {
   height: 80rpx;
   line-height: 80rpx;
-  color: #5960ed;
+  color: rgb(89,96,237);
   font-size: 24rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
@@ -96,7 +96,7 @@
 .threebox>view {
   width: 102rpx;
   height: 102rpx;
-  background-color: #5c78f1;
+  color: rgb(92,120,241);
   border-radius: 50%;
 }
 
@@ -111,7 +111,7 @@
   font-size: 28rpx;
   letter-spacing: 1px;
   line-height: 40rpx;
-  color: #333541;
+  color: rgb(51,53,65);
 }
 
 /* function-set */
@@ -121,7 +121,7 @@
   align-items: center;
   margin: 30rpx 80rpx 0 80rpx;
   font-size: 28rpx;
-  color: #070922;
+  color: rgb(7,9,34);
   font-weight: 400;
 }
 
@@ -135,19 +135,19 @@
 }
 
 .liner-yellow{
-  background: #3A5EFF linear-gradient(180deg, #FFD826 0%, #F6AB04 100%);
+  background: rgb(58,94,255) linear-gradient(180deg, rgb(255,216,38) 0%, rgb(246,171,4) 100%);
 }
 
 .liner-blue{
-  background: #0AC173 linear-gradient(180deg, #57C2FE 0%, #3D79FF 100%);
+  background: rgb(10,193,115) linear-gradient(180deg, rgb(87,194,254) 0%, rgb(61,121,255) 100%);
 }
 
 .liner-green{
-  background: #3A5EFF linear-gradient(180deg, #52E4C3 0%, #10BB97 100%);
+  background: rgb(58,94,255) linear-gradient(180deg, rgb(82,228,195) 0%, rgb(16,187,151) 100%);
 }
 
 .liner-orange{
-  background: #0AC173 linear-gradient(180deg, #FE9E58 0%, #FE662C 100%);
+  background: rgb(10,193,115) linear-gradient(180deg, rgb(254,158,88) 0%, rgb(254,102,44) 100%);
 }
 
 .function-set-child{
@@ -231,7 +231,7 @@
 .choiceleft>text {
   font-size: 34rpx;
   line-height: 48rpx;
-  color: #323541;
+  color: rgb(50,53,65);
   font-weight: 500;
 }
 
@@ -243,7 +243,7 @@
 .choiceright>text {
   font-size: 28rpx;
   line-height: 40rpx;
-  color: #5c6171;
+  color: rgb(92,97,113);
   margin-right: 20rpx;
 }
 
@@ -283,7 +283,7 @@
 .bluebox {
   width: 140rpx;
   height: 48rpx;
-  background-color: #2259ef;
+  background-color: rgb(34,89,239);
   position: absolute;
   bottom: 12rpx;
   left: 8rpx;
@@ -338,7 +338,7 @@
 .bodythird text {
   font-size: 24rpx;
   line-height: 34rpx;
-  color: #5c6171;
+  color: rgb(92,97,113);
 }
 
 /* recomend-reading */
@@ -408,7 +408,7 @@
 .rehead>text {
   font-size: 34rpx;
   line-height: 48rpx;
-  color: #323541;
+  color: rgb(50,53,65);
   font-weight: 500;
 }
 
@@ -423,7 +423,7 @@
   width: 160rpx;
   height: 160rpx;
   border-radius: 5px;
-  background-color: #5c78f1;
+  background-color: rgb(92,120,241);
   margin-left: 46rpx;
 }
 
@@ -437,13 +437,13 @@
   font-size: 28rpx;
   letter-spacing: 1px;
   line-height: 40rpx;
-  color: #333;
+  color: rgb(51,51,51);
   font-weight: 600;
 }
 
 .retwo {
   font-size: 22rpx;
-  color: #999;
+  color: rgb(153,153,153);
   line-height: 32rpx;
   display: flex;
   align-items: center;
@@ -453,7 +453,7 @@
 .rebodyline {
   width: 2rpx;
   height: 32rpx;
-  background-color: #e7e7e7;
+  background-color: rgb(231,231,231);
   margin: 0 38rpx;
 }
 
@@ -681,7 +681,7 @@
   content: '';
   width: 80rpx;
   height: 12rpx;
-  background-color: #353EE8;
+  background-color: rgb(53,62,232);
 }
 /*首页骨架屏*/
 .skeleton-index-page-wrapper{

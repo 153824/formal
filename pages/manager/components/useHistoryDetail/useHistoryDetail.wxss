@@ -93,7 +93,7 @@ page{
 
 }
 .rate-info > text{
-    color: #171C69;
+    color: rgb(23,28,105);
     font-size: 28rpx;
     font-weight: 400;
 }

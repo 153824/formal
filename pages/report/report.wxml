@@ -242,41 +242,29 @@
                                       data-i="{{i}}">{{node.name}}：
                                     <block wx:if="{{ item.showSubScore === 'total' }}">
                                         <block wx:if="{{ item.subScale === 'origin' }}">
-                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
-                                                }} {{util.saveDouble(node.total)}}分
-                                            </text>
+                                            <text style="color:{{node.color}};">{{util.saveDouble(node.total)}}分 {{ item.showSubLevel ? node.lvName : "" }}</text>
                                             <image src="./images/report@icon-arrow.png"></image>
                                         </block>
                                         <block wx:elif="{{ item.subScale === 'decimal' }}">
-                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
-                                                }} {{util.saveDouble(node.total10)}}分
-                                            </text>
+                                            <text style="color:{{node.color}};">{{util.saveDouble(node.total10)}}分 {{ item.showSubLevel ? node.lvName : "" }}</text>
                                             <image src="./images/report@icon-arrow.png"></image>
                                         </block>
                                         <block wx:elif="{{ item.subScale === 'centesimal' }}">
-                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
-                                                }} {{util.saveDouble(node.total100)}}分
-                                            </text>
+                                            <text style="color:{{node.color}};">{{util.saveDouble(node.total100)}}分 {{ item.showSubLevel ? node.lvName : "" }}</text>
                                             <image src="./images/report@icon-arrow.png"></image>
                                         </block>
                                     </block>
                                     <block wx:elif="{{ item.showSubScore === 'average' }}">
                                         <block wx:if="{{ item.subScale === 'origin' }}">
-                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
-                                                }} {{util.saveDouble(node.average)}}分
-                                            </text>
+                                            <text style="color:{{node.color}};">{{util.saveDouble(node.average)}}分 {{ item.showSubLevel ? node.lvName : "" }}</text>
                                             <image src="./images/report@icon-arrow.png"></image>
                                         </block>
                                         <block wx:elif="{{ item.subScale === 'decimal' }}">
-                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
-                                                }} {{util.saveDouble(node.av10)}}分
-                                            </text>
+                                            <text style="color:{{node.color}};">{{util.saveDouble(node.av10)}}分 {{ item.showSubLevel ? node.lvName : "" }}</text>
                                             <image src="./images/report@icon-arrow.png"></image>
                                         </block>
                                         <block wx:elif="{{ item.subScale === 'centesimal' }}">
-                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
-                                                }} {{util.saveDouble(node.av100)}}分
-                                            </text>
+                                            <text style="color:{{node.color}};">{{util.saveDouble(node.av100)}}分 {{ item.showSubLevel ? node.lvName : "" }}</text>
                                             <image src="./images/report@icon-arrow.png"></image>
                                         </block>
                                     </block>
@@ -297,9 +285,7 @@
                             <view class="item">
                                 <view class="title {{node.active}}" bindtap="activeItem" data-index="{{index}}"
                                       data-i="{{i}}">{{node.name}}：
-                                    <text style="color:{{node.color}};">{{node.lvName}}
-                                        {{util.saveDouble(node.av10)}}分
-                                    </text>
+                                    <text style="color:{{node.color}};">{{util.saveDouble(node.av10)}}分 {{node.lvName}}</text>
                                     <image src="./images/report@icon-arrow.png"></image>
                                 </view>
                                 <view class="contentMsg" wx:if="{{node.active}}">
@@ -642,60 +628,42 @@
                                           data-i="{{i}}">{{node.name}}：
                                         <block wx:if="{{ item.showSubScore === 'total' }}">
                                             <block wx:if="{{ item.subScale === 'origin' }}">
-                                                <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
-                                                    }} {{util.saveDouble(node.subTotal)}}分
-                                                </text>
+                                                <text style="color:{{node.color}};">{{util.saveDouble(node.subTotal)}}分 {{ item.showSubLevel ? node.lvName : "" }}</text>
                                                 <image src="./images/report@icon-arrow.png"></image>
                                             </block>
                                             <block wx:elif="{{ item.subScale === 'decimal' }}">
-                                                <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
-                                                    }} {{util.saveDouble(node.subTotal10)}}分
-                                                </text>
+                                                <text style="color:{{node.color}};">{{util.saveDouble(node.subTotal10)}}分 {{ item.showSubLevel ? node.lvName : "" }}</text>
                                                 <image src="./images/report@icon-arrow.png"></image>
                                             </block>
                                             <block wx:elif="{{ item.subScale === 'centesimal' }}">
-                                                <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
-                                                    }} {{util.saveDouble(node.subTotal100)}}分
-                                                </text>
+                                                <text style="color:{{node.color}};">{{util.saveDouble(node.subTotal100)}}分 {{ item.showSubLevel ? node.lvName : "" }}</text>
                                                 <image src="./images/report@icon-arrow.png"></image>
                                             </block>
                                             <block wx:elif="{{ item.subScale === 'stanine' }}">
-                                                <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
-                                                    }} {{node.subTotalStanine}}分
-                                                </text>
+                                                <text style="color:{{node.color}};">{{node.subTotalStanine}}分 {{ item.showSubLevel ? node.lvName : "" }}</text>
                                                 <image src="./images/report@icon-arrow.png"></image>
                                             </block>
                                         </block>
                                         <block wx:elif="{{ item.showSubScore === 'average' }}">
                                             <block wx:if="{{ item.subScale === 'origin' }}">
-                                                <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
-                                                    }} {{util.saveDouble(node.average)}}分
-                                                </text>
+                                                <text style="color:{{node.color}};">{{util.saveDouble(node.average)}}分 {{ item.showSubLevel ? node.lvName : "" }}</text>
                                                 <image src="./images/report@icon-arrow.png"></image>
                                             </block>
                                             <block wx:elif="{{ item.subScale === 'decimal' }}">
-                                                <text style="color:{{node.color}};">{{ item.showSubLevel ?
-                                                    node.lvName : "" }} {{util.saveDouble(node.average10)}}分
-                                                </text>
+                                                <text style="color:{{node.color}};">{{util.saveDouble(node.average10)}}分 {{ item.showSubLevel ? node.lvName : "" }}</text>
                                                 <image src="./images/report@icon-arrow.png"></image>
                                             </block>
                                             <block wx:elif="{{ item.subScale === 'centesimal' }}">
-                                                <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
-                                                    }} {{util.saveDouble(node.average100)}}分
-                                                </text>
+                                                <text style="color:{{node.color}};">{{util.saveDouble(node.average100)}}分 {{ item.showSubLevel ? node.lvName : "" }}</text>
                                                 <image src="./images/report@icon-arrow.png"></image>
                                             </block>
                                             <block wx:elif="{{ item.subScale === 'stanine' }}">
-                                                <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : ""
-                                                    }} {{node.averageStanine}}分
-                                                </text>
+                                                <text style="color:{{node.color}};">{{node.averageStanine}}分 {{ item.showSubLevel ? node.lvName : "" }}</text>
                                                 <image src="./images/report@icon-arrow.png"></image>
                                             </block>
                                         </block>
                                         <block wx:elif="{{ item.showSubScore === 'none' }}">
-                                            <text style="color:{{node.color}};">
-                                                {{ item.showSubLevel ? node.lvName : "" }}
-                                            </text>
+                                            <text style="color:{{node.color}};">{{ item.showSubLevel ? node.lvName : "" }}</text>
                                             <image src="./images/report@icon-arrow.png"></image>
                                         </block>
                                     </view>
@@ -715,9 +683,7 @@
                                 <view class="item">
                                     <view class="title {{node.active}}" bindtap="activeItem" data-index="{{index}}"
                                           data-i="{{i}}">{{node.name}}：
-                                        <text style="color:{{node.color}};">{{node.lvName}}
-                                            {{util.saveDouble(node.av10)}}分
-                                        </text>
+                                        <text style="color:{{node.color}};">{{util.saveDouble(node.av10)}}分 {{node.lvName}}</text>
                                         <image src="./images/report@icon-arrow.png"></image>
                                     </view>
                                     <view class="contentMsg" wx:if="{{node.active}}">

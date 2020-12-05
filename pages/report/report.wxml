@@ -32,8 +32,8 @@
                 <view class="flex-main">
                     <view class="name">{{participantInfo.username || participantInfo.nickname || "好啦访客"}}</view>
                     <view class="otherMsg">
-                        <text>年龄：{{participantInfo.age || "——"}}</text>
-                        <text>学历：{{participantInfo.educationName || "——"}}</text>
+                        <text>年龄：{{participantInfo.age || "—"}}</text>
+                        <text>学历：{{participantInfo.educationName || "—"}}</text>
                     </view>
                 </view>
             </view>
@@ -401,8 +401,8 @@
                 <view class="flex-main">
                     <view class="name">{{participantInfo.username || participantInfo.nickname}}</view>
                     <view class="otherMsg">
-                        <text>年龄：{{participantInfo.age}}</text>
-                        <text>学历：{{participantInfo.educationName}}</text>
+                        <text>年龄：{{participantInfo.age || "—"}}</text>
+                        <text>学历：{{participantInfo.educationName || "—"}}</text>
                     </view>
                 </view>
             </view>

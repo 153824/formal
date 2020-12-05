@@ -23,7 +23,8 @@ Page({
         dropDownOps: [],
         dropdownValue: 0,
         isWxWork: false,
-        dispatchInfo: {}
+        dispatchInfo: {},
+        defaultDeptId: ""
     },
 
     /**
@@ -65,6 +66,7 @@ Page({
                         }
                     ],
                     dropdownValue: value,
+                    defaultDeptId: value
                 })
                 this.loadDispatchInfo(value);
             })
@@ -146,7 +148,8 @@ Page({
             maxCount,
             reportMeet,
             dispatchInfo,
-            isWxWork
+            isWxWork,
+            defaultDeptId
         } = that.data;
         console.log("dispatchInfo.count: ",dispatchInfo.inventory);
         let costNum = count;
@@ -175,7 +178,7 @@ Page({
         };
         if(this.data.isWxWork){
             try {
-                releaseInfo.deptId = wx.getStorageSync(`checked-depart-info-${evaluationId}`).value;
+                releaseInfo.deptId = wx.getStorageSync(`checked-depart-info-${evaluationId}`).value || defaultDeptId;
             }catch (e) {
                 throw e;
             }

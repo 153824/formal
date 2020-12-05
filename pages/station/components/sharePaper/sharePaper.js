@@ -69,7 +69,6 @@ Page({
                 this.loadDispatchInfo(value);
             })
         }
-        })
         this._loadEvaluationDetail(id);
     },
 

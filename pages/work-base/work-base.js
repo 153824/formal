@@ -168,9 +168,10 @@ Page({
         if (isWxWork && isWxWorkAdmin) {
             const getMyEvaluationPromise = new Promise((resolve, reject) => {
                 app.doAjax({
-                    url: 'inventories',
+                    url: 'inventories/we_work',
                     method: 'get',
                     data: {
+                        funcCode: "evaluationManage",
                         teamId: app.teamId || wx.getStorageSync("GET_MY_TEAM_LIST").objectId,
                         page: 1,
                         pageSize: 3,

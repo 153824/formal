@@ -2,7 +2,7 @@
 
 .pageView {
   position: absolute;
-  top: 42%;
+  top: 50%;
   left: 32rpx;
   right: 32rpx;
   transform: translateY(-50%);
@@ -25,7 +25,6 @@
 }
 
 .content {
-  height: 395rpx;
   margin: auto;
   padding: 96rpx 40rpx;
   background: #07092208;
@@ -229,6 +228,36 @@
 .van-button-custom{
   font-size: 32rpx !important;
   font-weight: 400;
+}
+.department-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.depart{
+  position: relative;
+  width: 100%;
+  margin-top: 70rpx;
+}
+.van-dropdown-item--down{
+  top: 510px !important;
+}
+.title{
+  font-size: 16px;
+  font-weight: 500;
+  color: #12132F;
+}
+.dispatch-info-wrapper{
+  display: flex;
+  justify-content: center;
+  margin: 60rpx 0 0 0;
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #12132F;
+}
+.dispatch-count{
+  color: rgba(53, 62, 232, 1);
 }
 @keyframes loading {
   from{

@@ -30,25 +30,37 @@
                 <text>允许</text>
             </view>
         </view>
+        <view wx:if="{{isWxWork}}" class="department-wrapper">
+            <text class="title">被测者归属部门</text>
+            <view class="depart">
+                <van-dropdown-menu direction="down" overlay="{{false}}" active-color="rgba(53, 62, 232, 1)">
+                    <van-dropdown-item id="drop-item" bind:open="open" value="{{ dropdownValue }}" options="{{ dropDownOps }}"/>
+                </van-dropdown-menu>
+            </view>
+        </view>
+        <view class="dispatch-info-wrapper" wx:if="{{isWxWork}}">
+            可用数量：
+            <text class="{{dispatchInfo.deptId ? 'dispatch-count' : ''}}">{{dispatchInfo.deptId ? dispatchInfo.inventory : "选取部门后显示"}}</text>
+        </view>
     </view>
     <view class="inviteBtn" bindtap="toSharePaper">生成测评邀请函</view>
 </view>
-<view class="datibox" wx:if="{{sharePaperInfo.img}}" catchtouchmove="true" style="z-index: 999;">
+<view class="datibox" wx:if="{{sharePaperInfo.invitationImgUrl}}" catchtouchmove="true" style="z-index: 999;">
     <block wx:if="{{!isWxWork}}">
         <view style="color:#FFFFFFFF;font-size: 32rpx;font-weight: 600;margin-top: 68rpx;">长按下图保存，可发放至以下招聘渠道</view>
         <image src="../../images/sharePaper@banner-share-platform.png"
                style="width: 484rpx;min-height: 56rpx;max-height: 56rpx;margin: 24rpx 0 68rpx 0;"></image>
     </block>
     <view class="daticenterbox">
-        <van-image width="556rpx" height="990rpx" src="{{sharePaperInfo.img}}" lazy-load show-loading use-loading-slot
-                   fill
+        <van-image width="556rpx" height="990rpx" src="{{sharePaperInfo.invitationImgUrl}}" lazy-load
+                   show-loading use-loading-slot fill
                    show-menu-by-longpress="{{isWxWork ? false : true}}"
         >
             <van-loading slot="loading" type="spinner" size="88" vertical>
                 <image src="../../../../images/icon/icon@icon-loading.png" class="loading"></image>
             </van-loading>
         </van-image>
-        <!--    <image class="daticenterboximg" src="{{sharePaperInfo.img}}" show-menu-by-longpress="true"></image>-->
+        <!--    <image class="daticenterboximg" src="{{sharePaperInfo.invitationImgUrl}}" show-menu-by-longpress="true"></image>-->
         <image class="daticlosebtn" bindtap="closeQrCode" src="../../images/sharePaper@icon-close.png"></image>
         <view wx:if="{{isWxWork}}" class="button-group">
             <van-button custom-style="padding-left: 83rpx;"

@@ -4,7 +4,8 @@ Page({
         page: 1,
         myEvaluation: [],
         pixelRate: app.globalData.pixelRate,
-        windowHeight: 0
+        windowHeight: 0,
+        isWxWork: app.wxWorkInfo.isWxWork
     },
     onLoad: function (options) {
         this.loadMyEvaluation();

@@ -1,0 +1,48 @@
+.depart-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20rpx;
+    height: 100rpx;
+    background: #FFFFFF;
+    border-bottom: 2rpx solid rgba(211, 211, 211, 0.5);
+}
+.depart-name{
+    width: 80vw;
+    height: 100rpx;
+    line-height: 100rpx;
+    font-size: 30rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #303113;
+}
+.custom-icon{
+    /*font-size: .5em !important;*/
+    /*width: 32rpx !important;*/
+    /*height: 32rpx !important;*/
+}
+.scroll-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.scroll-item,.scroll-wrapper{
+    line-height: 70rpx;
+    padding: 0rpx 15rpx;
+    height: 70rpx;
+    width: calc(100vw - 60rpx);
+}
+.char-icon{
+    margin: 0 20rpx;
+    width: 14rpx;
+    height: 19rpx;
+}
+.display-wrapper{
+    overflow: hidden;
+    white-space: nowrap;
+}
+.display-scroll-item{
+    height: calc(100vh - 178rpx);
+}

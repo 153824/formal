@@ -5,7 +5,7 @@
             <view class="program-body" data-name="{{ evaluationItem.evaluationName }}">
                 <image src="{{ evaluationItem.smallImg || 'http://img2.luoke101.com/2020-06-17T10:10:31.391ZnormalImg.png' }}"
                        style="width: 114rpx;height: 114rpx;border-radius: 15rpx;"></image>
-                <view class="evaluation-wrapper" bindtap="goToEvaluationDetail"
+                <view class="evaluation-wrapper" bindtap="{{ isWxWork ? '':'goToEvaluationDetail' }}"
                       data-evaluation-id="{{ evaluationItem.evaluationId }}">
                     <view class="evaluation-name">
                         {{evaluationItem.evaluationName}}

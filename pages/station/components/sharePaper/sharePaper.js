@@ -20,6 +20,10 @@ Page({
         titleHeight: app.globalData.titleHeight,
         loading: "loading...",
         smallImg: ""
+        dropDownOps: [],
+        dropdownValue: 0,
+        isWxWork: false,
+        dispatchInfo: {}
     },
 
     /**
@@ -40,6 +44,31 @@ Page({
         });
         this.setData({
             isWxWork: app.wxWorkInfo.isWxWork
+        });
+        let storageInfo = wx.getStorageInfoSync().keys;
+        let departInfo = wx.getStorageSync(`checked-depart-info-${id}`);
+        const reg = /^checked-depart-info-.*/ig;
+        storageInfo.forEach((item, key) => {
+            if (reg.test(item) && !departInfo) {
+                wx.removeStorageSync(item);
+            }
+        });
+        if(!departInfo){
+            this._loadRootDepart().then(res=>{
+                const {label,value} = res.data[0];
+                console.log("res.data: ",res.data);
+                this.setData({
+                    dropDownOps: [
+                        {
+                            text: label,
+                            value: value
+                        }
+                    ],
+                    dropdownValue: value,
+                })
+                this.loadDispatchInfo(value);
+            })
+        }
         })
         this._loadEvaluationDetail(id);
     },
@@ -55,7 +84,21 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
+        const {evaluationId,isWxWork} = this.data;
+        const dropDownOps = wx.getStorageSync(`checked-depart-info-${evaluationId}`);
+        if (dropDownOps && isWxWork) {
+            this.loadDispatchInfo(dropDownOps.value);
+            this.setData({
+                dropDownOps: [dropDownOps],
+                dropdownValue: dropDownOps.value
+            });
+        }
     },
+
+    onHide() {
+        this.selectComponent("#drop-item").toggle(false);
+    },
+
     changeCount: function (e) {
         const that = this;
         const t = e.currentTarget.dataset.t;
@@ -94,12 +137,28 @@ Page({
     },
     toSharePaper: function () {
         const that = this;
-        let {count, evaluationName, norms, evaluationId, hadBuyout, isFree, maxCount, reportMeet, quesCount, estimatedTime} = that.data;
+        let {
+            count,
+            evaluationName,
+            norms,
+            evaluationId,
+            hadBuyout,
+            isFree,
+            maxCount,
+            reportMeet,
+            dispatchInfo,
+            isWxWork
+        } = that.data;
+        console.log("dispatchInfo.count: ",dispatchInfo.inventory);
         let costNum = count;
         if (!costNum && !hadBuyout && !isFree) {
             return;
         }
-        if (costNum > maxCount && !hadBuyout && !isFree) {
+        if (!isWxWork && costNum > maxCount && !hadBuyout && !isFree) {
+            app.toast("测评可用数量不足");
+            return;
+        }
+        if(isWxWork && !isFree && !hadBuyout && !dispatchInfo.inventory){
             app.toast("测评可用数量不足");
             return;
         }
@@ -108,25 +167,25 @@ Page({
         } catch (e) {
 
         }
+        const releaseInfo = {
+            evaluationId: evaluationId,
+            normId: norms[0].normId,
+            permitSetting: reportMeet === 1 ? "LOOSE" : "STRICT",
+            releaseCount: costNum,
+            entrance: "WECHAT_MA"
+        };
+        if(this.data.isWxWork){
+            try {
+                releaseInfo.deptId = wx.getStorageSync(`checked-depart-info-${evaluationId}`).value;
+            }catch (e) {
+                throw e;
+            }
+            releaseInfo.entrance = "WEWORK_MA";
+        }
         app.doAjax({
-            url: "release/share",
+            url: "../wework/evaluations/share/qr_code",
             method: "post",
-            data: {
-                evaluationInfo: {
-                    evaluationId: evaluationId,
-                    normId: norms[0].normId,
-                    freeEvaluation: isFree,
-                    evaluationName: evaluationName,
-                    quesCount: quesCount,
-                    estimatedTime: estimatedTime,
-                    avatar: app.globalData.userInfo.avatar
-                },
-                releaseInfo: {
-                    permitSetting: reportMeet === 1 ? "LOOSE" : "STRICT",
-                    teamName: app.wxWorkInfo.isWxWork && app.wxWorkInfo.isWxWorkAdmin ? wx.getStorageSync("userInfo").userCompany.name : app.teamName,
-                    releaseCount: costNum
-                }
-            },
+            data: releaseInfo,
             success: function (res) {
                 that.setData({
                     sharePaperInfo: res
@@ -147,7 +206,7 @@ Page({
     saveImage: function () {
         const {sharePaperInfo} = this.data;
         wx.previewImage({
-            urls: [sharePaperInfo.img]
+            urls: [sharePaperInfo.invitationImgUrl]
         })
     },
 
@@ -197,12 +256,57 @@ Page({
         })
     },
 
+    open: function () {
+        const {evaluationId} = this.data;
+        wx.navigateTo({
+            url: `/pages/station/components/depart/depart?evaluationId=${evaluationId}`,
+        })
+    },
+
+    loadDispatchInfo(departmentId){
+        const _this = this;
+        const {evaluationId} = this.data;
+        app.doAjax({
+            url: `wework/evaluations/${evaluationId}/inventory/available/ma`,
+            method: "get",
+            data: {
+                evaluationId: evaluationId,
+                departmentId: departmentId
+            },
+            success: (res)=>{
+                _this.setData({
+                    dispatchInfo: res
+                })
+            }
+        })
+    },
+
+    _loadRootDepart() {
+        const rootDepart = new Promise((resolve, reject) => {
+            app.doAjax({
+                url: 'departments/subdivision',
+                method: 'get',
+                data: {
+                    entrance: 'WEWORK_MA',
+                    funcCode: 'evaluationManage'
+                },
+                success: (res) => {
+                    resolve(res);
+                },
+                fail: (err) => {
+                    reject(err)
+                }
+            })
+        });
+        return rootDepart;
+    },
+
     onShareAppMessage(options) {
-        const {evaluationName,smallImg,sharePaperInfo} = this.data;
-        const {releaseRecordId} = sharePaperInfo;
+        const {evaluationName} = this.data;
+        const {img, smallImg = "",invitationImgUrl} = this.data.sharePaperInfo;
         return {
-            title: `邀您参加《${evaluationName}》`,
-            path: `pages/work-base/components/guide/guide?releaseRecordId=${releaseRecordId}`,
+            title: `您有一个测评邀请，请尽快作答`,
+            path: `/common/webView?img=${invitationImgUrl}&title=true`,
             imageUrl: smallImg,
         }
     }

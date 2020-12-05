@@ -815,7 +815,7 @@
                                     <text></text>
                                     用户选择:
                                     <block wx:for="{{ recordItem.respondIdx }}" wx:for-item="respondItem"
-                                           wx:key="unique">{{util.ASCIIToChar(respondItem)}}
+                                           wx:key="unique">{{util.ASCIIToChar(respondItem) ? util.ASCIIToChar(respondItem):""}}
                                     </block>
                                 </title>
                                 <block wx:if="{{ knowledgePoints[recordItem.qId].length > 0 }}">
@@ -887,7 +887,7 @@
                                     <text></text>
                                     用户选择:
                                     <block wx:for="{{ recordItem.respondIdx }}" wx:for-item="respondItem"
-                                           wx:key="unique">{{util.ASCIIToChar(respondItem)}}
+                                           wx:key="unique">{{util.ASCIIToChar(respondItem) ? util.ASCIIToChar(respondItem):""}}
                                     </block>
                                 </title>
                                 <block wx:if="{{ knowledgePoints[recordItem.qId].length > 0 }}">
@@ -957,7 +957,7 @@
                                     用户选择：
                                     <block wx:for="{{ recordItem.respondIdx }}" wx:for-item="respondItem"
                                            wx:key="unique">
-                                        {{util.ASCIIToChar(respondItem)}}
+                                        {{util.ASCIIToChar(respondItem) ? util.ASCIIToChar(respondItem):""}}
                                     </block>
                                 </title>
                                 <block wx:if="{{ knowledgePoints[recordItem.qId].length > 0 }}">
@@ -1012,8 +1012,7 @@
                                     <text></text>
                                     用户选择:
                                     <block wx:for="{{ recordItem.respondIdx }}" wx:for-item="respondItem"
-                                           wx:key="unique"
-                                           wx:key="unique">{{util.ASCIIToChar(respondItem)}}
+                                           wx:key="unique">{{util.ASCIIToChar(respondItem) ? util.ASCIIToChar(respondItem):""}}
                                     </block>
                                 </title>
                                 <block wx:if="{{ knowledgePoints[recordItem.qId].length > 0 }}">

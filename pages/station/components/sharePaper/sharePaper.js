@@ -210,9 +210,9 @@ Page({
     },
 
     saveToAlbum: function () {
-        let {img} = this.data.sharePaperInfo;
+        let {invitationImgUrl} = this.data.sharePaperInfo;
         wx.downloadFile({
-            url: img,
+            url: invitationImgUrl,
             success: res => {
                 wx.saveImageToPhotosAlbum({
                     filePath: res.tempFilePath,

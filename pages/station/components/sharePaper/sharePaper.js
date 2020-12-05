@@ -19,7 +19,7 @@ Page({
         statusbarHeight: app.globalData.statusbarHeight,
         titleHeight: app.globalData.titleHeight,
         loading: "loading...",
-        smallImg: ""
+        smallImg: "",
         dropDownOps: [],
         dropdownValue: 0,
         isWxWork: false,
@@ -182,7 +182,7 @@ Page({
             releaseInfo.entrance = "WEWORK_MA";
         }
         app.doAjax({
-            url: "../wework/evaluations/share/qr_code",
+            url: "wework/evaluations/share/qr_code",
             method: "post",
             data: releaseInfo,
             success: function (res) {
@@ -301,11 +301,11 @@ Page({
     },
 
     onShareAppMessage(options) {
-        const {evaluationName} = this.data;
-        const {img, smallImg = "",invitationImgUrl} = this.data.sharePaperInfo;
+        const {evaluationName,smallImg,sharePaperInfo} = this.data;
+        const {releaseRecordId} = sharePaperInfo;
         return {
-            title: `您有一个测评邀请，请尽快作答`,
-            path: `/common/webView?img=${invitationImgUrl}&title=true`,
+            title: `邀您参加《${evaluationName}》`,
+            path: `pages/work-base/components/guide/guide?releaseRecordId=${releaseRecordId}`,
             imageUrl: smallImg,
         }
     }

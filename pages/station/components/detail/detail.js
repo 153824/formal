@@ -59,10 +59,7 @@ Page({
     },
     onShow: function () {
         const that = this;
-        const isBindPhone = (app.globalData.userInfo || wx.getStorageSync("userInfo")).phone ? true : false;
-        this.setData({
-            isBindPhone: isBindPhone
-        });
+        this._checkUserIsBindPhone();
         if (app.isLogin) {
             const teamDetailPromise = new Promise((resolve, reject) => {
                 app.doAjax({
@@ -909,6 +906,21 @@ Page({
                     break;
             }
         }
+    },
+    _checkUserIsBindPhone: function (userId) {
+        const _this = this;
+        app.doAjax({
+            url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
+            method: "get",
+            data: {
+                openid: wx.getStorageSync("openId"),
+            },
+            success: function (res) {
+                _this.setData({
+                    isBindPhone: true,
+                });
+            }
+        });
     },
     changeTicketCount: function (e) {
         this.setData({

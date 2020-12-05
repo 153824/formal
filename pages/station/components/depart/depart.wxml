@@ -2,8 +2,12 @@
     <view>
         <view class="scroll-wrapper">
             <scroll-view class="scroll-item" scroll-x="{{true}}" scroll-y="{{false}}">
+                <block>
+                    <text bindtap="loadTargetDepart" data-root="{{true}}" data-index="{{index}}" data-depart="{{item}}">根部门</text>
+                    <image wx:if="{{routeMap.length}}" src="/images/icon/icon@icon-right-arrow.png" class="char-icon"/>
+                </block>
                 <block wx:for="{{routeMap}}" wx:key="unique">
-                    <text bindtap="loadTargetDepart" data-index="{{index}}" data-depart="{{item}}">{{item.label}}</text>
+                    <text bindtap="{{index+1 === routeMap.length ? '' : 'loadTargetDepart'}}" data-index="{{index}}" data-depart="{{item}}">{{item.label}}</text>
                     <image wx:if="{{index+1 !== routeMap.length}}" src="/images/icon/icon@icon-right-arrow.png"
                            class="char-icon"></image>
                 </block>

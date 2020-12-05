@@ -34,12 +34,7 @@
             <text class="title">被测者归属部门</text>
             <view class="depart">
                 <van-dropdown-menu direction="down" overlay="{{false}}" active-color="rgba(53, 62, 232, 1)">
-                    <block wx:if="{{dropdownValue !== 0}}">
-                        <van-dropdown-item id="drop-item" bind:open="open" value="{{ dropdownValue }}" options="{{ dropDownOps }}" toggle="{{false}}"/>
-                    </block>
-                    <block wx:else>
-                        <van-dropdown-item id="drop-item" bind:open="open" title="被测者归属部门" value="{{ dropdownValue }}" options="{{ dropDownOps }}" />
-                    </block>
+                    <van-dropdown-item id="drop-item" bind:open="open" value="{{ dropdownValue }}" options="{{ dropDownOps }}"/>
                 </van-dropdown-menu>
             </view>
         </view>

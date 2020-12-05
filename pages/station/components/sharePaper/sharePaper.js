@@ -52,6 +52,22 @@ Page({
                 wx.removeStorageSync(item);
             }
         });
+        if(!departInfo){
+            this._loadRootDepart().then(res=>{
+                const {label,value} = res.data[0];
+                console.log("res.data: ",res.data);
+                this.setData({
+                    dropDownOps: [
+                        {
+                            text: label,
+                            value: value
+                        }
+                    ],
+                    dropdownValue: value,
+                })
+                this.loadDispatchInfo(value);
+            })
+        }
     },
 
     /**
@@ -68,7 +84,6 @@ Page({
         const {evaluationId,isWxWork} = this.data;
         const dropDownOps = wx.getStorageSync(`checked-depart-info-${evaluationId}`);
         if (dropDownOps && isWxWork) {
-            this.selectComponent("#drop-item").toggle(false);
             this.loadDispatchInfo(dropDownOps.value);
             this.setData({
                 dropDownOps: [dropDownOps],
@@ -76,6 +91,11 @@ Page({
             });
         }
     },
+
+    onHide() {
+        this.selectComponent("#drop-item").toggle(false);
+    },
+
     changeCount: function (e) {
         const that = this;
         const t = e.currentTarget.dataset.t;
@@ -114,12 +134,28 @@ Page({
     },
     toSharePaper: function () {
         const that = this;
-        let {count, evaluationName, norms, evaluationId, hadBuyout, isFree, maxCount, reportMeet, quesCount, estimatedTime} = that.data;
+        let {
+            count,
+            evaluationName,
+            norms,
+            evaluationId,
+            hadBuyout,
+            isFree,
+            maxCount,
+            reportMeet,
+            dispatchInfo,
+            isWxWork
+        } = that.data;
+        console.log("dispatchInfo.count: ",dispatchInfo.inventory);
         let costNum = count;
         if (!costNum && !hadBuyout && !isFree) {
             return;
         }
-        if (costNum > maxCount && !hadBuyout && !isFree) {
+        if (!isWxWork && costNum > maxCount && !hadBuyout && !isFree) {
+            app.toast("测评可用数量不足");
+            return;
+        }
+        if(isWxWork && !isFree && !hadBuyout && !dispatchInfo.inventory){
             app.toast("测评可用数量不足");
             return;
         }
@@ -202,7 +238,6 @@ Page({
     },
 
     open: function () {
-        this.selectComponent("#drop-item").toggle(false);
         const {evaluationId} = this.data;
         wx.navigateTo({
             url: `/pages/station/components/depart/depart?evaluationId=${evaluationId}`,
@@ -225,6 +260,26 @@ Page({
                 })
             }
         })
+    },
+
+    _loadRootDepart() {
+        const rootDepart = new Promise((resolve, reject) => {
+            app.doAjax({
+                url: 'departments/subdivision',
+                method: 'get',
+                data: {
+                    entrance: 'WEWORK_MA',
+                    funcCode: 'evaluationManage'
+                },
+                success: (res) => {
+                    resolve(res);
+                },
+                fail: (err) => {
+                    reject(err)
+                }
+            })
+        });
+        return rootDepart;
     },
 
     onShareAppMessage(options) {

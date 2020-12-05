@@ -40,8 +40,15 @@ Page({
         });
         return rootDepart;
     },
-    loadDepart(e, parent = false) {
-        const {depart} = e.currentTarget.dataset;
+    loadDepart(e) {
+        let {depart} = e.currentTarget.dataset;
+        console.log("depart: ",depart)
+        if(!depart){
+            depart = {
+                value: "",
+                parentId: ""
+            }
+        }
         const departInfo = new Promise((resolve, reject) => {
             app.doAjax({
                 url: 'departments/subdivision',
@@ -49,7 +56,7 @@ Page({
                 data: {
                     entrance: 'WEWORK_MA',
                     funcCode: 'evaluationManage',
-                    deptId: parent ? (depart.parentId || "") : depart.value
+                    deptId: depart.value
                 },
                 success: (res) => {
                     resolve(res)
@@ -77,11 +84,11 @@ Page({
     },
     loadTargetDepart(e) {
         const {routeMap} = this.data;
-        const {index} = e.currentTarget.dataset;
-        const targetDepart = this.loadDepart(e, true);
+        const {index,root} = e.currentTarget.dataset;
+        const targetDepart = this.loadDepart(e);
         targetDepart.then(res => {
             this.setData({
-                routeMap: routeMap.slice(0, index),
+                routeMap: root ? []:routeMap.slice(0, index+1),
                 childDepart: res.data
             });
         }).catch(err => {

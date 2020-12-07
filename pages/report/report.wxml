@@ -609,8 +609,8 @@
                     </view>
                     <!-- 柱状图 -->
                     <view wx:if="{{ item.chartType == 2 }}" class="chartImg histogram-img {{(incentives && (incentives.top3 || incentives.others || incentives.belowLowLevelLines)) ? 'no-margin':''}}">
-                        <hola-histogram histogramIndex="{{index}}" histogramYAxis="{{histogramYAxis}}" limit="{{limit}}"
-                                        histogramValues="{{histogramValues}}" lines="{{lines}}"></hola-histogram>
+                        <hola-histogram histogramIndex="{{index}}" histogramYAxis="{{histogramYAxis}}" limit="{{limit}}" histogramValues="{{histogramValues}}" lines="{{lines}}" direction="{{item.direction}}" colors="{{item.colors}}">
+                        </hola-histogram>
                     </view>
                     <!-- 雷达图 -->
                     <view class="chartImg radar-img" wx:if="{{ item.chartType == 3 }}">

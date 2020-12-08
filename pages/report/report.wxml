@@ -608,8 +608,8 @@
                         <rich-text nodes="<p>{{item.lvDesc||''}}</p>"></rich-text>
                     </view>
                     <!-- 柱状图 -->
-                    <view wx:if="{{ item.chartType == 2 }}" class="chartImg histogram-img {{(incentives && (incentives.top3 || incentives.others || incentives.belowLowLevelLines)) ? 'no-margin':''}}">
-                        <hola-histogram histogramIndex="{{index}}" histogramYAxis="{{histogramYAxis}}" limit="{{limit}}" histogramValues="{{histogramValues}}" lines="{{lines}}" direction="{{item.direction}}" colors="{{item.colors}}">
+                    <view wx:if="{{ item.chartType == 2 || item.chartType == 4 }}" class="chartImg histogram-img {{(incentives && (incentives.top3 || incentives.others || incentives.belowLowLevelLines)) ? 'no-margin':''}}">
+                        <hola-histogram histogramIndex="{{index}}" histogramYAxis="{{histogramYAxis}}" limit="{{limit}}" histogramValues="{{histogramValues}}" lines="{{lines}}" direction="{{item.chartType == 4 ? 'row':'column'}}" colors="{{item.colors}}">
                         </hola-histogram>
                     </view>
                     <!-- 雷达图 -->

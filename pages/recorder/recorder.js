@@ -3,7 +3,7 @@ import throttle from "../../utils/lodash/throttle";
 const app = getApp();
 Page({
     data: {
-        username: "",
+        username: wx.getStorageSync("userInfo").info.nickName,
         eduArr: [
             '小学',
             '初中',
@@ -19,9 +19,9 @@ Page({
         education: -1,
         sex: ["男", "女"],
         checkedSex: 0,
-        isGetPhone: false,
-        phoneNumber: "微信一键授权",
-        verify: false
+        isGetPhone: wx.getStorageSync("userInfo").phone.length >= 11,
+        phoneNumber:  wx.getStorageSync("userInfo").phone || "微信一键授权",
+        verify: false,
     },
 
     onLoad: function (options) {
@@ -51,7 +51,7 @@ Page({
 
     getPhoneNumber: function (e) {
         const that = this;
-        const {isGetPhone,} = this.data;
+        const {isGetPhone,phone} = this.data;
         if (this.data.isSelf === 'SHARE') {
             try {
                 wx.uma.trackEvent('1602215557718')
@@ -59,13 +59,21 @@ Page({
 
             }
         }
-        if (app.wxWorkInfo.isWxWork) {
+        const detail = e.detail;
+        const iv = detail.iv;
+        const encryptedData = detail.encryptedData;
+        console.log("e.detail: ",e.detail);
+        const userMsg = app.globalData.userMsg || {};
+        userMsg["iv"] = iv;
+        userMsg["encryptedData"] = encryptedData;
+        if(!isGetPhone){
             app.doAjax({
                 url: 'wework/auth/mobile',
                 method: "post",
                 data: {
                     userId: wx.getStorageSync("userInfo").id,
                     teamId: wx.getStorageSync("userInfo").teamId,
+                    userMsg: userMsg
                 },
                 success: function (res) {
                     that.setData({
@@ -77,43 +85,6 @@ Page({
                     app.toast(err.msg)
                 }
             })
-        } else {
-            if (!isGetPhone) {
-                const detail = e.detail;
-                const iv = detail.iv;
-                const encryptedData = detail.encryptedData;
-                if (encryptedData) {
-                    const userMsg = app.globalData.userMsg || {};
-                    userMsg["iv"] = iv;
-                    userMsg["encryptedData"] = encryptedData;
-                    app.doAjax({
-                        url: "updatedUserMobile",
-                        data: userMsg,
-                        success: function (ret) {
-                            if (that.data.isSelf === 'SHARE') {
-                                try {
-                                    wx.uma.trackEvent('1602216242156')
-                                } catch (e) {
-                                    console.error(e);
-                                }
-                            }
-                            app.doAjax({
-                                url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
-                                method: "get",
-                                data: {
-                                    openid: wx.getStorageSync("openId"),
-                                },
-                                success: function (res) {
-                                    that.setData({
-                                        isGetPhone: true,
-                                        phoneNumber: res.phone || '微信一键授权'
-                                    });
-                                }
-                            });
-                        }
-                    });
-                }
-            }
         }
     },
 
@@ -147,11 +118,13 @@ Page({
                 receiveRecordId: receiveRecordId
             },
             success: function (res) {
-                let isGetPhone = false;
                 const {educationName, username, phone,birthday} = res;
                 const {eduArr} = _this.data;
                 if(!birthday){
                     res.birthday = "1995-01"
+                }
+                if(!username){
+                    res.username = wx.getStorageSync("userInfo").info.nickName;
                 }
                 if (educationName) {
                     eduArr.forEach((item, key) => {
@@ -160,12 +133,8 @@ Page({
                         }
                     })
                 }
-                if(phone){
-                    isGetPhone = true
-                }
+
                 _this.setData({
-                    isGetPhone: isGetPhone,
-                    phoneNumber: phone || "微信一键授权",
                     ...res
                 })
             },

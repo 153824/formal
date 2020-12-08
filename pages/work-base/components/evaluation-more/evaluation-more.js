@@ -67,7 +67,7 @@ Page({
             isFree: type === "FREE",
             hadBuyout: type === "BY_COUNT" ? false : true,
         };
-        if (!available && !necessaryInfo.hadBuyout && !necessaryInfo.isFree) {
+        if (!available && !necessaryInfo.hadBuyout && !necessaryInfo.isFree && !this.data.isWxWork) {
             app.toast("测评可用数量不足");
             return;
         }

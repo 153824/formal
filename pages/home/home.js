@@ -49,7 +49,10 @@ Page({
         app.checkUserInfo = (userInfo) => {
             if (userInfo.isNew) {
                 wx.redirectTo({
-                    url: "/pages/preload/preload"
+                    url: "/pages/preload/preload",
+                    success: res=>{
+                        wx.uma.trackEvent("1607407387532")
+                    }
                 });
                 return;
             }

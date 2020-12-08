@@ -1393,3 +1393,6 @@ swiper, swiper-item {
 .no-margin{
     margin: 0 0 !important;
 }
+.histogram-row{
+    height: 520rpx;
+}

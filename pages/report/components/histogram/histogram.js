@@ -26,7 +26,7 @@ Component({
         },
         direction: {
             type: String,
-            value: 'column'
+            value: ''
         },
         colors: {
             type: Array,
@@ -44,17 +44,37 @@ Component({
                 devicePixelRatio: wx.getSystemInfoSync().pixelRatio
             });
             const {histogramYAxis, limit, histogramValues, lines, direction} = that.properties;
-            const barColors = that.properties.colors;
+            let barColors = that.properties.colors;
             const series = [
                 {
                     name: "受测者得分",
                     type: 'bar',
-                    data: direction === 'column' ? histogramValues[index].reverse() : histogramValues[index],
+                    data: wx.getStorageSync(`mychart-${index}-direction`) === 'column' ? histogramValues[index].reverse() : histogramValues[index],
                     label: {
                         show: true,
-                        position: direction === "column" ? "right" : "top",
+                        position: wx.getStorageSync(`mychart-${index}-direction`) === "column" ? "right" : "top",
                         textStyle: {
-                            color: 'rgba(53, 62, 232, 0.43)',
+                            color: function (res,dataIndex) {
+                                if (!barColors.length) {
+                                    return {
+                                        colorStops: [
+                                            {
+                                                offset: 1, color: "rgba(154, 161, 244, 1)"
+                                            },
+                                            {
+                                                offset: 0, color: "rgba(109, 115, 229, 1)"
+                                            },
+                                        ]
+                                    }
+                                } else {
+                                    barColors = wx.getStorageSync(`mychart-${index}-colors`)
+                                    if (wx.getStorageSync(`mychart-${index}-direction`) === "column") {
+                                        console.log("barColors： ",barColors);
+                                        barColors = barColors.reverse()
+                                    }
+                                    return barColors[dataIndex];
+                                }
+                            },
                             fontSize: +(22 * app.rate).toFixed(0),
                         }
                     },
@@ -74,6 +94,11 @@ Component({
                                         ]
                                     }
                                 } else {
+                                    barColors = wx.getStorageSync(`mychart-${index}-colors`)
+                                    if (wx.getStorageSync(`mychart-${index}-direction`) === "column") {
+                                        console.log("barColors： ",barColors);
+                                        barColors = barColors.reverse()
+                                    }
                                     return barColors[res.dataIndex];
                                 }
                             },
@@ -81,7 +106,7 @@ Component({
                     },
                 },
             ];
-            const legend = {
+            let legend = {
                 data: [
                     {
                         name: '受测者得分',
@@ -108,7 +133,7 @@ Component({
                 const line = {
                     name: key,
                     type: 'line',
-                    data: direction === 'column' ? lines[index][key].data.reverse() : lines[index][key].data,
+                    data: wx.getStorageSync(`mychart-${index}-direction`) === 'column' ? lines[index][key].data.reverse() : lines[index][key].data,
                     itemStyle: {
                         normal: {
                             color: lines[index][key].color || color,
@@ -125,8 +150,13 @@ Component({
                         fontSize: +(24 * app.rate).toFixed(0),
                     }
                 };
-                series.push(line);
                 legend.data.push(legendData);
+                if (wx.getStorageSync(`mychart-${index}-direction`) === 'column') {
+                    series.push(line);
+                }
+                if (wx.getStorageSync(`mychart-${index}-direction`) === 'row') {
+                    legend = ""
+                }
             }
             canvas.setChart(chart);
             let defaultXData = [
@@ -147,13 +177,33 @@ Component({
                     },
                     axisLabel: {
                         textStyle: {
-                            color: 'rgba(53, 62, 232, 1)',
-                            fontSize: +(28 * app.rate).toFixed(0),
+                            color: function (res,dataIndex) {
+                                if (!barColors.length) {
+                                    return {
+                                        colorStops: [
+                                            {
+                                                offset: 1, color: "rgba(154, 161, 244, 1)"
+                                            },
+                                            {
+                                                offset: 0, color: "rgba(109, 115, 229, 1)"
+                                            },
+                                        ]
+                                    }
+                                } else {
+                                    barColors = wx.getStorageSync(`mychart-${index}-colors`)
+                                    if (wx.getStorageSync(`mychart-${index}-direction`) === "column") {
+                                        console.log("barColors： ",barColors);
+                                        barColors = barColors.reverse()
+                                    }
+                                    return barColors[dataIndex];
+                                }
+                            },
+                            fontSize: +(20 * app.rate).toFixed(0),
                         }
                     },
                     type: 'category',
                     boundaryGap: true,
-                    data: direction === 'column' ? histogramYAxis[index].reverse() : histogramYAxis[index],
+                    data: wx.getStorageSync(`mychart-${index}-direction`) === 'column' ? histogramYAxis[index].reverse() : histogramYAxis[index],
                 }
             ];
             let defaultYData = {
@@ -177,13 +227,11 @@ Component({
                     show: true,
                 },
             };
-            if (direction === 'column') {
+            if (wx.getStorageSync(`mychart-${index}-direction`) === 'column') {
                 let temp;
                 temp = defaultXData;
                 defaultXData = defaultYData;
                 defaultYData = temp;
-            }else{
-                defaultXData[0].axisLabel.rotate = -90;
             }
             const option = {
                 legend: legend,
@@ -193,7 +241,7 @@ Component({
                 xAxis: defaultXData,
                 yAxis: defaultYData,
                 tooltip: {
-                    trigger: 'axis',
+                    trigger: wx.getStorageSync(`mychart-${index}-direction`) === "column" ? 'axis' : '',
                     axisPointer: {
                         type: 'line',
                         crossStyle: {
@@ -203,6 +251,15 @@ Component({
                 },
                 series: series,
             };
+            if (wx.getStorageSync(`mychart-${index}-direction`) === 'row') {
+                option.grid = {
+                    top: '15%',
+                    left: '5%',
+                    right: '5%',
+                    bottom: '15%',
+                    containLabel: true
+                }
+            }
             chart.setOption(option);
             return chart;
         }
@@ -211,11 +268,20 @@ Component({
     lifetimes: {
         attached() {
             _this = this;
+            const {histogramIndex, colors,direction} = this.properties;
+            console.log("direction: ",direction);
+            wx.setStorageSync(`mychart-${histogramIndex}-colors`, colors);
+            wx.setStorageSync(`mychart-${histogramIndex}-direction`,direction);
             this.setData({
                 getHistogramInfoInit: {
                     onInit: this.getHistogramInfo
                 }
             })
+        },
+        detached() {
+            const {histogramIndex, colors,direction} = this.properties;
+            wx.removeStorageSync(`mychart-${histogramIndex}-colors`);
+            wx.removeStorageSync(`mychart-${histogramIndex}-direction`);
         }
     }
 });

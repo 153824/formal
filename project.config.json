@@ -88,7 +88,7 @@
 					"id": 2,
 					"name": "报告详情",
 					"pathName": "pages/report/report",
-					"query": "receiveRecordId=5fc9cfd040d66331dcd572d1",
+					"query": "receiveRecordId=5fcf32ff8e1a9d7594cd8f22",
 					"scene": null
 				},
 				{
@@ -116,14 +116,14 @@
 					"id": 6,
 					"name": "小程序码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=5fbc6bcbf3656a76c711a4b8",
+					"query": "scene=5fcf3100329d753357b99933",
 					"scene": null
 				},
 				{
 					"id": 7,
 					"name": "二维码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "q=https://api.luoke101.com/s/5fb4e4e8ca59954c1c19305e",
+					"query": "q=https://api.luoke101.com/s/5fcf5fde329d753357b99947",
 					"scene": null
 				},
 				{

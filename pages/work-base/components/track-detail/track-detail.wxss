@@ -122,16 +122,15 @@ page{
     font-size: 50px;
 }
 .qrcode-wrapper{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
 }
 .qrcode{
     position: relative;
@@ -158,6 +157,17 @@ page{
     width: 44rpx;
     height: 44rpx;
     animation: loading 1s infinite;
+}
+.button-group{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.van-button-custom{
+    font-size: 32rpx !important;
+    font-weight: 400;
+    color: white;
 }
 @keyframes loading {
     from{

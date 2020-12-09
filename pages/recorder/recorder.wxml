@@ -26,7 +26,7 @@
         </picker>
         <view class="get-user-phone-wrapper">
             <text>联系电话</text>
-            <button class="get-user-phone" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"
+            <button class="get-user-phone" open-type="{{isGetPhone?'getPhoneNumber':'getPhoneNumber'}}" bindgetphonenumber="{{isGetPhone ? 'getPhoneNumber':'getPhoneNumber'}}"
                     data-name="{{ paperList.setting.name1 }}">
                 {{ phoneNumber }}
             </button>

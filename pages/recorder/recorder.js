@@ -62,18 +62,16 @@ Page({
         const detail = e.detail;
         const iv = detail.iv;
         const encryptedData = detail.encryptedData;
-        console.log("e.detail: ",e.detail);
-        const userMsg = app.globalData.userMsg || {};
-        userMsg["iv"] = iv;
-        userMsg["encryptedData"] = encryptedData;
-        if(!isGetPhone){
+        if(!isGetPhone || true){
             app.doAjax({
                 url: 'wework/auth/mobile',
                 method: "post",
                 data: {
                     userId: wx.getStorageSync("userInfo").id,
                     teamId: wx.getStorageSync("userInfo").teamId,
-                    userMsg: userMsg
+                    sessionKey: app.globalData.userMsg.session_key,
+                    iv,
+                    encryptedData
                 },
                 success: function (res) {
                     that.setData({
@@ -133,7 +131,6 @@ Page({
                         }
                     })
                 }
-
                 _this.setData({
                     ...res
                 })

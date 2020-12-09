@@ -145,7 +145,11 @@ Page({
                     res.birthday = "1995-01"
                 }
                 if (!username) {
-                    res.username = wx.getStorageSync("userInfo").info.nickName;
+                    try{
+                        res.username = wx.getStorageSync("userInfo").info.nickName;
+                    }catch (e) {
+                        console.error(e)
+                    }
                 }
                 if (educationName) {
                     eduArr.forEach((item, key) => {

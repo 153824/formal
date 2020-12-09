@@ -44,7 +44,8 @@ Page({
             estimatedTime: estimatedTime
         });
         this.setData({
-            isWxWork: app.wxWorkInfo.isWxWork
+            isWxWork: app.wxWorkInfo.isWxWork,
+            reportMeet: app.wxWorkInfo.isWxWork ? 2 : 1,
         });
         let storageInfo = wx.getStorageInfoSync().keys;
         let departInfo = wx.getStorageSync(`checked-depart-info-${id}`);

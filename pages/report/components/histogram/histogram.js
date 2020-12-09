@@ -253,7 +253,7 @@ Component({
             };
             if (wx.getStorageSync(`mychart-${index}-direction`) === 'row') {
                 option.grid = {
-                    top: '15%',
+                    top: '5%',
                     left: '5%',
                     right: '5%',
                     bottom: '15%',

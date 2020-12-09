@@ -316,7 +316,7 @@ assessor-info
 }
 
 .box1 .temple {
-    margin-top: 20rpx;
+    margin-top: 40rpx;
     position: relative;
 }
 
@@ -331,7 +331,7 @@ assessor-info
     /* height: 476rpx; */
     padding: 0 44rpx;
     background: rgba(255, 255, 255, 1);
-    box-shadow: 0px 4rpx 16rpx 0px rgba(207, 216, 240, 0.79);
+    box-shadow: 0px 4rpx 16rpx 0px rgba(207, 216, 240, 0.4);
     border-radius: 20rpx;
     box-sizing: border-box;
     align-items: center;
@@ -426,7 +426,7 @@ assessor-info
 .box1 .content {
     /* text-align: center; */
     margin-top: 20rpx;
-    padding: 35rpx 50rpx 35rpx;
+    padding: 35rpx 40rpx 35rpx;
     background: rgba(255, 255, 255, 1);
     box-shadow: 0px 4rpx 16rpx 0px rgba(207, 216, 240, 0.79);
     border-radius: 16rpx;
@@ -541,7 +541,7 @@ assessor-info
 }
 
 .box3 .content {
-    padding: 18rpx 30rpx;
+    padding: 35rpx 40rpx;
     margin: 40rpx 40rpx;
     background: rgba(245, 246, 251, 1);
     border-radius: 16rpx;
@@ -625,6 +625,19 @@ assessor-info
 }
 
 .box3 .list .item .contentMsg .msg {
+    margin-top: 10rpx;
+    font-size: 30rpx;
+    font-family: PingFangSC-Regular, PingFangSC;
+    font-weight: 400;
+    color: rgba(92, 97, 113, 1);
+    line-height: 150%;
+    letter-spacing: 1px;
+    padding-bottom: 40rpx;
+    display: block;
+    text-align: justify;
+}
+
+.content-msg {
     margin-top: 10rpx;
     font-size: 30rpx;
     font-family: PingFangSC-Regular, PingFangSC;
@@ -1396,3 +1409,4 @@ swiper, swiper-item {
 .histogram-row{
     height: 520rpx;
 }
+

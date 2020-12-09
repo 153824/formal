@@ -3,7 +3,7 @@ import throttle from "../../utils/lodash/throttle";
 const app = getApp();
 Page({
     data: {
-        username: wx.getStorageSync("userInfo").info.nickName,
+        username: "",
         eduArr: [
             '小学',
             '初中',
@@ -19,17 +19,40 @@ Page({
         education: -1,
         sex: ["男", "女"],
         checkedSex: 0,
-        isGetPhone: wx.getStorageSync("userInfo").phone.length >= 11,
-        phoneNumber:  wx.getStorageSync("userInfo").phone || "微信一键授权",
+        isGetPhone: false,
+        phoneNumber: "微信一键授权",
         verify: false,
+        isWxWork: false,
+        isWxWorkAdmin: false
     },
 
     onLoad: function (options) {
+        const _this = this;
         const {releaseRecordId = ""} = options;
+        const userInfo = wx.getStorageSync('userInfo') || app.globalData.userInfo;
         if (releaseRecordId) {
             this.setData({
                 releaseRecordId: releaseRecordId,
             })
+        }
+        if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
+            app.checkUserInfo = (userInfo) => {
+                _this.setData({
+                    isWxWork: userInfo.isWxWork,
+                    isWxWorkAdmin: userInfo.isAdmin,
+                    isGetPhone: userInfo.phone.length >= 11,
+                    phoneNumber: userInfo.phone,
+                    username: userInfo.info.nickName,
+                });
+            }
+        } else {
+            _this.setData({
+                isWxWork: app.wxWorkInfo.isWxWork,
+                isWxWorkAdmin: wx.getStorageSync("userInfo").isAdmin || app.wxWorkInfo.isWxWorkAdmin,
+                isGetPhone: userInfo.phone.length >= 11,
+                phoneNumber: userInfo.phone,
+                username: userInfo.info.nickName,
+            });
         }
         this._checkUserIsAuthPhone();
     },
@@ -51,7 +74,7 @@ Page({
 
     getPhoneNumber: function (e) {
         const that = this;
-        const {isGetPhone,phone} = this.data;
+        const {isGetPhone, phone} = this.data;
         if (this.data.isSelf === 'SHARE') {
             try {
                 wx.uma.trackEvent('1602215557718')
@@ -62,7 +85,7 @@ Page({
         const detail = e.detail;
         const iv = detail.iv;
         const encryptedData = detail.encryptedData;
-        if(!isGetPhone || true){
+        if (!isGetPhone || true) {
             app.doAjax({
                 url: 'wework/auth/mobile',
                 method: "post",
@@ -116,12 +139,12 @@ Page({
                 receiveRecordId: receiveRecordId
             },
             success: function (res) {
-                const {educationName, username, phone,birthday} = res;
+                const {educationName, username, phone, birthday} = res;
                 const {eduArr} = _this.data;
-                if(!birthday){
+                if (!birthday) {
                     res.birthday = "1995-01"
                 }
-                if(!username){
+                if (!username) {
                     res.username = wx.getStorageSync("userInfo").info.nickName;
                 }
                 if (educationName) {
@@ -298,9 +321,9 @@ Page({
             return;
         } else {
             this._fetchVerify().then(res => {
-                try{
+                try {
                     wx.uma.trackEvent('1602216442285');
-                }catch (e) {
+                } catch (e) {
                     console.error(e)
                 }
                 this._pushMessagesFetched(res.receiveRecordId)

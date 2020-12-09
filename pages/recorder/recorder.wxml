@@ -24,17 +24,26 @@
                 {{eduArr[education] || ''}}
             </view>
         </picker>
-        <view class="get-user-phone-wrapper">
+        <view wx:if="{{!isWxWork}}" class="get-user-phone-wrapper">
             <text>联系电话</text>
-            <button class="get-user-phone" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"
+            <button class="get-user-phone" open-type="{{isGetPhone?'':'getPhoneNumber'}}" bindgetphonenumber="{{isGetPhone ? '':'getPhoneNumber'}}"
                     data-name="{{ paperList.setting.name1 }}">
                 {{ phoneNumber }}
             </button>
         </view>
-        <block>
+        <block wx:if="{{!isWxWork}}">
             <view wx:if="{{!username||!birthday||(!education&&education!=0)}}" class="graybtn">确认无误，开始作答</view>
             <block wx:else>
-                <block wx:if="{{ username && (education != -1) && isGetPhone && phoneNumber.length > 6 }}">
+                <block wx:if="{{ username && (education != -1) && ((isGetPhone && phoneNumber.length > 6)) }}">
+                    <button form-type="submit" data-name="{{ paperList.setting.name1 }}">确认无误，开始作答</button>
+                </block>
+                <view wx:else class="graybtn">确认无误，开始作答</view>
+            </block>
+        </block>
+        <block wx:if="{{isWxWork}}">
+            <view wx:if="{{!username||!birthday||(!education&&education!=0)}}" class="graybtn">确认无误，开始作答</view>
+            <block wx:else>
+                <block wx:if="{{ username && (education != -1) && birthday }}">
                     <button form-type="submit" data-name="{{ paperList.setting.name1 }}">确认无误，开始作答</button>
                 </block>
                 <view wx:else class="graybtn">确认无误，开始作答</view>

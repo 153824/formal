@@ -21,6 +21,7 @@ Page({
         ]
     },
     onLoad: function (options) {
+        wx.uma.trackEvent("1607407387531")
     },
     onHide() {
         wx.uma.trackEvent("1606213423182")

@@ -38,7 +38,8 @@ Page({
         maskTrigger: true,
         finishCount: 0,
         examiningCount: 0,
-        channel: "qrcode"
+        channel: "qrcode",
+        isWxWork: false
     },
 
     onLoad: function (options) {
@@ -59,6 +60,9 @@ Page({
         options.userId = "";
         options.teamId = "";
         if (app.globalData.userInfo && wx.getStorageSync('userInfo')) {
+            this.setData({
+                isWxWork: app.wxWorkInfo.isWxWork,
+            });
             if (releaseRecordId && sharedAt) {
                 this.acceptEvaluationTrack(options).then(res => {
                     Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
@@ -91,6 +95,9 @@ Page({
             app.checkUserInfo = (userInfo) => {
                 options.teamId = userInfo.teamId;
                 options.userId = userInfo.id;
+                this.setData({
+                    isWxWork: userInfo.isWxWork,
+                });
                 if (releaseRecordId && sharedAt) {
                     this.acceptEvaluationTrack(options).then(res => {
                         Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
@@ -363,8 +370,45 @@ Page({
         })
     },
 
+    saveToAlbum: function () {
+        let invitationImgUrl = this.data.QRCode;
+        wx.downloadFile({
+            url: invitationImgUrl,
+            success: res => {
+                wx.saveImageToPhotosAlbum({
+                    filePath: res.tempFilePath,
+                    success: res => {
+                        wx.showModal({
+                            title: "保存成功",
+                            icon: "none"
+                        })
+                    },
+                    fail: err => {
+                        wx.showModal({
+                            title: "保存失败",
+                            icon: "none"
+                        })
+                    }
+                });
+            },
+            fail: err => {
+                wx.showModal({
+                    title: "下载图片失败",
+                    icon: "none"
+                })
+            }
+        })
+    },
+
     onShareAppMessage: function () {
         const {trackId, releaseRecordId, evaluationName, cover} = this.data;
+        if(this.data.imageTrigger){
+            return {
+                title: `邀您参加《${evaluationName}》`,
+                path: `pages/work-base/components/guide/guide?releaseRecordId=${releaseRecordId}`,
+                imageUrl: cover,
+            }
+        }
         const time = new Date().getTime();
         try {
             wx.uma.trackEvent('1602216690926')

@@ -21,15 +21,38 @@ Page({
         checkedSex: 0,
         isGetPhone: false,
         phoneNumber: "微信一键授权",
-        verify: false
+        verify: false,
+        isWxWork: false,
+        isWxWorkAdmin: false
     },
 
     onLoad: function (options) {
+        const _this = this;
         const {releaseRecordId = ""} = options;
+        const userInfo = wx.getStorageSync('userInfo') || app.globalData.userInfo;
         if (releaseRecordId) {
             this.setData({
                 releaseRecordId: releaseRecordId,
             })
+        }
+        if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
+            app.checkUserInfo = (userInfo) => {
+                _this.setData({
+                    isWxWork: userInfo.isWxWork,
+                    isWxWorkAdmin: userInfo.isAdmin,
+                    isGetPhone: userInfo.phone.length >= 11,
+                    phoneNumber: userInfo.phone,
+                    username: userInfo.info.nickName,
+                });
+            }
+        } else {
+            _this.setData({
+                isWxWork: app.wxWorkInfo.isWxWork,
+                isWxWorkAdmin: wx.getStorageSync("userInfo").isAdmin || app.wxWorkInfo.isWxWorkAdmin,
+                isGetPhone: userInfo.phone.length >= 11,
+                phoneNumber: userInfo.phone,
+                username: userInfo.info.nickName,
+            });
         }
         this._checkUserIsAuthPhone();
     },
@@ -51,7 +74,7 @@ Page({
 
     getPhoneNumber: function (e) {
         const that = this;
-        const {isGetPhone,} = this.data;
+        const {isGetPhone, phone} = this.data;
         if (this.data.isSelf === 'SHARE') {
             try {
                 wx.uma.trackEvent('1602215557718')
@@ -59,13 +82,19 @@ Page({
 
             }
         }
-        if (app.wxWorkInfo.isWxWork) {
+        const detail = e.detail;
+        const iv = detail.iv;
+        const encryptedData = detail.encryptedData;
+        if (!isGetPhone || true) {
             app.doAjax({
                 url: 'wework/auth/mobile',
                 method: "post",
                 data: {
                     userId: wx.getStorageSync("userInfo").id,
                     teamId: wx.getStorageSync("userInfo").teamId,
+                    sessionKey: app.globalData.userMsg.session_key,
+                    iv,
+                    encryptedData
                 },
                 success: function (res) {
                     that.setData({
@@ -77,43 +106,6 @@ Page({
                     app.toast(err.msg)
                 }
             })
-        } else {
-            if (!isGetPhone) {
-                const detail = e.detail;
-                const iv = detail.iv;
-                const encryptedData = detail.encryptedData;
-                if (encryptedData) {
-                    const userMsg = app.globalData.userMsg || {};
-                    userMsg["iv"] = iv;
-                    userMsg["encryptedData"] = encryptedData;
-                    app.doAjax({
-                        url: "updatedUserMobile",
-                        data: userMsg,
-                        success: function (ret) {
-                            if (that.data.isSelf === 'SHARE') {
-                                try {
-                                    wx.uma.trackEvent('1602216242156')
-                                } catch (e) {
-                                    console.error(e);
-                                }
-                            }
-                            app.doAjax({
-                                url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
-                                method: "get",
-                                data: {
-                                    openid: wx.getStorageSync("openId"),
-                                },
-                                success: function (res) {
-                                    that.setData({
-                                        isGetPhone: true,
-                                        phoneNumber: res.phone || '微信一键授权'
-                                    });
-                                }
-                            });
-                        }
-                    });
-                }
-            }
         }
     },
 
@@ -147,11 +139,17 @@ Page({
                 receiveRecordId: receiveRecordId
             },
             success: function (res) {
-                let isGetPhone = false;
-                const {educationName, username, phone,birthday} = res;
+                const {educationName, username, phone, birthday} = res;
                 const {eduArr} = _this.data;
-                if(!birthday){
+                if (!birthday) {
                     res.birthday = "1995-01"
+                }
+                if (!username) {
+                    try{
+                        res.username = wx.getStorageSync("userInfo").info.nickName;
+                    }catch (e) {
+                        console.error(e)
+                    }
                 }
                 if (educationName) {
                     eduArr.forEach((item, key) => {
@@ -160,12 +158,7 @@ Page({
                         }
                     })
                 }
-                if(phone){
-                    isGetPhone = true
-                }
                 _this.setData({
-                    isGetPhone: isGetPhone,
-                    phoneNumber: phone || "微信一键授权",
                     ...res
                 })
             },
@@ -332,9 +325,9 @@ Page({
             return;
         } else {
             this._fetchVerify().then(res => {
-                try{
+                try {
                     wx.uma.trackEvent('1602216442285');
-                }catch (e) {
+                } catch (e) {
                     console.error(e)
                 }
                 this._pushMessagesFetched(res.receiveRecordId)

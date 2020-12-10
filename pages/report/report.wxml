@@ -458,7 +458,7 @@
             <view class="flex temple"
                   wx:if="{{report.showSummaryTotal||report.showSummaryDefinition||report.summaryRankOrg||report.summaryRankAll}}">
                 <view class="flex-main item noramlTem"
-                      style="padding:56rpx 0;{{!report.summaryRankOrg&&!report.summaryRankAll?'':'margin-right:20rpx;'}}{{(!report.summaryRankOrg||!report.summaryRankAll)&&!report.showSummaryTotal?'height:230rpx;':''}}"
+                      style="padding:28rpx 0;{{!report.summaryRankOrg&&!report.summaryRankAll?'':'margin-right:20rpx;'}}{{(!report.summaryRankOrg||!report.summaryRankAll)&&!report.showSummaryTotal?'height:230rpx;':''}}"
                       wx:if="{{report.showSummaryTotal||report.showSummaryDefinition||report.summary.title}}">
                     <view style="width: 100%;">
                         <view class="name" wx:if="{{report.showSummaryDefinition}}">{{report.summaryDefinitionName}}
@@ -604,13 +604,14 @@
                             </view>
                         </view>
                     </block>
-                    <view class="content" wx:if="{{item.lvDesc}}">
+                    <view class="content content-msg" wx:if="{{item.lvDesc}}">
                         <rich-text nodes="<p>{{item.lvDesc||''}}</p>"></rich-text>
                     </view>
                     <!-- 柱状图 -->
-                    <view wx:if="{{ item.chartType == 2 }}" class="chartImg histogram-img {{(incentives && (incentives.top3 || incentives.others || incentives.belowLowLevelLines)) ? 'no-margin':''}}">
-                        <hola-histogram histogramIndex="{{index}}" histogramYAxis="{{histogramYAxis}}" limit="{{limit}}"
-                                        histogramValues="{{histogramValues}}" lines="{{lines}}"></hola-histogram>
+                    <view wx:if="{{ item.chartType == 2 || item.chartType == 4 }}"
+                          class="chartImg histogram-img {{item.chartType == 2 ? '' : 'histogram-row'}} {{(incentives && (incentives.top3 || incentives.others || incentives.belowLowLevelLines)) ? 'no-margin':''}}">
+                        <hola-histogram histogramIndex="{{index}}" histogramYAxis="{{histogramYAxis}}" limit="{{limit}}" histogramValues="{{histogramValues}}" lines="{{lines}}" direction="{{item.chartType == 2 ? 'column':'row'}}" colors="{{item.colors}}">
+                        </hola-histogram>
                     </view>
                     <!-- 雷达图 -->
                     <view class="chartImg radar-img" wx:if="{{ item.chartType == 3 }}">
@@ -1164,4 +1165,3 @@
 </block>
 <hola-mask isShow="{{maskTrigger}}"></hola-mask>
 <wxs src="../../utils/util.wxs" module="util"></wxs>
-

@@ -129,6 +129,24 @@
             </van-image>
             <image class="close-icon" src="/images/icon/icon@icon-close.png" bindtap="closeQrcode"></image>
         </view>
+        <view wx:if="{{isWxWork}}" class="button-group">
+            <van-button custom-class="van-button-custom"
+                        type="default" color="transparent"
+                        icon="/images/icon/icon@icon-save.png"
+                        bind:tap="saveToAlbum"
+            >
+                保存到相册
+            </van-button>
+            <van-button custom-class="van-button-custom"
+                        type="default"
+                        color="transparent"
+                        icon="/images/icon/icon@icon-share.png"
+                        open-type="share"
+                        bind:tap="share"
+            >
+                邀请同事参加测评
+            </van-button>
+        </view>
     </view>
 </van-overlay>
 <hola-mask isShow="{{ maskTrigger }}"></hola-mask>

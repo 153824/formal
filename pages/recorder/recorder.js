@@ -41,7 +41,7 @@ Page({
                     isWxWork: userInfo.isWxWork,
                     isWxWorkAdmin: userInfo.isAdmin,
                     isGetPhone: userInfo.phone.length >= 11,
-                    phoneNumber: userInfo.phone,
+                    phoneNumber: userInfo.phone || "微信一键授权",
                     username: userInfo.info.nickName,
                 });
             }
@@ -50,7 +50,7 @@ Page({
                 isWxWork: app.wxWorkInfo.isWxWork,
                 isWxWorkAdmin: wx.getStorageSync("userInfo").isAdmin || app.wxWorkInfo.isWxWorkAdmin,
                 isGetPhone: userInfo.phone.length >= 11,
-                phoneNumber: userInfo.phone,
+                phoneNumber: userInfo.phone || "微信一键授权",
                 username: userInfo.info.nickName,
             });
         }
@@ -85,7 +85,7 @@ Page({
         const detail = e.detail;
         const iv = detail.iv;
         const encryptedData = detail.encryptedData;
-        if (!isGetPhone || true) {
+        if (!isGetPhone) {
             app.doAjax({
                 url: 'wework/auth/mobile',
                 method: "post",
@@ -145,11 +145,14 @@ Page({
                     res.birthday = "1995-01"
                 }
                 if (!username) {
-                    try{
+                    try {
                         res.username = wx.getStorageSync("userInfo").info.nickName;
-                    }catch (e) {
+                    } catch (e) {
                         console.error(e)
                     }
+                }
+                if (!phone) {
+                    res.phone = "微信一键授权";
                 }
                 if (educationName) {
                     eduArr.forEach((item, key) => {

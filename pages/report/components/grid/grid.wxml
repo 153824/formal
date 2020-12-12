@@ -15,16 +15,12 @@
                                        icon-class="van-grid-icon-custom" text-class="van-grid-text-custom van-grid-text-custom-nine-cell {{ util.arrayEleIsSame(coordinate,[areaIndex,areaChildIndex]) ? 'van-grid-text-custom-first-command' : '' }}"/>
                     </block>
                 </van-grid>
-                <view class="axis-data-x">
-                    <text class="{{coordinate[0] === 0 ? 'reach-the-standard': 'not-reach-the-standard'}}">低</text>
-                    <text class="{{coordinate[0] === 1 ? 'reach-the-standard': 'not-reach-the-standard'}}">中</text>
-                    <text class="{{coordinate[0] === 2 ? 'reach-the-standard': 'not-reach-the-standard'}}">高</text>
-                </view>
-                <view class="axis-data-y">
-                    <text class="{{coordinate[1] === 0 ? 'reach-the-standard': 'not-reach-the-standard'}}">低</text>
-                    <text class="{{coordinate[1] === 1 ? 'reach-the-standard': 'not-reach-the-standard'}}">中</text>
-                    <text class="{{coordinate[1] === 2 ? 'reach-the-standard': 'not-reach-the-standard'}}">高</text>
-                </view>
+                <block wx:for="{{axis}}" wx:for-item="axisItem" wx:for-index="axisItemIndex">
+                    <view class="{{axisItemIndex === 1 ? 'axis-data-y' : 'axis-data-x'}}">
+                        <text wx:for="{{axisItem.area}}" wx:for-item="axisAreaItem" wx:for-index="axisAreaItemIndex"
+                              class="{{axisAreaItem === axisItem.level ? 'reach-the-standard': 'not-reach-the-standard'}}">{{axisAreaItem}}</text>
+                    </view>
+                </block>
             </view>
             <view class="axis-row axis-x-row"></view>
             <view class="axis-row axis-y-row"></view>

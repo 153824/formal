@@ -31,7 +31,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.12.2",
-	"appid": "wxdb1dcb4a9e212d32",
+	"appid": "wx85cde7d3e8f3d949",
 	"projectname": "luoke-haola-wx-admin",
 	"debugOptions": {
 		"hidedInDevtools": []
@@ -39,7 +39,7 @@
 	"isGameTourist": false,
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {
-		"qywx_simulator_plugin": "2.4.0"
+		"qywx_simulator_plugin": "2.10.1"
 	},
 	"scripts": {
 		"beforeCompile": "",
@@ -88,7 +88,7 @@
 					"id": 2,
 					"name": "报告详情",
 					"pathName": "pages/report/report",
-					"query": "receiveRecordId=5fd090aa3bd73b0a96d1d1e1",
+					"query": "receiveRecordId=5facfac6b3ee12146116f06d",
 					"scene": null
 				},
 				{
@@ -116,7 +116,7 @@
 					"id": 6,
 					"name": "小程序码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=5fd243973bd73b0a96d1d202",
+					"query": "scene=5fd2d3a7b407175493346f15",
 					"scene": null
 				},
 				{

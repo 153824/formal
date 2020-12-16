@@ -104,6 +104,7 @@ Component({
                             },
                         }
                     },
+                    color: 'rgba(53, 62, 232, 1)',
                 },
             ];
             let legend = {
@@ -151,6 +152,7 @@ Component({
                     }
                 };
                 legend.data.push(legendData);
+                console.log("legend.data: ",legend.data);
                 if (wx.getStorageSync(`mychart-${index}-direction`) === 'column') {
                     series.push(line);
                 }

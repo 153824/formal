@@ -34,7 +34,7 @@
                     {{ item.name }}({{ examiningCount }})
                 </block>
                 <block wx:if="{{ item.id === 2 }}">
-                    {{ item.name }}({{ status == "REVOKED" ? '0' : (amount-finishList.length-examiningList.length) }})
+                    {{ item.name }}({{ status == "REVOKED" ? '0' : (amount-finishCount-examiningCount) }})
                 </block>
             </view>
         </view>

@@ -227,7 +227,7 @@
                         <rich-text nodes="<p>{{item.lvDesc||''}}</p>"></rich-text>
                     </view>
                     <!-- 雷达图 -->
-                    <view class="chartImg" wx:if="{{item.chartType == 3}}">
+                    <view class="chartImg radar-img radar-img-margin" wx:if="{{item.chartType == 3}}">
                         <hola-radar id="{{index}}" radarValue="{{ radarValue }}"
                                     radarIndicator="{{ radarIndicator }}"></hola-radar>
                     </view>

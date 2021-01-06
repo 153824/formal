@@ -37,7 +37,7 @@
 		"hidedInDevtools": []
 	},
 	"isGameTourist": false,
-	"simulatorType": "wechat",
+	"simulatorType": "qywx_simulator_plugin",
 	"simulatorPluginLibVersion": {
 		"qywx_simulator_plugin": "2.10.1"
 	},
@@ -187,6 +187,12 @@
 					"name": "完成页面",
 					"pathName": "pages/work-base/components/done/done",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "360-home",
+					"pathName": "pages/360/360",
 					"scene": null
 				}
 			]

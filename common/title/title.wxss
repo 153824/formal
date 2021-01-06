@@ -79,3 +79,9 @@
 .liner-lightorange{
     background: linear-gradient(90deg, #E35E4C 0%, #F48D5B 100%);
 }
+.transparent{
+    background: transparent;
+}
+.liner-darkblue{
+    background: linear-gradient(90deg, #353EE8 0%, #356DE8 100%);
+}

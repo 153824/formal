@@ -678,5 +678,48 @@ App({
                 that.getMyTeamList(cb);
             },
         })
+    },
+
+    /**
+     * @Description: 微信一键授权
+     * @author: WE!D
+     * @name: getUserAuth
+     * @args: {data: Object}
+     * @return: Promise
+     * @date: 2021/1/6
+    */
+    getUserAuth: function (data) {
+        const that = this;
+        const userInfo = data.detail.userInfo;
+        userInfo["openid"] = wx.getStorageSync("openId") || app.globalData.userMsg.openid;
+        const auth = new Promise((resolve, reject) => {
+            if (!userInfo) {
+                reject()
+                console.error("获取用户资料失败", data);
+                return;
+            }
+            this.doAjax({
+                url: "updateUserMsg",
+                method: "post",
+                data: {
+                    data: JSON.stringify({
+                        wxUserInfo: userInfo,
+                        userCompany: {
+                            name: userInfo.nickName + "的团队"
+                        }
+                    }),
+                },
+                success: function(res) {
+                    res = res.data;
+                    const localUserInfo = wx.getStorageSync("userInfo");
+                    const localUserDetail = wx.getStorageSync("USER_DETAIL");
+                    that.globalData.userInfo = Object.assign(that.globalData.userInfo,localUserInfo,localUserDetail,res);
+                    wx.setStorageSync("userInfo",that.globalData.userInfo);
+                    wx.setStorageSync("USER_DETAIL",that.globalData.userInfo);
+                    resolve(res)
+                }
+            });
+        })
+        return auth
     }
 });

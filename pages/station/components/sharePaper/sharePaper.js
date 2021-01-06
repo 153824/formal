@@ -158,11 +158,24 @@ Page({
             return;
         }
         if (!isWxWork && costNum > maxCount && !hadBuyout && !isFree) {
-            app.toast("测评可用数量不足");
+            console.error(JSON.stringify({
+                isWxWork,
+                isFree: isFree,
+                hadBuyout: hadBuyout,
+                costNum,
+                maxCount,
+            }))
+            app.toast("测评可用数量不足!!");
             return;
         }
         if(isWxWork && !isFree && !hadBuyout && !dispatchInfo.inventory){
-            app.toast("测评可用数量不足");
+            console.error(JSON.stringify({
+                isWxWork,
+                isFree: isFree,
+                hadBuyout: hadBuyout,
+                inventory: dispatchInfo.inventory
+            }))
+            app.toast("测评可用数量不足!");
             return;
         }
         try {
@@ -278,7 +291,8 @@ Page({
             },
             success: (res)=>{
                 _this.setData({
-                    dispatchInfo: res
+                    dispatchInfo: res,
+                    maxCount: res.inventory
                 })
             }
         })

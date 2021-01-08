@@ -9,8 +9,8 @@ Page({
         reportPermit: "",
         receiveRecordId: "",
         evaluationId: "",
-        targetURL: "",
-        evaluationName: ""
+        targetURL: "/pages/home/home",
+        evaluationName: "",
     },
     onLoad: function (options) {
         const {receiveRecordId, evaluationId} = options;
@@ -20,8 +20,10 @@ Page({
             receiveRecordId: receiveRecordId,
             evaluationId: evaluationId
         });
-        this._checkedReceiveInfo(receiveRecordId);
-        this._checkType(receiveRecordId);
+        if(receiveRecordId){
+            this._checkedReceiveInfo(receiveRecordId);
+            this._checkType(receiveRecordId);
+        }
     },
     onShow: function () {
     },

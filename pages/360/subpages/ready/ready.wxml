@@ -1,0 +1,19 @@
+<view class="ready">
+    <view class="ready--view__item">
+        <view class="ready--view__header">
+            共有 <text class="ready--view__header-text">{{targetList.length}}位</text> 候选人需要评估
+        </view>
+        <scroll-view class="ready--view__scroll-list" scroll-y>
+            <block wx:for="{{targetList}}" wx:for-item="targetItem" wx:key="unique">
+                <view class="ready--view__scroll-item">
+                    {{targetItem}}
+                </view>
+            </block>
+        </scroll-view>
+    </view>
+    <view class="ready--view__item">
+        <button class="start--button" bind:tap="start">
+            开始评估
+        </button>
+    </view>
+</view>

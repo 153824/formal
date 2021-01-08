@@ -44,7 +44,9 @@
     "pages/preload/preload",
     "pages/recorder/recorder",
     "pages/station/components/depart/depart",
-    "pages/360/360"
+    "pages/360/360",
+    "pages/360/subpages/ready/ready",
+    "pages/360/subpages/replying/replying"
   ],
   "tabBar": {
     "custom": true,

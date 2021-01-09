@@ -1,0 +1,8 @@
+<view class="question-number-group">
+    <view class="current-question">
+        <text>{{currentNum >= 10 ? currentNum : '0' + currentNum }}</text>
+        <text class="border"></text>
+    </view>
+    <text class="fragment-question">/</text>
+    <text class="total-question">{{total}}</text>
+</view>

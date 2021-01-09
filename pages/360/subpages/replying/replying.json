@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "hola-question-counter": "/common/question-counter/question-counter",
+    "van-icon": "/common/vant-weapp/dist/icon/index",
+    "van-popup": "/common/vant-weapp/dist/popup/index",
+    "van-field": "/common/vant-weapp/dist/field/index"
+  }
+}

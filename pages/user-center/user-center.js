@@ -47,39 +47,17 @@ Page({
         })
     },
     getUserInfo: function(e) {
-        var that = this;
-        var userInfo = e.detail.userInfo;
-        if (!userInfo) {
-            console.error("获取用户资料失败", e);
-            return;
-        }
-        userInfo["openid"] = wx.getStorageSync("openId") || app.globalData.userMsg.openid;
-        app.doAjax({
-            url: "updateUserMsg",
-            method: "post",
-            data: {
-                data: JSON.stringify({
-                    wxUserInfo: userInfo,
-                    userCompany: {
-                        name: userInfo.nickName + "的团队"
-                    }
-                }),
-            },
-            success: function(res) {
-                res = res.data;
-                const localUserInfo = wx.getStorageSync("userInfo");
-                const localUserDetail = wx.getStorageSync("USER_DETAIL");
-                app.globalData.userInfo = Object.assign(app.globalData.userInfo,localUserInfo,localUserDetail,res);
-                wx.setStorageSync("userInfo",app.globalData.userInfo);
-                wx.setStorageSync("USER_DETAIL",app.globalData.userInfo);
-                const userInfo = Object.assign({},app.globalData.userInfo);
-                that.setData({
-                    userInfo: wx.setStorageSync("userInfo",app.globalData.userInfo) || userInfo
-                });
-                app.addNewTeam(that.onShow);
-                that.onShow();
-            }
-        });
+        const that = this;
+        app.getUserAuth(e).then(res=>{
+            const userInfo = Object.assign({},app.globalData.userInfo);
+            that.setData({
+                userInfo: wx.getStorageSync("userInfo") || userInfo
+            });
+            app.addNewTeam(that.onShow);
+            that.onShow();
+        }).catch(err=>{
+            console.error(err)
+        })
     },
     showServing: function () {
         this.selectComponent('#serving').callServing();

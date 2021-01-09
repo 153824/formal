@@ -136,46 +136,71 @@ Component({
         },
 
         getUserInfo: function (e) {
-            var that = this;
-            var userInfo = e.detail.userInfo;
-            if (!userInfo) {
-                return;
-            }
-            userInfo["openid"] = wx.getStorageSync("openId") || app.globalData.userMsg.openid;
-            app.doAjax({
-                url: "updateUserMsg",
-                method: "post",
-                data: {
-                    data: JSON.stringify({
-                        wxUserInfo: userInfo,
-                        userCompany: {
-                            name: userInfo.nickName + "的团队"
-                        }
-                    }),
-                },
-                success: function (res) {
-                    let info = that.data.userInfo;
-                    app.globalData.userInfo = Object.assign(app.globalData.userInfo,info,res.data);
-                    wx.setStorageSync("userInfo", Object.assign(app.globalData.userInfo,info,res.data));
-                    app.globalData.userInfo.nickname = userInfo.nickName;
-                    try {
-                        const isBindPromise = new Promise(function (resolve, reject) {
-                            resolve(app.addNewTeam(app.getUserInfo.call(that.loadUserMsg)));
+            const that = this
+            app.getUserAuth(e).then(res=>{
+                let info = that.data.userInfo;
+                app.globalData.userInfo = Object.assign(app.globalData.userInfo,info,res.data);
+                wx.setStorageSync("userInfo", Object.assign(app.globalData.userInfo,info,res.data));
+                app.globalData.userInfo.nickname = e.detail.userInfo.nickName;
+                try {
+                    const isBindPromise = new Promise(function (resolve, reject) {
+                        resolve(app.addNewTeam(app.getUserInfo.call(that.loadUserMsg)));
+                    });
+                    isBindPromise.then(() => {
+                        info.isBind = true;
+                        that.setData({
+                            userInfo: info
                         });
-                        isBindPromise.then(() => {
-                            info.isBind = true;
-                            that.setData({
-                                userInfo: info
-                            });
-                            that.getMyTeamList(false, true);
-                        }).catch((err) => {
-                            console.error(err);
-                        })
-                    } catch (e) {
-                        console.error("At common/title/title 140, ", e);
-                    }
+                        that.getMyTeamList(false, true);
+                    }).catch((err) => {
+                        console.error(err);
+                    })
+                } catch (e) {
+                    console.error("At common/title/title 140, ", e);
                 }
-            });
+            }).catch(err=>{
+                console.error(err);
+            })
+            // var that = this;
+            // var userInfo = e.detail.userInfo;
+            // if (!userInfo) {
+            //     return;
+            // }
+            // userInfo["openid"] = wx.getStorageSync("openId") || app.globalData.userMsg.openid;
+            // app.doAjax({
+            //     url: "updateUserMsg",
+            //     method: "post",
+            //     data: {
+            //         data: JSON.stringify({
+            //             wxUserInfo: userInfo,
+            //             userCompany: {
+            //                 name: userInfo.nickName + "的团队"
+            //             }
+            //         }),
+            //     },
+            //     success: function (res) {
+            //         let info = that.data.userInfo;
+            //         app.globalData.userInfo = Object.assign(app.globalData.userInfo,info,res.data);
+            //         wx.setStorageSync("userInfo", Object.assign(app.globalData.userInfo,info,res.data));
+            //         app.globalData.userInfo.nickname = userInfo.nickName;
+            //         try {
+            //             const isBindPromise = new Promise(function (resolve, reject) {
+            //                 resolve(app.addNewTeam(app.getUserInfo.call(that.loadUserMsg)));
+            //             });
+            //             isBindPromise.then(() => {
+            //                 info.isBind = true;
+            //                 that.setData({
+            //                     userInfo: info
+            //                 });
+            //                 that.getMyTeamList(false, true);
+            //             }).catch((err) => {
+            //                 console.error(err);
+            //             })
+            //         } catch (e) {
+            //             console.error("At common/title/title 140, ", e);
+            //         }
+            //     }
+            // });
         },
 
         /**

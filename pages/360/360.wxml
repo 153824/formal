@@ -1,0 +1,21 @@
+<hola-title type="colorful" liner="{{liner}}" time="{{startTime}}" moreType="{{type}}" width="150vw"></hola-title>
+<view class="omni">
+    <view class="omni--view__item">
+        <view class="omni--view__item-content">
+            <text class="omni--view__item__text">{{evaluationInfo.evaluationName}}</text>
+            <image class="omni--view__item__bg" src="" alt=""/>
+        </view>
+        <view class="omni--view__item__circle-mask"></view>
+    </view>
+    <view class="omni--view__item-info">
+        <view class="omni--view__item-info__user-info">
+            <text class="omni--hello-text">您好</text>
+            <text class="omni--intro-text">请使用接收评估通知的手机号登录</text>
+        </view>
+        <view>
+            <button disabled="{{disabled}}" class="omni__login-btn" open-type="getPhoneNumber" bind:getphonenumber="{{disabled ? '' : 'wxAuthLogin'}}">
+                {{disabled ? '评估已失效' : '微信一键授权登录'}}
+            </button>
+        </view>
+    </view>
+</view>

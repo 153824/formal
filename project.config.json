@@ -4,8 +4,9 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
+		"enhance": false,
 		"postcss": true,
 		"preloadBackgroundData": false,
 		"minified": true,
@@ -26,8 +27,7 @@
 		},
 		"bundle": true,
 		"useCompilerModule": false,
-		"userConfirmedUseCompilerModuleSwitch": false,
-		"enhance": false
+		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.12.2",
@@ -186,6 +186,27 @@
 					"id": -1,
 					"name": "完成页面",
 					"pathName": "pages/work-base/components/done/done",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 17,
+					"name": "360首页",
+					"pathName": "pages/360/360",
+					"query": "feedbackEvaluationId=5ff831dfa8482112f2eb74c0",
+					"scene": null
+				},
+				{
+					"id": 18,
+					"name": "360准备评估",
+					"pathName": "pages/360/subpages/ready/ready",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "360作答",
+					"pathName": "pages/360/subpages/replying/replying",
 					"query": "",
 					"scene": null
 				}

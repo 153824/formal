@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "好啦测评",
   "usingComponents": {
-    "van-count-down": "/common/vant-weapp/dist/count-down/index"
+    "van-count-down": "/common/vant-weapp/dist/count-down/index",
+    "hola-question-counter": "/common/question-counter/question-counter"
   }
 }

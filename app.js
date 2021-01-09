@@ -57,7 +57,8 @@ App({
     isReLaunch: false,
     otherPageReLaunchTrigger: true,
     quitPage: "",
-    host: "https://api.luoke101.com/b",
+    host: "http://api.dev.luoke101.int",
+    // host: "https://api.luoke101.com/b",
     // host: "http://api.dev.luoke101.int",
     // host: 'https://api.uat.luoke101.com',
     // host: "http://192.168.0.101:3000",
@@ -85,7 +86,7 @@ App({
     umengConfig: {
         // 悠悠测评 5f7fc58180455950e49eaa0d
         // 好啦测评 5f6d5902906ad81117141b70
-        appKey: '5f6d5902906ad81117141b70', //由友盟分配的APP_KEY
+        appKey: '', //由友盟分配的APP_KEY
         // 使用Openid进行统计，此项为false时将使用友盟+uuid进行用户统计。
         // 使用Openid来统计微信小程序的用户，会使统计的指标更为准确，对系统准确性要求高的应用推荐使用Openid。
         useOpenid: true,
@@ -125,7 +126,9 @@ App({
             const that = this;
             wx.qy.login({
                 success: res => {
-                    that.wxWorkUserLogin(res.code).then(data => {}).catch(err => {});
+                    that.wxWorkUserLogin(res.code).then(data => {
+                    }).catch(err => {
+                    });
                 },
                 fail: function (err) {
                     console.error(err);
@@ -265,7 +268,7 @@ App({
                         that.globalData.userInfo = Object.assign(userData,
                             that.globalData.userInfo || {})
                         that.isLogin = true;
-                        if(res.data.isNew){
+                        if (res.data.isNew) {
                             wx.uma.trackEvent("1606212682385");
                         }
                         if (that.checkUserInfo) {
@@ -425,7 +428,7 @@ App({
      * @return: none
      * @date: 2020/7/21
      */
-    doAjax: function (params = {noLoading: true,toastTrigger: true}) {
+    doAjax: function (params = {noLoading: true, toastTrigger: true}) {
         const that = this;
         const {prefix = ''} = params;
         let url = this.host + '/hola/' + params.url;
@@ -437,10 +440,10 @@ App({
                 title: '正在请求...',
             });
         }
-        if(!params.toastTrigger){
+        if (!params.toastTrigger) {
             params.toastTrigger = false;
         }
-        if (params.url.indexOf('wework') !== -1) {
+        if (params.url.startsWith('wework')) {
             url = `${this.host}/${params.url}`;
         }
         params.data = params.data || {};
@@ -463,7 +466,7 @@ App({
                 if (ret.statusCode >= 400) {
                     params.toastTrigger = true;
                     if (params.error) return params.error(retData);
-                    if(params.toastTrigger){
+                    if (params.toastTrigger) {
                         wx.showToast({
                             title: retData.msg,
                             icon: 'none',
@@ -678,5 +681,82 @@ App({
                 that.getMyTeamList(cb);
             },
         })
+    },
+
+    /**
+     * @Description: 微信一键授权
+     * @author: WE!D
+     * @name: getUserAuth
+     * @args: {data: Object}
+     * @return: Promise
+     * @date: 2021/1/6
+     */
+    getUserAuth: function (data) {
+        const that = this;
+        const userInfo = data.detail.userInfo;
+        userInfo["openid"] = wx.getStorageSync("openId") || app.globalData.userMsg.openid;
+        const auth = new Promise((resolve, reject) => {
+            if (!userInfo) {
+                reject()
+                console.error("获取用户资料失败", data);
+                return;
+            }
+            this.doAjax({
+                url: "updateUserMsg",
+                method: "post",
+                data: {
+                    data: JSON.stringify({
+                        wxUserInfo: userInfo,
+                        userCompany: {
+                            name: userInfo.nickName + "的团队"
+                        }
+                    }),
+                },
+                success: function (res) {
+                    res = res.data;
+                    const localUserInfo = wx.getStorageSync("userInfo");
+                    const localUserDetail = wx.getStorageSync("USER_DETAIL");
+                    that.globalData.userInfo = Object.assign(that.globalData.userInfo, localUserInfo, localUserDetail, res);
+                    wx.setStorageSync("userInfo", that.globalData.userInfo);
+                    wx.setStorageSync("USER_DETAIL", that.globalData.userInfo);
+                    resolve(res)
+                }
+            });
+        });
+        return auth
+    },
+
+    /**
+     * @Description:
+     * @author: WE!D
+     * @name: updateUserMobile
+     * @args: {data:Object}
+     * @return: Promise
+     * @date: 2021/1/8
+     */
+    updateUserMobile(e) {
+        let detail = e.detail;
+        let iv = detail.iv;
+        let encryptedData = detail.encryptedData;
+        const mobile = new Promise((resolve, reject) => {
+            if (encryptedData) {
+                let userMsg = this.globalData.userMsg || {};
+                userMsg["iv"] = iv;
+                userMsg["encryptedData"] = encryptedData;
+                this.doAjax({
+                    url: "updatedUserMobile",
+                    data: userMsg,
+                    success(res) {
+                        resolve(res)
+                    },
+                    error(err) {
+                        reject(err)
+                    }
+                });
+            } else {
+                reject()
+            }
+        });
+        return mobile;
     }
 });

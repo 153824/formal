@@ -31,7 +31,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.12.2",
-	"appid": "wx85cde7d3e8f3d949",
+	"appid": "wxdb1dcb4a9e212d32",
 	"projectname": "luoke-haola-wx-admin",
 	"debugOptions": {
 		"hidedInDevtools": []
@@ -116,7 +116,7 @@
 					"id": 6,
 					"name": "小程序码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=5fd2d3a7b407175493346f15",
+					"query": "scene=600652c2eda280395d8c0fa4",
 					"scene": null
 				},
 				{
@@ -193,7 +193,7 @@
 					"id": 17,
 					"name": "360首页",
 					"pathName": "pages/360/360",
-					"query": "feedbackEvaluationId=5ff831dfa8482112f2eb74c0",
+					"query": "surveyId=5fffb83060ec956e02b91b9a",
 					"scene": null
 				},
 				{

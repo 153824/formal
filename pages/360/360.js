@@ -6,48 +6,49 @@ Page({
         fbEId: '',
         evaluationInfo: {
             evaluationName: "无标题问卷",
-            status: 'UNCLAIMED'
+            status: 'UNCLAIMED',
+            reviewerName: ''
         },
         userInfo: app.globalData.userInfo || wx.getStorageSync('userInfo'),
-        disabled: false
+        disabled: false,
+        surveyId: '',
     },
     onLoad: function (options) {
-        const feedbackEvaluationId = options.feedbackEvaluationId;
-        console.log(feedbackEvaluationId);
+        const surveyId = options.surveyId;
         if (!app.globalData.userInfo && !wx.getStorageSync('userInfo')) {
             app.checkUserInfo = userInfo => {
-                this.loadTemptation(feedbackEvaluationId, userInfo)
+                this.loadTemptation(surveyId, userInfo)
                 this.setData({
                     userInfo: userInfo
                 });
             };
         } else {
             const userInfo = app.globalData.userInfo || wx.getStorageSync('userInfo')
-            this.loadTemptation(feedbackEvaluationId, userInfo)
+            this.loadTemptation(surveyId, userInfo)
             this.setData({
                 userInfo: userInfo
             });
         }
         this.setData({
-            fbEId: feedbackEvaluationId
+            surveyId: surveyId
         });
     },
     onShow() {
-        const {fbEId} = this.data;
-        if (app.globalData.userInfo && fbEId) {
+        const {surveyId} = this.data;
+        if (app.globalData.userInfo && surveyId) {
             const userInfo = app.globalData.userInfo || wx.getStorageSync('userInfo')
-            this.loadTemptation(fbEId, userInfo);
+            this.loadTemptation(surveyId, userInfo);
         }
     },
     getTemptation(id, data) {
-        let {fbEId, userInfo} = this.data;
-        if (!fbEId && id) {
-            fbEId = id
+        let {surveyId, userInfo} = this.data;
+        if (!surveyId && id) {
+            surveyId = id
         }
-        console.log("feedbackEvaluationId, userInfo: ", (fbEId, userInfo));
+        console.log("feedbackEvaluationId, userInfo: ", (surveyId, userInfo));
         const temptation = new Promise((resolve, reject) => {
             app.doAjax({
-                url: `wework/evaluations/360/fetch/${fbEId}/temptation`,
+                url: `wework/evaluations/360/fetch/${surveyId}/temptation`,
                 method: 'GET',
                 data: {
                     userId: userInfo.id
@@ -62,8 +63,9 @@ Page({
         });
         return temptation;
     },
-    checkEvaluation() {
-        return this.getTemptation().then(res => {
+    checkEvaluationStatus() {
+        return this.getTemptation
+        ().then(res => {
             return new Promise((resolve, reject) => {
                 switch (res.status) {
                     case 'UNAVAILABLE':
@@ -82,6 +84,10 @@ Page({
                         resolve();
                         app.toast('测评已领取');
                         break;
+                    case 'IMPOSTOR':
+                        reject();
+                        app.toast('测评已被别人领取');
+                        break;
                 }
             })
         }).catch(err => {
@@ -91,68 +97,73 @@ Page({
         })
     },
     loadTemptation(id, data) {
-        let {fbEId} = this.data;
-        if(!id){
-            id = fbEId
+        let {surveyId} = this.data;
+        if (!id) {
+            id = surveyId
         }
         const temptation = this.getTemptation(id, data)
         temptation.then(res => {
-            const {status, surveyId, evaluationName} = res;
+            const {status, feedbackEvaluationId, evaluationName} = res;
             const surveyInfo = {
                 name: evaluationName,
-                fbEId: fbEId || id,
-                surveyId: surveyId || ""
+                fbEId: feedbackEvaluationId,
+                surveyId: surveyId || id
             };
+            console.log(surveyInfo);
             switch (status) {
                 case 'UNAVAILABLE':
                     app.toast('评估已失效');
                     break;
                 case 'FINISHED':
-                    this.done();
+                    this.goToDone();
                     app.toast('测评已完成');
                     break;
                 case 'UNCLAIMED':
                     app.toast('测评可用');
                     break;
                 case 'FETCHED':
-                    wx.navigateTo({
-                        url: `/pages/360/subpages/ready/ready?surveyInfo=${JSON.stringify(surveyInfo)}`
-                    });
+                    this.goToReady(surveyInfo)
                     app.toast('测评已领取');
+                    break;
+                case 'IMPOSTOR':
+                    app.toast('测评已被别人领取');
                     break;
             }
             this.setData({
-                evaluationInfo: res,
-                surveyInfo: surveyInfo
+                evaluationInfo: res
             })
         }).catch(err => {
             console.error(err)
         })
     },
     wxAuthLogin(e) {
-        const {surveyInfo} = this.data;
-        this.checkEvaluation().then(res => {
+        const {surveyId, evaluationInfo, fbEId} = this.data;
+        const surveyInfo = {
+            name: evaluationInfo.evaluationName,
+            fbEId: fbEId,
+            surveyId,
+        }
+        this.checkEvaluationStatus().then(res => {
             return app.updateUserMobile(e);
         }).then(res => {
             return this.verify();
         }).then(res => {
-            const {surveyInfo} = this.data;
-            console.log("verify: ", res);
-            if (res.surveyId) {
-                surveyInfo.surveyId = res.surveyId;
-                wx.navigateTo({
-                    url: `/pages/360/subpages/ready/ready?surveyInfo=${JSON.stringify(surveyInfo)}`
-                });
+            if (surveyId) {
+                this.goToReady(surveyInfo)
             }
         }).catch(err => {
-            switch (err.msg) {
-                case 'already fetched':
-                    wx.navigateTo({
-                        url: `/pages/360/subpages/ready/ready?surveyInfo=${JSON.stringify(surveyInfo)}`
-                    });
+            switch (err.message) {
+                case 'FETCHED':
+                    this.goToReady(surveyInfo)
                     break;
                 case 'UNAVAILABLE':
                     app.toast("测评已失效，请联系管理员");
+                    this.setData({
+                        disabled: true
+                    });
+                    break;
+                case 'MISMATCHED':
+                    app.toast("手机号码不匹配，请联系管理员");
                     this.setData({
                         disabled: true
                     });
@@ -162,18 +173,30 @@ Page({
         });
     },
     verify(data) {
-        const {fbEId, userInfo} = this.data;
+        const {surveyId, userInfo} = this.data;
         const verify = new Promise((resolve, reject) => {
-            // reject({msg: 'UNAVAILABLE'})
             app.doAjax({
                 url: 'wework/evaluations/360/fetch/verify',
                 method: 'POST',
                 data: {
-                    feedbackEvaluationId: fbEId,
+                    surveyId: surveyId,
                     userId: userInfo.id
                 },
                 success(res) {
-                    resolve(res)
+                    switch (res.message) {
+                        case 'SUCCESS':
+                            resolve(res);
+                            break;
+                        case 'MISMATCHED':
+                            reject(res);
+                            break;
+                        case 'UNAVAILABLE':
+                            reject(res);
+                            break;
+                        case 'FETCHED':
+                            reject(res);
+                            break;
+                    }
                 },
                 error(err) {
                     reject(err)
@@ -182,9 +205,14 @@ Page({
         });
         return verify
     },
-    done() {
+    goToDone() {
         wx.navigateTo({
             url: "/pages/work-base/components/done/done"
         })
+    },
+    goToReady(surveyInfo) {
+        wx.navigateTo({
+            url: `/pages/360/subpages/ready/ready?surveyInfo=${JSON.stringify(surveyInfo)}`
+        });
     }
 });

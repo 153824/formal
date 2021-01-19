@@ -9,7 +9,7 @@
     </view>
     <view class="omni--view__item-info">
         <view class="omni--view__item-info__user-info">
-            <text class="omni--hello-text">您好</text>
+            <text class="omni--hello-text">您好,{{evaluationInfo.reviewerName}}</text>
             <text class="omni--intro-text">请使用接收评估通知的手机号登录</text>
         </view>
         <view>

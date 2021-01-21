@@ -38,9 +38,7 @@
 	},
 	"isGameTourist": false,
 	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {
-		"qywx_simulator_plugin": "2.10.1"
-	},
+	"simulatorPluginLibVersion": {},
 	"scripts": {
 		"beforeCompile": "",
 		"beforePreview": "",
@@ -193,7 +191,7 @@
 					"id": 17,
 					"name": "360首页",
 					"pathName": "pages/360/360",
-					"query": "surveyId=5fffb83060ec956e02b91b9a",
+					"query": "surveyId=OBXxAJGs",
 					"scene": null
 				},
 				{

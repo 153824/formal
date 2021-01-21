@@ -15,5 +15,8 @@
   "license": "ISC",
   "dependencies": {
     "umtrack-wx": "^2.4.6"
+  },
+  "devDependencies": {
+    "mocha": "^8.2.1"
   }
 }

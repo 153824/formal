@@ -12,43 +12,44 @@ Page({
         userInfo: app.globalData.userInfo || wx.getStorageSync('userInfo'),
         disabled: false,
         surveyId: '',
+        smsCode: ''
     },
     onLoad: function (options) {
-        const surveyId = options.surveyId;
+        const smsCode = options.surveyId || options.smsCode;
         if (!app.globalData.userInfo && !wx.getStorageSync('userInfo')) {
             app.checkUserInfo = userInfo => {
-                this.loadTemptation(surveyId, userInfo)
+                this.loadTemptation(smsCode, userInfo);
                 this.setData({
                     userInfo: userInfo
                 });
             };
         } else {
-            const userInfo = app.globalData.userInfo || wx.getStorageSync('userInfo')
-            this.loadTemptation(surveyId, userInfo)
+            const userInfo = app.globalData.userInfo || wx.getStorageSync('userInfo');
+            this.loadTemptation(smsCode, userInfo);
             this.setData({
                 userInfo: userInfo
             });
         }
         this.setData({
-            surveyId: surveyId
+            smsCode: smsCode
         });
     },
     onShow() {
-        const {surveyId} = this.data;
-        if (app.globalData.userInfo && surveyId) {
-            const userInfo = app.globalData.userInfo || wx.getStorageSync('userInfo')
-            this.loadTemptation(surveyId, userInfo);
+        const {smsCode} = this.data;
+        if (app.globalData.userInfo && smsCode) {
+            const userInfo = app.globalData.userInfo || wx.getStorageSync('userInfo');
+            this.loadTemptation(smsCode, userInfo);
         }
     },
     getTemptation(id, data) {
-        let {surveyId, userInfo} = this.data;
-        if (!surveyId && id) {
-            surveyId = id
+        let {smsCode, userInfo} = this.data;
+        if (!smsCode && id) {
+            smsCode = id
         }
-        console.log("feedbackEvaluationId, userInfo: ", (surveyId, userInfo));
+        console.log("feedbackEvaluationId, userInfo: ", (smsCode, userInfo));
         const temptation = new Promise((resolve, reject) => {
             app.doAjax({
-                url: `wework/evaluations/360/fetch/${surveyId}/temptation`,
+                url: `wework/evaluations/360/fetch/${smsCode}/temptation`,
                 method: 'GET',
                 data: {
                     userId: userInfo.id
@@ -97,17 +98,17 @@ Page({
         })
     },
     loadTemptation(id, data) {
-        let {surveyId} = this.data;
+        let {smsCode} = this.data;
         if (!id) {
-            id = surveyId
+            id = smsCode
         }
-        const temptation = this.getTemptation(id, data)
+        const temptation = this.getTemptation(id, data);
         temptation.then(res => {
-            const {status, feedbackEvaluationId, evaluationName} = res;
+            const {status, feedbackEvaluationId, evaluationName, surveyId} = res;
             const surveyInfo = {
                 name: evaluationName,
                 fbEId: feedbackEvaluationId,
-                surveyId: surveyId || id
+                surveyId: surveyId
             };
             console.log(surveyInfo);
             switch (status) {
@@ -130,7 +131,9 @@ Page({
                     break;
             }
             this.setData({
-                evaluationInfo: res
+                evaluationInfo: res,
+                surveyId: surveyId,
+                fbEId: feedbackEvaluationId,
             })
         }).catch(err => {
             console.error(err)
@@ -141,8 +144,8 @@ Page({
         const surveyInfo = {
             name: evaluationInfo.evaluationName,
             fbEId: fbEId,
-            surveyId,
-        }
+            surveyId: surveyId,
+        };
         this.checkEvaluationStatus().then(res => {
             return app.updateUserMobile(e);
         }).then(res => {
@@ -154,7 +157,7 @@ Page({
         }).catch(err => {
             switch (err.message) {
                 case 'FETCHED':
-                    this.goToReady(surveyInfo)
+                    this.goToReady(surveyInfo);
                     break;
                 case 'UNAVAILABLE':
                     app.toast("测评已失效，请联系管理员");
@@ -174,6 +177,7 @@ Page({
     },
     verify(data) {
         const {surveyId, userInfo} = this.data;
+        console.log(surveyId)
         const verify = new Promise((resolve, reject) => {
             app.doAjax({
                 url: 'wework/evaluations/360/fetch/verify',

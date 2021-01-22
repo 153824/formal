@@ -2,7 +2,32 @@ const app = getApp()
 Page({
     data: {
         drafts: [],
-        questions: [],
+        questions: [
+            {"options": ["请输入选项-1222", "请输入选项-233"], "required": true, "stem": "请输入题目-1", "type": "SINGLE"},
+            {"options": ["请输入选项-1", "请输入选项-2"], "required": true, "stem": "请输入题目-2", "type": "SINGLE"},
+            {"options": ["请输入选项-1222", "请输入选项-233"], "required": true, "stem": "请输入题目-1", "type": "SINGLE"},
+            {"options": ["请输入选项-1", "请输入选项-2"], "required": true, "stem": "请输入题目-2", "type": "SINGLE"},
+            {"options": ["请输入选项-1222", "请输入选项-233"], "required": true, "stem": "请输入题目-1", "type": "SINGLE"},
+            {"options": ["请输入选项-1", "请输入选项-2"], "required": true, "stem": "请输入题目-2", "type": "SINGLE"},
+            {"options": ["请输入选项-1222", "请输入选项-233"], "required": true, "stem": "请输入题目-1", "type": "SINGLE"},
+            {"options": ["请输入选项-1", "请输入选项-2"], "required": true, "stem": "请输入题目-2", "type": "SINGLE"},
+            {"options": ["请输入选项-1222", "请输入选项-233"], "required": true, "stem": "请输入题目-1", "type": "SINGLE"},
+            {"options": ["请输入选项-1", "请输入选项-2"], "required": true, "stem": "请输入题目-2", "type": "SINGLE"},
+            {"options": ["请输入选项-1222", "请输入选项-233"], "required": true, "stem": "请输入题目-1", "type": "SINGLE"},
+            {"options": ["请输入选项-1", "请输入选项-2"], "required": true, "stem": "请输入题目-2", "type": "SINGLE"},
+            {"options": ["请输入选项-1222", "请输入选项-233"], "required": true, "stem": "请输入题目-1", "type": "SINGLE"},
+            {"options": ["请输入选项-1", "请输入选项-2"], "required": true, "stem": "请输入题目-2", "type": "SINGLE"},
+            {"options": ["请输入选项-1222", "请输入选项-233"], "required": true, "stem": "请输入题目-1", "type": "SINGLE"},
+            {"options": ["请输入选项-1", "请输入选项-2"], "required": true, "stem": "请输入题目-2", "type": "SINGLE"},
+            {"options": ["请输入选项-1222", "请输入选项-233"], "required": true, "stem": "请输入题目-1", "type": "SINGLE"},
+            {"options": ["请输入选项-1", "请输入选项-2"], "required": true, "stem": "请输入题目-2", "type": "SINGLE"},
+            {"options": ["请输入选项-1222", "请输入选项-233"], "required": true, "stem": "请输入题目-1", "type": "SINGLE"},
+            {"options": ["请输入选项-1", "请输入选项-2"], "required": true, "stem": "请输入题目-2", "type": "SINGLE"},
+            {"options": ["请输入选项-1222", "请输入选项-233"], "required": true, "stem": "请输入题目-1", "type": "SINGLE"},
+            {"options": ["请输入选项-1", "请输入选项-2"], "required": true, "stem": "请输入题目-2", "type": "SINGLE"},
+            {"options": ["请输入选项-1222", "请输入选项-233"], "required": true, "stem": "请输入题目-1", "type": "SINGLE"},
+            {"options": ["请输入选项-1", "请输入选项-2"], "required": true, "stem": "请输入题目-2", "type": "SINGLE"},
+        ],
         popupTrigger: false,
         popupInfo: {
             char: 2,
@@ -15,7 +40,8 @@ Page({
             fbEId: '',
             surveyId: ''
         },
-        message: ""
+        message: "",
+        isArriveToLower: false
     },
     onLoad: function (options) {
         const surveyInfo = JSON.parse(options.surveyInfo);
@@ -29,7 +55,7 @@ Page({
         });
         this.getQuestions(surveyInfo.fbEId).then(res => {
             this.setData({
-                questions: res
+                // questions: res
             })
         }).catch(err => {
             console.error(err)
@@ -126,7 +152,7 @@ Page({
             return;
         }
         this.setData({
-            scrollIntoViewID: `y-${index-1}`
+            scrollIntoViewID: `y-${index - 1}`
         })
     },
     saveDrafts() {
@@ -137,6 +163,7 @@ Page({
                 url: `wework/evaluations/360/surveys/${surveyInfo.surveyId}/drafts`,
                 method: 'POST',
                 data: drafts,
+                noLoading: true,
                 success(res) {
                     resolve(res)
                 },
@@ -176,6 +203,11 @@ Page({
     done() {
         wx.navigateTo({
             url: "/pages/work-base/components/done/done"
+        })
+    },
+    displaySubmitButton() {
+        this.setData({
+            isArriveToLower: true,
         })
     }
 });

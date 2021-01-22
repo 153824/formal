@@ -7,12 +7,13 @@
         </van-popup>
     </view>
 <!--    scroll-with-animation-->
-    <scroll-view class="replying--scroll-view__scroll-list"
+    <scroll-view class="replying--scroll-view__scroll-list {{isArriveToLower ? 'replying--scroll-view__scroll-list-small' : ''}}"
                  scroll-y
                  scroll-into-view="{{scrollIntoViewID}}"
                  enhanced="{{true}}"
                  enable-back-to-top
                  bounces
+                 bind:scrolltolower="displaySubmitButton"
                  bind:dragend="dragend">
         <block wx:for="{{questions}}" wx:for-item="questionItem" wx:for-index="questionIndex">
             <view id="y-{{questionIndex}}" class="replying--question">
@@ -92,7 +93,7 @@
             </view>
         </block>
     </scroll-view>
-    <view class="replying--view__item replying--view__item-btn-wrapper">
+    <view wx:if="isArriveToLower" class="replying--view__item replying--view__item-btn-wrapper">
         <button class="replying--view__btn" bind:tap="submit">确认无误，提交</button>
     </view>
 </view>

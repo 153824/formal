@@ -67,6 +67,9 @@
     margin-bottom: 0;
 }
 .replying--scroll-view__scroll-list{
+    height: 100vh;
+}
+.replying--scroll-view__scroll-list-small{
     height: calc(100vh - 124rpx);
 }
 .replying--view__item-btn-wrapper{

@@ -89,7 +89,7 @@
                                             <van-field
                                                     value="{{ draftItem.responds[questionIndex].text }}"
                                                     type="textarea"
-                                                    placeholder="请输入留言"
+                                                    placeholder="请输入答案"
                                                     autosize="{height: 100%}"
                                                     border="{{ false }}"
                                                     clickable="{{true}}"

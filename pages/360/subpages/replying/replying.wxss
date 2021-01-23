@@ -82,13 +82,14 @@
     font-weight: 600;
     color: #353EE8;
     line-height: 44rpx;
+    transition: all .5s;
 }
 .replying--view__btn{
     outline: unset;
     border: unset;
     border-color: transparent;
     background-color: transparent !important;
-    color: #353EE8;
+    color: #353EE8;s
 }
 .replying--view__btn::after{
     content: unset;

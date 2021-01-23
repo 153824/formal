@@ -1,25 +1,32 @@
 <view class="replying">
     <view class="replying--view__item-popup">
-        <van-popup show="{{ popupTrigger }}" overlay="{{false}}" position="top" bind:close="onClose" custom-class="replying--view__item-popup__custom">
+        <van-popup show="{{ popupTrigger }}" overlay="{{false}}" position="top" bind:close="onClose"
+                   custom-class="replying--view__item-popup__custom">
             <view class="replying--view__item-popup__content">
-                <text><text class="replying--view__item-popup__content-character">{{util.ASCIIToChar(popupInfo.char)}}</text>{{popupInfo.content}}</text>
+                <text>
+                    <text class="replying--view__item-popup__content-character">{{util.ASCIIToChar(popupInfo.char)}}
+                    </text>
+                    {{popupInfo.content}}
+                </text>
             </view>
         </van-popup>
     </view>
-<!--    scroll-with-animation-->
-    <scroll-view class="replying--scroll-view__scroll-list {{isArriveToLower ? 'replying--scroll-view__scroll-list-small' : ''}}"
-                 scroll-y
-                 scroll-into-view="{{scrollIntoViewID}}"
-                 enhanced="{{true}}"
-                 enable-back-to-top
-                 bounces
-                 bind:scrolltolower="displaySubmitButton"
-                 bind:dragend="dragend">
+    <!--    scroll-with-animation-->
+    <scroll-view
+            class="replying--scroll-view__scroll-list {{isArriveToLower ? 'replying--scroll-view__scroll-list-small' : ''}}"
+            scroll-y
+            scroll-into-view="{{scrollIntoViewID}}"
+            enhanced="{{true}}"
+            enable-back-to-top
+            bounces
+            bind:scrolltolower="displaySubmitButton"
+            bind:dragend="dragend">
         <block wx:for="{{questions}}" wx:for-item="questionItem" wx:for-index="questionIndex">
             <view id="y-{{questionIndex}}" class="replying--question">
                 <!--题号-->
                 <view class="replying--question__counter">
-                    <hola-question-counter total="{{questions.length}}" currentNum="{{questionIndex+1}}"></hola-question-counter>
+                    <hola-question-counter total="{{questions.length}}"
+                                           currentNum="{{questionIndex+1}}"></hola-question-counter>
                 </view>
                 <view class="replying--question__container">
                     <!--题干-->
@@ -29,7 +36,8 @@
                     <!--题目选项-->
                     <block wx:if="{{questionItem.type === 'SINGLE'}}">
                         <view class="replying--question__content">
-                            <block wx:for="{{questionItem.options}}" wx:for-item="optionItem" wx:for-index="optionIndex">
+                            <block wx:for="{{questionItem.options}}" wx:for-item="optionItem"
+                                   wx:for-index="optionIndex">
                                 <view class="replying--question__content__item">
                                     <view class="replying--question__content__item__character">
                                         {{util.ASCIIToChar(optionIndex)}}
@@ -44,7 +52,8 @@
                         <view class="replying--question__testee">
                             <view class="replying--question__testee__header">
                                 <text class="replying--question__testee__header__text">被评价者</text>
-                                <block wx:for="{{questionItem.options}}" wx:for-item="optionItem" wx:for-index="optionIndex">
+                                <block wx:for="{{questionItem.options}}" wx:for-item="optionItem"
+                                       wx:for-index="optionIndex">
                                     <text>{{util.ASCIIToChar(optionIndex)}}</text>
                                 </block>
                             </view>
@@ -52,11 +61,15 @@
                                 <block wx:for="{{drafts}}" wx:for-item="draftItem" wx:for-index="draftIndex">
                                     <view class="replying--question__testee__content__item">
                                         <view class="replying--question__testee__name">{{draftItem.targetName}}</view>
-                                        <block wx:for="{{questionItem.options}}" wx:for-item="optionItem" wx:for-index="optionIndex">
+                                        <block wx:for="{{questionItem.options}}" wx:for-item="optionItem"
+                                               wx:for-index="optionIndex">
                                             <view class="replying--question__testee__choice {{draftItem.responds[questionIndex].optionIdx === optionIndex ? 'replying--question__testee__choice-checked' : ''}}"
-                                                  data-draft-idx="{{draftIndex}}" data-question-idx="{{questionIndex}}" data-option-idx="{{optionIndex}}" bind:tap="checkedOption"
+                                                  data-draft-idx="{{draftIndex}}" data-question-idx="{{questionIndex}}"
+                                                  data-option-idx="{{optionIndex}}" bind:tap="checkedOption"
                                             >
-                                                <van-icon wx:if="{{draftItem.responds[questionIndex].optionIdx === optionIndex}}" name="success" />
+                                                <van-icon
+                                                        wx:if="{{draftItem.responds[questionIndex].optionIdx === optionIndex}}"
+                                                        name="success"/>
                                             </view>
                                         </block>
                                     </view>
@@ -68,7 +81,9 @@
                         <view class="replying--question__content-textual">
                             <block wx:for="{{drafts}}" wx:for-item="draftItem" wx:for-index="draftIndex">
                                 <view class="replying--question__content-textual__item">
-                                    <view class="replying--question__content-textual__item__name">{{draftItem.targetName}}</view>
+                                    <view class="replying--question__content-textual__item__name">
+                                        {{draftItem.targetName}}
+                                    </view>
                                     <view class="replying--question__content-textual__item__textarea">
                                         <van-cell-group>
                                             <van-field
@@ -93,8 +108,10 @@
             </view>
         </block>
     </scroll-view>
-    <view wx:if="isArriveToLower" class="replying--view__item replying--view__item-btn-wrapper">
-        <button class="replying--view__btn" bind:tap="submit">确认无误，提交</button>
-    </view>
+    <van-transition show="{{ isArriveToLower }}" custom-class="block">
+        <view class="replying--view__item replying--view__item-btn-wrapper">
+            <button class="replying--view__btn" bind:tap="submit">确认无误，提交</button>
+        </view>
+    </van-transition>
 </view>
 <wxs src="../../../../utils/util.wxs" module="util"></wxs>

@@ -89,7 +89,7 @@
     border: unset;
     border-color: transparent;
     background-color: transparent !important;
-    color: #353EE8;s
+    color: #353EE8;
 }
 .replying--view__btn::after{
     content: unset;

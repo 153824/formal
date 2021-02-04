@@ -1,7 +1,5 @@
-// store/sharePaper.js
-var app = getApp();
+const app = getApp();
 Page({
-
     /**
      * 页面的初始数据
      */
@@ -23,6 +21,7 @@ Page({
         dropDownOps: [],
         dropdownValue: 0,
         isWxWork: false,
+        is3rd: false,
         dispatchInfo: {},
         defaultDeptId: ""
     },
@@ -44,8 +43,9 @@ Page({
             estimatedTime: estimatedTime
         });
         this.setData({
+            is3rd: app.wx3rdInfo.is3rd,
             isWxWork: app.wxWorkInfo.isWxWork,
-            reportMeet: app.wxWorkInfo.isWxWork ? 2 : 1,
+            reportMeet: app.wxWorkInfo.isWxWork || app.wx3rdInfo.is3rd ? 2 : 1,
         });
         let storageInfo = wx.getStorageInfoSync().keys;
         let departInfo = wx.getStorageSync(`checked-depart-info-${id}`);
@@ -55,10 +55,10 @@ Page({
                 wx.removeStorageSync(item);
             }
         });
-        if(!departInfo){
-            this._loadRootDepart().then(res=>{
-                const {label,value} = res.data[0];
-                console.log("res.data: ",res.data);
+        if (!departInfo) {
+            this._loadRootDepart().then(res => {
+                const {label, value} = res.data[0];
+                console.log("res.data: ", res.data);
                 this.setData({
                     dropDownOps: [
                         {
@@ -86,9 +86,9 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-        const {evaluationId,isWxWork} = this.data;
+        const {evaluationId, isWxWork, is3rd} = this.data;
         const dropDownOps = wx.getStorageSync(`checked-depart-info-${evaluationId}`);
-        if (dropDownOps && isWxWork) {
+        if (dropDownOps && (isWxWork || is3rd)) {
             this.loadDispatchInfo(dropDownOps.value);
             this.setData({
                 dropDownOps: [dropDownOps],
@@ -150,14 +150,15 @@ Page({
             reportMeet,
             dispatchInfo,
             isWxWork,
+            is3rd,
             defaultDeptId
         } = that.data;
-        console.log("dispatchInfo.count: ",dispatchInfo.inventory);
+        console.log("dispatchInfo.count: ", dispatchInfo.inventory);
         let costNum = count;
         if (!costNum && !hadBuyout && !isFree) {
             return;
         }
-        if (!isWxWork && costNum > maxCount && !hadBuyout && !isFree) {
+        if (!isWxWork && !is3rd && costNum > maxCount && !hadBuyout && !isFree) {
             console.error(JSON.stringify({
                 isWxWork,
                 isFree: isFree,
@@ -168,9 +169,10 @@ Page({
             app.toast("测评可用数量不足!!");
             return;
         }
-        if(isWxWork && !isFree && !hadBuyout && !dispatchInfo.inventory){
+        if ((isWxWork || is3rd) && !isFree && !hadBuyout && !dispatchInfo.inventory) {
             console.error(JSON.stringify({
                 isWxWork,
+                is3rd,
                 isFree: isFree,
                 hadBuyout: hadBuyout,
                 inventory: dispatchInfo.inventory
@@ -190,10 +192,10 @@ Page({
             releaseCount: costNum,
             entrance: "WECHAT_MA"
         };
-        if(this.data.isWxWork){
+        if (this.data.isWxWork || this.data.is3rd) {
             try {
                 releaseInfo.deptId = wx.getStorageSync(`checked-depart-info-${evaluationId}`).value || defaultDeptId;
-            }catch (e) {
+            } catch (e) {
                 throw e;
             }
             releaseInfo.entrance = "WEWORK_MA";
@@ -279,7 +281,7 @@ Page({
         })
     },
 
-    loadDispatchInfo(departmentId){
+    loadDispatchInfo(departmentId) {
         const _this = this;
         const {evaluationId} = this.data;
         app.doAjax({
@@ -289,7 +291,7 @@ Page({
                 evaluationId: evaluationId,
                 departmentId: departmentId
             },
-            success: (res)=>{
+            success: (res) => {
                 _this.setData({
                     dispatchInfo: res,
                     maxCount: res.inventory
@@ -319,7 +321,7 @@ Page({
     },
 
     onShareAppMessage(options) {
-        const {evaluationName,smallImg,sharePaperInfo} = this.data;
+        const {evaluationName, smallImg, sharePaperInfo} = this.data;
         const {releaseRecordId} = sharePaperInfo;
         return {
             title: `邀您参加《${evaluationName}》`,

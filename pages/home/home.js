@@ -46,6 +46,7 @@ Page({
     onLoad: function (options = {loadingTrigger: false}, name) {
         const that = this;
         const {isWxWork} = app.wxWorkInfo;
+        const {is3rd} = app.wx3rdInfo;
         app.checkUserInfo = (userInfo) => {
             if (userInfo.isNew) {
                 wx.redirectTo({
@@ -71,12 +72,26 @@ Page({
             }
             return;
         }
+        if (is3rd) {
+            const {trigger} = this.data;
+            this.setData({
+                loading: true,
+            });
+            if (trigger) {
+                setTimeout(() => {
+                    wx.switchTab({
+                        url: "/pages/work-base/work-base"
+                    });
+                }, 4000);
+            }
+            return;
+        }
         if (options.loadingTrigger) {
             this.setData({
                 loading: true
             })
         }
-        if (!isWxWork) {
+        if (!isWxWork && !is3rd) {
             let homePagesPromiseList = [];
             const homePagesPromise = new Promise(function (resolve, reject) {
                 app.doAjax({
@@ -138,7 +153,6 @@ Page({
     },
     onShow: function () {
         const that = this;
-        const {isWxWork} = app.wxWorkInfo;
         app.freeTickId = "";
         if (!app.isLogin) {
             app.checkUser = function () {
@@ -308,8 +322,8 @@ Page({
         });
     },
     onUnload() {
-        const {isWxWork} = app.wxWorkInfo;
-        if (isWxWork) {
+        const {isWxWork,is3rd} = app.wxWorkInfo;
+        if (isWxWork || is3rd) {
             this.setData({
                 loading: true,
                 trigger: false

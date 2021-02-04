@@ -57,8 +57,40 @@ Component({
                 },
             ]
         },
+        wx3rdPage: {
+            admin: [
+                {
+                    text: "工作台",
+                    normal: '../../images/icon/icon@evaluation-manager-no-active.png',
+                    active: '../../images/icon/icon@evaluation-manager-active.png',
+                    path: "/pages/work-base/work-base"
+                },
+                {
+                    text: "我的",
+                    normal: '../../images/icon/icon@my-no-active.png',
+                    active: '../../images/icon/icon@my-active.png',
+                    path: "/pages/user-center/user-center"
+                },
+            ],
+            member: [
+                {
+                    text: "测评任务",
+                    normal: '../../images/icon/icon@evaluation-manager-no-active.png',
+                    active: '../../images/icon/icon@evaluation-manager-active.png',
+                    path: "/pages/work-base/work-base"
+                },
+                {
+                    text: "个人中心",
+                    normal: '../../images/icon/icon@my-no-active.png',
+                    active: '../../images/icon/icon@my-active.png',
+                    path: "/pages/user-center/user-center"
+                },
+            ]
+        },
         isWxWork: app.wxWorkInfo.isWxWork,
         isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
+        is3rd: app.wx3rdInfo.is3rd,
+        is3rdAdmin: app.wx3rdInfo.is3rdAdmin,
     },
     properties: {
         active: {
@@ -73,9 +105,9 @@ Component({
     methods: {
         onChange(event) {
             const that = this;
-            const {isWxWork, isWxWorkAdmin} = this.data;
+            const {isWxWork, isWxWorkAdmin, is3rd, is3rdAdmin} = this.data;
             const active = Number(event.detail);
-            if (!isWxWork) {
+            if (!isWxWork && !is3rd) {
                 wx.switchTab({
                     url: `${that.data.wxPage[active].path}`
                 });
@@ -88,14 +120,18 @@ Component({
                 wx.switchTab({
                     url: `${that.data.wxWorkPage.admin[active].path}`
                 });
-            } else {
-                try {
-                    wx.switchTab({
-                        url: `${that.data.wxWorkPage.member[active].path}`
-                    });
-                } catch (e) {
-
-                }
+            } else if (isWxWork && !isWxWorkAdmin) {
+                wx.switchTab({
+                    url: `${that.data.wxWorkPage.member[active].path}`
+                });
+            } else if (is3rd && is3rdAdmin){
+                wx.switchTab({
+                    url: `${that.data.wx3rdPage.admin[active].path}`
+                });
+            } else if (is3rd && !is3rdAdmin){
+                wx.switchTab({
+                    url: `${that.data.wx3rdPage.member[active].path}`
+                });
             }
         },
     },
@@ -107,12 +143,16 @@ Component({
                     that.setData({
                         isWxWork: userInfo.isWxWork,
                         isWxWorkAdmin: userInfo.isAdmin,
+                        is3rd: userInfo.is3rd,
+                        is3rdAdmin: userInfo.is3rdAdmin
                     });
                 }
             } else {
                 that.setData({
                     isWxWork: app.wxWorkInfo.isWxWork,
                     isWxWorkAdmin: wx.getStorageSync("userInfo").isAdmin || app.wxWorkInfo.isWxWorkAdmin,
+                    is3rd: app.wx3rdInfo.is3rd,
+                    is3rdAdmin: app.wx3rdInfo.is3rdAdmin,
                 });
             }
             wx.createSelectorQuery().in(this).select("#tabbar").boundingClientRect().exec(res => {
@@ -133,12 +173,16 @@ Component({
                     that.setData({
                         isWxWork: userInfo.isWxWork,
                         isWxWorkAdmin: userInfo.isAdmin,
+                        is3rd: userInfo.is3rd,
+                        is3rdAdmin: userInfo.is3rdAdmin
                     });
                 }
             } else {
                 that.setData({
                     isWxWork: app.wxWorkInfo.isWxWork,
                     isWxWorkAdmin: wx.getStorageSync("userInfo").isAdmin || app.wxWorkInfo.isWxWorkAdmin,
+                    is3rd: app.wx3rdInfo.is3rd,
+                    is3rdAdmin: app.wx3rdInfo.is3rdAdmin,
                 });
             }
         }

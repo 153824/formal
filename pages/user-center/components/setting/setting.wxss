@@ -1,0 +1,28 @@
+page{
+    background-color: #F2F2F2;
+}
+.setting--scroll-view__wrapper{
+    height: calc(100vh - 160rpx);
+}
+.setting--view-btn__wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 160rpx;
+    font-size: 32rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #353EE8;
+    line-height: 44rpx;
+}
+.van-cell__title,.van-cell__value{
+    flex: unset !important;
+    font-size: 32rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #313645;
+    line-height: 44rpx;
+}
+.van-cell__value{
+    margin-left: 20rpx;
+}

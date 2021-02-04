@@ -23,7 +23,9 @@ Page({
         phoneNumber: "微信一键授权",
         verify: false,
         isWxWork: false,
-        isWxWorkAdmin: false
+        isWxWorkAdmin: false,
+        is3rd: false,
+        is3rdAdmin: false
     },
 
     onLoad: function (options) {

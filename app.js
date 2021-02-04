@@ -77,11 +77,14 @@ App({
         assistant: ["5efed573b1ef0200062a85f7"]
     },
     wxWorkInfo: {
-        wxWorkUserId: "",
-        wxWorkTeamId: "",
         isWxWork: false,
         isWxWorkAdmin: false,
         wxWorkUserInfo: {},
+    },
+    wx3rdInfo: {
+        is3rd: true,
+        is3rdAdmin: true,
+        wx3rdUserInfo: {}
     },
     umengConfig: {
         // 悠悠测评 5f7fc58180455950e49eaa0d
@@ -100,6 +103,7 @@ App({
         const referrerInfo = options.referrerInfo;
         const menuBtnObj = wx.getMenuButtonBoundingClientRect();
         const sysMsg = wx.getSystemInfoSync();
+        const appId = ['wx85cde7d3e8f3d949', 'wxdb1dcb4a9e212d32'];
         this.isIphoneX = false;
         this.isIos = false;
         this.fromAppId = '';
@@ -107,6 +111,10 @@ App({
         this.rate = sysMsg.windowWidth / 750;
         if (referrerInfo && referrerInfo.appid) {
             this.fromAppId = referrerInfo.appid
+        }
+        if(!appId.includes(wx.getAccountInfoSync().miniProgram.appId)){
+            this.wx3rdInfo.is3rd = true
+            console.log("wx.getAccountInfoSync(): " ,wx.getAccountInfoSync().miniProgram.appId);
         }
         wx.onMemoryWarning(function (res) {
             console.warn('onMemoryWarningReceive', res)
@@ -216,7 +224,7 @@ App({
         } catch (e) {
 
         }
-        if (this.wxWorkInfo.isWxWork && this.isReLaunch && pages.includes(this.quitPage) && pages.includes(currentPage) && !scenes.includes(sceneOption.scene)) {
+        if ((this.wxWorkInfo.isWxWork || this.wx3rdInfo.is3rd) && this.isReLaunch && pages.includes(this.quitPage) && pages.includes(currentPage) && !scenes.includes(sceneOption.scene)) {
             const that = this;
             wx.switchTab({
                 url: '/pages/work-base/work-base',
@@ -231,7 +239,7 @@ App({
     },
 
     onHide() {
-        if (this.wxWorkInfo.isWxWork) {
+        if (this.wxWorkInfo.isWxWork || this.wx3rdInfo.is3rd) {
             this.isReLaunch = true;
             this.quitPage = getCurrentPages()[getCurrentPages().length - 1].route;
         }
@@ -275,6 +283,8 @@ App({
                             res.teamId = that.teamId;
                             res.isWxWork = false;
                             res.isAdmin = false;
+                            res.is3rd = that.wx3rdInfo.is3rd;
+                            res.is3rdAdmin = that.wx3rdInfo.is3rdAdmin
                             that.checkUserInfo(res.data);
                         }
                         that.getMyTeamList(that.checkUser);

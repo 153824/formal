@@ -82,9 +82,9 @@ App({
         wxWorkUserInfo: {},
     },
     wx3rdInfo: {
-        is3rd: true,
-        is3rdAdmin: true,
-        wx3rdUserInfo: {}
+        is3rd: false,
+        is3rdAdmin: false,
+        wx3rdCompanyInfo: {}
     },
     umengConfig: {
         // 悠悠测评 5f7fc58180455950e49eaa0d
@@ -112,8 +112,8 @@ App({
         if (referrerInfo && referrerInfo.appid) {
             this.fromAppId = referrerInfo.appid
         }
-        if(!appId.includes(wx.getAccountInfoSync().miniProgram.appId)){
-            this.wx3rdInfo.is3rd = true
+        if(wx.getExtConfigSync().is3rd){
+            this.wx3rdInfo.is3rd = true;
             console.log("wx.getAccountInfoSync(): " ,wx.getAccountInfoSync().miniProgram.appId);
         }
         wx.onMemoryWarning(function (res) {
@@ -280,11 +280,11 @@ App({
                             wx.uma.trackEvent("1606212682385");
                         }
                         if (that.checkUserInfo) {
-                            res.teamId = that.teamId;
-                            res.isWxWork = false;
-                            res.isAdmin = false;
-                            res.is3rd = that.wx3rdInfo.is3rd;
-                            res.is3rdAdmin = that.wx3rdInfo.is3rdAdmin
+                            res.data.teamId = that.teamId;
+                            res.data.isWxWork = false;
+                            res.data.isAdmin = false;
+                            res.data.is3rd = that.wx3rdInfo.is3rd;
+                            res.data.is3rdAdmin =res.data.isAdmin || that.wx3rdInfo.is3rdAdmin;
                             that.checkUserInfo(res.data);
                         }
                         that.getMyTeamList(that.checkUser);
@@ -768,5 +768,31 @@ App({
             }
         });
         return mobile;
+    },
+
+    updateUserMobileByWeWork(e) {
+        const detail = e.detail;
+        const iv = detail.iv;
+        const encryptedData = detail.encryptedData;
+        const updateUserMobilePromise = new Promise((resolve, reject) => {
+            this.doAjax({
+                url: 'wework/auth/mobile',
+                method: "post",
+                data: {
+                    userId: wx.getStorageSync("userInfo").id,
+                    teamId: wx.getStorageSync("userInfo").teamId,
+                    sessionKey: this.globalData.userMsg.session_key,
+                    iv,
+                    encryptedData
+                },
+                success: function (res) {
+                    resolve(res);
+                },
+                error: function (err) {
+                    reject(err)
+                }
+            })
+        });
+        return updateUserMobilePromise;
     }
 });

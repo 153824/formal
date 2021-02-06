@@ -79,8 +79,8 @@ Page({
             });
             if (trigger) {
                 setTimeout(() => {
-                    wx.switchTab({
-                        url: "/pages/work-base/work-base"
+                    wx.navigateTo({
+                        url: "/pages/3rd-home/index"
                     });
                 }, 4000);
             }

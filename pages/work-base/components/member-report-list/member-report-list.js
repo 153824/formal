@@ -12,6 +12,7 @@ Component({
     isIPhoneXModel: app.isIphoneX,
     safeAreaDiff: 0,
     isWxWork: app.wxWorkInfo.isWxWork,
+    is3rd: app.wx3rdInfo.is3rd,
     maskTrigger: true,
     isIos: app.isIos
   },
@@ -145,7 +146,8 @@ Component({
       const windowHeight = systemInfo.windowHeight;
       let height = 0;
       this.setData({
-        isWxWork: wx.getSystemInfoSync().environment === 'wxwork' || app.wxWorkInfo.isWxWork
+        isWxWork: wx.getSystemInfoSync().environment === 'wxwork' || app.wxWorkInfo.isWxWork,
+        is3rd: wx.getExtConfigSync().extConfig
       });
       if(wx.getSystemInfoSync().environment === 'wxwork' && isIPhoneXModel){
         this.setData({

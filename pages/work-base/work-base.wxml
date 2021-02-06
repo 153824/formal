@@ -124,7 +124,7 @@
 </view>
 <!--End: 企业微信端管理员页工作台-->
 <!--Start: 企业微信端非管理员页工作台-测评列表-->
-<block wx:elif="{{ !isWxWork && !is3rdAdmin }}">
+<block wx:elif="{{ !isWxWork && !is3rd }}">
     <view class="head">
         <view class="head-company">
             <image src="./images/work-base@@icon-company.png" style="width: 50rpx;height: 44rpx;margin-right: 16rpx;"></image>
@@ -268,7 +268,6 @@
             <view class="head-company">
                 <image src="./images/work-base@@icon-company.png" style="width: 50rpx;height: 44rpx;margin-right: 16rpx;"></image>
                 <text>{{userInfo.userCompany.name}}</text>
-                <image src="{{logo}}" style="width: 50rpx;height: 44rpx;margin-left: 16rpx;"/>
             </view>
         </view>
         <view class="content wxwork-content" style="height: {{ (windowHeight - tabBarHeight - safeAreaDiff)*pixelRate - 112 }}rpx;">

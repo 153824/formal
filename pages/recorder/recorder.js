@@ -84,30 +84,15 @@ Page({
 
             }
         }
-        const detail = e.detail;
-        const iv = detail.iv;
-        const encryptedData = detail.encryptedData;
         if (!isGetPhone) {
-            app.doAjax({
-                url: 'wework/auth/mobile',
-                method: "post",
-                data: {
-                    userId: wx.getStorageSync("userInfo").id,
-                    teamId: wx.getStorageSync("userInfo").teamId,
-                    sessionKey: app.globalData.userMsg.session_key,
-                    iv,
-                    encryptedData
-                },
-                success: function (res) {
-                    that.setData({
-                        isGetPhone: true,
-                        phoneNumber: res.phone || '微信一键授权'
-                    });
-                },
-                fail: function (err) {
-                    app.toast(err.msg)
-                }
-            })
+            app.updateUserMobileByWeWork(e).then(res=>{
+                that.setData({
+                    isGetPhone: true,
+                    phoneNumber: res.phone || '微信一键授权'
+                });
+            }).catch(err=>{
+                app.toast(err.msg)
+            });
         }
     },
 

@@ -112,7 +112,7 @@ App({
         if (referrerInfo && referrerInfo.appid) {
             this.fromAppId = referrerInfo.appid
         }
-        if(wx.getExtConfigSync().is3rd){
+        if(wx.getExtConfigSync().isCustomVersion){
             this.wx3rdInfo.is3rd = true;
             console.log("wx.getAccountInfoSync(): " ,wx.getAccountInfoSync().miniProgram.appId);
         }

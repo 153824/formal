@@ -27,8 +27,11 @@
     letter-spacing: 1px;
     line-height: 34rpx;
     color: #323541;
-    margin-bottom: 60rpx;
     display: block;
+}
+
+.margin-bottom{
+    margin-bottom: 60rpx;
 }
 
 .container1 form {

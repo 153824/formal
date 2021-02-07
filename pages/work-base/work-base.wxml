@@ -1,5 +1,5 @@
 <!--Start: 企业微信端管理员页工作台-->
-<view wx:if="{{ isWxWork&&isWxWorkAdmin }}" class="home-page-wrapper">
+<view wx:if="{{ isWxWork && isWxWorkAdmin }}" class="home-page-wrapper">
     <view class="head" style="height: 112rpx;">
         <view class="head-company">
             <image src="./images/work-base@@icon-company.png" style="width: 50rpx;height: 44rpx;margin-right: 16rpx;"></image>
@@ -124,7 +124,7 @@
 </view>
 <!--End: 企业微信端管理员页工作台-->
 <!--Start: 企业微信端非管理员页工作台-测评列表-->
-<block wx:elif="{{ !isWxWork }}">
+<block wx:elif="{{ !isWxWork && !is3rd }}">
     <view class="head">
         <view class="head-company">
             <image src="./images/work-base@@icon-company.png" style="width: 50rpx;height: 44rpx;margin-right: 16rpx;"></image>
@@ -261,6 +261,139 @@
     <hola-member-report-list id="hola-member-report-list" navigationBarTitleText="" tabBarTrigger="true" backToUserCenter="false"></hola-member-report-list>
 </block>
 <!--End: 企业微信端非管理员页工作台-测评列表-->
+<!--Start: 代小程序管理员页工作台-->
+<block wx:elif="{{ is3rd && is3rdAdmin }}">
+    <view class="home-page-wrapper">
+        <view class="head" style="height: 112rpx;">
+            <view class="head-company">
+                <image src="./images/work-base@@icon-company.png" style="width: 50rpx;height: 44rpx;margin-right: 16rpx;"></image>
+                <text>{{userInfo.userCompany.name}}</text>
+            </view>
+        </view>
+        <view class="content wxwork-content" style="height: {{ (windowHeight - tabBarHeight - safeAreaDiff)*pixelRate - 112 }}rpx;">
+            <scroll-view class="content-scroll-area"
+                         style="height: 100%;"
+                         scroll-y>
+                <!--Start: 我的测评-->
+                <view class="program-wrapper">
+                    <view class="program-title">
+                        <text>我的测评</text>
+                        <text class="more" wx:if="{{myEvaluationCount > 3}}" bindtap="goToEvaluationMore">更多...</text>
+                    </view>
+                    <view wx:if="{{myEvaluation.length}}" wx:for="{{ myEvaluation }}" wx:for-item="evaluationItem" wx:key="unique"
+                          wx:for-index="evaluationIndex">
+                        <view class="program-body" data-name="{{ evaluationItem.evaluationName }}">
+                            <image src="{{ evaluationItem.smallImg || 'http://img2.luoke101.com/2020-06-17T10:10:31.391ZnormalImg.png' }}"
+                                   style="width: 114rpx;height: 114rpx;border-radius: 15rpx;"></image>
+                            <view class="evaluation-wrapper" bindtap=""
+                                  data-evaluation-id="{{ evaluationItem.evaluationId }}">
+                                <view class="evaluation-name">
+                                    {{evaluationItem.evaluationName}}
+                                </view>
+                                <view class="evaluation-info">
+                                    <text>{{evaluationItem.quesCount}}题  {{evaluationItem.estimatedTime}}分钟</text>
+                                </view>
+                            </view>
+                            <view style="width: 4rpx;height: 114rpx;background-color: #F4F4F4FF;margin-right: 20rpx;"></view>
+                            <view class="send-evaluation" bindtap="goToSharePaper"
+                                  data-evaluation-id="{{ evaluationItem.evaluationId }}"
+                                  data-count="{{ evaluationItem.available }}"
+                                  data-index="{{ evaluationIndex }}"
+                            >
+                                <image src="./images/work-base@icon-plane.png"
+                                       style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
+                                <text>发测评</text>
+                            </view>
+                        </view>
+                    </view>
+                    <view>
+                        <hola-empty customClass="work-base-empty" isShow="{{!myEvaluation.length}}" title="暂无测评"></hola-empty>
+                    </view>
+                </view>
+                <!--End: 我的测评-->
+                <!--Start: 最新报告-->
+                <view class="program-wrapper">
+                    <view class="program-title">
+                        <view>
+                            <text>最新报告</text>
+                            <text wx:if="{{newlyNums}}" class="new-adding">今日+{{newlyNums}}</text>
+                        </view>
+                        <text wx:if="{{reportsListCount > 3}}" class="more" bindtap="goToReportMore">更多...</text>
+                    </view>
+                    <view class="program-body the-last-report" wx:for="{{ reportsList }}" wx:for-item="reportItem"
+                          wx:key="unique" data-id="{{reportItem.receiveRecordId}}" bindtap="goToReportDetail">
+                        <view class="report-created-time">
+                            <text>{{util.getMonthAndDayByFrag(reportItem.reportGeneratedAt,"/",true)}}</text>
+                            <text>{{util.getHourAndMinByFrag(reportItem.reportGeneratedAt,":",true)}}</text>
+                        </view>
+                        <view class="evaluation-wrapper">
+                            <view class="evaluation-name user-info-wrapper">
+                                <view class="user-info">
+                                    <text>{{reportItem.participant || "好啦访客"}}</text><text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text><text wx:if="{{ reportItem.showGrade }}" class="recommend-grade recommend-score">{{reportItem.grade}}分</text>
+                                </view>
+                            </view>
+                            <view class="user-answer-evaluation">
+                                {{reportItem.evaluation}}
+                            </view>
+                        </view>
+                        <view class="send-evaluation">
+                            <image src="./images/work-base@icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
+                        </view>
+                        <view wx:if="{{ false }}" class="new-adding-mark">
+                            <text>新</text>
+                        </view>
+                    </view>
+                    <view>
+                        <hola-empty  customClass="work-base-empty" isShow="{{!reportsList.length}}" title="暂无测评报告"></hola-empty>
+                    </view>
+                </view>
+                <!--End: 最新报告-->
+                <!--Start: 作答跟踪-->
+                <view class="program-wrapper" style="margin-bottom: 99rpx;">
+                    <view class="program-title">
+                        <text>作答跟踪</text>
+                        <text wx:if="{{evaluationTrackCount > 3}}" class="more" bindtap="goToTrackMore">更多...</text>
+                    </view>
+                    <view wx:if="{{evaluationTrack.length}}" wx:for="{{ evaluationTrack }}" wx:for-item="trackItem" wx:for-index="trackIndex" wx:key="unique"
+                          class="program-body reply-track-body" bindtap="goToTrackDetail"
+                          data-track-id="{{trackItem.releaseRecordId}}" data-track-index="{{trackIndex}}"
+                    >
+                        <view class="evaluation-wrapper track-info-wrapper">
+                            <view class="evaluation-name">
+                                {{ trackItem.evaluationName }}
+                            </view>
+                            <view class="reply-track-info">
+                                发放数量:
+                                <text class="count" style="margin: 0 10rpx;">{{trackItem.amount}}</text>
+                                完成数量:
+                                <text class="count" style="margin-left: 10rpx;">{{trackItem.finished}}</text>
+                            </view>
+                            <view class="reply-track-info">
+                                发放时间:
+                                <text class="date" style="margin-left: 10rpx;">{{util.getFullDateByFrag(trackItem.createdAt,"/",true)}} {{util.getHourAndMinByFrag(trackItem.createdAt,":",true)}}</text>
+                            </view>
+                        </view>
+                        <view class="send-evaluation">
+                            <image src="./images/work-base@icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
+                        </view>
+                    </view>
+                    <view>
+                        <hola-empty  customClass="work-base-empty" isShow="{{!evaluationTrack.length}}" title="暂无测评发放记录"></hola-empty>
+                    </view>
+                </view>
+                <!--End: 作答跟踪-->
+            </scroll-view>
+        </view>
+        <hola-tab-bar active="{{ 0 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{isWxWorkAdmin}}"></hola-tab-bar>
+    </view>
+</block>
+<!--End: 代小程序管理员页工作台-->
+<!--------------------------------------------------------------------------------------------------------------------->
+<!--Start: 代小程序非管理员页工作台-测评列表-->
+<block wx:elif="{{ is3rd && !is3rdAdmin }}">
+    <hola-member-report-list id="hola-member-report-list" navigationBarTitleText="" tabBarTrigger="true" backToUserCenter="false"></hola-member-report-list>
+</block>
+<!--End: 代小程序非管理员页工作台-测评列表-->
 <!--------------------------------------------------------------------------------------------------------------------->
 <hola-mask isShow="{{ maskTrigger }}"></hola-mask>
 <wxs src="../../utils/util.wxs" module="util"></wxs>

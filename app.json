@@ -46,7 +46,9 @@
     "pages/station/components/depart/depart",
     "pages/360/360",
     "pages/360/subpages/ready/ready",
-    "pages/360/subpages/replying/replying"
+    "pages/360/subpages/replying/replying",
+    "pages/user-center/components/setting/setting",
+    "pages/3rd-home/index"
   ],
   "tabBar": {
     "custom": true,
@@ -96,11 +98,5 @@
   "sitemapLocation": "sitemap.json",
   "navigateToMiniProgramAppIdList": [
     "wx0ef45039046afc95"
-  ],
-  "plugins": {
-    "contactPlugin": {
-      "version": "1.2.1",
-      "provider": "wx5917c8c26f85c588"
-    }
-  }
+  ]
 }

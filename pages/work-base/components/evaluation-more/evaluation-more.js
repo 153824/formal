@@ -5,7 +5,8 @@ Page({
         myEvaluation: [],
         pixelRate: app.globalData.pixelRate,
         windowHeight: 0,
-        isWxWork: app.wxWorkInfo.isWxWork
+        isWxWork: app.wxWorkInfo.isWxWork,
+        is3rd: app.wx3rdInfo.is3rd
     },
     onLoad: function (options) {
         this.loadMyEvaluation();
@@ -67,7 +68,7 @@ Page({
             isFree: type === "FREE",
             hadBuyout: type === "BY_COUNT" ? false : true,
         };
-        if (!available && !necessaryInfo.hadBuyout && !necessaryInfo.isFree && !this.data.isWxWork) {
+        if (!available && !necessaryInfo.hadBuyout && !necessaryInfo.isFree && !this.data.isWxWork && !this.data.is3rd) {
             app.toast("测评可用数量不足");
             return;
         }

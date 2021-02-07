@@ -344,7 +344,8 @@ Page({
         detailTrigger: false,
         opacityTrigger: true,
         incentives: {},
-        currentActive: ""
+        currentActive: "",
+        reportCopyrightTxt: ""
     },
 
     onLoad: function (options = {isSelf: ""}) {
@@ -380,6 +381,7 @@ Page({
                 } else {
                     that.getReport(id);
                 }
+                this.getProgramSetting(userInfo.teamId)
             };
         }else{
             if (options.sharedAt) {
@@ -401,6 +403,7 @@ Page({
             } else {
                 that.getReport(id);
             }
+            this.getProgramSetting()
         }
     },
 
@@ -1108,6 +1111,17 @@ Page({
         //         opacityTrigger: !opacityTrigger
         //     })
         // },200)
+    },
+
+    getProgramSetting() {
+        const that = this;
+        app.getMiniProgramSetting().then(res=>{
+            that.setData({
+                reportCopyrightTxt: res.reportCopyrightTxt
+            })
+        }).catch(err=>{
+            console.error(err)
+        });
     },
 
     onUnload: function () {

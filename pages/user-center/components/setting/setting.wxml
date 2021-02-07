@@ -1,0 +1,10 @@
+<view class="setting">
+    <scroll-view class="setting--scroll-view__wrapper">
+        <van-cell-group border="{{false}}">
+            <van-cell title="账号绑定手机:" size="large" border="{{false}}">18888888888</van-cell>
+        </van-cell-group>
+    </scroll-view>
+    <view class="setting--view-btn__wrapper">
+        <text>退出登录</text>
+    </view>
+</view>

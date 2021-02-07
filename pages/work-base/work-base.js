@@ -34,7 +34,10 @@ Page({
         currTeam: app.teamName,
         isIPhoneXModel: app.isIphoneX,
         safeAreaDiff: 0,
-        tabBarHeight: 0
+        tabBarHeight: 0,
+        is3rd: true,
+        is3rdAdmin: true,
+        logo: wx.getExtConfigSync().logo
     },
 
     onLoad: function (option) {
@@ -45,6 +48,8 @@ Page({
                     userInfo: userInfo,
                     isWxWork: userInfo.isWxWork,
                     isWxWorkAdmin: userInfo.isAdmin,
+                    is3rd: userInfo.is3rd,
+                    is3rdAdmin: userInfo.is3rdAdmin
                 })
             };
         } else {
@@ -52,6 +57,8 @@ Page({
                 userInfo: wx.getStorageSync("userInfo") || app.globalData.userInfo,
                 isWxWork: app.wxWorkInfo.isWxWork,
                 isWxWorkAdmin: wx.getStorageSync('userInfo').isAdmin || app.wxWorkInfo.isWxWorkAdmin,
+                is3rd: app.wx3rdInfo.is3rd,
+                is3rdAdmin: app.wx3rdInfo.is3rdAdmin || wx.getStorageSync('userInfo').is3rdAdmin
             });
         }
         let {isIPhoneXModel} = this.data;
@@ -75,8 +82,8 @@ Page({
 
     onShow() {
         const that = this;
-        let {isWxWorkAdmin, isWxWork} = this.data;
-        if (!isWxWork) {
+        let {isWxWorkAdmin, isWxWork, is3rd, is3rdAdmin} = this.data;
+        if (!isWxWork && !is3rd) {
             this.title = this.selectComponent("#title");
             app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
             // TODO UM埋点，跟踪哪个用户使用哪份常模
@@ -166,7 +173,7 @@ Page({
                 currTeam: app.teamName
             })
         }
-        if (isWxWork && isWxWorkAdmin) {
+        if (isWxWork && isWxWorkAdmin ) {
             const getMyEvaluationPromise = new Promise((resolve, reject) => {
                 app.doAjax({
                     url: 'inventories/we_work',
@@ -245,6 +252,89 @@ Page({
             })
         }
         if (isWxWork && !isWxWorkAdmin) {
+            this.setData({
+                maskTrigger: false
+            })
+        }
+        if (is3rd && is3rdAdmin ) {
+            const getMyEvaluationPromise = new Promise((resolve, reject) => {
+                app.doAjax({
+                    url: 'inventories/we_work',
+                    method: 'get',
+                    data: {
+                        funcCode: "evaluationManage",
+                        teamId: app.teamId || wx.getStorageSync("GET_MY_TEAM_LIST").objectId,
+                        page: 1,
+                        pageSize: 3,
+                    },
+                    noLoading: true,
+                    success: function (res) {
+                        that.setData({
+                            myEvaluation: res.data,
+                            myEvaluationCount: res.count
+                        });
+                        resolve(true);
+                    },
+                    fail: function (err) {
+                        reject(false);
+                    }
+                });
+            });
+            const getEvaluationTrack = new Promise((resolve, reject) => {
+                app.doAjax({
+                    url: 'release_records',
+                    method: 'get',
+                    data: {
+                        isEE: true,
+                        page: 1,
+                        pageSize: 3,
+                    },
+                    noLoading: true,
+                    success: function (res) {
+                        that.setData({
+                            evaluationTrack: res.data,
+                            evaluationTrackCount: res.count
+                        });
+                        resolve(true)
+                    },
+                    fail: function (err) {
+                        reject(false)
+                    }
+                });
+            });
+            const getReportList = new Promise((resolve, reject) => {
+                app.doAjax({
+                    url: `reports`,
+                    method: "get",
+                    data: {
+                        isEE: true,
+                        page: 1,
+                        pageSize: 3
+                    },
+                    noLoading: true,
+                    success: function (res) {
+                        that.setData({
+                            reportsList: res.data,
+                            reportsListCount: res.count
+                        })
+                        resolve(true);
+                    },
+                    fail: function (err) {
+                        reject(false)
+                    }
+                })
+            });
+            Promise.all([getMyEvaluationPromise, getEvaluationTrack, getReportList]).then(res => {
+                that.setData({
+                    maskTrigger: false
+                })
+            }).catch(err => {
+                that.setData({
+                    maskTrigger: false
+                })
+            })
+        }
+        if (is3rd && !is3rdAdmin) {
             this.setData({
                 maskTrigger: false
             })

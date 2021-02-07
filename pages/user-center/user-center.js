@@ -3,11 +3,14 @@ Page({
     data: {
         isWxWork: app.wxWorkInfo.isWxWork,
         isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
+        is3rd: app.wx3rdInfo.is3rd,
+        is3rdAdmin: app.wx3rdInfo.is3rdAdmin,
         userInfo: wx.getStorageSync("userInfo") || wx.getStorageSync("USER_DETAIL") || app.globalData.userInfo || app.globalData.userMsg
     },
     onLoad: function (options) {
-        const {isWxWork, isWxWorkAdmin} = this.data;
+        const {isWxWork, isWxWorkAdmin, is3rd, is3rdAdmin} = this.data;
         this.setData({
+            is3rdAdmin: app.wx3rdInfo.is3rdAdmin,
             isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
             userInfo: wx.getStorageSync("userInfo") || wx.getStorageSync("USER_DETAIL") || app.globalData.userInfo || app.globalData.userMsg
         });
@@ -24,6 +27,8 @@ Page({
             userInfo:  wx.getStorageSync("userInfo") || wx.getStorageSync("USER_DETAIL") || app.globalData.userInfo || app.globalData.userMsg,
             isWxWork: app.wxWorkInfo.isWxWork,
             isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
+            is3rd: app.wx3rdInfo.is3rd,
+            is3rdAdmin: app.wx3rdInfo.is3rdAdmin,
         })
     },
     goToReceiveReports: function () {
@@ -44,6 +49,11 @@ Page({
     goToServingClient: function () {
         wx.navigateTo({
             url: "/pages/user-center/components/serving-client/serving-client"
+        })
+    },
+    goToSetting() {
+        wx.navigateTo({
+            url: "/pages/user-center/components/setting/setting"
         })
     },
     getUserInfo: function(e) {

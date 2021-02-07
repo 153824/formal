@@ -60,7 +60,8 @@ App({
     // host: "http://api.dev.luoke101.int",
     // host: "https://api.luoke101.com/b",
     // host: "http://api.dev.luoke101.int",
-    host: 'https://api.uat.luoke101.com',
+    // host: 'https://api.uat.luoke101.com',
+    host: 'https://www.uat.haola101.com',
     // host: "http://192.168.0.101:3000",
     // dev: "http://api.dev.luoke101.int",
     globalData: {
@@ -77,11 +78,14 @@ App({
         assistant: ["5efed573b1ef0200062a85f7"]
     },
     wxWorkInfo: {
-        wxWorkUserId: "",
-        wxWorkTeamId: "",
         isWxWork: false,
         isWxWorkAdmin: false,
         wxWorkUserInfo: {},
+    },
+    wx3rdInfo: {
+        is3rd: false,
+        is3rdAdmin: false,
+        wx3rdCompanyInfo: {}
     },
     umengConfig: {
         // 悠悠测评 5f7fc58180455950e49eaa0d
@@ -100,6 +104,7 @@ App({
         const referrerInfo = options.referrerInfo;
         const menuBtnObj = wx.getMenuButtonBoundingClientRect();
         const sysMsg = wx.getSystemInfoSync();
+        const appId = ['wx85cde7d3e8f3d949', 'wxdb1dcb4a9e212d32'];
         this.isIphoneX = false;
         this.isIos = false;
         this.fromAppId = '';
@@ -107,6 +112,11 @@ App({
         this.rate = sysMsg.windowWidth / 750;
         if (referrerInfo && referrerInfo.appid) {
             this.fromAppId = referrerInfo.appid
+        }
+        console.log(wx.getExtConfigSync().isCustomVersion);
+        if (wx.getExtConfigSync().isCustomVersion) {
+            this.wx3rdInfo.is3rd = true;
+            console.log("wx.getAccountInfoSync(): ", wx.getAccountInfoSync().miniProgram.appId);
         }
         wx.onMemoryWarning(function (res) {
             console.warn('onMemoryWarningReceive', res)
@@ -216,7 +226,7 @@ App({
         } catch (e) {
 
         }
-        if (this.wxWorkInfo.isWxWork && this.isReLaunch && pages.includes(this.quitPage) && pages.includes(currentPage) && !scenes.includes(sceneOption.scene)) {
+        if ((this.wxWorkInfo.isWxWork || this.wx3rdInfo.is3rd) && this.isReLaunch && pages.includes(this.quitPage) && pages.includes(currentPage) && !scenes.includes(sceneOption.scene)) {
             const that = this;
             wx.switchTab({
                 url: '/pages/work-base/work-base',
@@ -231,7 +241,7 @@ App({
     },
 
     onHide() {
-        if (this.wxWorkInfo.isWxWork) {
+        if (this.wxWorkInfo.isWxWork || this.wx3rdInfo.is3rd) {
             this.isReLaunch = true;
             this.quitPage = getCurrentPages()[getCurrentPages().length - 1].route;
         }
@@ -249,7 +259,8 @@ App({
         const that = this;
         const userLoginPromise = new Promise((resolve, reject) => {
             that.doAjax({
-                url: 'userLogin',
+                // url: 'userLogin',
+                url: 'wework/auth/login',
                 method: 'POST',
                 data: {
                     fromAppId: that.fromAppId,
@@ -257,25 +268,27 @@ App({
                     code: code,
                 },
                 noLoading: true,
-                success: function (res) {
-                    that.globalData.userMsg = res.userMsg || {};
-                    var userData = res.data;
+                success: function (userData) {
+                    that.globalData.userMsg = userData.userMsg || {};
                     wx.hideLoading();
-                    if (0 === res.code) {
+                    if (0 === userData.code || true) {
+                        console.log(userData);
                         const userMsg = that.globalData.userMsg;
                         wx.setStorageSync('userInfo', userData);
                         wx.setStorageSync('openId', userData.openid || userMsg.openid);
                         that.globalData.userInfo = Object.assign(userData,
                             that.globalData.userInfo || {})
                         that.isLogin = true;
-                        if (res.data.isNew) {
+                        if (userData.isNew) {
                             wx.uma.trackEvent("1606212682385");
                         }
                         if (that.checkUserInfo) {
-                            res.teamId = that.teamId;
-                            res.isWxWork = false;
-                            res.isAdmin = false;
-                            that.checkUserInfo(res.data);
+                            userData.teamId = that.teamId;
+                            userData.isWxWork = false;
+                            userData.isAdmin = false;
+                            userData.is3rd = that.wx3rdInfo.is3rd;
+                            userData.is3rdAdmin = userData.isAdmin || that.wx3rdInfo.is3rdAdmin;
+                            that.checkUserInfo(userData);
                         }
                         that.getMyTeamList(that.checkUser);
                         resolve({openId: userData.openid || userMsg.openid})
@@ -758,5 +771,54 @@ App({
             }
         });
         return mobile;
+    },
+
+    updateUserMobileByWeWork(e) {
+        const detail = e.detail;
+        const iv = detail.iv;
+        const encryptedData = detail.encryptedData;
+        const updateUserMobilePromise = new Promise((resolve, reject) => {
+            this.doAjax({
+                url: 'wework/auth/mobile',
+                method: "post",
+                data: {
+                    userId: wx.getStorageSync("userInfo").id,
+                    teamId: wx.getStorageSync("userInfo").teamId,
+                    sessionKey: this.globalData.userMsg.session_key,
+                    iv,
+                    encryptedData
+                },
+                success: function (res) {
+                    resolve(res);
+                },
+                error: function (err) {
+                    reject(err)
+                }
+            })
+        });
+        return updateUserMobilePromise;
+    },
+    getMiniProgramSetting() {
+        const teamId = this.teamId || wx.getStorageSync("userInfo").teamId || wx.getStorageSync("MY_TEAM_ID");
+        if(true){
+            this.checkUserInfo = userInfo => {
+                console.log(userInfo);
+            }
+        }
+        const miniProgramSettingPromise = new Promise((resolve, reject) => {
+            resolve()
+            // this.doAjax({
+            //     url: `wework/evaluations/settings/${teamId}/wechat-ma`,
+            //     method: 'GET',
+            //     success(res) {
+            //         resolve(res);
+            //     },
+            //     error(err) {
+            //         console.error(err);
+            //         reject(err);
+            //     }
+            // })
+        })
+        return miniProgramSettingPromise;
     }
 });

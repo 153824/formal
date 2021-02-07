@@ -86,7 +86,7 @@
 					"id": 2,
 					"name": "报告详情",
 					"pathName": "pages/report/report",
-					"query": "receiveRecordId=5fd873e43bd73b0a96d1d26b",
+					"query": "receiveRecordId=601f8ca634d04b090df0d499",
 					"scene": null
 				},
 				{
@@ -140,9 +140,9 @@
 				},
 				{
 					"id": 10,
-					"name": "小层序码领取测评",
+					"name": "小程序码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=5fb4eb6dca59954c1c193067",
+					"query": "scene=601cf949aa08e800b66a7cb4",
 					"scene": null
 				},
 				{
@@ -206,6 +206,13 @@
 					"name": "360作答",
 					"pathName": "pages/360/subpages/replying/replying",
 					"query": "surveyInfo={\"name\":\"无标题问卷2\",\"fbEId\":\"6008e84ea48e2e73ba0e5053\",\"surveyId\":\"6008e862a48e2e73ba0e5056\"}",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "3rd首页",
+					"pathName": "pages/3rd-home/index",
+					"query": "",
 					"scene": null
 				}
 			]

@@ -348,7 +348,7 @@
             <rich-text nodes="{{report.statement}}"></rich-text>
         </view>
         <!-- 底部固定 -->
-        <view class="ownerMsg">©好啦测评</view>
+        <view class="ownerMsg">{{reportCopyrightTxt}}</view>
         <!-- 弹窗信息 -->
         <view class="coverView" wx:if="{{showDlg}}" bindtap="hideDlg"></view>
         <view class="dlgView" wx:if="{{showDlg}}">
@@ -1141,7 +1141,7 @@
             <rich-text nodes="{{report.statement}}"></rich-text>
         </view>
         <!-- 底部固定 -->
-        <view class="ownerMsg">©好啦测评</view>
+        <view class="ownerMsg">{{reportCopyrightTxt}}</view>
         <!-- 弹窗信息 -->
         <view class="coverView" wx:if="{{showDlg}}" bindtap="hideDlg"></view>
         <view class="dlgView" wx:if="{{showDlg}}">

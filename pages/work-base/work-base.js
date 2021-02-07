@@ -79,6 +79,7 @@ Page({
         if (!isWxWork) {
             this.title = this.selectComponent("#title");
             app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
+            // TODO UM埋点，跟踪哪个用户使用哪份常模
             const inventoriesPromise = new Promise((resolve, reject) => {
                 app.doAjax({
                     url: 'inventories',

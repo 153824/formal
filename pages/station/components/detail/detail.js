@@ -541,7 +541,7 @@ Page({
             name: evaluation.name,
             isFree: evaluation.freeEvaluation,
             hadBuyout: buyoutInfo.hadBuyout,
-            norms: evaluation.generalNorms.length ? evaluation.generalNorms : customNorms,
+            norms: customNorms.length ? customNorms : evaluation.generalNorms,
             quesCount: evaluation.quesCount,
             estimatedTime: evaluation.estimatedTime,
 

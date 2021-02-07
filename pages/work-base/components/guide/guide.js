@@ -12,7 +12,8 @@ Page({
         receiveRecordId: "",
         evaluationStatus: "",
         demonstrateInfo: {},
-        evaluationStatusText: ""
+        evaluationStatusText: "",
+        respondPreparingPageTxt: ""
     },
     onLoad: function (option) {
         const that = this;
@@ -58,10 +59,12 @@ Page({
             }
             if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
                 app.checkUserInfo = (userInfo) => {
+                    that.getMiniProgramSetting(userInfo.teamId)
                     that.getTemptation(userInfo);
                 }
             } else {
                 that.getTemptation();
+                that.getMiniProgramSetting()
             }
         }catch (e) {
             console.error(e)
@@ -360,6 +363,17 @@ Page({
         }
         wx.navigateTo({
             url: `/pages/recorder/recorder?releaseRecordId=${releaseRecordId}`
+        });
+    },
+
+    getProgramSetting() {
+        const that = this;
+        app.getMiniProgramSetting().then(res=>{
+            that.setData({
+                respondPreparingPageTxt: res.respondPreparingPageTxt
+            })
+        }).catch(err=>{
+            console.error(err)
         });
     }
 });

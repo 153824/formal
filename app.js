@@ -60,7 +60,8 @@ App({
     // host: "http://api.dev.luoke101.int",
     // host: "https://api.luoke101.com/b",
     // host: "http://api.dev.luoke101.int",
-    host: 'https://api.uat.luoke101.com',
+    // host: 'https://api.uat.luoke101.com',
+    host: 'https://www.uat.haola101.com',
     // host: "http://192.168.0.101:3000",
     // dev: "http://api.dev.luoke101.int",
     globalData: {
@@ -112,9 +113,10 @@ App({
         if (referrerInfo && referrerInfo.appid) {
             this.fromAppId = referrerInfo.appid
         }
-        if(wx.getExtConfigSync().isCustomVersion){
+        console.log(wx.getExtConfigSync().isCustomVersion);
+        if (wx.getExtConfigSync().isCustomVersion) {
             this.wx3rdInfo.is3rd = true;
-            console.log("wx.getAccountInfoSync(): " ,wx.getAccountInfoSync().miniProgram.appId);
+            console.log("wx.getAccountInfoSync(): ", wx.getAccountInfoSync().miniProgram.appId);
         }
         wx.onMemoryWarning(function (res) {
             console.warn('onMemoryWarningReceive', res)
@@ -257,7 +259,8 @@ App({
         const that = this;
         const userLoginPromise = new Promise((resolve, reject) => {
             that.doAjax({
-                url: 'userLogin',
+                // url: 'userLogin',
+                url: 'wework/auth/login',
                 method: 'POST',
                 data: {
                     fromAppId: that.fromAppId,
@@ -265,27 +268,27 @@ App({
                     code: code,
                 },
                 noLoading: true,
-                success: function (res) {
-                    that.globalData.userMsg = res.userMsg || {};
-                    var userData = res.data;
+                success: function (userData) {
+                    that.globalData.userMsg = userData.userMsg || {};
                     wx.hideLoading();
-                    if (0 === res.code) {
+                    if (0 === userData.code || true) {
+                        console.log(userData);
                         const userMsg = that.globalData.userMsg;
                         wx.setStorageSync('userInfo', userData);
                         wx.setStorageSync('openId', userData.openid || userMsg.openid);
                         that.globalData.userInfo = Object.assign(userData,
                             that.globalData.userInfo || {})
                         that.isLogin = true;
-                        if (res.data.isNew) {
+                        if (userData.isNew) {
                             wx.uma.trackEvent("1606212682385");
                         }
                         if (that.checkUserInfo) {
-                            res.data.teamId = that.teamId;
-                            res.data.isWxWork = false;
-                            res.data.isAdmin = false;
-                            res.data.is3rd = that.wx3rdInfo.is3rd;
-                            res.data.is3rdAdmin =res.data.isAdmin || that.wx3rdInfo.is3rdAdmin;
-                            that.checkUserInfo(res.data);
+                            userData.teamId = that.teamId;
+                            userData.isWxWork = false;
+                            userData.isAdmin = false;
+                            userData.is3rd = that.wx3rdInfo.is3rd;
+                            userData.is3rdAdmin = userData.isAdmin || that.wx3rdInfo.is3rdAdmin;
+                            that.checkUserInfo(userData);
                         }
                         that.getMyTeamList(that.checkUser);
                         resolve({openId: userData.openid || userMsg.openid})
@@ -794,5 +797,28 @@ App({
             })
         });
         return updateUserMobilePromise;
+    },
+    getMiniProgramSetting() {
+        const teamId = this.teamId || wx.getStorageSync("userInfo").teamId || wx.getStorageSync("MY_TEAM_ID");
+        if(true){
+            this.checkUserInfo = userInfo => {
+                console.log(userInfo);
+            }
+        }
+        const miniProgramSettingPromise = new Promise((resolve, reject) => {
+            resolve()
+            // this.doAjax({
+            //     url: `wework/evaluations/settings/${teamId}/wechat-ma`,
+            //     method: 'GET',
+            //     success(res) {
+            //         resolve(res);
+            //     },
+            //     error(err) {
+            //         console.error(err);
+            //         reject(err);
+            //     }
+            // })
+        })
+        return miniProgramSettingPromise;
     }
 });

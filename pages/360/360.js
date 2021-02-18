@@ -147,7 +147,7 @@ Page({
             surveyId: surveyId,
         };
         this.checkEvaluationStatus().then(res => {
-            return app.updateUserMobile(e);
+            return app.updateUserMobileByWeWork(e);
         }).then(res => {
             return this.verify();
         }).then(res => {

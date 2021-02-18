@@ -51,24 +51,13 @@ Page({
    * 用户手机号授权
    */
   checkUserMobile: function(e) {
-    var that = this;
-    var detail = e.detail;
-    var iv = detail.iv;
-    var encryptedData = detail.encryptedData;
-    if (encryptedData) {
-      //用户授权手机号
-      var userMsg = app.globalData.userMsg || {};
-      userMsg["iv"] = iv;
-      userMsg["encryptedData"] = encryptedData;
-      app.doAjax({
-        url: "updatedUserMobile",
-        data: userMsg,
-        success: function(ret) {
-          that.setData({
-            hasMobile: true
-          });
-        }
+    const that = this;
+    app.updateUserMobileByWeWork(e).then(res=>{
+      that.setData({
+        hasMobile: true
       });
-    }
+    }).catch(err=>{
+      console.error(err);
+    });
   }
 })

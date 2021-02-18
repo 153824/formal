@@ -206,21 +206,11 @@ Page({
                 }
                 if ((!detail || !detail.encryptedData) && n == "getPhoneNumber") return;
                 if (detail && detail.encryptedData) {
-                    const iv = detail.iv;
-                    const encryptedData = detail.encryptedData;
-                    if (encryptedData) {
-                        const userMsg = app.globalData.userMsg || {};
-                        userMsg["iv"] = iv;
-                        userMsg["encryptedData"] = encryptedData;
-                        app.doAjax({
-                            url: "updatedUserMobile",
-                            data: userMsg,
-                            noLoading: true,
-                            success: function (res) {
-                                app.getUserInfo();
-                            }
-                        });
-                    }
+                    app.updateUserMobileByWeWork(e).then(res=>{
+                        app.getUserInfo();
+                    }).catch(err=>{
+                        console.error(err)
+                    });
                 }
                 wx.navigateTo({
                     url: url

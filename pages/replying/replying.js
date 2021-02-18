@@ -359,25 +359,14 @@ Page({
         }
 
         if (!that.data.getphoneNum) {
-            let detail = e.detail;
-            let iv = detail.iv;
-            let encryptedData = detail.encryptedData;
-            if (encryptedData) {
-                //用户授权手机号
-                let userMsg = app.globalData.userMsg || {};
-                userMsg["iv"] = iv;
-                userMsg["encryptedData"] = encryptedData;
-                app.doAjax({
-                    url: "updatedUserMobile",
-                    data: userMsg,
-                    success: function (ret) {
-                        that.setData({
-                            getphoneNum: true
-                        });
-                        doNext();
-                    }
+            app.updateUserMobileByWeWork(e).then(res=>{
+                that.setData({
+                    getphoneNum: true
                 });
-            }
+                doNext();
+            }).catch(err=>{
+                console.error(err);
+            });
             return;
         } else {
             doNext();
@@ -1048,42 +1037,30 @@ Page({
             }
         }
         if (!that.data.getphoneNum) {
-            let detail = e.detail;
-            let iv = detail.iv;
-            let encryptedData = detail.encryptedData;
-            if (encryptedData) {
-                //用户授权手机号
-                let userMsg = app.globalData.userMsg || {};
-                userMsg["iv"] = iv;
-                userMsg["encryptedData"] = encryptedData;
-                app.doAjax({
-                    url: "updatedUserMobile",
-                    data: userMsg,
-                    success: function (ret) {
-                        if (that.data.isSelf === 'SHARE') {
-                            try {
-                                wx.uma.trackEvent('1602216242156')
-                            } catch (e) {
+            app.updateUserMobileByWeWork(e).then(res=>{
+                if (that.data.isSelf === 'SHARE') {
+                    try {
+                        wx.uma.trackEvent('1602216242156')
+                    } catch (e) {
 
-                            }
-                        }
-                        app.doAjax({
-                            url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
-                            method: "get",
-                            data: {
-                                openid: wx.getStorageSync("openId"),
-                            },
-                            success: function (res) {
-                                that.setData({
-                                    getphoneNum: true,
-                                    phoneNumber: res.phone
-                                });
-                            }
+                    }
+                }
+                app.doAjax({
+                    url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
+                    method: "get",
+                    data: {
+                        openid: wx.getStorageSync("openId"),
+                    },
+                    success: function (res) {
+                        that.setData({
+                            getphoneNum: true,
+                            phoneNumber: res.phone
                         });
                     }
                 });
-            }
-            return;
+            }).catch(err=>{
+                console.error(err)
+            });
         }
     },
     changeslider(e) {

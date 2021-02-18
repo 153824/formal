@@ -592,27 +592,16 @@ Page({
      * 用户手机号授权
      */
     checkUserMobile: function (e, cb) {
-        var that = this;
+        const that = this;
         if (that.data.userData.phone) {
             return cb();
         }
-        var detail = e.detail;
-        var iv = detail.iv;
-        var encryptedData = detail.encryptedData;
-        if (encryptedData) {
-            //用户授权手机号
-            var userMsg = app.globalData.userMsg || {};
-            userMsg["iv"] = iv;
-            userMsg["encryptedData"] = encryptedData;
-            app.doAjax({
-                url: "updatedUserMobile",
-                data: userMsg,
-                success: function (ret) {
-                    app.getUserInfo();
-                    cb && cb();
-                }
-            });
-        }
+        app.updateUserMobileByWeWork(e).then(res=>{
+            app.getUserInfo();
+            cb && cb();
+        }).catch(err=>{
+            console.error(err)
+        });
     },
     /**
      * 复制微客服信号
@@ -822,16 +811,12 @@ Page({
 
             }
             var updatedUserMobilePromise = new Promise(((resolve, reject) => {
-                app.doAjax({
-                    url: "updatedUserMobile",
-                    data: userMsg,
-                    success: function (res) {
-                        resolve(true);
-                    },
-                    fail: function (err) {
-                        reject(err);
-                    }
-                })
+                app.updateUserMobileByWeWork(e).then(res=>{
+                    resolve(true);
+                }).catch(err=>{
+                    reject(err);
+                    console.error(err);
+                });
             }));
             updatedUserMobilePromise.then(() => {
                 app.doAjax({

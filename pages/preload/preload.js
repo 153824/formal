@@ -48,60 +48,48 @@ Page({
         } catch (e) {
             console.error(e);
         }
-        let detail = e.detail;
-        let iv = detail.iv;
-        let encryptedData = detail.encryptedData;
-        if (encryptedData) {
-            let userMsg = app.globalData.userMsg || {};
-            userMsg["iv"] = iv;
-            userMsg["encryptedData"] = encryptedData;
-            app.doAjax({
-                url: "updatedUserMobile",
-                data: userMsg,
-                success: function (res) {
-                    that.getNewerTicket();
+        app.updateUserMobileByWeWork(e).then(res=>{
+            that.getNewerTicket();
+            try {
+                wx.uma.trackEvent('1605250635744');
+            } catch (e) {
+                console.error(e);
+            }
+            switch (type) {
+                case "school":
                     try {
-                        wx.uma.trackEvent('1605250635744');
+                        wx.uma.trackEvent('1605250635738');
                     } catch (e) {
                         console.error(e);
                     }
-                    switch (type) {
-                        case "school":
-                            try {
-                                wx.uma.trackEvent('1605250635738');
-                            } catch (e) {
-                                console.error(e);
-                            }
-                            break;
-                        case "social":
-                            try {
-                                wx.uma.trackEvent('1605250635739');
-                            } catch (e) {
-                                console.error(e);
-                            }
-                            break;
-                        case "brain":
-                            try {
-                                wx.uma.trackEvent('1605250635740');
-                            } catch (e) {
-                                console.error(e);
-                            }
-                            break;
-                        case "risk":
-                            try {
-                                wx.uma.trackEvent('1605250635741');
-                            } catch (e) {
-                                console.error(e);
-                            }
-                            break;
+                    break;
+                case "social":
+                    try {
+                        wx.uma.trackEvent('1605250635739');
+                    } catch (e) {
+                        console.error(e);
                     }
-                    wx.navigateTo({
-                        url: url,
-                    });
-                }
+                    break;
+                case "brain":
+                    try {
+                        wx.uma.trackEvent('1605250635740');
+                    } catch (e) {
+                        console.error(e);
+                    }
+                    break;
+                case "risk":
+                    try {
+                        wx.uma.trackEvent('1605250635741');
+                    } catch (e) {
+                        console.error(e);
+                    }
+                    break;
+            }
+            wx.navigateTo({
+                url: url,
             });
-        } else {
-            this.setData({
+        }).catch(err=>{
+            that.setData({
                 active: ""
             });
             try {
@@ -109,7 +97,8 @@ Page({
             } catch (e) {
                 console.error(e);
             }
-        }
+            console.error(err);
+        });
     },
 
     getNewerTicket: function (e) {

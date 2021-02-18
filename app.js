@@ -271,40 +271,35 @@ App({
                 success: function (userData) {
                     that.globalData.userMsg = userData.userMsg || {};
                     wx.hideLoading();
-                    if (0 === userData.code || true) {
-                        console.log(userData);
-                        const userMsg = that.globalData.userMsg;
-                        wx.setStorageSync('userInfo', userData);
-                        wx.setStorageSync('openId', userData.openid || userMsg.openid);
-                        that.globalData.userInfo = Object.assign(userData,
-                            that.globalData.userInfo || {})
-                        that.isLogin = true;
-                        if (userData.isNew) {
-                            wx.uma.trackEvent("1606212682385");
-                        }
-                        if (that.checkUserInfo) {
-                            userData.teamId = that.teamId;
-                            userData.isWxWork = false;
-                            userData.isAdmin = false;
-                            userData.is3rd = that.wx3rdInfo.is3rd;
-                            userData.is3rdAdmin = userData.isAdmin || that.wx3rdInfo.is3rdAdmin;
-                            that.checkUserInfo(userData);
-                        }
-                        that.getMyTeamList(that.checkUser);
-                        resolve({openId: userData.openid || userMsg.openid})
-                    } else {
-                        wx.showModal({
-                            title: '登入失败！',
-                            content: '网络故障，请退出重新进入小程序。',
-                            showCancel: !1,
-                            confirmText: '确定',
-                            confirmColor: 'rgb(0,153,255)',
-                            success: function (e) {
-                            },
-                        });
-                        reject({openId: ''})
+                    const userMsg = that.globalData.userMsg;
+                    wx.setStorageSync('userInfo', userData);
+                    wx.setStorageSync('openId', userData.openid || userMsg.openid);
+                    that.globalData.userInfo = Object.assign(userData,
+                        that.globalData.userInfo || {})
+                    that.isLogin = true;
+                    if (userData.isNew) {
+                        wx.uma.trackEvent("1606212682385");
                     }
-
+                    if (that.checkUserInfo) {
+                        userData.teamId = that.teamId;
+                        userData.isWxWork = false;
+                        userData.isAdmin = false;
+                        userData.is3rd = that.wx3rdInfo.is3rd;
+                        userData.is3rdAdmin = userData.isAdmin || that.wx3rdInfo.is3rdAdmin;
+                        that.checkUserInfo(userData);
+                    }
+                    that.getMyTeamList(that.checkUser);
+                    resolve({openId: userData.openid || userMsg.openid})
+                },
+                error: function() {
+                    wx.showModal({
+                        title: '登入失败！',
+                        content: '网络故障，请退出重新进入小程序。',
+                        showCancel: !1,
+                        confirmText: '确定',
+                        confirmColor: 'rgb(0,153,255)',
+                    });
+                    reject({openId: ''})
                 },
                 complete: function () {
                     wx.hideLoading()

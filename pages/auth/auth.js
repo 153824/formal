@@ -1,7 +1,11 @@
 const app = getApp()
 Page({
-    data: {},
-    onLoad: function (options) {},
+    data: {
+        appTitle:''                
+    },
+    onLoad: function (options) {
+        this.getAppTitle()
+    }, 
     wxAuthLogin(e) {
         const that = this;
         app.updateUserMobileByWeWork(e).then(res => {
@@ -32,5 +36,24 @@ Page({
     },
     getUserAuth(e) {
         return app.getUserAuth(e)
+    },
+    getAppTitle() {
+        const temptation = new Promise((resolve, reject) => {
+            app.doAjax({
+                url: `wework/evaluations/settings/${wx.getAccountInfoSync().miniProgram.appId}/app-name`,
+                method: 'GET',
+                success(res) {
+                    resolve(res)
+                },
+                error(err) {
+                    reject(err)
+                }
+            })
+        });
+        temptation.then(res => {
+            this.setData({
+                appTitle: res
+            })
+        })
     }
 });

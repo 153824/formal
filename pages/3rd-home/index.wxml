@@ -3,7 +3,7 @@
     <view class="omni--view__item">
         <view class="omni--view__item-content">
             <view class="omni--view__item__text">欢迎使用，</view>
-            <view class="omni--view__item__text">升学通测评</view>
+            <view class="omni--view__item__text">{{appTitle}}</view>
             <image class="omni--view__item__bg" src="https://ihola.luoke101.com/3rd-bg.png" alt=""/>
         </view>
         <view class="omni--view__item__circle-mask"></view>

@@ -1,200 +1,194 @@
 {
-	"description": "项目配置文件",
-	"packOptions": {
-		"ignore": []
-	},
-	"setting": {
-		"urlCheck": false,
-		"es6": true,
-		"enhance": false,
-		"postcss": true,
-		"preloadBackgroundData": false,
-		"minified": true,
-		"newFeature": true,
-		"coverView": true,
-		"nodeModules": true,
-		"autoAudits": true,
-		"showShadowRootInWxmlPanel": true,
-		"scopeDataCheck": false,
-		"uglifyFileName": false,
-		"checkInvalidKey": true,
-		"checkSiteMap": true,
-		"uploadWithSourceMap": true,
-		"babelSetting": {
-			"ignore": [],
-			"disablePlugins": [],
-			"outputPath": ""
-		},
-		"bundle": true,
-		"useCompilerModule": false,
-		"userConfirmedUseCompilerModuleSwitch": false
-	},
-	"compileType": "miniprogram",
-	"libVersion": "2.12.2",
-	"appid": "wxdb1dcb4a9e212d32",
-	"projectname": "luoke-haola-wx-admin",
-	"debugOptions": {
-		"hidedInDevtools": []
-	},
-	"isGameTourist": false,
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
-	"scripts": {
-		"beforeCompile": "",
-		"beforePreview": "",
-		"beforeUpload": "./push.bat"
-	},
-	"condition": {
-		"search": {
-			"current": -1,
-			"list": []
-		},
-		"conversation": {
-			"current": -1,
-			"list": []
-		},
-		"plugin": {
-			"current": -1,
-			"list": []
-		},
-		"game": {
-			"currentL": -1,
-			"list": []
-		},
-		"gamePlugin": {
-			"current": -1,
-			"list": []
-		},
-		"miniprogram": {
-			"current": -1,
-			"list": [
-				{
-					"id": 0,
-					"name": "pages/home/home",
-					"pathName": "pages/home/home",
-					"query": "q=https://api.luoke101.com/s/5f6af8a433c1241d23572834",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "加入团队",
-					"pathName": "pages/user/components/teamInvite/teamInvite",
-					"query": "key=teamMsg_5f51ada624e15034a2a33827_2",
-					"scene": null
-				},
-				{
-					"id": 2,
-					"name": "报告详情",
-					"pathName": "pages/report/report",
-					"query": "receiveRecordId=5fd873e43bd73b0a96d1d26b",
-					"scene": null
-				},
-				{
-					"id": 3,
-					"name": "作答記錄",
-					"pathName": "pages/work-base/components/track-detail/track-detail",
-					"query": "releaseRecordId=5f813067d5a972193142e46e&sharedAt=1602310089498&tabIndex=1",
-					"scene": null
-				},
-				{
-					"id": 4,
-					"name": "测评详情",
-					"pathName": "pages/station/components/detail/detail",
-					"query": "id=5fb365eab3ee12146116f5cf",
-					"scene": null
-				},
-				{
-					"id": 5,
-					"name": "分享-报告详情",
-					"pathName": "pages/report/report",
-					"query": "receiveRecordId=5f812fe89511751230f99fce",
-					"scene": null
-				},
-				{
-					"id": 6,
-					"name": "小程序码领取测评",
-					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=5fd2d3a7b407175493346f15",
-					"scene": null
-				},
-				{
-					"id": 7,
-					"name": "二维码领取测评",
-					"pathName": "pages/work-base/components/guide/guide",
-					"query": "q=https://api.luoke101.com/s/5fd09a4a3bd73b0a96d1d1e5",
-					"scene": null
-				},
-				{
-					"id": 11,
-					"name": "完成测评",
-					"pathName": "pages/work-base/components/done/done",
-					"query": "id=5f71abd2d9d80005bd987a45&isSelf=SHARE",
-					"scene": null
-				},
-				{
-					"id": 9,
-					"name": "领取报告",
-					"pathName": "pages/report/report",
-					"query": "receivedRecordId=5f74507cd9d79d3c986c2c12&sharedAt=1601612953307",
-					"scene": null
-				},
-				{
-					"id": 10,
-					"name": "小层序码领取测评",
-					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=5fb4eb6dca59954c1c193067",
-					"scene": null
-				},
-				{
-					"id": 11,
-					"name": "分享图片",
-					"pathName": "common/webView",
-					"query": "img=https://ihola.luoke101.com/holateam/tmp1602645968770.png&title=true",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/forbidden/forbidden",
-					"pathName": "pages/forbidden/forbidden",
-					"query": "scene=5f8428e5164cf1025532e138",
-					"scene": null
-				},
-				{
-					"id": 13,
-					"name": "引流页",
-					"pathName": "pages/home/components/more/more",
-					"query": "type=school",
-					"scene": null
-				},
-				{
-					"id": 14,
-					"name": "二维码领取测评-2",
-					"pathName": "pages/work-base/components/guide/guide",
-					"query": "q=https://api.luoke101.com/s/5fb34b8db3ee12146116f5b3",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "用户信息录入",
-					"pathName": "pages/recorder/recorder",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "完成页面",
-					"pathName": "pages/work-base/components/done/done",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "认证中心",
-					"pathName": "pages/auth/auth",
-					"query": "",
-					"scene": null
-				}
-			]
-		}
-	}
+  "description": "项目配置文件",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": false,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "nodeModules": true,
+    "autoAudits": true,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "bundle": true,
+    "useCompilerModule": false,
+    "userConfirmedUseCompilerModuleSwitch": false
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.12.2",
+  "appid": "wxdb1dcb4a9e212d32",
+  "projectname": "luoke-haola-wx-admin",
+  "debugOptions": {
+    "hidedInDevtools": []
+  },
+  "isGameTourist": false,
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "scripts": {
+    "beforeCompile": "",
+    "beforePreview": "",
+    "beforeUpload": "./push.bat"
+  },
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "id": 0,
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "q=https://api.luoke101.com/s/5f6af8a433c1241d23572834",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "加入团队",
+          "pathName": "pages/user/components/teamInvite/teamInvite",
+          "query": "key=teamMsg_5f51ada624e15034a2a33827_2",
+          "scene": null
+        },
+        {
+          "id": 2,
+          "name": "报告详情",
+          "pathName": "pages/report/report",
+          "query": "receiveRecordId=5fd873e43bd73b0a96d1d26b",
+          "scene": null
+        },
+        {
+          "id": 3,
+          "name": "作答記錄",
+          "pathName": "pages/work-base/components/track-detail/track-detail",
+          "query": "releaseRecordId=5f813067d5a972193142e46e&sharedAt=1602310089498&tabIndex=1",
+          "scene": null
+        },
+        {
+          "id": 4,
+          "name": "测评详情",
+          "pathName": "pages/station/components/detail/detail",
+          "query": "id=5fb365eab3ee12146116f5cf",
+          "scene": null
+        },
+        {
+          "id": 5,
+          "name": "分享-报告详情",
+          "pathName": "pages/report/report",
+          "query": "receiveRecordId=5f812fe89511751230f99fce",
+          "scene": null
+        },
+        {
+          "id": 6,
+          "name": "小程序码领取测评",
+          "pathName": "pages/work-base/components/guide/guide",
+          "query": "scene=5fd2d3a7b407175493346f15",
+          "scene": null
+        },
+        {
+          "id": 7,
+          "name": "二维码领取测评",
+          "pathName": "pages/work-base/components/guide/guide",
+          "query": "q=https://api.luoke101.com/s/5fd09a4a3bd73b0a96d1d1e5",
+          "scene": null
+        },
+        {
+          "id": 11,
+          "name": "完成测评",
+          "pathName": "pages/work-base/components/done/done",
+          "query": "id=5f71abd2d9d80005bd987a45&isSelf=SHARE",
+          "scene": null
+        },
+        {
+          "id": 9,
+          "name": "领取报告",
+          "pathName": "pages/report/report",
+          "query": "receivedRecordId=5f74507cd9d79d3c986c2c12&sharedAt=1601612953307",
+          "scene": null
+        },
+        {
+          "id": 10,
+          "name": "小层序码领取测评",
+          "pathName": "pages/work-base/components/guide/guide",
+          "query": "scene=5fb4eb6dca59954c1c193067",
+          "scene": null
+        },
+        {
+          "id": 11,
+          "name": "分享图片",
+          "pathName": "common/webView",
+          "query": "img=https://ihola.luoke101.com/holateam/tmp1602645968770.png&title=true",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/forbidden/forbidden",
+          "pathName": "pages/forbidden/forbidden",
+          "query": "scene=5f8428e5164cf1025532e138",
+          "scene": null
+        },
+        {
+          "id": 13,
+          "name": "引流页",
+          "pathName": "pages/home/components/more/more",
+          "query": "type=school",
+          "scene": null
+        },
+        {
+          "id": 14,
+          "name": "二维码领取测评-2",
+          "pathName": "pages/work-base/components/guide/guide",
+          "query": "q=https://api.luoke101.com/s/5fb34b8db3ee12146116f5b3",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "用户信息录入",
+          "pathName": "pages/recorder/recorder",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "完成页面",
+          "pathName": "pages/work-base/components/done/done",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "认证中心",
+          "pathName": "pages/auth/auth",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/3rd-home/index",
+          "pathName": "pages/3rd-home/index",
+          "query": "surveyId=5d64776043e78c00689c9210",
+          "scene": null
+        }
+      ]
+    }
+  }
 }

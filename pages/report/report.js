@@ -545,7 +545,8 @@ Page({
                 });
                 objs[n].child = newChild;
                 var keys = Object.keys(newChild);
-                objs[n].child[keys[0]]["active"] = "active";
+                console.log(keys);
+                objs[n].child[keys[keys.length-1]]["active"] = "active";
             }
             res["id"] = id;
             var total1Full = res.report.total1;
@@ -720,7 +721,8 @@ Page({
                 });
                 objs[n].subclass = newChild;
                 var keys = Object.keys(newChild);
-                objs[n].subclass[keys[0]]["active"] = "active"
+                console.log(keys);
+                objs[n].subclass[keys[keys.length-1]]["active"] = "active"
             }
             that.setData({
                 histogramYAxis: histogramYAxis,

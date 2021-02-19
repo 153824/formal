@@ -495,6 +495,10 @@ App({
                 console.error(err);
                 wx.hideLoading()
             },
+            fail: err=>{
+                console.error(err);
+                wx.hideLoading()
+            }
         })
     },
 
@@ -701,7 +705,7 @@ App({
      */
     getUserAuth: function (data) {
         const that = this;
-        const userInfo = data.detail.userInfo;
+        const userInfo = data.detail.userInfo || data.userInfo;
         userInfo["openid"] = wx.getStorageSync("openId") || app.globalData.userMsg.openid;
         const auth = new Promise((resolve, reject) => {
             if (!userInfo) {
@@ -733,6 +737,10 @@ App({
         });
         return auth
     },
+
+    getUserAuthByAPI: function (){
+
+    }
 
     /**
      * @Description:

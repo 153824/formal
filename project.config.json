@@ -86,7 +86,7 @@
 					"id": 2,
 					"name": "报告详情",
 					"pathName": "pages/report/report",
-					"query": "receiveRecordId=601f8ca634d04b090df0d499",
+					"query": "receiveRecordId=5fd873e43bd73b0a96d1d26b",
 					"scene": null
 				},
 				{
@@ -114,14 +114,14 @@
 					"id": 6,
 					"name": "小程序码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=600652c2eda280395d8c0fa4",
+					"query": "scene=5fd2d3a7b407175493346f15",
 					"scene": null
 				},
 				{
 					"id": 7,
 					"name": "二维码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "q=https://api.luoke101.com/s/6006acbceda280395d8c0fa5",
+					"query": "q=https://api.luoke101.com/s/5fd09a4a3bd73b0a96d1d1e5",
 					"scene": null
 				},
 				{
@@ -140,9 +140,9 @@
 				},
 				{
 					"id": 10,
-					"name": "小程序码领取测评",
+					"name": "小层序码领取测评",
 					"pathName": "pages/work-base/components/guide/guide",
-					"query": "scene=601cf949aa08e800b66a7cb4",
+					"query": "scene=5fb4eb6dca59954c1c193067",
 					"scene": null
 				},
 				{
@@ -188,30 +188,9 @@
 					"scene": null
 				},
 				{
-					"id": 17,
-					"name": "360首页",
-					"pathName": "pages/360/360",
-					"query": "surveyId=",
-					"scene": null
-				},
-				{
-					"id": 18,
-					"name": "360准备评估",
-					"pathName": "pages/360/subpages/ready/ready",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 19,
-					"name": "360作答",
-					"pathName": "pages/360/subpages/replying/replying",
-					"query": "surveyInfo={\"name\":\"无标题问卷2\",\"fbEId\":\"6008e84ea48e2e73ba0e5053\",\"surveyId\":\"6008e862a48e2e73ba0e5056\"}",
-					"scene": null
-				},
-				{
 					"id": -1,
-					"name": "3rd首页",
-					"pathName": "pages/3rd-home/index",
+					"name": "认证中心",
+					"pathName": "pages/auth/auth",
 					"query": "",
 					"scene": null
 				}

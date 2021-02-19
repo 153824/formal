@@ -48,7 +48,8 @@
     "pages/360/subpages/ready/ready",
     "pages/360/subpages/replying/replying",
     "pages/user-center/components/setting/setting",
-    "pages/3rd-home/index"
+    "pages/3rd-home/index",
+    "pages/auth/auth"
   ],
   "tabBar": {
     "custom": true,

@@ -1,0 +1,99 @@
+page{
+    overflow-x: hidden;
+}
+.omni{
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+.omni--view__item{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-self: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 180rpx 0 0;
+    width: 150vw;
+    height: 548rpx;
+    background: #D8D8D8 linear-gradient(90deg, #353EE8 0%, #356DE8 100%);
+}
+.omni--view__item-info{
+    position: absolute;
+    top: 124vw;
+    width: calc(100vw - 208rpx);
+    padding: 0 104rpx 40rpx 104rpx;
+}
+.omni--view__item-info__user-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.omni--hello-text{
+    font-size: 48rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #000000;
+    line-height: 66rpx;
+    margin-bottom: 42rpx;
+}
+.omni--intro-text{
+    font-size: 36rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #000000;
+    line-height: 50rpx;
+    margin-bottom: 94rpx;
+    text-align: center;
+}
+.omni__login-btn{
+    background-color: #353EE8;
+    border: unset;
+    outline: unset;
+    font-size:36rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 50rpx;
+    padding: 24rpx 80rpx;
+    border-radius: 10px;
+}
+.omni--view__item-transparent{
+    background: transparent;
+}
+.omni--view__item-content{
+    position: absolute;
+    top: 80px;
+    max-width: 100vw;
+    margin-left: 25vw;
+}
+.omni--view__item__bg{
+    position: absolute;
+    bottom: -548rpx;
+    width: 100vw;
+    height: 363rpx;
+}
+.omni--view__item__text{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: calc(100vw - 208rpx);
+    padding: 0 104rpx 0rpx 104rpx;
+    font-size: 52rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+.omni--view__item__circle-mask{
+    position: absolute;
+    bottom: -14vw;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: -1;
+    width: 180vw;
+    height: 120vw;
+    border-radius: 50%;
+    background: #D8D8D8 linear-gradient(90deg, #353EE8 0%, #356DE8 100%);
+    /*background-color: #2f3038;*/
+}

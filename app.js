@@ -740,7 +740,7 @@ App({
 
     getUserAuthByAPI: function (){
 
-    }
+    },
 
     /**
      * @Description:

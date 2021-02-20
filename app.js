@@ -63,7 +63,6 @@ App({
     // host: 'https://api.uat.luoke101.com',
     host: 'https://www.uat.haola101.com',
     // host: "http://192.168.0.101:3000",
-    // dev: "http://api.dev.luoke101.int",
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
         userInfo: null,
@@ -257,39 +256,38 @@ App({
      */
     userLogin: function (code) {
         const that = this;
-        const userLoginPromise = new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             that.doAjax({
-                // url: 'userLogin',
-                url: 'wework/auth/login',
+                url: 'wework/auth/ma_auth_code',
                 method: 'POST',
                 data: {
-                    fromAppId: that.fromAppId,
+                    type: 'WECHAT',
                     appid: that.globalData.appid,
                     code: code,
                 },
                 noLoading: true,
                 success: function (userData) {
-                    that.globalData.userMsg = userData.userMsg || {};
-                    wx.hideLoading();
-                    const userMsg = that.globalData.userMsg;
-                    wx.setStorageSync('userInfo', userData);
-                    wx.setStorageSync('openId', userData.openid || userMsg.openid);
-                    that.globalData.userInfo = Object.assign(userData,
-                        that.globalData.userInfo || {})
-                    that.isLogin = true;
+                    // that.globalData.userMsg = userData.userMsg || {};
+                    // wx.hideLoading();
+                    // const userMsg = that.globalData.userMsg;
+                    // wx.setStorageSync('userInfo', userData);
+                    // wx.setStorageSync('openId', userData.openid || userMsg.openid);
+                    // that.globalData.userInfo = Object.assign(userData,
+                    //     that.globalData.userInfo || {})
+                    // that.isLogin = true;
                     if (userData.isNew) {
                         wx.uma.trackEvent("1606212682385");
                     }
                     if (that.checkUserInfo) {
                         userData.teamId = that.teamId;
                         userData.isWxWork = false;
-                        userData.isAdmin = false;
+                        // userData.isAdmin = false;
                         userData.is3rd = that.wx3rdInfo.is3rd;
-                        userData.is3rdAdmin = userData.isAdmin || that.wx3rdInfo.is3rdAdmin;
+                        // userData.is3rdAdmin = userData.isAdmin || that.wx3rdInfo.is3rdAdmin;
                         that.checkUserInfo(userData);
                     }
-                    that.getMyTeamList(that.checkUser);
-                    resolve({openId: userData.openid || userMsg.openid})
+                    // that.getMyTeamList(that.checkUser);
+                    // resolve({openId: userData.openid || userMsg.openid})
                 },
                 error: function() {
                     wx.showModal({
@@ -306,7 +304,6 @@ App({
                 },
             })
         });
-        return userLoginPromise
     },
 
     /**
@@ -321,10 +318,12 @@ App({
         const that = this;
         return new Promise((resolve, reject) => {
             that.doAjax({
-                url: `wework/auth/ma`,
-                method: 'get',
+                url: `wework/auth/ma_auth_code`,
+                method: 'POST',
                 data: {
-                    code: code
+                    type: 'WEWORK',
+                    appid: that.globalData.appid,
+                    code: code,
                 },
                 noLoading: true,
                 success: function (res) {
@@ -737,9 +736,27 @@ App({
         });
         return auth
     },
-
-    getUserAuthByAPI: function (){
-
+    /**
+     * @Description: 获取用户信息
+     * @author: WE!D
+     * @name: getUserInfoAuthByAPI
+     * @args: none
+     * @return: Promise
+     * @date: 2021/2/20
+    */
+    getUserInfoAuthByAPI(){
+        return new Promise((resolve, reject) => {
+            wx.getUserInfo({
+                success: res=> {
+                    console.log("getUserInfoAuthByAPI: ",res);
+                    resolve({res,status: 'success'})
+                },
+                fail: err=>{
+                    console.error("getUserInfoAuthByAPI: ",err);
+                    resolve({err, status: 'fail'})
+                }
+            })
+        });
     },
 
     /**
@@ -776,10 +793,15 @@ App({
         return mobile;
     },
 
-    updateUserMobileByWeWork(e) {
+    async updateUserMobileByWeWork(e) {
         const detail = e.detail;
         const iv = detail.iv;
         const encryptedData = detail.encryptedData;
+        const result = await this.getUserInfoAuthByAPI();
+        let userInfo = {};
+        if(result.status === 'success'){
+            userInfo = result.userInfo;
+        }
         const updateUserMobilePromise = new Promise((resolve, reject) => {
             this.doAjax({
                 url: 'wework/auth/mobile',
@@ -801,6 +823,7 @@ App({
         });
         return updateUserMobilePromise;
     },
+
     getMiniProgramSetting() {
         const teamId = this.teamId || wx.getStorageSync("userInfo").teamId || wx.getStorageSync("MY_TEAM_ID");
         if(true){

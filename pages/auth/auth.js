@@ -1,12 +1,13 @@
 const app = getApp()
 Page({
     data: {
-        appTitle:''                
+        appTitle:''
     },
     onLoad: function (options) {
         this.getAppTitle()
-    }, 
+    },
     wxAuthLogin(e) {
+        app.updateUserMobileByWeWork(e)
         const that = this;
         app.updateUserMobileByWeWork(e).then(res => {
             return that.wxAuthUserInfo()

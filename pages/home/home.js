@@ -43,21 +43,15 @@ Page({
             return data;
         })()
     },
-    onLoad: function (options = {loadingTrigger: false}, name) {
+    onLoad: function (options = {loadingTrigger: false}) {
         const that = this;
         const {isWxWork} = app.wxWorkInfo;
         const {is3rd} = app.wx3rdInfo;
-        app.checkUserInfo = (userInfo) => {
-            if (userInfo.isNew) {
-                wx.redirectTo({
-                    url: "/pages/preload/preload",
-                    success: res=>{
-                        wx.uma.trackEvent("1607407387532")
-                    }
-                });
-                return;
-            }
-        };
+        if (options.loadingTrigger) {
+            this.setData({
+                loading: true
+            })
+        }
         if (isWxWork) {
             const {trigger} = this.data;
             this.setData({
@@ -86,12 +80,17 @@ Page({
             }
             return;
         }
-        if (options.loadingTrigger) {
-            this.setData({
-                loading: true
-            })
-        }
         if (!isWxWork && !is3rd) {
+            app.checkUserInfo = (userInfo) => {
+                if (userInfo.isNew) {
+                    wx.redirectTo({
+                        url: "/pages/preload/preload",
+                        success: res=>{
+                            wx.uma.trackEvent("1607407387532")
+                        }
+                    });
+                }
+            };
             let homePagesPromiseList = [];
             const homePagesPromise = new Promise(function (resolve, reject) {
                 app.doAjax({

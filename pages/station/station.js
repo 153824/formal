@@ -52,8 +52,6 @@ Page({
     });
   },
   onShow: function(){
-    this.title = this.selectComponent("#title");
-    app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
   },
   changeTab: function (e) {
     const checkedId = e.currentTarget.id,

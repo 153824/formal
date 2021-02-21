@@ -76,10 +76,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-    var that = this;
-    app.getUserInfo(that.loadUserMsg);
-  },
+  onShow: function () {},
 
   /**
    * 生命周期函数--监听页面隐藏
@@ -120,30 +117,8 @@ Page({
     * 获取微信用户信息
     */
   getUserInfo: function (e) {
-    var that = this;
-    var userInfo = e.detail.userInfo;
-    if (!userInfo) {
-      console.error("获取用户资料失败", e);
-      return;
-    }
-    userInfo["openid"] = wx.getStorageSync("openId") || app.globalData.userMsg.openid;
-    // userInfo["unionid"] = wx.getStorageSync("unionId") || app.globalData.userMsg.unionid;
-    app.doAjax({
-      url: "updateUserMsg",
-      method: "post",
-      data: {
-        data: JSON.stringify({
-          wxUserInfo: userInfo,
-          userCompany: {
-            name: userInfo.nickName + "的团队"
-          }
-        }),
-      },
-      success: function (res) {
-        that.hideLoginDlg();
-        app.globalData.userInfo.nickname = userInfo.nickName;
-        app.addNewTeam(that.onShow);
-      }
+    app.updateUserInfo().then(res=>{}).catch(err=>{
+      console.error(err);
     });
   },
   join: function() {
@@ -161,7 +136,6 @@ Page({
       success: function (res) {
         app.teamId = id;
         app.teamName = that.data.name;
-        app.getUserInfo();
         app.toast("操作成功");
         wx.clearStorage();
         wx.setStorageSync('TARGET_TEAM_ID',id);

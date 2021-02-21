@@ -31,13 +31,16 @@ Page({
         reportsList: [],
         newlyNums: 0,
         userInfo: app.globalData.userInfo || wx.getStorageSync("userInfo"),
-        currTeam: app.teamName,
         isIPhoneXModel: app.isIphoneX,
         safeAreaDiff: 0,
         tabBarHeight: 0,
-        is3rd: true,
-        is3rdAdmin: true,
-        logo: wx.getExtConfigSync().logo
+        is3rd: false,
+        is3rdAdmin: false,
+        logo: wx.getExtConfigSync().logo,
+        isGetAccessToken: app.checkAccessToken(),
+        showEditDialog: false,
+        editedTeamName: '',
+        companyName: '好啦访客'
     },
 
     onLoad: function (option) {
@@ -84,8 +87,6 @@ Page({
         const that = this;
         let {isWxWorkAdmin, isWxWork, is3rd, is3rdAdmin} = this.data;
         if (!isWxWork && !is3rd) {
-            this.title = this.selectComponent("#title");
-            app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
             // TODO UM埋点，跟踪哪个用户使用哪份常模
             const inventoriesPromise = new Promise((resolve, reject) => {
                 app.doAjax({
@@ -169,11 +170,8 @@ Page({
                 }, 888)
                 console.error(err);
             });
-            this.setData({
-                currTeam: app.teamName
-            })
         }
-        if (isWxWork && isWxWorkAdmin ) {
+        if (isWxWork && isWxWorkAdmin) {
             const getMyEvaluationPromise = new Promise((resolve, reject) => {
                 app.doAjax({
                     url: 'inventories/we_work',
@@ -256,7 +254,7 @@ Page({
                 maskTrigger: false
             })
         }
-        if (is3rd && is3rdAdmin ) {
+        if (is3rd && is3rdAdmin) {
             const getMyEvaluationPromise = new Promise((resolve, reject) => {
                 app.doAjax({
                     url: 'inventories/we_work',
@@ -339,15 +337,62 @@ Page({
                 maskTrigger: false
             })
         }
+        app.getTeamList().then(res => {
+            console.log("getTeamList: ", res);
+            let companyName = '';
+            res.forEach((item, index) => {
+                if (item.isLoginTeam) {
+                    companyName = item.shortName
+                }
+            });
+            that.setData({
+                companyName
+            })
+        }).catch(err => {
+            console.error(err);
+        });
+        this.setData({
+            isGetAccessToken: app.checkAccessToken()
+        })
     },
 
     onHide() {
     },
 
+    editTeamName() {
+        this.setData({
+            showEditDialog: true
+        });
+    },
+
+    saveTeamName() {
+        const {editedTeamName} = this.data;
+        app.doAjax({
+            url: 'wework/teams/name',
+            method: 'POST',
+            data: {
+                name: editedTeamName
+            },
+            success(res) {
+                app.toast('修改成功！')
+                wx.reLaunch({
+                    url: '/pages/work-base/work-base'
+                })
+            }
+        })
+    },
+
+    getPhoneNumber(e) {
+        app.getAccessToken(e).then(res => {
+            wx.reLaunch({
+                url: '/pages/home/home'
+            })
+        })
+    },
+
     getUserInfo: function (e) {
-        var that = this;
-        var userData = e.detail.userInfo;
-        if (!userData) {
+        const flag = Object.keys(e.detail.userInfo).length > 0;
+        if (!flag) {
             wx.showModal({
                 title: "授权失败",
                 content: "需要授权后才可以开始答题或查看报告列表",
@@ -357,29 +402,8 @@ Page({
             });
             return;
         }
-        userData.openid = wx.getStorageSync("openId")
-        app.doAjax({
-            url: "updateUserMsg",
-            method: "post",
-            data: {
-                data: JSON.stringify({
-                    wxUserInfo: userData,
-                    userCompany: {
-                        name: userData.nickName + "的团队"
-                    }
-                })
-            },
-            success: function (res) {
-                var userData = res.data;
-                var globalData = app.globalData.userInfo;
-                if (0 == res.code) {
-                    wx.hideLoading();
-                    app.globalData.userInfo = Object.assign(globalData, userData);
-                    wx.setStorageSync("userInfo", Object.assign(globalData, userData));
-                    wx.setStorageSync("openId", userData.openid);
-                    that.changePage();
-                }
-            }
+        app.updateUserInfo(e).then(res=>{}).catch(err=>{
+            console.error(err);
         });
     },
 

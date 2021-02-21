@@ -5,7 +5,10 @@
     "hola-member-report-list": "components/member-report-list/member-report-list",
     "hola-mask": "../../common/mask/mask",
     "hola-title": "../../common/title/title",
-    "hola-empty": "../../common/empty/empty"
+    "hola-empty": "../../common/empty/empty",
+    "van-icon": "/common/vant-weapp/dist/icon/index",
+    "van-dialog": "/common/vant-weapp/dist/dialog/index",
+    "van-field": "/common/vant-weapp/dist/field/index"
   },
   "navigationBarTitleText": ""
 }

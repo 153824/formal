@@ -20,11 +20,11 @@ page{
     box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(0,0,0,0.06);
     font-size: 36rpx;
     font-weight: 600;
-    z-index: 999999999;
+    z-index: 999;
 }
 .head-company{
     display: flex;
-    align-items: baseline;
+    align-items: 'flex-end';
 }
 .company-action{
     display: flex;
@@ -534,4 +534,26 @@ page {
     font-family: PingFangSC-Regular, PingFangSC;
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
+}
+.company-name{
+    margin-right: 10rpx;
+}
+.auth-btn{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    width: 100%;
+    height: calc(100% - 102rpx);
+    background-color: transparent;
+    border: unset;
+    padding: unset;
+    outline: unset;
+}
+.auth-btn::after,.auth-btn::before{
+    border: unset;
+    padding: unset;
+    outline: unset;
 }

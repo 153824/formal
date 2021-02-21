@@ -26,7 +26,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    if (!app.teamId) return wx.navigateBack();
+    const {teamId} = wx.getStorageSync('userInfo')
+    if (!teamId) return wx.navigateBack();
     var isvip0 = wx.getStorageSync("isvip0");
     var isvip1 = wx.getStorageSync("isvip1");
     var isvip2 = wx.getStorageSync("isvip2");
@@ -59,7 +60,7 @@ Page({
       url: "myTeamDetail",
       method: "get",
       data: {
-        id: app.teamId
+        id: teamId
       },
       success: function(res) {
         adminNum = res.adminMemberMax || adminNum;

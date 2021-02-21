@@ -36,7 +36,10 @@ Page({
             url: "/pages/home/home"
         })
     },
-    getPhoneNumber: function (e) {
+    getPhoneNumber: async function (e) {
+        const info = await app.getUserInfoAuthByAPI()
+        console.log("info: ",info);
+        e.detail.userInfo = info.res.userInfo;
         const that = this;
         const {type} = e.currentTarget.dataset;
         let url = `/pages/home/components/more/more?type=${type}`;
@@ -48,7 +51,7 @@ Page({
         } catch (e) {
             console.error(e);
         }
-        app.updateUserMobileByWeWork(e).then(res=>{
+        app.getAccessToken(e).then(res=>{
             that.getNewerTicket();
             try {
                 wx.uma.trackEvent('1605250635744');
@@ -107,7 +110,6 @@ Page({
             method: "post",
             data: {},
             success: function (ret) {
-                app.getUserInfo();
                 app.toast("恭喜！成功领取新人券");
             },
             error: function (res) {

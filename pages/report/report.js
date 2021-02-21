@@ -345,11 +345,18 @@ Page({
         opacityTrigger: true,
         incentives: {},
         currentActive: "",
-        reportCopyrightTxt: ""
+        reportCopyrightTxt: "",
+        options: {}
     },
 
     onLoad: function (options = {isSelf: ""}) {
         const that = this;
+        if(!app.checkAccessToken()){
+            wx.navigateTo({
+                url: '/pages/whoami/whoami'
+            });
+            return;
+        }
         ctx = wx.createCanvasContext('canvasArcCir');
         const id = that.data.id || options.receiveRecordId || options.receivedRecordId;
         if(options.isSelf){
@@ -358,56 +365,36 @@ Page({
             });
         }
         this.setData({
-            id: id,
+            id,
+            options
         });
-        if(!app.globalData.userInfo && !wx.getStorageSync('userInfo')){
-            app.checkUserInfo = userInfo => {
-                if (options.sharedAt) {
-                    options.userId = userInfo.id || wx.getStorageSync("userInfo")["id"];
-                    that.verifyReportIsCanRead(options).then(res => {
-                        that.getReport(id);
-                    }).catch(err => {
-                        wx.showToast({
-                            title: "该分享已过期",
-                            icon: "none",
-                            duration: 888
-                        });
-                        setTimeout(() => {
-                            wx.switchTab({
-                                url: '/pages/home/home'
-                            })
-                        }, 999);
-                    });
-                } else {
-                    that.getReport(id);
-                }
-                this.getProgramSetting(userInfo.teamId)
-            };
-        }else{
-            if (options.sharedAt) {
-                options.userId = wx.getStorageSync("userInfo")["id"];
-                that.verifyReportIsCanRead(options).then(res => {
-                    that.getReport(id);
-                }).catch(err => {
-                    wx.showToast({
-                        title: "该分享已过期",
-                        icon: "none",
-                        duration: 888
-                    });
-                    setTimeout(() => {
-                        wx.switchTab({
-                            url: '/pages/home/home'
-                        })
-                    }, 999);
-                });
-            } else {
-                that.getReport(id);
-            }
-            this.getProgramSetting()
-        }
     },
 
-    onShow: function () {},
+    onShow: function () {
+        const that = this;
+        const {options} = this.data;
+        const id = that.data.id || options.receiveRecordId || options.receivedRecordId;
+        if (options.sharedAt) {
+            options.userId = wx.getStorageSync("userInfo")["id"];
+            that.verifyReportIsCanRead(options).then(res => {
+                that.getReport(id);
+            }).catch(err => {
+                wx.showToast({
+                    title: "该分享已过期",
+                    icon: "none",
+                    duration: 888
+                });
+                setTimeout(() => {
+                    wx.switchTab({
+                        url: '/pages/home/home'
+                    })
+                }, 999);
+            });
+        } else {
+            that.getReport(id);
+        }
+        this.getProgramSetting()
+    },
 
     verifyReportIsCanRead: function (option) {
         return this.acceptReport(option)
@@ -953,21 +940,6 @@ Page({
         var userPapersNum = this.data.userPapersNum;
         wx.navigateTo({
             url: '../station/components/detail/detail?id=' + evaluationInfo.evaluationId,
-        });
-    },
-    /**
-     * 获取团队列表，并切换到我自己的团队
-     */
-    getMyTeamList: function (e) {
-        app.getMyTeamList(function (list) {
-            list.forEach(function (node) {
-                if (node.role == 3) {
-                    app.teamId = node.objectId;
-                    app.teamName = node.name;
-                    app.teamRole = node.role;
-                    app.globalData.team = node;
-                }
-            });
         });
     },
     /**

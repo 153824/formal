@@ -70,7 +70,7 @@ page{
 }
 .omni--view__item__bg{
     position: absolute;
-    bottom: -548rpx;
+    bottom: -567rpx;
     width: 100vw;
     height: 363rpx;
 }

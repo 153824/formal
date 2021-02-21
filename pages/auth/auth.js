@@ -1,13 +1,18 @@
 const app = getApp()
 Page({
     data: {
-        appTitle:''
+        appTitle:'',
+        liner: 'transparent',
     },
     onLoad: function (options) {
         this.getAppTitle()
     },
-    wxAuthLogin(e) {
-        app.updateUserMobileByWeWork(e)
+    async wxAuthLogin(e) {
+        app.getAccessToken(e).then(res=>{
+            wx.switchTab({
+                url: '/pages/work-base/work-base'
+            })
+        })
     },
     getAppTitle() {
         const temptation = new Promise((resolve, reject) => {

@@ -1037,7 +1037,7 @@ Page({
             }
         }
         if (!that.data.getphoneNum) {
-            app.updateUserMobileByWeWork(e).then(res=>{
+            app.getAccessToken(e).then(res=>{
                 if (that.data.isSelf === 'SHARE') {
                     try {
                         wx.uma.trackEvent('1602216242156')

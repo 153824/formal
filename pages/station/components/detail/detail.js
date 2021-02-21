@@ -33,7 +33,8 @@ Page({
         certificateTicket: 0,
         shareTicket: 0,
         deprecatedTicket: 0,
-        customNorms: []
+        customNorms: [],
+        isGetAccessToken: app.checkAccessToken()
     },
 
     onLoad: function (options) {
@@ -60,26 +61,7 @@ Page({
     onShow: function () {
         const that = this;
         this._checkUserIsBindPhone();
-        if (app.isLogin) {
-            const teamDetailPromise = new Promise((resolve, reject) => {
-                app.doAjax({
-                    url: "myTeamDetail",
-                    method: "get",
-                    data: {
-                        id: app.teamId
-                    },
-                    noLoading: true,
-                    success: function (ret) {
-                        that.setData({
-                            teamAdminUser: ret.adminUser.nickname
-                        });
-                        resolve('success');
-                    },
-                    fail: function (err) {
-                        reject('fail');
-                    }
-                });
-            });
+        if (app.isLogin || true) {
             const evaluationDetailPromise = new Promise((resolve, reject) => {
                 app.doAjax({
                     url: 'evaluations/outline',
@@ -177,7 +159,7 @@ Page({
                     }
                 })
             }));
-            Promise.all([teamDetailPromise, evaluationDetailPromise, evaluationVoucherPromise]).then(values => {
+            Promise.race([evaluationDetailPromise, evaluationVoucherPromise]).then(values => {
                 setTimeout(() => {
                     this.setData({
                         loading: false,
@@ -565,41 +547,17 @@ Page({
      * 用户授权
      */
     getUserInfo: function (e) {
-        var that = this;
-        var userInfo = e.detail.userInfo;
-        if (!userInfo) return;
-        userInfo["openid"] = wx.getStorageSync("openId") || app.globalData.userMsg.openid;
-        // userInfo["unionid"] = wx.getStorageSync("unionId") || app.globalData.userMsg.unionid;
-        app.doAjax({
-            url: "updateUserMsg",
-            method: "post",
-            data: {
-                data: JSON.stringify({
-                    wxUserInfo: userInfo,
-                    userCompany: {
-                        name: userInfo.nickName + "的团队"
-                    }
-                }),
-            },
-            success: function (res) {
-                app.globalData.userInfo.nickname = userInfo.nickName;
-                app.addNewTeam(that.onShow);
-            }
+        app.updateUserInfo().then(res=>{}).catch(err=>{
+            console.error(err);
         });
-        that.getNewerTicket();
+        this.getNewerTicket();
     },
     /**
      * 用户手机号授权
      */
-    checkUserMobile: function (e, cb) {
+    checkUserMobile: function (e) {
         const that = this;
-        if (that.data.userData.phone) {
-            return cb();
-        }
-        app.updateUserMobileByWeWork(e).then(res=>{
-            app.getUserInfo();
-            cb && cb();
-        }).catch(err=>{
+        app.updateUserMobileByWeWork(e).catch(err=>{
             console.error(err)
         });
     },
@@ -680,7 +638,6 @@ Page({
             method: "post",
             data: {},
             success: function (ret) {
-                app.getUserInfo(); //更新用户信息
                 that.setData({
                     giftTrigger: true,
                 });
@@ -810,25 +767,22 @@ Page({
             } catch (e) {
 
             }
-            var updatedUserMobilePromise = new Promise(((resolve, reject) => {
-                app.updateUserMobileByWeWork(e).then(res=>{
+            const getAccessToken = new Promise(((resolve, reject) => {
+                app.getAccessToken(e).then(res=>{
                     resolve(true);
                 }).catch(err=>{
                     reject(err);
                     console.error(err);
                 });
             }));
-            updatedUserMobilePromise.then(() => {
+            getAccessToken.then(() => {
                 app.doAjax({
-                    url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
+                    url: `wework/users/${wx.getStorageSync('userInfo').id}`,
                     method: "get",
                     data: {
                         openid: wx.getStorageSync("openId"),
                     },
                     success: function (res) {
-                        app.globalData.userInfo = Object.assign(app.globalData.userInfo, res);
-                        wx.setStorageSync("userInfo", app.globalData.userInfo);
-                        wx.setStorageSync("USER_DETAIL", app.globalData.userInfo);
                         if (res.phone && mark !== 'dont-get-ticket') {
                             that.getNewerTicket();
                             try {
@@ -868,7 +822,7 @@ Page({
                             }
                         }
                         that.setData({
-                            isBindPhone: true
+                            isGetAccessToken: true
                         })
                     }
                 })
@@ -879,7 +833,7 @@ Page({
         const that = this;
         const {mark, eventName} = e.currentTarget.dataset;
         const {evaluation} = this.data;
-        if (that.data.isBindPhone) {
+        if (that.data.isGetAccessToken) {
             switch (eventName) {
                 case 'goToDaTi':
                     wx.uma.trackEvent('1602212461556', {name: evaluation.name, isFree: evaluation.freeEvaluation});
@@ -893,19 +847,11 @@ Page({
         }
     },
     _checkUserIsBindPhone: function (userId) {
-        const _this = this;
-        app.doAjax({
-            url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
-            method: "get",
-            data: {
-                openid: wx.getStorageSync("openId"),
-            },
-            success: function (res) {
-                _this.setData({
-                    isBindPhone: true,
-                });
-            }
-        });
+        if(wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').tokenInfo && wx.getStorageSync('userInfo').tokenInfo.accessToken){
+            this.setData({
+                isGetAccessToken: true,
+            });
+        }
     },
     changeTicketCount: function (e) {
         this.setData({

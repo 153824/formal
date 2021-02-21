@@ -54,13 +54,13 @@
             <view class="button-group-child">
                 <button class="button-group-get-user-phone"
                         data-mark="dont-get-ticket"
-                        open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
+                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
                         bindgetphonenumber="getPhoneNumber"
                         data-event-name="goToReplyingGuide"
                         data-name="{{ evaluation.name }}"
                         data-answering="{{ currAnsweringStatus }}"
                         data-id="{{ evaluation.id }}"
-                        bindtap="{{isBindPhone ? 'goToTransit' : ''}}"
+                        bindtap="{{isGetAccessToken ? 'goToTransit' : ''}}"
                 >
                     <view class="gotoguide-btn">
                         <press title="自己测" bgColor="rgba(255,255,255,1)" color="rgba(53,62,232,1)" fontSize="32"
@@ -69,10 +69,10 @@
                 </button>
                 <button class="button-group-get-user-phone large-button-group-get-user-phone"
                         data-mark="dont-get-ticket"
-                        open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
+                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
                         bindgetphonenumber="getPhoneNumber"
                         data-event-name="goToDaTi"
-                        bindtap="{{isBindPhone ? 'goToTransit' : ''}}"
+                        bindtap="{{isGetAccessToken ? 'goToTransit' : ''}}"
                 >
                     <view class="gotodati-btn">
                         <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
@@ -87,13 +87,13 @@
             <view class="button-group-child">
                 <button class="button-group-get-user-phone"
                         data-mark="dont-get-ticket"
-                        open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
+                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
                         bindgetphonenumber="getPhoneNumber"
                         data-name="{{ evaluation.name }}"
                         data-answering="{{ currAnsweringStatus }}"
                         data-id="{{ evaluation.id }}"
                         data-event-name="goToReplyingGuide"
-                        bindtap="{{isBindPhone ? 'goToTransit' : ''}}"
+                        bindtap="{{isGetAccessToken ? 'goToTransit' : ''}}"
                 >
                     <view class="gotoguide-btn">
                         <press title="{{ currAnsweringStatus ? '继续体验' : '自己测'}}" bgColor="rgba(255,255,255,1)"
@@ -103,10 +103,10 @@
                 </button>
                 <button class="button-group-get-user-phone large-button-group-get-user-phone"
                         data-mark="dont-get-ticket"
-                        open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
+                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
                         bindgetphonenumber="getPhoneNumber"
                         data-event-name="goToDaTi"
-                        bindtap="{{isBindPhone ? 'goToTransit' : ''}}"
+                        bindtap="{{isGetAccessToken ? 'goToTransit' : ''}}"
                 >
                     <view class="gotodati-btn">
                         <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
@@ -132,10 +132,10 @@
             </view>
             <view wx:else>
                 <button class="button-group-get-user-phone" data-mark="dont-get-ticket"
-                        open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
+                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
                         bindgetphonenumber="getPhoneNumber"
                         data-event-name="payForEvaluation"
-                        bindtap="{{isBindPhone ? 'payForEvaluation' : ''}}"
+                        bindtap="{{isGetAccessToken ? 'payForEvaluation' : ''}}"
                 >
                     <press title="购买测评" fontSize="32" fontWeight="600"></press>
                 </button>
@@ -156,13 +156,13 @@
             </view>
             <view class="button-group-child">
                 <button class="button-group-get-user-phone" data-mark="dont-get-ticket"
-                        open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
+                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
                         bindgetphonenumber="getPhoneNumber"
                         data-name="{{ evaluation.name }}"
                         data-answering="{{ currAnsweringStatus }}"
                         data-id="{{ evaluation.id }}"
                         data-event-name="goToReplyingGuide"
-                        bindtap="{{isBindPhone ? 'goToTransit' : ''}}"
+                        bindtap="{{isGetAccessToken ? 'goToTransit' : ''}}"
                 >
                     <view class="gotoguide-btn">
                         <press title="{{ currAnsweringStatus ? '继续体验' : '自己测'}}" bgColor="rgba(255,255,255,1)"
@@ -172,10 +172,10 @@
                 </button>
                 <button class="button-group-get-user-phone large-button-group-get-user-phone"
                         data-mark="dont-get-ticket"
-                        open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
+                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
                         bindgetphonenumber="getPhoneNumber"
                         data-event-name="goToDaTi"
-                        bindtap="{{isBindPhone ? 'goToTransit' : ''}}"
+                        bindtap="{{isGetAccessToken ? 'goToTransit' : ''}}"
                 >
                     <view class="gotodati-btn">
                         <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
@@ -192,13 +192,13 @@
             </view>
             <view class="button-group-child">
                 <button class="button-group-get-user-phone" data-mark="dont-get-ticket"
-                        open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
+                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
                         bindgetphonenumber="getPhoneNumber"
                         data-name="{{ evaluation.name }}"
                         data-answering="{{ currAnsweringStatus }}"
                         data-id="{{ evaluation.id }}"
                         data-event-name="goToReplyingGuide"
-                        bindtap="{{isBindPhone ? 'goToTransit' : ''}}"
+                        bindtap="{{isGetAccessToken ? 'goToTransit' : ''}}"
                 >
                     <view class="gotoguide-btn">
                         <press title="{{ currAnsweringStatus ? '继续体验' : '自己测'}}" bgColor="rgba(255,255,255,1)"
@@ -208,10 +208,10 @@
                 </button>
                 <button class="button-group-get-user-phone large-button-group-get-user-phone"
                         data-mark="dont-get-ticket"
-                        open-type="{{isBindPhone ? '' : 'getPhoneNumber'}}"
+                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
                         bindgetphonenumber="getPhoneNumber"
                         data-event-name="goToDaTi"
-                        bindtap="{{isBindPhone ? 'goToTransit' : ''}}"
+                        bindtap="{{isGetAccessToken ? 'goToTransit' : ''}}"
                 >
                     <view class="gotodati-btn">
                         <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>

@@ -5,14 +5,14 @@ Page({
         isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
         is3rd: app.wx3rdInfo.is3rd,
         is3rdAdmin: app.wx3rdInfo.is3rdAdmin,
-        userInfo: wx.getStorageSync("userInfo") || wx.getStorageSync("USER_DETAIL") || app.globalData.userInfo || app.globalData.userMsg
+        userBaseInfo: {},
+        isGetAccessToken: app.checkAccessToken()
     },
     onLoad: function (options) {
         const {isWxWork, isWxWorkAdmin, is3rd, is3rdAdmin} = this.data;
         this.setData({
             is3rdAdmin: app.wx3rdInfo.is3rdAdmin,
             isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
-            userInfo: wx.getStorageSync("userInfo") || wx.getStorageSync("USER_DETAIL") || app.globalData.userInfo || app.globalData.userMsg
         });
         if (!isWxWork) {
         } else if (isWxWork && isWxWorkAdmin) {
@@ -20,15 +20,24 @@ Page({
         } else if (isWxWork && !isWxWorkAdmin) {
 
         }
+        app.getUserInformation().then(res=>{
+            if(res.avatar || res.nickname){
+                this.setData({
+                    userBaseInfo: res
+                })
+            }
+        }).catch(err=>{
+            console.error(err)
+        })
 
     },
     onShow() {
         this.setData({
-            userInfo:  wx.getStorageSync("userInfo") || wx.getStorageSync("USER_DETAIL") || app.globalData.userInfo || app.globalData.userMsg,
             isWxWork: app.wxWorkInfo.isWxWork,
             isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
             is3rd: app.wx3rdInfo.is3rd,
             is3rdAdmin: app.wx3rdInfo.is3rdAdmin,
+            isGetAccessToken: app.checkAccessToken()
         })
     },
     goToReceiveReports: function () {
@@ -57,14 +66,10 @@ Page({
         })
     },
     getUserInfo: function(e) {
-        const that = this;
-        app.getUserAuth(e).then(res=>{
-            const userInfo = Object.assign({},app.globalData.userInfo);
-            that.setData({
-                userInfo: wx.getStorageSync("userInfo") || userInfo
-            });
-            app.addNewTeam(that.onShow);
-            that.onShow();
+        app.updateUserInfo(e).then(res=>{
+            this.setData({
+                userBaseInfo: res
+            })
         }).catch(err=>{
             console.error(err)
         })

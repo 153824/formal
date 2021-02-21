@@ -13,9 +13,14 @@ Page({
         evaluationStatus: "",
         demonstrateInfo: {},
         evaluationStatusText: "",
-        respondPreparingPageTxt: ""
+        respondPreparingPageTxt: "",
     },
     onLoad: function (option) {
+        if(!app.checkAccessToken()){
+            wx.navigateTo({
+                url: '/pages/whoami/whoami'
+            })
+        }
         const that = this;
         let releaseEvaluationId = "";
         if (option.q) {
@@ -57,15 +62,8 @@ Page({
             if (app.isTest && !releaseRecordId) {
                 return that.getPaperMsg()
             }
-            if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
-                app.checkUserInfo = (userInfo) => {
-                    that.getMiniProgramSetting(userInfo.teamId)
-                    that.getTemptation(userInfo);
-                }
-            } else {
-                that.getTemptation();
-                that.getMiniProgramSetting()
-            }
+            that.getTemptation();
+            that.getMiniProgramSetting()
         }catch (e) {
             console.error(e)
         }
@@ -318,38 +316,17 @@ Page({
     },
 
     getUserInfo(e){
-        const that = this;
-        const userData = e.detail.userInfo;
+        const flag = Object.keys(e.detail.userInfo).length > 0;
         const {isGetUserInfo} = this.data;
-        if (!userData && !isGetUserInfo) return;
-        if (userData) {
-            userData.openid = wx.getStorageSync("openId");
-            app.doAjax({
-                url: "updateUserMsg",
-                method: "post",
-                noLoading: true,
-                data: {
-                    data: JSON.stringify({
-                        wxUserInfo: userData,
-                        userCompany: {
-                            name: userData.nickName + "的团队"
-                        }
-                    })
-                },
-                success: function (res) {
-                    const updatedUserData = {}||res.data;
-                    const globalData = app.globalData.userInfo;
-                    if (0 === res.code) {
-                        app.globalData.userInfo = Object.assign(globalData, updatedUserData);
-                        wx.setStorageSync("userInfo", Object.assign(globalData, updatedUserData));
-                        wx.setStorageSync("USER_DETAIL", Object.assign(globalData, updatedUserData));
-                        wx.setStorageSync("openId", updatedUserData.openid);
-                        that.setData({
-                            isGetUserInfo: true,
-                        });
-                    }
-                    that.goToRecorder();
-                }
+        if (!flag && !isGetUserInfo) return;
+        if (flag) {
+            app.updateUserInfo(e).then(res=>{
+                this.goToRecorder();
+                this.setData({
+                    isGetUserInfo: true,
+                });
+            }).catch(err=>{
+                console.error(err);
             });
         }
     },

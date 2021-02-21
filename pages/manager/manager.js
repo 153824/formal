@@ -117,9 +117,6 @@ Page({
   onReady: function () {},
 
   onShow: function () {
-    /*1.获取title组件 2.调用title组件的loadUserMsg方法*/
-    this.title = this.selectComponent("#title");
-    app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
     const checkedReportId = wx.getStorageSync('CHECKED_REPORT_ID');
     const checkedUseHistoryId = wx.getStorageSync('CHECKED_USE_HISTORY_ID');
     this.setData({

@@ -9,7 +9,6 @@
     "pages/manager/components/useHistoryDetail/useHistoryDetail",
     "pages/report/report",
     "pages/report/components/shareReport/shareReport",
-    "pages/user/user",
     "pages/user/components/addGroup/addGroup",
     "pages/user/components/invoice/invoice",
     "pages/user/components/myTeam/myTeam",
@@ -49,7 +48,8 @@
     "pages/360/subpages/replying/replying",
     "pages/user-center/components/setting/setting",
     "pages/3rd-home/index",
-    "pages/auth/auth"
+    "pages/auth/auth",
+    "pages/whoami/whoami"
   ],
   "tabBar": {
     "custom": true,

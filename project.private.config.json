@@ -1,59 +1,5 @@
 {
-  "description": "项目配置文件",
-  "packOptions": {
-    "ignore": []
-  },
-  "setting": {
-    "urlCheck": false,
-    "es6": true,
-    "enhance": true,
-    "postcss": true,
-    "preloadBackgroundData": false,
-    "minified": true,
-    "newFeature": true,
-    "coverView": true,
-    "nodeModules": true,
-    "autoAudits": true,
-    "showShadowRootInWxmlPanel": true,
-    "scopeDataCheck": false,
-    "uglifyFileName": false,
-    "checkInvalidKey": true,
-    "checkSiteMap": true,
-    "uploadWithSourceMap": true,
-    "useMultiFrameRuntime": true,
-    "useApiHook": true,
-    "useApiHostProcess": false,
-    "babelSetting": {
-      "ignore": [],
-      "disablePlugins": [],
-      "outputPath": ""
-    },
-    "bundle": false,
-    "useIsolateContext": true,
-    "useCompilerModule": false,
-    "userConfirmedUseCompilerModuleSwitch": false,
-    "userConfirmedBundleSwitch": false,
-    "packNpmManually": false,
-    "packNpmRelationList": [],
-    "minifyWXSS": true
-  },
-  "compileType": "miniprogram",
-  "libVersion": "2.12.2",
-  "appid": "wxdb1dcb4a9e212d32",
-  "projectname": "luoke-haola-wx-admin",
-  "debugOptions": {
-    "hidedInDevtools": []
-  },
-  "isGameTourist": false,
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {
-    "qywx_simulator_plugin": "2.4.0"
-  },
-  "scripts": {
-    "beforeCompile": "",
-    "beforePreview": "",
-    "beforeUpload": "./push.bat"
-  },
+  "setting": {},
   "condition": {
     "plugin": {
       "list": []
@@ -102,17 +48,15 @@
           "scene": null
         },
         {
-          "id": 5,
           "name": "分享-报告详情",
           "pathName": "pages/report/report",
-          "query": "receiveRecordId=5f812fe89511751230f99fce",
+          "query": "receiveRecordId=60324c2bc56b104ef400ec27",
           "scene": null
         },
         {
-          "id": 6,
           "name": "小程序码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "scene=5fd2d3a7b407175493346f15",
+          "query": "scene=60324357c56b104ef400ec25",
           "scene": null
         },
         {
@@ -196,6 +140,12 @@
           "name": "pages/3rd-home/index",
           "pathName": "pages/3rd-home/index",
           "query": "surveyId=5d64776043e78c00689c9210",
+          "scene": null
+        },
+        {
+          "name": "领取测评/领取报告账户验证",
+          "pathName": "pages/whoami/whoami",
+          "query": "scene=60324357c56b104ef400ec25",
           "scene": null
         }
       ]

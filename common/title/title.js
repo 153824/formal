@@ -40,185 +40,38 @@ Component({
         userInfo: app.globalData.userInfo,
         teamNames: [],
         loading: false,
-        titleLoading: true
+        titleLoading: true,
+        visibility: (() => {
+            if (wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').tokenInfo && wx.getStorageSync('userInfo').tokenInfo.accessToken) {
+                return 'visible';
+            } else {
+                return 'hidden';
+            }
+        })(),
+        teamMap: [],
+        checkedTeam: 0
     },
     methods: {
-        /**
-         * @Description:  加载用户信息,是否开启缓存
-         * @author: WE!D
-         * @name:  loadUserMsg
-         * @args:  cacheTrigger为boolean控制是否开启缓存
-         * @return:  none
-         * @date: 2020/8/27
-         */
-        loadUserMsg: function (cacheTrigger = true,reLaunchTrigger) {
-            const userData = app.globalData.userInfo || wx.getStorageSync("userInfo");
-            this.setData({
-                userInfo: userData
-            });
-            this.getMyTeamList(cacheTrigger,reLaunchTrigger);
-        },
-
-        /**
-         * @Description:  获取团队列表
-         * @author: WE!D
-         * @name:  getMyTeamList
-         * @args:  cacheTrigger为boolean控制是否开启缓存
-         * @return:  none
-         * @date: 2020/8/27
-         */
-        getMyTeamList: function (cacheTrigger, reLaunchTrigger = false) {
-            const that = this;
-            app.getMyTeamList(function (list) {
-                const teamNames = [];
-                list.forEach(function (node) {
-                    teamNames.push(node.name);
+        getTeamList() {
+            app.getTeamList().then(res => {
+                let checkedTeam = 0;
+                res.forEach((item, index) => {
+                    if(item.isLoginTeam){
+                        checkedTeam = index;
+                    }
                 });
-                app.teamName = list[0].name;
-                that.setData({
-                    teamId: app.teamId,
-                    teamRole: app.teamRole,
-                    nowTeam: list[0],
-                    teamList: list,
-                    selTeam: 0,
-                    teamNames: teamNames,
-                });
-                if(reLaunchTrigger){
-                    setTimeout(()=>{
-                        wx.reLaunch({
-                            url: `../../pages/${that.properties.url}?loadingTrigger=true`,
-                        })
-                    },500)
-                }
-                setTimeout(() => {
-                    that.setData({
-                        titleLoading: false
-                    })
-                }, 300)
-            }, cacheTrigger);
-        },
-
-        /**
-         * @Description:  切换团队
-         * @author: WE!D
-         * @name:  changeTeam
-         * @args:  e视图层传参
-         * @return:  none
-         * @date: 2020/8/27
-         */
-        changeTeam: function (e) {
-            const that = this;
-            const {value} = e.detail;
-            const {teamList} = this.data;
-            const nowTeam = teamList[value];
-            if (!nowTeam) {
-                return;
-            }
-            app.teamId = nowTeam.objectId;
-            app.teamName = nowTeam.name;
-            app.teamRole = nowTeam.role;
-            app.globalData.team = nowTeam;
-            app.globalData.selTeam = value;
-            wx.setStorageSync("MY_TEAM_ID", app.teamId);
-            this.setData({
-                nowTeam: nowTeam,
-                selTeam: value,
-                teamId: app.teamId,
-                teamRole: app.teamRole,
-                titleLoading: true
-            });
-            this.loadUserMsg(false,true);
-            // setTimeout(()=>{
-            //     wx.reLaunch({
-            //         url: `../../pages/${that.properties.url}?loadingTrigger=true`,
-            //     })
-            // },500)
-        },
-
-        getUserInfo: function (e) {
-            const that = this
-            app.getUserAuth(e).then(res=>{
-                let info = that.data.userInfo;
-                app.globalData.userInfo = Object.assign(app.globalData.userInfo,info,res.data);
-                wx.setStorageSync("userInfo", Object.assign(app.globalData.userInfo,info,res.data));
-                app.globalData.userInfo.nickname = e.detail.userInfo.nickName;
-                try {
-                    const isBindPromise = new Promise(function (resolve, reject) {
-                        resolve(app.addNewTeam(app.getUserInfo.call(that.loadUserMsg)));
-                    });
-                    isBindPromise.then(() => {
-                        info.isBind = true;
-                        that.setData({
-                            userInfo: info
-                        });
-                        that.getMyTeamList(false, true);
-                    }).catch((err) => {
-                        console.error(err);
-                    })
-                } catch (e) {
-                    console.error("At common/title/title 140, ", e);
-                }
-            }).catch(err=>{
+                this.setData({
+                    teamMap: res,
+                    checkedTeam
+                })
+            }).catch(err => {
                 console.error(err);
             })
-            // var that = this;
-            // var userInfo = e.detail.userInfo;
-            // if (!userInfo) {
-            //     return;
-            // }
-            // userInfo["openid"] = wx.getStorageSync("openId") || app.globalData.userMsg.openid;
-            // app.doAjax({
-            //     url: "updateUserMsg",
-            //     method: "post",
-            //     data: {
-            //         data: JSON.stringify({
-            //             wxUserInfo: userInfo,
-            //             userCompany: {
-            //                 name: userInfo.nickName + "的团队"
-            //             }
-            //         }),
-            //     },
-            //     success: function (res) {
-            //         let info = that.data.userInfo;
-            //         app.globalData.userInfo = Object.assign(app.globalData.userInfo,info,res.data);
-            //         wx.setStorageSync("userInfo", Object.assign(app.globalData.userInfo,info,res.data));
-            //         app.globalData.userInfo.nickname = userInfo.nickName;
-            //         try {
-            //             const isBindPromise = new Promise(function (resolve, reject) {
-            //                 resolve(app.addNewTeam(app.getUserInfo.call(that.loadUserMsg)));
-            //             });
-            //             isBindPromise.then(() => {
-            //                 info.isBind = true;
-            //                 that.setData({
-            //                     userInfo: info
-            //                 });
-            //                 that.getMyTeamList(false, true);
-            //             }).catch((err) => {
-            //                 console.error(err);
-            //             })
-            //         } catch (e) {
-            //             console.error("At common/title/title 140, ", e);
-            //         }
-            //     }
-            // });
         },
-
-        /**
-         * @Description:  对外暴露this
-         * @author: WE!D
-         * @name:  _this
-         * @args:
-         * @return:  this
-         * @date: 2020/8/27
-         */
-        _this: function () {
-            return this;
-        },
-
         goToBack: function () {
             let text = "";
             let time = 0;
-            const {moreType,startTime} = this.properties;
+            const {moreType, startTime} = this.properties;
             switch (moreType) {
                 case "school":
                     text = "校招选才";
@@ -253,11 +106,11 @@ Component({
                     }
                     break;
             }
-            if(startTime){
-                time = (new Date().getTime() - startTime)/1000;
+            if (startTime) {
+                time = (new Date().getTime() - startTime) / 1000;
             }
             try {
-                wx.uma.trackEvent('1605666844223',{name: text,time: time,});
+                wx.uma.trackEvent('1605666844223', {name: text, time: time,});
             } catch (e) {
                 console.error(e);
             }
@@ -265,7 +118,6 @@ Component({
                 url: "/pages/home/home"
             })
         },
-
         goToPage: function () {
             const {url} = this.properties;
             wx.reLaunch({
@@ -283,6 +135,16 @@ Component({
                     });
                 }
             });
+        }
+    },
+    pageLifetimes: {
+        show() {
+            if (wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').tokenInfo && wx.getStorageSync('userInfo').tokenInfo.accessToken) {
+                this.getTeamList();
+                this.setData({
+                    visibility: 'visible',
+                })
+            }
         }
     }
 });

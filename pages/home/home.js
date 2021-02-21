@@ -41,6 +41,13 @@ Page({
                 },
             ]
             return data;
+        })(),
+        canUseTitle: (()=>{
+            if(wx.getStorageSync('userInfo')){
+                return true;
+            }else{
+                return false;
+            }
         })()
     },
     onLoad: function (options = {loadingTrigger: false}) {
@@ -59,8 +66,8 @@ Page({
             });
             if (trigger) {
                 setTimeout(() => {
-                    wx.switchTab({
-                        url: "/pages/work-base/work-base"
+                    wx.navigateTo({
+                        url: "/pages/auth/auth?redirect=wework"
                     });
                 }, 4000);
             }
@@ -82,7 +89,8 @@ Page({
         }
         if (!isWxWork && !is3rd) {
             app.checkUserInfo = (userInfo) => {
-                if (userInfo.isNew) {
+                if (String(userInfo.isNew) !== 'false') {
+                    console.log("userInfo: ",userInfo)
                     wx.redirectTo({
                         url: "/pages/preload/preload",
                         success: res=>{
@@ -160,8 +168,6 @@ Page({
             };
             return;
         }
-        this.title = this.selectComponent("#title");
-        app.getUserInfo(this.title.loadUserMsg.call(this.title._this()));
         try {
             wx.uma.trackEvent("1601368297264")
         } catch (e) {
@@ -206,7 +212,7 @@ Page({
                 if ((!detail || !detail.encryptedData) && n == "getPhoneNumber") return;
                 if (detail && detail.encryptedData) {
                     app.updateUserMobileByWeWork(e).then(res=>{
-                        app.getUserInfo();
+
                     }).catch(err=>{
                         console.error(err)
                     });

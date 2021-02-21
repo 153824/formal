@@ -112,10 +112,8 @@ App({
         if (referrerInfo && referrerInfo.appid) {
             this.fromAppId = referrerInfo.appid
         }
-        console.log(wx.getExtConfigSync().isCustomVersion);
         if (wx.getExtConfigSync().isCustomVersion) {
             this.wx3rdInfo.is3rd = true;
-            console.log("wx.getAccountInfoSync(): ", wx.getAccountInfoSync().miniProgram.appId);
         }
         wx.onMemoryWarning(function (res) {
             console.warn('onMemoryWarningReceive', res)
@@ -267,6 +265,8 @@ App({
                 },
                 noLoading: true,
                 success: function (userData) {
+                    const {authCode} = userData;
+                    wx.setStorageSync('authCode', authCode);
                     // that.globalData.userMsg = userData.userMsg || {};
                     // wx.hideLoading();
                     // const userMsg = that.globalData.userMsg;
@@ -289,7 +289,7 @@ App({
                     // that.getMyTeamList(that.checkUser);
                     // resolve({openId: userData.openid || userMsg.openid})
                 },
-                error: function() {
+                error: function () {
                     wx.showModal({
                         title: '登入失败！',
                         content: '网络故障，请退出重新进入小程序。',
@@ -327,24 +327,25 @@ App({
                 },
                 noLoading: true,
                 success: function (res) {
-                    if (res.isAdmin) {
-                        that.wxWorkInfo.isWxWorkAdmin = true;
-                        wx.setStorageSync('isWxWorkAdmin', true);
-                    }
+                    wx.setStorageSync('authCode', res.authCode)
+                    // if (res.isAdmin) {
+                    //     that.wxWorkInfo.isWxWorkAdmin = true;
+                    //     wx.setStorageSync('isWxWorkAdmin', true);
+                    // }
                     if (that.checkUserInfo) {
                         res.isWxWork = true;
                         that.checkUserInfo(res);
                     }
-                    that.globalData.userMsg = res.userMsg || {};
-                    const userData = res;
-                    const userMsg = that.globalData.userMsg;
-                    wx.setStorageSync('userInfo', userData);
-                    wx.setStorageSync('openId', userData.openid || userMsg.openid);
-                    that.globalData.userInfo = Object.assign(userData,
-                        that.globalData.userInfo || {});
-                    that.teamId = res.teamId;
-                    that.isLogin = true;
-                    resolve({openId: userData.openid || userMsg.openid});
+                    // that.globalData.userMsg = res.userMsg || {};
+                    // const userData = res;
+                    // const userMsg = that.globalData.userMsg;
+                    // wx.setStorageSync('userInfo', userData);
+                    // wx.setStorageSync('openId', userData.openid || userMsg.openid);
+                    // that.globalData.userInfo = Object.assign(userData,
+                    //     that.globalData.userInfo || {});
+                    // that.teamId = res.teamId;
+                    // that.isLogin = true;
+                    resolve();
                 },
                 error: function (err) {
                     console.error("error: ", err);
@@ -352,47 +353,6 @@ App({
                 }
             })
         });
-    },
-
-    /**
-     * @Description: 获取用户信息
-     * @author: WE!D
-     * @name: getUserInfo
-     * @args: Function
-     * @return: none
-     * @date: 2020/7/21
-     */
-    getUserInfo: function (callBack) {
-        const that = this;
-        if (!wx.getStorageSync('openId') || !that.isLogin) {
-            callBack && callBack();
-            return;
-        }
-        const LOCAL_USER_INFO = wx.getStorageSync('USER_DETAIL');
-        this.checkUser = null;
-        if (LOCAL_USER_INFO.id) {
-            common.setUserDetail.apply(that, [LOCAL_USER_INFO]);
-            wx.hideLoading();
-            that.getMyTeamList(callBack);
-        } else {
-            this.doAjax({
-                url: `wework/users/${that.globalData.userMsg.id || that.globalData.userInfo.id}`,
-                method: 'get',
-                noLoading: true,
-                success: function (res) {
-                    wx.setStorage({
-                        key: 'USER_DETAIL',
-                        data: res
-                    });
-                    common.setUserDetail.apply(that, [res]);
-                    wx.hideLoading();
-                    that.getMyTeamList(callBack);
-                },
-                fail(err) {
-                    wx.hideLoading()
-                },
-            })
-        }
     },
 
     /**
@@ -453,10 +413,19 @@ App({
         if (params.url.startsWith('wework')) {
             url = `${this.host}/${params.url}`;
         }
+        console.log("userInfo.id", (wx.getStorageSync("userInfo").id));
         params.data = params.data || {};
-        params.data['userId'] = params.data['userId'] || (that.globalData.userInfo || wx.getStorageSync("userInfo")).id || '';
-        params.data['teamId'] = params.data['teamId'] || that.teamId || wx.getStorageSync("userInfo").teamId || params.data['teamId'] || "";
-        params.data['teamRole'] = that.teamRole || "";
+        params.data['userId'] = params.data['userId'] || wx.getStorageSync("userInfo").id || "";
+        params.data['teamId'] = params.data['teamId'] || wx.getStorageSync("userInfo").teamId || "";
+        let accessToken = '';
+        if (wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').tokenInfo) {
+            accessToken = wx.getStorageSync('userInfo').tokenInfo.accessToken;
+        }
+        if (accessToken) {
+            params.header = {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        }
         wx.request({
             url: url,
             method: params.method || 'POST',
@@ -494,7 +463,7 @@ App({
                 console.error(err);
                 wx.hideLoading()
             },
-            fail: err=>{
+            fail: err => {
                 console.error(err);
                 wx.hideLoading()
             }
@@ -562,112 +531,6 @@ App({
     },
 
     /**
-     * @Description: 获取团队列表
-     * @author: WE!D
-     * @name: getMyTeamList
-     * @args: Function
-     * @return: none
-     * @date: 2020/7/21
-     */
-    getMyTeamList: function (cb, cacheTrigger = true) {
-        const that = this;
-        if (that.wxWorkInfo.isWxWork) {
-            return;
-        }
-        let LOCAL_MY_TEAM_LIST = wx.getStorageSync('GET_MY_TEAM_LIST');
-        if (LOCAL_MY_TEAM_LIST instanceof Array && cacheTrigger) {
-            var toAddNew = true;
-            LOCAL_MY_TEAM_LIST = LOCAL_MY_TEAM_LIST || []
-            if (that.checkUser && !that.isLogin) {
-                that.isLogin = true
-            }
-            LOCAL_MY_TEAM_LIST.forEach(function (n) {
-                try {
-                    if (n.role == 3 && n.createUser.objectId ==
-                        that.globalData.userInfo.id) { //有我创建的团队时不进行自动新增团队
-                        toAddNew = false
-                    }
-                } catch (e) {
-                    console.error("At app.js 445, ", e)
-                }
-            });
-            if (LOCAL_MY_TEAM_LIST instanceof Array) {
-                var obj = LOCAL_MY_TEAM_LIST[0]
-                var teams = []
-                that.teamId = obj.objectId
-                wx.setStorageSync("MY_TEAM_ID", obj.objectId);
-                that.teamName = obj.name
-                that.teamRole = obj.role
-                that.globalData.team = obj
-                LOCAL_MY_TEAM_LIST.forEach((item, key) => {
-                    teams.push(item.name)
-                })
-                that.globalData.teams = teams
-                cb && cb(LOCAL_MY_TEAM_LIST)
-            }
-            if (toAddNew && !LOCAL_MY_TEAM_LIST instanceof Array) {
-                that.addNewTeam(cb)
-            }
-            if (toAddNew && LOCAL_MY_TEAM_LIST instanceof Array) {
-                that.addNewTeam()
-            }
-        } else {
-            this.doAjax({
-                url: 'myTeamList',
-                method: 'get',
-                noLoading: true,
-                data: {
-                    teamId: that.teamId || wx.getStorageSync("userInfo").teamId,
-                    page: 1,
-                    pageSize: 12,
-                    targetTeamId: wx.getStorageSync("TARGET_TEAM_ID") || ""
-                },
-                success: function (list) {
-                    wx.removeStorageSync("TARGET_TEAM_ID");
-                    let toAddNew = true;
-                    list = list || [];
-                    if (list.length) {
-                        wx.setStorage({
-                            key: 'GET_MY_TEAM_LIST',
-                            data: list
-                        })
-                    }
-                    if (that.checkUser && !that.isLogin) {
-                        that.isLogin = true;
-                    }
-                    list.forEach(function (n) {
-                        if (n.role == 3 && n.createUser.objectId ==
-                            that.globalData.userInfo.id) { //有我创建的团队时不进行自动新增团队
-                            toAddNew = false;
-                        }
-                    });
-                    if (list.length) {
-                        var obj = list[0]
-                        var teams = []
-                        that.teamId = obj.objectId
-                        wx.setStorageSync("MY_TEAM_ID", obj.objectId);
-                        that.teamName = obj.name
-                        that.teamRole = obj.role
-                        that.globalData.team = obj
-                        list.forEach((item, key) => {
-                            teams.push(item.name)
-                        })
-                        that.globalData.teams = teams
-                        // that.checkUserVip(obj);
-                        cb && cb(list)
-                    }
-                    if (toAddNew && !list.length) {
-                        that.addNewTeam(cb)
-                    }
-                    if (toAddNew && list.length) {
-                        that.addNewTeam()
-                    }
-                },
-            });
-        }
-    },
-
-    /**
      * @Description: 添加团队(默认会添加一个自己的团队)
      * @author: WE!D
      * @name: addNewTeam
@@ -689,52 +552,33 @@ App({
             },
             success: function () {
                 wx.removeStorageSync('GET_MY_TEAM_LIST');
-                that.getMyTeamList(cb);
             },
         })
     },
 
-    /**
-     * @Description: 微信一键授权
-     * @author: WE!D
-     * @name: getUserAuth
-     * @args: {data: Object}
-     * @return: Promise
-     * @date: 2021/1/6
-     */
-    getUserAuth: function (data) {
+    getAccessToken(e) {
         const that = this;
-        const userInfo = data.detail.userInfo || data.userInfo;
-        userInfo["openid"] = wx.getStorageSync("openId") || app.globalData.userMsg.openid;
-        const auth = new Promise((resolve, reject) => {
-            if (!userInfo) {
-                reject()
-                console.error("获取用户资料失败", data);
-                return;
-            }
+        const {iv, encryptedData} = e.detail;
+        const accessTokenPromise = new Promise((resolve, reject) => {
             this.doAjax({
-                url: "updateUserMsg",
-                method: "post",
+                url: 'wework/auth/ma_access_token',
+                method: 'POST',
                 data: {
-                    data: JSON.stringify({
-                        wxUserInfo: userInfo,
-                        userCompany: {
-                            name: userInfo.nickName + "的团队"
-                        }
-                    }),
+                    authCode: wx.getStorageSync('authCode'),
+                    iv,
+                    encryptedData,
                 },
-                success: function (res) {
-                    res = res.data;
-                    const localUserInfo = wx.getStorageSync("userInfo");
-                    const localUserDetail = wx.getStorageSync("USER_DETAIL");
-                    that.globalData.userInfo = Object.assign(that.globalData.userInfo, localUserInfo, localUserDetail, res);
-                    wx.setStorageSync("userInfo", that.globalData.userInfo);
-                    wx.setStorageSync("USER_DETAIL", that.globalData.userInfo);
+                success(res) {
+                    wx.setStorageSync('userInfo', res);
+                    that.globalData.userInfo = res;
                     resolve(res)
+                },
+                fail(err) {
+                    reject(err)
                 }
-            });
+            })
         });
-        return auth
+        return accessTokenPromise;
     },
     /**
      * @Description: 获取用户信息
@@ -743,65 +587,26 @@ App({
      * @args: none
      * @return: Promise
      * @date: 2021/2/20
-    */
-    getUserInfoAuthByAPI(){
+     */
+    getUserInfoAuthByAPI() {
         return new Promise((resolve, reject) => {
             wx.getUserInfo({
-                success: res=> {
-                    console.log("getUserInfoAuthByAPI: ",res);
-                    resolve({res,status: 'success'})
+                success: res => {
+                    console.log("getUserInfoAuthByAPI: ", res);
+                    resolve({res, status: 'success'})
                 },
-                fail: err=>{
-                    console.error("getUserInfoAuthByAPI: ",err);
+                fail: err => {
+                    console.error("getUserInfoAuthByAPI: ", err);
                     resolve({err, status: 'fail'})
                 }
             })
         });
     },
 
-    /**
-     * @Description:
-     * @author: WE!D
-     * @name: updateUserMobile
-     * @args: {data:Object}
-     * @return: Promise
-     * @date: 2021/1/8
-     */
-    updateUserMobile(e) {
-        let detail = e.detail;
-        let iv = detail.iv;
-        let encryptedData = detail.encryptedData;
-        const mobile = new Promise((resolve, reject) => {
-            if (encryptedData) {
-                let userMsg = this.globalData.userMsg || {};
-                userMsg["iv"] = iv;
-                userMsg["encryptedData"] = encryptedData;
-                this.doAjax({
-                    url: "updatedUserMobile",
-                    data: userMsg,
-                    success(res) {
-                        resolve(res)
-                    },
-                    error(err) {
-                        reject(err)
-                    }
-                });
-            } else {
-                reject()
-            }
-        });
-        return mobile;
-    },
-
-    async updateUserMobileByWeWork(e) {
+    updateUserMobileByWeWork(e) {
         const detail = e.detail;
         const iv = detail.iv;
         const encryptedData = detail.encryptedData;
-        const result = await this.getUserInfoAuthByAPI();
-        let userInfo = {};
-        if(result.status === 'success'){
-            userInfo = result.userInfo;
-        }
         const updateUserMobilePromise = new Promise((resolve, reject) => {
             this.doAjax({
                 url: 'wework/auth/mobile',
@@ -825,26 +630,102 @@ App({
     },
 
     getMiniProgramSetting() {
-        const teamId = this.teamId || wx.getStorageSync("userInfo").teamId || wx.getStorageSync("MY_TEAM_ID");
-        if(true){
-            this.checkUserInfo = userInfo => {
-                console.log(userInfo);
-            }
-        }
+        const teamId = wx.getStorageSync('userInfo').teamId;
         const miniProgramSettingPromise = new Promise((resolve, reject) => {
-            resolve()
-            // this.doAjax({
-            //     url: `wework/evaluations/settings/${teamId}/wechat-ma`,
-            //     method: 'GET',
-            //     success(res) {
-            //         resolve(res);
-            //     },
-            //     error(err) {
-            //         console.error(err);
-            //         reject(err);
-            //     }
-            // })
+            this.doAjax({
+                url: `wework/evaluations/settings/${teamId}/wechat-ma`,
+                method: 'GET',
+                success(res) {
+                    resolve(res);
+                },
+                error(err) {
+                    reject(err);
+                }
+            })
         })
         return miniProgramSettingPromise;
+    },
+
+    getTeamList() {
+        const p = new Promise((resolve, reject) => {
+            this.doAjax({
+                url: 'wework/teams',
+                method: 'GET',
+                noLoading: true,
+                success(res) {
+                    resolve(res)
+                },
+                fail(err) {
+                    reject(err)
+                }
+            });
+        });
+        return p;
+    },
+
+    updateUserInfo(e) {
+        const {userInfo} = e.detail;
+        userInfo.avatar = userInfo.avatarUrl
+        const p = new Promise((resolve, reject) => {
+            this.doAjax({
+                url: 'wework/users/info',
+                method: 'PUT',
+                data: {
+                    ...userInfo
+                },
+                success(res) {
+                    wx.setStorageSync('userBaseInfo', res);
+                    resolve(res);
+                },
+                fail(err) {
+                    reject(err);
+                }
+            })
+        });
+        return p;
+    },
+
+    getUserInformation() {
+        const p = new Promise((resolve, reject) => {
+            this.doAjax({
+                url: 'wework/users/avatar',
+                method: 'GET',
+                success(res) {
+                    wx.setStorageSync('userBaseInfo', res);
+                    resolve(res);
+                },
+                fail(err) {
+                    reject(err);
+                }
+            })
+        });
+        return p;
+    },
+
+    getUserInfoOfPhone() {
+        const p = new Promise((resolve, reject) => {
+            this.doAjax({
+                url: `wework/users/${wx.getStorageSync('userInfo').id}`,
+                method: "get",
+                data: {
+                    openid: wx.getStorageSync("openId") || app.globalData.userInfo.openId,
+                },
+                success: function (res) {
+                    that.setData({
+                        getphoneNum: true,
+                        phoneNumber: res.phone
+                    });
+                }
+            });
+        });
+        return p;
+    },
+
+    checkAccessToken() {
+        if (wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').tokenInfo && wx.getStorageSync('userInfo').tokenInfo.accessToken) {
+            return true;
+        } else {
+            return false;
+        }
     }
 });

@@ -88,9 +88,9 @@ Component({
             ]
         },
         isWxWork: app.wxWorkInfo.isWxWork,
-        isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
+        isWxWorkAdmin: app.checkAdmin(),
         is3rd: app.wx3rdInfo.is3rd,
-        is3rdAdmin: app.wx3rdInfo.is3rdAdmin,
+        is3rdAdmin: app.checkAdmin(),
     },
     properties: {
         active: {
@@ -137,24 +137,7 @@ Component({
     },
     pageLifetimes: {
         show: function () {
-            const that = this;
-            if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
-                app.checkUserInfo = (userInfo) => {
-                    that.setData({
-                        isWxWork: userInfo.isWxWork,
-                        isWxWorkAdmin: userInfo.isAdmin,
-                        is3rd: userInfo.is3rd,
-                        is3rdAdmin: userInfo.is3rdAdmin
-                    });
-                }
-            } else {
-                that.setData({
-                    isWxWork: app.wxWorkInfo.isWxWork,
-                    isWxWorkAdmin: wx.getStorageSync("userInfo").isAdmin || app.wxWorkInfo.isWxWorkAdmin,
-                    is3rd: app.wx3rdInfo.is3rd,
-                    is3rdAdmin: app.wx3rdInfo.is3rdAdmin,
-                });
-            }
+            app.setDataOfPlatformInfo.apply(this);
             wx.createSelectorQuery().in(this).select("#tabbar").boundingClientRect().exec(res => {
                 wx.setStorageSync("TAB_BAR_HEIGHT", res[0].height)
             });
@@ -167,24 +150,7 @@ Component({
 
         },
         attached() {
-            const that = this;
-            if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
-                app.checkUserInfo = (userInfo) => {
-                    that.setData({
-                        isWxWork: userInfo.isWxWork,
-                        isWxWorkAdmin: userInfo.isAdmin,
-                        is3rd: userInfo.is3rd,
-                        is3rdAdmin: userInfo.is3rdAdmin
-                    });
-                }
-            } else {
-                that.setData({
-                    isWxWork: app.wxWorkInfo.isWxWork,
-                    isWxWorkAdmin: wx.getStorageSync("userInfo").isAdmin || app.wxWorkInfo.isWxWorkAdmin,
-                    is3rd: app.wx3rdInfo.is3rd,
-                    is3rdAdmin: app.wx3rdInfo.is3rdAdmin,
-                });
-            }
+            app.setDataOfPlatformInfo.apply(this);
         }
     }
 });

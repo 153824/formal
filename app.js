@@ -438,6 +438,11 @@ App({
                         url: "/pages/forbidden/forbidden"
                     })
                 }
+                if(ret.statusCode === 401&&(this.wxWorkInfo.isWxWork||this.wx3rdInfo.is3rd)){
+                    wx.navigateTo({
+                        url: '/pages/auth/auth'
+                    })
+                }
                 var retData = ret.data;
                 if (ret.statusCode >= 400) {
                     params.toastTrigger = true;
@@ -727,5 +732,26 @@ App({
         } else {
             return false;
         }
+    },
+
+    checkAdmin() {
+        if(wx.getStorageSync('userInfo')){
+            return wx.getStorageSync('userInfo').isAdmin
+        }
+        return false;
+    },
+
+    setDataOfPlatformInfo() {
+        // 获取getApp()实例，避免混淆this
+        const app = getApp()
+        const platformInfo = {
+            isWxWork: app.wxWorkInfo.isWxWork,
+            isWxWorkAdmin: app.checkAdmin(),
+            is3rd: app.wx3rdInfo.is3rd,
+            is3rdAdmin: app.checkAdmin()
+        }
+        this.setData({
+            ...platformInfo
+        })
     }
 });

@@ -25,7 +25,9 @@ Page({
         pixelRate: app.globalData.pixelRate,
         phoneModel: app.isIphoneX,
         isWxWork: app.wxWorkInfo.isWxWork,
-        isWxWorkAdmin: wx.getStorageSync('userInfo').isAdmin,
+        isWxWorkAdmin: app.checkAdmin(),
+        is3rd: app.wx3rdInfo.is3rd,
+        is3rdAdmin: app.checkAdmin(),
         myEvaluation: [],
         evaluationTrack: [],
         reportsList: [],
@@ -34,8 +36,6 @@ Page({
         isIPhoneXModel: app.isIphoneX,
         safeAreaDiff: 0,
         tabBarHeight: 0,
-        is3rd: false,
-        is3rdAdmin: false,
         logo: wx.getExtConfigSync().logo,
         isGetAccessToken: app.checkAccessToken(),
         showEditDialog: false,
@@ -45,25 +45,31 @@ Page({
 
     onLoad: function (option) {
         const that = this;
-        if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
-            app.checkUserInfo = (userInfo) => {
-                that.setData({
-                    userInfo: userInfo,
-                    isWxWork: userInfo.isWxWork,
-                    isWxWorkAdmin: userInfo.isAdmin,
-                    is3rd: userInfo.is3rd,
-                    is3rdAdmin: userInfo.is3rdAdmin
-                })
-            };
-        } else {
-            that.setData({
-                userInfo: wx.getStorageSync("userInfo") || app.globalData.userInfo,
-                isWxWork: app.wxWorkInfo.isWxWork,
-                isWxWorkAdmin: wx.getStorageSync('userInfo').isAdmin || app.wxWorkInfo.isWxWorkAdmin,
-                is3rd: app.wx3rdInfo.is3rd,
-                is3rdAdmin: app.wx3rdInfo.is3rdAdmin || wx.getStorageSync('userInfo').is3rdAdmin
-            });
+        if(!app.checkAccessToken() && (app.wxWorkInfo.isWxWork || app.wx3rdInfo.is3rd)){
+            wx.navigateTo({
+                url: '/pages/auth/auth'
+            })
         }
+        app.setDataOfPlatformInfo.apply(this);
+        // if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
+        //     app.checkUserInfo = (userInfo) => {
+        //         that.setData({
+        //             userInfo: userInfo,
+        //             isWxWork: userInfo.isWxWork,
+        //             isWxWorkAdmin: userInfo.isAdmin,
+        //             is3rd: userInfo.is3rd,
+        //             is3rdAdmin: userInfo.is3rdAdmin
+        //         })
+        //     };
+        // } else {
+        //     that.setData({
+        //         userInfo: wx.getStorageSync("userInfo") || app.globalData.userInfo,
+        //         isWxWork: app.wxWorkInfo.isWxWork,
+        //         isWxWorkAdmin: wx.getStorageSync('userInfo').isAdmin || app.wxWorkInfo.isWxWorkAdmin,
+        //         is3rd: app.wx3rdInfo.is3rd,
+        //         is3rdAdmin: app.wx3rdInfo.is3rdAdmin || wx.getStorageSync('userInfo').is3rdAdmin
+        //     });
+        // }
         let {isIPhoneXModel} = this.data;
         wx.getSystemInfo({
             success: function (res) {
@@ -338,7 +344,6 @@ Page({
             })
         }
         app.getTeamList().then(res => {
-            console.log("getTeamList: ", res);
             let companyName = '';
             res.forEach((item, index) => {
                 if (item.isLoginTeam) {
@@ -356,8 +361,7 @@ Page({
         })
     },
 
-    onHide() {
-    },
+    onHide() {},
 
     editTeamName() {
         this.setData({

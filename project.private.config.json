@@ -147,6 +147,12 @@
           "pathName": "pages/whoami/whoami",
           "query": "scene=60324357c56b104ef400ec25",
           "scene": null
+        },
+        {
+          "name": "工作台",
+          "pathName": "pages/work-base/work-base",
+          "query": "scene=60324357c56b104ef400ec25",
+          "scene": null
         }
       ]
     }

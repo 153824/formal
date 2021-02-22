@@ -29,33 +29,13 @@ Page({
     },
 
     onLoad: function (options) {
-        const _this = this;
         const {releaseRecordId = ""} = options;
-        const userInfo = wx.getStorageSync('userInfo') || app.globalData.userInfo;
         if (releaseRecordId) {
             this.setData({
                 releaseRecordId: releaseRecordId,
             })
         }
-        if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
-            app.checkUserInfo = (userInfo) => {
-                _this.setData({
-                    isWxWork: userInfo.isWxWork,
-                    isWxWorkAdmin: userInfo.isAdmin,
-                    isGetPhone: userInfo.phone.length >= 11,
-                    phoneNumber: userInfo.phone || "微信一键授权",
-                    username: userInfo.info.nickName,
-                });
-            }
-        } else {
-            _this.setData({
-                isWxWork: app.wxWorkInfo.isWxWork,
-                isWxWorkAdmin: wx.getStorageSync("userInfo").isAdmin || app.wxWorkInfo.isWxWorkAdmin,
-                isGetPhone: userInfo.phone.length >= 11,
-                phoneNumber: userInfo.phone || "微信一键授权",
-                username: userInfo.info.nickName,
-            });
-        }
+        app.setDataOfPlatformInfo.apply(this);
         this._checkUserIsAuthPhone();
     },
 

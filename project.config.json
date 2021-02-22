@@ -45,7 +45,7 @@
     "hidedInDevtools": []
   },
   "isGameTourist": false,
-  "simulatorType": "wechat",
+  "simulatorType": "qywx_simulator_plugin",
   "simulatorPluginLibVersion": {
     "qywx_simulator_plugin": "2.4.0"
   },

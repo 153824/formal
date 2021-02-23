@@ -351,12 +351,6 @@ Page({
 
     onLoad: function (options = {isSelf: ""}) {
         const that = this;
-        if(!app.checkAccessToken()){
-            wx.navigateTo({
-                url: '/pages/whoami/whoami'
-            });
-            return;
-        }
         ctx = wx.createCanvasContext('canvasArcCir');
         const id = that.data.id || options.receiveRecordId || options.receivedRecordId;
         if(options.isSelf){
@@ -368,12 +362,20 @@ Page({
             id,
             options
         });
+        if(!app.checkAccessToken()){
+            wx.navigateTo({
+                url: '/pages/whoami/whoami'
+            });
+        }
     },
 
     onShow: function () {
         const that = this;
         const {options} = this.data;
         const id = that.data.id || options.receiveRecordId || options.receivedRecordId;
+        if(!app.checkAccessToken()){
+            return;
+        }
         if (options.sharedAt) {
             options.userId = wx.getStorageSync("userInfo")["id"];
             that.verifyReportIsCanRead(options).then(res => {
@@ -532,7 +534,6 @@ Page({
                 });
                 objs[n].child = newChild;
                 var keys = Object.keys(newChild);
-                console.log(keys);
                 objs[n].child[keys[keys.length-1]]["active"] = "active";
             }
             res["id"] = id;
@@ -708,7 +709,6 @@ Page({
                 });
                 objs[n].subclass = newChild;
                 var keys = Object.keys(newChild);
-                console.log(keys);
                 objs[n].subclass[keys[keys.length-1]]["active"] = "active"
             }
             that.setData({
@@ -1089,6 +1089,9 @@ Page({
 
     getProgramSetting() {
         const that = this;
+        if(!app.checkAccessToken()){
+            return;
+        }
         app.getMiniProgramSetting().then(res=>{
             that.setData({
                 reportCopyrightTxt: res.reportCopyrightTxt

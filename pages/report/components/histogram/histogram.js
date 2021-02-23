@@ -69,7 +69,6 @@ Component({
                                 } else {
                                     barColors = wx.getStorageSync(`mychart-${index}-colors`)
                                     if (wx.getStorageSync(`mychart-${index}-direction`) === "column") {
-                                        console.log("barColors： ",barColors);
                                         barColors = barColors.reverse()
                                     }
                                     return barColors[dataIndex];
@@ -96,7 +95,6 @@ Component({
                                 } else {
                                     barColors = wx.getStorageSync(`mychart-${index}-colors`)
                                     if (wx.getStorageSync(`mychart-${index}-direction`) === "column") {
-                                        console.log("barColors： ",barColors);
                                         barColors = barColors.reverse()
                                     }
                                     return barColors[res.dataIndex];
@@ -152,7 +150,6 @@ Component({
                     }
                 };
                 legend.data.push(legendData);
-                console.log("legend.data: ",legend.data);
                 if (wx.getStorageSync(`mychart-${index}-direction`) === 'column') {
                     series.push(line);
                 }
@@ -194,7 +191,6 @@ Component({
                                 } else {
                                     barColors = wx.getStorageSync(`mychart-${index}-colors`)
                                     if (wx.getStorageSync(`mychart-${index}-direction`) === "column") {
-                                        console.log("barColors： ",barColors);
                                         barColors = barColors.reverse()
                                     }
                                     return barColors[dataIndex];
@@ -271,7 +267,6 @@ Component({
         attached() {
             _this = this;
             const {histogramIndex, colors,direction} = this.properties;
-            console.log("direction: ",direction);
             wx.setStorageSync(`mychart-${histogramIndex}-colors`, colors);
             wx.setStorageSync(`mychart-${histogramIndex}-direction`,direction);
             this.setData({

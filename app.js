@@ -413,7 +413,6 @@ App({
         if (params.url.startsWith('wework')) {
             url = `${this.host}/${params.url}`;
         }
-        console.log("userInfo.id", (wx.getStorageSync("userInfo").id));
         params.data = params.data || {};
         params.data['userId'] = params.data['userId'] || wx.getStorageSync("userInfo").id || "";
         params.data['teamId'] = params.data['teamId'] || wx.getStorageSync("userInfo").teamId || "";
@@ -580,6 +579,9 @@ App({
                 },
                 fail(err) {
                     reject(err)
+                },
+                error(err){
+                    reject(err)
                 }
             })
         });
@@ -597,7 +599,6 @@ App({
         return new Promise((resolve, reject) => {
             wx.getUserInfo({
                 success: res => {
-                    console.log("getUserInfoAuthByAPI: ", res);
                     resolve({res, status: 'success'})
                 },
                 fail: err => {
@@ -727,6 +728,7 @@ App({
     },
 
     checkAccessToken() {
+        wx.setStorageSync('userInfo', {"appid":"wxdb1dcb4a9e212d32","avatar":"https://thirdwx.qlogo.cn/mmopen/vi_32/PLBibibuUwfH2qrDLAIeVg1yI7LTbDShGcxicDXNJLic8CPhnHQhSTYCLJBSQicOBXicRYAS5x0jiaeAVs6woibiaicb3yww/132","id":"5eb6a9e7c9dd6e0008d3f762","info":{"avatarUrl":"https://thirdwx.qlogo.cn/mmopen/vi_32/PLBibibuUwfH2qrDLAIeVg1yI7LTbDShGcxicDXNJLic8CPhnHQhSTYCLJBSQicOBXicRYAS5x0jiaeAVs6woibiaicb3yww/132","country":"China","gender":1,"language":"zh_CN","nickName":"WE!D","openid":"o7Jo85PuWvi98dhA5SmLGcLDOkcQ","province":null,"unionid":null},"isAdmin":true,"openid":"o7Jo85PuWvi98dhA5SmLGcLDOkcQ","phone":"18150378337","teamId":"601fb35a34d04b090df0d49c","tokenInfo":{"accessToken":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1ZWI2YTllN2M5ZGQ2ZTAwMDhkM2Y3NjIiLCJleHAiOjE2MTY2Mzk0MTQsImFwcF9pZCI6Ind4ZGIxZGNiNGE5ZTIxMmQzMiIsImNvcnBfaWQiOiI2MDFmYjM1YTM0ZDA0YjA5MGRmMGQ0OWMifQ.UCA2Y0tk6kYzHRQ06qbE5ZodTG8IBSbmE8aitgv86REwFPzfmUb4AOhPSEGKURzdLN0IuSsaNcp-zNay7gi2RA","expiresIn":1616639414319,"serverTime":1614047414331}})
         if (wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').tokenInfo && wx.getStorageSync('userInfo').tokenInfo.accessToken) {
             return true;
         } else {
@@ -741,16 +743,17 @@ App({
         return false;
     },
 
-    setDataOfPlatformInfo() {
+    setDataOfPlatformInfo(that) {
         // 获取getApp()实例，避免混淆this
-        const app = getApp()
+        const app = getApp();
         const platformInfo = {
             isWxWork: app.wxWorkInfo.isWxWork,
             isWxWorkAdmin: app.checkAdmin(),
             is3rd: app.wx3rdInfo.is3rd,
-            is3rdAdmin: app.checkAdmin()
-        }
-        this.setData({
+            is3rdAdmin: app.checkAdmin(),
+            isGetAccessToken: app.checkAccessToken()
+        };
+        that.setData({
             ...platformInfo
         })
     }

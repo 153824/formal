@@ -1,13 +1,12 @@
 const app = getApp()
 Page({
     data: {
-        appTitle:''                
+        appTitle:''
     },
     onLoad: function (options) {
         this.getAppTitle()
     },
     wxAuthLogin(e) {
-        console.log(app);
         app.updateUserMobileByWeWork(e).then(res=>{
             wx.switchTab({
                 url: "/pages/work-base/work-base"

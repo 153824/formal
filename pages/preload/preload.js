@@ -38,7 +38,6 @@ Page({
     },
     getPhoneNumber: async function (e) {
         const info = await app.getUserInfoAuthByAPI()
-        console.log("info: ",info);
         e.detail.userInfo = info.res.userInfo;
         const that = this;
         const {type} = e.currentTarget.dataset;

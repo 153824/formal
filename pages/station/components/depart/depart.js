@@ -42,7 +42,6 @@ Page({
     },
     loadDepart(e) {
         let {depart} = e.currentTarget.dataset;
-        console.log("depart: ",depart)
         if(!depart){
             depart = {
                 value: "",
@@ -96,7 +95,6 @@ Page({
         });
     },
     changeDepart(e) {
-        console.log(e.detail);
         this.setData({
             checkedDepart: e.detail
         });
@@ -123,7 +121,6 @@ Page({
     submit(e) {
         const {evaluationId} = this.data;
         this._loadDepartInfo().then(res=>{
-            console.log("_loadDepartInfo: ",res);
             const {deptName,deptId} = res.data;
             wx.setStorageSync(`checked-depart-info-${evaluationId}`, {
                 text: deptName,

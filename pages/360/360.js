@@ -46,7 +46,6 @@ Page({
         if (!smsCode && id) {
             smsCode = id
         }
-        console.log("feedbackEvaluationId, userInfo: ", (smsCode, userInfo));
         const temptation = new Promise((resolve, reject) => {
             app.doAjax({
                 url: `wework/evaluations/360/fetch/${smsCode}/temptation`,
@@ -110,7 +109,6 @@ Page({
                 fbEId: feedbackEvaluationId,
                 surveyId: surveyId
             };
-            console.log(surveyInfo);
             switch (status) {
                 case 'UNAVAILABLE':
                     app.toast('评估已失效');
@@ -177,7 +175,6 @@ Page({
     },
     verify(data) {
         const {surveyId, userInfo} = this.data;
-        console.log(surveyId)
         const verify = new Promise((resolve, reject) => {
             app.doAjax({
                 url: 'wework/evaluations/360/fetch/verify',

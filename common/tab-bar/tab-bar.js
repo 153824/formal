@@ -137,7 +137,7 @@ Component({
     },
     pageLifetimes: {
         show: function () {
-            app.setDataOfPlatformInfo.apply(this);
+            app.setDataOfPlatformInfo(this);
             wx.createSelectorQuery().in(this).select("#tabbar").boundingClientRect().exec(res => {
                 wx.setStorageSync("TAB_BAR_HEIGHT", res[0].height)
             });
@@ -150,7 +150,7 @@ Component({
 
         },
         attached() {
-            app.setDataOfPlatformInfo.apply(this);
+            app.setDataOfPlatformInfo(this);
         }
     }
 });

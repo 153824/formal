@@ -2,24 +2,14 @@ const app = getApp();
 Page({
     data: {
         isWxWork: app.wxWorkInfo.isWxWork,
-        isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
+        isWxWorkAdmin: app.checkAdmin(),
         is3rd: app.wx3rdInfo.is3rd,
-        is3rdAdmin: app.wx3rdInfo.is3rdAdmin,
+        is3rdAdmin: app.checkAdmin(),
         userBaseInfo: {},
         isGetAccessToken: app.checkAccessToken()
     },
     onLoad: function (options) {
-        const {isWxWork, isWxWorkAdmin, is3rd, is3rdAdmin} = this.data;
-        this.setData({
-            is3rdAdmin: app.wx3rdInfo.is3rdAdmin,
-            isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
-        });
-        if (!isWxWork) {
-        } else if (isWxWork && isWxWorkAdmin) {
-
-        } else if (isWxWork && !isWxWorkAdmin) {
-
-        }
+        app.setDataOfPlatformInfo(this);
         app.getUserInformation().then(res=>{
             if(res.avatar || res.nickname){
                 this.setData({
@@ -32,13 +22,7 @@ Page({
 
     },
     onShow() {
-        this.setData({
-            isWxWork: app.wxWorkInfo.isWxWork,
-            isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
-            is3rd: app.wx3rdInfo.is3rd,
-            is3rdAdmin: app.wx3rdInfo.is3rdAdmin,
-            isGetAccessToken: app.checkAccessToken()
-        })
+        app.setDataOfPlatformInfo(this);
     },
     goToReceiveReports: function () {
         wx.navigateTo({

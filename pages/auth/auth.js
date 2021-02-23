@@ -7,11 +7,16 @@ Page({
     onLoad: function (options) {
         this.getAppTitle()
     },
-    async wxAuthLogin(e) {
+    wxAuthLogin(e) {
         app.getAccessToken(e).then(res=>{
             wx.switchTab({
                 url: '/pages/work-base/work-base'
             })
+        }).catch(err=>{
+            wx.switchTab({
+                url: '/pages/work-base/work-base'
+            })
+            console.error('wxAuthLogin: ', err);
         })
     },
     getAppTitle() {

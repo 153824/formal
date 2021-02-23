@@ -16,11 +16,6 @@ Page({
         respondPreparingPageTxt: "",
     },
     onLoad: function (option) {
-        if(!app.checkAccessToken()){
-            wx.navigateTo({
-                url: '/pages/whoami/whoami'
-            })
-        }
         const that = this;
         let releaseEvaluationId = "";
         if (option.q) {
@@ -51,8 +46,16 @@ Page({
                 }
             });
         }
+        if(!app.checkAccessToken()){
+            wx.navigateTo({
+                url: '/pages/whoami/whoami'
+            })
+        }
     },
     onShow: function () {
+        if(!app.checkAccessToken()){
+            return;
+        }
         try{
             if (wx.canIUse('hideHomeButton')) {
                 wx.hideHomeButton();

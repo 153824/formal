@@ -45,31 +45,6 @@ Page({
 
     onLoad: function (option) {
         const that = this;
-        if(!app.checkAccessToken() && (app.wxWorkInfo.isWxWork || app.wx3rdInfo.is3rd)){
-            wx.navigateTo({
-                url: '/pages/auth/auth'
-            })
-        }
-        app.setDataOfPlatformInfo.apply(this);
-        // if (!app.globalData.userInfo && !wx.getStorageSync("userInfo")) {
-        //     app.checkUserInfo = (userInfo) => {
-        //         that.setData({
-        //             userInfo: userInfo,
-        //             isWxWork: userInfo.isWxWork,
-        //             isWxWorkAdmin: userInfo.isAdmin,
-        //             is3rd: userInfo.is3rd,
-        //             is3rdAdmin: userInfo.is3rdAdmin
-        //         })
-        //     };
-        // } else {
-        //     that.setData({
-        //         userInfo: wx.getStorageSync("userInfo") || app.globalData.userInfo,
-        //         isWxWork: app.wxWorkInfo.isWxWork,
-        //         isWxWorkAdmin: wx.getStorageSync('userInfo').isAdmin || app.wxWorkInfo.isWxWorkAdmin,
-        //         is3rd: app.wx3rdInfo.is3rd,
-        //         is3rdAdmin: app.wx3rdInfo.is3rdAdmin || wx.getStorageSync('userInfo').is3rdAdmin
-        //     });
-        // }
         let {isIPhoneXModel} = this.data;
         wx.getSystemInfo({
             success: function (res) {
@@ -87,9 +62,20 @@ Page({
             windowHeight,
             safeAreaDiff: isIPhoneXModel ? Math.abs(safeArea.height - safeArea.bottom) : 0,
         })
+        if(!app.checkAccessToken() && (app.wxWorkInfo.isWxWork || app.wx3rdInfo.is3rd)){
+            wx.navigateTo({
+                url: '/pages/auth/auth'
+            });
+            return;
+        }
+        app.setDataOfPlatformInfo(this);
     },
 
     onShow() {
+        if(!app.checkAccessToken() && (app.wxWorkInfo.isWxWork || app.wx3rdInfo.is3rd)){
+            return;
+        }
+        app.setDataOfPlatformInfo(this);
         const that = this;
         let {isWxWorkAdmin, isWxWork, is3rd, is3rdAdmin} = this.data;
         if (!isWxWork && !is3rd) {

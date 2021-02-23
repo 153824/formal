@@ -10,7 +10,6 @@ Page({
     },
     onLoad: function (options) {
         const surveyInfo = JSON.parse(options.surveyInfo)
-        console.log(surveyInfo);
         this.setData({
             surveyInfo: surveyInfo
         })

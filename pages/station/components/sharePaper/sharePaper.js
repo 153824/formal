@@ -58,7 +58,6 @@ Page({
         if (!departInfo) {
             this._loadRootDepart().then(res => {
                 const {label, value} = res.data[0];
-                console.log("res.data: ", res.data);
                 this.setData({
                     dropDownOps: [
                         {
@@ -153,7 +152,6 @@ Page({
             is3rd,
             defaultDeptId
         } = that.data;
-        console.log("dispatchInfo.count: ", dispatchInfo.inventory);
         let costNum = count;
         if (!costNum && !hadBuyout && !isFree) {
             return;

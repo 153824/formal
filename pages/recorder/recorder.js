@@ -35,7 +35,7 @@ Page({
                 releaseRecordId: releaseRecordId,
             })
         }
-        app.setDataOfPlatformInfo.apply(this);
+        app.setDataOfPlatformInfo(this);
         this._checkUserIsAuthPhone();
     },
 

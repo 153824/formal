@@ -20,7 +20,6 @@ Page({
     },
     onLoad: function (options) {
         const surveyInfo = JSON.parse(options.surveyInfo);
-        console.log(surveyInfo);
         this.getDraft(surveyInfo.surveyId).then(res => {
             this.setData({
                 drafts: res
@@ -132,7 +131,6 @@ Page({
     },
     saveDrafts() {
         const {surveyInfo, drafts} = this.data;
-        console.log("saveDrafts: ", this.data.drafts)
         const draftPromise = new Promise((resolve, reject) => {
             app.doAjax({
                 url: `wework/evaluations/360/surveys/${surveyInfo.surveyId}/drafts`,

@@ -64,13 +64,13 @@ page{
 }
 .omni--view__item-content{
     position: absolute;
-    top: 80px;
+    top: 128px;
     max-width: 100vw;
     margin-left: 25vw;
 }
 .omni--view__item__bg{
     position: absolute;
-    bottom: -567rpx;
+    top: 240rpx;
     width: 100vw;
     height: 363rpx;
 }

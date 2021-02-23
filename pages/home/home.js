@@ -42,13 +42,6 @@ Page({
             ]
             return data;
         })(),
-        canUseTitle: (()=>{
-            if(wx.getStorageSync('userInfo')){
-                return true;
-            }else{
-                return false;
-            }
-        })()
     },
     onLoad: function (options = {loadingTrigger: false}) {
         const that = this;
@@ -59,7 +52,7 @@ Page({
                 loading: true
             })
         }
-        if (isWxWork) {
+        if (isWxWork || is3rd) {
             const {trigger} = this.data;
             this.setData({
                 loading: true,
@@ -68,20 +61,6 @@ Page({
                 setTimeout(() => {
                     wx.navigateTo({
                         url: "/pages/auth/auth?redirect=wework"
-                    });
-                }, 4000);
-            }
-            return;
-        }
-        if (is3rd) {
-            const {trigger} = this.data;
-            this.setData({
-                loading: true,
-            });
-            if (trigger) {
-                setTimeout(() => {
-                    wx.navigateTo({
-                        url: "/pages/3rd-home/index"
                     });
                 }, 4000);
             }

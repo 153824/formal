@@ -1,28 +1,26 @@
 <block wx:if="{{ type === 'status-bar' }}">
     <view class="bar-wrapper" style="height: {{ statusbarHeight + titleHeight }}px;">
         <view class="statusbar" style="height: {{ statusbarHeight }}px;visibility: {{visibility}};"></view>
-        <view class="title-bar" style="height: {{ titleHeight }}px;top: {{ statusbarHeight }}px;visibility: {{visibility}};">
-            <block wx:if="{{ !titleLoading || true }}">
-                <picker class="company-picker" bind:change="changeTeam" value="{{ checkedTeam }}" range-key="shortName" range="{{ teamMap }}" class="company-child">
-                    <view style="display: flex;align-items: center;">
-                        {{teamMap[checkedTeam].shortName}}
-                        <image
-                                wx:if="{{ teamMap.length > 1 }}"
-                                style="display: inline-block;"
-                                class="company-picker-image"
-                                src="../../images/icon/icon@icon-bototm-arrow.png"/>
-                    </view>
-                </picker>
-            </block>
-            <block wx:elif="{{ titleLoading }}">
-                <van-loading color="rgba(53, 62, 232, 1)"></van-loading>
-            </block>
+        <view class="title-bar"
+              style="height: {{ titleHeight }}px;top: {{ statusbarHeight }}px;visibility: {{visibility}};">
+            <picker class="company-picker" bind:change="switchTeam" value="{{ checkedTeam }}" range-key="shortName"
+                    range="{{ teamMap }}" class="company-child">
+                <view style="display: flex;align-items: center;">
+                    {{teamMap[checkedTeam].shortName}}
+                    <image
+                            wx:if="{{ teamMap.length > 1 }}"
+                            style="display: inline-block;"
+                            class="company-picker-image"
+                            src="../../images/icon/icon@icon-bototm-arrow.png"/>
+                </view>
+            </picker>
         </view>
     </view>
 </block>
 <block wx:if="{{ type === 'normal' }}">
     <block>
-        <picker class="company-picker" bindchange="changeTeam" value="{{ checkedTeam }}" range-key="shortName" range="{{ teamMap }}" class="company-child">
+        <picker class="company-picker" bindchange="switchTeam" value="{{ checkedTeam }}" range-key="shortName"
+                range="{{ teamMap }}" class="company-child">
             <view style="display: flex;align-items: center;">
                 <text class="check-company">切换企业</text>
                 <image
@@ -50,6 +48,7 @@
         </view>
     </view>
 </block>
-<view wx:if="{{ loading }}" style="display: flex;align-items:center;justify-content: center;height: 100vh;width: 100vw;">
+<view wx:if="{{ loading }}"
+      style="display: flex;align-items:center;justify-content: center;height: 100vh;width: 100vw;">
     <van-loading type="spinner" color="rgba(53, 62, 232, 1)"/>
 </view>

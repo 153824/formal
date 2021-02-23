@@ -264,7 +264,7 @@ Page({
                         evaluationId: res.evaluationId,
                         evaluationName: res.evaluationName,
                         releaseRecordId: res.releaseRecordId,
-                        type: res.type.toLowerCase(),
+                        type: res.type ? res.type.toLowerCase() : '',
                     });
                     resolve(true);
                 },

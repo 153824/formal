@@ -15,7 +15,7 @@ page{
     padding: 0 40rpx;
     display: flex;
     flex-direction: column;
-    height: 194rpx;
+    /* height: 194rpx; */
     background: #FFFFFFFF;
     box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(0,0,0,0.06);
     font-size: 36rpx;

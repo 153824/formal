@@ -40,14 +40,8 @@ Component({
         userInfo: app.globalData.userInfo,
         teamNames: [],
         loading: false,
-        titleLoading: true,
-        visibility: (() => {
-            if (wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').tokenInfo && wx.getStorageSync('userInfo').tokenInfo.accessToken) {
-                return 'visible';
-            } else {
-                return 'hidden';
-            }
-        })(),
+        titleLoading: false,
+        visibility: app.checkAccessToken() ? 'visible' : 'hidden',
         teamMap: [],
         checkedTeam: 0
     },
@@ -123,6 +117,16 @@ Component({
             wx.reLaunch({
                 url
             })
+        },
+        switchTeam(e) {
+            const teamIndex = e.detail.value;
+            const teamId = this.data.teamMap[teamIndex].id;
+            app.switchTeam(teamId).then(res=>{
+                wx.setStorageSync('userInfo', res);
+                wx.reLaunch({
+                    url: '/pages/home/home'
+                })
+            }).catch(err=>{})
         }
     },
 
@@ -139,7 +143,7 @@ Component({
     },
     pageLifetimes: {
         show() {
-            if (wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').tokenInfo && wx.getStorageSync('userInfo').tokenInfo.accessToken) {
+            if (app.checkAccessToken()) {
                 this.getTeamList();
                 this.setData({
                     visibility: 'visible',

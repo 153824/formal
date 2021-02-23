@@ -40,12 +40,11 @@ Page({
         isGetAccessToken: app.checkAccessToken(),
         showEditDialog: false,
         editedTeamName: '',
-        companyName: '好啦访客'
+        companyName: '好啦访客',
     },
 
     onLoad: function (option) {
         const that = this;
-        let {isIPhoneXModel} = this.data;
         wx.getSystemInfo({
             success: function (res) {
                 const {isIPhoneXModel} = that.data;
@@ -55,13 +54,6 @@ Page({
                 })
             }
         });
-        const {windowHeight, safeArea} = wx.getSystemInfoSync();
-        const tabBarHeight = Number(wx.getStorageSync("TAB_BAR_HEIGHT"));
-        this.setData({
-            tabBarHeight: tabBarHeight,
-            windowHeight,
-            safeAreaDiff: isIPhoneXModel ? Math.abs(safeArea.height - safeArea.bottom) : 0,
-        })
         if(!app.checkAccessToken() && (app.wxWorkInfo.isWxWork || app.wx3rdInfo.is3rd)){
             wx.navigateTo({
                 url: '/pages/auth/auth'
@@ -72,6 +64,14 @@ Page({
     },
 
     onShow() {
+        let {isIPhoneXModel} = this.data;
+        const {windowHeight, safeArea} = wx.getSystemInfoSync();
+        const tabBarHeight = Number(wx.getStorageSync("TAB_BAR_HEIGHT"));
+        this.setData({
+            tabBarHeight: tabBarHeight,
+            windowHeight,
+            safeAreaDiff: isIPhoneXModel ? Math.abs(safeArea.height - safeArea.bottom) : 0,
+        })
         if(!app.checkAccessToken() && (app.wxWorkInfo.isWxWork || app.wx3rdInfo.is3rd)){
             return;
         }

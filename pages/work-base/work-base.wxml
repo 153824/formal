@@ -3,8 +3,7 @@
     <view class="head" style="height: 112rpx;">
         <view class="head-company">
             <image src="./images/work-base@@icon-company.png"
-                   style="width: 50rpx;height: 44rpx;margin-right: 16rpx;"></image>
-            <text>{{companyName}}</text>
+                   style="width: 50rpx;height: 44rpx;margin-right: 16rpx;"/><text>{{companyName}}</text>
         </view>
     </view>
     <view class="content wxwork-content"
@@ -130,18 +129,10 @@
 <block wx:elif="{{ !isWxWork && !is3rd }}">
     <view class="head">
         <view class="head-company">
-            <image src="./images/work-base@@icon-company.png"
-                   style="width: 50rpx;height: 44rpx;margin-right: 16rpx;"></image>
-            <block wx:if="{{isGetAccessToken}}">
-                <text class="company-name">{{companyName}}</text>
-                <van-icon name="edit" color="rgba(53, 62, 232, 1)" bind:click="editTeamName"/>
-            </block>
-            <text wx:else>授权登录，创建团队</text>
+            <image src="./images/work-base@@icon-company.png" style="width: 50rpx;height: 44rpx;margin-right: 16rpx;"/><block wx:if="{{isGetAccessToken}}"><text class="company-name">{{companyName}}</text><van-icon name="edit" color="rgba(53, 62, 232, 1)" bind:click="editTeamName"/></block><text wx:else>授权登录，创建团队</text>
         </view>
         <view class="company-action">
-            <text bindtap="setChildManager" style="font-weight: 600;">子管理员设置</text>
-            <text bindtap="setCompanyCert" style="margin: 0 30rpx;font-weight: 600;">企业认证</text>
-            <hola-title id="title" url="work-base/work-base" type="normal"></hola-title>
+            <text bindtap="setChildManager" style="font-weight: 600;">子管理员设置</text><text bindtap="setCompanyCert" style="margin: 0 30rpx;font-weight: 600;">企业认证</text><hola-title id="title" url="work-base/work-base" type="normal"></hola-title>
         </view>
     </view>
     <view class="content" style="height: {{ (windowHeight - tabBarHeight - safeAreaDiff)*pixelRate - 194 }}rpx;">
@@ -258,7 +249,11 @@
         </scroll-view>
     </view>
     <hola-tab-bar active="{{ 2 }}"></hola-tab-bar>
-    <button wx:if="{{!isGetAccessToken}}" open-type="getPhoneNumber" bind:getphonenumber="getPhoneNumber" class="auth-btn"></button>
+    <button wx:if="{{!isGetAccessToken}}"
+            open-type="getPhoneNumber"
+            bind:getphonenumber="getPhoneNumber"
+            style="height: {{ (windowHeight - tabBarHeight - safeAreaDiff)*pixelRate}}rpx;"
+            class="auth-btn"></button>
     <van-dialog
             use-slot
             title="修改团队名称"

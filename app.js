@@ -653,6 +653,9 @@ App({
     },
 
     getTeamList() {
+        if(!this.checkAccessToken()){
+            return;
+        }
         const p = new Promise((resolve, reject) => {
             this.doAjax({
                 url: 'wework/teams',
@@ -692,6 +695,9 @@ App({
     },
 
     getUserInformation() {
+        if(!this.checkAccessToken()){
+            return;
+        }
         const p = new Promise((resolve, reject) => {
             this.doAjax({
                 url: 'wework/users/avatar',
@@ -723,6 +729,25 @@ App({
                     });
                 }
             });
+        });
+        return p;
+    },
+
+    switchTeam(teamId) {
+        const p = new Promise((resolve, reject) => {
+            this.doAjax({
+                url: 'wework/ma_access_token/switch',
+                method: 'POST',
+                data: {
+                    teamId
+                },
+                success(res) {
+                    resolve(res);
+                },
+                resolve(err) {
+                    reject(err);
+                }
+            })
         });
         return p;
     },

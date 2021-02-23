@@ -13,7 +13,7 @@
                 <block wx:if="{{isGetAccessToken}}">
                     <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
                            style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                    <text>{{userBaseInfo.nickname}}</text>
+                    <text>{{userBaseInfo.nickname || userBaseInfo.realname}}</text>
                 </block>
             </view>
         </view>
@@ -54,7 +54,7 @@
             <view class="user-personal-info">
                 <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
                        style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                <text>{{userBaseInfo.nickname}}</text>
+                <text>{{userBaseInfo.nickname || userBaseInfo.realname || userBaseInfo.teamName + '的员工'}}</text>
             </view>
         </view>
         <view class="content">
@@ -94,7 +94,7 @@
             <view class="user-personal-info">
                 <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
                        style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                <text>{{userBaseInfo.userCompany.name || userBaseInfo.company.name}}的员工</text>
+                <text>{{userBaseInfo.nickname || userBaseInfo.realname || userBaseInfo.teamName + '的员工'}}</text>
             </view>
         </view>
         <view class="content">
@@ -135,7 +135,7 @@
                 <block wx:if="{{isGetAccessToken}}">
                     <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
                            style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                    <text>{{userBaseInfo.info.nickName}}</text>
+                    <text>{{userBaseInfo.nickname || userBaseInfo.realname || userBaseInfo.teamName + '的员工'}}</text>
                 </block>
             </view>
         </view>
@@ -193,7 +193,7 @@
                 <block wx:if="{{isGetAccessToken}}">
                     <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
                            style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                    <text>{{userBaseInfo.info.nickName}}</text>
+                    <text>{{userBaseInfo.nickname || userBaseInfo.realname || userBaseInfo.teamName + '的员工'}}</text>
                 </block>
             </view>
         </view>

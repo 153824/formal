@@ -15,19 +15,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    var key = options.key;
+    let key = options.key;
     if (options.q) {
       options.q = decodeURIComponent(options.q);
       key = options.q.split("?")[1].replace("key=", "");
     }
-    var reportId = options.reportId || "";
+    const reportId = options.reportId || "";
     if (!key) {
       this.setData({
         showPage: true
       });
       return;
     }
-    var that = this;
+    const that = this;
 
     function toCheck() {
       app.doAjax({
@@ -44,26 +44,10 @@ Page({
         }
       });
     }
-    if (app.isLogin) {
+    if (app.checkAccessToken()) {
       toCheck();
       return;
     }
-    app.checkUser = function() {
-      toCheck();
-      app.checkUser = null;
-    };
-    // var that = this;
-    //查看是否授权
-    wx.getSetting({
-      success: function(res) {
-        if (res.authSetting['scope.userInfo']) {
-          console.log("用户授权了");
-        } else {
-          //用户没有授权
-          console.log("用户没有授权");
-        }
-      }
-    });
   },
 
   /**

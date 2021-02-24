@@ -34,14 +34,12 @@
  * ********************************************************************************************************************/
 const uma = require('umtrack-wx');
 const qiniuUpload = require("./utils/qiniuUpload");
-const common = require('./utils/common.js');
 qiniuUpload.init({
     region: 'SCN',
     domain: 'ihola.luoke101.com',
     uptokenURL: 'https://api.luoke101.com/hola/getQiNiuToken',
     shouldUseQiniuFileName: false
 });
-
 App({
     defaultShareObj: {
         imageUrl: "http://ihola.luoke101.com/wxShareImg.png",
@@ -532,32 +530,6 @@ App({
                 },
             })
         }
-    },
-
-    /**
-     * @Description: 添加团队(默认会添加一个自己的团队)
-     * @author: WE!D
-     * @name: addNewTeam
-     * @args: Function
-     * @return: none
-     * @date: 2020/7/21
-     */
-    addNewTeam: function (cb) {
-        var that = this;
-        var userInfo = that.globalData.userInfo;
-        that.doAjax({
-            url: 'updateTeamMember',
-            method: 'post',
-            noLoading: true,
-            data: {
-                type: 6,
-                name: (userInfo.nickname || userInfo.nickName) + '的团队',
-                remark: '自动生成的团队',
-            },
-            success: function () {
-                wx.removeStorageSync('GET_MY_TEAM_LIST');
-            },
-        })
     },
 
     getAccessToken(e) {

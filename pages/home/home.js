@@ -137,15 +137,7 @@ Page({
         }
     },
     onShow: function () {
-        const that = this;
         app.freeTickId = "";
-        if (!app.isLogin) {
-            app.checkUser = function () {
-                that.onShow();
-                app.checkUser = null;
-            };
-            return;
-        }
         try {
             wx.uma.trackEvent("1601368297264")
         } catch (e) {

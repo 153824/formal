@@ -2,7 +2,6 @@
  * @NAME: WEID       /       @DATE: 2020/7/21      /       @DESC: 变量注释模板(新增变量务必添加)
  * shareId: 领取测评ID
  * active: tabbar激活ID
- * isLogin: 是否登录
  * loading: 是否加载中
  * maskTrigger: 遮罩控制器
  * isWxWork: 是否为企业微信
@@ -16,7 +15,6 @@ Page({
     data: {
         shareId: "",
         active: 0,
-        isLogin: false,
         loading: true,
         maskTrigger: true,
         titleHeight: app.globalData.titleHeight,
@@ -329,19 +327,21 @@ Page({
                 maskTrigger: false
             })
         }
-        app.getTeamList().then(res => {
-            let companyName = '';
-            res.forEach((item, index) => {
-                if (item.isLoginTeam) {
-                    companyName = item.shortName
-                }
+        if(app.checkAccessToken()){
+            app.getTeamList().then(res => {
+                let companyName = '';
+                res.forEach((item, index) => {
+                    if (item.isLoginTeam) {
+                        companyName = item.shortName
+                    }
+                });
+                that.setData({
+                    companyName
+                })
+            }).catch(err => {
+                console.error(err);
             });
-            that.setData({
-                companyName
-            })
-        }).catch(err => {
-            console.error(err);
-        });
+        }
         this.setData({
             isGetAccessToken: app.checkAccessToken()
         })

@@ -52,125 +52,118 @@ Page({
             isGetInAgainst,
             isPC: app.isPC
         });
-        if (app.isLogin) return;
-        app.checkUser = function () {
-            that.onShow();
-            app.checkUser = null;
-        };
     },
     onShow: function () {
         const that = this;
         this._checkUserIsBindPhone();
-        if (app.isLogin || true) {
-            const evaluationDetailPromise = new Promise((resolve, reject) => {
-                app.doAjax({
-                    url: 'evaluations/outline',
-                    method: 'get',
-                    data: {
-                        evaluationId: that.data.evaluationId
-                    },
-                    noLoading: true,
-                    success: function (res) {
-                        let evaluation = res;
-                        let {id, name, freeEvaluation} = evaluation;
-                        if (freeEvaluation) {
-                            // 	访问免费测评
-                            try {
-                                wx.uma.trackEvent('1602211030236', {name: name})
-                            } catch (e) {
-
-                            }
-                        } else {
-                            // 	访问付费测评
-                            try {
-                                wx.uma.trackEvent('1602211124861', {name: name})
-                            } catch (e) {
-
-                            }
-                        }
-                        // 访问测评详情
+        const evaluationDetailPromise = new Promise((resolve, reject) => {
+            app.doAjax({
+                url: 'evaluations/outline',
+                method: 'get',
+                data: {
+                    evaluationId: that.data.evaluationId
+                },
+                noLoading: true,
+                success: function (res) {
+                    let evaluation = res;
+                    let {id, name, freeEvaluation} = evaluation;
+                    if (freeEvaluation) {
+                        // 	访问免费测评
                         try {
-                            wx.uma.trackEvent('1602210780126', {name: name})
+                            wx.uma.trackEvent('1602211030236', {name: name})
                         } catch (e) {
 
                         }
-                        that.setData({
-                            evaluation,
-                        });
-                        if (evaluation.freeEvaluation) {
-                        } else {
+                    } else {
+                        // 	访问付费测评
+                        try {
+                            wx.uma.trackEvent('1602211124861', {name: name})
+                        } catch (e) {
+
                         }
-                        resolve("success");
-                    },
-                    fail: function (err) {
-                        reject("fail");
                     }
-                });
+                    // 访问测评详情
+                    try {
+                        wx.uma.trackEvent('1602210780126', {name: name})
+                    } catch (e) {
+
+                    }
+                    that.setData({
+                        evaluation,
+                    });
+                    if (evaluation.freeEvaluation) {
+                    } else {
+                    }
+                    resolve("success");
+                },
+                fail: function (err) {
+                    reject("fail");
+                }
             });
-            const evaluationVoucherPromise = new Promise(((resolve, reject) => {
-                app.doAjax({
-                    url: `inventories/${that.data.evaluationId}`,
-                    method: "get",
-                    success: function (res) {
-                        const evaluationVoucherInfo = res;
-                        let hasVoucher = true,
-                            voucher = 0,
-                            {voucherInfo} = evaluationVoucherInfo,
-                            isFreeTicket = false,
-                            shareTicket = 0,
-                            experienceTicket = 0,
-                            officialTicket = 0,
-                            deprecatedTicket = 0,
-                            certificateTicket = 0;
-                        let {id, name} = that.data.evaluation;
-                        if (Object.keys(voucherInfo).length <= 0) {
-                            hasVoucher = false;
-                        } else {
-                            for (let i in voucherInfo) {
-                                voucher += voucherInfo[i];
-                                if (i === 'BEGINNER') {
-                                    officialTicket = voucherInfo[i];
-                                } else if (i === ' EXCLUSIVE') {
-                                    shareTicket = voucherInfo[i];
-                                } else if (i === 'GIFT') {
-                                    experienceTicket = voucherInfo[i];
-                                } else if (i === 'CERTIFICATE') {
-                                    certificateTicket = voucherInfo[i];
-                                } else if (i === 'DEPRECATED') {
-                                    deprecatedTicket = voucherInfo[i];
-                                }
-                                if (i === ' EXCLUSIVE' || i === 'GIFT') {
-                                    isFreeTicket = true;
-                                }
+        });
+        const evaluationVoucherPromise = new Promise(((resolve, reject) => {
+            app.doAjax({
+                url: `inventories/${that.data.evaluationId}`,
+                method: "get",
+                success: function (res) {
+                    const evaluationVoucherInfo = res;
+                    let hasVoucher = true,
+                        voucher = 0,
+                        {voucherInfo} = evaluationVoucherInfo,
+                        isFreeTicket = false,
+                        shareTicket = 0,
+                        experienceTicket = 0,
+                        officialTicket = 0,
+                        deprecatedTicket = 0,
+                        certificateTicket = 0;
+                    let {id, name} = that.data.evaluation;
+                    if (Object.keys(voucherInfo).length <= 0) {
+                        hasVoucher = false;
+                    } else {
+                        for (let i in voucherInfo) {
+                            voucher += voucherInfo[i];
+                            if (i === 'BEGINNER') {
+                                officialTicket = voucherInfo[i];
+                            } else if (i === ' EXCLUSIVE') {
+                                shareTicket = voucherInfo[i];
+                            } else if (i === 'GIFT') {
+                                experienceTicket = voucherInfo[i];
+                            } else if (i === 'CERTIFICATE') {
+                                certificateTicket = voucherInfo[i];
+                            } else if (i === 'DEPRECATED') {
+                                deprecatedTicket = voucherInfo[i];
+                            }
+                            if (i === ' EXCLUSIVE' || i === 'GIFT') {
+                                isFreeTicket = true;
                             }
                         }
-                        that.setData({
-                            evaluationVoucherInfo,
-                            hasVoucher,
-                            voucher,
-                            officialTicket,
-                            shareTicket,
-                            experienceTicket,
-                            certificateTicket,
-                            deprecatedTicket,
-                            customNorms: res.customNorms
-                        });
-                        resolve("success");
                     }
-                })
-            }));
-            Promise.race([evaluationDetailPromise, evaluationVoucherPromise]).then(values => {
-                setTimeout(() => {
-                    this.setData({
-                        loading: false,
-                    })
-                }, 500)
-            }).catch(err => {
+                    that.setData({
+                        evaluationVoucherInfo,
+                        hasVoucher,
+                        voucher,
+                        officialTicket,
+                        shareTicket,
+                        experienceTicket,
+                        certificateTicket,
+                        deprecatedTicket,
+                        customNorms: res.customNorms
+                    });
+                    resolve("success");
+                }
+            })
+        }));
+        Promise.race([evaluationDetailPromise, evaluationVoucherPromise]).then(values => {
+            setTimeout(() => {
                 this.setData({
                     loading: false,
                 })
-            });
-        }
+            }, 500)
+        }).catch(err => {
+            this.setData({
+                loading: false,
+            })
+        });
     },
     onUnload: function () {
         try {

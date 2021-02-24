@@ -36,7 +36,6 @@ Component({
         titleHeight: app.globalData.titleHeight,
         teamId: "",
         isIos: false,
-        showAddNewTeam: false,
         userInfo: app.globalData.userInfo,
         teamNames: [],
         loading: false,

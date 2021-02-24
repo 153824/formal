@@ -121,11 +121,14 @@ Component({
             const teamIndex = e.detail.value;
             const teamId = this.data.teamMap[teamIndex].id;
             app.switchTeam(teamId).then(res=>{
+                wx.clearStorageSync();
                 wx.setStorageSync('userInfo', res);
                 wx.reLaunch({
-                    url: '/pages/home/home'
+                    url: '/pages/home/home',
                 })
-            }).catch(err=>{})
+            }).catch(err=>{
+                console.error('切换团队失败: title.js->130, ',err)
+            })
         }
     },
 

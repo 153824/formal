@@ -47,7 +47,6 @@ App({
     teamName: "",
     teamId: "",
     teamRole: "",
-    isLogin: false,
     isIos: false,
     isTest: false,
     qiniuUpload: qiniuUpload,
@@ -262,30 +261,18 @@ App({
                     code: code,
                 },
                 noLoading: true,
-                success: function (userData) {
-                    const {authCode} = userData;
+                success: function (res) {
+                    const {authCode} = res;
                     wx.setStorageSync('authCode', authCode);
-                    // that.globalData.userMsg = userData.userMsg || {};
-                    // wx.hideLoading();
-                    // const userMsg = that.globalData.userMsg;
-                    // wx.setStorageSync('userInfo', userData);
-                    // wx.setStorageSync('openId', userData.openid || userMsg.openid);
-                    // that.globalData.userInfo = Object.assign(userData,
-                    //     that.globalData.userInfo || {})
-                    // that.isLogin = true;
-                    if (userData.isNew) {
+                    if (res.isNew) {
                         wx.uma.trackEvent("1606212682385");
                     }
                     if (that.checkUserInfo) {
-                        userData.teamId = that.teamId;
-                        userData.isWxWork = false;
-                        // userData.isAdmin = false;
-                        userData.is3rd = that.wx3rdInfo.is3rd;
-                        // userData.is3rdAdmin = userData.isAdmin || that.wx3rdInfo.is3rdAdmin;
-                        that.checkUserInfo(userData);
+                        res.isWxWork = false;
+                        res.is3rd = that.wx3rdInfo.is3rd;
+                        that.checkUserInfo(res);
                     }
-                    // that.getMyTeamList(that.checkUser);
-                    // resolve({openId: userData.openid || userMsg.openid})
+                    resolve();
                 },
                 error: function () {
                     wx.showModal({
@@ -295,7 +282,7 @@ App({
                         confirmText: '确定',
                         confirmColor: 'rgb(0,153,255)',
                     });
-                    reject({openId: ''})
+                    reject()
                 },
                 complete: function () {
                     wx.hideLoading()
@@ -326,23 +313,11 @@ App({
                 noLoading: true,
                 success: function (res) {
                     wx.setStorageSync('authCode', res.authCode)
-                    // if (res.isAdmin) {
-                    //     that.wxWorkInfo.isWxWorkAdmin = true;
-                    //     wx.setStorageSync('isWxWorkAdmin', true);
-                    // }
                     if (that.checkUserInfo) {
                         res.isWxWork = true;
+                        res.is3rd = that.wx3rdInfo.is3rd;
                         that.checkUserInfo(res);
                     }
-                    // that.globalData.userMsg = res.userMsg || {};
-                    // const userData = res;
-                    // const userMsg = that.globalData.userMsg;
-                    // wx.setStorageSync('userInfo', userData);
-                    // wx.setStorageSync('openId', userData.openid || userMsg.openid);
-                    // that.globalData.userInfo = Object.assign(userData,
-                    //     that.globalData.userInfo || {});
-                    // that.teamId = res.teamId;
-                    // that.isLogin = true;
                     resolve();
                 },
                 error: function (err) {
@@ -708,7 +683,7 @@ App({
     switchTeam(teamId) {
         const p = new Promise((resolve, reject) => {
             this.doAjax({
-                url: 'wework/ma_access_token/switch',
+                url: 'wework/auth/ma_access_token/switch',
                 method: 'POST',
                 data: {
                     teamId

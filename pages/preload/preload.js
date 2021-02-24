@@ -36,9 +36,7 @@ Page({
             url: "/pages/home/home"
         })
     },
-    getPhoneNumber: async function (e) {
-        const info = await app.getUserInfoAuthByAPI()
-        e.detail.userInfo = info.res.userInfo;
+    getPhoneNumber: function (e) {
         const that = this;
         const {type} = e.currentTarget.dataset;
         let url = `/pages/home/components/more/more?type=${type}`;

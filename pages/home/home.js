@@ -53,6 +53,7 @@ Page({
             })
         }
         if (isWxWork || is3rd) {
+            console.error('isWxWork/is3rd: ', isWxWork, is3rd);
             const {trigger} = this.data;
             this.setData({
                 loading: true,

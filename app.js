@@ -57,8 +57,8 @@ App({
     // host: "http://api.dev.luoke101.int",
     // host: "https://api.luoke101.com/b",
     // host: "http://api.dev.luoke101.int",
-    // host: 'https://api.uat.luoke101.com',
-    host: 'https://www.uat.haola101.com',
+    host: 'https://uat.api.haola101.com',
+    // host: 'https://www.uat.haola101.com',
     // host: "http://192.168.0.101:3000",
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
@@ -109,7 +109,8 @@ App({
         if (referrerInfo && referrerInfo.appid) {
             this.fromAppId = referrerInfo.appid
         }
-        if (wx.getExtConfigSync().isCustomVersion) {
+        if (wx.getExtConfigSync().isCustomVersion === 'true') {
+            console.error('wx.getExtConfigSync().isCustomVersion: ', wx.getExtConfigSync().isCustomVersion)
             this.wx3rdInfo.is3rd = true;
         }
         wx.onMemoryWarning(function (res) {
@@ -123,39 +124,11 @@ App({
             this.isIos = true
         }
         if (sysMsg.environment === 'wxwork') {
+            console.error('sysMsg.environment: ', sysMsg.environment);
             this.wxWorkInfo.isWxWork = true;
         }
         const scene = wx.getLaunchOptionsSync();
-        if (this.wxWorkInfo.isWxWork) {
-            const that = this;
-            wx.qy.login({
-                success: res => {
-                    that.wxWorkUserLogin(res.code).then(data => {
-                    }).catch(err => {
-                    });
-                },
-                fail: function (err) {
-                    console.error(err);
-                }
-            })
-        } else {
-            /**
-             * @Description: 登录
-             * @author: WE!D
-             * @name: wx.login
-             * @args: Object
-             * @return: Object {openId, sessionKey, unionId}
-             * @date: 2020/7/21
-             */
-            wx.login({
-                success: res => {
-                    this.userLogin(res.code).then(res => {
-                    }).catch(err => {
-                        console.error(err)
-                    });
-                },
-            });
-        }
+        this.getAuthCode();
 
         /**
          * @Description: 获取设置
@@ -410,7 +383,7 @@ App({
                         url: "/pages/forbidden/forbidden"
                     })
                 }
-                if(ret.statusCode === 401&&(this.wxWorkInfo.isWxWork||this.wx3rdInfo.is3rd)){
+                if (ret.statusCode === 401 && (that.wxWorkInfo.isWxWork || that.wx3rdInfo.is3rd)) {
                     wx.navigateTo({
                         url: '/pages/auth/auth'
                     })
@@ -419,14 +392,6 @@ App({
                 if (ret.statusCode >= 400) {
                     params.toastTrigger = true;
                     if (params.error) return params.error(retData);
-                    if (params.toastTrigger) {
-                        wx.showToast({
-                            title: retData.msg,
-                            icon: 'none',
-                            duration: 2000,
-                        });
-                    }
-                    return;
                 }
                 if (params.success) {
                     try {
@@ -437,11 +402,23 @@ App({
                 }
             },
             error: function (err) {
-                console.error(err);
+                if(params.toastTrigger){
+                    wx.showToast({
+                        title: err.msg,
+                        icon: 'none',
+                        duration: 2000,
+                    });
+                }
                 wx.hideLoading()
             },
             fail: err => {
-                console.error(err);
+                if(params.toastTrigger){
+                    wx.showToast({
+                        title: err.msg,
+                        icon: 'none',
+                        duration: 2000,
+                    });
+                }
                 wx.hideLoading()
             }
         })
@@ -527,7 +504,7 @@ App({
                 fail(err) {
                     reject(err)
                 },
-                error(err){
+                error(err) {
                     reject(err)
                 }
             })
@@ -600,7 +577,7 @@ App({
     },
 
     getTeamList() {
-        if(!this.checkAccessToken()){
+        if (!this.checkAccessToken()) {
             return;
         }
         const p = new Promise((resolve, reject) => {
@@ -642,7 +619,7 @@ App({
     },
 
     getUserInformation() {
-        if(!this.checkAccessToken()){
+        if (!this.checkAccessToken()) {
             return;
         }
         const p = new Promise((resolve, reject) => {
@@ -709,7 +686,7 @@ App({
     },
 
     checkAdmin() {
-        if(wx.getStorageSync('userInfo')){
+        if (wx.getStorageSync('userInfo')) {
             return wx.getStorageSync('userInfo').isAdmin
         }
         return false;
@@ -728,5 +705,41 @@ App({
         that.setData({
             ...platformInfo
         })
+    },
+
+    getAuthCode() {
+        const that = this;
+        const p = new Promise((resolve, reject) => {
+            if (that.wxWorkInfo.isWxWork) {
+                wx.qy.login({
+                    success: res => {
+                        that.wxWorkUserLogin(res.code).then(res=>{
+                            resolve()
+                        }).catch(err => {
+                            reject(err)
+                        });
+                    },
+                    fail: function (err) {
+                        reject(err)
+                    }
+                })
+            } else {
+                wx.login({
+                    success: res => {
+                        that.userLogin(res.code).then(res=>{
+                            resolve()
+                        }).catch(err => {
+                            console.error(err);
+                            reject(err)
+                        });
+                    },
+                    fail: err=>{
+                        console.error(err);
+                        reject(err)
+                    }
+                });
+            }
+        })
+        return p;
     }
 });

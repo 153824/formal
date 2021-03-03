@@ -97,6 +97,11 @@ Page({
             } catch (e) {
                 console.error(e);
             }
+            if(err.code === '40111'){
+                app.getAuthCode().then(res=>{
+                    this.getPhoneNumber(e)
+                })
+            }
             console.error(err);
         });
     },

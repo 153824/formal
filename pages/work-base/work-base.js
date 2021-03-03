@@ -377,6 +377,12 @@ Page({
             wx.reLaunch({
                 url: '/pages/home/home'
             })
+        }).catch(err=>{
+            if(err.code === '40111'){
+                app.getAuthCode().then(res=>{
+                    this.getPhoneNumber(e)
+                })
+            }
         })
     },
 

@@ -13,10 +13,11 @@ Page({
                 url: '/pages/work-base/work-base'
             })
         }).catch(err=>{
-            wx.switchTab({
-                url: '/pages/work-base/work-base'
-            })
-            console.error('wxAuthLogin: ', err);
+            if(err.code === '40111'){
+                app.getAuthCode().then(res=>{
+                    this.wxAuthLogin(e)
+                })
+            }
         })
     },
     getAppTitle() {

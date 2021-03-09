@@ -1,7 +1,8 @@
 {
   "usingComponents": {
     "van-cell": "/common/vant-weapp/dist/cell/index",
-    "van-cell-group": "/common/vant-weapp/dist/cell-group/index"
+    "van-cell-group": "/common/vant-weapp/dist/cell-group/index",
+    "van-button": "/common/vant-weapp/dist/button/index"
   },
   "navigationBarTitleText": "设置"
 }

@@ -34,7 +34,8 @@ Page({
         shareTicket: 0,
         deprecatedTicket: 0,
         customNorms: [],
-        isGetAccessToken: app.checkAccessToken()
+        isGetAccessToken: app.checkAccessToken(),
+        authCodeCounter: 0
     },
 
     onLoad: function (options) {
@@ -708,12 +709,15 @@ Page({
         const that = this;
         const {mark, eventName} = e.currentTarget.dataset;
         const {iv, encryptedData} = e.detail;
-        const {evaluation} = this.data;
+        let {evaluation,authCodeCounter} = this.data;
         try {
             // 唤起手机授权
             wx.uma.trackEvent('1602747468531');
         } catch (e) {
             throw e
+        }
+        if(authCodeCounter > 5){
+            return;
         }
         if (mark !== 'dont-get-ticket') {
             try {
@@ -823,6 +827,9 @@ Page({
                 if(err.code === '40111'){
                     app.getAuthCode().then(res=>{
                         this.getPhoneNumber(e)
+                    });
+                    that.setData({
+                        authCodeCounter: authCodeCounter++
                     })
                 }
             });

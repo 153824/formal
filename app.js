@@ -235,7 +235,10 @@ App({
                 },
                 noLoading: true,
                 success: function (res) {
-                    const {authCode} = res;
+                    const {authCode,tokenInfo} = res;
+                    if(tokenInfo.accessToken){
+                        wx.setStorageSync('tokenInfo', tokenInfo.accessToken)
+                    }
                     wx.setStorageSync('authCode', authCode);
                     if (res.isNew) {
                         wx.uma.trackEvent("1606212682385");
@@ -285,7 +288,11 @@ App({
                 },
                 noLoading: true,
                 success: function (res) {
-                    wx.setStorageSync('authCode', res.authCode)
+                    const {authCode, tokenInfo} = res;
+                    if(tokenInfo.accessToken){
+                        wx.setStorageSync('accessToken', tokenInfo.accessToken)
+                    }
+                    wx.setStorageSync('authCode', authCode)
                     if (that.checkUserInfo) {
                         res.isWxWork = true;
                         res.is3rd = that.wx3rdInfo.is3rd;
@@ -392,6 +399,7 @@ App({
                 if (ret.statusCode >= 400) {
                     params.toastTrigger = true;
                     if (params.error) return params.error(retData);
+                    return
                 }
                 if (params.success) {
                     try {
@@ -510,6 +518,34 @@ App({
             })
         });
         return accessTokenPromise;
+    },
+
+    getAccessTokenOfWeWork(e) {
+        const that = this;
+        const {phone, code} = e;
+        const p = new Promise((resolve, reject) => {
+            this.doAjax({
+                url: 'wework/auth/ma_access_token',
+                method: 'POST',
+                data: {
+                    authCode: wx.getStorageSync('authCode'),
+                    smsCode: code,
+                    phone: phone,
+                },
+                success(res) {
+                    wx.setStorageSync('userInfo', res);
+                    that.globalData.userInfo = res;
+                    resolve(res)
+                },
+                fail(err) {
+                    reject(err)
+                },
+                error(err) {
+                    reject(err)
+                }
+            })
+        });
+        return p;
     },
     /**
      * @Description: 获取用户信息
@@ -740,6 +776,26 @@ App({
                 });
             }
         })
+        return p;
+    },
+
+    getSMSCode(phone) {
+        const p = new Promise((resolve, reject) => {
+            this.doAjax({
+                url: 'wework/auth/ma_sms_code',
+                method: 'POST',
+                data: {
+                    appid: wx.getAccountInfoSync().miniProgram.appId,
+                    phone,
+                },
+                success(res) {
+                    resolve(res)
+                },
+                error(){
+                    reject(err)
+                }
+            })
+        });
         return p;
     }
 });

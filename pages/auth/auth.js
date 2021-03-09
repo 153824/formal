@@ -3,11 +3,17 @@ Page({
     data: {
         appTitle:'',
         liner: 'transparent',
+        authCodeCounter: 0
     },
     onLoad: function (options) {
         this.getAppTitle()
     },
     wxAuthLogin(e) {
+        const that = this;
+        let {authCodeCounter} = this.data;
+        if(authCodeCounter > 5){
+            return;
+        }
         app.getAccessToken(e).then(res=>{
             wx.switchTab({
                 url: '/pages/work-base/work-base'
@@ -16,6 +22,9 @@ Page({
             if(err.code === '40111'){
                 app.getAuthCode().then(res=>{
                     this.wxAuthLogin(e)
+                });
+                that.setData({
+                    authCodeCounter: authCodeCounter++
                 })
             }
         })

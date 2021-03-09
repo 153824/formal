@@ -1,0 +1,44 @@
+<wxs src="../../../../utils/util.wxs" module="util"></wxs>
+<view class="verify">
+    <view>
+        <view class="verify__code-info--wrapper">
+            <text class="verify__code-info__text">请输入验证码</text>
+        </view>
+        <view>
+            <text class="verify__code-info__tips">验证码以通过短信发送至{{util.subString(phone, 0, 3)}} {{util.subString(phone, 3, 7)}} {{util.subString(phone, 7, 11)}}</text>
+        </view>
+    </view>
+    <view class="verify__code-input--wrapper">
+        <van-field
+                value="{{ code }}"
+                placeholder="请输入验证码"
+                type="number"
+                border="{{ false }}"
+                maxlength="6"
+                center
+                input-align="left"
+                bind:change="getCode"
+        >
+            <van-button custom-class="custom-van-button-send-code {{isDisabled ? 'is-disable':''}}"
+                        slot="button"
+                        bind:tap="{{showCountDown ? '' : 'getSMSCode'}}"
+                        size="small" plain>
+                <block wx:if="{{!showCountDown}}">
+                    重新获取
+                </block>
+                <block wx:else>
+                    <van-count-down
+                            use-slot time="{{time}}"
+                            format="ss"
+                            bind:finish="onTimeFinish"
+                            bind:change="onTimeChange">
+                        <text class="count-down-text">{{timeData.seconds}}s 后重新获取</text>
+                    </van-count-down>
+                </block>
+            </van-button>
+        </van-field>
+    </view>
+    <view class="verify__code-btn--wrapper">
+        <van-button color="#353EE8" custom-class="custom-van-button" bind:tap="verifySMSCode">登录</van-button>
+    </view>
+</view>

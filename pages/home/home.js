@@ -53,6 +53,10 @@ Page({
             })
         }
         if (isWxWork || is3rd) {
+            let url = isWxWork ? "/pages/account/account" : "/pages/auth/auth"
+            if(app.checkAccessToken()){
+                url = '/pages/work-base/work-base'
+            }
             console.error('isWxWork/is3rd: ', isWxWork, is3rd);
             const {trigger} = this.data;
             this.setData({
@@ -61,7 +65,7 @@ Page({
             if (trigger) {
                 setTimeout(() => {
                     wx.navigateTo({
-                        url: "/pages/auth/auth?redirect=wework"
+                        url: url
                     });
                 }, 4000);
             }

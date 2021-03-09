@@ -1,0 +1,81 @@
+.verify{
+    padding: 40rpx 60rpx;
+}
+.verify__code-info--wrapper{
+
+}
+.verify__code-info__text{
+    font-size: 52rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #000000;
+    line-height: 74rpx;
+}
+.verify__code-info__tips{
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #ABABAB;
+    line-height: 40rpx;
+}
+.verify__code-btn--wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.verify__code-btn--wrapper .custom-van-button .van-button__text{
+    color: #fff!important;
+}
+.van-field__input{
+    font-size: 36rpx!important;
+    font-family: PingFangSC-Regular, PingFang SC!important;
+    font-weight: 400!important;
+    color: #000000!important;
+    line-height: 50px!important;
+}
+.van-cell{
+    width: calc(100vw - 120rpx)!important;
+    height: 88rpx!important;
+    background-color: #f8f8f8!important;
+    border-radius: 10rpx!important;
+}
+.verify__code-input--wrapper{
+    display: flex;
+    justify-content: space-between;
+    margin: 60rpx 0 30rpx 0;
+}
+.custom-van-button{
+    width: calc(100vw - 120rpx)!important;
+    height: 88rpx!important;
+    font-size: 32rpx!important;
+    font-family: PingFangSC-Semibold, PingFang SC!important;
+    font-weight: 600!important;
+    color: #FFFFFF!important;
+    border-radius: 10rpx!important;
+    border-radius: 10rpx!important;
+}
+.custom-van-button-send-code{
+    background-color: transparent!important;
+    border: unset!important;
+    font-size: 26rpx!important;
+    font-family: PingFangSC-Regular, PingFang SC!important;
+    font-weight: 400!important;
+    color: #353EE8!important;
+    line-height: 36px!important;
+}
+.custom-van-button-send-code.is-disable .van-button__text{
+    color: #BFBFBFFF!important;
+}
+.van-button__text{
+    color: #353EE8FF!important;
+}
+.van-button--active:before{
+    opacity: 0!important;
+}
+.count-down-text{
+    font-size: 26rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #BFBFBF;
+    line-height: 36rpx;
+}

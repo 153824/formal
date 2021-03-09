@@ -1,10 +1,21 @@
 <view class="setting">
     <scroll-view class="setting--scroll-view__wrapper">
         <van-cell-group border="{{false}}">
-            <van-cell title="账号绑定手机:" size="large" border="{{false}}">18888888888</van-cell>
+            <van-cell title="手机号:" size="large" border="{{false}}">
+                <view class="setting--bound-info__wrapper">
+                    <text class="setting--bound-phone">18888888888</text><van-button custom-class="setting--unbound__btn">换绑</van-button>
+                </view>
+            </van-cell>
+            <van-cell title="关联账号:" size="large" border="{{false}}">
+                <view class="setting--bound-app__wrapper">
+                    <view class="setting--bound-app__item is-unbound">
+                        <image class="setting--bound-app" src="/images/icon/icon@wework.png"/>
+                    </view>
+                    <view class="setting--bound-app__item is-bound">
+                        <image class="setting--bound-app" src="/images/icon/icon@wechat.png"/>
+                    </view>
+                </view>
+            </van-cell>
         </van-cell-group>
     </scroll-view>
-    <view class="setting--view-btn__wrapper">
-        <text>退出登录</text>
-    </view>
 </view>

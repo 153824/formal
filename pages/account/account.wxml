@@ -1,0 +1,26 @@
+<view class="account">
+    <view>
+        <view class="account__welcome--wrapper">
+            <text class="account__welcome--text">欢迎使用</text>
+        </view>
+        <view>
+            <text class="account__welcome--text">好啦人才测评</text>
+        </view>
+    </view>
+    <view class="account__item-wrapper">
+        <van-field
+                input-class="custom-van-field"
+                type="number"
+                maxlength="11"
+                model:value="{{ phone }}"
+                placeholder="请输入手机号登录"
+                border="{{ false }}"
+                bind:change="onChange"
+                clearable
+        />
+        <text class="account__item--error-message">{{isWrong ? '手机号错误，请重新填写' : ''}}</text>
+    </view>
+    <view>
+        <van-button disabled="{{isDisabled}}" color="#353EE8FF" custom-class="custom-van-button" bind:tap="sendSMSCode">发送短信验证码</van-button>
+    </view>
+</view>

@@ -48,7 +48,10 @@
     "pages/360/subpages/replying/replying",
     "pages/user-center/components/setting/setting",
     "pages/auth/auth",
-    "pages/whoami/whoami"
+    "pages/whoami/whoami",
+    "pages/account/account",
+    "pages/account/subpages/verify/verify",
+    "pages/account/subpages/unbound/unbound"
   ],
   "tabBar": {
     "custom": true,

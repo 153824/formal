@@ -18,7 +18,8 @@ Page({
                 text: "我想快速筛选校招中的高潜人才",
                 type: "school"
             },
-        ]
+        ],
+        authCodeCounter: 0
     },
     onLoad: function (options) {
         wx.uma.trackEvent("1607407387531")
@@ -38,6 +39,7 @@ Page({
     },
     getPhoneNumber: function (e) {
         const that = this;
+        let {authCodeCounter} = this.data;
         const {type} = e.currentTarget.dataset;
         let url = `/pages/home/components/more/more?type=${type}`;
         this.setData({
@@ -47,6 +49,9 @@ Page({
             wx.uma.trackEvent('1605250635743');
         } catch (e) {
             console.error(e);
+        }
+        if(authCodeCounter > 5){
+            return;
         }
         app.getAccessToken(e).then(res=>{
             that.getNewerTicket();
@@ -100,6 +105,9 @@ Page({
             if(err.code === '40111'){
                 app.getAuthCode().then(res=>{
                     this.getPhoneNumber(e)
+                });
+                that.setData({
+                    authCodeCounter: authCodeCounter++
                 })
             }
             console.error(err);

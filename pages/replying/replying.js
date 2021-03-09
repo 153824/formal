@@ -42,6 +42,7 @@ Page({
         lastAnswer: [],
         theFinalQuestionAnswer: [],
         loading: true,
+        authCodeCounter: 0
     },
 
     onLoad: function (options) {
@@ -1029,6 +1030,7 @@ Page({
     getPhoneNumber: function (e) {
         const {name} = e.currentTarget.dataset;
         let that = this;
+        let {authCodeCounter} = this.data;
         if (this.data.isSelf === 'SHARE') {
             try {
                 wx.uma.trackEvent('1602215557718')
@@ -1037,6 +1039,9 @@ Page({
             }
         }
         if (!that.data.getphoneNum) {
+            if(authCodeCounter > 5){
+                return
+            }
             app.getAccessToken(e).then(res=>{
                 if (that.data.isSelf === 'SHARE') {
                     try {
@@ -1062,6 +1067,9 @@ Page({
                 if(err.code === '40111'){
                     app.getAuthCode().then(res=>{
                         this.getPhoneNumber(e)
+                    });
+                    that.setData({
+                        authCodeCounter: authCodeCounter++
                     })
                 }
                 console.error(err)

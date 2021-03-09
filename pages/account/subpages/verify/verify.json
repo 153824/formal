@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "van-button": "/common/vant-weapp/dist/button/index",
+    "van-field": "/common/vant-weapp/dist/field/index",
+    "van-count-down": "/common/vant-weapp/dist/count-down/"
+  }
+}

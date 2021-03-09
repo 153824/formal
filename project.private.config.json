@@ -152,6 +152,30 @@
           "pathName": "pages/work-base/work-base",
           "query": "scene=60324357c56b104ef400ec25",
           "scene": null
+        },
+        {
+          "name": "企微登录",
+          "pathName": "pages/account/account",
+          "query": "releaseRecordId=5f813067d5a972193142e46e&sharedAt=1602310089498&tabIndex=1",
+          "scene": null
+        },
+        {
+          "name": "验证码验证",
+          "pathName": "pages/account/subpages/verify/verify",
+          "query": "phone=18150378337",
+          "scene": null
+        },
+        {
+          "name": "企微换绑",
+          "pathName": "pages/account/subpages/unbound/unbound",
+          "query": "releaseRecordId=5f813067d5a972193142e46e&sharedAt=1602310089498&tabIndex=1",
+          "scene": null
+        },
+        {
+          "name": "设置",
+          "pathName": "pages/user-center/components/setting/setting",
+          "query": "releaseRecordId=5f813067d5a972193142e46e&sharedAt=1602310089498&tabIndex=1",
+          "scene": null
         }
       ]
     }

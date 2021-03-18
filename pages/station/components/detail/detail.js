@@ -547,15 +547,6 @@ Page({
         this.getNewerTicket();
     },
     /**
-     * 用户手机号授权
-     */
-    checkUserMobile: function (e) {
-        const that = this;
-        app.updateUserMobileByWeWork(e).catch(err=>{
-            console.error(err)
-        });
-    },
-    /**
      * 复制微客服信号
      */
     copyIt: function (e) {

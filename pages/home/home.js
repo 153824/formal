@@ -168,45 +168,6 @@ Page({
             url: '../../common/webView',
         });
     },
-
-    changePage: function (e) {
-        const {name, url, tab, n} = e.currentTarget.dataset;
-        if (url) {
-            if (url.indexOf('http') != -1) {
-                wx.setStorageSync("webView_Url", url);
-                wx.navigateTo({
-                    url: '../common/webView',
-                });
-            } else {
-                const {detail} = e;
-                try {
-                    wx.uma.trackEvent('1601368400960', {"测评名称": name})
-                } catch (e) {
-                    console.error('home.js -> 136', e)
-                }
-                if ((!detail || !detail.encryptedData) && n == "getPhoneNumber") return;
-                if (detail && detail.encryptedData) {
-                    app.updateUserMobileByWeWork(e).then(res=>{
-
-                    }).catch(err=>{
-                        console.error(err)
-                    });
-                }
-                wx.navigateTo({
-                    url: url
-                });
-            }
-        }
-        if (tab) {
-            wx.switchTab({
-                url: tab
-            });
-        }
-        this.setData({
-            showTopGift: true,
-            showGiftDlg: false
-        });
-    },
     /**继续体验 */
     goToReplying: function (e) {
         const {t} = e.target.dataset;

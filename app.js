@@ -230,13 +230,13 @@ App({
                 method: 'POST',
                 data: {
                     type: 'WECHAT',
-                    appid: that.globalData.appid,
+                    appId: that.globalData.appid,
                     code: code,
                 },
                 noLoading: true,
                 success: function (res) {
                     const {authCode,tokenInfo} = res;
-                    if(tokenInfo.accessToken){
+                    if(tokenInfo && tokenInfo.accessToken){
                         wx.setStorageSync('tokenInfo', tokenInfo.accessToken)
                     }
                     wx.setStorageSync('authCode', authCode);
@@ -791,7 +791,7 @@ App({
                 success(res) {
                     resolve(res)
                 },
-                error(){
+                error(err){
                     reject(err)
                 }
             })

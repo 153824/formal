@@ -47,17 +47,4 @@ Page({
     }
     app.changePage(url);
   },
-  /**
-   * 用户手机号授权
-   */
-  checkUserMobile: function(e) {
-    const that = this;
-    app.updateUserMobileByWeWork(e).then(res=>{
-      that.setData({
-        hasMobile: true
-      });
-    }).catch(err=>{
-      console.error(err);
-    });
-  }
 })

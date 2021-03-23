@@ -30,12 +30,18 @@ Page({
 
     onLoad: function (options) {
         const {releaseRecordId = ""} = options;
+        const {isWxWork} = this.data;
         if (releaseRecordId) {
             this.setData({
                 releaseRecordId: releaseRecordId,
             })
         }
         app.setDataOfPlatformInfo(this);
+        // if(isWxWork){
+        //     this.setData({
+        //         phoneNumber:
+        //     })
+        // }
         this._checkUserIsAuthPhone();
     },
 
@@ -108,18 +114,24 @@ Page({
             success: function (res) {
                 const {educationName, username, phone, birthday} = res;
                 const {eduArr} = _this.data;
+                const localUserInfo = wx.getStorageSync("userBaseInfo")
                 if (!birthday) {
                     res.birthday = "1995-01"
                 }
                 if (!username) {
                     try {
-                        res.username = wx.getStorageSync("userInfo").info.nickName;
+                        res.username = localUserInfo && localUserInfo.nickname ? localUserInfo.nickname : '' ;
                     } catch (e) {
                         console.error(e)
                     }
                 }
                 if (!phone) {
                     res.phone = "微信一键授权";
+                }else{
+                    _this.setData({
+                        phoneNumber: res.phone,
+                        isGetPhone: true
+                    })
                 }
                 if (educationName) {
                     eduArr.forEach((item, key) => {
@@ -129,7 +141,7 @@ Page({
                     })
                 }
                 _this.setData({
-                    ...res
+                    ...res,
                 })
             },
             fail: function (err) {

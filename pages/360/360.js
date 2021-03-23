@@ -12,23 +12,14 @@ Page({
         userInfo: app.globalData.userInfo || wx.getStorageSync('userInfo'),
         disabled: false,
         surveyId: '',
-        smsCode: ''
+        smsCode: '',
+        authCodeCounter: 0,
     },
     onLoad: function (options) {
         const smsCode = options.surveyId || options.smsCode;
-        if (!app.globalData.userInfo && !wx.getStorageSync('userInfo')) {
-            app.checkUserInfo = userInfo => {
-                this.loadTemptation(smsCode, userInfo);
-                this.setData({
-                    userInfo: userInfo
-                });
-            };
-        } else {
-            const userInfo = app.globalData.userInfo || wx.getStorageSync('userInfo');
-            this.loadTemptation(smsCode, userInfo);
-            this.setData({
-                userInfo: userInfo
-            });
+        this.getBaseInfo(smsCode)
+        if(app.checkAccessToken()){
+            this.loadTemptation(smsCode)
         }
         this.setData({
             smsCode: smsCode
@@ -41,7 +32,7 @@ Page({
             this.loadTemptation(smsCode, userInfo);
         }
     },
-    getTemptation(id, data) {
+    getTemptation(id) {
         let {smsCode, userInfo} = this.data;
         if (!smsCode && id) {
             smsCode = id
@@ -62,6 +53,29 @@ Page({
             })
         });
         return temptation;
+    },
+    getBaseInfo(smsCode) {
+        const p = new Promise((resolve, reject) => {
+            app.doAjax({
+                url: `wework/evaluations/360/fetch/${smsCode}/info`,
+                method: 'GET',
+                data: {
+                    smsCode,
+                },
+                success(res) {
+                    resolve(res)
+                },
+                error(err) {
+                    reject(err)
+                }
+            })
+        });
+        p.then(res=>{
+            this.setData({
+                evaluationInfo: Object.assign({},this.data.evaluationInfo,res),
+                fbEId: res.feedbackEvaluationId,
+            })
+        })
     },
     checkEvaluationStatus() {
         return this.getTemptation
@@ -96,45 +110,48 @@ Page({
             })
         })
     },
-    loadTemptation(id, data) {
+    loadTemptation(id) {
         let {smsCode} = this.data;
         if (!id) {
             id = smsCode
         }
-        const temptation = this.getTemptation(id, data);
-        temptation.then(res => {
+        const temptation = this.getTemptation(id);
+
+        return temptation.then(res => {
             const {status, feedbackEvaluationId, evaluationName, surveyId} = res;
             const surveyInfo = {
                 name: evaluationName,
                 fbEId: feedbackEvaluationId,
                 surveyId: surveyId
             };
-            switch (status) {
-                case 'UNAVAILABLE':
-                    app.toast('评估已失效');
-                    break;
-                case 'FINISHED':
-                    this.goToDone();
-                    app.toast('测评已完成');
-                    break;
-                case 'UNCLAIMED':
-                    app.toast('测评可用');
-                    break;
-                case 'FETCHED':
-                    this.goToReady(surveyInfo)
-                    app.toast('测评已领取');
-                    break;
-                case 'IMPOSTOR':
-                    app.toast('测评已被别人领取');
-                    break;
-            }
             this.setData({
                 evaluationInfo: res,
                 surveyId: surveyId,
                 fbEId: feedbackEvaluationId,
-            })
+            });
+            switch (status) {
+                case 'UNAVAILABLE':
+                    app.toast('评估已失效');
+                    return Promise.reject();
+                case 'FINISHED':
+                    this.goToDone();
+                    app.toast('测评已完成');
+                    return Promise.reject();
+                case 'UNCLAIMED':
+                    app.toast('测评可用');
+                    return Promise.resolve();
+                case 'FETCHED':
+                    this.goToReady(surveyInfo);
+                    app.toast('测评已领取');
+                    return Promise.reject();
+                case 'IMPOSTOR':
+                    app.toast('测评已被别人领取');
+                    return Promise.reject();
+                    break;
+            }
         }).catch(err => {
             console.error(err)
+            return Promise.reject();
         })
     },
     wxAuthLogin(e) {
@@ -145,8 +162,6 @@ Page({
             surveyId: surveyId,
         };
         this.checkEvaluationStatus().then(res => {
-            return app.updateUserMobileByWeWork(e);
-        }).then(res => {
             return this.verify();
         }).then(res => {
             if (surveyId) {
@@ -215,5 +230,26 @@ Page({
         wx.navigateTo({
             url: `/pages/360/subpages/ready/ready?surveyInfo=${JSON.stringify(surveyInfo)}`
         });
+    },
+    getAccessToken(e) {
+        const that = this;
+        let {authCodeCounter} = this.data;
+        if(authCodeCounter > 5){
+            return;
+        }
+        app.getAccessToken(e).then(res=>{
+            return this.loadTemptation()
+        }).then(res=>{
+            return this.wxAuthLogin(e)
+        }).catch(err=>{
+            if(err && err.code === '401111'){
+                app.getAuthCode().then(res=>{
+                    this.getPhoneNumber(e)
+                });
+                that.setData({
+                    authCodeCounter: authCodeCounter++
+                })
+            }
+        })
     }
 });

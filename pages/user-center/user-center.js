@@ -11,7 +11,7 @@ Page({
     onLoad: function (options) {
         app.setDataOfPlatformInfo(this);
         app.getUserInformation().then(res=>{
-            if(res.avatar || res.nickname){
+            if(res.avatar || res.nickname ||res.realname ){
                 this.setData({
                     userBaseInfo: res
                 })

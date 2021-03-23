@@ -1,7 +1,7 @@
 <view class="unbound">
     <view>
         <view>
-            <text class="unbound__title--text">该手机号已被其他账号绑定</text>
+            <text class="unbound__title--text">手机号已被该平台其他账号绑定</text>
         </view>
         <view class="unbound__user-info--wrapper">
             <view class="unbound__user-info-avatar--wrapper">
@@ -15,22 +15,30 @@
     </view>
     <view class="unbound__item--wrapper">
         <view class="unbound__title-text--wrapper">
-            <text class="unbound__title--text">您是否需要?</text>
+            <text class="unbound__title--text">请先在原平台账号中解绑手机</text>
         </view>
         <view class="unbound__step--card">
-            <image class="unbound__step-card--logo" src="/images/icon/icon@phone.png"/>
-            <text class="unbound__step-card--text">将手机号换绑到当前账号</text>
-        </view>
-        <view class="unbound__char-text--wrapper">
-            <text>&</text>
+            <text class="unbound__step--card-title">Step1 登录原账号，进入「我的」</text>
+            <image class="unbound__step-card--logo" src="/images/icon/icon@step-1.png"/>
         </view>
         <view class="unbound__step--card">
-            <image class="unbound__step-card--logo" src="/images/icon/icon@move-data.png"/>
-            <text class="unbound__step-card--text">将手机号换绑到当前账号</text>
+            <text class="unbound__step--card-title">Step2 进入账号设置</text>
+            <image class="unbound__step-card--logo" src="/images/icon/icon@step-2.png"/>
+        </view>
+        <view class="unbound__step--card">
+            <text class="unbound__step--card-title">Step3 点击解绑，完成绑定关系解除</text>
+            <image class="unbound__step-card--logo" src="/images/icon/icon@step-3.png"/>
         </view>
     </view>
-    <view>
-        <van-button custom-class="unbound-custom-van-button" color="#353EE8FF">确认换绑</van-button>
-        <van-button custom-class="unbound-custom-van-button is-plain" color="#353EE8FF" plain>选择其他手机绑定</van-button>
+    <view class="unbound-custom-van-button-group-wrapper">
+        <view class="unbound-custom-van-button-group">
+            <van-button custom-class="unbound-custom-van-button is-done" color="#353EE8FF" bind:tap="goToRebind">
+                解绑完成，重新绑定
+            </van-button>
+            <van-button custom-class="unbound-custom-van-button is-confirm" color="#353EE8FF" bind:tap="goToRebind">
+                绑定其他手机
+            </van-button>
+        </view>
+        <text class="tips">无法登录原平台账号？</text>
     </view>
 </view>

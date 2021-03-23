@@ -43,40 +43,41 @@ Page({
             return data;
         })(),
     },
-    onLoad: function (options = {loadingTrigger: false}) {
+    onLoad: function (options) {
         const that = this;
         const {isWxWork} = app.wxWorkInfo;
         const {is3rd} = app.wx3rdInfo;
-        if (options.loadingTrigger) {
-            this.setData({
-                loading: true
-            })
-        }
         if (isWxWork || is3rd) {
+            let flag = false
             let url = isWxWork ? "/pages/account/account" : "/pages/auth/auth"
-            if(app.checkAccessToken()){
+            if (app.checkAccessToken()) {
                 url = '/pages/work-base/work-base'
+                wx.switchTab({
+                    url: url
+                });
+            } else {
+                app.checkUserInfo = (res) => {
+                    flag = res && res.tokenInfo
+                    if (flag) {
+                        url = '/pages/work-base/work-base'
+                        wx.switchTab({
+                            url: url
+                        });
+                    } else {
+                        wx.navigateTo({
+                            url: url
+                        });
+                    }
+                };
             }
-            console.error('isWxWork/is3rd: ', isWxWork, is3rd);
-            const {trigger} = this.data;
-            this.setData({
-                loading: true,
-            });
-            if (trigger) {
-                setTimeout(() => {
-                    wx.navigateTo({
-                        url: url
-                    });
-                }, 4000);
-            }
-            return;
+            return
         }
         if (!isWxWork && !is3rd) {
             app.checkUserInfo = (userInfo) => {
                 if (String(userInfo.isNew) !== 'false') {
                     wx.redirectTo({
                         url: "/pages/preload/preload",
-                        success: res=>{
+                        success: res => {
                             wx.uma.trackEvent("1607407387532")
                         }
                     });
@@ -253,7 +254,7 @@ Page({
         });
     },
     onUnload() {
-        const {isWxWork,is3rd} = app.wxWorkInfo;
+        const {isWxWork, is3rd} = app.wxWorkInfo;
         if (isWxWork || is3rd) {
             this.setData({
                 loading: true,

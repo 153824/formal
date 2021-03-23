@@ -44,6 +44,7 @@ Page({
 
     onLoad: function (option) {
         const that = this;
+        console.error('work-base')
         wx.getSystemInfo({
             success: function (res) {
                 const {isIPhoneXModel} = that.data;
@@ -384,7 +385,7 @@ Page({
                 url: '/pages/home/home'
             })
         }).catch(err=>{
-            if(err.code === '40111'){
+            if(err.code === '401111'){
                 app.getAuthCode().then(res=>{
                     this.getPhoneNumber(e)
                 });

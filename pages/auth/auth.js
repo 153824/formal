@@ -19,7 +19,7 @@ Page({
                 url: '/pages/work-base/work-base'
             })
         }).catch(err=>{
-            if(err.code === '40111'){
+            if(err.code === '401111'){
                 app.getAuthCode().then(res=>{
                     this.wxAuthLogin(e)
                 });

@@ -247,9 +247,6 @@ Page({
         app.doAjax({
             url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
             method: "get",
-            data: {
-                openid: wx.getStorageSync("openId") || app.globalData.userInfo.openId,
-            },
             success: function (res) {
                 that.setData({
                     getphoneNum: true,
@@ -1053,9 +1050,6 @@ Page({
                 app.doAjax({
                     url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
                     method: "get",
-                    data: {
-                        openid: wx.getStorageSync("openId"),
-                    },
                     success: function (res) {
                         that.setData({
                             getphoneNum: true,
@@ -1064,7 +1058,7 @@ Page({
                     }
                 });
             }).catch(err=>{
-                if(err.code === '40111'){
+                if(err.code === '401111'){
                     app.getAuthCode().then(res=>{
                         this.getPhoneNumber(e)
                     });

@@ -14,7 +14,7 @@ Page({
         app.getAccessToken(e).then(res=>{
             this.goBack();
         }).catch(err=>{
-            if(err.code === '40111'){
+            if(err.code === '401111'){
                 app.getAuthCode().then(res=>{
                     this.getPhoneNumber(e)
                 });

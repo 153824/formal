@@ -39,6 +39,20 @@
         </van-field>
     </view>
     <view class="verify__code-btn--wrapper">
-        <van-button color="#353EE8" custom-class="custom-van-button" bind:tap="verifySMSCode">登录</van-button>
+        <block wx:if="{{verifyType === 'login'}}">
+            <van-button color="#353EE8" disabled="{{code.length !== 6}}" custom-class="custom-van-button" bind:tap="{{code.length !== 6 ? '' : 'verifyLoginSMSCode'}}">
+                登录
+            </van-button>
+        </block>
+        <block wx:if="{{verifyType === 'unbound'}}">
+            <van-button color="#353EE8" disabled="{{code.length !== 6}}" custom-class="custom-van-button" bind:tap="{{code.length !== 6 ? '' : 'verifyUnboundSMSCode'}}">
+                确认解绑
+            </van-button>
+        </block>
+        <block wx:if="{{verifyType === 'bound'}}">
+            <van-button color="#353EE8" disabled="{{code.length !== 6}}" custom-class="custom-van-button" bind:tap="{{code.length !== 6 ? '' : 'verifyLoginSMSCode'}}">
+                确认绑定
+            </van-button>
+        </block>
     </view>
 </view>

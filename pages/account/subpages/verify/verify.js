@@ -7,19 +7,28 @@ Page({
         authCodeCounter: 0,
         timeData: {},
         time: 6000,
-        showCountDown: true
+        showCountDown: true,
+        verifyType: 'login',
+        isWxWork: app.wxWorkInfo.isWxWork,
+        isWxWorkAdmin: app.checkAdmin(),
+        is3rd: app.wx3rdInfo.is3rd,
+        is3rdAdmin: app.checkAdmin(),
+        isGetAccessToken: app.checkAccessToken()
     },
     onLoad: function (options) {
+        const {verifyType, phone} = options;
         this.setData({
-            phone: options.phone
-        })
+            phone: phone,
+            verifyType: verifyType ? verifyType : 'login',
+        });
+        app.setDataOfPlatformInfo(this)
     },
     getCode(e) {
         this.setData({
             code: e.detail
         })
     },
-    verifySMSCode() {
+    verifyLoginSMSCode() {
         const that = this;
         let {authCodeCounter} = this.data;
         console.log('authCodeCounter: ', authCodeCounter);
@@ -27,9 +36,10 @@ Page({
             return;
         }
         this.getAccessToken().catch(err => {
-            if (err.code === '40111') {
+            console.error('getAccessToken: ',err.code);
+            if (err.code === '401111') {
                 app.getAuthCode().then(res => {
-                    this.verifySMSCode()
+                    that.verifyLoginSMSCode()
                 });
                 console.log(authCodeCounter++);
                 that.setData({
@@ -41,16 +51,16 @@ Page({
     getAccessToken() {
         const {code, phone} = this.data;
         return app.getAccessTokenOfWeWork({code, phone}).then(res => {
-            wx.navigateTo({
-                url: '/page/home/home'
+            wx.switchTab({
+                url: '/pages/work-base/work-base'
             })
         })
     },
     getSMSCode() {
         const {phone} = this.data;
-        app.getSMSCode(phone).then(res=>{
+        app.getSMSCode(phone).then(res => {
             app.toast('success')
-        }).catch(err=>{
+        }).catch(err => {
             console.error(err)
         });
         this.setData({
@@ -67,4 +77,34 @@ Page({
             showCountDown: false
         })
     },
+    verifyUnboundSMSCode() {
+        const {phone, code, is3rd, isWxWork} = this.data;
+        app.doAjax({
+            url: 'wework/users/phone/unbinding',
+            method: 'PUT',
+            data: {
+                smsCode: code,
+                phone
+            },
+            success(res) {
+                if (isWxWork) {
+                    wx.navigateTo({
+                        url: '/pages/account/account'
+                    })
+                } else if (is3rd) {
+                    wx.navigateTo({
+                        url: '/pages/auth/auth'
+                    })
+                } else {
+                    wx.switchTab({
+                        url: '/pages/home/home'
+                    })
+                }
+            },
+            error(err) {
+                console.log('verifyUnboundSMSCode: ', err)
+            }
+        })
+    }
+
 });

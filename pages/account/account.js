@@ -4,12 +4,16 @@ Page({
     data: {
         phone: '',
         isDisabled: true,
-        isWrong: false
+        isWrong: false,
+        /*{ 'login': 登录, 'bound': 绑定, 'unbound': 解绑 }*/
+        verifyType: 'login'
     },
     onLoad: function (options) {
+        this.setData({
+            verifyType: options.verifyType ? options.verifyType : 'login'
+        })
     },
     onChange(e) {
-        console.log(e.detail);
         if(isComplete(e.detail, 11)){
             console.log(verifyPhoneFormat(e.detail));
             if(verifyPhoneFormat(e.detail)){
@@ -36,10 +40,10 @@ Page({
         })
     },
     sendSMSCode() {
-        const {phone} = this.data;
+        const {phone,verifyType} = this.data;
         app.getSMSCode(phone).then(res=>{
             wx.navigateTo({
-                url: `/pages/account/subpages/verify/verify?phone=${phone}`
+                url: `/pages/account/subpages/verify/verify?phone=${phone}&verifyType=${verifyType}`
             })
         }).catch(err=>{
             console.error(err);

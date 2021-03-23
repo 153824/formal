@@ -1,5 +1,21 @@
 <view class="account">
-    <view>
+    <view wx:if="{{verifyType === 'bound'}}">
+        <view class="account__welcome--wrapper">
+            <text class="account__welcome--text" style="color: #fff">欢迎使用</text>
+        </view>
+        <view class="account__welcome--wrapper">
+            <text class="account__welcome--text">绑定手机号</text>
+        </view>
+    </view>
+    <view wx:elif="{{verifyType === 'unbound'}}">
+        <view class="account__welcome--wrapper">
+            <text class="account__welcome--text" style="color: #fff">欢迎使用</text>
+        </view>
+        <view class="account__welcome--wrapper">
+            <text class="account__welcome--text">解除手机号绑定</text>
+        </view>
+    </view>
+    <view wx:else>
         <view class="account__welcome--wrapper">
             <text class="account__welcome--text">欢迎使用</text>
         </view>
@@ -13,7 +29,7 @@
                 type="number"
                 maxlength="11"
                 model:value="{{ phone }}"
-                placeholder="请输入手机号登录"
+                placeholder="{{isBound ? '请输入您要绑定的手机号' : '请输入手机号登录'}}"
                 border="{{ false }}"
                 bind:change="onChange"
                 clearable

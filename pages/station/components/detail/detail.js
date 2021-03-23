@@ -389,7 +389,7 @@ Page({
                     id: evaluation.id,
                     count: that.data.count,
                     type: 1,
-                    openid: wx.getStorageSync("openId") || app.globalData.userMsg.openid
+                    openid: wx.getStorageSync("userInfo").openid
                 },
                 success: function (res) {
                     wx.requestPayment({
@@ -432,74 +432,6 @@ Page({
                 }
             })
         }
-    },
-    /**
-     * 按买断购买测评
-     */
-    payByBuyout: function () {
-        var that = this;
-        var {evaluation} = this.data;
-        var dayOfPeriod = 365;
-        try {
-            dayOfPeriod = evaluation.buyoutPlans[0].dayOfPeriod
-        } catch (e) {
-
-        }
-        app.doAjax({
-            url: 'buyout',
-            method: 'post',
-            data: {
-                evaluationId: evaluation.id,
-                evaluationName: evaluation.evaluationName,
-                dayOfPeriod: dayOfPeriod,
-                openid: wx.getStorageSync("openId") || app.globalData.userMsg.openid,
-            },
-            success: function (res) {
-                wx.requestPayment({
-                    appId: res.appId,
-                    timeStamp: res.timeStamp,
-                    nonceStr: res.nonceStr,
-                    package: res.package,
-                    signType: 'MD5',
-                    paySign: res.paySign,
-                    success: function (res) {
-                        wx.showToast({
-                            title: '购买成功',
-                            duration: 2000
-                        });
-                        setTimeout(function () {
-                            that.toGetPaperDetail();
-                        }, 500);
-                        that.setData({
-                            buyByTicket: false
-                        });
-                    },
-                    fail: function (res) {
-                        if (res.errMsg === "requestPayment:fail cancel") {
-                            wx.showToast({
-                                title: '购买取消',
-                                icon: 'none',
-                                duration: 1200
-                            })
-                        } else {
-                            wx.showToast({
-                                title: '购买失败',
-                                icon: 'none',
-                                duration: 1200
-                            })
-                        }
-                        that.setData({
-                            buyByTicket: false
-                        });
-                    },
-                    complete: function (res) {
-                        that.setData({
-                            buyByTicket: false
-                        });
-                    }
-                })
-            }
-        });
     },
 
     goToDaTi: function () {
@@ -767,9 +699,6 @@ Page({
                 app.doAjax({
                     url: `wework/users/${wx.getStorageSync('userInfo').id}`,
                     method: "get",
-                    data: {
-                        openid: wx.getStorageSync("openId"),
-                    },
                     success: function (res) {
                         if (res.phone && mark !== 'dont-get-ticket') {
                             that.getNewerTicket();
@@ -815,7 +744,7 @@ Page({
                     }
                 })
             }).catch(err=>{
-                if(err.code === '40111'){
+                if(err.code === '401111'){
                     app.getAuthCode().then(res=>{
                         this.getPhoneNumber(e)
                     });

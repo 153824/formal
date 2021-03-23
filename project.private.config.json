@@ -176,6 +176,18 @@
           "pathName": "pages/user-center/components/setting/setting",
           "query": "releaseRecordId=5f813067d5a972193142e46e&sharedAt=1602310089498&tabIndex=1",
           "scene": null
+        },
+        {
+          "name": "360",
+          "pathName": "pages/360/360",
+          "query": "smsCode=7j0WIXLF",
+          "scene": null
+        },
+        {
+          "name": "360作答完成页面",
+          "pathName": "pages/360/subpages/end/end",
+          "query": "",
+          "scene": null
         }
       ]
     }

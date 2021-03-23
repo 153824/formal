@@ -109,7 +109,8 @@ App({
         if (referrerInfo && referrerInfo.appid) {
             this.fromAppId = referrerInfo.appid
         }
-        if (wx.getExtConfigSync().isCustomVersion === 'true') {
+        console.log(wx.getExtConfigSync());
+        if (wx.getExtConfigSync().isCustomVersion) {
             console.error('wx.getExtConfigSync().isCustomVersion: ', wx.getExtConfigSync().isCustomVersion)
             this.wx3rdInfo.is3rd = true;
         }
@@ -235,9 +236,10 @@ App({
                 },
                 noLoading: true,
                 success: function (res) {
-                    const {authCode,tokenInfo} = res;
+                    const {authCode, tokenInfo, userInfo} = res;
                     if(tokenInfo && tokenInfo.accessToken){
-                        wx.setStorageSync('tokenInfo', tokenInfo.accessToken)
+                        userInfo.tokenInfo = tokenInfo
+                        wx.setStorageSync('userInfo', userInfo)
                     }
                     wx.setStorageSync('authCode', authCode);
                     if (res.isNew) {
@@ -283,14 +285,15 @@ App({
                 method: 'POST',
                 data: {
                     type: 'WEWORK',
-                    appid: that.globalData.appid,
+                    appId: that.globalData.appid,
                     code: code,
                 },
                 noLoading: true,
                 success: function (res) {
-                    const {authCode, tokenInfo} = res;
-                    if(tokenInfo.accessToken){
-                        wx.setStorageSync('accessToken', tokenInfo.accessToken)
+                    const {authCode, tokenInfo, userInfo} = res;
+                    if(tokenInfo && tokenInfo.accessToken){
+                        userInfo.tokenInfo = tokenInfo
+                        wx.setStorageSync('userInfo', userInfo)
                     }
                     wx.setStorageSync('authCode', authCode)
                     if (that.checkUserInfo) {
@@ -393,6 +396,11 @@ App({
                 if (ret.statusCode === 401 && (that.wxWorkInfo.isWxWork || that.wx3rdInfo.is3rd)) {
                     wx.navigateTo({
                         url: '/pages/auth/auth'
+                    })
+                }
+                if(ret.statusCode === 400 && ret.data.code === '402002'){
+                    wx.navigateTo({
+                        url: '/pages/account/subpages/unbound/unbound'
                     })
                 }
                 var retData = ret.data;
@@ -679,9 +687,6 @@ App({
             this.doAjax({
                 url: `wework/users/${wx.getStorageSync('userInfo').id}`,
                 method: "get",
-                data: {
-                    openid: wx.getStorageSync("openId") || app.globalData.userInfo.openId,
-                },
                 success: function (res) {
                     that.setData({
                         getphoneNum: true,
@@ -712,9 +717,14 @@ App({
         return p;
     },
 
-    checkAccessToken() {
-        // wx.setStorageSync('userInfo', {"appid":"wxdb1dcb4a9e212d32","avatar":"https://thirdwx.qlogo.cn/mmopen/vi_32/PLBibibuUwfH2qrDLAIeVg1yI7LTbDShGcxicDXNJLic8CPhnHQhSTYCLJBSQicOBXicRYAS5x0jiaeAVs6woibiaicb3yww/132","id":"5eb6a9e7c9dd6e0008d3f762","info":{"avatarUrl":"https://thirdwx.qlogo.cn/mmopen/vi_32/PLBibibuUwfH2qrDLAIeVg1yI7LTbDShGcxicDXNJLic8CPhnHQhSTYCLJBSQicOBXicRYAS5x0jiaeAVs6woibiaicb3yww/132","country":"China","gender":1,"language":"zh_CN","nickName":"WE!D","openid":"o7Jo85PuWvi98dhA5SmLGcLDOkcQ","province":null,"unionid":null},"isAdmin":false,"openid":"o7Jo85PuWvi98dhA5SmLGcLDOkcQ","phone":"18150378337","teamId":"601fb35a34d04b090df0d49c","tokenInfo":{"accessToken":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1ZWI2YTllN2M5ZGQ2ZTAwMDhkM2Y3NjIiLCJleHAiOjE2MTY2Mzk0MTQsImFwcF9pZCI6Ind4ZGIxZGNiNGE5ZTIxMmQzMiIsImNvcnBfaWQiOiI2MDFmYjM1YTM0ZDA0YjA5MGRmMGQ0OWMifQ.UCA2Y0tk6kYzHRQ06qbE5ZodTG8IBSbmE8aitgv86REwFPzfmUb4AOhPSEGKURzdLN0IuSsaNcp-zNay7gi2RA","expiresIn":1616639414319,"serverTime":1614047414331}})
-        if (wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').tokenInfo && wx.getStorageSync('userInfo').tokenInfo.accessToken) {
+    checkAccessToken(res) {
+        if (
+            wx.getStorageSync('userInfo')
+            &&
+            wx.getStorageSync('userInfo').tokenInfo
+            &&
+            wx.getStorageSync('userInfo').tokenInfo.accessToken
+        ) {
             return true;
         } else {
             return false;

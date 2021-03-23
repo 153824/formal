@@ -16,7 +16,7 @@ Page({
             surveyId: ''
         },
         message: "",
-        isArriveToLower: false
+        isArriveToLower: true
     },
     onLoad: function (options) {
         const surveyInfo = JSON.parse(options.surveyInfo);
@@ -29,7 +29,7 @@ Page({
         });
         this.getQuestions(surveyInfo.fbEId).then(res => {
             this.setData({
-                // questions: res
+                questions: res
             })
         }).catch(err => {
             console.error(err)
@@ -147,7 +147,7 @@ Page({
         });
         draftPromise.catch(err => {
             console.error('上传草稿失败！', err)
-            app.toast('上传草稿失败！')
+            app.toast('实时保存失败')
         })
     },
     submit() {
@@ -166,16 +166,16 @@ Page({
             })
         });
         answer.then(res => {
-            app.toast("答案保存成功！")
+            app.toast("答案保存成功")
             this.done()
         }).catch(err => {
-            app.toast("请先完成必选项！")
+            app.toast("您还有未完成的选项")
             this._verify(err.msg);
         })
     },
     done() {
         wx.navigateTo({
-            url: "/pages/work-base/components/done/done"
+            url: "/pages/360/subpages/end/end"
         })
     },
     displaySubmitButton() {

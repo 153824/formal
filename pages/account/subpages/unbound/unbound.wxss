@@ -5,16 +5,16 @@
     padding: 0 0 64rpx 0;
 }
 .unbound__title--text{
-    font-size: 40rpx;
+    font-size: 36rpx;
     font-family: PingFangSC-Semibold, PingFang SC;
     font-weight: 600;
     color: #000000;
-    line-height: 40rpx;
+    line-height: 50rpx;
 }
 .unbound__user-info--wrapper{
     display: flex;
     flex-direction: row;
-    margin: 50rpx 0;
+    margin: 32rpx 0;
     padding: 40rpx 40rpx;
     background: rgba(53, 62, 232, 0.05);
     border-radius: 20rpx;
@@ -32,6 +32,7 @@
 .unbound__user-info-name--wrapper{
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     margin-left: 40rpx;
 }
 .unbound__user-info-name{
@@ -56,12 +57,16 @@
 .unbound__step--card{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 50rpx 0 30rpx 0;
-    height: 128rpx;
     background: #FCFCFC;
     border-radius: 10px;
+}
+.unbound__step--card-title{
+    margin-bottom: 20rpx;
+    font-size: 30rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #353EE8;
+    line-height: 42rpx;
 }
 .unbound__title-text--wrapper{
     margin-bottom: 50rpx;
@@ -81,18 +86,32 @@
     margin: 12rpx 0rpx;
 }
 .unbound__step-card--logo{
-    width: 60rpx;
-    height: 60rpx;
+    width: 670rpx;
+    height: 140rpx;
+    margin-left: -18rpx;
 }
 .unbound-custom-van-button{
-    width: calc(100vw - 120rpx);
-    height: 88rpx!important;
+    width: calc(100vw - 120rpx)/3;
+    height: 86rpx!important;
     border-radius: 10rpx!important;
-    font-size: 32rpx!important;
+    font-size: 30rpx!important;
     font-family: PingFangSC-Semibold, PingFang SC!important;
     font-weight: 600;
     color: #FFFFFF!important;
     line-height: 44rpx!important;
+    text-align: center;
+}
+.is-done{
+    width: 372rpx;
+}
+.is-confirm{
+    width: 235rpx;
+    background-color:  #fff!important;
+    border-color:  #353EE8FF!important;
+    color: #353EE8FF!important;
+}
+.is-confirm::before{
+    opacity: 0!important;
 }
 .unbound-custom-van-button.is-plain{
     font-size: 28rpx!important;
@@ -101,4 +120,22 @@
     color: #353EE8FF!important;
     line-height: 40rpx!important;
     border: unset!important;
+}
+.unbound-custom-van-button-group-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.unbound-custom-van-button-group{
+    display: flex;
+    justify-content: space-between;
+}
+.tips{
+    margin: 30rpx 0;
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #353EE8;
+    line-height: 40rpx;
+    text-align: center;
 }

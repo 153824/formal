@@ -3,15 +3,18 @@
         <van-cell-group border="{{false}}">
             <van-cell title="手机号:" size="large" border="{{false}}">
                 <view class="setting--bound-info__wrapper">
-                    <text class="setting--bound-phone">18888888888</text><van-button custom-class="setting--unbound__btn">换绑</van-button>
+                    <text class="setting--bound-phone">{{phone}}</text>
+                    <van-button custom-class="setting--unbound__btn" bind:tap="goToBound">
+                        {{phone ? '解绑' : '绑定' }}
+                    </van-button>
                 </view>
             </van-cell>
             <van-cell title="关联账号:" size="large" border="{{false}}">
                 <view class="setting--bound-app__wrapper">
-                    <view class="setting--bound-app__item is-unbound">
+                    <view class="setting--bound-app__item {{binding.includes('WEWORK') ? 'is-bound-wework' : 'is-unbound' }}">
                         <image class="setting--bound-app" src="/images/icon/icon@wework.png"/>
                     </view>
-                    <view class="setting--bound-app__item is-bound">
+                    <view class="setting--bound-app__item {{binding.includes('WECHAT') ? 'is-bound-wechat' : 'is-unbound' }}">
                         <image class="setting--bound-app" src="/images/icon/icon@wechat.png"/>
                     </view>
                 </view>

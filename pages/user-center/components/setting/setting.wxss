@@ -37,8 +37,11 @@ page{
     width: 32rpx;
     height: 32rpx;
 }
-.is-bound{
+.is-bound-wework{
     background-color: #0082F0FF;
+}
+.is-bound-wechat{
+    background-color:  #00C061;
 }
 .is-unbound{
     background-color: #D8D8D8FF;

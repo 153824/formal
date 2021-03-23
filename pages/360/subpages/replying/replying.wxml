@@ -108,10 +108,10 @@
             </view>
         </block>
     </scroll-view>
-    <van-transition show="{{ isArriveToLower }}" custom-class="block">
+<!--    <van-transition show="{{ isArriveToLower || true }}" custom-class="block">-->
         <view class="replying--view__item replying--view__item-btn-wrapper">
             <button class="replying--view__btn" bind:tap="submit">确认无误，提交</button>
         </view>
-    </van-transition>
+<!--    </van-transition>-->
 </view>
 <wxs src="../../../../utils/util.wxs" module="util"></wxs>

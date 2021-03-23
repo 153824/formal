@@ -1,0 +1,7 @@
+<view class="fullPage">
+	<view class="pageView">
+		<image src="../../../work-base/images/done@icon-done.png" />
+		<view class="mindMsg">您的作答结果已提交</view>
+		<view class="mindMsg">感谢您的参与</view>
+	</view>
+</view>

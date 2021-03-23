@@ -13,7 +13,7 @@
             <text class="omni--intro-text">请使用接收评估通知的手机号登录</text>
         </view>
         <view>
-            <button disabled="{{disabled}}" class="omni__login-btn" open-type="getPhoneNumber" bind:getphonenumber="{{disabled ? '' : 'wxAuthLogin'}}">
+            <button disabled="{{disabled}}" class="omni__login-btn" open-type="getPhoneNumber" bind:getphonenumber="{{disabled ? '' : 'getAccessToken'}}">
                 {{disabled ? '评估已失效' : '微信一键授权登录'}}
             </button>
         </view>

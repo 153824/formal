@@ -39,7 +39,10 @@ Page({
         finishCount: 0,
         examiningCount: 0,
         channel: "qrcode",
-        isWxWork: false
+        isWxWork: false,
+        isWxWorkAdmin: false,
+        is3rd: false,
+        is3rdAdmin: false
     },
 
     onLoad: function (options) {
@@ -59,84 +62,53 @@ Page({
         }
         options.userId = "";
         options.teamId = "";
-        if (app.globalData.userInfo && wx.getStorageSync('userInfo')) {
-            this.setData({
-                isWxWork: app.wxWorkInfo.isWxWork,
-            });
-            if (releaseRecordId && sharedAt) {
-                this.acceptEvaluationTrack(options).then(res => {
-                    Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
-                        setTimeout(()=>{
-                            that.setData({
-                                maskTrigger: false
-                            })
-                        },500)
-                    })
-                }).catch(err => {
-                    wx.switchTab({
-                        url: "pages/work-base/work-base",
-                    })
-                })
-            } else {
-                Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
-                    setTimeout(()=>{
-                        that.setData({
-                            maskTrigger: false
-                        })
-                    },500)
-                }).catch(err => {
-                    console.error("err: ", err);
-                    that.setData({
-                        maskTrigger: false
-                    })
-                })
-            }
-        } else {
-            app.checkUserInfo = (userInfo) => {
-                options.teamId = userInfo.teamId;
-                options.userId = userInfo.id;
-                this.setData({
-                    isWxWork: userInfo.isWxWork,
-                });
-                if (releaseRecordId && sharedAt) {
-                    this.acceptEvaluationTrack(options).then(res => {
-                        Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
-                            setTimeout(()=>{
-                                that.setData({
-                                    maskTrigger: false
-                                })
-                            },500)
-                        })
-                    }).catch(err => {
-                        wx.switchTab({
-                            url: "pages/work-base/work-base",
-                        })
-                    })
-                } else {
-                    Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
-                        setTimeout(()=>{
-                            that.setData({
-                                maskTrigger: false
-                            })
-                        },500)
-                    }).catch(err => {
-                        console.error("err: ", err);
-                        setTimeout(()=>{
-                            that.setData({
-                                maskTrigger: false
-                            })
-                        },500)
-                    })
-                }
+        if(app.checkAccessToken()){
+            this.canIUseEvaluationTrack({options,releaseRecordId, sharedAt})
+        }else{
+            app.checkUserInfo = (userInfo) =>{
+                this.canIUseEvaluationTrack({options,releaseRecordId, sharedAt})
             }
         }
         const systemInfo = wx.getSystemInfoSync();
         that.setData({
             windowHeight: systemInfo.windowHeight,
         });
+        app.setDataOfPlatformInfo(this);
     },
 
-    onShow() {
+    onShow() {},
+
+    canIUseEvaluationTrack({options,releaseRecordId,sharedAt}){
+        const that = this;
+        const {examiningDetail, finishedDetail, digestDetail} = this;
+        if (releaseRecordId && sharedAt) {
+            this.acceptEvaluationTrack(options).then(res => {
+                Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
+                    setTimeout(()=>{
+                        that.setData({
+                            maskTrigger: false
+                        })
+                    },500)
+                })
+            }).catch(err => {
+                wx.switchTab({
+                    url: "pages/work-base/work-base",
+                })
+            })
+        } else {
+            Promise.all([examiningDetail(options), finishedDetail(options), digestDetail(options)]).then(res => {
+                setTimeout(()=>{
+                    that.setData({
+                        maskTrigger: false
+                    })
+                },500)
+            }).catch(err => {
+                console.error("err: ", err);
+                that.setData({
+                    maskTrigger: false
+                })
+            })
+        }
     },
 
     acceptEvaluationTrack: function (options={trackId: "", releaseRecordId: "", sharedAt: "", userId: ""}) {

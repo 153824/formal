@@ -1,10 +1,7 @@
 <view class="teamInvite">
   <image src="../work-base/images/teams-cert@icon-team-invite.png"/>
-  <view class="mind1">您需要授权</view>
-  <view class="mind1">您的手机号</view>
   <view class="bottomView">
-    <view class="mind">后才可以领取测评/查看报告</view>
-    <button class="join" open-type='getPhoneNumber' bind:getphonenumber='getPhoneNumber'>授权</button>
-    <view class="back" bind:tap="goBack">取消</view>
+    <view class="mind1">授权登录，查看报告</view>
   </view>
+  <button class="join" open-type='getPhoneNumber' bind:getphonenumber='getPhoneNumber'>微信一键授权</button>
 </view>

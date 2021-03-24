@@ -1,3 +1,4 @@
+<wxs src="../../../../utils/util.wxs" module="util"></wxs>
 <view class="setting">
     <scroll-view class="setting--scroll-view__wrapper">
         <van-cell-group border="{{false}}">
@@ -11,10 +12,10 @@
             </van-cell>
             <van-cell title="关联账号:" size="large" border="{{false}}">
                 <view class="setting--bound-app__wrapper">
-                    <view class="setting--bound-app__item {{binding.includes('WEWORK') ? 'is-bound-wework' : 'is-unbound' }}">
+                    <view class="setting--bound-app__item {{util.isIncludes(binding, 'WEWORK') ? 'is-bound-wework' : 'is-unbound' }}">
                         <image class="setting--bound-app" src="/images/icon/icon@wework.png"/>
                     </view>
-                    <view class="setting--bound-app__item {{binding.includes('WECHAT') ? 'is-bound-wechat' : 'is-unbound' }}">
+                    <view class="setting--bound-app__item {{util.isIncludes(binding, 'WECHAT') ? 'is-bound-wechat' : 'is-unbound' }}">
                         <image class="setting--bound-app" src="/images/icon/icon@wechat.png"/>
                     </view>
                 </view>

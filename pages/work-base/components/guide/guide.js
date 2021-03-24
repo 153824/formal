@@ -14,6 +14,8 @@ Page({
         demonstrateInfo: {},
         evaluationStatusText: "",
         respondPreparingPageTxt: "",
+        isGetAccessToken: app.checkAccessToken(),
+        authCodeCounter: 0
     },
     onLoad: function (option) {
         const that = this;
@@ -46,31 +48,40 @@ Page({
                 }
             });
         }
-        if(!app.checkAccessToken()){
-            wx.navigateTo({
-                url: '/pages/whoami/whoami'
-            })
-        }
     },
     onShow: function () {
-        if(!app.checkAccessToken()){
-            return;
+        const that = this;
+        const {releaseRecordId} = that.data;
+        if (wx.canIUse('hideHomeButton')) {
+            wx.hideHomeButton();
         }
+
+        if(app.checkAccessToken()){
+            this.canIUseTemptation()
+        }else{
+            app.checkUserInfo=(res)=>{
+                this.canIUseTemptation()
+            };
+        }
+    },
+
+    canIUseTemptation() {
+        const flag = app.checkAccessToken()
+        const target = app.checkAccessToken() ? this.getTemptation : this.getDemonstrate;
         try{
-            if (wx.canIUse('hideHomeButton')) {
-                wx.hideHomeButton();
-            }
-            const that = this;
-            const {releaseRecordId} = that.data;
-            if (app.isTest && !releaseRecordId) {
-                return that.getPaperMsg()
-            }
-            that.getTemptation();
-            that.getMiniProgramSetting()
+            // if (app.isTest && !releaseRecordId) {
+            //     return that.getPaperMsg()
+            // }getTemptation
+            target()
+            this.getProgramSetting();
         }catch (e) {
             console.error(e)
         }
+        this.setData({
+            isGetAccessToken: flag
+        })
     },
+
     /**
      * 申请查看报告
      */
@@ -266,6 +277,28 @@ Page({
         });
     },
 
+    getDemonstrate() {
+        const _this = this;
+        const {releaseRecordId} = this.data;
+        app.doAjax({
+            url: "wework/evaluations/fetch/demonstrate",
+            method: "post",
+            data: {
+                releaseRecordId: releaseRecordId,
+            },
+            success: function (res) {
+                _this.setData({
+                    demonstrateInfo: res,
+                    maskTrigger: false
+                });
+            },
+            complete: function () {},
+            fail: function (err) {
+                console.error(err);
+            }
+        })
+    },
+
     getTemptation: function (userInfo = {id: ""}) {
         const _this = this;
         const {releaseRecordId} = this.data;
@@ -274,7 +307,7 @@ Page({
             method: "post",
             data: {
                 releaseRecordId: releaseRecordId,
-                userId: userInfo.id
+                // userId: userInfo.id
             },
             success: function (res) {
                 let text = "";
@@ -293,7 +326,7 @@ Page({
                     case "APPLYING":
                         text = "等待hr通过申请";
                         break;
-                    case "DISABLE":
+                    case "DISABLED":
                         text = "申请查看报告";
                         break;
                     case "VERIFY":
@@ -301,6 +334,9 @@ Page({
                         break;
                     case "APPROVED":
                         text = "查看报告";
+                        break;
+                    case "DISABLE":
+                        text = "申请查看报告";
                         break;
                 }
                 _this.setData({
@@ -346,14 +382,35 @@ Page({
         });
     },
 
-    getProgramSetting() {
+    getProgramSetting(teamId) {
+        return
         const that = this;
-        app.getMiniProgramSetting().then(res=>{
+        app.getMiniProgramSetting(teamId).then(res=>{
             that.setData({
                 respondPreparingPageTxt: res.respondPreparingPageTxt
             })
         }).catch(err=>{
             console.error(err)
         });
-    }
+    },
+
+    getPhoneNumber(e) {
+        const that = this;
+        let {authCodeCounter} = this.data;
+        if(authCodeCounter > 5){
+            return
+        }
+        app.getAccessToken(e).then(res => {
+            this.goToRecorder()
+        }).catch(err=>{
+            if(err.code === '401111'){
+                app.getAuthCode().then(res=>{
+                    this.getPhoneNumber(e)
+                });
+                that.setData({
+                    authCodeCounter: authCodeCounter++
+                })
+            }
+        })
+    },
 });

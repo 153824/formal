@@ -244,7 +244,7 @@ Page({
         }).catch(err=>{
             if(err && err.code === '401111'){
                 app.getAuthCode().then(res=>{
-                    this.getPhoneNumber(e)
+                    this.getAccessToken(e)
                 });
                 that.setData({
                     authCodeCounter: authCodeCounter++

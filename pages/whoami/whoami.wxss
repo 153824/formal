@@ -36,7 +36,9 @@
 }
 
 .teamInvite {
-  padding-top: 28rpx;
+  position: relative;
+  padding: 40rpx 0;
+  height: calc(100vh - 80rpx);
 }
 
 .teamInvite image {
@@ -57,7 +59,6 @@
 
 .teamInvite .bottomView {
   text-align: center;
-  margin-top: 182rpx;
 }
 
 .teamInvite .bottomView .mind {
@@ -68,12 +69,14 @@
   line-height: 42rpx;
 }
 
-.teamInvite .bottomView .join {
-  margin: auto;
-  margin-top: 42rpx;
+.join {
+  position: absolute;
+  bottom: 40rpx;
+  left: 50%;
+  transform: translateX(-50%);
   width: 528rpx;
   height: 106rpx;
-  background: rgba(89, 96, 237, 1);
+  background: #353ee8;
   border-radius: 18rpx;
   font-size: 32rpx;
   font-family: PingFangSC-Semibold, PingFang SC;

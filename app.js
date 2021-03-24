@@ -109,8 +109,7 @@ App({
         if (referrerInfo && referrerInfo.appid) {
             this.fromAppId = referrerInfo.appid
         }
-        console.log(wx.getExtConfigSync());
-        if (wx.getExtConfigSync().isCustomVersion) {
+        if (wx.getExtConfigSync().isCustomVersion === 'true') {
             console.error('wx.getExtConfigSync().isCustomVersion: ', wx.getExtConfigSync().isCustomVersion)
             this.wx3rdInfo.is3rd = true;
         }
@@ -603,8 +602,8 @@ App({
         return updateUserMobilePromise;
     },
 
-    getMiniProgramSetting() {
-        const teamId = wx.getStorageSync('userInfo').teamId;
+    getMiniProgramSetting(teamId) {
+        teamId = wx.getStorageSync('userInfo').teamId || teamId;
         const miniProgramSettingPromise = new Promise((resolve, reject) => {
             this.doAjax({
                 url: `wework/evaluations/settings/${teamId}/wechat-ma`,
@@ -613,6 +612,9 @@ App({
                     resolve(res);
                 },
                 error(err) {
+                    reject(err);
+                },
+                fail(err){
                     reject(err);
                 }
             })

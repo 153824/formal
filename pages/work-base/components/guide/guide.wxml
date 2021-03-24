@@ -22,14 +22,19 @@
             <view class="smalltext">平均用时{{demonstrateInfo.estimatedTime}}分钟</view>
         </view>
     </view>
-    <view wx:if="{{evaluationStatusText === '分享已失效'}}" class="begin">测评已失效</view>
-    <view wx:elif="{{evaluationStatusText === '等待hr通过申请'}}" class="begin">等待hr通过申请</view>
-    <view wx:elif="{{evaluationStatusText === '查看报告'}}" class="begin" bindtap="toDetail">查看报告</view>
-    <view wx:elif="{{evaluationStatusText === '申请查看报告'}}" class="begin" bindtap="toApply" data-id="{{receiveRecordId}}">向HR申请查看报告</view>
-    <view wx:elif="{{evaluationStatusText === '立即验证'}}" class="begin" bindtap="goToRecorder">立即验证</view>
-    <view wx:elif="{{evaluationStatusText === '继续作答'}}" class="begin" bindtap="goToReplying">继续作答</view>
-    <view wx:elif="{{evaluationStatusText === '开始作答' && isGetUserInfo}}" class="begin" bindtap="goToRecorder" data-mark="begin">开始作答</view>
-    <button wx:elif="{{evaluationStatusText === '开始作答' && !isGetUserInfo}}" class="begin" open-type="getUserInfo" data-mark="begin" bindgetuserinfo="getUserInfo">开始作答</button>
+    <block wx:if="{{isGetAccessToken}}">
+        <view wx:if="{{evaluationStatusText === '分享已失效'}}" class="begin">测评已失效</view>
+        <view wx:elif="{{evaluationStatusText === '等待hr通过申请'}}" class="begin">等待hr通过申请</view>
+        <view wx:elif="{{evaluationStatusText === '查看报告'}}" class="begin" bindtap="toDetail">查看报告</view>
+        <view wx:elif="{{evaluationStatusText === '申请查看报告'}}" class="begin" bindtap="toApply" data-id="{{receiveRecordId}}">向HR申请查看报告</view>
+        <view wx:elif="{{evaluationStatusText === '立即验证'}}" class="begin" bindtap="goToRecorder">立即验证</view>
+        <view wx:elif="{{evaluationStatusText === '继续作答'}}" class="begin" bindtap="goToReplying">继续作答</view>
+        <view wx:elif="{{evaluationStatusText === '开始作答' && isGetUserInfo}}" class="begin" bindtap="goToRecorder" data-mark="begin">开始作答</view>
+        <button wx:elif="{{evaluationStatusText === '开始作答' && !isGetUserInfo}}" class="begin" open-type="getUserInfo" data-mark="begin" bindgetuserinfo="getUserInfo">开始作答</button>
+    </block>
+    <block wx:else>
+        <button class="begin" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">微信一键授权</button>
+    </block>
     <text class="infotext">{{respondPreparingPageTxt}}</text>
 </view>
 <hola-mask isShow="{{ maskTrigger }}"></hola-mask>

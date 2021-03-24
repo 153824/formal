@@ -253,6 +253,54 @@ Page({
             }
         });
     },
+    changePage: function (e) {
+        const {name, url, tab, n} = e.currentTarget.dataset;
+        if (url) {
+            if (url.indexOf('http') != -1) {
+                wx.setStorageSync("webView_Url", url);
+                wx.navigateTo({
+                    url: '../common/webView',
+                });
+            } else {
+                const {detail} = e;
+                try {
+                    wx.uma.trackEvent('1601368400960', {"测评名称": name})
+                } catch (e) {
+                    console.error('home.js -> 136', e)
+                }
+                if ((!detail || !detail.encryptedData) && n == "getPhoneNumber") return;
+                if (detail && detail.encryptedData) {
+                    const iv = detail.iv;
+                    const encryptedData = detail.encryptedData;
+                    if (encryptedData) {
+                        const userMsg = app.globalData.userMsg || {};
+                        userMsg["iv"] = iv;
+                        userMsg["encryptedData"] = encryptedData;
+                        app.doAjax({
+                            url: "updatedUserMobile",
+                            data: userMsg,
+                            noLoading: true,
+                            success: function (res) {
+                                app.getUserInfo();
+                            }
+                        });
+                    }
+                }
+                wx.navigateTo({
+                    url: url
+                });
+            }
+        }
+        if (tab) {
+            wx.switchTab({
+                url: tab
+            });
+        }
+        this.setData({
+            showTopGift: true,
+            showGiftDlg: false
+        });
+    },
     onUnload() {
         const {isWxWork, is3rd} = app.wxWorkInfo;
         if (isWxWork || is3rd) {

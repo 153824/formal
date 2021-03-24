@@ -362,38 +362,42 @@ Page({
             id,
             options
         });
-        if(!app.checkAccessToken()){
-            wx.navigateTo({
-                url: '/pages/whoami/whoami'
-            });
-        }
     },
 
     onShow: function () {
         const that = this;
         const {options} = this.data;
         const id = that.data.id || options.receiveRecordId || options.receivedRecordId;
-        if(!app.checkAccessToken()){
-            return;
+        if(app.checkAccessToken()){
+            this.canIUseShareAt({id,options});
+        }else{
+            app.checkUserInfo=(res)=>{
+                this.canIUseShareAt({id,options});
+            };
+        }
+    },
+
+    canIUseShareAt({options,id}) {
+        const flag = app.checkAccessToken();
+        if(!flag){
+            wx.navigateTo({
+                url: '/pages/whoami/whoami'
+            });
+            return
         }
         if (options.sharedAt) {
-            options.userId = wx.getStorageSync("userInfo")["id"];
-            that.verifyReportIsCanRead(options).then(res => {
-                that.getReport(id);
+            options.userId = wx.getStorageSync('userInfo').userId;
+            this.verifyReportIsCanRead(options).then(res => {
+                this.getReport(id);
             }).catch(err => {
                 wx.showToast({
                     title: "该分享已过期",
                     icon: "none",
                     duration: 888
                 });
-                setTimeout(() => {
-                    wx.switchTab({
-                        url: '/pages/home/home'
-                    })
-                }, 999);
             });
         } else {
-            that.getReport(id);
+            this.getReport(id);
         }
         this.getProgramSetting()
     },

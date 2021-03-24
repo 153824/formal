@@ -19,13 +19,14 @@ Page({
         education: -1,
         sex: ["男", "女"],
         checkedSex: 0,
-        isGetPhone: false,
-        phoneNumber: "微信一键授权",
+        // isGetPhone: false,
+        // phoneNumber: "微信一键授权",
         verify: false,
         isWxWork: false,
         isWxWorkAdmin: false,
         is3rd: false,
-        is3rdAdmin: false
+        is3rdAdmin: false,
+        authCodeCounter: 0
     },
 
     onLoad: function (options) {
@@ -62,24 +63,25 @@ Page({
 
     getPhoneNumber: function (e) {
         const that = this;
-        const {isGetPhone, phone} = this.data;
-        if (this.data.isSelf === 'SHARE') {
-            try {
-                wx.uma.trackEvent('1602215557718')
-            } catch (e) {
-
-            }
+        let {authCodeCounter} = this.data;
+        if(authCodeCounter > 5){
+            return;
         }
-        if (!isGetPhone) {
-            app.updateUserMobileByWeWork(e).then(res=>{
-                that.setData({
-                    isGetPhone: true,
-                    phoneNumber: res.phone || '微信一键授权'
+        app.getAccessToken(e).then(res=>{
+            // this.setData({
+            //     isGetPhone: true,
+            //     phoneNumber: res.phone
+            // })
+        }).catch(err=>{
+            if(err.code === '401111'){
+                app.getAuthCode().then(res=>{
+                    this.getPhoneNumber(e)
                 });
-            }).catch(err=>{
-                app.toast(err.msg)
-            });
-        }
+                that.setData({
+                    authCodeCounter: authCodeCounter++
+                })
+            }
+        })
     },
 
     _checkEvaluationType: function () {
@@ -101,15 +103,15 @@ Page({
 
     _checkUserIsAuthPhone: function (userId) {
         const _this = this;
-        const {receiveRecordId = ""} = this.data;
+        const {receiveRecordId} = this.data;
         if (!userId) {
             userId = (wx.getStorageSync("userInfo") || app.globalData.userInfo || app.globalData.userMsg).id;
         }
         app.doAjax({
-            url: `wework/evaluations/fetch/info/participant/${userId}`,
+            url: `wework/evaluations/fetch/info/participant`,
             method: "get",
             data: {
-                receiveRecordId: receiveRecordId
+                receiveRecordId: receiveRecordId || ""
             },
             success: function (res) {
                 const {educationName, username, phone, birthday} = res;
@@ -125,14 +127,14 @@ Page({
                         console.error(e)
                     }
                 }
-                if (!phone) {
-                    res.phone = "微信一键授权";
-                }else{
-                    _this.setData({
-                        phoneNumber: res.phone,
-                        isGetPhone: true
-                    })
-                }
+                // if (!phone) {
+                //     res.phone = "微信一键授权";
+                // }else{
+                //     _this.setData({
+                //         phoneNumber: res.phone,
+                //         isGetPhone: true
+                //     })
+                // }
                 if (educationName) {
                     eduArr.forEach((item, key) => {
                         if (item === educationName) {
@@ -167,14 +169,14 @@ Page({
             app.toast("请选择出生年月！");
             return false;
         }
-        if (phoneNumber.length < 11) {
-            app.toast("请授权手机号码！");
-            return false;
-        }
-        if (!isGetPhone) {
-            app.toast("请再次授权手机号！");
-            return false;
-        }
+        // if (phoneNumber.length < 11) {
+        //     app.toast("请授权手机号码！");
+        //     return false;
+        // }
+        // if (!isGetPhone) {
+        //     app.toast("请再次授权手机号！");
+        //     return false;
+        // }
         return true;
     },
 
@@ -218,7 +220,7 @@ Page({
                     birthday: birthday,
                     gender: gender,
                     educationName: educationName,
-                    phone: phoneNumber,
+                    // phone: phoneNumber,
                 },
                 success: function (res) {
                     const {msg} = res;
@@ -275,7 +277,7 @@ Page({
                     const {eduArr} = _this.data;
                     const copy = {
                         username: "",
-                        phone: "",
+                        // phone: "",
                         birthday: "",
                         educationName: "",
                         gender: "",
@@ -300,6 +302,14 @@ Page({
             })
         });
         return preloadInfo;
+    },
+
+    getUserInfo(e) {
+        app.updateUserInfo(e).then(res=>{
+            this.submit()
+        }).catch(err=>{
+            console.error(err)
+        })
     },
 
     submit: function () {

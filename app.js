@@ -109,7 +109,7 @@ App({
         if (referrerInfo && referrerInfo.appid) {
             this.fromAppId = referrerInfo.appid
         }
-        if (wx.getExtConfigSync().isCustomVersion === 'true') {
+        if (wx.getExtConfigSync().isCustomVersion === 'true' || (wx.getExtConfigSync().isCustomVersion && wx.getExtConfigSync().isCustomVersion.toString() === 'true') ) {
             console.error('wx.getExtConfigSync().isCustomVersion: ', wx.getExtConfigSync().isCustomVersion)
             this.wx3rdInfo.is3rd = true;
         }
@@ -183,6 +183,7 @@ App({
     },
 
     onShow: function () {
+        this.getAuthCode();
         const that = this;
         const pages = ["pages/home/home", "pages/work-base/work-base", "pages/user-center/user-center"];
         const scenes = [1007, 1008, 1011, 1012, 1013, 1014, 1017, 1036, 1037, 1038, 1044, 1047, 1048, 1049, 1073, 1074, 1088, 1096, 1107, 1113, 1114, 1119];

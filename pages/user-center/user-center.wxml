@@ -2,7 +2,7 @@
     <view class="user-page-wrapper">
         <view class="head">
             <view class="user-personal-info">
-                <block wx:if="{{!isGetAccessToken}}">
+                <block wx:if="{{!isGetUserInfo}}">
                     <button class="user-info-button" open-type="getUserInfo"
                             bindgetuserinfo="getUserInfo">
                         <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
@@ -10,7 +10,7 @@
                         <text>点击登录</text>
                     </button>
                 </block>
-                <block wx:if="{{isGetAccessToken}}">
+                <block wx:if="{{isGetUserInfo}}">
                     <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
                            style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
                     <text>{{userBaseInfo.nickname || userBaseInfo.realname}}</text>
@@ -140,7 +140,7 @@
     <view class="user-page-wrapper">
         <view class="head">
             <view class="user-personal-info">
-                <block wx:if="{{!isGetAccessToken}}">
+                <block wx:if="{{!isGetUserInfo}}">
                     <button class="user-info-button" open-type="getUserInfo"
                             bindgetuserinfo="getUserInfo">
                         <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
@@ -148,7 +148,7 @@
                         <text>授权登录以显示头像昵称</text>
                     </button>
                 </block>
-                <block wx:if="{{isGetAccessToken}}">
+                <block wx:if="{{isGetUserInfo}}">
                     <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
                            style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
                     <text>{{userBaseInfo.nickname || userBaseInfo.realname || userBaseInfo.teamName + '的员工'}}</text>
@@ -198,7 +198,7 @@
     <view class="user-page-wrapper">
         <view class="head">
             <view class="user-personal-info">
-                <block wx:if="{{!isGetAccessToken}}">
+                <block wx:if="{{!isGetUserInfo}}">
                     <button class="user-info-button" open-type="getUserInfo"
                             bindgetuserinfo="getUserInfo">
                         <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
@@ -206,7 +206,7 @@
                         <text>授权登录以显示头像昵称</text>
                     </button>
                 </block>
-                <block wx:if="{{isGetAccessToken}}">
+                <block wx:if="{{isGetUserInfo}}">
                     <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
                            style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
                     <text>{{userBaseInfo.nickname || userBaseInfo.realname || userBaseInfo.teamName + '的员工'}}</text>

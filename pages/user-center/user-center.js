@@ -6,20 +6,25 @@ Page({
         is3rd: app.wx3rdInfo.is3rd,
         is3rdAdmin: app.checkAdmin(),
         userBaseInfo: {},
-        isGetAccessToken: app.checkAccessToken()
+        isGetAccessToken: app.checkAccessToken(),
+        isGetUserInfo: false
     },
     onLoad: function (options) {
         app.setDataOfPlatformInfo(this);
         app.getUserInformation().then(res=>{
-            if(res.avatar || res.nickname ||res.realname ){
+            if(res.avatar){
                 this.setData({
-                    userBaseInfo: res
-                })
+                    userBaseInfo: res,
+                    isGetUserInfo: true,
+                });
+                return
             }
+            this.setData({
+                isGetUserInfo: false,
+            });
         }).catch(err=>{
             console.error(err)
         })
-
     },
     onShow() {
         app.setDataOfPlatformInfo(this);
@@ -51,8 +56,19 @@ Page({
     },
     getUserInfo: function(e) {
         app.updateUserInfo(e).then(res=>{
-            this.setData({
-                userBaseInfo: res
+            app.getUserInformation().then(res=>{
+                if(res.avatar){
+                    this.setData({
+                        userBaseInfo: res,
+                        isGetUserInfo: true,
+                    });
+                    return
+                }
+                this.setData({
+                    isGetUserInfo: false,
+                });
+            }).catch(err=>{
+                console.error(err)
             })
         }).catch(err=>{
             console.error(err)

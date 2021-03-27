@@ -2,7 +2,7 @@
     <view wx:if="{{!evaluationTask.length}}" class="noData">
         <hola-empty title="暂未收到测评邀约"></hola-empty>
     </view>
-    <view class="list" style="padding: 0 44rpx;background-color: rgba(247, 248, 250, 1);" wx:else>
+    <view wx:else class="list" style="padding: 0 44rpx;background-color: rgba(247, 248, 250, 1);">
         <scroll-view scroll-y style="height: {{ isWxWork ? (windowHeight-60-safeAreaDiff) * pixelRate : '' }}rpx;">
             <block wx:for="{{evaluationTask}}" wx:key="unique">
                 <view class="item">
@@ -37,7 +37,7 @@
             </block>
         </scroll-view>
     </view>
-    <block wx:if="{{isWxWork&&tabBarTrigger}}">
+    <block wx:if="{{(isWxWork || is3rd)&&tabBarTrigger}}">
         <hola-tab-bar id="hola-tab-bar" active="{{ 0 }}" morePath="../../../" isWxWork="{{isWxWork}}"></hola-tab-bar>
     </block>
 </view>

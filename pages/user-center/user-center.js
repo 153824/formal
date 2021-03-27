@@ -11,7 +11,7 @@ Page({
     },
     onLoad: function (options) {
         app.setDataOfPlatformInfo(this);
-        app.getUserInformation().then(res=>{
+        this.getUserInformation().then(res=>{
             if(res.avatar){
                 this.setData({
                     userBaseInfo: res,
@@ -24,10 +24,13 @@ Page({
             });
         }).catch(err=>{
             console.error(err)
-        })
+        });
     },
     onShow() {
         app.setDataOfPlatformInfo(this);
+    },
+    getUserInformation() {
+        return app.getUserInformation()
     },
     goToReceiveReports: function () {
         wx.navigateTo({
@@ -56,20 +59,18 @@ Page({
     },
     getUserInfo: function(e) {
         app.updateUserInfo(e).then(res=>{
-            app.getUserInformation().then(res=>{
-                if(res.avatar){
-                    this.setData({
-                        userBaseInfo: res,
-                        isGetUserInfo: true,
-                    });
-                    return
-                }
+            return this.getUserInformation()
+        }).then(res=>{
+            if(res.avatar){
                 this.setData({
-                    isGetUserInfo: false,
+                    userBaseInfo: res,
+                    isGetUserInfo: true,
                 });
-            }).catch(err=>{
-                console.error(err)
-            })
+                return
+            }
+            this.setData({
+                isGetUserInfo: false,
+            });
         }).catch(err=>{
             console.error(err)
         })

@@ -183,8 +183,7 @@ App({
     },
 
     onShow: function () {
-        this.getAuthCode();
-        const that = this;
+        this.prueLogin();
         const pages = ["pages/home/home", "pages/work-base/work-base", "pages/user-center/user-center"];
         const scenes = [1007, 1008, 1011, 1012, 1013, 1014, 1017, 1036, 1037, 1038, 1044, 1047, 1048, 1049, 1073, 1074, 1088, 1096, 1107, 1113, 1114, 1119];
         let currentPage = "";
@@ -792,6 +791,58 @@ App({
         return p;
     },
 
+    getPrueAuthCode(code) {
+        const that = this;
+        const type = this.wxWorkInfo.isWxWork ? 'WEWORK' : 'WECHAT';
+        const p = new Promise((resolve, reject) => {
+            this.doAjax({
+                url: `wework/auth/ma_auth_code`,
+                method: 'POST',
+                data: {
+                    type: type,
+                    appId: that.globalData.appid,
+                    code: code,
+                },
+                noLoading: true,
+                success: function (res) {
+                    resolve(res)
+                },
+                error: function (err) {
+                    reject(err);
+                }
+            });
+        });
+        return p;
+    },
+
+    prueLogin() {
+        const that = this;
+        if (this.wxWorkInfo.isWxWork) {
+            wx.qy.login({
+                success: res => {
+                    that.getPrueAuthCode(res.code).then(res=>{
+                        wx.setStorageSync('authCode', res.authCode)
+                    })
+                },
+                fail: function (err) {
+                    console.error(err);
+                }
+            })
+        }
+        else {
+            wx.login({
+                success: res => {
+                    that.getPrueAuthCode(res.code).then(res=>{
+                        wx.setStorageSync('authCode', res.authCode)
+                    })
+                },
+                fail: function (err) {
+                    console.error(err);
+                }
+            })
+        }
+    },
+
     getSMSCode(phone) {
         const p = new Promise((resolve, reject) => {
             this.doAjax({
@@ -810,5 +861,5 @@ App({
             })
         });
         return p;
-    }
+    },
 });

@@ -15,14 +15,14 @@
             </view>
         </view>
         <view style="background-color: #fff;margin-top: 20rpx;">
-            <block>
-                <button wx:if="{{ !evaluationVoucherInfo.isBeginner && !evaluation.freeEvaluation && isGetInAgainst === 'YES' && !evaluationVoucherInfo.hadShare }}"
-                        class="get-free-ticket"
-                        open-type="share"
-                        style="background: transparent;border: none !important;">
-                    <ticket image="http://ihola.luoke101.com/icon%40icon-ticket-banner.png"></ticket>
-                </button>
-            </block>
+<!--            <block>-->
+<!--                <button wx:if="{{ (!evaluationVoucherInfo.isBeginner && !evaluation.freeEvaluation && isGetInAgainst === 'YES' && !evaluationVoucherInfo.hadShare) }}"-->
+<!--                        class="get-free-ticket"-->
+<!--                        open-type="share"-->
+<!--                        style="background: transparent;border: none !important;">-->
+<!--                    <ticket image="http://ihola.luoke101.com/icon%40icon-ticket-banner.png"></ticket>-->
+<!--                </button>-->
+<!--            </block>-->
             <!--面试助手判断逻辑-->
             <block wx:if="{{ util.isIncludes(assistant,evaluation.evaluationInfo.id) }}">
                 <checkout title="测评简介" type="introduction" info="{{ evaluation.synopsis }}"></checkout>
@@ -118,7 +118,7 @@
         <view class="buy-group"
               wx:elif="{{ !evaluationVoucherInfo.hadConsumed && !evaluationVoucherInfo.buyoutInfo.hadBuyout }}">
             <button class="meal meal-button" style="background-color: rgba(255,243,224,1);outline: none;border: none;"
-                    open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
+                    open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}" bindgetphonenumber="getPhoneNumber" bind:tap="{{isGetAccessToken ? 'getNewerTicket' : ''}}">
                 <meal isShow="{{ evaluationVoucherInfo.isBeginner }}" title="新用户领券，免费体验测评"
                       subIcon="../../images/icon/icon@banner-ticket.gif" subtitle="立即领券 >" icon="false"></meal>
             </button>

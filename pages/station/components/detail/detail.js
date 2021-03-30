@@ -165,6 +165,9 @@ Page({
                 loading: false,
             })
         });
+        this.setData({
+            isGetAccessToken: app.checkAccessToken()
+        })
     },
     onUnload: function () {
         try {
@@ -504,29 +507,31 @@ Page({
                 imageUrl: `${evaluationInfo.smallImg}`,
             }
         }
-        app.doAjax({
-            url: `drawVoucher?paperId=${id}`,
-            success: function (res) {
-                app.toast(res);
-            },
-            fail: function (err) {
-                console.error(err);
-            }
-        });
-        setTimeout(() => {
-            wx.showModal({
-                title: '',
-                content: '领券成功，快去兑换测评吧',
-                confirmText: '立即兑换',
-                success(res) {
-                    if (res.confirm) {
-                        that.setData({
-                            buyByTicket: true
-                        })
-                    }
-                }
-            });
-        }, 2000);
+        // 分享领券-开始
+        // app.doAjax({
+        //     url: `drawVoucher?paperId=${id}`,
+        //     success: function (res) {
+        //         app.toast(res);
+        //     },
+        //     fail: function (err) {
+        //         console.error(err);
+        //     }
+        // });
+        // setTimeout(() => {
+        //     wx.showModal({
+        //         title: '',
+        //         content: '领券成功，快去兑换测评吧',
+        //         confirmText: '立即兑换',
+        //         success(res) {
+        //             if (res.confirm) {
+        //                 that.setData({
+        //                     buyByTicket: true
+        //                 })
+        //             }
+        //         }
+        //     });
+        // }, 2000);
+        // 分享领券-结束
         return {
             title: "我发现一个不错的人才测评软件，快来看看吧~",
             path: "pages/home/home",

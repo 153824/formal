@@ -22,6 +22,9 @@ Page({
             verifyType: verifyType ? verifyType : 'login',
         });
         app.setDataOfPlatformInfo(this)
+        if(phone){
+            this.getSMSCode()
+        }
     },
     getCode(e) {
         this.setData({
@@ -59,7 +62,7 @@ Page({
     getSMSCode() {
         const {phone} = this.data;
         app.getSMSCode(phone).then(res => {
-            app.toast('success')
+            app.toast('验证码发送成功~')
         }).catch(err => {
             console.error(err)
         });

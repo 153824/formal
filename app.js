@@ -86,7 +86,7 @@ App({
     umengConfig: {
         // 悠悠测评 5f7fc58180455950e49eaa0d
         // 好啦测评 5f6d5902906ad81117141b70
-        appKey: '', //由友盟分配的APP_KEY
+        appKey: '5f7fc58180455950e49eaa0d', //由友盟分配的APP_KEY
         // 使用Openid进行统计，此项为false时将使用友盟+uuid进行用户统计。
         // 使用Openid来统计微信小程序的用户，会使统计的指标更为准确，对系统准确性要求高的应用推荐使用Openid。
         useOpenid: true,
@@ -817,30 +817,51 @@ App({
 
     prueLogin() {
         const that = this;
-        if (this.wxWorkInfo.isWxWork) {
-            wx.qy.login({
-                success: res => {
-                    that.getPrueAuthCode(res.code).then(res=>{
-                        wx.setStorageSync('authCode', res.authCode)
-                    })
-                },
-                fail: function (err) {
-                    console.error(err);
-                }
-            })
-        }
-        else {
-            wx.login({
-                success: res => {
-                    that.getPrueAuthCode(res.code).then(res=>{
-                        wx.setStorageSync('authCode', res.authCode)
-                    })
-                },
-                fail: function (err) {
-                    console.error(err);
-                }
-            })
-        }
+        const p = new Promise((resolve, reject) => {
+            if (this.wxWorkInfo.isWxWork) {
+                wx.qy.login({
+                    success: res => {
+                        that.getPrueAuthCode(res.code).then(res=>{
+                            const {authCode, tokenInfo, userInfo} = res;
+                            if(tokenInfo && tokenInfo.accessToken){
+                                userInfo.tokenInfo = tokenInfo
+                                wx.setStorageSync('userInfo', userInfo)
+                            }
+                            wx.setStorageSync('authCode', authCode)
+                            resolve()
+                        }).catch(err=>{
+                            reject(err)
+                        });
+                    },
+                    fail: function (err) {
+                        console.error(err);
+                        reject(err)
+                    }
+                })
+            }
+            else {
+                wx.login({
+                    success: res => {
+                        that.getPrueAuthCode(res.code).then(res=>{
+                            const {authCode, tokenInfo, userInfo} = res;
+                            if(tokenInfo && tokenInfo.accessToken){
+                                userInfo.tokenInfo = tokenInfo
+                                wx.setStorageSync('userInfo', userInfo)
+                            }
+                            wx.setStorageSync('authCode', authCode)
+                            resolve()
+                        }).catch(err=>{
+                            reject(err)
+                        })
+                    },
+                    fail: function (err) {
+                        reject(err)
+                        console.error(err);
+                    }
+                })
+            }
+        });
+        return p;
     },
 
     getSMSCode(phone) {

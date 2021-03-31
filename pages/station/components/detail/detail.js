@@ -166,6 +166,7 @@ Page({
             })
         });
         this.setData({
+            // app.checkAccessToken()
             isGetAccessToken: app.checkAccessToken()
         })
     },
@@ -694,6 +695,7 @@ Page({
             }
             const getAccessToken = new Promise(((resolve, reject) => {
                 app.getAccessToken(e).then(res=>{
+                    that.onShow();
                     resolve(true);
                 }).catch(err=>{
                     reject(err);
@@ -764,7 +766,7 @@ Page({
         const that = this;
         const {mark, eventName} = e.currentTarget.dataset;
         const {evaluation} = this.data;
-        if (that.data.isGetAccessToken) {
+        if (app.checkAccessToken()) {
             switch (eventName) {
                 case 'goToDaTi':
                     wx.uma.trackEvent('1602212461556', {name: evaluation.name, isFree: evaluation.freeEvaluation});

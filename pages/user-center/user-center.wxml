@@ -7,7 +7,7 @@
                             bindgetuserinfo="getUserInfo">
                         <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
                                style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                        <text>点击登录</text>
+                        <text>点击授权头像</text>
                     </button>
                 </block>
                 <block wx:if="{{isGetUserInfo}}">

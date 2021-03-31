@@ -38,6 +38,6 @@ Page({
                     binding: res.binding
                 })
             }
-        })
+        });
     }
 });

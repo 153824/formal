@@ -74,7 +74,8 @@ Page({
         }
         if (!isWxWork && !is3rd) {
             app.checkUserInfo = (userInfo) => {
-                if (String(userInfo.isNew) !== 'false') {
+                console.log('userInfo: ',userInfo);
+                if (userInfo && userInfo.isNew && String(userInfo.isNew) === 'true') {
                     wx.redirectTo({
                         url: "/pages/preload/preload",
                         success: res => {

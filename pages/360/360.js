@@ -243,7 +243,7 @@ Page({
             return this.wxAuthLogin(e)
         }).catch(err=>{
             if(err && err.code === '401111'){
-                app.getAuthCode().then(res=>{
+                app.prueLogin().then(res=>{
                     this.getAccessToken(e)
                 });
                 that.setData({

@@ -22,7 +22,7 @@ Page({
             return
         }
         const verifyType = phone ? 'unbound' : 'bound';
-        const url = phone ? `/pages/account/account?verifyType=${verifyType}` : `/pages/account/account?verifyType=${verifyType}`
+        const url = phone ? `/pages/account/subpages/verify/verify?verifyType=${verifyType}&phone=${phone}` : `/pages/account/account?verifyType=${verifyType}`
         wx.navigateTo({
             url
         })

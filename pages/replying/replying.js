@@ -1059,7 +1059,7 @@ Page({
                 });
             }).catch(err=>{
                 if(err.code === '401111'){
-                    app.getAuthCode().then(res=>{
+                    app.prueLogin().then(res=>{
                         this.getPhoneNumber(e)
                     });
                     that.setData({

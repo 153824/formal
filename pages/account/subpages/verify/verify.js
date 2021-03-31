@@ -41,7 +41,7 @@ Page({
         this.getAccessToken().catch(err => {
             console.error('getAccessToken: ',err.code);
             if (err.code === '401111') {
-                app.getAuthCode().then(res => {
+                app.prueLogin().then(res => {
                     that.verifyLoginSMSCode()
                 });
                 console.log(authCodeCounter++);

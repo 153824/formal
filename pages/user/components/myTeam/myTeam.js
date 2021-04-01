@@ -31,37 +31,6 @@ Page({
   onShow: function() {
     const {teamId} = wx.getStorageSync('userInfo')
     if (!teamId) return wx.navigateBack();
-    var adminNum = 1;
-    var that = this;
-    // app.doAjax({
-    //   url: "myTeamDetail",
-    //   method: "get",
-    //   data: {
-    //     id: teamId
-    //   },
-    //   success: function(res) {
-    //     adminNum = res.adminMemberMax || adminNum;
-    //     let members = res.members || [];
-    //     let memberRole = res.memberRole || {};
-    //     let adminMember = []; //管理员
-    //     let member = []; //普通成员
-    //     members.forEach(function(node) {
-    //       if (node) {
-    //         let id = node.objectId;
-    //         let role = memberRole[id] || 1;
-    //         if (role === 2) {
-    //           adminMember.push(node);
-    //         } else {
-    //           member.push(node);
-    //         }
-    //       }
-    //     });
-    //     res["adminNum"] = adminNum;
-    //     res["adminMember"] = adminMember;
-    //     res["member"] = member;
-    //     that.setData(res);
-    //   }
-    // });
     this.loadAdminInfo()
   },
 
@@ -132,7 +101,7 @@ Page({
   delMember: function(e) {
     var that = this;
     var index = e.currentTarget.dataset.index;
-    var obj = that.data.adminMember[index];
+    var obj = that.data.members[index];
     wx.showModal({
       title: '取消子管理员权限',
       content: '确定将该成员降为普通成员吗',
@@ -144,7 +113,7 @@ Page({
               id: app.teamId,
               type: 2,
               role: 1,
-              teamUserId: obj.objectId
+              teamUserId: obj.id
             },
             success: function() {
               app.toast("操作成功");
@@ -161,7 +130,7 @@ Page({
   showEditMenu1: function(e) {
     const that = this;
     const index = e.currentTarget.dataset.index;
-    const obj = that.data.adminMember[index];
+    const obj = that.data.members[index];
     wx.showModal({
       title: "移除成员",
       content: "确定将该成员从团队中移除吗?",
@@ -170,7 +139,7 @@ Page({
           const postData = {
             id: app.teamId,
             type: 3,
-            teamUserId: obj.objectId
+            teamUserId: obj.id
           };
           app.doAjax({
             url: "updateTeamMember",
@@ -183,49 +152,6 @@ Page({
         }
       }
     });
-    // wx.showActionSheet({
-    //   itemList: ['移除成员', '降为普通成员'],
-    //   success(res) {
-    //     var tapIndex = res.tapIndex;
-    //     var t = "移除成员";
-    //     var txt = "确定将该成员从团队中移除吗";
-    //     var postData = {
-    //       id: app.teamId,
-    //       type: 3,
-    //       teamUserId: obj.objectId
-    //     };
-    //     if (tapIndex == 1) {
-    //       //降为普通成员
-    //       t = "降为普通成员";
-    //       txt = "确定将该成员降为普通成员吗";
-    //       postData = {
-    //         id: app.teamId,
-    //         type: 2,
-    //         role: 1,
-    //         teamUserId: obj.objectId
-    //       };
-    //     }
-    //     wx.showModal({
-    //       title: t,
-    //       content: txt,
-    //       success: function(ret) {
-    //         if (ret.confirm) {
-    //           app.doAjax({
-    //             url: "updateTeamMember",
-    //             data: postData,
-    //             success: function() {
-    //               app.toast("操作成功");
-    //               that.onShow();
-    //             }
-    //           });
-    //         }
-    //       }
-    //     });
-    //   },
-    //   fail(res) {
-    //     console.log(res.errMsg)
-    //   }
-    // });
   },
   /**
    * 编辑普通成员

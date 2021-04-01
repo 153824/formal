@@ -4,8 +4,8 @@
   <block wx:for="{{list}}" wx:key="unique">
     <view class="item flex" bindtap="selIt" data-index="{{index}}">
       <image class="headerIcon" src="{{item.avatar}}"></image>
-      <view class="flex-main name">{{item.nickname}}</view>
-      <view wx:if="{{selUser==item.objectId}}" class="checkView">
+      <view class="flex-main name">{{item.nickName || item.realName}}</view>
+      <view wx:if="{{selUser==item.id}}" class="checkView">
         <image src="../img/user/teams/icon9.png"></image>
       </view>
     </view>

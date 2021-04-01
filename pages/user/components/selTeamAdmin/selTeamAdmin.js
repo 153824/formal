@@ -69,8 +69,8 @@ Page({
     var index = e.currentTarget.dataset.index;
     var obj = this.data.list[index];
     this.setData({
-      selUser: obj.objectId,
-      selUserName: obj.nickname
+      selUser: obj.id,
+      selUserName: obj.nickName || obj.realName
     });
   },
   /**

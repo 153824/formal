@@ -7,7 +7,10 @@ Page({
    */
   data: {
     adminNum: 1,
-    memberNum: 2
+    memberNum: 2,
+    adminUser: {},
+    adminMemberMax: 1,
+    members: []
   },
 
   /**
@@ -28,63 +31,38 @@ Page({
   onShow: function() {
     const {teamId} = wx.getStorageSync('userInfo')
     if (!teamId) return wx.navigateBack();
-    var isvip0 = wx.getStorageSync("isvip0");
-    var isvip1 = wx.getStorageSync("isvip1");
-    var isvip2 = wx.getStorageSync("isvip2");
-    var isvip3 = wx.getStorageSync("isvip3");
-    var isvip4 = wx.getStorageSync("isvip4");
     var adminNum = 1;
-    var memberNum = -1;
-    if (isvip0) {
-      adminNum = 2;
-      memberNum = -1;
-    }
-    if (isvip1) {
-      adminNum = -1;
-      memberNum = -1;
-    }
-    if (isvip2) {
-      adminNum = 4;
-      memberNum = -1;
-    }
-    if (isvip3) {
-      adminNum = 6;
-      memberNum = -1;
-    }
-    if (isvip4) {
-      adminNum = 8;
-      memberNum = -1;
-    }
     var that = this;
-    app.doAjax({
-      url: "myTeamDetail",
-      method: "get",
-      data: {
-        id: teamId
-      },
-      success: function(res) {
-        adminNum = res.adminMemberMax || adminNum;
-        let members = res.members || [];
-        let memberRole = res.memberRole || {};
-        let adminMember = []; //管理员
-        let member = []; //普通成员
-        members.forEach(function(node) {
-          if (node) {
-            let id = node.objectId;
-            let role = memberRole[id] || 1;
-            if (role === 2) {
-              adminMember.push(node);
-            } else {
-              member.push(node);
-            }
-          }
-        });
-        res["adminNum"] = adminNum;
-        res["adminMember"] = adminMember;
-        res["member"] = member;
-        that.setData(res);
-      }
-    });
+    // app.doAjax({
+    //   url: "myTeamDetail",
+    //   method: "get",
+    //   data: {
+    //     id: teamId
+    //   },
+    //   success: function(res) {
+    //     adminNum = res.adminMemberMax || adminNum;
+    //     let members = res.members || [];
+    //     let memberRole = res.memberRole || {};
+    //     let adminMember = []; //管理员
+    //     let member = []; //普通成员
+    //     members.forEach(function(node) {
+    //       if (node) {
+    //         let id = node.objectId;
+    //         let role = memberRole[id] || 1;
+    //         if (role === 2) {
+    //           adminMember.push(node);
+    //         } else {
+    //           member.push(node);
+    //         }
+    //       }
+    //     });
+    //     res["adminNum"] = adminNum;
+    //     res["adminMember"] = adminMember;
+    //     res["member"] = member;
+    //     that.setData(res);
+    //   }
+    // });
+    this.loadAdminInfo()
   },
 
   /**
@@ -304,11 +282,25 @@ Page({
    * 转让超级管理员
    */
   changeAdminUser: function(e) {
-    var data = this.data;
-    var list = data.adminMember.concat(data.member);
-    wx.setStorageSync("teamMembers", list);
+    const {members} = this.data;
+    wx.setStorageSync("teamMembers", members);
     wx.navigateTo({
       url: '../selTeamAdmin/selTeamAdmin'
     });
+  },
+  loadAdminInfo() {
+    const that = this;
+    app.doAjax({
+      url: '../wework/teams/collaborators',
+      method: 'GET',
+      success(res) {
+        const {adminUser, adminMemberMax, members} = res;
+        that.setData({
+          adminUser,
+          adminMemberMax,
+          members
+        })
+      },
+    })
   }
-})
+});

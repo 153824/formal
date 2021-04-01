@@ -2,33 +2,33 @@
 <view class="adminUser flex">
     <image class="headerIcon" src="{{adminUser.avatar}}"></image>
     <view class="flex-main">
-        <view class="name">{{adminUser.nickname}}</view>
+        <view class="name">{{adminUser.nickName}}</view>
         <view class="roleName">超级管理员</view>
     </view>
-    <view wx:if="{{adminMember.length||member.length}}" class="changeAdminUser" bindtap="changeAdminUser">转让超级管理员</view>
+    <view wx:if="{{members.length}}" class="changeAdminUser" bindtap="changeAdminUser">转让超级管理员</view>
 </view>
 <view class="list">
     <view class="listInfo flex">
         <view class="flex-main">
-            <view class="title">子管理员 ({{ adminMember.length }}/{{ adminNum }})</view>
+            <view class="title">子管理员 ({{ members.length }}/{{ adminMemberMax }})</view>
             <view class="info">可与您一同发放测评，查看报告</view>
         </view>
     </view>
-    <block wx:for="{{adminMember}}" wx:key="unique">
+    <block wx:for="{{members}}" wx:key="unique">
         <view class="item flex">
             <image src="{{item.avatar}}" class="headerIcon"></image>
-            <view class="flex-main name">{{item.nickname}}</view>
+            <view class="flex-main name">{{item.nickName || item.realName}}</view>
             <view class="editBtn" bindtap="showEditMenu1" data-index="{{index}}">
                 <image src="../../images/myTeam@icon-my-team.png" style="height: 32rpx;width: 32rpx;"></image>
             </view>
         </view>
     </block>
-    <button wx:if="{{adminMember.length<adminNum}}" open-type="share" class="shareBtn" bindtap="inviteMember"
+    <button wx:if="{{members.length<adminMemberMax}}" open-type="share" class="shareBtn" bindtap="inviteMember"
             data-role="2">
         <image src="../../images/my-team@icon-add.png" style="height: 16px;width: 16px;margin-right: 14rpx;"></image>
         添加子管理员
     </button>
-    <button wx:else class="shareBtn" bindtap="inviteMember" data-num="{{adminNum}}" data-n="子管理员">
+    <button wx:else class="shareBtn" bindtap="inviteMember" data-num="{{adminMemberMax}}" data-n="子管理员">
         <image src="../../images/my-team@icon-add.png" style="height: 16px;width: 16px;margin-right: 14rpx;"></image>
         添加子管理员
     </button>

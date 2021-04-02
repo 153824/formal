@@ -39,6 +39,7 @@
                 绑定其他手机
             </van-button>
         </view>
-        <text class="tips">无法登录原平台账号？</text>
+        <text class="tips" bind:tap="showServing">无法登录原平台账号？</text>
     </view>
 </view>
+<hola-serving id="serving" visibility="hidden" />

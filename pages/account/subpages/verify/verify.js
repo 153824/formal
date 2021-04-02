@@ -6,7 +6,7 @@ Page({
         phone: '18150378337',
         authCodeCounter: 0,
         timeData: {},
-        time: 6000,
+        time: 60000,
         showCountDown: true,
         verifyType: 'login',
         isWxWork: app.wxWorkInfo.isWxWork,
@@ -62,7 +62,7 @@ Page({
     getSMSCode() {
         const {phone} = this.data;
         app.getSMSCode(phone).then(res => {
-            app.toast('验证码发送成功~')
+            // app.toast('验证码发送成功~')
         }).catch(err => {
             console.error(err)
         });

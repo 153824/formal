@@ -6,5 +6,8 @@ Page({
         wx.navigateTo({
             url: `/pages/account/account?verifyType=${verifyType}`
         })
+    },
+    showServing: function () {
+        this.selectComponent('#serving').callServing();
     }
 });

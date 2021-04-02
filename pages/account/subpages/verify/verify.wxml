@@ -2,10 +2,10 @@
 <view class="verify">
     <view>
         <view class="verify__code-info--wrapper">
-            <text class="verify__code-info__text">请输入验证码</text>
+            <text class="verify__code-info__text">请输入验证码{{verifyType === 'unbound' ? '解绑' : ''}}</text>
         </view>
         <view>
-            <text class="verify__code-info__tips">验证码以通过短信发送至{{util.subString(phone, 0, 3)}} {{util.subString(phone, 3, 7)}} {{util.subString(phone, 7, 11)}}{{verifyType === 'unbound' ? '解绑' : ''}}</text>
+            <text class="verify__code-info__tips">验证码以通过短信发送至{{util.subString(phone, 0, 3)}} {{util.subString(phone, 3, 7)}} {{util.subString(phone, 7, 11)}}</text>
         </view>
     </view>
     <view class="verify__code-input--wrapper">

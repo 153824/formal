@@ -129,7 +129,6 @@ App({
         }
         const scene = wx.getLaunchOptionsSync();
         this.getAuthCode();
-
         /**
          * @Description: 获取设置
          * @author: WE!D
@@ -183,7 +182,6 @@ App({
     },
 
     onShow: function () {
-        this.prueLogin();
         const pages = ["pages/home/home", "pages/work-base/work-base", "pages/user-center/user-center"];
         const scenes = [1007, 1008, 1011, 1012, 1013, 1014, 1017, 1036, 1037, 1038, 1044, 1047, 1048, 1049, 1073, 1074, 1088, 1096, 1107, 1113, 1114, 1119];
         let currentPage = "";
@@ -244,6 +242,7 @@ App({
                     if (res.isNew) {
                         wx.uma.trackEvent("1606212682385");
                     }
+                    console.log('that.checkUserInfo: ', that.checkUserInfo)
                     if (that.checkUserInfo) {
                         res.isWxWork = false;
                         res.is3rd = that.wx3rdInfo.is3rd;
@@ -295,6 +294,7 @@ App({
                         wx.setStorageSync('userInfo', userInfo)
                     }
                     wx.setStorageSync('authCode', authCode)
+                    console.log('that.checkUserInfo: ', that.checkUserInfo)
                     if (that.checkUserInfo) {
                         res.isWxWork = true;
                         res.is3rd = that.wx3rdInfo.is3rd;
@@ -764,6 +764,7 @@ App({
                         that.wxWorkUserLogin(res.code).then(res=>{
                             resolve()
                         }).catch(err => {
+                            console.log(err);
                             reject(err)
                         });
                     },

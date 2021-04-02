@@ -71,6 +71,8 @@ Page({
                 };
             }
             return
+
+            
         }
         if (!isWxWork && !is3rd) {
             app.checkUserInfo = (userInfo) => {

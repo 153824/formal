@@ -3,12 +3,23 @@ Page({
     data: {
         appTitle:'',
         liner: 'transparent',
-        authCodeCounter: 0
+        authCodeCounter: 0,
+        isWxWork: app.wxWorkInfo.isWxWork,
     },
     onLoad: function (options) {
+        const {isWxWork} = app.wxWorkInfo;
+        if(isWxWork){
+            wx.navigateTo({
+                url: '/pages/account/account'
+            });
+            return;
+        }
         this.getAppTitle()
     },
     wxAuthLogin(e) {
+        if(app.wxWorkInfo.isWxWork){
+            return;
+        }
         const that = this;
         let {authCodeCounter} = this.data;
         if(authCodeCounter > 5){

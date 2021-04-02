@@ -102,10 +102,10 @@
     text-align: center;
 }
 .is-done{
-    width: 372rpx;
+    width: 352rpx;
 }
 .is-confirm{
-    width: 235rpx;
+    min-width: 255rpx;
     background-color:  #fff!important;
     border-color:  #353EE8FF!important;
     color: #353EE8FF!important;

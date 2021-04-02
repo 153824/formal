@@ -71,8 +71,8 @@ Page({
         try{
             // if (app.isTest && !releaseRecordId) {
             //     return that.getPaperMsg()
-            // }getTemptation
-            target()
+            // }
+            target();
             this.getProgramSetting();
         }catch (e) {
             console.error(e)
@@ -383,7 +383,6 @@ Page({
     },
 
     getProgramSetting(teamId) {
-        return
         const that = this;
         app.getMiniProgramSetting(teamId).then(res=>{
             that.setData({
@@ -405,7 +404,7 @@ Page({
         }).catch(err=>{
             if(err.code === '401111'){
                 app.prueLogin().then(res=>{
-                    this.getPhoneNumber(e)
+                    that.getPhoneNumber(e)
                 });
                 that.setData({
                     authCodeCounter: authCodeCounter++

@@ -55,7 +55,7 @@
         {
           "name": "小程序码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "scene=605b1f81c38cdf420f1798f1",
+          "query": "scene=6066ca0068deda392eea5d17",
           "scene": null
         },
         {
@@ -79,10 +79,9 @@
           "scene": null
         },
         {
-          "id": 10,
           "name": "小层序码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "scene=5fb4eb6dca59954c1c193067",
+          "query": "scene=6066ce4068deda392eea5d19",
           "scene": null
         },
         {

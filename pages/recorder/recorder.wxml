@@ -29,7 +29,7 @@
             <view wx:if="{{!username||!birthday||(!education&&education!=0)}}" class="graybtn">确认无误，开始作答</view>
             <block wx:else>
                 <block wx:if="{{ username && (education != -1) && birthday }}">
-                    <button open-type="getUserInfo" bind:getuserinfo="getUserInfo" data-name="{{ paperList.setting.name1 }}">确认无误，开始作答</button>
+                    <button open-type="getUserInfo" bindgetuserinfo="getUserInfo" data-name="{{ paperList.setting.name1 }}">确认无误，开始作答</button>
                 </block>
                 <view wx:else class="graybtn">确认无误，开始作答</view>
             </block>

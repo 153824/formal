@@ -400,6 +400,9 @@ App({
                             url: targetURL
                         })
                     }
+                    if(that.wxWorkInfo.isWxWork){
+                        that.getAuthCode()
+                    }
                 }
                 if(ret.statusCode === 400 && ret.data.code === '402002'){
                     wx.navigateTo({

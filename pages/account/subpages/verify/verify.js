@@ -34,7 +34,6 @@ Page({
     verifyLoginSMSCode() {
         const that = this;
         let {authCodeCounter} = this.data;
-        console.log('authCodeCounter: ', authCodeCounter);
         if (authCodeCounter > 5) {
             return;
         }
@@ -44,7 +43,6 @@ Page({
                 app.prueLogin().then(res => {
                     that.verifyLoginSMSCode()
                 });
-                console.log(authCodeCounter++);
                 that.setData({
                     authCodeCounter: authCodeCounter++
                 });
@@ -105,7 +103,7 @@ Page({
                 }
             },
             error(err) {
-                console.log('verifyUnboundSMSCode: ', err)
+                console.error('verifyUnboundSMSCode: ', err)
             }
         })
     }

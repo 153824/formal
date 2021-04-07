@@ -1,6 +1,8 @@
 {
   "usingComponents": {
     "van-button": "/common/vant-weapp/dist/button/index",
-    "van-field": "/common/vant-weapp/dist/field/index"
-  }
+    "van-field": "/common/vant-weapp/dist/field/index",
+    "hola-title": "/common/title/title"
+  },
+  "navigationStyle": "custom"
 }

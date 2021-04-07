@@ -186,6 +186,12 @@
           "pathName": "pages/360/subpages/end/end",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "统一授权页",
+          "pathName": "pages/auth/auth",
+          "query": "",
+          "scene": null
         }
       ]
     }

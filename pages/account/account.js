@@ -6,7 +6,8 @@ Page({
         isDisabled: true,
         isWrong: false,
         /*{ 'login': 登录, 'bound': 绑定, 'unbound': 解绑 }*/
-        verifyType: 'login'
+        verifyType: 'login',
+        liner: 'transparent',
     },
     onLoad: function (options) {
         this.setData({
@@ -15,7 +16,6 @@ Page({
     },
     onChange(e) {
         if(isComplete(e.detail, 11)){
-            console.log(verifyPhoneFormat(e.detail));
             if(verifyPhoneFormat(e.detail)){
                 this.setData({
                     isDisabled: false,

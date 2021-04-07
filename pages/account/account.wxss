@@ -1,4 +1,5 @@
 .account{
+    margin-top: 150rpx;
     padding: 40rpx 60rpx;
 }
 .account__welcome--wrapper{

@@ -55,7 +55,7 @@ App({
     otherPageReLaunchTrigger: true,
     quitPage: "",
     // host: "http://api.dev.luoke101.int",
-    // host: "https://api.luoke101.com",
+    host: "https://api.haola101.com",
     // host: "http://api.dev.luoke101.int",
     // host: 'https://uat.api.haola101.com',
     // host: 'https://www.uat.haola101.com',
@@ -242,7 +242,6 @@ App({
                     if (res.isNew) {
                         wx.uma.trackEvent("1606212682385");
                     }
-                    console.log('that.checkUserInfo: ', that.checkUserInfo)
                     if (that.checkUserInfo) {
                         res.isWxWork = false;
                         res.is3rd = that.wx3rdInfo.is3rd;
@@ -293,8 +292,7 @@ App({
                         userInfo.tokenInfo = tokenInfo
                         wx.setStorageSync('userInfo', userInfo)
                     }
-                    wx.setStorageSync('authCode', authCode)
-                    console.log('that.checkUserInfo: ', that.checkUserInfo)
+                    wx.setStorageSync('authCode', authCode);
                     if (that.checkUserInfo) {
                         res.isWxWork = true;
                         res.is3rd = that.wx3rdInfo.is3rd;
@@ -377,7 +375,7 @@ App({
         }
         if (accessToken) {
             params.header = {
-                'Authorization': `Bearer ${accessToken}`
+                'Authorization': `Bearer ${ params.token||accessToken}`
             }
         }
         wx.request({
@@ -393,9 +391,15 @@ App({
                     })
                 }
                 if (ret.statusCode === 401 && (that.wxWorkInfo.isWxWork || that.wx3rdInfo.is3rd)) {
-                    wx.navigateTo({
-                        url: '/pages/auth/auth'
-                    })
+                    let targetURL = '';
+                    if(!that.wxWorkInfo.isWxWork){
+                        targetURL = '/pages/auth/auth'
+                    }
+                    if(targetURL){
+                        wx.navigateTo({
+                            url: targetURL
+                        })
+                    }
                 }
                 if(ret.statusCode === 400 && ret.data.code === '402002'){
                     wx.navigateTo({
@@ -627,17 +631,20 @@ App({
             return;
         }
         const p = new Promise((resolve, reject) => {
-            this.doAjax({
-                url: 'wework/teams',
-                method: 'GET',
-                noLoading: true,
-                success(res) {
-                    resolve(res)
-                },
-                fail(err) {
-                    reject(err)
-                }
-            });
+            return this.checkUserInfo=(res)=>{
+                this.doAjax({
+                    url: 'wework/teams',
+                    method: 'GET',
+                    noLoading: true,
+                    token: res.tokenInfo.accessToken,
+                    success(res) {
+                        resolve(res)
+                    },
+                    fail(err) {
+                        reject(err)
+                    }
+                });
+            }
         });
         return p;
     },

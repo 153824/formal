@@ -113,7 +113,6 @@ var arrayEleIsSame = function(compare=[],target=[]){
 };
 
 var subString = function(string,start,end){
-  console.log(string)
   if(string.length >= end){
     return string.substring(start,end);
   }

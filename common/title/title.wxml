@@ -40,6 +40,11 @@
         </view>
     </view>
 </block>
+<block wx:if="{{ type === 'cant-back' }}">
+    <view class="bar-wrapper colorful {{liner}}" style="height: {{ statusbarHeight + titleHeight }}px;">
+        <view class="statusbar colorful-bg" style="height: {{ statusbarHeight }}px;"></view>
+    </view>
+</block>
 <block wx:if="{{ type === 'navigator' }}">
     <view class="bar-wrapper" style="height: {{ statusbarHeight + titleHeight }}px;">
         <view class="statusbar colorful-bg" style="height: {{ statusbarHeight }}px;"></view>

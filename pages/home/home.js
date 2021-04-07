@@ -57,7 +57,7 @@ Page({
                 });
             } else {
                 app.checkUserInfo = (res) => {
-                    flag = res && res.tokenInfo
+                    flag = res && res.tokenInfo;
                     if (flag) {
                         url = '/pages/work-base/work-base'
                         wx.switchTab({

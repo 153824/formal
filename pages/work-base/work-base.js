@@ -329,6 +329,7 @@ Page({
                 maskTrigger: false
             })
         }
+
         if(app.checkAccessToken()){
             app.getTeamList().then(res => {
                 let companyName = '';

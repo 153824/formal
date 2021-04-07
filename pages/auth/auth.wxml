@@ -1,4 +1,4 @@
-<hola-title type="colorful" liner="{{liner}}" time="{{startTime}}" moreType="{{type}}" width="150vw"></hola-title>
+<hola-title type="cant-back" liner="{{liner}}" time="{{startTime}}" moreType="{{type}}" width="150vw"></hola-title>
 <view class="omni">
     <view class="omni--view__item">
         <view class="omni--view__item-content">

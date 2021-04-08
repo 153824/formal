@@ -10,12 +10,19 @@
     </view>
     <view class="omni--view__item-info">
         <view class="omni--view__item-info__user-info">
-            <text class="omni--intro-text">请授权您的手机号以登录系统</text>
+            <text class="omni--intro-text">{{type === 'auth' ? '请授权您的手机号以登录系统' : '您的登录凭证已过期，请重新获取' }}</text>
         </view>
         <view>
-            <button class="omni__login-btn" open-type="getPhoneNumber" bind:getphonenumber="wxAuthLogin">
-                微信一键授权登录
-            </button>
+            <block wx:if="{{type === 'auth'}}">
+                <button class="omni__login-btn" open-type="getPhoneNumber" bind:getphonenumber="wxAuthLogin">
+                    微信一键授权登录
+                </button>
+            </block>
+            <block wx:else>
+                <button class="omni__login-btn" bind:tap="prueLogin">
+                    一键获取登录凭证
+                </button>
+            </block>
         </view>
     </view>
 </view>

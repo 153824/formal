@@ -46,6 +46,7 @@ Component({
     },
     methods: {
         getTeamList() {
+            console.log('title->getTeamList')
             app.getTeamList().then(res => {
                 let checkedTeam = 0;
                 res.forEach((item, index) => {
@@ -145,11 +146,18 @@ Component({
     },
     pageLifetimes: {
         show() {
+            const {type} = this.properties;
+            const pages = getCurrentPages()
             if (app.checkAccessToken()) {
-                this.getTeamList();
-                this.setData({
-                    visibility: 'visible',
-                })
+                if((
+                    pages[pages.length-1].route.indexOf('pages/home/home') !== -1
+                    || pages[pages.length-1].route.indexOf('pages/work-base/work-base') !== -1)
+                ){
+                    this.getTeamList();
+                    this.setData({
+                        visibility: 'visible',
+                    })
+                }
             }
         }
     }

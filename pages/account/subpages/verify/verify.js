@@ -94,7 +94,7 @@ Page({
                     })
                 } else if (is3rd) {
                     wx.navigateTo({
-                        url: '/pages/auth/auth'
+                        url: '/pages/auth/auth?type=auth'
                     })
                 } else {
                     wx.switchTab({

@@ -56,7 +56,7 @@ Page({
         });
         if(!app.checkAccessToken() && (app.wxWorkInfo.isWxWork || app.wx3rdInfo.is3rd)){
             wx.navigateTo({
-                url: '/pages/auth/auth'
+                url: '/pages/auth/auth?type=auth'
             });
             return;
         }
@@ -329,9 +329,10 @@ Page({
                 maskTrigger: false
             })
         }
-
         if(app.checkAccessToken()){
+            console.log('work-base->getTeamList')
             app.getTeamList().then(res => {
+                console.log(res);
                 let companyName = '';
                 res.forEach((item, index) => {
                     if (item.isLoginTeam) {

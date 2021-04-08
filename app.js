@@ -375,7 +375,7 @@ App({
         }
         if (accessToken) {
             params.header = {
-                'Authorization': `Bearer ${ params.token||accessToken}`
+                'Authorization': `Bearer ${accessToken}`
             }
         }
         wx.request({
@@ -385,23 +385,20 @@ App({
             header: params.header || {},
             success: function (ret) {
                 wx.hideLoading();
-                if (url.indexOf('wework/auth/ma') !== -1 && ret.statusCode === 403) {
+                if (ret.statusCode === 403) {
                     wx.reLaunch({
                         url: "/pages/forbidden/forbidden"
                     })
                 }
-                if (ret.statusCode === 401 && (that.wxWorkInfo.isWxWork || that.wx3rdInfo.is3rd)) {
-                    let targetURL = '';
-                    if(!that.wxWorkInfo.isWxWork){
-                        targetURL = '/pages/auth/auth'
-                    }
-                    if(targetURL){
-                        wx.navigateTo({
-                            url: targetURL
-                        })
-                    }
-                    if(that.wxWorkInfo.isWxWork){
-                        that.getAuthCode()
+                if (ret.statusCode === 401) {
+                    const pages = getCurrentPages()
+                    if(pages[pages.length-1].route.indexOf('pages/auth/auth') === -1){
+                        that.toast('登录凭证已失效~');
+                        setTimeout(()=>{
+                            wx.navigateTo({
+                                url: '/pages/auth/auth?type=getToken'
+                            })
+                        }, 2000)
                     }
                 }
                 if(ret.statusCode === 400 && ret.data.code === '402002'){
@@ -630,25 +627,19 @@ App({
     },
 
     getTeamList() {
-        if (!this.checkAccessToken()) {
-            return;
-        }
         const p = new Promise((resolve, reject) => {
-            return this.checkUserInfo=(res)=>{
-                this.doAjax({
-                    url: 'wework/teams',
-                    method: 'GET',
-                    noLoading: true,
-                    token: res.tokenInfo.accessToken,
-                    success(res) {
-                        resolve(res)
-                    },
-                    fail(err) {
-                        reject(err)
-                    }
-                });
-            }
-        });
+            this.doAjax({
+                url: 'wework/teams',
+                method: 'GET',
+                noLoading: true,
+                success(res) {
+                    resolve(res)
+                },
+                fail(err) {
+                    reject(err)
+                }
+            });
+        })
         return p;
     },
 
@@ -766,6 +757,9 @@ App({
     },
 
     getAuthCode() {
+        if(this.checkAccessToken()){
+            return;
+        }
         const that = this;
         const p = new Promise((resolve, reject) => {
             if (that.wxWorkInfo.isWxWork) {

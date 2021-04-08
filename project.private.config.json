@@ -61,7 +61,7 @@
         {
           "name": "二维码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "q=https://api.luoke101.com/s/605b0b66c38cdf420f1798e6",
+          "query": "q=https://api.luoke101.com/s/606e8058ea0089286495345a",
           "scene": null
         },
         {
@@ -134,8 +134,8 @@
           "scene": null
         },
         {
-          "name": "pages/3rd-home/index",
-          "pathName": "pages/3rd-home/index",
+          "name": "领取报告授权",
+          "pathName": "pages/whoami/whoami",
           "query": "surveyId=5d64776043e78c00689c9210",
           "scene": null
         },
@@ -190,7 +190,7 @@
         {
           "name": "统一授权页",
           "pathName": "pages/auth/auth",
-          "query": "",
+          "query": "type=getToken",
           "scene": null
         }
       ]

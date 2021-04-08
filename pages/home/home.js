@@ -49,7 +49,7 @@ Page({
         const {is3rd} = app.wx3rdInfo;
         if (isWxWork || is3rd) {
             let flag = false
-            let url = isWxWork ? "/pages/account/account" : "/pages/auth/auth"
+            let url = isWxWork ? "/pages/account/account" : "/pages/auth/auth?type=auth"
             if (app.checkAccessToken()) {
                 url = '/pages/work-base/work-base'
                 wx.switchTab({

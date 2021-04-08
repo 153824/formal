@@ -5,10 +5,15 @@ Page({
         liner: 'transparent',
         authCodeCounter: 0,
         isWxWork: app.wxWorkInfo.isWxWork,
+        type: 'auth'
     },
+
     onLoad: function (options) {
         const {isWxWork} = app.wxWorkInfo;
-        if(isWxWork){
+        this.setData({
+            type: options.type || 'auth'
+        });
+        if(isWxWork && options.type !== 'getToken'){
             wx.navigateTo({
                 url: '/pages/account/account'
             });
@@ -16,6 +21,7 @@ Page({
         }
         this.getAppTitle()
     },
+
     wxAuthLogin(e) {
         if(app.wxWorkInfo.isWxWork){
             return;
@@ -40,6 +46,7 @@ Page({
             }
         })
     },
+
     getAppTitle() {
         const temptation = new Promise((resolve, reject) => {
             app.doAjax({
@@ -57,6 +64,31 @@ Page({
             this.setData({
                 appTitle: res
             })
+        })
+    },
+
+    prueLogin() {
+        const pages = getCurrentPages();
+        app.prueLogin().then(res=>{
+            for(let i = pages.length - 1;i >= 0;i--){
+                if(pages[i].route.indexOf('pages/auth/auth') === -1){
+                    try{
+                        wx.switchTab({
+                            url: `/${pages[i].route}`
+                        });
+                    }catch (e) {
+                        wx.navigateTo({
+                            url: `/${pages[i].route}`
+                        });
+                    }
+                    return
+                }
+                if(i === 0){
+                    wx.switchTab({
+                        url: `/pages/work-base/work-base`
+                    });
+                }
+            }
         })
     }
 });

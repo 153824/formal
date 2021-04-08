@@ -17,7 +17,7 @@ Page({
         const {isWxWork} = this.data;
         if(!isWxWork && !phone){
             wx.navigateTo({
-                url: "/pages/auth/auth"
+                url: "/pages/auth/auth?type=auth"
             });
             return
         }

@@ -11,6 +11,9 @@ Page({
     },
     onLoad: function (options) {
         app.setDataOfPlatformInfo(this);
+    },
+    onShow() {
+        app.setDataOfPlatformInfo(this);
         this.getUserInformation().then(res=>{
             if(res.avatar){
                 this.setData({
@@ -25,9 +28,6 @@ Page({
         }).catch(err=>{
             console.error(err)
         });
-    },
-    onShow() {
-        app.setDataOfPlatformInfo(this);
     },
     getUserInformation() {
         return app.getUserInformation()

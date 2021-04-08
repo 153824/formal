@@ -71,7 +71,7 @@
 
 .join {
   position: absolute;
-  bottom: 40rpx;
+  top: 570rpx;
   left: 50%;
   transform: translateX(-50%);
   width: 528rpx;

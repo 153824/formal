@@ -7,6 +7,10 @@ Component({
 		itemData: {
 			type: Object,
 			value: {}
+		},
+		qIndex: {
+			type: Number,
+			value: 1
 		}
 	},
 	methods: {

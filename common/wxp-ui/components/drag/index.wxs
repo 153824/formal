@@ -218,11 +218,10 @@ var listObserver = function (newVal, oldVal, ownerInstance, ins) {
 		}
 	})
 }
-
 module.exports = {
 	longPress: longPress,
 	touchMove: touchMove,
 	touchEnd: touchEnd,
 	baseDataObserver: baseDataObserver,
-	listObserver: listObserver
+	listObserver: listObserver,
 }

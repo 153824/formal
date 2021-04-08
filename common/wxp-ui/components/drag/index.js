@@ -213,7 +213,7 @@ Component({
 				wrapStyle: `height: ${this.data.rows * this.data.itemHeight}rpx`
 			});
 			if (list.length === 0) return;
-
+			console.log(this.data.listWxs);
 			// 异步加载数据时候, 延迟执行 initDom 方法, 防止基础库 2.7.1 版本及以下无法正确获取 dom 信息
 			setTimeout(() => this.initDom(), 0);
 		}

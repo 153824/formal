@@ -21,7 +21,8 @@ Page({
         theFinalQuestionAnswer: [],
         isSelf: "",
         sandGlass: 0,
-        fetchedAt: 0
+        fetchedAt: 0,
+        outSideScrollTop: 0,
     },
 
     onLoad: function (options) {
@@ -767,5 +768,11 @@ Page({
 
     pageTouch(){
 
+    },
+    scroll(e) {
+        console.log('answering->scrollTop: ',e.detail.scrollTop);
+        this.setData({
+            outSideScrollTop: e.detail.scrollTop
+        });
     }
 });

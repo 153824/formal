@@ -1,0 +1,15 @@
+<drag id="drag"
+	  generic:item="drag-question-item"
+	  bind:click="itemClick"
+	  bind:change="change"
+	  bind:sortend="sortEnd"
+	  bind:scroll="scroll"
+	  item-wrap-class="drag-item-wrap"
+	  extra-nodes="{{extraNodes}}"
+	  list-data="{{listData}}"
+	  columns="{{size}}"
+	  item-height="{{180 / size}}"
+	  scroll-top="{{scrollTop}}"
+	  out-side-scroll-top="{{outSideScrollTop}}"
+	  top-size="110">
+</drag>

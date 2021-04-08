@@ -1,0 +1,8 @@
+<view catchtap="itemClick">
+	<view wx:if="{{columns === 1}}" class="cell">
+		<view class="question-number" data-index="5"/>
+		<view class="cell__bd">
+			<view class="name">{{itemData.title}}</view>
+		</view>
+	</view>
+</view>

@@ -94,7 +94,7 @@ Component({
 				listData: e.detail.listData,
 				timmer: new Date().getTime()
 			});
-			this.drag.init();
+			// this.drag.init();
 		},
 		change(e) {
 			console.log("change", e.detail.listData)

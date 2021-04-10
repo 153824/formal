@@ -73,7 +73,7 @@ Component({
 		platform: '',                                           // 平台信息
 		listWxs: [],                                            // wxs 传回的最新 list 数据
 		rows: 0,                                                // 行数
-
+		maxItemHeight: 0,
 		/* 渲染数据 */
 		wrapStyle: '',                                          // item-wrap 样式
 		list: [],                                               // 渲染数据列
@@ -131,10 +131,10 @@ Component({
 			baseData.rows =  this.data.rows;
 
 			const query = this.createSelectorQuery();
+			const itemQuery = this.createSelectorQuery();
 			query.select(".item").boundingClientRect();
 			query.select(".item-wrap").boundingClientRect();
 			query.exec((res) => {
-				console.log('query.exec: ',res);
 				baseData.itemWidth = res[0].width;
 				baseData.itemHeight = res[0].height;
 				baseData.wrapLeft = res[1].left;
@@ -144,6 +144,21 @@ Component({
 					baseData
 				});
 			});
+			itemQuery.selectAll('.item').boundingClientRect();
+			let maxHeight = 0;
+			itemQuery.exec(res=>{
+				res[0].forEach((item, key)=> {
+					console.log(item);
+					const itemHeight = item.height;
+					if(itemHeight > maxHeight){
+						maxHeight = itemHeight;
+					}
+				});
+				this.setData({
+					maxItemHeight: maxHeight || 0
+				})
+				console.log('maxItemHeight: ', maxHeight);
+			})
 		},
 		/**
 		 * column 改变时候需要清空 list, 以防页面溢出
@@ -210,7 +225,8 @@ Component({
 			this.setData({
 				list,
 				listWxs: list,
-				wrapStyle: `height: ${this.data.rows * this.data.itemHeight}rpx`
+				wrapStyle: `height: 0rpx`
+				// wrapStyle: `height: ${this.data.rows * this.data.itemHeight}rpx`
 			});
 			if (list.length === 0) return;
 			console.log(this.data.listWxs);

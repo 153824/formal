@@ -80,7 +80,6 @@ var longPress = function (event, ownerInstance) {
 
 	st.cur = ins.getDataset().index;
 	var outSideScrollTop = ins.getDataset().outSideScrollTop
-	console.log('_.wrapTop: ',_.wrapTop);
 	// 初始项是固定项则返回
 	var item = st.list[st.cur];
 	if (item && item.fixed) return;
@@ -94,12 +93,6 @@ var longPress = function (event, ownerInstance) {
 	st.tranX = _.columns === 1 ? 0 : sTouch.pageX - (_.itemWidth / 2 + _.wrapLeft);
 	st.tranY = sTouch.pageY - (_.itemHeight / 2 + _.wrapTop) + outSideScrollTop;
 	st.sId = sTouch.identifier;
-	// console.log('st.tranY: ',st.tranY);
-	// console.log('_:', JSON.stringify(_));
-	// console.log('sTouch: ', JSON.stringify(sTouch));
-	// console.log('sTouch.pageY: ',sTouch.pageY);
-	console.log("st.tranY: ",st.tranY);
-	console.log("wxs->outSideScrollTop: ", sTouch.pageY - (_.itemHeight / 2 + _.wrapTop) + outSideScrollTop, st.tranY);
 	ins.setStyle({
 		'transform': 'translate3d(' + st.tranX + 'px, ' + st.tranY + outSideScrollTop + 'px, 0)'
 	});

@@ -18,7 +18,8 @@
 
 .cell {
   display: flex;
-  height: 180rpx;
+  /*height: 280rpx;*/
+  /*max-height: 280rpx;*/
   padding: 20rpx;
   box-sizing: border-box;
   background: #FFFFFF; }
@@ -30,18 +31,25 @@
       margin-right: 20rpx;
       border-radius: 12rpx; }
   .cell__bd {
+    display: flex;
+    align-items: center;
     flex: 1;
     background: #FAFAFA;
     border-radius: 10px;
     padding: 40rpx;}
     .cell__bd .name {
-      display: -webkit-box;
+      flex: 1;
+      display: flex;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
-      overflow: hidden;
+      /* overflow: hidden; */
       word-break: break-all;
-      font-size: 28rpx;
-      margin-bottom: 4rpx; }
+      font-size: 30rpx;
+      margin-bottom: 4rpx;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #767676;
+      line-height: 50rpx;}
     .cell__bd .des {
       display: -webkit-box;
       -webkit-box-orient: vertical;
@@ -70,5 +78,5 @@
       font-size: 28rpx;
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
-      color: #00C061;
+      color: #fff;
     }

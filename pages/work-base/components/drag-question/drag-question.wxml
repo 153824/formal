@@ -8,7 +8,6 @@
 	  extra-nodes="{{extraNodes}}"
 	  list-data="{{listData}}"
 	  columns="{{size}}"
-	  item-height="{{180 / size}}"
 	  scroll-top="{{scrollTop}}"
 	  out-side-scroll-top="{{outSideScrollTop}}"
 	  top-size="110">

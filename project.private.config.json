@@ -61,7 +61,7 @@
         {
           "name": "二维码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "q=https://api.luoke101.com/s/606ed96eea008928649534e5",
+          "query": "q=https://api.luoke101.com/s/60710825ea0089286495369d",
           "scene": null
         },
         {
@@ -190,6 +190,12 @@
         {
           "name": "统一授权页",
           "pathName": "pages/auth/auth",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "测试用例-拖拽排序",
+          "pathName": "pages/test/drag-sort/index",
           "query": "",
           "scene": null
         }

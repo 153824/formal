@@ -12,7 +12,7 @@
 		class="item"
 		wx:for="{{list}}"
 		data-index="{{index}}"
-		style="width: {{100/columns}}%"
+		style="width: {{100/columns}}%;height: {{maxItemHeight ? maxItemHeight : auto }}px;"
 		data-out-side-scroll-top="{{outSideScrollTop}}"
 		bind:longpress="{{handler.longPress}}"
 		catch:touchmove="{{dragging ? handler.touchMove : ''}}"
@@ -22,7 +22,7 @@
 			<slot name="{{item.slot}}"></slot>
 		</block>
 		<block wx:else>
-			<item data-index="{{index}}" q-index="{{index}}" columns="{{columns}}" item-data="{{item.data}}" bind:click="itemClick"/>
+			<item id="{{item.data.dragId}}" data-index="{{index}}" q-index="{{index}}" columns="{{columns}}" item-data="{{item.data}}" bind:click="itemClick"/>
 		</block>
 	</view>
 </view>

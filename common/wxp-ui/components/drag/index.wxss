@@ -1,6 +1,8 @@
 .item-wrap {
   position: relative; }
   .item-wrap .item {
+    display: flex;
+    align-items: center;
     position: absolute;
     z-index: 1;
     top: 0;

@@ -1,4 +1,4 @@
-// test/index.js
+import {QUES_TYPE} from './const/index'
 const app = getApp();
 var sKey = "";
 var quesIdsOrder = [];
@@ -21,7 +21,15 @@ Page({
         theFinalQuestionAnswer: [],
         isSelf: "",
         sandGlass: 0,
-        fetchedAt: 0
+        fetchedAt: 0,
+
+        questions: [],
+        /*答题卡*/
+        answerSheet: [],
+        /*临时答题卡-使用Object数据结构方便答题操作数据*/
+        temporarySheet: {},
+        questionStep: 0,
+        fill: false,
     },
 
     onLoad: function (options) {
@@ -164,6 +172,15 @@ Page({
                 }
                 that.saveDraftAnswer();
             }
+        });
+        this.loadQuestion(options.receiveRecordId).then(res=>{
+            console.log('loadQuestion: ',res);
+            this.setData({
+                questions: res.questions,
+                countdownEnabled: res.countdownEnabled,
+                countdownInMinutes: res.countdownInMinutes
+            })
+
         });
     },
 
@@ -702,10 +719,6 @@ Page({
 
     },
 
-    notFillAll: function (e) {
-        return;
-    },
-
     _checkType: function (options) {
         const _this = this;
         app.doAjax({
@@ -767,5 +780,222 @@ Page({
 
     pageTouch(){
 
+    },
+
+    loadQuestion(receiveRecordId) {
+        receiveRecordId = this.data.receiveRecordId || receiveRecordId;
+        const p = new Promise((resolve, reject) => {
+            app.doAjax({
+                url: `../wework/evaluations/${receiveRecordId}/questions`,
+                method: 'GET',
+                success(res){
+                    resolve(res);
+                },
+                error(err){
+                    reject(err);
+                }
+            })
+        });
+        return p;
+    },
+
+    selectQuesItem(e) {
+        const {questionIndex, optionIndex} = e.currentTarget.dataset;
+        // console.log(questionIndex, optionIndex);
+        const {answerSheet, questions, questionStep} = this.data;
+        const targetSheet = [...answerSheet];
+        if(optionIndex < 0 || questionIndex < 0){
+            app.toast('题目或选项为空');
+            return;
+        }
+        const {type, leastChoice, mostChoice} = questions[questionIndex];
+        if(type === 'MULTIPLE' && answerSheet[questionIndex] && answerSheet[questionIndex].indexes){
+            const {indexes} = answerSheet[questionIndex];
+            if(indexes.length >= mostChoice && !indexes.includes(optionIndex)){
+                app.toast(`最多选中${mostChoice}个选项`)
+                return;
+            }
+        }
+        const targetItem = {
+            questionId: questions[questionIndex].id,
+            indexes: []
+        };
+        if(answerSheet.length - 1 < questionIndex){
+            targetItem.indexes.push(optionIndex);
+            targetSheet[questionIndex] = targetItem;
+        }
+        if(answerSheet.length - 1 >= questionIndex){
+            switch (type) {
+                case QUES_TYPE[0]:
+                    targetSheet[questionIndex].indexes = [optionIndex];
+                    break;
+                case QUES_TYPE[1]:
+                    answerSheet[questionIndex].indexes.push(optionIndex);
+                    let targetIndexes = answerSheet[questionIndex].indexes;
+                    targetIndexes = this.filterSameEle(targetIndexes);
+                    targetSheet[questionIndex].indexes = targetIndexes;
+                    break;
+                default:
+                    break;
+            }
+        }
+        this.setData({
+            answerSheet: targetSheet
+        });
+        this.memory();
+        if(type === QUES_TYPE[0]){
+            if(questionStep+1 !== questions.length){
+                this.nextQues()
+            }
+        }
+        if(questionStep+1 === questions.length){
+            this.judge().then(({fill})=>{
+                console.log('judge():',fill);
+                if(fill){
+                    this.setData({
+                        fill: true
+                    })
+                }
+            })
+        }
+    },
+
+    nextQues() {
+        const {questionStep, answerSheet} = this.data;
+        const indexes = answerSheet[questionStep] && answerSheet[questionStep].indexes ? answerSheet[questionStep].indexes : [] ;
+        this.judge().then(({flag, text})=>{
+            if(!flag && text){
+                app.toast(text)
+            }
+            if(indexes.length && flag){
+                this.setData({
+                    questionStep: questionStep + 1
+                })
+            }
+        })
+    },
+
+    preQues(e) {
+        const {questionStep, answerSheet} = this.data;
+        if(answerSheet[questionStep].indexes.length){
+            this.setData({
+                questionStep: questionStep - 1
+            })
+        }
+    },
+
+    memory(receiveRecordId) {
+        const {answerSheet} = this.data;
+        receiveRecordId = this.data.receiveRecordId || receiveRecordId;
+        if(!receiveRecordId){
+            console.error('answering.js:867 -> ', '缺少receiveRecordId');
+            return Promise.reject;
+        }
+        const p = new Promise((resolve, reject) => {
+            app.doAjax({
+                url: `../wework/evaluations/${receiveRecordId}/drafts`,
+                method: 'POST',
+                data: answerSheet,
+                noLoading: true,
+                success(res) {
+                    resolve(res)
+                },
+                error(err) {
+                    reject(err);
+                }
+            })
+        })
+        return p;
+    },
+
+    judge() {
+        let fill = false;
+        let flag = false;
+        let text = '';
+        const {questionStep, answerSheet, questions} = this.data;
+        const {type, leastChoice, mostChoice} = questions[questionStep];
+        const indexes = answerSheet[questionStep] && answerSheet[questionStep].indexes ? answerSheet[questionStep].indexes : [] ;
+        const p = new Promise((resolve, reject) => {
+            try{
+                switch (type) {
+                    case QUES_TYPE[0]:
+                        /*是否完成对应的题目要求*/
+                        if(indexes.length){
+                            flag = true;
+                        } else {
+                            text = `至少选中1个选项`
+                        }
+                        console.log()
+                        /*是否完成所有题目*/
+                        if(questionStep+1 === questions.length && flag) {
+                            fill = true;
+                        }
+                        break;
+                    case QUES_TYPE[1]:
+                        /*是否完成对应的题目要求*/
+                        if(indexes.length > mostChoice){
+                            text = `最多选中${mostChoice}个选项`
+                        } else if (indexes.length < leastChoice) {
+                            text = `至少选中${leastChoice}个选项`
+                        } else {
+                            flag = true;
+                        }
+                        /*是否完成所有题目*/
+                        if(questionStep+1 === questions.length && flag) {
+                            fill = true;
+                        }
+                        break;
+                    case QUES_TYPE[2]:
+                    case QUES_TYPE[3]:
+                }
+                resolve({flag, text, fill})
+            }
+            catch (err) {
+                reject(err);
+            }
+        });
+        return p;
+    },
+
+    save() {
+        const {answerSheet, receiveRecordId} = this.data;
+        const p = new Promise((resolve, reject) => {
+            app.doAjax({
+                url: '../hola/receive_records/answers',
+                method: 'POST',
+                data: {
+                    responds: answerSheet,
+                    receiveRecordId: receiveRecordId
+                },
+                success(res) {
+                    resolve(res)
+                },
+                error(err) {
+                    reject(err);
+                }
+            })
+        })
+        return p;
+    },
+
+    filterSameEle(arr) {
+        if(!arr.length){
+            return [];
+        }
+        const sames = [];
+        arr.sort();
+        for(let i =0; i < arr.length; i++){
+            if(arr[i] === arr[i+1] && (!sames.includes(arr[i])) ){
+                sames.push(arr[i]);
+                i++;
+            }
+        }
+        const targetArr = [];
+        arr = arr.forEach((item, key)=>{
+            if(!sames.includes(item)){
+                targetArr.push(item);
+            }
+        });
+        return targetArr;
     }
 });

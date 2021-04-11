@@ -1,7 +1,6 @@
 <!--test/index.wxml-->
 <!-- 填写个人信息 -->
 <view wx:if="{{isChangeQue}}" class="isChangeQue"></view>
-
 <!-- 答题页面 -->
 <view class="coverView" style="background-color:transparent;" wx:if="{{isChangeQue}}"></view>
 <view class="container font">
@@ -14,13 +13,13 @@
             <swiper current="{{swiperCurrent1}}">
                 <block wx:for="{{showQues}}" wx:for-index="quesindex" wx:for-item="quesitem" wx:key="unique">
                     <swiper-item catchtouchmove="pageTouch" wx:if="{{quesindex<(swiperCurrent+3)&&quesindex>(swiperCurrent-3)}}">
-                        <scroll-view id="question-scroll" bind:scroll="scroll" scroll-y="true" wx:if="{{quesitem}}">
+                        <scroll-view id="question-scroll" bind:scroll="scroll" scroll-y="true" wx:if="{{quesitem}}" scroll-top="{{computeScrollTop}}">
                             <hola-question-counter total="{{quesAll.length}}" currentNum="{{swiperCurrent + 1}}"></hola-question-counter>
                             <view class="paperhead">
                                 <rich-text class="title" space="nbsp"
                                            nodes="<p>{{quesitem.maxChoose>1?multipleQuesHTML:''}}{{ quesitem.type == 3 ? percentQuesHTML:'' }}{{quesitem.stem}}</p>"></rich-text>
                             </view>
-                            <view class="paperbody">
+                            <view class="paperbody paperbody-sort">
                                 <view class="options">
 <!--                                    <block wx:for="{{quesitem.options}}" wx:for-index="i" wx:for-item="item"-->
 <!--                                           wx:key="unique">-->
@@ -67,7 +66,8 @@
 <!--                                            </view>-->
 <!--                                        </view>-->
 <!--                                    </block>-->
-                                    <hola-drag-question out-side-scroll-top="{{outSideScrollTop}}"/>
+                                    <hola-drag-question out-side-scroll-top="{{outSideScrollTop}}" bind:getScrollTop="getScrollTop"/>
+<!--                                    <drag></drag>-->
                                 </view>
                             </view>
                             <view style="height:40rpx;"></view>

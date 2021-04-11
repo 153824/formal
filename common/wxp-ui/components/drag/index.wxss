@@ -3,6 +3,9 @@
   .item-wrap .item {
     display: flex;
     align-items: center;
+    background-color: #ffffff;
+    border-radius: 20rpx;
+    margin-bottom: 30rpx;
     position: absolute;
     z-index: 1;
     top: 0;
@@ -13,3 +16,21 @@
       z-index: 2; }
     .item-wrap .item.fixed {
       z-index: 0 !important; }
+    .item-content{
+      display: flex;
+      align-items: center;
+      background: #FAFAFA;
+      border-radius: 20rpx;
+      padding: 30rpx 40rpx;
+    }
+    .question-number{
+      position: absolute;
+      left: -20rpx;
+      width: 40rpx;
+      height: 40rpx;
+      line-height: 40rpx;
+      border-radius: 8rpx;
+      text-align: center;
+      color: #fff;
+      background-color: #353EE8FF;
+    }

@@ -1,5 +1,4 @@
 <wxs module="handler" src="./index.wxs"></wxs>
-
 <view class="item-wrap item-wrap-class"
 
 			list="{{list}}"
@@ -14,15 +13,19 @@
 		data-index="{{index}}"
 		style="width: {{100/columns}}%;height: {{maxItemHeight ? maxItemHeight : auto }}px;"
 		data-out-side-scroll-top="{{outSideScrollTop}}"
+		data-max-item-height="{{maxItemHeight}}"
 		bind:longpress="{{handler.longPress}}"
 		catch:touchmove="{{dragging ? handler.touchMove : ''}}"
 		catch:touchend="{{dragging ? handler.touchEnd : ''}}">
-
-		<block wx:if="{{item.extraNode}}">
-			<slot name="{{item.slot}}"></slot>
-		</block>
-		<block wx:else>
-			<item id="{{item.data.dragId}}" data-index="{{index}}" q-index="{{index}}" columns="{{columns}}" item-data="{{item.data}}" bind:click="itemClick"/>
-		</block>
+		<view class="item-content" style="min-height: {{pixelRate * (maxItemHeight - 15) - 60}}rpx;">
+			<text class="question-number">1</text>
+			{{item.data.title}}
+		</view>
+<!--		<block wx:if="{{item.extraNode}}">-->
+<!--			<slot name="{{item.slot}}"></slot>-->
+<!--		</block>-->
+<!--		<block wx:else>-->
+<!--			<item id="{{item.data.dragId}}" data-index="{{index}}" q-index="{{index}}" columns="{{columns}}" item-data="{{item.data}}" bind:click="itemClick"/>-->
+<!--		</block>-->
 	</view>
 </view>

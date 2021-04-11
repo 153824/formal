@@ -299,6 +299,10 @@
   background-color: #fff;
 }
 
+.container .paperbody-sort{
+  padding: 0 30rpx;
+}
+
 /* paper选项部分 */
 
 .container .paper .options {

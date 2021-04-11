@@ -23,9 +23,15 @@ Page({
         sandGlass: 0,
         fetchedAt: 0,
         outSideScrollTop: 0,
+        computeScrollTop: 0,
     },
 
     onLoad: function (options) {
+        // setTimeout(()=>{
+        //     this.setData({
+        //         computeScrollTop: 100,
+        //     })
+        // }, 5000)
         const that = this;
         this.setData({
             startTime: new Date().getTime(),
@@ -182,6 +188,13 @@ Page({
 
     onUnload: function () {
         answerTimeOut && clearTimeout(answerTimeOut);
+    },
+
+    getScrollTop(e) {
+        console.log('getScrollTop: ',e*20);
+        this.setData({
+            computeScrollTop: e.detail * 6
+        })
     },
 
     toTimeDown(timeKey, callBack) {

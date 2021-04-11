@@ -74,12 +74,12 @@ var longPress = function (event, ownerInstance) {
 	var ins = event.instance;
 	var st = ownerInstance.getState();
 	var _ = st.baseData;
+
 	var sTouch = event.changedTouches[0];
 	if (!sTouch) return;
 
 	st.cur = ins.getDataset().index;
-	var outSideScrollTop = ins.getDataset().outSideScrollTop
-	var maxItemHeight = ins.getDataset().maxItemHeight
+
 	// 初始项是固定项则返回
 	var item = st.list[st.cur];
 	if (item && item.fixed) return;
@@ -91,8 +91,9 @@ var longPress = function (event, ownerInstance) {
 
 	// 计算X,Y轴初始位移, 使 item 中心移动到点击处, 单列时候X轴初始不做位移
 	st.tranX = _.columns === 1 ? 0 : sTouch.pageX - (_.itemWidth / 2 + _.wrapLeft);
-	st.tranY = sTouch.pageY - (maxItemHeight / 2 + _.wrapTop) + outSideScrollTop;
+	st.tranY = sTouch.pageY - (_.itemHeight / 2 + _.wrapTop);
 	st.sId = sTouch.identifier;
+
 	ins.setStyle({
 		'transform': 'translate3d(' + st.tranX + 'px, ' + st.tranY + 'px, 0)'
 	});
@@ -101,6 +102,7 @@ var longPress = function (event, ownerInstance) {
 		item.removeClass("tran").removeClass("cur");
 		item.addClass(index === st.cur ? "cur" : "tran");
 	})
+
 	ownerInstance.callMethod("vibrate");
 };
 
@@ -108,8 +110,7 @@ var touchMove = function (event, ownerInstance) {
 	var ins = event.instance;
 	var st = ownerInstance.getState();
 	var _ = st.baseData;
-	var outSideScrollTop = ins.getDataset().outSideScrollTop;
-	var maxItemHeight = ins.getDataset().maxItemHeight;
+
 	var mTouch = event.changedTouches[0];
 	if (!mTouch) return;
 
@@ -120,18 +121,18 @@ var touchMove = function (event, ownerInstance) {
 
 	// 计算X,Y轴位移, 单列时候X轴初始不做位移
 	var tranX = _.columns === 1 ? 0 : mTouch.pageX - (_.itemWidth / 2 + _.wrapLeft);
-	var tranY = mTouch.pageY - (maxItemHeight / 2 + _.wrapTop) + outSideScrollTop;
+	var tranY = mTouch.pageY - (_.itemHeight / 2 + _.wrapTop);
 
 	// 到顶到底自动滑动
-	if (mTouch.clientY > _.windowHeight - maxItemHeight - _.realBottomSize) {
+	if (mTouch.clientY > _.windowHeight - _.itemHeight - _.realBottomSize) {
 		// 当前触摸点pageY + item高度 - (屏幕高度 - 底部固定区域高度)
 		ownerInstance.callMethod("pageScroll", {
-			scrollTop: mTouch.pageY + maxItemHeight - (_.windowHeight - _.realBottomSize)
+			scrollTop: mTouch.pageY + _.itemHeight - (_.windowHeight - _.realBottomSize)
 		});
-	} else if (mTouch.clientY < maxItemHeight + _.realTopSize) {
+	} else if (mTouch.clientY < _.itemHeight + _.realTopSize) {
 		// 当前触摸点pageY - item高度 - 顶部固定区域高度
 		ownerInstance.callMethod("pageScroll", {
-			scrollTop: mTouch.pageY - maxItemHeight - _.realTopSize
+			scrollTop: mTouch.pageY - _.itemHeight - _.realTopSize
 		});
 	}
 
@@ -142,7 +143,7 @@ var touchMove = function (event, ownerInstance) {
 
 	var startKey = st.list[st.cur].sortKey;
 	var curX = Math.round(tranX / _.itemWidth);
-	var curY = Math.round(tranY / maxItemHeight);
+	var curY = Math.round(tranY / _.itemHeight);
 	var endKey = curX + _.columns * curY;
 
 	// 目标项是固定项则返回
@@ -212,10 +213,11 @@ var listObserver = function (newVal, oldVal, ownerInstance, ins) {
 		}
 	})
 }
+
 module.exports = {
 	longPress: longPress,
 	touchMove: touchMove,
 	touchEnd: touchEnd,
 	baseDataObserver: baseDataObserver,
-	listObserver: listObserver,
+	listObserver: listObserver
 }

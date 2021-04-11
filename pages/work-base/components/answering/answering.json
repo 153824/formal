@@ -3,6 +3,7 @@
   "usingComponents": {
     "van-count-down": "/common/vant-weapp/dist/count-down/index",
     "hola-question-counter": "/common/question-counter/question-counter",
-    "hola-drag-question": "/pages/work-base/components/drag-question/drag-question"
+    "hola-drag-question": "/pages/work-base/components/drag-question/drag-question",
+    "drag": "../drag/index"
   }
 }

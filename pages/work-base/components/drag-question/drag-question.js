@@ -138,10 +138,11 @@ Component({
 
 		},
 		scroll(e) {
-			console.log(e);
+			console.log("scroll: ",e);
 			this.setData({
 				pageMetaScrollTop: e.detail.scrollTop
-			})
+			});
+			this.triggerEvent('getScrollTop', e.detail.scrollTop)
 		},
 		// 页面滚动
 		onPageScroll(e) {

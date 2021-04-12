@@ -45,7 +45,7 @@ Page({
         const oldData = wx.getStorageSync(sKey);
         const storage = wx.getStorageInfoSync().keys;
         storage.forEach(function (n) {
-            if (n.indexOf("oldAnswer") == 0 && n != sKey) {
+            if (n.indexOf("oldAnswer") === 0 && n !== sKey) {
                 wx.removeStorageSync(n);
             }
         });
@@ -173,15 +173,65 @@ Page({
                 that.saveDraftAnswer();
             }
         });
-        this.loadQuestion(options.receiveRecordId).then(res=>{
-            console.log('loadQuestion: ',res);
-            this.setData({
-                questions: res.questions,
-                countdownEnabled: res.countdownEnabled,
-                countdownInMinutes: res.countdownInMinutes
+        this.loadQuestion(options.receiveRecordId)
+            /*初始化题目*/
+            .then(res=>{
+                try{
+                    const {questions, countdownEnabled, countdownInMinutes} = res;
+                    this.setData({
+                        questions,
+                        countdownEnabled,
+                        countdownInMinutes
+                    });
+                    return Promise.resolve(res)
+                }catch(e){
+                    return Promise.reject('answering.js:188, 获取题目错误')
+                }
             })
-
-        });
+            /*初始化草稿*/
+            .then(res=>{
+                try{
+                    const draft = wx.getStorageSync(options.receiveRecordId);
+                    if(draft.length){
+                        this.setData({
+                            answerSheet: draft
+                        })
+                        this.swipeTo(draft.length - 1);
+                    }
+                    return Promise.resolve(res)
+                }catch (e) {
+                    return Promise.reject('answering.js:203, 获取草稿错误')
+                }
+            })
+            /*初始化答题卡*/
+            .then(res=>{
+                try{
+                    const {answerSheet} = this.data;
+                    const {questions} = res;
+                    if(answerSheet.length === questions.length){
+                        return this.judge()
+                    }
+                    return Promise.resolve()
+                }catch (e) {
+                    return Promise.reject('answering.js:216, 初始化答题卡错误')
+                }
+            })
+            /*初始化fill*/
+            .then(({fill})=>{
+                try{
+                    if(fill){
+                        this.setData({
+                            fill: true
+                        })
+                    }
+                }catch (e) {
+                    return Promise.reject('answering.js:228, 初始化fill错误')
+                }
+            })
+            /*抛出错误信息*/
+            .catch(err=>{
+                console.error(err);
+            });
     },
 
     onShow: function () {
@@ -842,7 +892,9 @@ Page({
         this.setData({
             answerSheet: targetSheet
         });
-        this.memory();
+        this.memory().then(()=>{
+            this.storageAnswerSheetAsync();
+        });
         if(type === QUES_TYPE[0]){
             if(questionStep+1 !== questions.length){
                 this.nextQues()
@@ -850,7 +902,6 @@ Page({
         }
         if(questionStep+1 === questions.length){
             this.judge().then(({fill})=>{
-                console.log('judge():',fill);
                 if(fill){
                     this.setData({
                         fill: true
@@ -875,9 +926,9 @@ Page({
         })
     },
 
-    preQues(e) {
-        const {questionStep, answerSheet} = this.data;
-        if(answerSheet[questionStep].indexes.length){
+    preQues() {
+        const {questionStep} = this.data;
+        if(questionStep >= 1){
             this.setData({
                 questionStep: questionStep - 1
             })
@@ -968,6 +1019,10 @@ Page({
                     receiveRecordId: receiveRecordId
                 },
                 success(res) {
+                    //TODO: 后端需要回传evaluationId
+                    wx.redirectTo({
+                        url: `../done/done?receiveRecordId=${receiveRecordId}&evaluationId=${evaluationId}`,
+                    });
                     resolve(res)
                 },
                 error(err) {
@@ -997,5 +1052,16 @@ Page({
             }
         });
         return targetArr;
+    },
+
+    storageAnswerSheetAsync() {
+        const {receiveRecordId, answerSheet} = this.data;
+        wx.setStorageSync(receiveRecordId, answerSheet);
+    },
+
+    swipeTo(step) {
+        this.setData({
+            questionStep: step
+        })
     }
 });

@@ -154,12 +154,11 @@ Page({
                 receiveRecordId: receiveRecordId,
             },
             success: function (res) {
-                const sKey = `oldAnswer${receiveRecordId}`;
                 const url = `/pages/work-base/components/answering/answering?evaluationId=${evaluationId}&releaseRecordId=${releaseRecordId}&receiveRecordId=${receiveRecordId}&reportPermit=${reportPermit}&status=${status}`;
-                wx.setStorageSync(sKey, res.draft);
+                wx.setStorageSync(receiveRecordId, res.draft);
                 wx.navigateTo({
                     url: url
-                })
+                });
             }
         });
     },

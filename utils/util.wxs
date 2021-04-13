@@ -119,6 +119,33 @@ var subString = function(string,start,end){
   }
 };
 
+var computeSteps = function(score) {
+  var defaultStep = Math.floor(score / 5);
+  var steps = [];
+  if(score <= 5) {
+    var step = 1;
+    for (var i = 0; i < score; i++) {
+      steps.push(Math.floor(i * step));
+    }
+  }
+  if(score > 5) {
+    for (var i = 0; i < 5; i++) {
+      steps.push(Math.floor(i * defaultStep));
+    }
+  }
+  console.log(steps)
+  return  steps;
+};
+
+var computeStepNumber = function(score) {
+  var defaultStep = 1;
+  if(score <= 5){
+    return defaultStep;
+  } else {
+    return Math.floor(score / 5)
+  }
+};
+
 module.exports = {
   getMonthAndDayByFrag: getMonthAndDayByFrag,
   getHourAndMinByFrag: getHourAndMinByFrag,
@@ -131,5 +158,7 @@ module.exports = {
   richTextFilter: richTextFilter,
   isSameDays: isSameDays,
   arrayEleIsSame: arrayEleIsSame,
-  subString: subString
+  subString: subString,
+  computeSteps: computeSteps,
+  computeStepNumber: computeStepNumber
 };

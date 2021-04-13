@@ -1,6 +1,6 @@
 <view class="container font">
     <view class="timebox sand-glass-wrapper" wx:if="{{countdownEnabled}}">剩余时间：
-        <van-count-down time="{{sandGlass}}" bind:finish="save"></van-count-down>
+        <van-count-down time="{{sandGlass}}" bind:finish="forceSave"></van-count-down>
     </view>
     <form bindsubmit="formSubmit">
         <view class="paper {{phoneModel ? 'isiphoneXpaper':'notiphoneXpaper'}}"

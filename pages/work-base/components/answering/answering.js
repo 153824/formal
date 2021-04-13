@@ -406,6 +406,17 @@ Page({
         return p;
     },
 
+    forceSave() {
+        wx.showModal({
+            title: '作答提示',
+            content: '作答时间到，已自动提交',
+            showCancel: false,
+            success: ()=> {
+                this.save()
+            }
+        })
+    },
+
     filterSameEle(arr) {
         if(!arr.length){
             return [];

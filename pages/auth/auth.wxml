@@ -10,7 +10,7 @@
     </view>
     <view class="omni--view__item-info">
         <view class="omni--view__item-info__user-info">
-            <text class="omni--intro-text">{{type === 'auth' ? '请授权您的手机号以登录系统' : '您的登录凭证已过期，请重新获取' }}</text>
+            <text class="omni--intro-text">{{type === 'auth' ? '请授权您的手机号以登录系统' : '您的登录信息已过期，请重新登录' }}</text>
         </view>
         <view>
             <block wx:if="{{type === 'auth'}}">
@@ -20,7 +20,7 @@
             </block>
             <block wx:else>
                 <button class="omni__login-btn" bind:tap="prueLogin">
-                    一键获取登录凭证
+                    微信一键登录
                 </button>
             </block>
         </view>

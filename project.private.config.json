@@ -61,7 +61,7 @@
         {
           "name": "二维码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "q=https://api.luoke101.com/s/6074444a5c44365e4ff1ce8f",
+          "query": "q=https://api.luoke101.com/s/6074ff0e5c44365e4ff1ce91",
           "scene": null
         },
         {

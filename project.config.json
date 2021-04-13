@@ -29,6 +29,7 @@
       "disablePlugins": [],
       "outputPath": ""
     },
+    "enableEngineNative": false,
     "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": false,
@@ -40,7 +41,7 @@
   },
   "compileType": "miniprogram",
   "libVersion": "2.16.0",
-  "appid": "wx85cde7d3e8f3d949",
+  "appid": "wxdb1dcb4a9e212d32",
   "projectname": "luoke-haola-wx-admin",
   "debugOptions": {
     "hidedInDevtools": []
@@ -48,7 +49,7 @@
   "isGameTourist": false,
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {
-    "qywx_simulator_plugin": "2.10.1"
+    "qywx_simulator_plugin": "2.4.0"
   },
   "scripts": {
     "beforeCompile": "",

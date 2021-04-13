@@ -1,0 +1,6 @@
+{
+	"usingComponents": {
+		"drag": "/common/wxp-ui/components/drag/index",
+		"drag-question-item": "./drag-question-item/index"
+	}
+}

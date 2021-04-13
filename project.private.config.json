@@ -192,6 +192,12 @@
           "pathName": "pages/auth/auth",
           "query": "type=getToken",
           "scene": null
+        },
+        {
+          "name": "测试用例-拖拽排序",
+          "pathName": "pages/test/drag-sort/index",
+          "query": "",
+          "scene": null
         }
       ]
     }

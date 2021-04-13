@@ -1,12 +1,10 @@
 <wxs module="handler" src="./index.wxs"></wxs>
 <view class="item-wrap item-wrap-class"
-
-			list="{{list}}"
-			style="{{wrapStyle}}"
-			baseData="{{baseData}}"
-			change:list="{{handler.listObserver}}"
-			change:baseData="{{handler.baseDataObserver}}">
-
+	  list="{{list}}"
+	  style="{{wrapStyle}}"
+	  baseData="{{baseData}}"
+	  change:list="{{handler.listObserver}}"
+	  change:baseData="{{handler.baseDataObserver}}">
 	<view
 		class="item"
 		wx:for="{{list}}"

@@ -1,3 +1,4 @@
+import debounce from "../../../../utils/lodash/debounce";
 const app = getApp();
 /**
  * 版本号比较
@@ -85,18 +86,15 @@ Component({
 		vibrate() {
 			if (this.data.platform !== "devtools") wx.vibrateShort();
 		},
-		setScrollTop(e) {
-			console.log(e);
-		},
+		// pageScroll: debounce(function (e) {
+		// 	this.triggerEvent("scroll", {
+		// 		scrollTop: e.scrollTop
+		// 	});
+		// },50,{
+		// 	leading: false,
+		// 	trailing: true
+		// }),
 		pageScroll(e) {
-			console.log('pageScroll: ', e.scrollTop);
-			wx.pageScrollTo({
-				scrollTop: e.scrollTop * 20,
-				selector: '#question-scroll',
-				success(res){
-					console.log('wx.pageScrollTo: ', res);
-				}
-			})
 			this.triggerEvent("scroll", {
 				scrollTop: e.scrollTop
 			});
@@ -135,7 +133,11 @@ Component({
 			baseData.realBottomSize = this.data.bottomSize * remScale / 2;
 			baseData.columns = this.data.columns;
 			baseData.rows =  this.data.rows;
-
+			const scrollViewQuery = wx.createSelectorQuery();
+			scrollViewQuery.select('#question-scroll-view-0').boundingClientRect();
+			scrollViewQuery.exec(res=>{
+				baseData.scrollViewHeight = res[0].height
+			});
 			const query = this.createSelectorQuery();
 			const itemQuery = this.createSelectorQuery();
 			query.select(".item").boundingClientRect();
@@ -154,7 +156,6 @@ Component({
 			let maxHeight = 0;
 			itemQuery.exec(res=>{
 				res[0].forEach((item, key)=> {
-					console.log(item);
 					const itemHeight = item.height;
 					if(itemHeight > maxHeight){
 						maxHeight = itemHeight;
@@ -163,7 +164,6 @@ Component({
 				this.setData({
 					maxItemHeight: maxHeight+15 || 0
 				});
-				console.log('maxItemHeight: ', maxHeight);
 			})
 		},
 		/**
@@ -235,7 +235,6 @@ Component({
 				// wrapStyle: `height: ${this.data.rows * this.data.itemHeight}rpx`
 			});
 			if (list.length === 0) return;
-			console.log(this.data.listWxs);
 			// 异步加载数据时候, 延迟执行 initDom 方法, 防止基础库 2.7.1 版本及以下无法正确获取 dom 信息
 			setTimeout(() => this.initDom(), 0);
 		}

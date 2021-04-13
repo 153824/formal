@@ -79,6 +79,7 @@ var longPress = function (event, ownerInstance) {
 
 	st.cur = ins.getDataset().index;
 	var outSideScrollTop = ins.getDataset().outSideScrollTop
+	console.log('outSideScrollTop: ', outSideScrollTop);
 	var maxItemHeight = ins.getDataset().maxItemHeight
 	// 初始项是固定项则返回
 	var item = st.list[st.cur];
@@ -123,10 +124,10 @@ var touchMove = function (event, ownerInstance) {
 	var tranY = mTouch.pageY - (maxItemHeight / 2 + _.wrapTop) + outSideScrollTop;
 
 	// 到顶到底自动滑动
-	if (mTouch.clientY > _.windowHeight - maxItemHeight - _.realBottomSize) {
+	if (mTouch.clientY > _.scrollViewHeight - maxItemHeight - _.realBottomSize) {
 		// 当前触摸点pageY + item高度 - (屏幕高度 - 底部固定区域高度)
 		ownerInstance.callMethod("pageScroll", {
-			scrollTop: mTouch.pageY + maxItemHeight - (_.windowHeight - _.realBottomSize)
+			scrollTop: mTouch.pageY + maxItemHeight - (_.scrollViewHeight - _.realBottomSize)
 		});
 	} else if (mTouch.clientY < maxItemHeight + _.realTopSize) {
 		// 当前触摸点pageY - item高度 - 顶部固定区域高度

@@ -16,8 +16,8 @@
 		catch:touchmove="{{dragging ? handler.touchMove : ''}}"
 		catch:touchend="{{dragging ? handler.touchEnd : ''}}">
 		<view class="item-content" style="min-height: {{pixelRate * (maxItemHeight - 15) - 60}}rpx;">
-			<text class="question-number">1</text>
-			{{item.data.title}}
+			<text class="question-number">{{index+1}}</text>
+			{{item.data.index}}·{{item.data.content}}
 		</view>
 <!--		<block wx:if="{{item.extraNode}}">-->
 <!--			<slot name="{{item.slot}}"></slot>-->

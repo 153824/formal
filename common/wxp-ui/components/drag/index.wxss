@@ -22,6 +22,7 @@
       background: #FAFAFA;
       border-radius: 20rpx;
       padding: 30rpx 40rpx;
+      width: 100%;
     }
     .question-number{
       position: absolute;

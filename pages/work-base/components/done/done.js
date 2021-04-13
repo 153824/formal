@@ -121,7 +121,7 @@ Page({
                 if (isSelf && isSelf === "SHARE") {
                     targetURL = "/pages/user-center/components/receive-evaluations/receive-evaluations?redirect=user-center";
                 } else {
-                    targetURL = `/pages/station/components/detail/detail?id=${evaluationId}`;
+                    targetURL = `/pages/station/components/detail/detail?id=${res.data.evaluationId}`;
                 }
                 _this.setData({
                     isSelf: isSelf,

@@ -19,9 +19,10 @@
     .item-content{
       display: flex;
       align-items: center;
+      font-size: 30rpx;
       background: #FAFAFA;
       border-radius: 20rpx;
-      padding: 30rpx 40rpx;
+      padding: 16rpx 40rpx;
       width: 100%;
     }
     .question-number{

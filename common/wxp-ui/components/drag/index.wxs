@@ -112,6 +112,7 @@ var touchMove = function (event, ownerInstance) {
 	var outSideScrollTop = ins.getDataset().outSideScrollTop;
 	var maxItemHeight = ins.getDataset().maxItemHeight;
 	var mTouch = event.changedTouches[0];
+	console.log(mTouch);
 	if (!mTouch) return;
 
 	if (!st.dragging) return;

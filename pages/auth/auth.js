@@ -1,4 +1,5 @@
-const app = getApp()
+import {switchTabPages} from "./const/switchPage";
+const app = getApp();
 Page({
     data: {
         appTitle:'',
@@ -72,16 +73,23 @@ Page({
         app.prueLogin().then(res=>{
             for(let i = pages.length - 1;i >= 0;i--){
                 if(pages[i].route.indexOf('pages/auth/auth') === -1){
-                    try{
+                    console.log(pages[i]);
+                    const options = pages[i].options;
+                    const optionKeys = Object.keys(pages[i].options);
+                    let query = '?';
+                    optionKeys.forEach((item, key)=>{
+                        query = `${query}${item}=${options[item]}${key===optionKeys.length ? '' : '&'}`
+                    });
+                    if(switchTabPages.includes(`${pages[i].route}`)){
                         wx.switchTab({
-                            url: `/${pages[i].route}`
+                            url: `/${pages[i].route}${query}`
                         });
-                    }catch (e) {
-                        wx.navigateTo({
-                            url: `/${pages[i].route}`
-                        });
+                        return;
                     }
-                    return
+                    wx.navigateTo({
+                        url: `/${pages[i].route}${query}`
+                    });
+                    return;
                 }
                 if(i === 0){
                     wx.switchTab({

@@ -47,7 +47,7 @@
 </view>
 <view class="datibox" wx:if="{{sharePaperInfo.invitationImgUrl}}" catchtouchmove="true" style="z-index: 999;">
     <block wx:if="{{!isWxWork && !is3rd}}">
-        <view style="color:#FFFFFFFF;font-size: 32rpx;font-weight: 600;margin-top: 68rpx;">长按下图保存，可发放至以下招聘渠道</view>
+        <view style="color:rgb(255,255,255);font-size: 32rpx;font-weight: 600;margin-top: 68rpx;">长按下图保存，可发放至以下招聘渠道</view>
         <image src="../../images/sharePaper@banner-share-platform.png"
                style="width: 484rpx;min-height: 56rpx;max-height: 56rpx;margin: 24rpx 0 68rpx 0;"></image>
     </block>

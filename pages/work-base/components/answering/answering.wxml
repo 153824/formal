@@ -14,7 +14,10 @@
                                 scroll-y="true"
                                 bind:scroll="paperScroll"
                                 scroll-top="{{quesIndex === questionStep ? computeScrollTop : null}}">
-                            <hola-question-counter id="paper-counter" total="{{questions.length}}" currentNum="{{questionStep + 1}}"></hola-question-counter>
+                            <hola-question-counter
+                                    id="paper-counter"
+                                    total="{{questions.length}}"
+                                    currentNum="{{questionStep + 1}}" tip="{{quesItem.type === 'SORTING' ? 'tips：长按选项拖拽排序' : null}}"/>
                             <view id="paper-head" class="paperhead">
                                 <rich-text class="title" space="nbsp"
                                            nodes="<p>{{quesItem.type === 'MULTIPLE'?multipleQuesHTML:''}}{{ quesItem.type === 'PROPORTION' ? percentQuesHTML:'' }}{{quesItem.stem}}</p>"></rich-text>

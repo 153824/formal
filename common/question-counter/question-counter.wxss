@@ -1,7 +1,12 @@
+.question-number-group-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28rpx 40rpx;
+}
 .question-number-group{
     display: flex;
     align-items: center;
-    padding: 28rpx 0 20rpx 40rpx;
     color: #2F3038;
     font-family: PingFangSC-Semibold,PingFang SC;
 }
@@ -29,4 +34,10 @@
 }
 .fragment-question{
     margin-left: 10rpx;
+}
+.tips{
+    font-size: 30rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #353EE8;
 }

@@ -61,7 +61,7 @@
         {
           "name": "二维码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "q=https://api.luoke101.com/s/6074ff0e5c44365e4ff1ce91",
+          "query": "q=https://api.luoke101.com/s/6076b64b5c44365e4ff1cea7",
           "scene": null
         },
         {
@@ -106,10 +106,9 @@
           "scene": null
         },
         {
-          "id": 14,
           "name": "二维码领取测评-2",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "q=https://api.luoke101.com/s/5fb34b8db3ee12146116f5b3",
+          "query": "q=https://api.luoke101.com/s/6076b2905c44365e4ff1ce9d",
           "scene": null
         },
         {

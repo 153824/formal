@@ -25,6 +25,7 @@ Page({
         extraNodes: [],
         pageMetaScrollTop: 0,
         scrollTop: 0,
+        receiveRecordId: ''
     },
 
     onLoad: function (options) {
@@ -37,7 +38,8 @@ Page({
                     this.setData({
                         questions,
                         countdownEnabled,
-                        countdownInMinutes
+                        countdownInMinutes,
+                        receiveRecordId: options.receiveRecordId
                     });
                     return Promise.resolve(res)
                 }catch(e){
@@ -67,7 +69,7 @@ Page({
                     if(answerSheet.length === questions.length){
                         return this.judge()
                     }
-                    return Promise.resolve()
+                    return Promise.resolve({})
                 }catch (e) {
                     return Promise.reject('answering.js:216, 初始化答题卡错误')
                 }
@@ -84,6 +86,9 @@ Page({
                     return Promise.reject('answering.js:228, 初始化fill错误')
                 }
             })
+            .then(()=>{
+                this._checkReceiveInfo(options.receiveRecordId)
+            })
             /*抛出错误信息*/
             .catch(err=>{
                 console.error(err);
@@ -95,7 +100,6 @@ Page({
         if (wx.canIUse('hideHomeButton')) {
             wx.hideHomeButton();
         }
-        this._checkReceiveInfo();
     },
 
     _checkType: function (options) {
@@ -114,9 +118,10 @@ Page({
         });
     },
 
-    _checkReceiveInfo: function () {
+    _checkReceiveInfo(receiveRecordId) {
         const that = this;
-        const {receiveRecordId, countdownInMinutes, countdownEnabled} = this.data;
+        let {countdownInMinutes, countdownEnabled} = this.data;
+        receiveRecordId = receiveRecordId || this.data.receiveRecordId;
         app.doAjax({
             url: `wework/evaluations/receive_info/${receiveRecordId}`,
             method: "get",
@@ -447,6 +452,9 @@ Page({
                     resolve(res)
                 },
                 error(err) {
+                    wx.reLaunch({
+                        url: '/pages/user-center/components/receive-evaluations/receive-evaluations'
+                    });
                     reject(err);
                 }
             })

@@ -2,7 +2,7 @@
     <view class="bar-wrapper" style="height: {{ statusbarHeight + titleHeight }}px;">
         <view class="statusbar" style="height: {{ statusbarHeight }}px;visibility: {{visibility}};"></view>
         <view class="title-bar"
-              style="height: {{ titleHeight }}px;top: {{ statusbarHeight }}px;visibility: {{visibility}};">
+              style="height: {{ titleHeight }}px;top: {{ statusbarHeight }}px;visibility: {{visibility}};" bind:tap="getTeamList">
             <picker class="company-picker" bind:change="switchTeam" value="{{ checkedTeam }}" range-key="shortName"
                     range="{{ teamMap }}" class="company-child">
                 <view style="display: flex;align-items: center;">
@@ -21,7 +21,7 @@
     <block>
         <picker class="company-picker" bindchange="switchTeam" value="{{ checkedTeam }}" range-key="shortName"
                 range="{{ teamMap }}" class="company-child">
-            <view style="display: flex;align-items: center;">
+            <view style="display: flex;align-items: center;" bind:tap="getTeamList">
                 <text class="check-company">切换企业</text>
                 <image
                         wx:if="{{ teamMap.length > 1 }}"

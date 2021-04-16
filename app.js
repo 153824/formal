@@ -55,9 +55,9 @@ App({
     otherPageReLaunchTrigger: true,
     quitPage: "",
     // host: "http://api.dev.luoke101.int",
-    // host: "https://api.haola101.com",
+    host: "https://api.haola101.com",
     // host: "http://api.dev.luoke101.int",
-    host: 'https://uat.api.haola101.com',
+    // host: 'https://uat.api.haola101.com',
     // host: 'https://www.uat.haola101.com',
     // host: "http://192.168.0.101:3000",
     globalData: {

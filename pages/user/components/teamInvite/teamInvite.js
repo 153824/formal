@@ -44,10 +44,7 @@ Page({
         }
       });
     }
-    if (app.checkAccessToken()) {
-      toCheck();
-      return;
-    }
+    toCheck();
   },
 
   /**

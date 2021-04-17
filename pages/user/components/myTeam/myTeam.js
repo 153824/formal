@@ -67,7 +67,9 @@ Page({
    */
   onShareAppMessage: function(e) {
     var role = e.target.dataset.role;
-    var shareKey = "teamMsg_" + app.teamId + "_" + role;
+    var shareKey = `teamMsg_${wx.getStorageSync('userInfo').teamId}_${role}`;
+    console.log('shareKey: ',shareKey);
+    console.log("pages/user/components/teamInvite/teamInvite?key=" + shareKey);
     return {
       title: "邀请加入团队",
       path: "pages/user/components/teamInvite/teamInvite?key=" + shareKey,
@@ -137,7 +139,7 @@ Page({
       success: function (res) {
         if(res.confirm){
           const postData = {
-            id: app.teamId,
+            id: wx.getStorageSync('userInfo').teamId,
             type: 3,
             teamUserId: obj.id
           };

@@ -20,7 +20,7 @@
                                     currentNum="{{questionStep + 1}}" tip="{{quesItem.type === 'SORTING' ? 'tips：长按选项拖拽排序' : null}}"/>
                             <view id="paper-head" class="paperhead">
                                 <rich-text class="title" space="nbsp"
-                                           nodes="<p>{{quesItem.type === 'MULTIPLE'?multipleQuesHTML:''}}{{ quesItem.type === 'PROPORTION' ? percentQuesHTML:'' }}{{quesItem.stem}}</p>"></rich-text>
+                                           nodes="<p>{{quesItem.type === 'MULTIPLE'?multipleQuesHTML:''}}{{ quesItem.type === 'PROPORTION' ? percentQuesHTML:'' }}{{util.richTextFilter(quesItem.stem)}}</p>"></rich-text>
                             </view>
                             <view class="paperbody {{quesItem.type === 'SORTING' ? 'options-padding' : ''}}">
                                 <view wx:if="{{quesItem.type === 'SORTING'}}" class="options">

@@ -5,7 +5,7 @@
         <view class="name">{{adminUser.nickName}}</view>
         <view class="roleName">{{adminUser.roleName}}</view>
     </view>
-    <view wx:if="{{members.length}}" class="changeAdminUser" bindtap="changeAdminUser">转让超级管理员</view>
+    <view wx:if="{{adminUser.roleName === '超级管理员'}}" class="changeAdminUser" bindtap="changeAdminUser">转让超级管理员</view>
 </view>
 <view class="list">
     <view class="listInfo flex">
@@ -18,18 +18,18 @@
         <view class="item flex">
             <image src="{{item.avatar}}" class="headerIcon"></image>
             <view class="flex-main name">{{item.nickName || item.realName}}</view>
-            <view class="editBtn" bindtap="showEditMenu1" data-index="{{index}}">
-                <image src="../../images/myTeam@icon-my-team.png" style="height: 32rpx;width: 32rpx;"></image>
+            <view wx:if="{{adminUser.roleName === '超级管理员'}}" class="editBtn" bindtap="showEditMenu1" data-index="{{index}}">
+                <image src="../../images/myTeam@icon-my-team.png" style="height: 32rpx;width: 32rpx;"/>
             </view>
         </view>
     </block>
     <button wx:if="{{members.length<adminMemberMax}}" open-type="share" class="shareBtn" bindtap="inviteMember"
             data-role="2">
-        <image src="../../images/my-team@icon-add.png" style="height: 16px;width: 16px;margin-right: 14rpx;"></image>
+        <image src="../../images/my-team@icon-add.png" style="height: 16px;width: 16px;margin-right: 14rpx;"/>
         添加子管理员
     </button>
     <button wx:else class="shareBtn" bindtap="inviteMember" data-num="{{adminMemberMax}}" data-n="子管理员">
-        <image src="../../images/my-team@icon-add.png" style="height: 16px;width: 16px;margin-right: 14rpx;"></image>
+        <image src="../../images/my-team@icon-add.png" style="height: 16px;width: 16px;margin-right: 14rpx;"/>
         添加子管理员
     </button>
 </view>

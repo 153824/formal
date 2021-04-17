@@ -60,7 +60,7 @@
         {
           "name": "二维码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "q=https://api.luoke101.com/s/6078f2775c44365e4ff1ceb7",
+          "query": "q=https://api.luoke101.com/s/607a9034d96e4a38348da89c",
           "scene": null
         },
         {
@@ -71,10 +71,9 @@
           "scene": null
         },
         {
-          "id": 9,
           "name": "领取报告",
           "pathName": "pages/report/report",
-          "query": "receivedRecordId=5f74507cd9d79d3c986c2c12&sharedAt=1601612953307",
+          "query": "receivedRecordId=607a8495d96e4a38348da895",
           "scene": null
         },
         {

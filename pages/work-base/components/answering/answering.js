@@ -171,7 +171,7 @@ Page({
         return p;
     },
 
-    selectQuesItem(e) {
+    selectQuesItem: debounce(function(e) {
         const {questionIndex, optionIndex} = e.currentTarget.dataset;
         // console.log(questionIndex, optionIndex);
         const {answerSheet, questions, questionStep} = this.data;
@@ -228,7 +228,10 @@ Page({
                 }
             })
         }
-    },
+    },500,{
+        trailing: true,
+        leading: false,
+    }),
 
     onChangeSlider: debounce(function (e) {
         const {questionStep, answerSheet, questions} = this.data;

@@ -57,15 +57,15 @@ Page({
         }
 
         if(app.checkAccessToken()){
-            this.canIUseTemptation()
+            this.canIUseTemptation(releaseRecordId)
         }else{
             app.checkUserInfo=(res)=>{
-                this.canIUseTemptation()
+                this.canIUseTemptation(releaseRecordId)
             };
         }
     },
 
-    canIUseTemptation() {
+    canIUseTemptation(releaseRecordId) {
         const flag = app.checkAccessToken()
         const target = app.checkAccessToken() ? this.getTemptation : this.getDemonstrate;
         try{
@@ -73,7 +73,7 @@ Page({
             //     return that.getPaperMsg()
             // }
             target();
-            this.getProgramSetting();
+            this.getProgramSetting(releaseRecordId);
         }catch (e) {
             console.error(e)
         }
@@ -381,9 +381,9 @@ Page({
         });
     },
 
-    getProgramSetting(teamId) {
+    getProgramSetting(releaseRecordId) {
         const that = this;
-        app.getMiniProgramSetting(teamId).then(res=>{
+        app.getMiniProgramSetting(releaseRecordId).then(res=>{
             that.setData({
                 respondPreparingPageTxt: res.respondPreparingPageTxt
             })

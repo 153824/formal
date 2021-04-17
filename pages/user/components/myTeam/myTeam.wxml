@@ -3,7 +3,7 @@
     <image class="headerIcon" src="{{adminUser.avatar}}"></image>
     <view class="flex-main">
         <view class="name">{{adminUser.nickName}}</view>
-        <view class="roleName">超级管理员</view>
+        <view class="roleName">{{adminUser.roleName}}</view>
     </view>
     <view wx:if="{{members.length}}" class="changeAdminUser" bindtap="changeAdminUser">转让超级管理员</view>
 </view>

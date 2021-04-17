@@ -55,10 +55,10 @@ App({
     otherPageReLaunchTrigger: true,
     quitPage: "",
     // host: "http://api.dev.luoke101.int",
-    host: "https://api.haola101.com",
+    // host: "https://api.haola101.com",
     // host: "http://api.dev.luoke101.int",
     // host: 'https://uat.api.haola101.com',
-    // host: 'https://www.uat.haola101.com',
+    host: 'https://www.uat.haola101.com',
     // host: "http://192.168.0.101:3000",
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
@@ -393,7 +393,7 @@ App({
                 if (ret.statusCode === 401) {
                     const pages = getCurrentPages()
                     if(pages[pages.length-1].route.indexOf('pages/auth/auth') === -1){
-                        that.toast('登录凭证已失效~');
+                        that.toast('登录信息已失效~');
                         setTimeout(()=>{
                             wx.navigateTo({
                                 url: '/pages/auth/auth?type=getToken'
@@ -606,12 +606,17 @@ App({
         return updateUserMobilePromise;
     },
 
-    getMiniProgramSetting(teamId) {
-        teamId = wx.getStorageSync('userInfo').teamId || teamId;
+    getMiniProgramSetting(releaseRecordId) {
+        if(!releaseRecordId){
+            return;
+        }
         const miniProgramSettingPromise = new Promise((resolve, reject) => {
             this.doAjax({
-                url: `wework/evaluations/settings/${teamId}/wechat-ma`,
+                url: `wework/evaluations/settings/wechat-ma`,
                 method: 'GET',
+                data: {
+                    releaseRecordId
+                },
                 success(res) {
                     resolve(res);
                 },
@@ -622,7 +627,7 @@ App({
                     reject(err);
                 }
             })
-        })
+        });
         return miniProgramSettingPromise;
     },
 

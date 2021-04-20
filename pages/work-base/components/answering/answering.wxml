@@ -6,86 +6,86 @@
         <view class="paper {{phoneModel ? 'isiphoneXpaper':'notiphoneXpaper'}}"
               style="top:{{sandGlass?84:32}}rpx;">
             <swiper current="{{questionStep}}">
-                <block wx:for="{{questions}}" wx:for-index="quesIndex" wx:for-item="quesItem" wx:key="unique">
+                <block wx:for="{{questions}}" wx:for-index="" wx:for-item="" wx:key="unique">
                     <swiper-item catch:touchmove="pageTouch">
                         <scroll-view
-                                wx:if="{{quesItem}}"
-                                id="question-scroll-view-{{quesIndex}}"
+                                wx:if="{{questions[questionStep]}}"
+                                id="question-scroll-view-{{questionStep}}"
                                 scroll-y="true"
                                 bind:scroll="paperScroll"
-                                scroll-top="{{quesIndex === questionStep ? computeScrollTop : null}}">
+                                scroll-top="{{questionStep === questionStep ? computeScrollTop : null}}">
                             <hola-question-counter
                                     id="paper-counter"
                                     total="{{questions.length}}"
-                                    currentNum="{{questionStep + 1}}" tip="{{quesItem.type === 'SORTING' ? 'tips：长按选项拖拽排序' : null}}"/>
+                                    currentNum="{{questionStep + 1}}" tip="{{questions[questionStep].type === 'SORTING' ? 'tips：长按选项拖拽排序' : null}}"/>
                             <view id="paper-head" class="paperhead">
                                 <rich-text class="title" space="nbsp"
-                                           nodes="<p>{{quesItem.type === 'MULTIPLE'?multipleQuesHTML:''}}{{ quesItem.type === 'PROPORTION' ? percentQuesHTML:'' }}{{util.richTextFilter(quesItem.stem)}}</p>"></rich-text>
+                                           nodes="<p>{{questions[questionStep].type === 'MULTIPLE'?multipleQuesHTML:''}}{{ questions[questionStep].type === 'PROPORTION' ? percentQuesHTML:'' }}{{util.richTextFilter(questions[questionStep].stem)}}</p>"></rich-text>
                             </view>
-                            <view class="paperbody {{quesItem.type === 'SORTING' ? 'options-padding' : ''}}">
-                                <view wx:if="{{quesItem.type === 'SORTING'}}" class="options">
-                                    <drag id="drag-{{quesIndex}}"
+                            <view class="paperbody {{questions[questionStep].type === 'SORTING' ? 'options-padding' : ''}}">
+                                <view wx:if="{{questions[questionStep].type === 'SORTING'}}" class="options">
+                                    <drag id="drag-{{questionStep}}"
                                           generic:item="drag-question-item"
                                           bind:click="itemClick"
                                           bind:sortend="onSorted"
                                           bind:scroll="dragScroll"
                                           item-wrap-class="drag-item-wrap"
                                           extra-nodes="{{extraNodes}}"
-                                          list-data="{{quesItem.indexedOptions}}"
+                                          list-data="{{questions[questionStep].indexedOptions}}"
                                           columns="{{size}}"
                                           scroll-top="{{scrollTop}}"
                                           out-side-scroll-top="{{outSideScrollTop}}"
                                     />
                                 </view>
                                 <view wx:else class="options">
-                                    <block wx:for="{{quesItem.options}}" wx:for-index="optionIndex" wx:for-item="optionItem"
+                                    <block wx:for="{{questions[questionStep].options}}" wx:for-index="optionIndex" wx:for-item="optionItem"
                                            wx:key="unique">
-                                        <view wx:if="{{quesItem.type === 'SINGLE' || quesItem.type === 'MULTIPLE'}}"
-                                              class="selectItem {{answerSheet[quesIndex] && util.isIncludes(answerSheet[quesIndex].indexes, optionIndex) ? 'active' : ''}}"
+                                        <view wx:if="{{questions[questionStep].type === 'SINGLE' || questions[questionStep].type === 'MULTIPLE'}}"
+                                              class="selectItem {{answerSheet[questionStep] && util.isIncludes(answerSheet[questionStep].indexes, optionIndex) ? 'active' : ''}}"
                                               bindtap="selectQuesItem"
-                                              data-question-index="{{quesIndex}}"
+                                              data-question-index="{{questionStep}}"
                                               data-option-index="{{optionIndex}}">
                                             <label>
                                                 <text class="langoption">{{optionsAry[optionIndex]}}:</text>
                                                 <rich-text class="optiontext" nodes="<p>{{optionItem}}</p>"></rich-text>
                                             </label>
                                         </view>
-                                        <view wx:elif="{{quesItem.type === 'PROPORTION'}}" class="notborderview selectItem">
+                                        <view wx:elif="{{questions[questionStep].type === 'PROPORTION'}}" class="notborderview selectItem">
                                             <view>
                                                 <text class="langoption">{{optionsAry[optionIndex]}}:</text>
                                                 <rich-text class="optiontext" nodes="<p>{{optionItem}}</p>"></rich-text>
                                             </view>
                                             <view>
                                                 <input class="number_input" type="number"
-                                                       value="{{answerSheet[quesIndex] && answerSheet[quesIndex]['indexes'] && answerSheet[quesIndex]['indexes'][optionIndex] >= 0 ? answerSheet[quesIndex]['indexes'][optionIndex] : 0}}"
+                                                       value="{{answerSheet[questionStep] && answerSheet[questionStep]['indexes'] && answerSheet[questionStep]['indexes'][optionIndex] >= 0 ? answerSheet[questionStep]['indexes'][optionIndex] : 0}}"
                                                        bind:confirm="onChangeSlider"
                                                        bind:input="onChangeSlider"
                                                        type="number"
-                                                       data-question-index="{{quesIndex}}"
+                                                       data-question-index="{{questionStep}}"
                                                        data-option-index="{{optionIndex}}"/>
                                                 <view class="number_slider_wrap">
                                                     <slider bind:changing="onChangeSlider"
                                                             bind:change="onChangeSlider"
-                                                            data-question-index="{{quesIndex}}"
+                                                            data-question-index="{{questionStep}}"
                                                             data-option-index="{{optionIndex}}"
                                                             class="number_slider"
                                                             min="0"
-                                                            max="{{quesItem.totalScore}}"
-                                                            step="{{util.computeStepNumber(quesItem.totalScore)}}"
-                                                            value="{{answerSheet[quesIndex] && answerSheet[quesIndex]['indexes'] && answerSheet[quesIndex]['indexes'][optionIndex] >= 0 ? answerSheet[quesIndex]['indexes'][optionIndex] : 0}}"
+                                                            max="{{questions[questionStep].totalScore}}"
+                                                            step="{{util.computeStepNumber(questions[questionStep].totalScore)}}"
+                                                            value="{{answerSheet[questionStep] && answerSheet[questionStep]['indexes'] && answerSheet[questionStep]['indexes'][optionIndex] >= 0 ? answerSheet[questionStep]['indexes'][optionIndex] : 0}}"
                                                             activeColor="#353EE8"
                                                             block-size="10"
                                                             block-color="#353EE8"/>
                                                     <view class="number_slider_tip">
                                                         <view class="number_slider_tip_item_center">
                                                             <view class="number_slider_tip_item"
-                                                                  wx:for="{{util.computeSteps(quesItem.totalScore)}}"
+                                                                  wx:for="{{util.computeSteps(questions[questionStep].totalScore)}}"
                                                                   wx:for-item="sliderItem" wx:key="unique"
                                                                   wx:for-index="idx">
                                                                 <label class="number_slider_tip_number_label">{{sliderItem}}</label>
                                                             </view>
                                                         </view>
-                                                        <label class="number_slider_tip_number_label">{{quesItem.totalScore}}</label>
+                                                        <label class="number_slider_tip_number_label">{{questions[questionStep].totalScore}}</label>
                                                     </view>
                                                 </view>
                                             </view>

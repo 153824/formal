@@ -181,6 +181,13 @@ Page({
             return;
         }
         const {type, leastChoice, mostChoice} = questions[questionIndex];
+        try {
+            if(type === 'SINGLE' && answerSheet[questionIndex].indexes.includes(optionIndex)){
+                return;
+            }
+        } catch (e) {
+
+        }
         if(type === 'MULTIPLE' && answerSheet[questionIndex] && answerSheet[questionIndex].indexes){
             const {indexes} = answerSheet[questionIndex];
             if(indexes.length >= mostChoice && !indexes.includes(optionIndex)){
@@ -215,11 +222,11 @@ Page({
             this.storageAnswerSheetAsync();
         });
         if(type === QUES_TYPE[0]){
-            if(questionStep+1 !== questions.length){
-                this.nextQues()
+            if(questionIndex+1 !== questions.length){
+                this.nextQues(questionIndex)
             }
         }
-        if(questionStep+1 === questions.length){
+        if(questionIndex+1 === questions.length){
             this.judge().then(({fill})=>{
                 if(fill){
                     this.setData({
@@ -228,7 +235,7 @@ Page({
                 }
             })
         }
-    },500,{
+    },0,{
         trailing: true,
         leading: false,
     }),
@@ -309,7 +316,7 @@ Page({
         }
     },
 
-    nextQues() {
+    nextQues(questionIndex) {
         let isSorting = false;
         const {questionStep, answerSheet, indexedOptions, questions} = this.data;
         const indexes = answerSheet[questionStep] && answerSheet[questionStep].indexes ? answerSheet[questionStep].indexes : [] ;
@@ -326,9 +333,11 @@ Page({
                 isSorting = true;
             }
             if(indexes.length && flag || isSorting){
-                this.setData({
-                    questionStep: questionStep + 1
-                })
+                setTimeout(()=>{
+                    this.setData({
+                        questionStep: questionIndex >= 0 ? questionIndex + 1 : questionStep + 1
+                    })
+                },350)
             }
         })
     },

@@ -88,7 +88,6 @@ var ASCIIToChar = function(number){
 
 var isIncludes = function(array=[],item){
   if( array.indexOf(item) > -1 ){
-    console.log('isIncludes: ',array)
     return true;
   }else{
     return false;
@@ -133,7 +132,6 @@ var computeSteps = function(score) {
       steps.push(Math.floor(i * defaultStep));
     }
   }
-  console.log(steps)
   return  steps;
 };
 

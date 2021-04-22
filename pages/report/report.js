@@ -399,7 +399,6 @@ Page({
         } else {
             this.getReport(id);
         }
-        this.getProgramSetting()
     },
 
     verifyReportIsCanRead: function (option) {
@@ -451,6 +450,7 @@ Page({
                     receiveRecordId: id
                 },
                 success: function (res) {
+                    that.getProgramSetting(res.evaluationInfo.releaseRecordId)
                     resolve(res);
                 },
                 fail: function (err) {
@@ -1091,12 +1091,12 @@ Page({
         // },200)
     },
 
-    getProgramSetting() {
+    getProgramSetting(releaseRecordId) {
         const that = this;
         if(!app.checkAccessToken()){
             return;
         }
-        app.getMiniProgramSetting().then(res=>{
+        app.getMiniProgramSetting(releaseRecordId).then(res=>{
             that.setData({
                 reportCopyrightTxt: res.reportCopyrightTxt
             })

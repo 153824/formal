@@ -152,6 +152,7 @@ Page({
         });
     },
 
+    /*禁止手指滑动翻页*/
     pageTouch() {return},
 
     loadQuestion(receiveRecordId) {
@@ -558,6 +559,8 @@ Page({
     init() {
         const {questionStep} = this.data;
         this.drag = this.selectComponent(`#drag-${questionStep}`);
-        this.drag.init();
+        if(this.drag){
+            this.drag.init();
+        }
     },
 });

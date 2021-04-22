@@ -604,7 +604,7 @@ App({
 
     getMiniProgramSetting(releaseRecordId) {
         if(!releaseRecordId){
-            return;
+            return Promise.reject('releaseRecordId is null');
         }
         const miniProgramSettingPromise = new Promise((resolve, reject) => {
             this.doAjax({

@@ -37,7 +37,7 @@ const qiniuUpload = require("./utils/qiniuUpload");
 qiniuUpload.init({
     region: 'SCN',
     domain: 'ihola.luoke101.com',
-    uptokenURL: 'https://api.luoke101.com/hola/getQiNiuToken',
+    uptokenURL: 'https://api.haola101.com/hola/getQiNiuToken',
     shouldUseQiniuFileName: false
 });
 App({

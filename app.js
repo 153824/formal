@@ -54,8 +54,8 @@ App({
     isReLaunch: false,
     otherPageReLaunchTrigger: true,
     quitPage: "",
-    // host: "https://api.haola101.com",
-    host: 'https://uat.api.haola101.com',
+    host: "https://api.haola101.com",
+    // host: 'https://uat.api.haola101.com',
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
         userInfo: null,

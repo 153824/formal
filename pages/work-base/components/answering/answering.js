@@ -182,13 +182,6 @@ Page({
             return;
         }
         const {type, leastChoice, mostChoice} = questions[questionIndex];
-        try {
-            if(type === 'SINGLE' && answerSheet[questionIndex].indexes.includes(optionIndex)){
-                return;
-            }
-        } catch (e) {
-
-        }
         if(type === 'MULTIPLE' && answerSheet[questionIndex] && answerSheet[questionIndex].indexes){
             const {indexes} = answerSheet[questionIndex];
             if(indexes.length >= mostChoice && !indexes.includes(optionIndex)){
@@ -223,7 +216,13 @@ Page({
             this.storageAnswerSheetAsync();
         });
         if(type === QUES_TYPE[0]){
+            this.setData({
+
+            })
             if(questionIndex+1 !== questions.length){
+                this.setData({
+                    questionStepChanging: 'start'
+                })
                 this.nextQues(questionIndex)
             }
         }
@@ -333,12 +332,15 @@ Page({
                 });
                 isSorting = true;
             }
-            if(indexes.length && flag || isSorting){
-                setTimeout(()=>{
+            if((indexes.length && flag) || isSorting){
+                this.setData({
+                    questionStep: questionIndex >= 0 ? questionIndex + 1 : questionStep + 1,
+                    questionStepChanging: 'start'
+                },()=>{
                     this.setData({
-                        questionStep: questionIndex >= 0 ? questionIndex + 1 : questionStep + 1
+                        questionStepChanging: 'end',
                     })
-                },350)
+                })
             }
         })
     },

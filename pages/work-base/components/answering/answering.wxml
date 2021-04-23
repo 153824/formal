@@ -5,9 +5,9 @@
     <form bindsubmit="formSubmit">
         <view class="paper {{phoneModel ? 'isiphoneXpaper':'notiphoneXpaper'}}"
               style="top:{{sandGlass?84:32}}rpx;">
-            <swiper current="{{questionStep}}">
-                <block wx:for="{{questions}}" wx:for-index="quesIndex" wx:for-item="quesItem" wx:key="unique">
-                    <swiper-item catch:touchmove="pageTouch">
+            <swiper current="{{questionStep}}" circular="true">
+                <block wx:for="{{questions}}" wx:for-index="quesIndex" wx:for-item="quesItem">
+                    <swiper-item wx:key="unique" item-id="{{quesIndex}}" skip-hidden-item-layout="{{true}}" catch:touchmove="pageTouch" class="{{questionStepChanging === 'start' ? 'prevent' : ''}}">
                         <scroll-view
                                 wx:if="{{quesItem}}"
                                 id="question-scroll-view-{{quesIndex}}"

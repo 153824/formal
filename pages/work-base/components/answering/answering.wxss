@@ -822,3 +822,6 @@
 .question-stem-rich-text-img{
   max-width: 100%;
 }
+.prevent{
+  pointer-events: none;
+}

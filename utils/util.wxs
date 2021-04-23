@@ -144,6 +144,16 @@ var computeStepNumber = function(score) {
   }
 };
 
+var isMiddleValue = function(questionStep, questionIndex, length) {
+  var min = questionIndex - 3;
+  var max = questionIndex + 3 >= length-1 ? length-1 : questionIndex + 3;
+  console.log(min, questionIndex,questionStep, max)
+  if(questionStep >= min && questionStep <= max){
+    return true;
+  }
+  return false;
+};
+
 module.exports = {
   getMonthAndDayByFrag: getMonthAndDayByFrag,
   getHourAndMinByFrag: getHourAndMinByFrag,
@@ -158,5 +168,6 @@ module.exports = {
   arrayEleIsSame: arrayEleIsSame,
   subString: subString,
   computeSteps: computeSteps,
-  computeStepNumber: computeStepNumber
+  computeStepNumber: computeStepNumber,
+  isMiddleValue: isMiddleValue
 };

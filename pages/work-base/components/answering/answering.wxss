@@ -9,7 +9,49 @@
   left: 0;
   background: transparent;
 }
-
+.imgTimeout{
+  font-size: 30rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #353EE8;
+  line-height: 42rpx;
+}
+.imgTimeoutContent{
+  margin-top: 40rpx;
+  display: flex;
+  justify-content: center;
+}
+.imgQue{
+  display: flex;
+  padding: 0rpx 40rpx;
+  font-size: 30rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  line-height: 42rpx;
+  font-weight: 600;
+  margin-bottom: 30rpx;
+}
+.imgQue-title{
+  color: #353EE8;
+}
+.titleImgButton{
+  display: inline;
+  padding: 12rpx 56rpx;
+  background: #353EE8;
+  font-size: 32rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 44rpx;
+  cursor: pointer;
+  border-radius: 10rpx;
+  margin-left: 50rpx;
+}
+.imgContent{
+  margin-bottom: 40rpx;
+}
+.showImg{
+  padding: 0 40rpx;
+}
 .container1 {
   padding: 50rpx 60rpx 0;
 }

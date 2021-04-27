@@ -56,6 +56,7 @@ App({
     quitPage: "",
     // host: "https://api.haola101.com",
     host: 'https://uat.api.haola101.com',
+    // host: 'http://api.dev.luoke101.int',
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
         userInfo: null,

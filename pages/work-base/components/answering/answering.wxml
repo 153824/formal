@@ -20,9 +20,27 @@
                                     currentNum="{{questionStep + 1}}" tip="{{questions[questionStep].type === 'SORTING' ? 'tips：长按选项拖拽排序' : null}}"/>
                             <view id="paper-head" class="paperhead">
                                 <rich-text class="title" space="nbsp"
-                                           nodes="<p>{{questions[questionStep].type === 'MULTIPLE'?multipleQuesHTML:''}}{{ questions[questionStep].type === 'PROPORTION' ? percentQuesHTML:'' }}{{util.richTextFilter(questions[questionStep].stem)}}</p>"></rich-text>
+                                           nodes="<p>{{questions[questionStep].type === 'MULTIPLE'?multipleQuesHTML:''}}{{ questions[questionStep].type === 'PROPORTION' ? percentQuesHTML:'' }}{{util.richTextFilter(questions[questionStep].stem)}}</p>">
+                                </rich-text>
                             </view>
-                            <view class="paperbody {{questions[questionStep].type === 'SORTING' ? 'options-padding' : ''}}">
+                            <view wx:if="{{hasVanishImageSetting[questionStep]&&hasVanishImageSetting[questionStep].isShow}}" 
+                                data-question-step="{{questionStep}}" class="titleImgButton" bindtap="openImg">
+                                显示图片 
+                            </view>
+                            <view wx:elif="{{hasVanishImageSetting[questionStep]&&hasVanishImageSetting[questionStep].standingInSeconds>0}}" 
+                                data-question-step="{{questionStep}}"  bindtap="openImg" class="showImg">
+                                <rich-text class="imgContent" space="nbsp"
+                                           nodes="<p>{{util.richTextFilter(hasVanishImageSetting[questionStep].tag)}}</p>">
+                                </rich-text>
+                                <view class="imgTimeoutContent">
+                                    <text class="imgTimeout">{{hasVanishImageSetting[questionStep].standingInSeconds}}s</text><text>后图片将消失</text>
+                                </view>
+                            </view>
+                            <view wx:else class="paperbody {{questions[questionStep].type === 'SORTING' ? 'options-padding' : ''}}">
+                                <view wx:if="hasVanishImageSetting[questionStep]" class="imgQue">
+                                    <text class="imgQue-title">问：</text>
+                                    <text>{{hasVanishImageSetting[questionStep].substitute}}</text>
+                                </view>
                                 <view wx:if="{{questions[questionStep].type === 'SORTING'}}" class="options">
                                     <drag id="drag-{{questionStep}}"
                                           generic:item="drag-question-item"

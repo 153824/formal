@@ -117,7 +117,6 @@
           "scene": null
         },
         {
-          "id": 7,
           "name": "二维码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
           "query": "q=https://api.luoke101.com/s/5fd09a4a3bd73b0a96d1d1e5",
@@ -197,6 +196,36 @@
           "name": "pages/3rd-home/index",
           "pathName": "pages/3rd-home/index",
           "query": "surveyId=5d64776043e78c00689c9210",
+          "scene": null
+        },
+        {
+          "name": "pages/work-base/components/guide/guide",
+          "pathName": "pages/work-base/components/guide/guide",
+          "query": "q=https://api.luoke101.com/s/6086354ac51dc71a7f5566bb",
+          "scene": null
+        },
+        {
+          "name": "pages/work-base/components/guide/guide",
+          "pathName": "pages/work-base/components/guide/guide",
+          "query": "q=https://api.luoke101.com/s/608635b854eda868d2b4b726",
+          "scene": null
+        },
+        {
+          "name": "pages/work-base/components/guide/guide",
+          "pathName": "pages/work-base/components/guide/guide",
+          "query": "q=https://api.luoke101.com/s/60865710c51dc71a7f5566c7",
+          "scene": null
+        },
+        {
+          "name": "pages/work-base/components/guide/guide",
+          "pathName": "pages/work-base/components/guide/guide",
+          "query": "q=https://api.luoke101.com/s/60865d7054eda868d2b4b739",
+          "scene": null
+        },
+        {
+          "name": "pages/work-base/components/guide/guide",
+          "pathName": "pages/work-base/components/guide/guide",
+          "query": "q=https://api.luoke101.com/s/6086750554eda868d2b4b747",
           "scene": null
         }
       ]

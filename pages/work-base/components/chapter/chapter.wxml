@@ -1,0 +1,42 @@
+<view class="chapters">
+  <view class="chapters-header"> 
+    <text class="chapters-chapterName">{{evaluationName}}</text>
+    <text class="chapters-part">本测评分为以下{{synopses.length}}个部分</text>
+  </view>
+  <view class="chapters-content">
+    <view wx:for="{{synopses}}" wx:for-index="synopsesIndex" wx:for-item="synopsesItem" wx:key="unique" class="chapters-contentItem">
+      <view class="chapters-chapterTitle">
+        <text>第{{synopsesIndex+1}}部分：{{synopsesItem.title}}</text>
+        <image wx:if="{{synopsesItem.status === 'LOCKING'}}" src="../../images/chapter-suo.png"></image>
+      </view>
+      <view class="chapters-chapterInfo">
+        <view class="chapters-chapterCount">
+          <view>
+            <!-- <image></image> -->
+            <text>题量：{{synopsesItem.questionCount}}题</text>
+          </view>
+          <view>
+            <!-- <image></image> -->
+            <text wx:if="synopsesItem.countdownEnabled">限时：{{synopsesItem.countdownInMinutes||0}}分钟</text>
+            <text wx:else>不限时</text>
+          </view>
+        </view>
+        <view wx:if="{{synopsesItem.status === 'PREPARED'}}" class="chapters-chapterStatus" data-chapterId="synopsesItem.chapter-id" bindtap="toSample">
+          <text>开始作答</text>
+          <image src="../../images/chapter-enter.png"></image>
+        </view>
+        <view wx:elif="{{synopsesItem.status === 'RELAY'}}" class="chapters-chapterStatus">
+          <text>继续作答</text>
+          <image src="../../images/chapter-enter.png"></image>
+        </view>
+        <view wx:elif="{{synopsesItem.status === 'FINISHED'}}" class="chapters-chapterStatus chapters-chapterStatus-success">
+          <text>已完成</text>
+          <image src="../../images/chapter-success.png"></image>
+        </view>
+        <view wx:elif="{{synopsesItem.status === 'LOCKING'}}" class="chapters-chapterStatus chapters-chapterStatus-lock">
+          <text>完成上一部分后解锁</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

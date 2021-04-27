@@ -81,7 +81,7 @@ Component({
      */
     changePage: function(e) {
       app.isTest = false;
-      const url = e.currentTarget.dataset.url;
+      const url = e.currentTarget.dataset.url; 
       app.changePage(url);
     },
     /**

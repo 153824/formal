@@ -24,6 +24,8 @@
     "pages/work-base/work-base",
     "pages/work-base/components/teams-cert/teams-cert",
     "pages/work-base/components/answering/answering",
+    "pages/work-base/components/chapter/chapter",
+    "pages/work-base/components/sample/sample",
     "pages/work-base/components/done/done",
     "pages/work-base/components/guide/guide",
     "pages/work-base/components/member-report-list/member-report-list",

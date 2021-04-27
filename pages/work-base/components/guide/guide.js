@@ -154,7 +154,8 @@ Page({
                 receiveRecordId: receiveRecordId,
             },
             success: function (res) {
-                const url = `/pages/work-base/components/answering/answering?evaluationId=${evaluationId}&releaseRecordId=${releaseRecordId}&receiveRecordId=${receiveRecordId}&reportPermit=${reportPermit}&status=${status}`;
+                // const url = `/pages/work-base/components/answering/answering?evaluationId=${evaluationId}&releaseRecordId=${releaseRecordId}&receiveRecordId=${receiveRecordId}&reportPermit=${reportPermit}&status=${status}`;
+                const url = `/pages/work-base/components/chapter/chapter?evaluationId=${evaluationId}&releaseRecordId=${releaseRecordId}&receiveRecordId=${receiveRecordId}&reportPermit=${reportPermit}&status=${status}`;
                 wx.setStorageSync(receiveRecordId, res.draft);
                 wx.navigateTo({
                     url: url
@@ -309,6 +310,7 @@ Page({
                 // userId: userInfo.id
             },
             success: function (res) {
+                console.log(res)
                 let text = "";
                 let {msg} = res;
                 const {receiveRecordId=""} = res;

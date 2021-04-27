@@ -25,7 +25,8 @@ Page({
         extraNodes: [],
         pageMetaScrollTop: 0,
         scrollTop: 0,
-        receiveRecordId: ''
+        receiveRecordId: '',
+        hasVanishImageSetting:[]
     },
 
     onLoad: function (options) {
@@ -34,13 +35,26 @@ Page({
             /*初始化题目*/
             .then(res=>{
                 try{
-                    const {questions, countdownEnabled, countdownInMinutes} = res;
-                    this.setData({
-                        questions,
-                        countdownEnabled,
-                        countdownInMinutes,
-                        receiveRecordId: options.receiveRecordId
-                    });
+                    console.log(res,11)
+                    if(res.paper){
+                        var {questions, countdownEnabled, countdownInMinutes} = res;
+                        var hasVanishImageSetting = Array.apply(null,{length:questions.length})
+                        questions.forEach((que,queIndex) => {
+                            if(que.vanishImageSetting){
+                                que.stem = que.stem.replace(/<img.*?(?:>|\/>)/gi,'')
+                                var newObj = que.vanishImageSetting
+                                newObj['isShow'] = true
+                                hasVanishImageSetting.splice(queIndex,1,newObj)
+                            }
+                        })
+                        this.setData({
+                            hasVanishImageSetting,
+                            questions,
+                            countdownEnabled,
+                            countdownInMinutes,
+                            receiveRecordId: options.receiveRecordId
+                        });
+                    }
                     return Promise.resolve(res)
                 }catch(e){
                     return Promise.reject('answering.js:188, 获取题目错误')
@@ -102,6 +116,25 @@ Page({
         }
     },
 
+    openImg(event) {
+        var hasVanishImageSetting = this.data.hasVanishImageSetting
+        hasVanishImageSetting[event.currentTarget.dataset.questionStep].isShow = false
+        var time = hasVanishImageSetting[event.currentTarget.dataset.questionStep].standingInSeconds
+        var intervarl = setInterval(()=>{
+            time--
+            if(time===0){
+                clearInterval(intervarl)
+            }
+            hasVanishImageSetting[event.currentTarget.dataset.questionStep].standingInSeconds = time
+            this.setData({
+                hasVanishImageSetting
+            })
+        },1000)
+        this.setData({
+            hasVanishImageSetting
+        });
+    },
+
     _checkType: function (options) {
         const _this = this;
         app.doAjax({
@@ -159,7 +192,7 @@ Page({
         receiveRecordId = this.data.receiveRecordId || receiveRecordId;
         const p = new Promise((resolve, reject) => {
             app.doAjax({
-                url: `../wework/evaluations/${receiveRecordId}/questions`,
+                url: `../wework/evaluations/${receiveRecordId}/paper`,
                 method: 'GET',
                 success(res){
                     resolve(res);
@@ -351,6 +384,7 @@ Page({
             })
         }
     },
+
 
     memory(receiveRecordId) {
         const {answerSheet} = this.data;

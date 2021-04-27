@@ -235,7 +235,7 @@ Page({
                     }
                     const {evaluationId} = res;
                     const receiveRecordId = res.receiveRecordId || _this.data.receiveRecordId;
-                    const url = `/pages/work-base/components/answering/answering?evaluationId=${evaluationId}&receiveRecordId=${receiveRecordId}`;
+                    const url = `/pages/work-base/components/chapter/chapter?evaluationId=${evaluationId}&receiveRecordId=${receiveRecordId}`;
                     _this.setData({
                         receiveRecordId: res.receiveRecordId
                     });

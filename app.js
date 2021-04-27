@@ -37,7 +37,7 @@ const qiniuUpload = require("./utils/qiniuUpload");
 qiniuUpload.init({
     region: 'SCN',
     domain: 'ihola.luoke101.com',
-    uptokenURL: 'https://api.luoke101.com/hola/getQiNiuToken',
+    uptokenURL: 'https://api.haola101.com/hola/getQiNiuToken',
     shouldUseQiniuFileName: false
 });
 App({
@@ -54,9 +54,9 @@ App({
     isReLaunch: false,
     otherPageReLaunchTrigger: true,
     quitPage: "",
-    // host: "https://api.haola101.com",
     host: 'https://uat.api.haola101.com',
     // host: 'http://api.dev.luoke101.int',
+    //host: "https://api.haola101.com",
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
         userInfo: null,

@@ -318,7 +318,7 @@
 
 .container .paperhead {
   width: 100%;
-  padding: 36rpx 40rpx 50rpx;
+  padding: 0rpx 40rpx 50rpx;
   box-sizing: border-box;
   display: flex;
   justify-content: left;
@@ -863,4 +863,7 @@
   height: 100%; }
 .question-stem-rich-text-img{
   max-width: 100%;
+}
+.prevent{
+  pointer-events: none;
 }

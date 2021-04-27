@@ -26,7 +26,9 @@ Page({
         pageMetaScrollTop: 0,
         scrollTop: 0,
         receiveRecordId: '',
-        hasVanishImageSetting:[]
+        hasVanishImageSetting:[],
+        /*遮罩控制，防止用户多次滑动swiper-item，导致答题流程错误*/
+        isChangeQue: false,
     },
 
     onLoad: function (options) {
@@ -209,20 +211,18 @@ Page({
         const {questionIndex, optionIndex} = e.currentTarget.dataset;
         // console.log(questionIndex, optionIndex);
         const {answerSheet, questions, questionStep} = this.data;
+        const {type, leastChoice, mostChoice} = questions[questionIndex];
         const targetSheet = [...answerSheet];
         if(optionIndex < 0 || questionIndex < 0){
             app.toast('题目或选项为空');
             return;
         }
-        const {type, leastChoice, mostChoice} = questions[questionIndex];
-        try {
-            if(type === 'SINGLE' && answerSheet[questionIndex].indexes.includes(optionIndex)){
-                return;
-            }
-        } catch (e) {
-
+        if(type === QUES_TYPE[0] && questionIndex !== questions.length-1){
+            this.setData({
+                isChangeQue: true,
+            })
         }
-        if(type === 'MULTIPLE' && answerSheet[questionIndex] && answerSheet[questionIndex].indexes){
+        if(type === QUES_TYPE[1] && answerSheet[questionIndex] && answerSheet[questionIndex].indexes){
             const {indexes} = answerSheet[questionIndex];
             if(indexes.length >= mostChoice && !indexes.includes(optionIndex)){
                 app.toast(`最多选中${mostChoice}个选项`)
@@ -351,12 +351,21 @@ Page({
     },
 
     nextQues(questionIndex) {
+        this.setData({
+            isChangeQue: true
+        });
         let isSorting = false;
         const {questionStep, answerSheet, indexedOptions, questions} = this.data;
         const indexes = answerSheet[questionStep] && answerSheet[questionStep].indexes ? answerSheet[questionStep].indexes : [] ;
         this.judge().then(({flag, text})=>{
             if(!flag && text){
                 app.toast(text);
+                setTimeout(()=>{
+                    this.setData({
+                        isChangeQue: false
+                    });
+                },600);
+                return;
             }
             if(questions[questionStep].type === 'SORTING' && indexes.length === 0){
                 const targetSheet = [...answerSheet];
@@ -366,23 +375,41 @@ Page({
                 });
                 isSorting = true;
             }
-            if(indexes.length && flag || isSorting){
-                setTimeout(()=>{
-                    this.setData({
-                        questionStep: questionIndex >= 0 ? questionIndex + 1 : questionStep + 1
-                    })
-                },350)
+            if((indexes.length && flag) || isSorting){
+                this.setData({
+                    questionStep: questionIndex >= 0 ? questionIndex + 1 : questionStep + 1,
+                },()=>{
+                    setTimeout(()=>{
+                        this.setData({
+                            isChangeQue: false
+                        });
+                    }, 600)
+                })
             }
         })
     },
 
     preQues() {
+        this.setData({
+            isChangeQue: true
+        });
         const {questionStep} = this.data;
         if(questionStep >= 1){
             this.setData({
                 questionStep: questionStep - 1
+            },()=>{
+                setTimeout(()=>{
+                    console.log(this)
+                    this.setData({
+                        isChangeQue: false
+                    });
+                }, 600)
             })
+            return;
         }
+        this.setData({
+            isChangeQue: false,
+        });
     },
 
 

@@ -54,13 +54,13 @@
         {
           "name": "小程序码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "scene=607e8e7c36ce7602642f6834",
+          "query": "scene=60826f85dd1cd552a051e1fa",
           "scene": null
         },
         {
           "name": "二维码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "q=https://api.luoke101.com/s/607eb53536ce7602642f6848",
+          "query": "q=https://api.luoke101.com/s/6082a0a5158a97114045b518",
           "scene": null
         },
         {

@@ -26,7 +26,8 @@ Page({
         isWxWorkAdmin: false,
         is3rd: false,
         is3rdAdmin: false,
-        authCodeCounter: 0
+        authCodeCounter: 0,
+        canIUseGetUserProfile: wx.getUserProfile
     },
 
     onLoad: function (options) {
@@ -309,6 +310,19 @@ Page({
             this.submit()
         }).catch(err=>{
             console.error(err)
+        })
+    },
+
+    getUserProfile() {
+        const that = this
+        wx.getUserProfile({
+            success: (res) => {
+                app.updateUserInfo(res).then(res=>{
+                    that.submit()
+                }).catch(err=>{
+                    console.error(err)
+                })
+            }
         })
     },
 

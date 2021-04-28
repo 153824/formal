@@ -27,7 +27,7 @@ Page({
         is3rd: false,
         is3rdAdmin: false,
         authCodeCounter: 0,
-        canIUseGetUserProfile: wx.getUserProfile
+        canIUseGetUserProfile: wx.getUserProfile ? true : false
     },
 
     onLoad: function (options) {
@@ -316,12 +316,19 @@ Page({
     getUserProfile() {
         const that = this
         wx.getUserProfile({
+            desc: "获取用户信息",
             success: (res) => {
                 app.updateUserInfo(res).then(res=>{
                     that.submit()
                 }).catch(err=>{
                     console.error(err)
                 })
+            },
+            error: (e) => {
+                console.log(e);
+            },
+            fail: (e) => {
+                console.log(e);
             }
         })
     },

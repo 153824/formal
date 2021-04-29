@@ -7,7 +7,8 @@ Page({
    */
   data: {
     evaluationName:'',
-    synopses:[]
+    synopses:[],
+    receiveRecordId:''
   },
 
   /**
@@ -15,23 +16,24 @@ Page({
    */
   onLoad: function (options) {
     this.loadQuestion(options.receiveRecordId).then(res=>{
-      if(res.paper&&!res.chapter){
-        const url = `/pages/work-base/components/answering/answering?evaluationId=${options.evaluationId}&releaseRecordId=${options.releaseRecordId}&receiveRecordId=${options.receiveRecordId}&reportPermit=${reportPermit}&status=${options.status}`;
-        wx.navigateTo({
-          url: url
-        });
-      }else{
         const {evaluationName,synopses} = res.chapter
         this.setData({
           evaluationName,
-          synopses
+          synopses,
+          receiveRecordId:options.receiveRecordId
         })
-      }
     })
   },
+  toAnswer(e){
+    const {chapterId,chapterIndex,chapterTotal} = e.currentTarget.dataset
+    const url = `/pages/work-base/components/answering/answering?chapterId=${chapterId}&receiveRecordId=${this.data.receiveRecordId}&chapterIndex=${chapterIndex+1}&chapterTotal=${chapterTotal}`;
+    wx.navigateTo({
+      url: url
+    });
+  },
   toSample(e) {
-    const chapterId = e.currentTarget.dataset.chapterId
-    const url = `/pages/work-base/components/sample/sample?chapterId=${chapterId}`;
+    const {chapterId,introduction,sampleQuestions,chapterIndex,chapterTotal} = e.currentTarget.dataset
+    const url = `/pages/work-base/components/sample/sample?chapterId=${chapterId}&sampleQuestions=${JSON.stringify(sampleQuestions)}&introduction=${introduction}&receiveRecordId=${this.data.receiveRecordId}&chapterIndex=${chapterIndex+1}&chapterTotal=${chapterTotal}`;
     wx.navigateTo({
       url: url
     });

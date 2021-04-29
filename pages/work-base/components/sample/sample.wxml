@@ -1,2 +1,21 @@
-<!--pages/work-base/components/sample/sample.wxml-->
-<text>pages/work-base/components/sample/sample.wxml</text>
+<view class="sample">
+  <view class="sample-explain" wx:if="{{introduction}}">
+    <text class="sample-explainTitle">说明</text>
+    <text class="sample-explainContent">{{introduction}}</text>
+  </view>
+  <view class="sample-examplesQue">
+    <text class="sample-examplesQueTitle">例题</text>
+    <view class="sample-examplesQueContent" wx:for="{{sampleQuestions}}" wx:for-item="sampleItem" wx:key="unique">
+      <text class="sample-examplesQueContentTitle">{{sampleItem.question.stem}}</text>
+      <block>
+        <text class="sample-examplesQueContentOption" wx:for="{{sampleItem.question.options}}" wx:for-index="optionIndex" wx:for-item="option" wx:key="unique">{{optionsAry[optionIndex]}} : {{option}}</text>
+      </block>
+      <view class="sample-examplesQueContentAnalysis">
+        解析：{{sampleItem.interpretation}}
+      </view>
+    </view>
+  </view>
+  <view class="sample-toAnswer" bindtap="toAnswer">
+    开始作答
+  </view>
+</view>

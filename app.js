@@ -364,8 +364,10 @@ App({
             url = `${this.host}/${params.url}`;
         }
         params.data = params.data || {};
-        params.data['userId'] = params.data['userId'] || wx.getStorageSync("userInfo").id || "";
-        params.data['teamId'] = params.data['teamId'] || wx.getStorageSync("userInfo").teamId || "";
+        if(params.url.split('?')[0].slice(-6)!=='drafts'){
+            params.data['userId'] = params.data['userId'] || wx.getStorageSync("userInfo").id || "";
+            params.data['teamId'] = params.data['teamId'] || wx.getStorageSync("userInfo").teamId || "";
+        }
         let accessToken = '';
         if (wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').tokenInfo) {
             accessToken = wx.getStorageSync('userInfo').tokenInfo.accessToken;

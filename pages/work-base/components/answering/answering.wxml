@@ -1,11 +1,11 @@
 <view class="coverView" style="background-color:transparent;" wx:if="{{isChangeQue}}"></view>
 <view class="container font">
     <view class="timebox sand-glass-wrapper" wx:if="{{countdownEnabled}}">剩余时间：
-        <van-count-down time="{{sandGlass}}" bind:finish="forceSave"></van-count-down>
+        <van-count-down time="{{countdownInSeconds*1000}}" bind:finish="forceSave"></van-count-down>
     </view>
     <form bindsubmit="formSubmit">
         <view class="paper {{phoneModel ? 'isiphoneXpaper':'notiphoneXpaper'}}"
-              style="top:{{sandGlass?84:32}}rpx;">
+              style="top:{{countdownInSeconds?84:32}}rpx;">
             <swiper current="{{questionStep}}">
                 <block wx:for="{{questions}}" wx:for-index="quesIndex" wx:for-item="quesItem">
                     <swiper-item catch:touchmove="pageTouch">
@@ -38,7 +38,7 @@
                                 </view>
                             </view>
                             <view wx:else class="paperbody {{quesItem.type === 'SORTING' ? 'options-padding' : ''}}">
-                                <view wx:if="hasVanishImageSetting[questionStep]" class="imgQue">
+                                <view wx:if="{{hasVanishImageSetting[questionStep]}}" class="imgQue">
                                     <text class="imgQue-title">问：</text>
                                     <text>{{hasVanishImageSetting[questionStep].substitute}}</text>
                                 </view>
@@ -60,9 +60,10 @@
                                     <block wx:for="{{quesItem.options}}" wx:for-index="optionIndex" wx:for-item="optionItem"
                                            wx:key="unique">
                                         <view wx:if="{{quesItem.type === 'SINGLE' || quesItem.type === 'MULTIPLE'}}"
-                                              class="selectItem {{answerSheet[quesIndex] && util.isIncludes(answerSheet[quesIndex].indexes, optionIndex) ? 'active' : ''}}"
+                                              class="selectItem {{answerSheet[quesItem.id] && util.isIncludes(answerSheet[quesItem.id].indexes, optionIndex) ? 'active' : ''}}"
                                               bindtap="selectQuesItem"
                                               data-question-index="{{quesIndex}}"
+                                              data-question-id="{{quesItem.id}}"
                                               data-option-index="{{optionIndex}}">
                                             <label>
                                                 <text class="langoption">{{optionsAry[optionIndex]}}:</text>
@@ -76,7 +77,7 @@
                                             </view>
                                             <view>
                                                 <input class="number_input" type="number"
-                                                       value="{{answerSheet[quesIndex] && answerSheet[quesIndex]['indexes'] && answerSheet[quesIndex]['indexes'][optionIndex] >= 0 ? answerSheet[quesIndex]['indexes'][optionIndex] : 0}}"
+                                                       value="{{answerSheet[quesItem.id] && answerSheet[quesItem.id]['indexes'] && answerSheet[quesItem.id]['indexes'][optionIndex] >= 0 ? answerSheet[quesItem.id]['indexes'][optionIndex] : 0}}"
                                                        bind:confirm="onChangeSlider"
                                                        bind:input="onChangeSlider"
                                                        type="number"
@@ -91,7 +92,7 @@
                                                             min="0"
                                                             max="{{quesItem.totalScore}}"
                                                             step="{{util.computeStepNumber(quesItem.totalScore)}}"
-                                                            value="{{answerSheet[quesIndex] && answerSheet[quesIndex]['indexes'] && answerSheet[quesIndex]['indexes'][optionIndex] >= 0 ? answerSheet[quesIndex]['indexes'][optionIndex] : 0}}"
+                                                            value="{{answerSheet[quesItem.id] && answerSheet[quesItem.id]['indexes'] && answerSheet[quesItem.id]['indexes'][optionIndex] >= 0 ? answerSheet[quesItem.id]['indexes'][optionIndex] : 0}}"
                                                             activeColor="#353EE8"
                                                             block-size="10"
                                                             block-color="#353EE8"/>

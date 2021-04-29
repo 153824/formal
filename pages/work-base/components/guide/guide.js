@@ -15,11 +15,21 @@ Page({
         evaluationStatusText: "",
         respondPreparingPageTxt: "",
         isGetAccessToken: app.checkAccessToken(),
-        authCodeCounter: 0
+        authCodeCounter: 0,
+        type:'',
+        demonstrateInfo:{}
     },
     onLoad: function (option) {
         const that = this;
         let releaseEvaluationId = "";
+        if(option.type){
+            this.setData({
+                type:option.type,
+                demonstrateInfo:JSON.parse(option.releaseInfo).demonstrateInfo,
+                isGetAccessToken:true,
+                evaluationStatusText:JSON.parse(option.releaseInfo).msg==='RELAY'?'继续作答':'开始作答'
+            })
+        }
         if (option.q) {
             const q = decodeURIComponent(option.q);
             const idArray = q.split("/");
@@ -51,17 +61,23 @@ Page({
     },
     onShow: function () {
         const that = this;
-        const {releaseRecordId} = that.data;
+        const {releaseRecordId,demonstrateInfo} = that.data;
         if (wx.canIUse('hideHomeButton')) {
             wx.hideHomeButton();
         }
-
-        if(app.checkAccessToken()){
-            this.canIUseTemptation(releaseRecordId)
-        }else{
-            app.checkUserInfo=(res)=>{
+        if(this.data.type!=='self'){
+            if(app.checkAccessToken()){
                 this.canIUseTemptation(releaseRecordId)
-            };
+            }else{
+                app.checkUserInfo=(res)=>{
+                    this.canIUseTemptation(releaseRecordId)
+                };
+            }
+        }else{
+            this.setData({
+                maskTrigger:false,
+                demonstrateInfo:demonstrateInfo
+            })
         }
     },
 
@@ -145,23 +161,32 @@ Page({
     },
 
     goToReplying: function (e) {
-        const {receiveRecordId} = this.data;
-        const {evaluationId,releaseRecordId,reportPermit,status} = this.data.demonstrateInfo;
-        app.doAjax({
-            url: "wework/evaluations/fetch/relay",
-            method: 'post',
-            data: {
-                receiveRecordId: receiveRecordId,
-            },
-            success: function (res) {
-                // const url = `/pages/work-base/components/answering/answering?evaluationId=${evaluationId}&releaseRecordId=${releaseRecordId}&receiveRecordId=${receiveRecordId}&reportPermit=${reportPermit}&status=${status}`;
-                const url = `/pages/work-base/components/chapter/chapter?evaluationId=${evaluationId}&releaseRecordId=${releaseRecordId}&receiveRecordId=${receiveRecordId}&reportPermit=${reportPermit}&status=${status}`;
-                wx.setStorageSync(receiveRecordId, res.draft);
-                wx.navigateTo({
-                    url: url
-                });
-            }
+        var receiveRecordId = this.data.receiveRecordId;
+        const p = new Promise((resolve, reject) => {
+            app.doAjax({
+                url: `../wework/evaluations/${receiveRecordId}/paper`,
+                method: 'GET',
+                success(res){
+                    if(res.paper&&!res.chapter){
+                        const url = `/pages/work-base/components/answering/answering?&receiveRecordId=${receiveRecordId}`;
+                        wx.navigateTo({
+                          url: url
+                        });
+                    }else{
+                        const url = `/pages/work-base/components/chapter/chapter?&receiveRecordId=${receiveRecordId}`;
+                        wx.setStorageSync(receiveRecordId, res.draft);
+                        wx.navigateTo({
+                            url: url
+                        });
+                    }
+                    resolve(res);
+                },
+                error(err){
+                    reject(err);
+                }
+            })
         });
+        return p;
     },
     /**
      * 进入报告详情
@@ -372,15 +397,50 @@ Page({
     },
 
     goToRecorder: function () {
-        const {releaseRecordId,demonstrateInfo} = this.data;
+        const {releaseRecordId,demonstrateInfo,receiveRecordId} = this.data;
         try {
             wx.uma.trackEvent('1602215501397', {name: demonstrateInfo.evaluationName})
         } catch (e) {
 
         }
-        wx.navigateTo({
-            url: `/pages/recorder/recorder?releaseRecordId=${releaseRecordId}`
-        });
+        if(this.data.type!=='self'){
+            wx.navigateTo({
+                url: `/pages/recorder/recorder?releaseRecordId=${releaseRecordId}`
+            });
+        }else{
+            app.doAjax({
+                url: "/release/self/start",
+                method: "post",
+                data: {
+                    receiveRecordId: receiveRecordId,
+                    // userId: userInfo.id
+                },
+                success: function (res) {
+                    new Promise((resolve, reject) => {
+                        app.doAjax({
+                            url: `../wework/evaluations/${receiveRecordId}/paper`,
+                            method: 'GET',
+                            success(res){
+                                resolve(res);
+                            },
+                            error(err){
+                                reject(err);
+                            }
+                        })
+                    }).then(res => {
+                        var url = ''
+                        if(res.chapter){
+                            url = `/pages/work-base/components/chapter/chapter?&receiveRecordId=${receiveRecordId}`;
+                        }else{
+                            url = `/pages/work-base/components/answering/answering?&receiveRecordId=${receiveRecordId}`
+                        }
+                        wx.redirectTo({
+                            url: url
+                        })
+                    })
+                }
+            })
+        }
     },
 
     getProgramSetting(releaseRecordId) {

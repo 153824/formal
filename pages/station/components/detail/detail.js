@@ -329,15 +329,13 @@ Page({
                 that.setData({
                     releaseInfo: res
                 });
-                const answeringURL = `/pages/work-base/components/answering/answering?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}`;
+                const answeringURL = `/pages/work-base/components/guide/guide?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId }&type=self&releaseInfo=${JSON.stringify(res)}`;
                 const sKey = "oldAnswer" + res.receiveRecordId;
-                if (res.unfinished) {
+                if (res.msg==='RELAY') {
                     let oldData = wx.getStorageSync(sKey);
                     if (!oldData && res.draft instanceof Object) {
                         wx.setStorageSync(sKey, res.draft);
                     }
-                } else {
-                    that._selfStart(res.receiveRecordId)
                 }
                 wx.navigateTo({
                     url: answeringURL
@@ -760,7 +758,7 @@ Page({
                     })
                 }
             });
-        }
+        } 
     },
     goToTransit: function (e) {
         const that = this;

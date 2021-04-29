@@ -5,14 +5,31 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    chapterId:'',
+    introduction:'',
+    sampleQuestions:[],
+    optionsAry: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      sampleQuestions:JSON.parse(options.sampleQuestions),
+      chapterId:options.chapterId,
+      introduction:options.introduction,
+      receiveRecordId:options.receiveRecordId,
+      chapterIndex:options.chapterIndex,
+      chapterTotal:options.chapterTotal
+    })
+  },
 
+  toAnswer(){
+    const url = `/pages/work-base/components/answering/answering?chapterId=${this.data.chapterId}&receiveRecordId=${this.data.receiveRecordId}&chapterIndex=${this.data.chapterIndex}&chapterTotal=${this.data.chapterTotal}`;
+    wx.navigateTo({
+      url: url
+    });
   },
 
   /**

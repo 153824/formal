@@ -13,9 +13,9 @@ Page({
         fetchedAt: 0,
         questions: [],
         countdownEnabled: false,
-        countdownInMinutes: 0,
+        countdownInSeconds: 0,
         /*答题卡*/
-        answerSheet: [],
+        answerSheet: {},
         questionStep: 0,
         fill: false,
         outSideScrollTop: 0,
@@ -24,39 +24,44 @@ Page({
         size: 1,
         extraNodes: [],
         pageMetaScrollTop: 0,
-        scrollTop: 0,
+        scrollTop: 0, 
         receiveRecordId: '',
         hasVanishImageSetting:[],
         /*遮罩控制，防止用户多次滑动swiper-item，导致答题流程错误*/
         isChangeQue: false,
+        chapterId:'',
+        chapterIndex:0,
+        chapterTotal:0
     },
 
     onLoad: function (options) {
-        this._checkType(options);
-        this.loadQuestion(options.receiveRecordId)
+        if(options.chapterId){
+            this.setData({
+                chapterId:options.chapterId,
+                chapterIndex:options.chapterIndex,
+                chapterTotal:options.chapterTotal
+            })
+            this.loadQuestionChapter(options.chapterId,options.receiveRecordId)
             /*初始化题目*/
             .then(res=>{
                 try{
-                    console.log(res,11)
-                    if(res.paper){
-                        var {questions, countdownEnabled, countdownInMinutes} = res;
-                        var hasVanishImageSetting = Array.apply(null,{length:questions.length})
-                        questions.forEach((que,queIndex) => {
-                            if(que.vanishImageSetting){
-                                que.stem = que.stem.replace(/<img.*?(?:>|\/>)/gi,'')
-                                var newObj = que.vanishImageSetting
-                                newObj['isShow'] = true
-                                hasVanishImageSetting.splice(queIndex,1,newObj)
-                            }
-                        })
-                        this.setData({
-                            hasVanishImageSetting,
-                            questions,
-                            countdownEnabled,
-                            countdownInMinutes,
-                            receiveRecordId: options.receiveRecordId
-                        });
-                    }
+                    var {questions, countdownEnabled, countdownInSeconds} = res;
+                    var hasVanishImageSetting = Array.apply(null,{length:questions.length})
+                    questions.forEach((que,queIndex) => {
+                        if(que.vanishImageSetting){
+                            que.stem = que.stem.replace(/<img.*?(?:>|\/>)/gi,'')
+                            var newObj = que.vanishImageSetting
+                            newObj['isShow'] = true
+                            hasVanishImageSetting.splice(queIndex,1,newObj)
+                        }
+                    })
+                    this.setData({
+                        hasVanishImageSetting,
+                        questions,
+                        countdownEnabled,
+                        countdownInSeconds,
+                        receiveRecordId: options.receiveRecordId
+                    });
                     return Promise.resolve(res)
                 }catch(e){
                     return Promise.reject('answering.js:188, 获取题目错误')
@@ -65,12 +70,12 @@ Page({
             /*初始化草稿*/
             .then(res=>{
                 try{
-                    const draft = wx.getStorageSync(options.receiveRecordId);
-                    if(draft.length){
+                    const draft = res.draft;
+                    if(Object.keys(draft).length){
                         this.setData({
                             answerSheet: draft
                         })
-                        this.swipeTo(draft.length - 1);
+                        this.swipeTo(Object.keys(draft).length - 1);
                     }
                     return Promise.resolve(res)
                 }catch (e) {
@@ -80,9 +85,10 @@ Page({
             /*初始化答题卡*/
             .then(res=>{
                 try{
+                    debounce
                     const {answerSheet} = this.data;
                     const {questions} = res;
-                    if(answerSheet.length === questions.length){
+                    if(Object.keys(answerSheet).length === questions.length){
                         return this.judge()
                     }
                     return Promise.resolve({})
@@ -102,13 +108,86 @@ Page({
                     return Promise.reject('answering.js:228, 初始化fill错误')
                 }
             })
-            .then(()=>{
-                this._checkReceiveInfo(options.receiveRecordId)
-            })
             /*抛出错误信息*/
             .catch(err=>{
                 console.error(err);
             });
+        }else{
+            this._checkType(options);
+            this.loadQuestion(options.receiveRecordId)
+                /*初始化题目*/
+                .then(res=>{
+                    try{
+                        console.log(res,11)
+                        if(res.paper){
+                            var {questions, countdownEnabled, countdownInSeconds} = res.paper;
+                            var hasVanishImageSetting = Array.apply(null,{length:questions.length})
+                            questions.forEach((que,queIndex) => {
+                                if(que.vanishImageSetting){
+                                    que.stem = que.stem.replace(/<img.*?(?:>|\/>)/gi,'')
+                                    var newObj = que.vanishImageSetting
+                                    newObj['isShow'] = true
+                                    hasVanishImageSetting.splice(queIndex,1,newObj)
+                                }
+                            })
+                            this.setData({
+                                hasVanishImageSetting,
+                                questions,
+                                countdownEnabled,
+                                countdownInSeconds,
+                                receiveRecordId: options.receiveRecordId
+                            });
+                        }
+                        return Promise.resolve(res)
+                    }catch(e){
+                        return Promise.reject('answering.js:188, 获取题目错误')
+                    }
+                })
+                /*初始化草稿*/
+                .then(res=>{
+                    try{
+                        const draft = res.paper.draft;
+                        if(Object.keys(draft).length){
+                            this.setData({
+                                answerSheet: draft
+                            })
+                            this.swipeTo(Object.keys(draft).length - 1);
+                        }
+                        return Promise.resolve(res)
+                    }catch (e) {
+                        return Promise.reject('answering.js:203, 获取草稿错误')
+                    }
+                })
+                /*初始化答题卡*/
+                .then(res=>{
+                    try{
+                        const {answerSheet} = this.data;
+                        const {questions} = res.paper;
+                        if(Object.keys(answerSheet).length === questions.length){
+                            return this.judge()
+                        }
+                        return Promise.resolve({})
+                    }catch (e) {
+                        return Promise.reject('answering.js:216, 初始化答题卡错误')
+                    }
+                })
+                /*初始化fill*/
+                .then(({fill})=>{
+                    try{
+                        if(fill){
+                            this.setData({
+                                fill: true
+                            })
+                        }
+                    }catch (e) {
+                        return Promise.reject('answering.js:228, 初始化fill错误')
+                    }
+                })
+                /*抛出错误信息*/
+                .catch(err=>{
+                    console.error(err);
+                });
+        }
         this.init();
     },
 
@@ -155,7 +234,7 @@ Page({
 
     _checkReceiveInfo(receiveRecordId) {
         const that = this;
-        let {countdownInMinutes, countdownEnabled} = this.data;
+        let {countdownInSeconds, countdownEnabled} = this.data;
         receiveRecordId = receiveRecordId || this.data.receiveRecordId;
         app.doAjax({
             url: `wework/evaluations/receive_info/${receiveRecordId}`,
@@ -165,7 +244,7 @@ Page({
                     return;
                 }
                 try{
-                    let sandGlass = countdownInMinutes * 60 * 1000 - (new Date().getTime() - res.fetchedAt);
+                    let sandGlass = countdownInSeconds * 60 * 1000 - (new Date().getTime() - res.fetchedAt);
                     that.setData({
                         sandGlass: sandGlass,
                         fetchedAt: res.fetchedAt
@@ -189,7 +268,24 @@ Page({
 
     /*禁止手指滑动翻页*/
     pageTouch() {return},
-
+    loadQuestionChapter(chapterId,receiveRecordId) {
+        const p = new Promise((resolve, reject) => {
+            app.doAjax({
+                url: `../wework/evaluations/chapters/${chapterId}/paper`,
+                method: 'GET',
+                success(res){
+                    resolve(res);
+                },
+                data:{
+                    receiveRecordId
+                },
+                error(err){
+                    reject(err);
+                }
+            })
+        });
+        return p;
+    },
     loadQuestion(receiveRecordId) {
         receiveRecordId = this.data.receiveRecordId || receiveRecordId;
         const p = new Promise((resolve, reject) => {
@@ -208,11 +304,11 @@ Page({
     },
 
     selectQuesItem: debounce(function(e) {
-        const {questionIndex, optionIndex} = e.currentTarget.dataset;
+        const {questionIndex, optionIndex, questionId} = e.currentTarget.dataset;
         // console.log(questionIndex, optionIndex);
         const {answerSheet, questions, questionStep} = this.data;
         const {type, leastChoice, mostChoice} = questions[questionIndex];
-        const targetSheet = [...answerSheet];
+        const targetSheet =  JSON.parse(JSON.stringify(answerSheet));
         if(optionIndex < 0 || questionIndex < 0){
             app.toast('题目或选项为空');
             return;
@@ -222,28 +318,28 @@ Page({
                 isChangeQue: true,
             })
         }
-        if(type === QUES_TYPE[1] && answerSheet[questionIndex] && answerSheet[questionIndex].indexes){
-            const {indexes} = answerSheet[questionIndex];
+        if(type === QUES_TYPE[1] && answerSheet[questionId] && answerSheet[questionId].indexes){
+            const {indexes} = answerSheet[questionId];
             if(indexes.length >= mostChoice && !indexes.includes(optionIndex)){
                 app.toast(`最多选中${mostChoice}个选项`)
                 return;
             }
         }
         const targetItem = this.answerSheetItem(questionIndex);
-        if(answerSheet.length - 1 < questionIndex){
+        if(Object.keys(answerSheet).length - 1 < questionIndex){
             targetItem.indexes.push(optionIndex);
-            targetSheet[questionIndex] = targetItem;
+            targetSheet[questionId] = targetItem;
         }
-        if(answerSheet.length - 1 >= questionIndex){
+        if(Object.keys(answerSheet).length - 1 >= questionIndex){
             switch (type) {
                 case QUES_TYPE[0]:
-                    targetSheet[questionIndex].indexes = [optionIndex];
+                    targetSheet[questionId].indexes = [optionIndex];
                     break;
                 case QUES_TYPE[1]:
-                    answerSheet[questionIndex].indexes.push(optionIndex);
-                    let targetIndexes = answerSheet[questionIndex].indexes;
+                    answerSheet[questionId].indexes.push(optionIndex);
+                    let targetIndexes = answerSheet[questionId].indexes;
                     targetIndexes = this.filterSameEle(targetIndexes);
-                    targetSheet[questionIndex].indexes = targetIndexes;
+                    targetSheet[questionId].indexes = targetIndexes;
                     break;
                 default:
                     break;
@@ -286,15 +382,15 @@ Page({
             value = 0;
         }
         const {options} = questions[questionIndex];
-        const targetSheet = [...answerSheet];
+        const targetSheet = JSON.parse(JSON.stringify(answerSheet));
         const targetItem = this.answerSheetItem(questionIndex);
         /*用户无作答记录的情况*/
-        if(answerSheet.length - 1 < questionIndex){
+        if(Object.keys(answerSheet).length - 1 < questionIndex){
             targetItem.indexes[optionIndex] = value;
             targetSheet.push(targetItem)
         }
         /*用户有作答记录的情况*/
-        if(answerSheet.length - 1 >= questionIndex){
+        if(Object.keys(answerSheet).length - 1 >= questionIndex){
             let indexes = targetSheet[questionIndex]['indexes'];
             if(indexes.length !== options.length){
                 indexes = new Array(options.length).fill(0);
@@ -324,13 +420,13 @@ Page({
         const {answerSheet, questions, questionStep} = this.data;
         const targetItem = this.answerSheetItem(questionStep);
         const targetSheet = [...answerSheet];
-        if(answerSheet.length - 1 < questionStep){
+        if(Object.keys(answerSheet).length - 1 < questionStep){
             targetItem.indexes = listData.map(item=>{
                 return item.index
             });
             targetSheet.push(targetItem);
         }
-        if(answerSheet.length - 1 >= questionStep){
+        if(Object.keys(answerSheet).length - 1 >= questionStep){
             targetSheet[questionStep].indexes = listData.map(item=>{
                 return item.index
             })
@@ -356,7 +452,7 @@ Page({
         });
         let isSorting = false;
         const {questionStep, answerSheet, indexedOptions, questions} = this.data;
-        const indexes = answerSheet[questionStep] && answerSheet[questionStep].indexes ? answerSheet[questionStep].indexes : [] ;
+        const indexes = answerSheet[questions[questionStep]['id']] && answerSheet[questions[questionStep]['id']].indexes ? answerSheet[questions[questionStep]['id']].indexes : [] ;
         this.judge().then(({flag, text})=>{
             if(!flag && text){
                 app.toast(text);
@@ -368,8 +464,8 @@ Page({
                 return;
             }
             if(questions[questionStep].type === 'SORTING' && indexes.length === 0){
-                const targetSheet = [...answerSheet];
-                targetSheet[questionStep] = this.answerSheetItem(questionStep);
+                const targetSheet = JSON.parse(JSON.stringify(answerSheet));
+                targetSheet[questions[questionStep].id] = this.answerSheetItem(questionStep);
                 this.setData({
                     answerSheet: targetSheet
                 });
@@ -413,28 +509,48 @@ Page({
     },
 
 
-    memory(receiveRecordId) {
+    memory(chapterId,receiveRecordId) {
         const {answerSheet} = this.data;
+        chapterId = this.data.chapterId || chapterId;
         receiveRecordId = this.data.receiveRecordId || receiveRecordId;
         if(!receiveRecordId){
             console.error('answering.js:867 -> ', '缺少receiveRecordId');
             return Promise.reject;
         }
-        const p = new Promise((resolve, reject) => {
-            app.doAjax({
-                url: `../wework/evaluations/${receiveRecordId}/drafts`,
-                method: 'POST',
-                data: answerSheet,
-                noLoading: true,
-                success(res) {
-                    resolve(res)
-                },
-                error(err) {
-                    reject(err);
-                }
+        var p
+        if(chapterId){
+            p = new Promise((resolve, reject) => {
+                app.doAjax({
+                    url: `../wework/evaluations/chapters/${chapterId}/drafts?receiveRecordId=${receiveRecordId}`,
+                    method: 'POST',
+                    data: answerSheet,
+                    noLoading: true,
+                    success(res) {
+                        resolve(res)
+                    },
+                    error(err) {
+                        reject(err);
+                    }
+                })
             })
-        })
-        return p;
+        }else{
+            p = new Promise((resolve, reject) => {
+                app.doAjax({
+                    url: `../wework/evaluations/${receiveRecordId}/drafts`,
+                    method: 'POST',
+                    data: answerSheet,
+                    noLoading: true,
+                    success(res) {
+                        resolve(res)
+                    },
+                    error(err) {
+                        reject(err);
+                    }
+                })
+            })
+            
+        }
+        return p
     },
 
     judge() {
@@ -448,7 +564,7 @@ Page({
         let text = '';
         const {questionStep, answerSheet, questions, sortedList} = this.data;
         const {type, leastChoice, mostChoice, totalScore} = questions[questionStep];
-        const indexes = answerSheet[questionStep] && answerSheet[questionStep].indexes ? answerSheet[questionStep].indexes : [] ;
+        const indexes = answerSheet[questions[questionStep].id] && answerSheet[questions[questionStep].id].indexes ? answerSheet[questions[questionStep].id].indexes : [] ;
         const p = new Promise((resolve, reject) => {
             try{
                 switch (type) {
@@ -510,30 +626,60 @@ Page({
     },
 
     save() {
-        const {answerSheet, receiveRecordId} = this.data;
-        const p = new Promise((resolve, reject) => {
-            app.doAjax({
-                url: '../hola/receive_records/answers',
-                method: 'POST',
-                data: {
-                    responds: answerSheet,
-                    receiveRecordId: receiveRecordId
-                },
-                success(res) {
-                    wx.redirectTo({
-                        url: `../done/done?receiveRecordId=${receiveRecordId}`,
-                    });
-                    resolve(res)
-                },
-                error(err) {
-                    wx.reLaunch({
-                        url: '/pages/user-center/components/receive-evaluations/receive-evaluations'
-                    });
-                    reject(err);
-                }
-            })
-        });
-        return p;
+        const {answerSheet, receiveRecordId, chapterId, chapterTotal, chapterIndex} = this.data;
+        if(chapterId){
+            const p = new Promise((resolve, reject) => {
+                app.doAjax({
+                    url: `../hola/receive_records/chapters/answers?receiveRecordId=${receiveRecordId}&chapterId=${chapterId}&userId=${wx.getStorageSync("userInfo").id || ""}`,
+                    method: 'POST',
+                    data: {
+                        responds: answerSheet,
+                    },
+                    success(res) {
+                        var url =''
+                        if(chapterTotal===chapterIndex){
+                            url = `../done/done?receiveRecordId=${receiveRecordId}`
+                        }else{
+                            url = `/pages/work-base/components/chapter/chapter?&receiveRecordId=${receiveRecordId}`
+                        }
+                        wx.redirectTo({
+                            url
+                        });
+                        resolve(res)
+                    },
+                    error(err) {
+                        wx.reLaunch({
+                            url: '/pages/user-center/components/receive-evaluations/receive-evaluations'
+                        });
+                        reject(err);
+                    }
+                })
+            });
+            return p;
+        }else{
+            const p = new Promise((resolve, reject) => {
+                app.doAjax({
+                    url: `../hola/receive_records/answers?receiveRecordId=${receiveRecordId}&userId=${wx.getStorageSync("userInfo").id || ""}`,
+                    method: 'POST',
+                    data: {
+                        responds: answerSheet,
+                    },
+                    success(res) {
+                        wx.redirectTo({
+                            url: `../done/done?receiveRecordId=${receiveRecordId}`,
+                        });
+                        resolve(res)
+                    },
+                    error(err) {
+                        wx.reLaunch({
+                            url: '/pages/user-center/components/receive-evaluations/receive-evaluations'
+                        });
+                        reject(err);
+                    }
+                })
+            });
+            return p;
+        }
     },
 
     forceSave() {

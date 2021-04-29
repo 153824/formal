@@ -60,6 +60,13 @@
 }
 .chapters-chapterCount view{
   margin-top: 16rpx;
+  display: flex;
+  align-items: center;
+}
+.chapters-chapterCount image{
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 10rpx;
 }
 .chapters-chapterStatus image{
   width: 30rpx;

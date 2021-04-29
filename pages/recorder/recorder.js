@@ -235,13 +235,31 @@ Page({
                     }
                     const {evaluationId} = res;
                     const receiveRecordId = res.receiveRecordId || _this.data.receiveRecordId;
-                    const url = `/pages/work-base/components/chapter/chapter?evaluationId=${evaluationId}&receiveRecordId=${receiveRecordId}`;
-                    _this.setData({
-                        receiveRecordId: res.receiveRecordId
-                    });
-                    resolve({receiveRecordId});
-                    wx.redirectTo({
-                        url: url
+                    var url = ''
+                    new Promise((resolve, reject) => {
+                        app.doAjax({
+                            url: `../wework/evaluations/${receiveRecordId}/paper`,
+                            method: 'GET',
+                            success(res){
+                                resolve(res);
+                            },
+                            error(err){
+                                reject(err);
+                            }
+                        })
+                    }).then(res => {
+                        if(res.chapter){
+                            url = `/pages/work-base/components/chapter/chapter?evaluationId=${evaluationId}&receiveRecordId=${receiveRecordId}`;
+                        }else{
+                            url = `/pages/work-base/components/answering/answering?&receiveRecordId=${receiveRecordId}`
+                        }
+                        _this.setData({
+                            receiveRecordId: res.receiveRecordId
+                        });
+                        resolve({receiveRecordId});
+                        wx.redirectTo({
+                            url: url
+                        })
                     })
                 },
                 fail: function (err) {

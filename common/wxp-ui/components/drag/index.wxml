@@ -9,7 +9,7 @@
 		class="item"
 		wx:for="{{list}}"
 		data-index="{{index}}"
-		style="width: {{100/columns}}%;height: {{maxItemHeight ? maxItemHeight : auto }}px;"
+		style="width: {{100/columns}}%;height: {{maxItemHeight > 0 ? maxItemHeight : auto }}px;"
 		data-out-side-scroll-top="{{outSideScrollTop}}"
 		data-max-item-height="{{maxItemHeight}}"
 		bind:longpress="{{handler.longPress}}"

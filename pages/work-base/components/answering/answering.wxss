@@ -23,7 +23,6 @@
 }
 .imgQue{
   display: flex;
-  padding: 0rpx 40rpx;
   font-size: 30rpx;
   font-family: PingFangSC-Medium, PingFang SC;
   line-height: 42rpx;
@@ -51,6 +50,9 @@
 }
 .showImg{
   padding: 0 40rpx;
+}
+.showImg .question-stem-rich-text-img{
+  max-width: 100%;
 }
 .container1 {
   padding: 50rpx 60rpx 0;
@@ -660,9 +662,6 @@
   padding: unset !important;
 }
 
-.get-user-phone-wrapper > text{
-
-}
 .question-number-group{
   display: flex;
   align-items: center;

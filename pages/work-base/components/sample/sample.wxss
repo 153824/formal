@@ -1,5 +1,226 @@
+.container .checkbluebox {
+  padding: 0rpx 20rpx;
+  box-sizing: border-box;
+  height: 40rpx;
+  background: rgba(36, 88, 240, 1);
+  border-radius: 6rpx;
+  font-size: 26rpx;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  line-height: 40rpx;
+  margin-right: 20rpx;
+}
+
+.container .timebox {
+  width: 100%;
+  height: 64rpx;
+  background: rgba(232, 233, 243, 1);
+  text-align: center;
+  line-height: 64rpx;
+  font-size: 24rpx;
+  font-weight: 400;
+  color: rgba(50, 53, 65, 1);
+}
+
+.container .paper {
+  position: fixed;
+  left: 30rpx;
+  right: 30rpx;
+  background-color: #fff;
+  box-shadow: 0 6rpx 12rpx 0 rgba(0, 0, 0, 0.12);
+  border-radius: 40rpx;
+  top: 32rpx;
+}
+
+.container .notiphoneXpaper {
+  bottom: 216rpx;
+}
+
+.container .isiphoneXpaper {
+  bottom: 276rpx;
+}
+
+
+.container .paperhead {
+  width: 100%;
+  padding-bottom:30rpx;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.container .title {
+  font-size: 30rpx;
+  font-weight: 500;
+  line-height: 40rpx;
+  max-width: 100%;
+  color: #303113;
+}
+
+.container .title img {
+  max-width: 100%;
+}
+.number_input{
+  width: 80rpx;
+  height: 74rpx;
+  border-radius: 5px;
+  border: 1px solid rgba(217,217,217,1);
+  text-align: center;
+}
+.number_slider_wrap{
+  flex:1;
+  display: flex;
+  flex-direction: column;
+}
+.number_slider{
+  width:calc(100% - 36px);
+  z-index:10;
+}
+.container .selectItem.notborderview view  .number_slider_tip{
+  width:calc(100% - 36px);
+  display: flex;
+  justify-content: space-between;
+}
+.number_slider_tip_item_1{
+  width:20rpx;
+}
+.number_slider_tip_item_center{
+  display: flex;
+  justify-content: space-between;
+  flex:1;
+}
+.number_slider_tip_number_label{
+  position:relative;
+}
+.container .selectItem.notborderview view{
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  align-items: center;
+}
+.container .selectItem.notborderview view .number_slider_tip {
+  width: calc(100% - 36px);
+  display: flex;
+  justify-content: space-between;
+}
+.container .selectItem.notborderview {
+  flex-direction: column;
+}
+.number_slider_tip_number_label:before{
+  position: absolute;
+  content:"|";
+  color:rgba(153, 153, 153, 1);
+  transform:translate(50%,-90%);
+}
+/* paperbody */
+
+.container .paperbody {
+  background-color: #fff;
+}
+
+.container .paperbody-sort{
+  padding: 0 30rpx;
+}
+.container .selectItem.notborderview view .langoption {
+  position: relative;
+  top: inherit;
+  height: 40rpx;
+  line-height: 40rpx;
+}
+/* paper选项部分 */
+
+.container .paper .options {
+  font-size: 28rpx;
+  font-weight: 400;
+  line-height: 40rpx;
+  padding: 0rpx 30rpx 50rpx;
+  box-sizing: border-box;
+  color: rgba(51, 51, 51, 1);
+}
+
+.options-padding{
+  padding: 0rpx 40rpx;
+}
+
+.container .lastbox {
+  margin-top: -80rpx;
+}
+
+.container .lastoptions {
+  font-size: 28rpx;
+  font-weight: 400;
+  line-height: 40rpx;
+  padding: 20rpx 30rpx;
+  box-sizing: border-box;
+  color: rgba(51, 51, 51, 1);
+  /* border: 1px solid red; */
+}
+
+.container .lasthead {
+  margin-bottom: 20rpx;
+  font-weight: 500;
+}
+
+.container .lasthead text {
+  color: #fff;
+  background-color: rgba(36, 88, 240, 1);
+  border-radius: 5rpx;
+  font-size: 22rpx;
+  padding: 3rpx 15rpx;
+  margin-left: 20rpx;
+  font-weight: 400;
+  letter-spacing: 2rpx;
+}
+
+.container .langoption {
+  width: 30rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  position: absolute;
+  top: calc((100% - 30rpx)/2);
+}
+
+.container .optiontext {
+  display: block;
+  margin-left: 40rpx;
+  height: 100%;
+  line-height: 40rpx;
+}
+
+/* 选项未选中时样式 */
+
+.container .selectItem {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  box-sizing: border-box;
+  margin-bottom: 20rpx;
+  border-radius: 20rpx;
+  position: relative;
+  background:rgba(250,250,250,1);
+  font-size: 30rpx;
+  font-family:PingFangSC-Semibold,PingFang SC;
+  font-weight: 600;
+  color:rgba(118,118,118,1);
+}
+
+/* 选中后的样式 */
+
+.container .selectItem.active {
+  font-size: 30rpx;
+  font-family:PingFangSC-Semibold,PingFang SC;
+  font-weight: 600;
+  color:rgba(53,62,232,1);
+  background:rgba(53,62,232,0.1);
+  box-shadow:0px 2px 4px 0px rgba(0,0,0,0.15);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+
 .sample{
-  height: 100vh;
+  height: 100%;
   background: #F7F8FA;
   padding-top: 1rpx;
 }
@@ -39,15 +260,76 @@
   color: #303113;
   line-height: 50rpx;
 }
+/*拖拽*/
+.drag-item-wrap {
+  background: #f7f7f7; }
 .sample-examplesQueContentAnalysis{
   padding: 30rpx;
   background: #5AD8A6;
   border-radius: 10px;
   color: white;
-  margin-top: 50rpx;
   font-size: 30rpx;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 500;
+}
+.sample-examplesQueContentAnalysis:not(:last-child){
+  margin-bottom: 90rpx;
+}
+.isChangeQue { 
+  position: fixed;
+  z-index: 999999;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: transparent;
+}
+.imgTimeout{
+  font-size: 30rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #353EE8;
+  line-height: 42rpx;
+}
+.imgTimeoutContent{
+  margin-top: 40rpx;
+  display: flex;
+  justify-content: center;
+}
+.imgQue{
+  display: flex;
+  font-size: 30rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  line-height: 42rpx;
+  font-weight: 600;
+  margin-bottom: 30rpx;
+}
+.imgQue-title{
+  color: #353EE8;
+}
+.titleImgButton{
+  display: block;
+  padding: 12rpx 0;
+  background: #353EE8;
+  text-align: center;
+  width: 210rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 44rpx;
+  cursor: pointer;
+  border-radius: 10rpx;
+  transition: all 1s;
+}
+.imgContent{
+  margin-bottom: 40rpx;
+}
+.showImg{
+  padding: 0 40rpx;
+}
+.showImg .question-stem-rich-text-img{
+  max-width: 100%;
 }
 .sample-toAnswer{
   height: 90rpx;
@@ -61,7 +343,10 @@
   font-weight: 600;
   color: #FFFFFF;
   margin: 0 40rpx;
-  margin-bottom: 54rpx;
+  margin-bottom: 120rpx;
+}
+.sample-toAnswerWrap{
+  padding-bottom: 50rpx;
 }
 .sample-examplesQueContentOption{
   padding: 30rpx;

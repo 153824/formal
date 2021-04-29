@@ -29,17 +29,14 @@ Page({
         hasVanishImageSetting:[],
         /*遮罩控制，防止用户多次滑动swiper-item，导致答题流程错误*/
         isChangeQue: false,
-        chapterId:'',
-        chapterIndex:0,
-        chapterTotal:0
+        chapterId:''
     },
 
     onLoad: function (options) {
         if(options.chapterId){
             this.setData({
                 chapterId:options.chapterId,
-                chapterIndex:options.chapterIndex,
-                chapterTotal:options.chapterTotal
+                type:options.type
             })
             this.loadQuestionChapter(options.chapterId,options.receiveRecordId)
             /*初始化题目*/
@@ -118,9 +115,8 @@ Page({
                 /*初始化题目*/
                 .then(res=>{
                     try{
-                        console.log(res,11)
-                        if(res.paper){
-                            var {questions, countdownEnabled, countdownInSeconds} = res.paper;
+                        if(res){
+                            var {questions, countdownEnabled, countdownInSeconds} = res;
                             var hasVanishImageSetting = Array.apply(null,{length:questions.length})
                             questions.forEach((que,queIndex) => {
                                 if(que.vanishImageSetting){
@@ -146,7 +142,7 @@ Page({
                 /*初始化草稿*/
                 .then(res=>{
                     try{
-                        const draft = res.paper.draft;
+                        const draft = res.draft;
                         if(Object.keys(draft).length){
                             this.setData({
                                 answerSheet: draft
@@ -162,7 +158,7 @@ Page({
                 .then(res=>{
                     try{
                         const {answerSheet} = this.data;
-                        const {questions} = res.paper;
+                        const {questions} = res;
                         if(Object.keys(answerSheet).length === questions.length){
                             return this.judge()
                         }
@@ -194,7 +190,7 @@ Page({
     onShow() {
         if (wx.canIUse('hideHomeButton')) {
             wx.hideHomeButton();
-        }
+        } 
     },
 
     openImg(event) {
@@ -387,11 +383,11 @@ Page({
         /*用户无作答记录的情况*/
         if(Object.keys(answerSheet).length - 1 < questionIndex){
             targetItem.indexes[optionIndex] = value;
-            targetSheet.push(targetItem)
+            targetSheet[questions[questionIndex].question.id]=targetItem
         }
         /*用户有作答记录的情况*/
         if(Object.keys(answerSheet).length - 1 >= questionIndex){
-            let indexes = targetSheet[questionIndex]['indexes'];
+            let indexes = targetSheet[questions[questionIndex].question.id]['indexes'];
             if(indexes.length !== options.length){
                 indexes = new Array(options.length).fill(0);
             }
@@ -626,7 +622,7 @@ Page({
     },
 
     save() {
-        const {answerSheet, receiveRecordId, chapterId, chapterTotal, chapterIndex} = this.data;
+        const {answerSheet, receiveRecordId, chapterId} = this.data;
         if(chapterId){
             const p = new Promise((resolve, reject) => {
                 app.doAjax({
@@ -637,7 +633,7 @@ Page({
                     },
                     success(res) {
                         var url =''
-                        if(chapterTotal===chapterIndex){
+                        if(!res.hasNext){
                             url = `../done/done?receiveRecordId=${receiveRecordId}`
                         }else{
                             url = `/pages/work-base/components/chapter/chapter?&receiveRecordId=${receiveRecordId}`

@@ -21,7 +21,7 @@
             <text wx:else>不限时</text>
           </view>
         </view>
-        <view wx:if="{{synopsesItem.status === 'PREPARED'}}" class="chapters-chapterStatus" data-sample-questions="{{synopsesItem.sampleQuestions}}" data-chapter-id="{{synopsesItem.chapterId}}" data-introduction="{{synopsesItem.introduction}}" data-chapter-index="{{synopsesIndex}}" data-chapter-total="{{synopses.length}}" bindtap="toSample">
+        <view wx:if="{{synopsesItem.status === 'PREPARED'}}" class="chapters-chapterStatus" data-chapter-id="{{synopsesItem.chapterId}}" data-introduction="{{synopsesItem.introduction}}" data-chapter-index="{{synopsesIndex}}" data-chapter-total="{{synopses.length}}" bindtap="toSample">
           <text>开始作答</text>
           <image src="../../images/chapter-enter.png"></image>
         </view>

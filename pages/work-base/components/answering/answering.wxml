@@ -40,7 +40,9 @@
                             <view wx:else class="paperbody {{quesItem.type === 'SORTING' ? 'options-padding' : ''}}">
                                 <view wx:if="{{hasVanishImageSetting[questionStep]}}" class="imgQue">
                                     <text class="imgQue-title">问：</text>
-                                    <text>{{hasVanishImageSetting[questionStep].substitute}}</text>
+                                    <rich-text class="title" space="nbsp"
+                                                nodes="{{hasVanishImageSetting[quesIndex].substitute}}">
+                                    </rich-text>
                                 </view>
                                 <view wx:if="{{quesItem.type === 'SORTING'}}" class="options">
                                     <drag id="drag-{{quesIndex}}"
@@ -117,7 +119,7 @@
                         </scroll-view>
                     </swiper-item>
                 </block>
-            </swiper>
+            </swiper> 
         </view>
         <view class="bottombtn {{phoneModel ? 'isiphoneX':''}}">
             <view class="btnprev" bind:tap="preQues" data-question-step="{{questionStep}}"

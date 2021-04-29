@@ -135,36 +135,41 @@ Component({
 			baseData.rows =  this.data.rows;
 			const scrollViewQuery = wx.createSelectorQuery();
 			scrollViewQuery.select('#question-scroll-view-0').boundingClientRect();
-			scrollViewQuery.exec(res=>{
-				baseData.scrollViewHeight = res[0].height
-			});
-			const query = this.createSelectorQuery();
-			const itemQuery = this.createSelectorQuery();
-			query.select(".item").boundingClientRect();
-			query.select(".item-wrap").boundingClientRect();
-			query.exec((res) => {
-				baseData.itemWidth = res[0].width;
-				baseData.itemHeight = res[0].height;
-				baseData.wrapLeft = res[1].left;
-				baseData.wrapTop = res[1].top + this.data.scrollTop;
-				this.setData({
-					dragging: false,
-					baseData
+			try{
+				scrollViewQuery.exec(res=>{
+					baseData.scrollViewHeight = res[0].height
 				});
-			});
-			itemQuery.selectAll('.item').boundingClientRect();
-			let maxHeight = 0;
-			itemQuery.exec(res=>{
-				res[0].forEach((item, key)=> {
-					const itemHeight = item.height;
-					if(itemHeight > maxHeight){
-						maxHeight = itemHeight;
-					}
+				const query = this.createSelectorQuery();
+				const itemQuery = this.createSelectorQuery();
+				query.select(".item").boundingClientRect();
+				query.select(".item-wrap").boundingClientRect();
+				query.exec((res) => {
+					baseData.itemWidth = res[0].width;
+					baseData.itemHeight = res[0].height;
+					baseData.wrapLeft = res[1].left;
+					baseData.wrapTop = res[1].top + this.data.scrollTop;
+					this.setData({
+						dragging: false,
+						baseData
+					});
 				});
-				this.setData({
-					maxItemHeight: maxHeight+15 || 0
-				});
-			})
+				itemQuery.selectAll('.item').boundingClientRect();
+				let maxHeight = 0;
+				itemQuery.exec(res=>{
+					res[0].forEach((item, key)=> {
+						const itemHeight = item.height;
+						if(itemHeight > maxHeight){
+							maxHeight = itemHeight;
+						}
+					});
+					this.setData({
+						maxItemHeight: maxHeight+15 || 0,
+						wrapStyle: `height: ${this.data.rows * (maxHeight+15)}px`
+					});
+				})
+			}catch{
+				
+			}
 		},
 		/**
 		 * column 改变时候需要清空 list, 以防页面溢出
@@ -231,8 +236,7 @@ Component({
 			this.setData({
 				list,
 				listWxs: list,
-				wrapStyle: `height: 0rpx`
-				// wrapStyle: `height: ${this.data.rows * this.data.itemHeight}rpx`
+				wrapStyle: `height: ${this.data.rows * this.data.itemHeight}rpx`
 			});
 			if (list.length === 0) return;
 			// 异步加载数据时候, 延迟执行 initDom 方法, 防止基础库 2.7.1 版本及以下无法正确获取 dom 信息

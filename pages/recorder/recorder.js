@@ -238,7 +238,7 @@ Page({
                     var url = ''
                     new Promise((resolve, reject) => {
                         app.doAjax({
-                            url: `../wework/evaluations/${receiveRecordId}/paper`,
+                            url: `../wework/evaluations/${receiveRecordId}/check_if_chapter_enabled`,
                             method: 'GET',
                             success(res){
                                 resolve(res);
@@ -248,7 +248,7 @@ Page({
                             }
                         })
                     }).then(res => {
-                        if(res.chapter){
+                        if(res){
                             url = `/pages/work-base/components/chapter/chapter?evaluationId=${evaluationId}&receiveRecordId=${receiveRecordId}`;
                         }else{
                             url = `/pages/work-base/components/answering/answering?&receiveRecordId=${receiveRecordId}`

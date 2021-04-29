@@ -164,10 +164,10 @@ Page({
         var receiveRecordId = this.data.receiveRecordId;
         const p = new Promise((resolve, reject) => {
             app.doAjax({
-                url: `../wework/evaluations/${receiveRecordId}/paper`,
+                url: `../wework/evaluations/${receiveRecordId}/check_if_chapter_enabled`,
                 method: 'GET',
                 success(res){
-                    if(res.paper&&!res.chapter){
+                    if(!res){
                         const url = `/pages/work-base/components/answering/answering?&receiveRecordId=${receiveRecordId}`;
                         wx.navigateTo({
                           url: url
@@ -418,7 +418,7 @@ Page({
                 success: function (res) {
                     new Promise((resolve, reject) => {
                         app.doAjax({
-                            url: `../wework/evaluations/${receiveRecordId}/paper`,
+                            url: `../wework/evaluations/${receiveRecordId}/check_if_chapter_enabled`,
                             method: 'GET',
                             success(res){
                                 resolve(res);
@@ -429,7 +429,7 @@ Page({
                         })
                     }).then(res => {
                         var url = ''
-                        if(res.chapter){
+                        if(res){
                             url = `/pages/work-base/components/chapter/chapter?&receiveRecordId=${receiveRecordId}`;
                         }else{
                             url = `/pages/work-base/components/answering/answering?&receiveRecordId=${receiveRecordId}`

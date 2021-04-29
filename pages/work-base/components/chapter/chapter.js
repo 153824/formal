@@ -16,33 +16,19 @@ Page({
    */
   onLoad: function (options) {
     this.loadQuestion(options.receiveRecordId).then(res=>{
-        const {evaluationName,synopses} = res.chapter
-        this.setData({
-          evaluationName,
-          synopses,
-          receiveRecordId:options.receiveRecordId
-        })
+      const {evaluationName,synopses} = res
+      this.setData({
+        evaluationName,
+        synopses,
+        receiveRecordId:options.receiveRecordId
+      })
     })
-  },
-  toAnswer(e){
-    const {chapterId,chapterIndex,chapterTotal} = e.currentTarget.dataset
-    const url = `/pages/work-base/components/answering/answering?chapterId=${chapterId}&receiveRecordId=${this.data.receiveRecordId}&chapterIndex=${chapterIndex+1}&chapterTotal=${chapterTotal}`;
-    wx.navigateTo({
-      url: url
-    });
-  },
-  toSample(e) {
-    const {chapterId,introduction,sampleQuestions,chapterIndex,chapterTotal} = e.currentTarget.dataset
-    const url = `/pages/work-base/components/sample/sample?chapterId=${chapterId}&sampleQuestions=${JSON.stringify(sampleQuestions)}&introduction=${introduction}&receiveRecordId=${this.data.receiveRecordId}&chapterIndex=${chapterIndex+1}&chapterTotal=${chapterTotal}`;
-    wx.navigateTo({
-      url: url
-    });
   },
   loadQuestion(receiveRecordId) {
     receiveRecordId = this.data.receiveRecordId || receiveRecordId;
     const p = new Promise((resolve, reject) => {
         app.doAjax({
-            url: `../wework/evaluations/${receiveRecordId}/paper`,
+            url: `../wework/evaluations/${receiveRecordId}/chapters`,
             method: 'GET',
             success(res){
                 resolve(res);
@@ -54,6 +40,27 @@ Page({
     });
     return p;
   },
+  toAnswer(e){
+    const {chapterId,chapterIndex,chapterTotal} = e.currentTarget.dataset
+    const url = `/pages/work-base/components/answering/answering?chapterId=${chapterId}&receiveRecordId=${this.data.receiveRecordId}&chapterIndex=${chapterIndex+1}&chapterTotal=${chapterTotal}`;
+    wx.navigateTo({
+      url: url
+    });
+  },
+  toSample(e) {
+    const {chapterId,introduction,chapterIndex,chapterTotal} = e.currentTarget.dataset
+    var url = ''
+    if(this.data.synopses[chapterIndex].sampleQuestions.length>0){
+      url = `/pages/work-base/components/sample/sample?chapterId=${chapterId}&introduction=${introduction}&receiveRecordId=${this.data.receiveRecordId}&chapterIndex=${chapterIndex}&chapterTotal=${chapterTotal}`;
+    }else{
+      url = `/pages/work-base/components/answering/answering?chapterId=${chapterId}&receiveRecordId=${this.data.receiveRecordId}&chapterIndex=${chapterIndex+1}&chapterTotal=${chapterTotal}`;
+    }
+    
+    wx.navigateTo({
+      url: url
+    });
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

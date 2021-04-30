@@ -8,6 +8,7 @@
     <text class="sample-examplesQueTitle">例题</text>
       <block wx:for="{{sampleQuestions}}" wx:for-index="quesIndex" wx:for-item="quesItem">
                   <view id="paper-head" class="paperhead">
+                    {{quesIndex+1}}、
                       <rich-text class="title" space="nbsp"
                                   nodes="<p>{{quesItem.question.type === 'MULTIPLE'?multipleQuesHTML:''}}{{ quesItem.question.type === 'PROPORTION' ? percentQuesHTML:'' }}{{util.richTextFilter(quesItem.question.stem)}}</p>">
                       </rich-text>

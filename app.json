@@ -55,7 +55,8 @@
     "pages/account/subpages/verify/verify",
     "pages/account/subpages/unbound/unbound",
     "pages/account/subpages/bound/bound",
-    "pages/360/subpages/end/end"
+    "pages/360/subpages/end/end",
+    "pages/home/subpages/all"
   ],
   "tabBar": {
     "custom": true,

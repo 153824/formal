@@ -1,0 +1,79 @@
+page{
+    background: #F9FAFC;
+}
+
+.list-wrapper{
+    padding: 80rpx 60rpx 0 40rpx;
+}
+
+.list-item{
+    position: relative;
+    height: 204rpx;
+    background: #FFFFFF;
+    border-radius: 10px;
+    margin: 0rpx 0rpx 80rpx 0;
+    padding-top: 30rpx;
+}
+
+.list-header{
+    position: absolute;
+    left: 32rpx;
+    bottom: 30rpx;
+    width: 184rpx;
+    height: 244rpx;
+    background-size: 500rpx 100%;
+    background-position: center center;
+    box-shadow: 0rpx 4rpx 10rpx 0rpx rgba(0, 0, 0, 0.19);
+    border-radius: 20rpx;
+}
+
+.list-header image{
+    width: 184rpx;
+    height: 244rpx;
+    border-radius: 20rpx;
+}
+
+.list-container{
+    position: absolute;
+    left: 254rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 26rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #A8A9B6;
+    line-height: 40rpx;
+    padding-right: 20rpx;
+}
+
+.list-container .title{
+    font-size: 32rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #20242F;
+    line-height: 44rpx;
+}
+
+.list-container .description{
+    margin-top: 18rpx;
+    max-height: 180rpx;
+}
+
+.list-trailer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 30rpx;
+    right: -22rpx;
+    background-color: #353EE8;
+    width: 60rpx;
+    height: 44rpx;
+    border-radius: 10rpx;
+}
+
+.list-trailer image{
+    width: 32rpx;
+    height: 32rpx;
+}

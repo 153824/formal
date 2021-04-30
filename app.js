@@ -648,8 +648,13 @@ App({
     },
 
     updateUserInfo(e) {
-        const {userInfo} = e.detail;
-        userInfo.avatar = userInfo.avatarUrl
+        let userInfo = {};
+        if(wx.getUserProfile) {
+            userInfo = e.userInfo
+        } else {
+            userInfo = e.detail.userInfo
+        }
+        userInfo.avatar = userInfo && userInfo.avatarUrl ? userInfo.avatarUrl : ''
         const p = new Promise((resolve, reject) => {
             this.doAjax({
                 url: 'wework/users/info',

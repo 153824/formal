@@ -7,7 +7,8 @@ Page({
         is3rdAdmin: app.checkAdmin(),
         userBaseInfo: {},
         isGetAccessToken: app.checkAccessToken(),
-        isGetUserInfo: false
+        isGetUserInfo: false,
+        canIUseGetUserProfile: !!wx.getUserProfile ? true : false
     },
     onLoad: function (options) {
         app.setDataOfPlatformInfo(this);
@@ -75,7 +76,37 @@ Page({
             console.error(err)
         })
     },
+    getUserProfile() {
+        const that = this
+        wx.getUserProfile({
+            desc: "获取用户信息",
+            success: (res) => {
+                app.updateUserInfo(res).then(res=>{
+                    return that.getUserInformation()
+                }).then(res=>{
+                    if(res.avatar){
+                        that.setData({
+                            userBaseInfo: res,
+                            isGetUserInfo: true,
+                        });
+                        return
+                    }
+                    that.setData({
+                        isGetUserInfo: false,
+                    });
+                }).catch(err=>{
+                    console.error(err)
+                })
+            },
+            error: (e) => {
+                console.log(e);
+            },
+            fail: (e) => {
+                console.log(e);
+            }
+        })
+    },
     showServing: function () {
         this.selectComponent('#serving').callServing();
-    }
+    },
 });

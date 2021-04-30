@@ -8,7 +8,8 @@ Page({
   data: {
     showPage: false,
     id: "",
-    name: ""
+    name: "",
+    canIUseGetUserProfile: !!wx.getUserProfile ? true : false
   },
 
   /**
@@ -98,9 +99,19 @@ Page({
     * 获取微信用户信息
     */
   getUserInfo: function (e) {
-    app.updateUserInfo().then(res=>{}).catch(err=>{
+    app.updateUserInfo(e).then(res=>{}).catch(err=>{
       console.error(err);
     });
+  },
+
+  getUserProfile() {
+    wx.getUserProfile({
+      success(res) {
+        app.updateUserInfo(res).then(res=>{}).catch(err=>{
+          console.error(err);
+        });
+      }
+    })
   },
   join: function() {
     // //加入团队

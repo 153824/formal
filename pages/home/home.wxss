@@ -210,6 +210,10 @@ page{
   padding: 0 60rpx 0 40rpx;
 }
 
+.list-wrapper .list-item:last-child{
+  margin-bottom: 0;
+}
+
 .list-item{
   position: relative;
   height: 204rpx;
@@ -595,7 +599,7 @@ page{
   justify-content: space-between;
   font-size: 38rpx;
   font-weight: 600;
-  margin: 50rpx 40rpx 70rpx 40rpx;
+  margin: 50rpx 40rpx 75rpx 40rpx;
 }
 
 .view-more{

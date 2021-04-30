@@ -237,6 +237,12 @@ Page({
             url: `/pages/home/components/more/more?type=${type}`,
         });
     },
+    goToAll(e) {
+        const {columnId} = e.currentTarget.dataset;
+        wx.navigateTo({
+            url: `/pages/home/subpages/all?columnId=${columnId}`
+        })
+    },
     callServing: function (e) {
         this.setData({
             showServing: true

@@ -169,13 +169,13 @@ Page({
                 success(res){
                     if(!res){
                         const url = `/pages/work-base/components/answering/answering?&receiveRecordId=${receiveRecordId}`;
-                        wx.navigateTo({
+                        wx.redirectTo({
                           url: url
                         });
                     }else{
                         const url = `/pages/work-base/components/chapter/chapter?&receiveRecordId=${receiveRecordId}`;
                         wx.setStorageSync(receiveRecordId, res.draft);
-                        wx.navigateTo({
+                        wx.redirectTo({
                             url: url
                         });
                     }
@@ -219,7 +219,7 @@ Page({
                 let text = "";
                 if (!res.receiveRecordId && res.msg !== 'qualification needed') {
                     app.toast("该分享已失效！");
-                    wx.navigateTo({
+                    wx.redirectTo({
                         url: "/pages/work-base/work-base"
                     });
                     return;
@@ -404,7 +404,7 @@ Page({
 
         }
         if(this.data.type!=='self'){
-            wx.navigateTo({
+            wx.redirectTo({
                 url: `/pages/recorder/recorder?releaseRecordId=${releaseRecordId}`
             });
         }else{

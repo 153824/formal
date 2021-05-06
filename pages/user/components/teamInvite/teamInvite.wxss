@@ -36,7 +36,7 @@
 }
 
 .teamInvite {
-  padding-top: 28rpx;
+  padding-top: 100rpx;
 }
 
 .teamInvite image {

@@ -335,7 +335,7 @@ Page({
   },
   toAnswer(){
     const url = `/pages/work-base/components/answering/answering?chapterId=${this.data.chapterId}&receiveRecordId=${this.data.receiveRecordId}`;
-    wx.navigateTo({
+    wx.redirectTo({
       url: url
     });
   },

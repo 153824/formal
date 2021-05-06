@@ -1,7 +1,5 @@
 /**home.wxss**/
-page{
-  background: #F9FAFC;
-}
+
 /* 首页 */
 .topTestView {
   height: 80rpx;
@@ -58,7 +56,7 @@ page{
 .banner {
   width: 670rpx;
   height: 320rpx;
-  margin: 40rpx 40rpx 50rpx 40rpx;
+  margin: 40rpx 40rpx 0rpx 40rpx;
   border-radius: 16rpx;
   overflow: hidden;
 }
@@ -116,17 +114,6 @@ page{
   color: rgb(51,53,65);
 }
 
-/* function-set */
-.function-set{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 30rpx 80rpx 0 80rpx;
-  font-size: 28rpx;
-  color: rgb(7,9,34);
-  font-weight: 400;
-}
-
 .icon-wrapper{
   display: flex;
   align-items: center;
@@ -152,36 +139,13 @@ page{
   background: rgb(10,193,115) linear-gradient(180deg, rgb(254,158,88) 0%, rgb(254,102,44) 100%);
 }
 
-.function-set-child{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 112rpx;
-  height: 150rpx;
-}
-
 .icon-wrapper > image{
   width: 40rpx;
   height: 40rpx;
 }
 
-.function-set-child > text{
-  display: block;
-  min-width: 112rpx;
-  margin-top: 20rpx;
-  font-size: 28rpx;
-  font-family: PingFangSC-Semibold,PingFang SC;
-  font-weight: 600;
-  color: rgba(7,9,34,1);
-  line-height: 40rpx;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
 .card-wrapper,.free-base-and-classic-table{
-  /* margin: 36rpx 0 40rpx 40rpx; */
+  margin: 36rpx 0 40rpx 40rpx;
 }
 
 .card-wrapper > .header{
@@ -204,86 +168,6 @@ page{
   line-height: 48rpx;
   margin-bottom: 50rpx;
   overflow: auto;
-}
-
-.list-wrapper{
-  padding: 0 60rpx 0 40rpx;
-}
-
-.list-wrapper .list-item:last-child{
-  margin-bottom: 0;
-}
-
-.list-item{
-  position: relative;
-  height: 204rpx;
-  background: #FFFFFF;
-  border-radius: 10px;
-  margin: 0rpx 0rpx 80rpx 0;
-  padding-top: 30rpx;
-}
-
-.list-header{
-  position: absolute;
-  left: 32rpx;
-  bottom: 30rpx;
-  width: 184rpx;
-  height: 244rpx;
-  background-size: 500rpx 100%;
-  background-position: center center;
-  box-shadow: 0rpx 4rpx 10rpx 0rpx rgba(0, 0, 0, 0.19);
-  border-radius: 20rpx;
-}
-
-.list-header image{
-  width: 184rpx;
-  height: 244rpx;
-  border-radius: 20rpx;
-}
-
-.list-container{
-  position: absolute;
-  left: 254rpx;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  font-size: 26rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: #A8A9B6;
-  line-height: 40rpx;
-  padding-right: 20rpx;
-}
-
-.list-container .title{
-  font-size: 32rpx;
-  font-family: PingFangSC-Semibold, PingFang SC;
-  font-weight: 600;
-  color: #20242F;
-  line-height: 44rpx;
-}
-
-.list-container .description{
-  margin-top: 18rpx;
-  max-height: 180rpx;
-}
-
-.list-trailer{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  bottom: 30rpx;
-  right: -22rpx;
-  background-color: #353EE8;
-  width: 60rpx;
-  height: 44rpx;
-  border-radius: 10rpx;
-}
-
-.list-trailer image{
-  width: 32rpx;
-  height: 32rpx;
 }
 
 /* choiceness */
@@ -594,12 +478,9 @@ page{
 }
 /* commont-style */
 .header{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   font-size: 38rpx;
   font-weight: 600;
-  margin: 50rpx 40rpx 75rpx 40rpx;
+  margin: 50rpx 0 0 40rpx;
 }
 
 .view-more{
@@ -745,23 +626,29 @@ page{
   height: 100rpx;
 }
 
-.header-wrapper{}
+.header-wrapper{
+  padding: 0 0 40rpx 0;
+  box-shadow:0px 2px 8px 0px rgba(53,62,232,0.1);
+  border-radius:0px 0px 40px 40px;
+}
 
 .column-title{
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 }
 
-.column-title > text{}
-
-.see-all{
-  font-size: 26rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: #919191;
-  line-height: 36rpx;
+.column-title > text{
+  height: 56rpx;
+  margin-bottom: 4rpx;
 }
 
+.column-title:after{
+  display: inline-block;
+  content: '';
+  width: 80rpx;
+  height: 12rpx;
+  background-color: rgb(53,62,232);
+}
 /*首页骨架屏*/
 .skeleton-index-page-wrapper{
   overflow: hidden !important;
@@ -874,4 +761,17 @@ page{
   width: 48rpx !important;
   height: 48rpx !important;
   background-color: #F6F6F6FF !important;
+}
+.evaluation-column-title{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.see-all{
+  margin: 25rpx 40rpx 0 0;
+  font-size: 26rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #919191;
+  line-height: 36rpx;
 }

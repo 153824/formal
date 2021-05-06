@@ -3,39 +3,29 @@ page{
 }
 
 .list-wrapper{
-    padding: 80rpx 60rpx 0 40rpx;
+    padding: 30rpx 40rpx 0 40rpx;
 }
 
 .list-item{
-    position: relative;
-    height: 204rpx;
+    display: flex;
+    align-items: center;
+    height: 200rpx;
     background: #FFFFFF;
     border-radius: 10px;
-    margin: 0rpx 0rpx 80rpx 0;
-    padding-top: 30rpx;
+    margin: 0rpx 0rpx 30rpx 0;
+    padding: 0 30rpx;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.06);
 }
 
 .list-header{
-    position: absolute;
-    left: 32rpx;
-    bottom: 30rpx;
-    width: 184rpx;
-    height: 244rpx;
-    background-size: 500rpx 100%;
-    background-position: center center;
-    box-shadow: 0rpx 4rpx 10rpx 0rpx rgba(0, 0, 0, 0.19);
-    border-radius: 20rpx;
-}
-
-.list-header image{
-    width: 184rpx;
-    height: 244rpx;
+    min-width: 196rpx;
+    min-height: 134rpx;
+    max-width: 196rpx;
+    max-height: 134rpx;
     border-radius: 20rpx;
 }
 
 .list-container{
-    position: absolute;
-    left: 254rpx;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -44,7 +34,7 @@ page{
     font-weight: 400;
     color: #A8A9B6;
     line-height: 40rpx;
-    padding-right: 20rpx;
+    margin-left: 30rpx;
 }
 
 .list-container .title{
@@ -58,22 +48,4 @@ page{
 .list-container .description{
     margin-top: 18rpx;
     max-height: 180rpx;
-}
-
-.list-trailer{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    bottom: 30rpx;
-    right: -22rpx;
-    background-color: #353EE8;
-    width: 60rpx;
-    height: 44rpx;
-    border-radius: 10rpx;
-}
-
-.list-trailer image{
-    width: 32rpx;
-    height: 32rpx;
 }

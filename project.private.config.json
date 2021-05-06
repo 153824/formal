@@ -60,7 +60,7 @@
         {
           "name": "二维码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "q=https://api.luoke101.com/s/6082a0a5158a97114045b518",
+          "query": "q=https://api.luoke101.com/s/6093c0087659434673d0fc7d",
           "scene": null
         },
         {
@@ -200,6 +200,12 @@
           "name": "加入团队",
           "pathName": "pages/user/components/teamInvite/teamInvite",
           "query": "key=teamMsg__2",
+          "scene": null
+        },
+        {
+          "name": "分享报告",
+          "pathName": "pages/report/components/shareReport/shareReport",
+          "query": "id=6093ad69229a141271a4644f",
           "scene": null
         }
       ]

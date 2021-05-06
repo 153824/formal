@@ -13,35 +13,6 @@ Page({
         active: 0,
         column: [],
         trigger: true,
-        navigationList: (() => {
-            const data = [
-                {
-                    name: "校招选才",
-                    type: "school",
-                    picture: "/pages/home/images/home@icon-school.png",
-                    liner: "yellow",
-                },
-                {
-                    name: "社招选才",
-                    type: "social",
-                    picture: "/pages/home/images/home@icon-company.png",
-                    liner: "blue",
-                },
-                {
-                    name: "人才盘点",
-                    type: "brain",
-                    picture: "/pages/home/images/home@icon-manage.png",
-                    liner: "green",
-                },
-                {
-                    name: "风险识别",
-                    type: "risk",
-                    picture: "/pages/home/images/home@icon-risk.png",
-                    liner: "orange",
-                },
-            ]
-            return data;
-        })(),
     },
     onLoad: function (options) {
         const that = this;
@@ -75,16 +46,6 @@ Page({
 
         }
         if (!isWxWork && !is3rd) {
-            app.checkUserInfo = (userInfo) => {
-                if (userInfo && userInfo.isNew && String(userInfo.isNew) === 'true') {
-                    wx.redirectTo({
-                        url: "/pages/preload/preload",
-                        success: res => {
-                            wx.uma.trackEvent("1607407387532")
-                        }
-                    });
-                }
-            };
             let homePagesPromiseList = [];
             const homePagesPromise = new Promise(function (resolve, reject) {
                 app.doAjax({
@@ -199,42 +160,6 @@ Page({
             url: `../station/components/detail/detail?id=${id}`,
             success: function () {
             }
-        });
-    },
-    gotoMore: function (e) {
-        const {type} = e.currentTarget.dataset;
-        switch (type) {
-            case "school":
-                try {
-                    wx.uma.trackEvent('1605250635717');
-                } catch (e) {
-                    console.error(e);
-                }
-                break;
-            case "social":
-                try {
-                    wx.uma.trackEvent('1605250635722');
-                } catch (e) {
-                    console.error(e);
-                }
-                break;
-            case "brain":
-                try {
-                    wx.uma.trackEvent('1605250635723');
-                } catch (e) {
-                    console.error(e);
-                }
-                break;
-            case "risk":
-                try {
-                    wx.uma.trackEvent('1605250635725');
-                } catch (e) {
-                    console.error(e);
-                }
-                break;
-        }
-        wx.navigateTo({
-            url: `/pages/home/components/more/more?type=${type}`,
         });
     },
     goToAll(e) {

@@ -42,7 +42,6 @@
     "pages/forbidden/forbidden",
     "common/webView",
     "pages/home/components/more/more",
-    "pages/preload/preload",
     "pages/recorder/recorder",
     "pages/station/components/depart/depart",
     "pages/360/360",

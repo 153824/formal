@@ -43,7 +43,7 @@ Page({
   toAnswer(e){
     const {chapterId,chapterIndex,chapterTotal} = e.currentTarget.dataset
     const url = `/pages/work-base/components/answering/answering?chapterId=${chapterId}&receiveRecordId=${this.data.receiveRecordId}&chapterIndex=${chapterIndex+1}&chapterTotal=${chapterTotal}`;
-    wx.navigateTo({
+    wx.redirectTo({
       url: url
     });
   },
@@ -56,7 +56,7 @@ Page({
       url = `/pages/work-base/components/answering/answering?chapterId=${chapterId}&receiveRecordId=${this.data.receiveRecordId}&chapterIndex=${chapterIndex+1}&chapterTotal=${chapterTotal}`;
     }
     
-    wx.navigateTo({
+    wx.redirectTo({
       url: url
     });
   },

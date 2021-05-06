@@ -118,7 +118,7 @@
         {
           "name": "二维码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "q=https://api.luoke101.com/s/608b625b54eda868d2b4b7f3",
+          "query": "q=https://api.luoke101.com/s/6093af7a4564aa3948ad8987",
           "scene": null
         },
         {
@@ -198,159 +198,9 @@
           "scene": null
         },
         {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "q=https://api.luoke101.com/s/6086354ac51dc71a7f5566bb",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "q=https://api.luoke101.com/s/608635b854eda868d2b4b726",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "q=https://api.luoke101.com/s/60865710c51dc71a7f5566c7",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "q=https://api.luoke101.com/s/60865d7054eda868d2b4b739",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "q=https://api.luoke101.com/s/6086750554eda868d2b4b747",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "receiveRecordId=6088f75854eda868d2b4b791",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "/6088f75854eda868d2b4b791",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "releaseRecordId=6088f75854eda868d2b4b791",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "releaseRecordId=6089090654eda868d2b4b79b",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "releaseRecordId=608909a754eda868d2b4b79c",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "releaseRecordId=60890a2a54eda868d2b4b79d",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "releaseRecordId=60890b3e54eda868d2b4b79e",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/sample/sample",
-          "pathName": "pages/work-base/components/sample/sample",
-          "query": "releaseRecordId=608912d154eda868d2b4b7aa",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "releaseRecordId=608912d154eda868d2b4b7aa",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "releaseRecordId=608913b054eda868d2b4b7ab",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "releaseRecordId=608914f154eda868d2b4b7ac",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "releaseRecordId=6089157154eda868d2b4b7ad",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "releaseRecordId=6089162b54eda868d2b4b7ae",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/done/done",
-          "pathName": "pages/work-base/components/done/done",
-          "query": "releaseRecordId=6089192254eda868d2b4b7af",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/done/done",
-          "pathName": "pages/work-base/components/done/done",
-          "query": "releaseRecordId=6089192254eda868d2b4b7af",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "releaseRecordId=6089192254eda868d2b4b7af",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/answering/answering",
-          "pathName": "pages/work-base/components/answering/answering",
-          "query": "releaseRecordId=60891b0754eda868d2b4b7b0",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "releaseRecordId=60891b0754eda868d2b4b7b0",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "releaseRecordId=60891ee654eda868d2b4b7b1",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "releaseRecordId=60893bf154eda868d2b4b7b3",
-          "scene": null
-        },
-        {
-          "name": "pages/work-base/components/guide/guide",
-          "pathName": "pages/work-base/components/guide/guide",
-          "query": "releaseRecordId=608a100d54eda868d2b4b7b6",
+          "name": "pages/user/components/teamInvite/teamInvite",
+          "pathName": "pages/user/components/teamInvite/teamInvite",
+          "query": "key=teamMsg_607e783336ce7602642f6828_2",
           "scene": null
         }
       ]

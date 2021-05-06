@@ -260,9 +260,7 @@
   color: #303113;
   line-height: 50rpx;
 }
-/*拖拽*/
-.drag-item-wrap {
-  background: #f7f7f7; }
+
 .sample-examplesQueContentAnalysis{
   padding: 30rpx;
   background: #5AD8A6;

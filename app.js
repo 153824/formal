@@ -492,6 +492,9 @@ App({
     getAccessToken(e) {
         const that = this;
         const {iv, encryptedData} = e.detail;
+        if(e.detail.errMsg.indexOf('fail') !== -1){
+            return Promise.reject({code: ''});
+        }
         const accessTokenPromise = new Promise((resolve, reject) => {
             this.doAjax({
                 url: 'wework/auth/ma_access_token',

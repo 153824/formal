@@ -2,8 +2,13 @@ page{
     background: #F9FAFC;
 }
 
+/* .all{
+    padding: 30rpx 0rpx 30rpx 0rpx;
+    height: calc(100vh - 60rpx)
+} */
+
 .list-wrapper{
-    padding: 30rpx 40rpx 0 40rpx;
+    padding: 40rpx 40rpx 20rpx 40rpx;
 }
 
 .list-item{

@@ -54,9 +54,9 @@ App({
     isReLaunch: false,
     otherPageReLaunchTrigger: true,
     quitPage: "",
-    // host: 'https://uat.api.haola101.com',
+    host: 'https://uat.api.haola101.com',
     // host: 'http://api.dev.luoke101.int',
-    host: "https://api.haola101.com",
+    // host: "https://api.haola101.com",
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
         userInfo: null,
@@ -492,6 +492,9 @@ App({
     getAccessToken(e) {
         const that = this;
         const {iv, encryptedData} = e.detail;
+        if(e.detail.errMsg.indexOf('fail') !== -1){
+            return Promise.reject({code: ''});
+        }
         const accessTokenPromise = new Promise((resolve, reject) => {
             this.doAjax({
                 url: 'wework/auth/ma_access_token',

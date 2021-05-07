@@ -207,6 +207,12 @@
           "pathName": "pages/report/components/shareReport/shareReport",
           "query": "id=6093ad69229a141271a4644f",
           "scene": null
+        },
+        {
+          "name": "授权手机",
+          "pathName": "pages/auth/auth",
+          "query": "",
+          "scene": null
         }
       ]
     }

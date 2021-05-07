@@ -118,7 +118,7 @@
         {
           "name": "二维码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "q=https://api.luoke101.com/s/6093af7a4564aa3948ad8987",
+          "query": "q=https://api.luoke101.com/s/6094d76d4564aa3948ad8989",
           "scene": null
         },
         {
@@ -201,6 +201,12 @@
           "name": "pages/user/components/teamInvite/teamInvite",
           "pathName": "pages/user/components/teamInvite/teamInvite",
           "query": "key=teamMsg_607e783336ce7602642f6828_2",
+          "scene": null
+        },
+        {
+          "name": "测试",
+          "pathName": "pages/user/components/teamInvite/teamInvite",
+          "query": "key=teamMsg_60938eed8e650e4ff94a9c2d_2",
           "scene": null
         }
       ]

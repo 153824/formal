@@ -383,11 +383,11 @@ Page({
         /*用户无作答记录的情况*/
         if(Object.keys(answerSheet).length - 1 < questionIndex){
             targetItem.indexes[optionIndex] = value;
-            targetSheet[questions[questionIndex].question.id]=targetItem
+            targetSheet[questions[questionIndex].id]=targetItem
         }
         /*用户有作答记录的情况*/
         if(Object.keys(answerSheet).length - 1 >= questionIndex){
-            let indexes = targetSheet[questions[questionIndex].question.id]['indexes'];
+            let indexes = targetSheet[questions[questionIndex].id]['indexes'];
             if(indexes.length !== options.length){
                 indexes = new Array(options.length).fill(0);
             }
@@ -596,6 +596,7 @@ Page({
                         indexes.forEach(item=>{
                             targetScore = targetScore + item;
                         });
+                        debugger
                         if(targetScore !== totalScore){
                             text = `各项分数之和必须等于${totalScore}分`
                         } else {

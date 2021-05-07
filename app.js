@@ -54,9 +54,9 @@ App({
     isReLaunch: false,
     otherPageReLaunchTrigger: true,
     quitPage: "",
-    host: 'https://uat.api.haola101.com',
+    // host: 'https://uat.api.haola101.com',
     // host: 'http://api.dev.luoke101.int',
-    //host: "https://api.haola101.com",
+    host: "https://api.haola101.com",
     globalData: {
         appid: wx.getAccountInfoSync().miniProgram.appId,
         userInfo: null,
@@ -407,7 +407,14 @@ App({
                 }
                 var retData = ret.data;
                 if (ret.statusCode >= 400) {
-                    params.toastTrigger = true;
+                    params.toastTrigger = retData.code == '401111' ? false : true;
+                    if(params.toastTrigger){
+                        wx.showToast({
+                            title: retData.msg,
+                            icon: 'none',
+                            duration: 2000,
+                        });
+                    }
                     if (params.error) return params.error(retData);
                     return
                 }
@@ -418,26 +425,6 @@ App({
                         console.error(e)
                     }
                 }
-            },
-            error: function (err) {
-                if(params.toastTrigger){
-                    wx.showToast({
-                        title: err.msg,
-                        icon: 'none',
-                        duration: 2000,
-                    });
-                }
-                wx.hideLoading()
-            },
-            fail: err => {
-                if(params.toastTrigger){
-                    wx.showToast({
-                        title: err.msg,
-                        icon: 'none',
-                        duration: 2000,
-                    });
-                }
-                wx.hideLoading()
             }
         })
     },

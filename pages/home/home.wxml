@@ -26,43 +26,31 @@
             </view>
         </view>
         <view wx:for="{{ column }}" wx:key="unique" wx:for-item="columnItem" wx:if="{{ columnItem.data.length > 0 }}">
-            <view class="header column-title">
-                <text>{{ columnItem.column_name }}</text>
-                <text wx:if="{{columnItem.data.length > 4}}" class="see-all" data-column-id="{{ columnItem.column_id }}"
-                      data-name="{{ columnItem.column_name }}" bindtap="goToAll">查看全部</text>
+            <view class="evaluation-column-title">
+                <view class="header column-title">
+                    <text>{{ columnItem.column_name }}</text>
+                </view>
+                <view wx:if="{{columnItem.data.length > 4}}" class="see-all" data-column-id="{{columnItem.column_id}}" bind:tap="goToAll">查看全部</view>
             </view>
             <view wx:if="{{ columnItem.showType == 1 }}" class="card-wrapper">
-                <view class="list-wrapper">
-                    <block v-if="{{index <= 4}}" wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem">
-                        <view class="list-item" data-id="{{dataItem.id}}" bind:tap="gotoDetail">
-                            <view class="list-header" style="{{'background-image: url('+dataItem.img+')'}}"></view>
-                            <view class="list-container">
-                                <text class="title">{{dataItem.name}}</text><text class="description">{{dataItem.infoPc}}</text>
-                            </view>
-                            <view class="list-trailer">
-                                <image src="/images/icon/icon@arrow-right.png"></image>
-                            </view>
+                <view class="card-set">
+                    <block wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem">
+                        <view wx:if="{{ isIos }}" bindtap="changePage" data-name="{{ dataItem.name }}"
+                              data-url='../station/components/detail/detail?id={{ dataItem.id }}&name={{dataItem.name}}'>
+                            <card image="{{ dataItem.img }}" title="{{ dataItem.name }}"
+                                  subtitle="{{ dataItem.infoPc }}"
+                                  feature="{{ dataItem.isFree ? '免费' : '' }}">
+                            </card>
+                        </view>
+                        <view wx:else bindtap="changePage" data-name="{{ dataItem.name }}"
+                              data-url='../station/components/detail/detail?id={{ dataItem.id }}&name={{dataItem.name}}'>
+                            <card image="{{ dataItem.img }}" title="{{ dataItem.name }}"
+                                  subtitle="{{ dataItem.infoPc }}"
+                                  feature="{{ dataItem.isFree ? '免费' : '￥' + (dataItem.price || dataItem.defaultPrice) }}">
+                            </card>
                         </view>
                     </block>
                 </view>
-<!--                <view class="card-set">-->
-<!--                    <block wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem">-->
-<!--                        <view wx:if="{{ isIos }}" bindtap="changePage" data-name="{{ dataItem.name }}"-->
-<!--                              data-url='../station/components/detail/detail?id={{ dataItem.id }}&name={{dataItem.name}}'>-->
-<!--                            <card image="{{ dataItem.img }}" title="{{ dataItem.name }}"-->
-<!--                                  subtitle="{{ dataItem.infoPc }}"-->
-<!--                                  feature="{{ dataItem.isFree ? '免费' : '' }}">-->
-<!--                            </card>-->
-<!--                        </view>-->
-<!--                        <view wx:else bindtap="changePage" data-name="{{ dataItem.name }}"-->
-<!--                              data-url='../station/components/detail/detail?id={{ dataItem.id }}&name={{dataItem.name}}'>-->
-<!--                            <card image="{{ dataItem.img }}" title="{{ dataItem.name }}"-->
-<!--                                  subtitle="{{ dataItem.infoPc }}"-->
-<!--                                  feature="{{ dataItem.isFree ? '免费' : '￥' + (dataItem.price || dataItem.defaultPrice) }}">-->
-<!--                            </card>-->
-<!--                        </view>-->
-<!--                    </block>-->
-<!--                </view>-->
             </view>
             <view wx:elif="{{ columnItem.showType == 2 }}">
                 <view wx:for="{{ columnItem.data }}" wx:key="unique" wx:for-item="dataItem" wx:for-index="dataIndex"
@@ -79,8 +67,8 @@
                         </skill>
                     </view>
                 </view>
-                <button wx:if="{{ columnItem.data.length > 2 }}" class="view-more" data-column-id="{{ columnItem.column_id }}"
-                        data-name="{{ columnItem.column_name }}" bindtap="goToAll">
+                <button wx:if="{{ columnItem.data.length > 2 }}" class="view-more" data-id="{{ columnItem.column_id }}"
+                        data-name="{{ columnItem.column_name }}" bindtap="gotoMore">
                     查看更多
                 </button>
             </view>

@@ -2,12 +2,9 @@
     <view class="list-wrapper">
         <block wx:for="{{ evaluations }}" wx:key="unique" wx:for-item="dataItem">
             <view class="list-item" data-id="{{dataItem.id}}" bind:tap="gotoDetail">
-                <view class="list-header" style="{{'background-image: url('+dataItem.img+')'}}"></view>
+                <image class="list-header" src="{{dataItem.img}}" />
                 <view class="list-container">
                     <text class="title">{{dataItem.name}}</text><text class="description">{{dataItem.infoPc}}</text>
-                </view>
-                <view class="list-trailer">
-                    <image src="/images/icon/icon@arrow-right.png"></image>
                 </view>
             </view>
         </block>

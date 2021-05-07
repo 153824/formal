@@ -107,7 +107,7 @@
                   </view>
                   <view style="height:40rpx;"></view>
           <view class="sample-examplesQueContentAnalysis">
-            解析：{{sampleItem.interpretation||'暂无'}}
+            解析：{{quesItem.interpretation||'暂无'}}
           </view>
       </block>
   </view>

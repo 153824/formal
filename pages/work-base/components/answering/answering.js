@@ -596,7 +596,6 @@ Page({
                         indexes.forEach(item=>{
                             targetScore = targetScore + item;
                         });
-                        debugger
                         if(targetScore !== totalScore){
                             text = `各项分数之和必须等于${totalScore}分`
                         } else {

@@ -102,26 +102,6 @@
         <view class="skeleton-banner">
             <van-skeleton row="1"></van-skeleton>
         </view>
-        <view class="skeleton-functional">
-            <view class="skeleton-functional-child">
-                <van-skeleton row="1"></van-skeleton>
-                <view class="skeleton-functional-child-rectangle-item" style="margin-top: 20rpx;">
-                    <van-skeleton row="1"></van-skeleton>
-                </view>
-            </view>
-            <view class="skeleton-functional-child">
-                <van-skeleton row="1"></van-skeleton>
-                <view class="skeleton-functional-child-rectangle-item" style="margin-top: 20rpx;">
-                    <van-skeleton row="1"></van-skeleton>
-                </view>
-            </view>
-            <view class="skeleton-functional-child">
-                <van-skeleton row="1"></van-skeleton>
-                <view class="skeleton-functional-child-rectangle-item" style="margin-top: 20rpx;">
-                    <van-skeleton row="1"></van-skeleton>
-                </view>
-            </view>
-        </view>
     </view>
     <view class="skeleton-content-wrapper">
         <view class="skeleton-content-child">

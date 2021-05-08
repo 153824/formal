@@ -219,7 +219,7 @@ Page({
   loadAdminInfo() {
     const that = this;
     app.doAjax({
-      url: '../wework/teams/collaborators',
+      url: '../wework/collaborators',
       method: 'GET',
       success(res) {
         const {adminUser, adminMemberMax, members} = res;

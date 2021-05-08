@@ -69,13 +69,13 @@
                                               data-option-index="{{optionIndex}}">
                                             <label>
                                                 <text class="langoption">{{optionsAry[optionIndex]}}:</text>
-                                                <rich-text class="optiontext" nodes="<p>{{optionItem}}</p>"></rich-text>
+                                                <rich-text class="optiontext" nodes="<p>{{util.richTextFilter(optionItem)}}</p>"></rich-text>
                                             </label>
                                         </view>
                                         <view wx:elif="{{quesItem.type === 'PROPORTION'}}" class="notborderview selectItem">
                                             <view>
                                                 <text class="langoption">{{optionsAry[optionIndex]}}:</text>
-                                                <rich-text class="optiontext" nodes="<p>{{optionItem}}</p>"></rich-text>
+                                                <rich-text class="optiontext" nodes="<p>{{util.richTextFilter(optionItem)}}</p>"></rich-text>
                                             </view>
                                             <view>
                                                 <input class="number_input" type="number"

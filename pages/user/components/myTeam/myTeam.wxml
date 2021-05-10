@@ -18,7 +18,7 @@
         <view class="item flex">
             <image src="{{item.avatar}}" class="headerIcon"></image>
             <view class="flex-main name">{{item.nickName || item.realName}}</view>
-            <view wx:if="{{adminUser.roleName === '超级管理员'}}" class="editBtn" bindtap="showEditMenu1" data-index="{{index}}">
+            <view wx:if="{{adminUser.roleName === '超级管理员'}}" class="editBtn" bindtap="remove" data-index="{{index}}">
                 <image src="../../images/myTeam@icon-my-team.png" style="height: 32rpx;width: 32rpx;"/>
             </view>
         </view>

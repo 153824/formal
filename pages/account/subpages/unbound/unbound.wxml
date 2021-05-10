@@ -4,12 +4,10 @@
             <text class="unbound__title--text">手机号已被该平台其他账号绑定</text>
         </view>
         <view class="unbound__user-info--wrapper">
-            <view class="unbound__user-info-avatar--wrapper">
-                <image class="unbound__user-info--avatar" src="/images/icon/icon@none-logo.png" alt=""/>
-            </view>
+            <image class="unbound__user-info-avatar--wrapper" src="{{boundInfo.avatar}}" alt=""/>
             <view class="unbound__user-info-name--wrapper">
-                <text class="unbound__user-info-name">林威</text>
-                <text class="unbound__user-info-account">企业微信账号</text>
+                <text class="unbound__user-info-name">{{boundInfo.nickName || boundInfo.realName}}</text>
+                <text class="unbound__user-info-account">{{boundInfo.platform}}</text>
             </view>
         </view>
     </view>

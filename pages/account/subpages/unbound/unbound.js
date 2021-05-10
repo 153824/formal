@@ -1,7 +1,13 @@
 const app = getApp()
 Page({
-    data: {},
-    onLoad: function (options) {},
+    data: {
+        boundInfo: {}
+    },
+    onLoad: function (options) {
+        this.setData({
+            boundInfo: JSON.parse(options.boundInfo) || {}
+        })
+    },
     goToRebind() {
         const verifyType = 'bound';
         const {isWxWork} = app.wxWorkInfo;

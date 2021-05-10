@@ -401,8 +401,12 @@ App({
                     }
                 }
                 if(ret.statusCode === 400 && ret.data.code === '402002'){
+                    let boundInfo = JSON.stringify({});
+                    if(ret.data.data){
+                        boundInfo = JSON.stringify(ret.data.data);
+                    }
                     wx.navigateTo({
-                        url: '/pages/account/subpages/unbound/unbound'
+                        url: `/pages/account/subpages/unbound/unbound?boundInfo=${boundInfo}`
                     })
                 }
                 var retData = ret.data;
@@ -786,6 +790,7 @@ App({
                         });
                     },
                     fail: err=>{
+
                         console.error(err);
                         reject(err)
                     }

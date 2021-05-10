@@ -1,5 +1,5 @@
 <!--user/teamInvite.wxml-->
-<view class="isPass" wx:if="{{!id&&showPage}}">
+<view class="isPass" wx:if="{{!inviteId&&showPage}}">
   <image src="../../images/teams@icon-team-fail.png"></image>
   <view class="mind1">链接已失效</view>
   <view class="back" bindtap="back">返回首页</view>

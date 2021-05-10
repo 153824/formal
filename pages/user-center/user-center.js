@@ -56,7 +56,7 @@ Page({
     goToSetting() {
         if(!app.checkAccessToken()){
             wx.navigateTo({
-                url: '/pages/auth/auth?type=getToken'
+                url: '/pages/auth/auth?type=auth'
             })
         }
         wx.navigateTo({

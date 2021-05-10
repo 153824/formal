@@ -54,6 +54,11 @@ Page({
         })
     },
     goToSetting() {
+        if(!app.checkAccessToken()){
+            wx.navigateTo({
+                url: '/pages/auth/auth?type=getToken'
+            })
+        }
         wx.navigateTo({
             url: "/pages/user-center/components/setting/setting"
         })

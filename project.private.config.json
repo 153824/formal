@@ -213,6 +213,12 @@
           "pathName": "pages/auth/auth",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "邀请加入团队",
+          "pathName": "pages/user/components/teamInvite/teamInvite",
+          "query": "inviteId=60938eed8e650e4ff94a9c2d",
+          "scene": null
         }
       ]
     }

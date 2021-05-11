@@ -7,7 +7,7 @@ Page({
    */
   data: {
     showPage: false,
-    id: "",
+    inviteId: "",
     name: "",
     canIUseGetUserProfile: !!wx.getUserProfile ? true : false
   },
@@ -16,77 +16,21 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    let key = options.key;
-    if (options.q) {
-      options.q = decodeURIComponent(options.q);
-      key = options.q.split("?")[1].replace("key=", "");
-    }
-    const reportId = options.reportId || "";
-    if (!key) {
-      this.setData({
-        showPage: true
-      });
+    console.log(options);
+    if(!options.inviteId){
+      app.toast('缺少团队邀请码');
       return;
     }
-    const that = this;
-
-    function toCheck() {
-      app.doAjax({
-        url: "getTeamInvite",
-        data: {
-          key: key
-        },
-        success: function(ret) {
-          ret = ret || {};
-          ret["reportId"] = reportId;
-          ret["showPage"] = true;
-          that.setData(ret);
-          that.checkTeamMember();
-        }
-      });
-    }
-    toCheck();
+    this.setData({
+      inviteId: options.inviteId,
+      showPage: true,
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
+  onShow() {
+    this.getInviteInfo()
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {},
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
-
-  },
   /**
    * 返回首页
    */
@@ -113,41 +57,42 @@ Page({
       }
     })
   },
-  join: function() {
-    // //加入团队
-    var that = this;
-    var id = that.data.id;
-    var role = +that.data.role;
+
+  getInviteInfo() {
+    const that = this;
+    const {inviteId} = this.data;
+    const shareKey = `teamMsg_${inviteId}_${2}`;
     app.doAjax({
-      url: "updateTeamMember",
+      url: "getTeamInvite",
       data: {
-        id: id,
-        type: 1,
-        role: role
+        key: shareKey
       },
-      success: function (res) {
-        app.teamId = id;
-        app.teamName = that.data.name;
-        app.toast("操作成功");
-        wx.clearStorage();
-        wx.setStorageSync('TARGET_TEAM_ID',id);
-        setTimeout(function () {
-          if (that.data.reportId) {
-            //进入报告详情
-            wx.reLaunch({
-              url: '/pages/report/report?id=' + that.data.reportId
-            });
-            return;
-          }
-          app.toast("正在为您跳转...");
-          setTimeout(()=>{
-            wx.reLaunch({
-              url: '/pages/home/home'
-            });
-          },500)
-        }, 500);
+      success: function(res) {
+        that.setData({
+          name: res.name
+        })
       }
     });
+  },
+
+  join() {
+    const {inviteId} = this.data;
+    app.doAjax({
+      url: "../wework/collaborators",
+      method: 'POST',
+      data: {
+        teamId: inviteId
+      },
+      success(res) {
+        app.toast('加入成功')
+        wx.clearStorage();
+        setTimeout(()=>{
+          wx.reLaunch({
+            url: '/pages/home/home'
+          });
+        },500)
+      },
+    })
   },
   bindGetUserInfo: function(res) {
     if (res.detail.userInfo) {
@@ -171,35 +116,4 @@ Page({
       });
     }
   },
-  /**检查当前用户是否为团队成员 */
-  checkTeamMember: function() {
-    var that = this;
-    app.doAjax({
-      url: "checkTeamMember",
-      data: {
-        id: that.data.id
-      },
-      success: function(ret) {
-        if (ret.isMember) {
-          wx.showModal({
-            title: '温馨提示',
-            content: '您已是该团队成员',
-            showCancel: false,
-            success: function() {
-              if (that.data.reportId) {
-                //进入报告详情
-                wx.reLaunch({
-                  url: '../../../report/report?id=' + that.data.reportId
-                });
-                return;
-              }
-              wx.switchTab({
-                url: '../../../station/station'
-              });
-            }
-          })
-        }
-      }
-    })
-  }
 })

@@ -13,7 +13,7 @@ Page({
         const {isWxWork} = app.wxWorkInfo;
         const url = isWxWork ? `/pages/account/account?verifyType=${verifyType}` : '/pages/auth/auth?type=auth';
         wx.navigateTo({
-            url: `/pages/account/account?verifyType=${verifyType}`
+            url
         })
     },
     showServing: function () {

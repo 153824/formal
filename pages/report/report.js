@@ -185,6 +185,8 @@ function getRadarChartInfo(canvas, width, height) {
         const sysMsg = wx.getSystemInfoSync();
         app.rate = sysMsg.windowWidth / 750;
     }
+    debugger
+    console.log(radarIndicator[index],33)
     canvas.setChart(chart);
     const option = {
         radar: {
@@ -348,7 +350,12 @@ Page({
         reportCopyrightTxt: "",
         options: {}
     },
-
+    properties: {
+		commond: {            // 额外节点
+			type: String,
+			value: ''
+        }
+    },
     onLoad: function (options = {isSelf: ""}) {
         const that = this;
         ctx = wx.createCanvasContext('canvasArcCir');
@@ -450,7 +457,8 @@ Page({
                     receiveRecordId: id
                 },
                 success: function (res) {
-                    that.getProgramSetting(res.evaluationInfo.releaseRecordId)
+                    console.log(res)
+                    that.getProgramSetting(res.releaseRecordId)
                     resolve(res);
                 },
                 fail: function (err) {
@@ -459,39 +467,22 @@ Page({
             })
         });
         getReportPromise.then(res => {
-            if (res.report.reportVersion) {
-                return new Promise((resolve, reject) => {
-                    resolve(res);
-                });
-            }
             if (this.isInTeams(res)) {
                 return;
             }
             let now = new Date().getFullYear();
-            let participantInfo = res.participantInfo;
+            let participantInfo = res.participant;
             let t = new Date(participantInfo.birthday).getFullYear();
-            res.participantInfo.age = now - t + 1;
-            res.report.finishTime = app.changeDate(res.report.finishTime, "yyyy/MM/dd hh:mm");
-            let timeNormal = 1; //作答时长正常
-            let answeTimeSatr = +res.report.answeTimeSatr;
-            let answeTimeEnd = +res.report.answeTimeEnd;
-            let time = +res.report.timeTotal;
-            if (time < answeTimeSatr) {
-                //作答时长偏短
-                timeNormal = 2;
-            }
-            if (time > answeTimeEnd) {
-                //作答时长偏长
-                timeNormal = 3;
-            }
-            res.report["timeNormal"] = timeNormal;
+            
+            res.participant.age = now - t + 1;
+            res.reportGeneratedAt = app.changeDate(res.reportGeneratedAt, "yyyy/MM/dd hh:mm");
             radarValue = {};
             radarIndicator = {};
             value_2 = {};
             indicator_2 = {};
-            var objs = res.report.dimension;
+            var objs = res.dimensions;
             for (var n in objs) {
-                var arr = objs[n].child;
+                var arr = objs[n].subclasses;
                 var newChild = [];
                 radarValue[n] = radarValue[n] || [];
                 radarIndicator[n] = radarIndicator[n] || [];
@@ -500,17 +491,11 @@ Page({
                 var {showSubScore} = objs[n];
                 for (var i in arr) {
                     var node = arr[i];
-                    if (showSubScore == 'average') {
-                        radarValue[n].push(node.average);
-                    } else if (!showSubScore) {
-                        radarValue[n].push(node.average);
-                    } else {
-                        radarValue[n].push(node.total);
-                    }
+                    radarValue[n].push(node.grade.value);
                     radarIndicator[n].push({
                         text: node.name,
                         color: "#323541",
-                        max: objs[n].max || 5
+                        max: objs[n].chartSetting.maxScore || 5
                     });
                     indicator_2[n].push({
                         value: node.name,
@@ -521,12 +506,12 @@ Page({
                             fontSize: 14
                         }
                     });
-                    value_2[n].push({
-                        value: node.average,
-                        itemStyle: {
-                            color: "#5186FF"
-                        }
-                    });
+                    // value_2[n].push({
+                    //     value: node.average,
+                    //     itemStyle: {
+                    //         color: "#5186FF"
+                    //     }
+                    // });
                     newChild.push(node);
                 }
                 that.setData({
@@ -536,32 +521,25 @@ Page({
                 newChild.sort(function (it1, it2) {
                     return it2.average - it1.average;
                 });
-                objs[n].child = newChild;
+                objs[n].subclasses = newChild;
                 var keys = Object.keys(newChild);
-                objs[n].child[keys[keys.length-1]]["active"] = "active";
+                objs[n].subclasses[keys[keys.length-1]]["active"] = "active";
             }
             res["id"] = id;
-            var total1Full = res.report.total1;
-            res.report.total1 = +res.report.total1.toFixed(0);
-            var proposal = res.report.proposal || [];
-            var dimensions = res.report.dimension || {};
-            res.report["proposalShow"] = false;
-            res.report["showDimension"] = false;
+            var proposal = res.proposal || [];
+            var dimensions = res.dimensions || [];
+            res["proposalShow"] = false;
+            res["showDimension"] = false;
             for (var i in dimensions) {
-                if (dimensions[i].show) {
-                    res.report["showDimension"] = true;
+                if (dimensions[i].display) {
+                    res["showDimension"] = true;
                 }
             }
-            proposal.forEach(function (n) {
-                if (n.show) {
-                    res.report["proposalShow"] = true;
-                }
-            });
+            if (proposal.display) {
+                res["proposalShow"] = true;
+            }
             that.drawCircle(res.total1);
-            res.report["statement"] = res.report["statement"].replace(/\n/g, "<br>").replace("<bold", "<span style='font-weight: 600;'").replace("</bold", "</span");
-            res.report["noTeamMember"] = false;
-            res.report["teamRole"] = (app.teamId == res.releaseTeamId) ? app.teamRole : 1;
-            res.report["showPage"] = true;
+            res["teamRole"] = (app.teamId == res.releaseTeamId) ? app.teamRole : 1;
             res.maskTrigger = false;
             that.setData(res);
             setTimeout(()=>{
@@ -569,43 +547,16 @@ Page({
                     maskTrigger: false
                 })
             },500)
-            app.doAjax({
-                url: "userOrderMsg",
-                method: "get",
-                data: {
-                    id: res.id,
-                    paperId: res.evaluationInfo.evaluationId,
-                    total: total1Full || 0,
-                    totalD1: res.dimension1Total || 0,
-                    totalD2: res.dimension2Total || 0
-                },
-                noLoading: true,
-                success: function (r) {
-                    that.setData(r);
-                }
-            });
         }).then(res => {
             if (!res || this.isInTeams(res)) {
                 return;
             }
             let now = new Date().getFullYear();
-            let participantInfo = res.participantInfo;
+            let participantInfo = res.participant;
             let t = new Date(participantInfo.birthday).getFullYear();
-            res.participantInfo.age = now - t + 1;
-            res.report.finishTime = app.changeDate(res.report.finishTime, "yyyy/MM/dd hh:mm");
-            let timeNormal = 1; //作答时长正常
-            let answeTimeSatr = +res.report.answeTimeSatr;
-            let answeTimeEnd = +res.report.answeTimeEnd;
-            let time = +res.report.timeTotal;
-            if (time < answeTimeSatr) {
-                //作答时长偏短
-                timeNormal = 2;
-            }
-            if (time > answeTimeEnd) {
-                //作答时长偏长
-                timeNormal = 3;
-            }
-            res.report["timeNormal"] = timeNormal;
+            
+            res.participant.age = now - t + 1;
+            res.reportGeneratedAt = app.changeDate(res.reportGeneratedAt, "yyyy/MM/dd hh:mm");
             radarValue = {};
             radarIndicator = {};
             value_2 = {};
@@ -619,65 +570,19 @@ Page({
                 const targetHistogramYAxisArr = [];
                 const targetLimitArr = [];
                 const targetHistogramValuesArr = [];
-                var arr = objs[n].subclass;
+                var arr = objs[n].subclasses;
                 var newChild = [];
                 radarValue[n] = radarValue[n] || [];
                 radarIndicator[n] = radarIndicator[n] || [];
                 value_2[n] = value_2[n] || [];
                 indicator_2[n] = indicator_2[n] || [];
-                var {showSubScore, subScale} = objs[n];
                 for (var i in arr) {
                     var node = arr[i];
-                    if (showSubScore === 'average') {
-                        switch (subScale) {
-                            case 'origin':
-                                radarValue[n].push(node.average);
-                                targetHistogramValuesArr.push(node.average);
-                                break;
-                            case 'decimal':
-                                radarValue[n].push(node.average10);
-                                targetHistogramValuesArr.push(node.average10);
-                                break;
-                            case 'centesimal':
-                                radarValue[n].push(node.average100);
-                                targetHistogramValuesArr.push(node.average100);
-                                break;
-                            case 'stanine':
-                                radarValue[n].push(node.averageStanine);
-                                targetHistogramValuesArr.push(node.averageStanine);
-                                break;
-                            default:
-                                radarValue[n].push(node.subTotal);
-                                targetHistogramValuesArr.push(node.subTotal);
-                                break;
-                        }
-                    } else if (showSubScore === 'total') {
-                        switch (subScale) {
-                            case 'origin':
-                                radarValue[n].push(node.subTotal);
-                                targetHistogramValuesArr.push(node.subTotal);
-                                break;
-                            case 'decimal':
-                                radarValue[n].push(node.subTotal10);
-                                targetHistogramValuesArr.push(node.subTotal10);
-                                break;
-                            case 'centesimal':
-                                radarValue[n].push(node.subTotal100);
-                                targetHistogramValuesArr.push(node.subTotal100);
-                                break;
-                            case 'stanine':
-                                radarValue[n].push(node.subTotalStanine);
-                                targetHistogramValuesArr.push(node.subTotalStanine);
-                                break;
-                            default:
-                                radarValue[n].push(node.subTotal);
-                                targetHistogramValuesArr.push(node.subTotal);
-                                break;
-                        }
-                    }
+                    radarValue[n].push(node.grade.value);
+                    targetHistogramValuesArr.push(node.grade.value);
                     targetHistogramYAxisArr.push(node.name);
-                    targetLimitArr.push(objs[n].min);
-                    targetLimitArr.push(objs[n].max);
+                    targetLimitArr.push(objs[n].chartSetting.minScore);
+                    targetLimitArr.push(objs[n].chartSetting.maxScore);
                     radarIndicator[n].push({
                         text: node.name,
                         color: "#323541",
@@ -800,16 +705,16 @@ Page({
         var index = d.index;
         if (index == null) return;
         var i = d.i;
-        var list = this.data.report;
+        var dimensions = this.data.dimensions;
         if (i != null) {
-            var old = list.dimension[index]["child"][i]["active"];
-            list.dimension[index]["child"][i]["active"] = old ? "" : "active";
+            var old = dimensions[index]["subclasses"][i]["active"];
+            dimensions[index]["subclasses"][i]["active"] = old ? "" : "active";
         } else {
-            var old = list.dimension[index]["active"];
-            list.dimension[index]["active"] = old ? "" : "active";
+            var old = dimensions[index]["subclasses"];
+            dimensions[index]["subclasses"] = old ? "" : "active";
         }
         this.setData({
-            report: list
+            dimensions: dimensions
         });
     },
     /**
@@ -820,13 +725,12 @@ Page({
         var index = d.index;
         if (index == null) return;
         var i = d.i;
-        var list = this.data.report;
         if (i != null) {
-            var old = list.dimension[index]["subclass"][i]["active"];
-            list.dimension[index]["subclass"][i]["active"] = old ? "" : "active";
+            var old = dimensions[index]["subclasses"][i]["active"];
+            dimensions[index]["subclasses"][i]["active"] = old ? "" : "active";
         } else {
-            var old = list.dimension[index]["active"];
-            list.dimension[index]["active"] = old ? "" : "active";
+            var old = dimensions[index]["subclasses"];
+            dimensions[index]["subclasses"] = old ? "" : "active";
         }
         this.setData({
             report: list

@@ -7,11 +7,11 @@ Component({
         },
         axis: {
             type: Array,
-            value: []
+            value: [1,2,3]
         },
         area: {
             type: Array,
-            value: []
+            value:[1,2,3]
         },
         coordinate: {
             type: Array,

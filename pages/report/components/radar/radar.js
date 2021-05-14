@@ -20,6 +20,7 @@ Component({
     methods: {
         getRadarChartInfo (canvas, width, height) {
             const canvasId = canvas.canvasId;
+            const radarIndex = radarIndex
             const index = canvasId.replace("mychartcanvas", "");
             const chart = echarts.init(canvas, null, {
                 width: width,

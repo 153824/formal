@@ -185,7 +185,6 @@ function getRadarChartInfo(canvas, width, height) {
         const sysMsg = wx.getSystemInfoSync();
         app.rate = sysMsg.windowWidth / 750;
     }
-    debugger
     console.log(radarIndicator[index],33)
     canvas.setChart(chart);
     const option = {
@@ -466,13 +465,14 @@ Page({
                 }
             })
         });
-        getReportPromise.then(res => {
+        getReportPromise.
+        then(res => {
             if (this.isInTeams(res)) {
                 return;
             }
             let now = new Date().getFullYear();
-            let participantInfo = res.participant;
-            let t = new Date(participantInfo.birthday).getFullYear();
+            let participant = res.participant;
+            let t = new Date(participant.birthday).getFullYear();
             
             res.participant.age = now - t + 1;
             res.reportGeneratedAt = app.changeDate(res.reportGeneratedAt, "yyyy/MM/dd hh:mm");
@@ -538,7 +538,7 @@ Page({
             if (proposal.display) {
                 res["proposalShow"] = true;
             }
-            that.drawCircle(res.total1);
+            that.drawCircle(res.summary.grade);
             res["teamRole"] = (app.teamId == res.releaseTeamId) ? app.teamRole : 1;
             res.maskTrigger = false;
             that.setData(res);
@@ -547,13 +547,14 @@ Page({
                     maskTrigger: false
                 })
             },500)
+            return Promise.resolve(res)
         }).then(res => {
             if (!res || this.isInTeams(res)) {
                 return;
             }
             let now = new Date().getFullYear();
-            let participantInfo = res.participant;
-            let t = new Date(participantInfo.birthday).getFullYear();
+            let participant = res.participant;
+            let t = new Date(participant.birthday).getFullYear();
             
             res.participant.age = now - t + 1;
             res.reportGeneratedAt = app.changeDate(res.reportGeneratedAt, "yyyy/MM/dd hh:mm");
@@ -561,7 +562,7 @@ Page({
             radarIndicator = {};
             value_2 = {};
             indicator_2 = {};
-            var objs = res.report.dimension;
+            var objs = res.dimensions;
             let histogramYAxis = [];
             let limit = [];
             let histogramValues = [];
@@ -586,7 +587,7 @@ Page({
                     radarIndicator[n].push({
                         text: node.name,
                         color: "#323541",
-                        max: objs[n].max || 5
+                        max: objs[n].chartSetting.maxScore || 5
                     });
                     indicator_2[n].push({
                         value: node.name,
@@ -627,30 +628,19 @@ Page({
                 lines: lines
             })
             res["id"] = id;
-            var total1Full = res.report.generalTotal100;
-            try {
-                res.report.total100 = +res.generalTotal100.toFixed(0);
-            } catch (e) {
-            }
-            var proposal = res.report.proposal || [];
-            var dimensions = res.report.dimension || {};
-            res.report["proposalShow"] = false;
-            res.report["showDimension"] = false;
+            var proposal = res.proposal || [];
+            var dimensions = res.dimensions || [];
             for (var i in dimensions) {
-                if (dimensions[i].show) {
-                    res.report["showDimension"] = true;
+                if (dimensions[i].display) {
+                    res["showDimension"] = true;
                 }
             }
-            proposal.forEach(function (n) {
-                if (n.show) {
-                    res.report["proposalShow"] = true;
-                }
-            });
-            that.drawCircle(res.total100);
-            res.report["statement"] = res.report["statement"].replace(/\n/g, "<br>").replace("<bold", "<span style='font-weight: 600;'").replace("</bold", "</span");
-            res.report["noTeamMember"] = false;
-            res.report["teamRole"] = (app.teamId == res.releaseTeamId) ? app.teamRole : 1;
-            res.report["showPage"] = true;
+            if (proposal.display) {
+                res["proposalShow"] = true;
+            }
+            that.drawCircle(res.summary.grade);
+            res["teamRole"] = (app.teamId == res.releaseTeamId) ? app.teamRole : 1;
+
             res.fillBlank = [];
             for (let i = 0; i < 4; i++) {
                 res.fillBlank.push("");
@@ -834,20 +824,20 @@ Page({
      */
     toShareReport: function () {
         const that = this;
-        const {participantInfo, evaluationInfo, paper, report} = this.data;
+        const {participant, shareInfo, paper, report,smallImg} = this.data;
         const {globalData} = app;
         return {
-            title: `${globalData.team.name}邀您看${participantInfo.username}的《${evaluationInfo.evaluationName}》报告`,
+            title: `${globalData.team.name}邀您看${participant.filledName||participant.nickname||'好啦访客'}的《${shareInfo.evaluationName}》报告`,
             path: `pages/report/report`,
             imageUrl: report.smallImg,
         }
     },
     /**测测他人 */
     toTestOtherUser: function () {
-        var {evaluationInfo} = this.data;
+        var {shareInfo} = this.data;
         var userPapersNum = this.data.userPapersNum;
         wx.navigateTo({
-            url: '../station/components/detail/detail?id=' + evaluationInfo.evaluationId,
+            url: '../station/components/detail/detail?id=' + shareInfo.evaluationId,
         });
     },
     /**
@@ -855,7 +845,7 @@ Page({
      */
     onShareAppMessage: function (options) {
         const that = this;
-        const {participantInfo, evaluationInfo, id, report} = this.data;
+        const {participant, shareInfo, id, report,smallImg} = this.data;
         const time = new Date().getTime();
         try{
             wx.uma.trackEvent('1602216644404');
@@ -863,9 +853,9 @@ Page({
 
         }
         return {
-            title: `邀您查看${participantInfo.username}的《${evaluationInfo.evaluationName}》报告`,
+            title: `邀您查看${participant.filledName||participant.nickname||'好啦测评'}的《${shareInfo.evaluationName}》报告`,
             path: `pages/report/report?receivedRecordId=${id}&sharedAt=${time}`,
-            imageUrl: evaluationInfo.smallImg,
+            imageUrl:smallImg,
         }
     },
     /**
@@ -878,12 +868,12 @@ Page({
      */
     getEvaluationQues: function () {
         const that = this;
-        const {evaluationInfo} = this.data;
+        const {shareInfo} = this.data;
         app.doAjax({
             url: "paperQues",
             method: "get",
             data: {
-                id: evaluationInfo.evaluationId
+                id: shareInfo.evaluationId
             },
             noLoading: true,
             success: function (res) {

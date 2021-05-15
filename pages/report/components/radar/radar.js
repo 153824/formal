@@ -29,6 +29,7 @@ Component({
             });
             let {radarValue,radarIndicator} = _this.properties;
             radarValue = JSON.parse(radarValue);
+            console.log(radarValue)
             radarIndicator = JSON.parse(radarIndicator);
             if (!app.rate) {
                 const sysMsg = wx.getSystemInfoSync();

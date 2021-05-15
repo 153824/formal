@@ -69,9 +69,28 @@
     <view class="user-page-wrapper">
         <view class="head">
             <view class="user-personal-info">
-                <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
-                       style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                <text>{{userBaseInfo.nickname || userBaseInfo.realname || userBaseInfo.teamName + '的员工'}}</text>
+                <block wx:if="{{!isGetUserInfo}}">
+                    <block wx:if="{{canIUseGetUserProfile}}">
+                        <button class="user-info-button" bind:tap="getUserProfile">
+                            <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                                   style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                            <text>点击授权头像</text>
+                        </button>
+                    </block>
+                    <block wx:else>
+                        <button class="user-info-button" open-type="getUserInfo"
+                                bindgetuserinfo="getUserInfo">
+                            <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                                   style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                            <text>点击授权头像</text>
+                        </button>
+                    </block>
+                </block>
+                <block wx:if="{{isGetUserInfo}}">
+                    <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                           style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                    <text>{{userBaseInfo.nickname || userBaseInfo.realname}}</text>
+                </block>
             </view>
         </view>
         <view class="content">
@@ -109,9 +128,28 @@
     <view class="user-page-wrapper">
         <view class="head">
             <view class="user-personal-info">
-                <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
-                       style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                <text>{{userBaseInfo.nickname || userBaseInfo.realname || userBaseInfo.teamName + '的员工'}}</text>
+                <block wx:if="{{!isGetUserInfo}}">
+                    <block wx:if="{{canIUseGetUserProfile}}">
+                        <button class="user-info-button" bind:tap="getUserProfile">
+                            <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                                   style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                            <text>点击授权头像</text>
+                        </button>
+                    </block>
+                    <block wx:else>
+                        <button class="user-info-button" open-type="getUserInfo"
+                                bindgetuserinfo="getUserInfo">
+                            <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                                   style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                            <text>点击授权头像</text>
+                        </button>
+                    </block>
+                </block>
+                <block wx:if="{{isGetUserInfo}}">
+                    <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                           style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                    <text>{{userBaseInfo.nickname || userBaseInfo.realname}}</text>
+                </block>
             </view>
         </view>
         <view class="content">

@@ -122,6 +122,10 @@ Component({
             };
             const colors = ["rgba(247, 181, 0, 1)", "rgba(109, 212, 0, 1)"];
             let color = colors[0];
+            console.log(wx.getStorageSync(`mychart-${index}-direction`),3)
+            if (wx.getStorageSync(`mychart-${index}-direction`) === 'row') {
+                legend = ""
+            }
             for (let key in lines[index]) {
                 let num = Math.random() * 10;
                 if (num > 5) {
@@ -197,7 +201,8 @@ Component({
                                 }
                             },
                             fontSize: +(20 * app.rate).toFixed(0),
-                        }
+                        },
+                        interval:0
                     },
                     type: 'category',
                     boundaryGap: true,
@@ -251,13 +256,14 @@ Component({
             };
             if (wx.getStorageSync(`mychart-${index}-direction`) === 'row') {
                 option.grid = {
-                    top: '5%',
+                    top: '10%',
                     left: '5%',
                     right: '5%',
                     bottom: '15%',
                     containLabel: true
                 }
             }
+            console.log(option,11)
             chart.setOption(option);
             return chart;
         }

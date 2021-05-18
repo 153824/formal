@@ -186,7 +186,7 @@ Page({
         const releaseInfo = {
             evaluationId: evaluationId,
             normId: norms[0].normId,
-            permitSetting: reportMeet === 1 ? "LOOSE" : "STRICT",
+            permitSetting: Number(reportMeet) === 1 ? "LOOSE" : "STRICT",
             releaseCount: costNum,
             entrance: "WECHAT_MA"
         };

@@ -124,7 +124,7 @@ Component({
             let color = colors[0];
             console.log(wx.getStorageSync(`mychart-${index}-direction`),3)
             if (wx.getStorageSync(`mychart-${index}-direction`) === 'row') {
-                legend = ""
+                legend = {data: []}
             }
             for (let key in lines[index]) {
                 let num = Math.random() * 10;
@@ -158,7 +158,7 @@ Component({
                     series.push(line);
                 }
                 if (wx.getStorageSync(`mychart-${index}-direction`) === 'row') {
-                    legend = ""
+                    legend = {data: []}
                 }
             }
             canvas.setChart(chart);

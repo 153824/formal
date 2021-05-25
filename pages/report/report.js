@@ -185,7 +185,6 @@ function getRadarChartInfo(canvas, width, height) {
         const sysMsg = wx.getSystemInfoSync();
         app.rate = sysMsg.windowWidth / 750;
     }
-    console.log(radarIndicator[index],33)
     canvas.setChart(chart);
     const option = {
         radar: {
@@ -316,6 +315,7 @@ Page({
         getChartMsg: {
             onInit: getChartMsg
         },
+        graphQuadrants:[],
         getRadarChartInfo: {
             onInit: getRadarChartInfo
         },
@@ -456,7 +456,6 @@ Page({
                     receiveRecordId: id
                 },
                 success: function (res) {
-                    console.log(res)
                     that.getProgramSetting(res.releaseRecordId)
                     resolve(res);
                 },
@@ -544,6 +543,7 @@ Page({
             that.setData(res);
             setTimeout(()=>{
                 that.setData({
+                    graphQuadrants:res.coordinate.graphQuadrants.reverse(),
                     maskTrigger: false
                 })
             },500)

@@ -107,7 +107,6 @@
 }
 .axis-data-x .reach-the-standard{
     padding: 30rpx 2rpx;
-    height: 30rpx;
     width: 40rpx;
     color: #fff;
     border-radius: 20rpx;
@@ -134,7 +133,6 @@
 }
 .axis-data-y .reach-the-standard{
     padding: 2rpx 30rpx;
-    width: 30rpx;
     height: 40rpx;
     line-height: 40rpx;
     color: #fff;

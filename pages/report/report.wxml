@@ -66,7 +66,7 @@
                 <text>{{summary.title}}</text>
             </view>
             <view wx:if="{{coordinate.display}}" class="chartImg" style="display: flex;justify-content: center;align-items: center;margin-top: 40rpx;">
-                <hola-grid axis="{{coordinate.graphAxis}}" area="{{coordinate.graphQuadrants}}" coordinate="{{coordinate.graphCoordinateIdx}}" type="nineCell">
+                <hola-grid axis="{{coordinate.graphAxis}}" area="{{graphQuadrants}}" coordinate="{{coordinate.graphCoordinateIdx}}" type="{{coordinate.graphAxis[0].areas.length===3?'nineCell':'fourCell'}}">
 
                 </hola-grid>
             </view>

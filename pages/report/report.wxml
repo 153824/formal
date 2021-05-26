@@ -555,7 +555,7 @@
                             {{ recordIndex + 1 }}
                         </view>
                     </block>
-                    <block wx:elif="{{ recordItem.type === 'multiple' && recordItem.correctIdx.length > 0 }}">
+                    <block wx:elif="{{ recordItem.type === 'MULTIPLE' && recordItem.correctIdx.length > 0 }}">
                         <view id="scroll-item-{{ recordIndex }}"
                               data-id="{{ recordIndex }}" bindtap="selectItem"
                               class="question-number {{ cardCur === recordIndex ? 'question-checked' : '' }} {{ (recordItem.analysis.wrong.length <= 0 && recordItem.analysis.omit.length <= 0) ? 'question-num-checked-right' : 'question-num-checked-fault' }} {{ cardCur === recordIndex && recordItem.analysis.wrong.length <= 0 && recordItem.analysis.omit.length <= 0  ? 'question-right-checked' : '' }} {{ cardCur === recordIndex && (recordItem.analysis.wrong.length > 0 || recordItem.analysis.omit.length > 0) ? 'question-fault-checked' : '' }}"
@@ -563,7 +563,7 @@
                             {{ recordIndex + 1 }}
                         </view>
                     </block>
-                    <block wx:elif="{{ recordItem.type === 'multiple' && recordItem.correctIdx.length <= 0 }}">
+                    <block wx:elif="{{ recordItem.type === 'MULTIPLE' && recordItem.correctIdx.length <= 0 }}">
                         <view id="scroll-item-{{ recordIndex }}"
                               data-id="{{ recordIndex }}" bindtap="selectItem"
                               class="question-number {{ cardCur === recordIndex ? 'question-checked' : '' }}">

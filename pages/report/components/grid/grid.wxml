@@ -45,12 +45,12 @@
                     </block>
                 </van-grid>
                 <view class="axis-data-x">
-                    <text class="not-reach-the-standard">{{axis[1].areas[0]}}</text>
-                    <text class="reach-the-standard">{{axis[1].areas[1]}}</text>
+                    <text class="{{0 == coordinate[1] ? 'reach-the-standard': 'not-reach-the-standard'}}">{{axis[1].areas[0]}}</text>
+                    <text class="{{1 == coordinate[1] ? 'reach-the-standard': 'not-reach-the-standard'}}">{{axis[1].areas[1]}}</text>
                 </view>
                 <view class="axis-data-y">
-                    <text class="not-reach-the-standard">{{axis[0].areas[0]}}</text>
-                    <text class="reach-the-standard">{{axis[0].areas[1]}}</text>
+                    <text class="{{0 == coordinate[0] ? 'reach-the-standard': 'not-reach-the-standard'}}">{{axis[0].areas[0]}}</text>
+                    <text class="{{1 == coordinate[0] ? 'reach-the-standard': 'not-reach-the-standard'}}">{{axis[0].areas[1]}}</text>
                 </view>
             </view>
             <view class="axis-row axis-x-row"></view>

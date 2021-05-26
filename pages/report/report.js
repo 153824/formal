@@ -1,5 +1,6 @@
 import debounce from '../../utils/lodash/debounce';
 import * as echarts from '../../utils/ec-canvas/echarts';
+import {getAge} from "../../utils/utils";
 
 var app = getApp();
 var _this;
@@ -469,11 +470,8 @@ Page({
             if (this.isInTeams(res)) {
                 return;
             }
-            let now = new Date().getFullYear();
             let participant = res.participant;
-            let t = new Date(participant.birthday).getFullYear();
-            
-            res.participant.age = now - t + 1;
+            res.participant.age = getAge(participant.birthday);
             res.reportGeneratedAt = app.changeDate(res.reportGeneratedAt, "yyyy/MM/dd hh:mm");
             radarValue = {};
             radarIndicator = {};
@@ -552,11 +550,8 @@ Page({
             if (!res || this.isInTeams(res)) {
                 return;
             }
-            let now = new Date().getFullYear();
             let participant = res.participant;
-            let t = new Date(participant.birthday).getFullYear();
-            
-            res.participant.age = now - t + 1;
+            res.participant.age = getAge(participant.birthday);
             res.reportGeneratedAt = app.changeDate(res.reportGeneratedAt, "yyyy/MM/dd hh:mm");
             radarValue = {};
             radarIndicator = {};

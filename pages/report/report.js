@@ -543,7 +543,7 @@ Page({
             that.setData(res);
             setTimeout(()=>{
                 that.setData({
-                    graphQuadrants:res.coordinate.graphQuadrants.reverse(),
+                    graphQuadrants:res.coordinate.graphQuadrants,
                     maskTrigger: false
                 })
             },500)

@@ -9,114 +9,116 @@
             <swiper current="{{questionStep}}">
                 <block wx:for="{{questions}}" wx:for-index="quesIndex" wx:for-item="quesItem">
                     <swiper-item catch:touchmove="pageTouch">
-                        <scroll-view
-                                wx:if="{{quesItem}}"
-                                id="question-scroll-view-{{quesIndex}}"
-                                scroll-y="true"
-                                bind:scroll="paperScroll"
-                                scroll-top="{{questionStep === quesIndex ? computeScrollTop : null}}">
-                            <hola-question-counter
-                                    id="paper-counter"
-                                    total="{{questions.length}}"
-                                    currentNum="{{quesIndex + 1}}" tip="{{quesItem.type === 'SORTING' ? 'tips：长按选项拖拽排序' : null}}"/>
-                            <view id="paper-head" class="paperhead">
-                                <rich-text class="title" space="nbsp"
-                                           nodes="<p>{{questions[questionStep].type === 'MULTIPLE'?multipleQuesHTML:''}}{{ questions[questionStep].type === 'PROPORTION' ? percentQuesHTML:'' }}{{util.richTextFilter(questions[questionStep].stem)}}</p>">
-                                </rich-text>
-                            </view>
-                            <view wx:if="{{hasVanishImageSetting[questionStep]&&hasVanishImageSetting[questionStep].isShow}}" 
-                                data-question-step="{{questionStep}}" class="titleImgButton" bindtap="openImg">
-                                显示图片 
-                            </view>
-                            <view wx:elif="{{hasVanishImageSetting[questionStep]&&hasVanishImageSetting[questionStep].standingInSeconds>0}}" 
-                                data-question-step="{{questionStep}}"  bindtap="openImg" class="showImg">
-                                <rich-text class="imgContent" space="nbsp"
-                                           nodes="<p>{{util.richTextFilter(hasVanishImageSetting[questionStep].tag)}}</p>">
-                                </rich-text>
-                                <view class="imgTimeoutContent">
-                                    <text class="imgTimeout">{{hasVanishImageSetting[questionStep].standingInSeconds}}s</text><text>后图片将消失</text>
-                                </view>
-                            </view>
-                            <view wx:else class="paperbody {{quesItem.type === 'SORTING' ? 'options-padding' : ''}}">
-                                <view wx:if="{{hasVanishImageSetting[questionStep]}}" class="imgQue">
-                                    <text class="imgQue-title">问：</text>
+                        <block wx:if="{{questionStep === quesIndex || questionStep - 1 === quesIndex || questionStep + 1 === quesIndex}}">
+                            <scroll-view
+                                    wx:if="{{quesItem}}"
+                                    id="question-scroll-view-{{quesIndex}}"
+                                    scroll-y="true"
+                                    bind:scroll="paperScroll"
+                                    scroll-top="{{questionStep === quesIndex ? computeScrollTop : null}}">
+                                <hola-question-counter
+                                        id="paper-counter"
+                                        total="{{questions.length}}"
+                                        currentNum="{{quesIndex + 1}}" tip="{{quesItem.type === 'SORTING' ? 'tips：长按选项拖拽排序' : null}}"/>
+                                <view id="paper-head" class="paperhead">
                                     <rich-text class="title" space="nbsp"
-                                                nodes="{{hasVanishImageSetting[quesIndex].substitute}}">
+                                               nodes="<p>{{questions[questionStep].type === 'MULTIPLE'?multipleQuesHTML:''}}{{ questions[questionStep].type === 'PROPORTION' ? percentQuesHTML:'' }}{{util.richTextFilter(questions[questionStep].stem)}}</p>">
                                     </rich-text>
                                 </view>
-                                <view wx:if="{{quesItem.type === 'SORTING'}}" class="options">
-                                    <drag id="drag-{{quesIndex}}"
-                                          generic:item="drag-question-item"
-                                          bind:click="itemClick"
-                                          bind:sortend="onSorted"
-                                          bind:scroll="dragScroll"
-                                          item-wrap-class="drag-item-wrap"
-                                          extra-nodes="{{extraNodes}}"
-                                          list-data="{{quesItem.indexedOptions}}"
-                                          columns="{{size}}"
-                                          scroll-top="{{scrollTop}}"
-                                          out-side-scroll-top="{{outSideScrollTop}}"
-                                    />
+                                <view wx:if="{{hasVanishImageSetting[questionStep]&&hasVanishImageSetting[questionStep].isShow}}"
+                                      data-question-step="{{questionStep}}" class="titleImgButton" bindtap="openImg">
+                                    显示图片
                                 </view>
-                                <view wx:else class="options">
-                                    <block wx:for="{{quesItem.options}}" wx:for-index="optionIndex" wx:for-item="optionItem"
-                                           wx:key="unique">
-                                        <view wx:if="{{quesItem.type === 'SINGLE' || quesItem.type === 'MULTIPLE'}}"
-                                              class="selectItem {{answerSheet[quesItem.id] && util.isIncludes(answerSheet[quesItem.id].indexes, optionIndex) ? 'active' : ''}}"
-                                              bindtap="selectQuesItem"
-                                              data-question-index="{{quesIndex}}"
-                                              data-question-id="{{quesItem.id}}"
-                                              data-option-index="{{optionIndex}}">
-                                            <label>
-                                                <text class="langoption">{{optionsAry[optionIndex]}}:</text>
-                                                <rich-text class="optiontext" nodes="<p>{{util.richTextFilter(optionItem)}}</p>"></rich-text>
-                                            </label>
-                                        </view>
-                                        <view wx:elif="{{quesItem.type === 'PROPORTION'}}" class="notborderview selectItem">
-                                            <view>
-                                                <text class="langoption">{{optionsAry[optionIndex]}}:</text>
-                                                <rich-text class="optiontext" nodes="<p>{{util.richTextFilter(optionItem)}}</p>"></rich-text>
+                                <view wx:elif="{{hasVanishImageSetting[questionStep]&&hasVanishImageSetting[questionStep].standingInSeconds>0}}"
+                                      data-question-step="{{questionStep}}"  bindtap="openImg" class="showImg">
+                                    <rich-text class="imgContent" space="nbsp"
+                                               nodes="<p>{{util.richTextFilter(hasVanishImageSetting[questionStep].tag)}}</p>">
+                                    </rich-text>
+                                    <view class="imgTimeoutContent">
+                                        <text class="imgTimeout">{{hasVanishImageSetting[questionStep].standingInSeconds}}s</text><text>后图片将消失</text>
+                                    </view>
+                                </view>
+                                <view wx:else class="paperbody {{quesItem.type === 'SORTING' ? 'options-padding' : ''}}">
+                                    <view wx:if="{{hasVanishImageSetting[questionStep]}}" class="imgQue">
+                                        <text class="imgQue-title">问：</text>
+                                        <rich-text class="title" space="nbsp"
+                                                   nodes="{{hasVanishImageSetting[quesIndex].substitute}}">
+                                        </rich-text>
+                                    </view>
+                                    <view wx:if="{{quesItem.type === 'SORTING'}}" class="options">
+                                        <drag id="drag-{{quesIndex}}"
+                                              generic:item="drag-question-item"
+                                              bind:click="itemClick"
+                                              bind:sortend="onSorted"
+                                              bind:scroll="dragScroll"
+                                              item-wrap-class="drag-item-wrap"
+                                              extra-nodes="{{extraNodes}}"
+                                              list-data="{{quesItem.indexedOptions}}"
+                                              columns="{{size}}"
+                                              scroll-top="{{scrollTop}}"
+                                              out-side-scroll-top="{{outSideScrollTop}}"
+                                        />
+                                    </view>
+                                    <view wx:else class="options">
+                                        <block wx:for="{{quesItem.options}}" wx:for-index="optionIndex" wx:for-item="optionItem"
+                                               wx:key="unique">
+                                            <view wx:if="{{quesItem.type === 'SINGLE' || quesItem.type === 'MULTIPLE'}}"
+                                                  class="selectItem {{answerSheet[quesItem.id] && util.isIncludes(answerSheet[quesItem.id].indexes, optionIndex) ? 'active' : ''}}"
+                                                  bindtap="selectQuesItem"
+                                                  data-question-index="{{quesIndex}}"
+                                                  data-question-id="{{quesItem.id}}"
+                                                  data-option-index="{{optionIndex}}">
+                                                <label>
+                                                    <text class="langoption">{{optionsAry[optionIndex]}}:</text>
+                                                    <rich-text class="optiontext" nodes="<p>{{util.richTextFilter(optionItem)}}</p>"></rich-text>
+                                                </label>
                                             </view>
-                                            <view>
-                                                <input class="number_input" type="number"
-                                                       value="{{answerSheet[quesItem.id] && answerSheet[quesItem.id]['indexes'] && answerSheet[quesItem.id]['indexes'][optionIndex] >= 0 ? answerSheet[quesItem.id]['indexes'][optionIndex] : 0}}"
-                                                       bind:confirm="onChangeSlider"
-                                                       bind:input="onChangeSlider"
-                                                       type="number"
-                                                       data-question-index="{{quesIndex}}"
-                                                       data-option-index="{{optionIndex}}"/>
-                                                <view class="number_slider_wrap">
-                                                    <slider bind:changing="onChangeSlider"
-                                                            bind:change="onChangeSlider"
-                                                            data-question-index="{{quesIndex}}"
-                                                            data-option-index="{{optionIndex}}"
-                                                            class="number_slider"
-                                                            min="0"
-                                                            max="{{quesItem.totalScore}}"
-                                                            step="{{util.computeStepNumber(quesItem.totalScore)}}"
-                                                            value="{{answerSheet[quesItem.id] && answerSheet[quesItem.id]['indexes'] && answerSheet[quesItem.id]['indexes'][optionIndex] >= 0 ? answerSheet[quesItem.id]['indexes'][optionIndex] : 0}}"
-                                                            activeColor="#353EE8"
-                                                            block-size="10"
-                                                            block-color="#353EE8"/>
-                                                    <view class="number_slider_tip">
-                                                        <view class="number_slider_tip_item_center">
-                                                            <view class="number_slider_tip_item"
-                                                                  wx:for="{{util.computeSteps(quesItem.totalScore)}}"
-                                                                  wx:for-item="sliderItem" wx:key="unique"
-                                                                  wx:for-index="idx">
-                                                                <label class="number_slider_tip_number_label">{{sliderItem}}</label>
+                                            <view wx:elif="{{quesItem.type === 'PROPORTION'}}" class="notborderview selectItem">
+                                                <view>
+                                                    <text class="langoption">{{optionsAry[optionIndex]}}:</text>
+                                                    <rich-text class="optiontext" nodes="<p>{{util.richTextFilter(optionItem)}}</p>"></rich-text>
+                                                </view>
+                                                <view>
+                                                    <input class="number_input" type="number"
+                                                           value="{{answerSheet[quesItem.id] && answerSheet[quesItem.id]['indexes'] && answerSheet[quesItem.id]['indexes'][optionIndex] >= 0 ? answerSheet[quesItem.id]['indexes'][optionIndex] : 0}}"
+                                                           bind:confirm="onChangeSlider"
+                                                           bind:input="onChangeSlider"
+                                                           type="number"
+                                                           data-question-index="{{quesIndex}}"
+                                                           data-option-index="{{optionIndex}}"/>
+                                                    <view class="number_slider_wrap">
+                                                        <slider bind:changing="onChangeSlider"
+                                                                bind:change="onChangeSlider"
+                                                                data-question-index="{{quesIndex}}"
+                                                                data-option-index="{{optionIndex}}"
+                                                                class="number_slider"
+                                                                min="0"
+                                                                max="{{quesItem.totalScore}}"
+                                                                step="{{util.computeStepNumber(quesItem.totalScore)}}"
+                                                                value="{{answerSheet[quesItem.id] && answerSheet[quesItem.id]['indexes'] && answerSheet[quesItem.id]['indexes'][optionIndex] >= 0 ? answerSheet[quesItem.id]['indexes'][optionIndex] : 0}}"
+                                                                activeColor="#353EE8"
+                                                                block-size="10"
+                                                                block-color="#353EE8"/>
+                                                        <view class="number_slider_tip">
+                                                            <view class="number_slider_tip_item_center">
+                                                                <view class="number_slider_tip_item"
+                                                                      wx:for="{{util.computeSteps(quesItem.totalScore)}}"
+                                                                      wx:for-item="sliderItem" wx:key="unique"
+                                                                      wx:for-index="idx">
+                                                                    <label class="number_slider_tip_number_label">{{sliderItem}}</label>
+                                                                </view>
                                                             </view>
+                                                            <label class="number_slider_tip_number_label">{{quesItem.totalScore}}</label>
                                                         </view>
-                                                        <label class="number_slider_tip_number_label">{{quesItem.totalScore}}</label>
                                                     </view>
                                                 </view>
                                             </view>
-                                        </view>
-                                    </block>
+                                        </block>
+                                    </view>
                                 </view>
-                            </view>
-                            <view style="height:40rpx;"></view>
-                        </scroll-view>
+                                <view style="height:40rpx;"></view>
+                            </scroll-view>
+                        </block>
                     </swiper-item>
                 </block>
             </swiper> 

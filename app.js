@@ -54,9 +54,6 @@ App({
     isReLaunch: false,
     otherPageReLaunchTrigger: true,
     quitPage: "",
-    // host: 'https://uat.api.haola101.com',
-    // host: 'http://api.dev.luoke101.int',
-    // host: "https://api.haola101.com",
     host: (()=>{
         const {envVersion} = wx.getAccountInfoSync().miniProgram;
         if (envVersion === 'release') {

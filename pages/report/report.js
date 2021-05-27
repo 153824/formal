@@ -541,7 +541,7 @@ Page({
             that.setData(res);
             setTimeout(()=>{
                 that.setData({
-                    graphQuadrants:res.coordinate.graphQuadrants,
+                    graphQuadrants:res.coordinate.graphQuadrants.reverse(),
                     maskTrigger: false
                 })
             },500)

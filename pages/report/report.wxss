@@ -5,7 +5,14 @@
 page, page > view {
     overflow-x: hidden;
 }
-
+.analysis-swiper-item{
+    width: 100%!important;
+}
+.analysis-swiper{
+    width: 300rpx!important;
+    height: 258rpx!important;
+    padding-right: 40rpx!important;
+}
 .grid-chart-wrapper{
     box-shadow: 0px 4rpx 16rpx 0px rgba(207, 216, 240, 0.79);
     border-radius: 20rpx;

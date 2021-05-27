@@ -103,6 +103,30 @@ var richTextFilter = function(nodeString=""){
   return targetNode;
 };
 
+var getOverRate = function(respCount,quesCount){
+  return (respCount/quesCount).toFixed(2)*100
+};
+
+
+var getDesirability = function(verdict){
+  var msg = ''
+  switch(verdict){
+    case 0:
+      msg = '低'
+      break
+    case 1:
+      msg = '正常'
+      break
+    case 2:
+      msg = '较高'
+      break
+    case 3:
+      msg = '高'
+      break
+  }
+  return msg
+};
+
 var arrayEleIsSame = function(compare=[],target=[]){
   compare = compare.toString(),target = target.toString();
   if(compare === target){
@@ -154,6 +178,7 @@ var isMiddleValue = function(questionStep, questionIndex, length) {
   return false;
 };
 
+
 module.exports = {
   getMonthAndDayByFrag: getMonthAndDayByFrag,
   getHourAndMinByFrag: getHourAndMinByFrag,
@@ -166,6 +191,8 @@ module.exports = {
   richTextFilter: richTextFilter,
   isSameDays: isSameDays,
   arrayEleIsSame: arrayEleIsSame,
+  getDesirability:getDesirability,
+  getOverRate:getOverRate,
   subString: subString,
   computeSteps: computeSteps,
   computeStepNumber: computeStepNumber,

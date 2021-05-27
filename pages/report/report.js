@@ -347,7 +347,8 @@ Page({
         incentives: {},
         currentActive: "",
         reportCopyrightTxt: "",
-        options: {}
+        options: {},
+        analysisCount:0
     },
     properties: {
 		commond: {            // 额外节点
@@ -472,7 +473,15 @@ Page({
             let now = new Date().getFullYear();
             let participant = res.participant;
             let t = new Date(participant.birthday).getFullYear();
-            
+            var  analysisCount = 0
+            for(var i in res.respondAnalysis){
+                if(res.respondAnalysis[i].display&&res.respondAnalysis[i]){
+                    analysisCount++
+                }
+            }
+            if(res.respondAnalysis['syllabus'].display){
+                analysisCount--
+            }
             res.participant.age = now - t + 1;
             res.reportGeneratedAt = app.changeDate(res.reportGeneratedAt, "yyyy/MM/dd hh:mm");
             radarValue = {};
@@ -541,10 +550,15 @@ Page({
             res["teamRole"] = (app.teamId == res.releaseTeamId) ? app.teamRole : 1;
             res.maskTrigger = false;
             that.setData(res);
+            if(res.coordinate.graphQuadrants){
+                that.setData({
+                    graphQuadrants:res.coordinate.graphQuadrants.reverse()
+                })
+            }
             setTimeout(()=>{
                 that.setData({
-                    graphQuadrants:res.coordinate.graphQuadrants.reverse(),
-                    maskTrigger: false
+                    maskTrigger: false,
+                    analysisCount:analysisCount
                 })
             },500)
             return Promise.resolve(res)

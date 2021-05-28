@@ -178,12 +178,30 @@ var isMiddleValue = function(questionStep, questionIndex, length) {
   return false;
 };
 
-
+var getDesirabilityMsg= function(index) {
+  var msg = ''
+  switch(index){
+    case 0:
+      msg='答题掩饰性低，受测者即使清楚社会赞许的正向行为是什么，也能够真诚面对自己，真实地作答'
+      break
+    case 1:
+      msg='答题掩饰性正常，受测者比较清楚社会赞许的正向行为是什么，不接纳的行为是什么，但基本能够正视自己的真实情况，在自我评价中相对公正'
+      break
+    case 2:
+      msg='答题掩饰性较高，受测者可能会因为清楚社会赞许的正向行为，而在自我评价中会低估自己的消极行为，高估自己的积极行为，和自己的实际情况可能会有一定的偏差'
+      break
+    case 3:
+      msg='受测者答题掩饰性明显高于常规情况，对于社会欣赏和接纳的正向行为非常清晰和敏感，在自我评价中很有可能会为了给他人留下一个良好的印象，对自己的正向行为过度自信和高估，低估或保护掩饰消极行为。这可能来自于两种原因，一种是有意识有目的地进行伪装掩饰，另一种也可能来自于对信念的自我保护意识'
+      break
+  }
+  return msg
+};
 module.exports = {
   getMonthAndDayByFrag: getMonthAndDayByFrag,
   getHourAndMinByFrag: getHourAndMinByFrag,
   getFullDateByFrag: getFullDateByFrag,
   saveDouble: saveDouble,
+  getDesirabilityMsg:getDesirabilityMsg,
   hidePartPhoneNumber: hidePartPhoneNumber,
   ASCIIToChar: ASCIIToChar,
   isIncludes: isIncludes,

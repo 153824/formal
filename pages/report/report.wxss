@@ -5,6 +5,9 @@
 page, page > view {
     overflow-x: hidden;
 }
+.hiddenBack{
+    height: 100vh!important;
+}
 .analysis-swiper-item{
     width: 100%!important;
 }

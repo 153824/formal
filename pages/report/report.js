@@ -558,7 +558,8 @@ Page({
             setTimeout(()=>{
                 that.setData({
                     maskTrigger: false,
-                    analysisCount:analysisCount
+                    analysisCount:analysisCount,
+                    graphQuadrants:res.coordinate.graphQuadrants,
                 })
             },500)
             return Promise.resolve(res)

@@ -18,7 +18,7 @@ Page({
         const that = this;
         const {isWxWork} = app.wxWorkInfo;
         const {is3rd} = app.wx3rdInfo;
-        if (isWxWork || is3rd) {
+        if (is3rd) {
             let flag = false
             let url = isWxWork ? "/pages/account/account" : "/pages/auth/auth?type=auth"
             if (app.checkAccessToken()) {
@@ -42,10 +42,8 @@ Page({
                 };
             }
             return
-
-
         }
-        if (!isWxWork && !is3rd) {
+        if (isWxWork && !is3rd) {
             let homePagesPromiseList = [];
             const homePagesPromise = new Promise(function (resolve, reject) {
                 app.doAjax({

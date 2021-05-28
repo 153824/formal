@@ -43,7 +43,7 @@ Page({
             }
             return
         }
-        if (isWxWork && !is3rd) {
+        if (!is3rd) {
             let homePagesPromiseList = [];
             const homePagesPromise = new Promise(function (resolve, reject) {
                 app.doAjax({

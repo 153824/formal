@@ -12,6 +12,7 @@ Component({
     isIPhoneXModel: app.isIphoneX,
     safeAreaDiff: 0,
     isWxWork: app.wxWorkInfo.isWxWork,
+    isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
     is3rd: app.wx3rdInfo.is3rd,
     maskTrigger: true,
     isIos: app.isIos
@@ -146,6 +147,7 @@ Component({
       const windowHeight = systemInfo.windowHeight;
       let height = 0;
       this.setData({
+        isWxWorkAdmin: app.wxWorkInfo.isWxWorkAdmin,
         isWxWork: wx.getSystemInfoSync().environment === 'wxwork' || app.wxWorkInfo.isWxWork,
         is3rd: wx.getExtConfigSync().extConfig
       });

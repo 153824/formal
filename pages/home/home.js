@@ -14,11 +14,29 @@ Page({
         column: [],
         trigger: true,
     },
-    onLoad: function (options) {
+    init() {
+        if(app.checkAccessToken()){
+            const {isWxWork} = app.wxWorkInfo;
+            const {is3rd} = app.wx3rdInfo;
+            const isWxWorkAdmin = wx.getStorageSync('userInfo').isAdmin;
+            this.check({
+                isWxWork,
+                isWxWorkAdmin,
+                is3rd
+            })
+        }else{
+            app.checkUserInfo=(res)=>{
+                this.check({
+                    isWxWork: res.isWxWork,
+                    isWxWorkAdmin: res.userInfo.isAdmin,
+                    is3rd: res.is3rd
+                })
+            };
+        }
+    },
+    check({isWxWork, isWxWorkAdmin,is3rd}) {
         const that = this;
-        const {isWxWork} = app.wxWorkInfo;
-        const {is3rd} = app.wx3rdInfo;
-        if (is3rd) {
+        if (is3rd || isWxWork && !isWxWorkAdmin) {
             let flag = false
             let url = isWxWork ? "/pages/account/account" : "/pages/auth/auth?type=auth"
             if (app.checkAccessToken()) {
@@ -102,6 +120,9 @@ Page({
                 }, 500);
             });
         }
+    },
+    onLoad: function () {
+        this.init();
     },
     onShow: function () {
         app.freeTickId = "";

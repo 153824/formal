@@ -54,12 +54,8 @@ App({
     isReLaunch: false,
     otherPageReLaunchTrigger: true,
     quitPage: "",
-    // host: 'https://uat.api.haola101.com',
-    // host: 'http://api.dev.luoke101.int',
-    // host: "https://api.haola101.com",
     host: (()=>{
-        const {envVersion} = wx.getAccountInfoSync().miniProgram;
-        if (envVersion === 'release') {
+        if (wx.getAccountInfoSync().miniProgram.appId === 'wx85cde7d3e8f3d949') {
             return "https://api.haola101.com";
         } else {
             return "https://uat.api.haola101.com";

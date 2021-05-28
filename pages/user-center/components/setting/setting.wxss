@@ -82,7 +82,8 @@ page{
     left: 50%;
     bottom: 50rpx;
     transform: translateX(-50%);
-    color: #8a8a8a;
+    color: #CCC;
+    font-size: 30rpx;
 }
 /*.van-cell__value{*/
 /*    margin-left: 20rpx;*/

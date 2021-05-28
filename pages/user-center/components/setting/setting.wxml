@@ -23,6 +23,6 @@
         </van-cell-group>
     </scroll-view>
     <view class='version'>
-        Version：{{version}}
+        V{{version||'8.8.8'}}
     </view>
 </view>

@@ -68,6 +68,7 @@ Page({
         return departInfo;
     },
     loadChildDepart(e) {
+        console.log(e);
         const {depart} = e.currentTarget.dataset;
         const {routeMap} = this.data;
         const childDepart = this.loadDepart(e);

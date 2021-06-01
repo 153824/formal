@@ -20,10 +20,11 @@
                         <view>
                             <van-radio checked-color="rgba(53, 62, 232, 1)" name="{{item.value}}"
                                           icon-class="custom-icon">
-                                <view class="depart-name" data-depart="{{item}}"
-                                      catchtap="{{ item.leaf ? '' : 'loadChildDepart' }}">
+                                <!-- <view class="depart-name" data-depart="{{item}}" type="departmentName" 
+                                      catchtap="{{ item.leaf ? '' : 'loadChildDepart' }}" open-type="departmentName" openid="{{item.bindTpDepartId}}">
                                     {{item.label}}
-                                </view>
+                                </view> -->
+                                <ww-open-data type="departmentName" openid="{{item.bindTpDepartId}}"></ww-open-data>
                             </van-radio>
                         </view>
                         <block wx:if="{{!item.leaf}}">

@@ -33,6 +33,7 @@
         <view wx:if="{{isWxWork || is3rd}}" class="department-wrapper">
             <text class="title">被测者归属部门</text>
             <view class="depart">
+                <button bind:tap="openContact">打开企业微信通讯录</button>
                 <van-dropdown-menu direction="down" overlay="{{false}}" active-color="rgba(53, 62, 232, 1)">
                     <van-dropdown-item id="drop-item" bind:open="open" value="{{ dropdownValue }}" options="{{ dropDownOps }}"/>
                 </van-dropdown-menu>

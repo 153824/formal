@@ -4,7 +4,8 @@
     "van-tab": "/common/vant-weapp/dist/tab/index",
     "van-radio": "/common/vant-weapp/dist/radio/index",
     "van-radio-group": "/common/vant-weapp/dist/radio-group/index",
-    "hola-press": "/common/press/press"
+    "hola-press": "/common/press/press",
+    "ww-open-data":"plugin://contactPlugin/ww-open-data"
   },
   "navigationBarTitleText": "选择所属组织节点"
 }

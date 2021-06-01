@@ -242,6 +242,12 @@
 .van-dropdown-item--down{
   top: 510px !important;
 }
+.van-dropdown-menu{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
 .title{
   font-size: 16px;
   font-weight: 500;

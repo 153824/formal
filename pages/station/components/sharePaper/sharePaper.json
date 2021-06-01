@@ -4,6 +4,7 @@
     "van-image": "../../../../common/vant-weapp/dist/image/index",
     "van-button": "../../../../common/vant-weapp/dist/button/index",
     "van-dropdown-menu": "../../../../common/vant-weapp/dist/dropdown-menu/index",
-    "van-dropdown-item": "../../../../common/vant-weapp/dist/dropdown-item/index"
+    "van-dropdown-item": "../../../../common/vant-weapp/dist/dropdown-item/index",
+    "ww-open-data":"plugin://contactPlugin/ww-open-data"
   }
 }

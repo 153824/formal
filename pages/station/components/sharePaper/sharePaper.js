@@ -23,7 +23,9 @@ Page({
         isWxWork: false,
         is3rd: false,
         dispatchInfo: {},
-        defaultDeptId: ""
+        defaultDeptId: "",
+        rootBindTpDepartId: "",
+        corpid: "wwfaa9224ffb93c5b3"
     },
 
     /**
@@ -57,16 +59,19 @@ Page({
         });
         if (!departInfo) {
             this._loadRootDepart().then(res => {
-                const {label, value} = res.data[0];
+                const {label, value, bindTpDepartId} = res.data[0];
                 this.setData({
                     dropDownOps: [
                         {
                             text: label,
-                            value: value
+                            value: value,
+
                         }
                     ],
                     dropdownValue: value,
-                    defaultDeptId: value
+                    defaultDeptId: value,
+                    rootBindTpDepartId: bindTpDepartId,
+                    corpid: res.corpid
                 })
                 this.loadDispatchInfo(value);
             })
@@ -293,9 +298,9 @@ Page({
     },
 
     open: function () {
-        const {evaluationId} = this.data;
+        const {evaluationId, corpid} = this.data;
         wx.navigateTo({
-            url: `/pages/station/components/depart/depart?evaluationId=${evaluationId}`,
+            url: `/pages/station/components/depart/depart?evaluationId=${evaluationId}&corpid=${corpid}`,
         })
     },
 

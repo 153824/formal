@@ -6,11 +6,11 @@
                     <text bindtap="loadTargetDepart" data-root="{{true}}" data-index="{{index}}" data-depart="{{item}}">根部门</text>
                     <image wx:if="{{routeMap.length}}" src="/images/icon/icon@icon-right-arrow.png" class="char-icon"/>
                 </block>
-                <block wx:for="{{routeMap}}" wx:key="unique">
-                    <text bindtap="{{index+1 === routeMap.length ? '' : 'loadTargetDepart'}}" data-index="{{index}}" data-depart="{{item}}">{{item.label}}</text>
+                <view wx:for="{{routeMap}}" class="open-data-wrapper" bindtap="{{index+1 === routeMap.length ? '' : 'loadTargetDepart'}}" data-index="{{index}}" data-depart="{{item}}">
+                    <ww-open-data corpid="{{corpid}}" type="departmentName" openid="{{item.bindTpDepartId}}"/>
                     <image wx:if="{{index+1 !== routeMap.length}}" src="/images/icon/icon@icon-right-arrow.png"
-                           class="char-icon"></image>
-                </block>
+                           class="char-icon"/>
+                </view>
             </scroll-view>
         </view>
         <view class="display-wrapper">
@@ -22,7 +22,7 @@
                                           icon-class="custom-icon">
                                 <view class="depart-name" data-depart="{{item}}" type="departmentName" 
                                       catchtap="{{ item.leaf ? '' : 'loadChildDepart' }}" open-type="departmentName" openid="{{item.bindTpDepartId}}">
-                                    {{item.label}}
+                                    <ww-open-data corpid="{{corpid}}" type="departmentName" openid="{{item.bindTpDepartId}}"/>
                                 </view>
                             </van-radio>
                         </view>

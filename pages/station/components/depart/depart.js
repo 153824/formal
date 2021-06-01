@@ -4,10 +4,17 @@ Page({
         childDepart: [],
         checkedDepart: "",
         routeMap: [],
-        evaluationId: ""
+        evaluationId: "",
+        corpid: ""
     },
     onLoad: function (options) {
-        const {evaluationId} = options;
+
+        const {evaluationId, corpid} = options;
+        if(corpid){
+            this.setData({
+                corpid
+            })
+        }
         if(evaluationId){
             this.setData({
                 evaluationId: evaluationId
@@ -31,6 +38,7 @@ Page({
                     funcCode: 'evaluationManage'
                 },
                 success: (res) => {
+                    console.log(res);
                     resolve(res);
                 },
                 fail: (err) => {
@@ -74,9 +82,10 @@ Page({
         const childDepart = this.loadDepart(e);
         childDepart.then(res => {
             routeMap.push(depart);
+            console.log('routeMap.push: ',routeMap);
             this.setData({
-                routeMap: routeMap,
-                childDepart: res.data
+                routeMap: [...routeMap],
+                childDepart: res.data,
             })
         }).catch(err => {
             throw err;
@@ -89,7 +98,7 @@ Page({
         targetDepart.then(res => {
             this.setData({
                 routeMap: root ? []:routeMap.slice(0, index+1),
-                childDepart: res.data
+                childDepart: res.data,
             });
         }).catch(err => {
             throw err;

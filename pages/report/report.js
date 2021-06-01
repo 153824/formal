@@ -539,12 +539,14 @@ Page({
             res["teamRole"] = (app.teamId == res.releaseTeamId) ? app.teamRole : 1;
             res.maskTrigger = false;
             that.setData(res);
-            setTimeout(()=>{
-                that.setData({
-                    graphQuadrants:res.coordinate.graphQuadrants.reverse(),
-                    maskTrigger: false
-                })
-            },500)
+            if(res.coordinate.display){
+                setTimeout(()=>{
+                    that.setData({
+                        graphQuadrants: res.coordinate.graphQuadrants.reverse(),
+                        maskTrigger: false
+                    })
+                },500)
+            }
             return Promise.resolve(res)
         }).then(res => {
             if (!res || this.isInTeams(res)) {

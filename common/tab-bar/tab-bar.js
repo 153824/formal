@@ -28,13 +28,27 @@ Component({
             }
         ],
         wxWorkPage: {
-            admin: [
+            superAdmin: [
                 {
                     text: "主页",
                     normal: '../../images/icon/icon@index-no-active.png',
                     active: '../../images/icon/icon@index-active.png',
                     path: "/pages/home/home"
                 },
+                {
+                    text: "工作台",
+                    normal: '../../images/icon/icon@evaluation-manager-no-active.png',
+                    active: '../../images/icon/icon@evaluation-manager-active.png',
+                    path: "/pages/work-base/work-base"
+                },
+                {
+                    text: "我的",
+                    normal: '../../images/icon/icon@my-no-active.png',
+                    active: '../../images/icon/icon@my-active.png',
+                    path: "/pages/user-center/user-center"
+                },
+            ],
+            admin: [
                 {
                     text: "工作台",
                     normal: '../../images/icon/icon@evaluation-manager-no-active.png',
@@ -95,6 +109,7 @@ Component({
         },
         isWxWork: app.wxWorkInfo.isWxWork,
         isWxWorkAdmin: app.checkAdmin(),
+        isWxWorkSuperAdmin: app.checkSuperAdmin(),
         is3rd: app.wx3rdInfo.is3rd,
         is3rdAdmin: app.checkAdmin(),
     },
@@ -111,7 +126,7 @@ Component({
     methods: {
         onChange(event) {
             const that = this;
-            const {isWxWork, isWxWorkAdmin, is3rd, is3rdAdmin} = this.data;
+            const {isWxWork, isWxWorkAdmin, isWxWorkSuperAdmin, is3rd, is3rdAdmin} = this.data;
             const active = Number(event.detail);
             if (!isWxWork && !is3rd) {
                 wx.switchTab({
@@ -122,13 +137,17 @@ Component({
                 } catch (e) {
                     console.error("tab-bar.js -> 85", e)
                 }
-            } else if (isWxWork && isWxWorkAdmin) {
+            } else if (isWxWork && isWxWorkAdmin && !isWxWorkSuperAdmin) {
                 wx.switchTab({
                     url: `${that.data.wxWorkPage.admin[active].path}`
                 });
-            } else if (isWxWork && !isWxWorkAdmin) {
+            } else if (isWxWork && !isWxWorkAdmin && !isWxWorkSuperAdmin) {
                 wx.switchTab({
                     url: `${that.data.wxWorkPage.member[active].path}`
+                });
+            } else if (isWxWork && isWxWorkAdmin && isWxWorkSuperAdmin) {
+                wx.switchTab({
+                    url: `${that.data.wxWorkPage.superAdmin[active].path}`
                 });
             } else if (is3rd && is3rdAdmin){
                 wx.switchTab({

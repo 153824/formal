@@ -24,6 +24,7 @@ Page({
         phoneModel: app.isIphoneX,
         isWxWork: app.wxWorkInfo.isWxWork,
         isWxWorkAdmin: app.checkAdmin(),
+        isWxWorkSuperAdmin: app.checkSuperAdmin(),
         is3rd: app.wx3rdInfo.is3rd,
         is3rdAdmin: app.checkAdmin(),
         myEvaluation: [],

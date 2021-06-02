@@ -348,7 +348,8 @@ Page({
         incentives: {},
         currentActive: "",
         reportCopyrightTxt: "",
-        options: {}
+        options: {},
+        analysisCount:0
     },
     properties: {
 		commond: {            // 额外节点
@@ -539,10 +540,16 @@ Page({
             res["teamRole"] = (app.teamId == res.releaseTeamId) ? app.teamRole : 1;
             res.maskTrigger = false;
             that.setData(res);
+            if(res.coordinate.graphQuadrants){
+                that.setData({
+                    graphQuadrants:res.coordinate.graphQuadrants.reverse()
+                })
+            }
             setTimeout(()=>{
                 that.setData({
                     graphQuadrants:res.coordinate.graphQuadrants.reverse(),
-                    maskTrigger: false
+                    maskTrigger: false,
+                    analysisCount:analysisCount,
                 })
             },500)
             return Promise.resolve(res)

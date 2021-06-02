@@ -61,7 +61,7 @@
                       data-n="{{respondAnalysis.desirability.valid?'':'desirability'}}">
                       <view class="topView {{(respondAnalysis.desirability.verdict==0||respondAnalysis.desirability.verdict==1)?'':'topView1'}}"></view>
                     <view class="name">作答掩饰性</view>
-                    <view class="msg msg1">{{util.getDesirability(respondAnalysis.desirability.verdict)}}</view>
+                    <view class="msg" class="{{(respondAnalysis.desirability.verdict==0||respondAnalysis.desirability.verdict==1)?'':'msg1'}}">{{util.getDesirability(respondAnalysis.desirability.verdict)}}</view>
                     <image src="./images/report@icon-{{(respondAnalysis.desirability.verdict==0||respondAnalysis.desirability.verdict==1)?'success':'thinking'}}.png"></image>
                 </view>
             </view>

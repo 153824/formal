@@ -487,6 +487,15 @@ Page({
                 value_2[n] = value_2[n] || [];
                 indicator_2[n] = indicator_2[n] || [];
                 var {showSubScore} = objs[n];
+                var  analysisCount = 0
+                for(var i in res.respondAnalysis){
+                    if(res.respondAnalysis[i].display&&res.respondAnalysis[i]){
+                        analysisCount++
+                    }
+                }
+                if(res.respondAnalysis['syllabus'].display){
+                    analysisCount--
+                }
                 for (var i in arr) {
                     var node = arr[i];
                     radarValue[n].push(node.grade.value);

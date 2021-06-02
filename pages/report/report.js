@@ -556,7 +556,6 @@ Page({
             }
             setTimeout(()=>{
                 that.setData({
-                    graphQuadrants:res.coordinate.graphQuadrants.reverse(),
                     maskTrigger: false,
                     analysisCount:analysisCount,
                 })

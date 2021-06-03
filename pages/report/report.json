@@ -4,6 +4,7 @@
     "hola-histogram": "./components/histogram/histogram",
     "hola-radar": "./components/radar/radar",
     "hola-grid": "./components/grid/grid",
-    "hola-mask": "../../common/mask/mask"
+    "hola-mask": "../../common/mask/mask",
+    "hola-personality": "./components/personality/personality"
   }
 }

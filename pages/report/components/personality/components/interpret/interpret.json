@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "van-collapse": "/common/vant-weapp/dist/collapse/index",
+    "van-collapse-item": "/common/vant-weapp/dist/collapse-item/index",
+    "van-icon": "/common/vant-weapp/dist/icon/index"
+  }
+}

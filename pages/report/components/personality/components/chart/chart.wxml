@@ -1,0 +1,21 @@
+<wxs src="/utils/util.wxs" module="util"/>
+<view style="position: relative;">
+    <view class="bar-line"></view>
+    <view wx:for="{{indicators}}" wx:for-item="indicatorItem" wx:for-index="indicatorIndex" wx:key="unique">
+        <view class="mbti-chart">
+            <view class="mbti-chart__item">
+                <view class="mbti-chart__label {{indicatorItem.value >= 0 ? 'is-gray' : ''}}">
+                    <text>{{indicatorItem.apexes[0].ratio}}</text>
+                    <text class="type">{{indicatorItem.apexes[0].name}}</text>
+                </view>
+                <view class="mbti-chart__bar">
+                    <view data-type="{{indicatorItem.label}}" class="mbti-chart__bar-block" style="{{util.computeMBTIChartPosition(412, indicatorItem.value, rate)}}" />
+                </view>
+                <view class="mbti-chart__label {{indicatorItem.value <= 0 ? 'is-gray' : ''}}">
+                    <text>{{indicatorItem.apexes[1].ratio}}</text>
+                    <text class="type">{{indicatorItem.apexes[1].name}}</text>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

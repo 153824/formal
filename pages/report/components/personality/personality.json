@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "hola-personality-type-tag": "./components/type-tag/type-tag",
+    "hola-personality-interpret": "./components/interpret/interpret",
+    "hola-personality-chart": "./components/chart/chart"
+  }
+}

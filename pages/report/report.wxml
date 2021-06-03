@@ -59,6 +59,9 @@
                   style="padding-right: 54rpx;padding-left: 24rpx;">
                 <rich-text nodes="<p>{{usageManual.description||''}}</p>"></rich-text>
             </view>
+            <block wx:if="{{mbti}}">
+                <hola-personality mbti="{{mbti}}"/>
+            </block>
         </view>
         <!-- 报告总述 -->
         <view class="box1" wx:if="{{summary.display}}">

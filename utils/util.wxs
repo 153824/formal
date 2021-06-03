@@ -154,6 +154,27 @@ var isMiddleValue = function(questionStep, questionIndex, length) {
   return false;
 };
 
+/**
+ * @Description: 计算MBTI报告图表样式
+ * @author: WE!D
+ * @name: computeMBTIChartPosition
+ * @args: Number
+ * @return: CSSStyle
+ * @date: 2020/6/2
+ */
+var computeMBTIChartPosition = function (barWidth, widthRate, rate) {
+  var borderStyle = '';
+  var char = widthRate < 0 ? ' - ' : ' + ';
+  var width = (barWidth / 2) * Math.abs(widthRate);
+  if(width === barWidth / 2 && widthRate < 0){
+    borderStyle = 'border-top-left-radius: 26rpx;border-bottom-left-radius: 26rpx;';
+  } else if (width === barWidth / 2 && widthRate > 0) {
+    borderStyle = 'border-top-right-radius: 26rpx;border-bottom-right-radius: 26rpx;';
+  }
+  console.log('widthRate: ', widthRate, width);
+  return 'width: ' + width + 'rpx;' + 'left: calc(50%' + char + (width/2) + 'rpx);' + borderStyle;
+}
+
 module.exports = {
   getMonthAndDayByFrag: getMonthAndDayByFrag,
   getHourAndMinByFrag: getHourAndMinByFrag,
@@ -169,5 +190,6 @@ module.exports = {
   subString: subString,
   computeSteps: computeSteps,
   computeStepNumber: computeStepNumber,
-  isMiddleValue: isMiddleValue
+  isMiddleValue: isMiddleValue,
+  computeMBTIChartPosition: computeMBTIChartPosition
 };

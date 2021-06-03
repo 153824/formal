@@ -1,0 +1,66 @@
+.mbti-chart__item{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 40rpx 0;
+}
+.mbti-chart__label{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #353EE8;
+}
+.mbti-chart__label text{
+    font-size: 30rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    line-height: 42rpx;
+}
+.mbti-chart__label .type{
+    font-size: 26rpx;
+    line-height: 36rpx;
+}
+.mbti-chart__bar{
+    position: relative;
+    height: 40rpx;
+    width: 412rpx;
+    margin: 0 22rpx;
+    background: rgba(53, 62, 232, 0.1);
+    border-radius: 26rpx;
+}
+.mbti-chart__bar-block{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    /*left: calc(50% - 8rpx);*/
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, #6572F5 0%, #353EE8 100%);
+}
+.mbti-chart__bar-block::after{
+    display: inline-block;
+    content: attr(data-type);
+    font-size: 28rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 40rpx;
+}
+.bar-line{
+    position: absolute;
+    top: 0;
+    left: calc(50% + 13rpx);
+    transform: translateX(-50%);
+    width: 20rpx;
+    height: 475rpx;
+    background-image: linear-gradient(to bottom, #ccc 0%, #ccc 50%, transparent 50%);
+    background-size: 2rpx 60rpx;
+    background-repeat: repeat-y;
+}
+.is-gray{
+    color: #B6B6B6;
+}

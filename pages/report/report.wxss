@@ -226,6 +226,10 @@ assessor-info
     line-height: 150%;
 }
 
+.time-wrapper{
+    margin-left: 20rpx;
+}
+
 .box .list .item .topView {
     height: 26rpx;
     background: rgba(82, 196, 26, 1);

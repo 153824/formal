@@ -33,7 +33,7 @@
                 <text class="underLineBg assessor-info">{{respondAnalysis.title}}</text>
             </view>
             <view class="list flex" wx:if="{{respondAnalysis.display}}">
-                <view class="item flex-main" wx:if="{{respondAnalysis.duration.display}}" bindtap="showDlg"
+                <view class="item flex-main time-wrapper" wx:if="{{respondAnalysis.duration.display}}" bindtap="showDlg"
                       data-n="{{respondAnalysis.duration.valid?'':'timeDlg'}}">
                     <view class="topView {{respondAnalysis.duration.valid?'':'topView1'}}"></view>
                     <view class="name">作答时长</view>

@@ -5,14 +5,27 @@
         <view class="mbti-chart">
             <view class="mbti-chart__item">
                 <view class="mbti-chart__label {{indicatorItem.value >= 0 ? 'is-gray' : ''}}">
-                    <text>{{indicatorItem.apexes[0].ratio}}</text>
+                    <text>{{indicatorItem.apexes[0].ratio}}%</text>
                     <text class="type">{{indicatorItem.apexes[0].name}}</text>
                 </view>
-                <view class="mbti-chart__bar">
-                    <view data-type="{{indicatorItem.label}}" class="mbti-chart__bar-block" style="{{util.computeMBTIChartPosition(412, indicatorItem.value, rate)}}" />
+                <view class="mbti-chart__bar-wrapper">
+                    <view class="mbti-chart__bar is-left">
+                        <view wx:if="{{indicatorItem.value < 0}}" class="mbti-chart__bar-block" style="{{util.computeMBTIChartPosition(412, indicatorItem.value, rate)}}">
+                            <view class="type-name-wrapper">
+                                <text class="type-name {{util.computeChartClass(indicatorItem.value)}}">{{indicatorItem.label}}</text>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="mbti-chart__bar is-right">
+                        <view wx:if="{{indicatorItem.value >= 0}}" class="mbti-chart__bar-block" style="{{util.computeMBTIChartPosition(412, indicatorItem.value, rate)}}">
+                            <view class="type-name-wrapper">
+                                <text class="type-name {{indicatorItem.value == 0 ? 'is-color' : ''}} {{util.computeChartClass(indicatorItem.value)}}">{{indicatorItem.label}}</text>
+                            </view>
+                        </view>
+                    </view>
                 </view>
-                <view class="mbti-chart__label {{indicatorItem.value <= 0 ? 'is-gray' : ''}}">
-                    <text>{{indicatorItem.apexes[1].ratio}}</text>
+                <view class="mbti-chart__label {{indicatorItem.value < 0 ? 'is-gray' : ''}}">
+                    <text>{{indicatorItem.apexes[1].ratio}}%</text>
                     <text class="type">{{indicatorItem.apexes[1].name}}</text>
                 </view>
             </view>

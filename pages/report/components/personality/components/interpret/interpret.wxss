@@ -12,7 +12,7 @@
     line-height: 50rpx;
 }
 .detail{
-    max-height: 240rpx;
+    /* max-height: 240rpx; */
     margin: 30rpx 0 20rpx 0;
     font-size: 28rpx;
     font-family: PingFangSC-Regular, PingFang SC;
@@ -26,6 +26,9 @@
 .detail--is-active{
     height: auto;
     max-height: unset!important;
+}
+.detail-max-height{
+    max-height: 240rpx;
 }
 .more{
     display: flex;

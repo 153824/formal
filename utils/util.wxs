@@ -169,8 +169,12 @@ var computeMBTIChartPosition = function (barWidth, widthRate, rate) {
   var direction = widthRate < 0 ? 'right: 0;' : 'left: 0;';
   if(width === barWidth / 2 && widthRate < 0){
     borderStyle = 'border-top-left-radius: 26rpx;border-bottom-left-radius: 26rpx;';
+    width = width - 5;
+    direction = 'left: 0;';
   } else if (width === barWidth / 2 && widthRate > 0) {
     borderStyle = 'border-top-right-radius: 26rpx;border-bottom-right-radius: 26rpx;';
+    width = width - 5;
+    direction = 'right: 0;';
   }
   return 'width: ' + width + 'rpx;' + direction + borderStyle;
 }

@@ -1,3 +1,4 @@
+const app = getApp();
 Component({
     properties: {
         description: {
@@ -11,7 +12,8 @@ Component({
     },
     data: {
         active: false,
-        canIUnfold: true
+        canIUnfold: true,
+        maxHeight: 0
     },
     methods: {
         seeIt() {
@@ -28,10 +30,11 @@ Component({
             query.selectAll(`#detail-${index}`).fields({
                 size: true
             }).exec(function (res) {
-                let lineHeight = 24 // 固定高度值 单位：PX
-                for (var i = 0; i < res[0].length; i++) {
+                for (let i = 0; i < res[0].length; i++) {
+                    const contentHeight = res[0][i].height;
                     that.setData({
-                        canIUnfold: (res[0][i].height / lineHeight) > 3.5
+                        canIUnfold: contentHeight / app.rate > 240,
+                        maxHeight: 240
                     })
                 }
             })

@@ -179,6 +179,14 @@ var computeMBTIChartPosition = function (barWidth, widthRate, rate) {
   return 'width: ' + width + 'rpx;' + direction + borderStyle;
 }
 
+/**
+ * @Description: 计算MBTI报告图表class
+ * @author: WE!D
+ * @name: computeChartClass
+ * @args: Number
+ * @return: ClassName
+ * @date: 2020/6/3
+ */
 var computeChartClass = function (value) {
   var className = 'is-left-plain';
   if (value < 0) {

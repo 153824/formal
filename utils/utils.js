@@ -27,5 +27,8 @@ export function getAge(dateString) {
     if (m <= 0) {
         age--;
     }
+    if(age <= 0){
+        age = 0
+    }
     return age;
 }

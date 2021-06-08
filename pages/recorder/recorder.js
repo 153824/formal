@@ -27,7 +27,8 @@ Page({
         is3rd: false,
         is3rdAdmin: false,
         authCodeCounter: 0,
-        canIUseGetUserProfile: wx.getUserProfile ? true : false
+        canIUseGetUserProfile: wx.getUserProfile ? true : false,
+        maxDate: `${new Date().getFullYear()}-${new Date().getMonth()+1 > 9 ? new Date().getMonth()+1 > 9 : '0' + (new Date().getMonth()+1)}`
     },
 
     onLoad: function (options) {

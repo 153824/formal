@@ -5,7 +5,17 @@
 page, page > view {
     overflow-x: hidden;
 }
-
+.hiddenBack{
+    height: 100vh!important;
+}
+.analysis-swiper-item{
+    width: 100%!important;
+}
+.analysis-swiper{
+    width: 300rpx!important;
+    height: 258rpx!important;
+    padding-right: 40rpx!important;
+}
 .grid-chart-wrapper{
     box-shadow: 0px 4rpx 16rpx 0px rgba(207, 216, 240, 0.79);
     border-radius: 20rpx;
@@ -862,7 +872,7 @@ swiper, swiper-item {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 574rpx;
-    padding: 66rpx 50rpx 136rpx;
+    padding: 0rpx 0rpx 76rpx;
     background: rgba(255, 255, 255, 1);
     box-shadow: 0px 4rpx 28rpx 0px rgba(177, 177, 177, 0.81);
     border-radius: 16rpx;
@@ -884,7 +894,38 @@ swiper, swiper-item {
     font-weight: 600;
     color: rgba(50, 53, 65, 1);
     line-height: 50rpx;
-    margin-top: 62rpx;
+    margin-top: 58rpx;
+    margin-bottom: 40rpx;
+}
+.dlgView .msgStatusDanger{
+    font-size: 18px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #E96C5B;
+    line-height: 25px;
+    text-align: center;
+    margin-bottom: 50rpx;
+}
+.dlgView .msgStatusSuccess{
+    font-size: 18px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    line-height: 25px;
+    color: rgba(82, 196, 26, 1);
+    text-align: center;
+    margin-bottom: 50rpx;
+}
+.dlgView .msgTop{
+    height: 26rpx;
+    background: #E96C5B;
+    border-radius: 5px 5px 0px 0px;
+    margin-top: -4rpx;
+}
+.dlgView .msgTopSuccess{
+    height: 26rpx;
+    background: rgba(82, 196, 26, 1);
+    border-radius: 5px 5px 0px 0px;
+    margin-top: -4rpx;
 }
 
 .dlgView .msg {
@@ -894,6 +935,7 @@ swiper, swiper-item {
     font-weight: 400;
     color: rgba(0, 0, 0, 1);
     line-height: 40rpx;
+    padding: 0 50rpx;
 }
 
 .hasApply {

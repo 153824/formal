@@ -348,7 +348,8 @@ Page({
         incentives: {},
         currentActive: "",
         reportCopyrightTxt: "",
-        options: {}
+        options: {},
+        analysisCount:0
     },
     properties: {
 		commond: {            // 额外节点
@@ -486,6 +487,15 @@ Page({
                 value_2[n] = value_2[n] || [];
                 indicator_2[n] = indicator_2[n] || [];
                 var {showSubScore} = objs[n];
+                var  analysisCount = 0
+                for(var i in res.respondAnalysis){
+                    if(res.respondAnalysis[i].display&&res.respondAnalysis[i]){
+                        analysisCount++
+                    }
+                }
+                if(res.respondAnalysis['syllabus'].display){
+                    analysisCount--
+                }
                 for (var i in arr) {
                     var node = arr[i];
                     radarValue[n].push(node.grade.value);
@@ -539,6 +549,17 @@ Page({
             res["teamRole"] = (app.teamId == res.releaseTeamId) ? app.teamRole : 1;
             res.maskTrigger = false;
             that.setData(res);
+            if(res.coordinate.graphQuadrants){
+                that.setData({
+                    graphQuadrants:res.coordinate.graphQuadrants.reverse()
+                })
+            }
+            setTimeout(()=>{
+                that.setData({
+                    maskTrigger: false,
+                    analysisCount:analysisCount,
+                })
+            },500)
             if(res.coordinate.display){
                 setTimeout(()=>{
                     that.setData({

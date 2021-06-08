@@ -103,6 +103,30 @@ var richTextFilter = function(nodeString=""){
   return targetNode;
 };
 
+var getOverRate = function(respCount,quesCount){
+  return (respCount/quesCount).toFixed(2)*100
+};
+
+
+var getDesirability = function(verdict){
+  var msg = ''
+  switch(verdict){
+    case 0:
+      msg = '低'
+      break
+    case 1:
+      msg = '正常'
+      break
+    case 2:
+      msg = '较高'
+      break
+    case 3:
+      msg = '高'
+      break
+  }
+  return msg
+};
+
 var arrayEleIsSame = function(compare=[],target=[]){
   compare = compare.toString(),target = target.toString();
   if(compare === target){
@@ -153,7 +177,40 @@ var isMiddleValue = function(questionStep, questionIndex, length) {
   }
   return false;
 };
+var getTimeMsg= function(index) {
+  var msg = ''
+  switch(index){
+    case 'OVERLONG':
+      msg='作答时长明显长于平均作答时间，在自我评价过程中可能存在过度思考，犹豫不决或中途长时间退出后复答的情况'
+      break
+    case 'DECENT':
+      msg='作答时间正常'
+      break
+    case 'HASTY':
+      msg='作答时间明显短于平均作答时间，在自我评价过程中存在审题过快、不细致或选项习惯性（例如习惯性选中间项或最高项）的可能性'
+      break
+  }
+  return msg
+};
 
+var getDesirabilityMsg= function(index) {
+  var msg = ''
+  switch(index){
+    case 0:
+      msg='答题掩饰性低，受测者即使清楚社会赞许的正向行为是什么，也能够真诚面对自己，真实地作答'
+      break
+    case 1:
+      msg='答题掩饰性正常，受测者比较清楚社会赞许的正向行为是什么，不接纳的行为是什么，但基本能够正视自己的真实情况，在自我评价中相对公正'
+      break
+    case 2:
+      msg='答题掩饰性较高，受测者可能会因为清楚社会赞许的正向行为，而在自我评价中会低估自己的消极行为，高估自己的积极行为，和自己的实际情况可能会有一定的偏差'
+      break
+    case 3:
+      msg='受测者答题掩饰性明显高于常规情况，对于社会欣赏和接纳的正向行为非常清晰和敏感，在自我评价中很有可能会为了给他人留下一个良好的印象，对自己的正向行为过度自信和高估，低估或保护掩饰消极行为。这可能来自于两种原因，一种是有意识有目的地进行伪装掩饰，另一种也可能来自于对信念的自我保护意识'
+      break
+  }
+  return msg
+};
 /**
  * @Description: 计算MBTI报告图表样式
  * @author: WE!D
@@ -204,13 +261,17 @@ module.exports = {
   getHourAndMinByFrag: getHourAndMinByFrag,
   getFullDateByFrag: getFullDateByFrag,
   saveDouble: saveDouble,
+  getDesirabilityMsg:getDesirabilityMsg,
   hidePartPhoneNumber: hidePartPhoneNumber,
   ASCIIToChar: ASCIIToChar,
   isIncludes: isIncludes,
   toFix: toFix,
+  getTimeMsg:getTimeMsg,
   richTextFilter: richTextFilter,
   isSameDays: isSameDays,
   arrayEleIsSame: arrayEleIsSame,
+  getDesirability:getDesirability,
+  getOverRate:getOverRate,
   subString: subString,
   computeSteps: computeSteps,
   computeStepNumber: computeStepNumber,

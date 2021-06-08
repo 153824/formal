@@ -1,6 +1,6 @@
 <!--admins/report.wxml-->
 <block>
-    <view>
+    <view class="{{showDlg?'hiddenBack':''}}">
         <!-- 头部信息 -->
         <view class="box0" style='padding: 36rpx  60rpx 48rpx 60rpx;background: #fff;'>
             <view class="paperName">
@@ -32,9 +32,9 @@
             <view class="title" style="margin-top:100rpx;" wx:if="{{respondAnalysis.display}}">
                 <text class="underLineBg assessor-info">{{respondAnalysis.title}}</text>
             </view>
-            <view class="list flex" wx:if="{{respondAnalysis.display}}">
+            <view class="list flex" wx:if="{{respondAnalysis.display&&analysisCount<=2}}">
                 <view class="item flex-main time-wrapper" wx:if="{{respondAnalysis.duration.display}}" bindtap="showDlg"
-                      data-n="{{respondAnalysis.duration.valid?'':'timeDlg'}}">
+                      data-n="{{respondAnalysis.duration.valid?'unTimeDlg':'timeDlg'}}">
                     <view class="topView {{respondAnalysis.duration.valid?'':'topView1'}}"></view>
                     <view class="name">作答时长</view>
                     <view class="msg" wx:if="{{respondAnalysis.duration.valid}}">{{respondAnalysis.duration.standing}}分钟（正常）</view>
@@ -42,14 +42,70 @@
                     <image src="./images/report@icon-{{respondAnalysis.duration.valid?'success':'thinking'}}.png"></image>
                 </view>
                 <view class="item flex-main" wx:if="{{respondAnalysis.discordant.display}}" bindtap="showDlg"
-                      data-n="{{respondAnalysis.discordant.valid?'':'noMatchDlg'}}">
+                      data-n="{{respondAnalysis.discordant.valid?'unNoMatchDlg':'noMatchDlg'}}">
                     <view class="topView {{respondAnalysis.discordant.valid?'':'topView1'}}"></view>
                     <view class="name">作答一致性</view>
                     <view class="msg" wx:if="{{respondAnalysis.discordant.valid}}">正常</view>
                     <view class="msg msg1" wx:else>异常</view>
                     <image src="./images/report@icon-{{respondAnalysis.discordant.valid?'success':'thinking'}}.png"></image>
                 </view>
+                <view class="item flex-main" wx:if="{{respondAnalysis.completion.display}}" bindtap="showDlg"
+                      data-n="{{respondAnalysis.completion.valid?'unNotOver':'notOver'}}">
+                    <view class="topView {{respondAnalysis.completion.valid?'':'topView1'}}"></view>
+                    <view class="name">作答完成率</view>
+                    <view class="msg" wx:if="{{respondAnalysis.completion.valid}}">100%</view>
+                    <view class="msg msg1" wx:else>{{util.getOverRate(respondAnalysis.completion.respCount,respondAnalysis.completion.quesCount)}}%</view>
+                    <image src="./images/report@icon-{{respondAnalysis.completion.valid?'success':'thinking'}}.png"></image>
+                </view>
+                <view class="item flex-main" wx:if="{{respondAnalysis.desirability.display}}" bindtap="showDlg"
+                data-n="{{(respondAnalysis.desirability.verdict==0||respondAnalysis.desirability.verdict==1)?'unDesirability':'desirability'}}">
+                      <view class="topView {{(respondAnalysis.desirability.verdict==0||respondAnalysis.desirability.verdict==1)?'':'topView1'}}"></view>
+                    <view class="name">作答掩饰性</view>
+                    <view class="msg" class="{{(respondAnalysis.desirability.verdict==0||respondAnalysis.desirability.verdict==1)?'':'msg1'}}">{{util.getDesirability(respondAnalysis.desirability.verdict)}}</view>
+                    <image src="./images/report@icon-{{(respondAnalysis.desirability.verdict==0||respondAnalysis.desirability.verdict==1)?'success':'thinking'}}.png"></image>
+                </view>
             </view>
+            <swiper class="list flex" wx:if="{{respondAnalysis.display&&analysisCount>2}}">
+                <swiper-item class="analysis-swiper"  wx:if="{{respondAnalysis.duration.display}}" >
+                    <view class="item flex-main analysis-swiper-item" bindtap="showDlg"
+                      data-n="{{respondAnalysis.duration.valid?'unTimeDlg':'timeDlg'}}">
+                        <view class="topView {{respondAnalysis.duration.valid?'':'topView1'}}"></view>
+                        <view class="name">作答时长</view>
+                        <view class="msg" wx:if="{{respondAnalysis.duration.valid}}">{{respondAnalysis.duration.standing}}分钟（正常）</view>
+                        <view class="msg msg1" wx:else>{{respondAnalysis.duration.standing}}分钟{{respondAnalysis.duration.verdict=="OVERLONG"?'（过长）':"（过短）"}}</view>
+                        <image src="./images/report@icon-{{respondAnalysis.duration.valid?'success':'thinking'}}.png"></image>
+                    </view>
+                </swiper-item>
+                <swiper-item class="analysis-swiper" wx:if="{{respondAnalysis.discordant.display}}" >
+                    <view class="item flex-main analysis-swiper-item" bindtap="showDlg"
+                      data-n="{{respondAnalysis.discordant.valid?'unNoMatchDlg':'noMatchDlg'}}">
+                    <view class="topView {{respondAnalysis.discordant.valid?'':'topView1'}}"></view>
+                    <view class="name">作答一致性</view>
+                    <view class="msg" wx:if="{{respondAnalysis.discordant.valid}}">正常</view>
+                    <view class="msg msg1" wx:else>异常</view>
+                    <image src="./images/report@icon-{{respondAnalysis.discordant.valid?'success':'thinking'}}.png"></image>
+                </view>
+                </swiper-item>
+                <swiper-item class="analysis-swiper"  wx:if="{{respondAnalysis.completion.display}}" >
+                    <view class="item flex-main analysis-swiper-item" bindtap="showDlg"
+                      data-n="{{respondAnalysis.completion.valid?'unNotOver':'notOver'}}">
+                    <view class="topView {{respondAnalysis.completion.valid?'':'topView1'}}"></view>
+                    <view class="name">作答完成率</view>
+                    <view class="msg" wx:if="{{respondAnalysis.completion.valid}}">100%</view>
+                    <view class="msg msg1" wx:else>{{util.getOverRate(respondAnalysis.completion.respCount,respondAnalysis.completion.quesCount)}}%</view>
+                    <image src="./images/report@icon-{{respondAnalysis.completion.valid?'success':'thinking'}}.png"></image>
+                </view>
+                </swiper-item>
+                <swiper-item class="analysis-swiper" wx:if="{{respondAnalysis.desirability.display}}" >
+                    <view class="item flex-main analysis-swiper-item" bindtap="showDlg"
+                      data-n="{{(respondAnalysis.desirability.verdict==0||respondAnalysis.desirability.verdict==1)?'unDesirability':'desirability'}}">
+                    <view class="topView {{(respondAnalysis.desirability.verdict==0||respondAnalysis.desirability.verdict==1)?'':'topView1'}}"></view>
+                    <view class="name">作答掩饰性</view>
+                    <view class="msg" class="{{(respondAnalysis.desirability.verdict==0||respondAnalysis.desirability.verdict==1)?'':'msg1'}}">{{util.getDesirability(respondAnalysis.desirability.verdict)}}</view>
+                    <image src="./images/report@icon-{{(respondAnalysis.desirability.verdict==0||respondAnalysis.desirability.verdict==1)?'success':'thinking'}}.png"></image>
+                </view>
+                </swiper-item>
+            </swiper>
             <view class="content" wx:if="{{respondAnalysis.syllabus.display}}">{{respondAnalysis.syllabus.annotation}}
             </view>
             <view class="title" style="margin-top:80rpx;" wx:if="{{ usageManual.display }}">
@@ -618,15 +674,45 @@
         <!-- 弹窗信息 -->
         <view class="coverView" wx:if="{{showDlg}}" bindtap="hideDlg"></view>
         <view class="dlgView" wx:if="{{showDlg}}">
+            <view wx:if="{{dlgName=='timeDlg'||dlgName=='noMatchDlg'||dlgName=='desirability'||dlgName=='notOver'}}" class="msgTop"></view>
+            <view wx:else class="msgTopSuccess"></view>
             <view wx:if="{{dlgName=='timeDlg'}}">
-                <image src="./images/report@icon-sandglass.png"></image>
-                <view class="msgTitle">作答时长：{{respondAnalysis.duration.standing}}分钟</view>
-                <view class="msg">{{respondAnalysis.duration.annotation}}</view>
+                <view class="msgTitle">作答时长</view>
+                <view class="msgStatusDanger">{{respondAnalysis.duration.standing}}分钟</view>
+                <view class="msg">{{util.getTimeMsg(respondAnalysis.duration.verdict)}}</view>
             </view>
             <view wx:if="{{dlgName=='noMatchDlg'}}">
-                <image src="./images/report@icon-uniformity-unusual.png"></image>
-                <view class="msgTitle">作答一致性：异常</view>
+                <view class="msgTitle">作答一致性</view>
+                <view class="msgStatusDanger">异常</view>
                 <view class="msg">{{respondAnalysis.discordant.annotation}}</view>
+            </view>
+            <view wx:if="{{dlgName=='desirability'}}">
+                <view class="msgTitle">作答掩饰性</view>
+                <view class="msgStatusDanger">{{util.getDesirability(respondAnalysis.desirability.verdict)}}</view>
+                <view class="msg">{{util.getDesirabilityMsg(respondAnalysis.desirability.verdict)}}</view>
+            </view>
+            <view wx:if="{{dlgName=='notOver'}}">
+                <view class="msgTitle">作答完成率</view>
+                <view class="msgStatusDanger">异常</view>
+            </view>
+            <view wx:if="{{dlgName=='unTimeDlg'}}">
+                <view class="msgTitle">作答时长</view>
+                <view class="msgStatusSuccess">{{respondAnalysis.duration.standing}}分钟</view>
+                <view class="msg">{{util.getTimeMsg(respondAnalysis.duration.verdict)}}</view>
+            </view>
+            <view wx:if="{{dlgName=='unNoMatchDlg'}}">
+                <view class="msgTitle">作答一致性</view>
+                <view class="msgStatusSuccess">正常</view>
+                <view class="msg">{{respondAnalysis.discordant.annotation}}</view>
+            </view>
+            <view wx:if="{{dlgName=='unDesirability'}}">
+                <view class="msgTitle">作答掩饰性</view>
+                <view class="msgStatusSuccess">{{util.getDesirability(respondAnalysis.desirability.verdict)}}</view>
+                <view class="msg">{{util.getDesirabilityMsg(respondAnalysis.desirability.verdict)}}</view>
+            </view>
+            <view wx:if="{{dlgName=='unNotOver'}}">
+                <view class="msgTitle">作答完成率</view>
+                <view class="msgStatusSuccess">正常</view>
             </view>
         </view>
     </view>

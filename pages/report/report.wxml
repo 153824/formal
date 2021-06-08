@@ -33,7 +33,7 @@
                 <text class="underLineBg assessor-info">{{respondAnalysis.title}}</text>
             </view>
             <view class="list flex" wx:if="{{respondAnalysis.display&&analysisCount<=2}}">
-                <view class="item flex-main" wx:if="{{respondAnalysis.duration.display}}" bindtap="showDlg"
+                <view class="item flex-main time-wrapper" wx:if="{{respondAnalysis.duration.display}}" bindtap="showDlg"
                       data-n="{{respondAnalysis.duration.valid?'unTimeDlg':'timeDlg'}}">
                     <view class="topView {{respondAnalysis.duration.valid?'':'topView1'}}"></view>
                     <view class="name">作答时长</view>
@@ -66,7 +66,7 @@
                 </view>
             </view>
             <swiper class="list flex" wx:if="{{respondAnalysis.display&&analysisCount>2}}">
-                <swiper-item class="analysis-swiper"  wx:if="{{respondAnalysis.duration.display}}" >   
+                <swiper-item class="analysis-swiper"  wx:if="{{respondAnalysis.duration.display}}" >
                     <view class="item flex-main analysis-swiper-item" bindtap="showDlg"
                       data-n="{{respondAnalysis.duration.valid?'unTimeDlg':'timeDlg'}}">
                         <view class="topView {{respondAnalysis.duration.valid?'':'topView1'}}"></view>
@@ -76,7 +76,7 @@
                         <image src="./images/report@icon-{{respondAnalysis.duration.valid?'success':'thinking'}}.png"></image>
                     </view>
                 </swiper-item>
-                <swiper-item class="analysis-swiper" wx:if="{{respondAnalysis.discordant.display}}" >  
+                <swiper-item class="analysis-swiper" wx:if="{{respondAnalysis.discordant.display}}" >
                     <view class="item flex-main analysis-swiper-item" bindtap="showDlg"
                       data-n="{{respondAnalysis.discordant.valid?'unNoMatchDlg':'noMatchDlg'}}">
                     <view class="topView {{respondAnalysis.discordant.valid?'':'topView1'}}"></view>
@@ -84,9 +84,9 @@
                     <view class="msg" wx:if="{{respondAnalysis.discordant.valid}}">正常</view>
                     <view class="msg msg1" wx:else>异常</view>
                     <image src="./images/report@icon-{{respondAnalysis.discordant.valid?'success':'thinking'}}.png"></image>
-                </view> 
+                </view>
                 </swiper-item>
-                <swiper-item class="analysis-swiper"  wx:if="{{respondAnalysis.completion.display}}" >  
+                <swiper-item class="analysis-swiper"  wx:if="{{respondAnalysis.completion.display}}" >
                     <view class="item flex-main analysis-swiper-item" bindtap="showDlg"
                       data-n="{{respondAnalysis.completion.valid?'unNotOver':'notOver'}}">
                     <view class="topView {{respondAnalysis.completion.valid?'':'topView1'}}"></view>
@@ -94,9 +94,9 @@
                     <view class="msg" wx:if="{{respondAnalysis.completion.valid}}">100%</view>
                     <view class="msg msg1" wx:else>{{util.getOverRate(respondAnalysis.completion.respCount,respondAnalysis.completion.quesCount)}}%</view>
                     <image src="./images/report@icon-{{respondAnalysis.completion.valid?'success':'thinking'}}.png"></image>
-                </view> 
+                </view>
                 </swiper-item>
-                <swiper-item class="analysis-swiper" wx:if="{{respondAnalysis.desirability.display}}" >   
+                <swiper-item class="analysis-swiper" wx:if="{{respondAnalysis.desirability.display}}" >
                     <view class="item flex-main analysis-swiper-item" bindtap="showDlg"
                       data-n="{{(respondAnalysis.desirability.verdict==0||respondAnalysis.desirability.verdict==1)?'unDesirability':'desirability'}}">
                     <view class="topView {{(respondAnalysis.desirability.verdict==0||respondAnalysis.desirability.verdict==1)?'':'topView1'}}"></view>
@@ -115,6 +115,9 @@
                   style="padding-right: 54rpx;padding-left: 24rpx;">
                 <rich-text nodes="<p>{{usageManual.description||''}}</p>"></rich-text>
             </view>
+            <block wx:if="{{mbti}}">
+                <hola-personality mbti="{{mbti}}"/>
+            </block>
         </view>
         <!-- 报告总述 -->
         <view class="box1" wx:if="{{summary.display}}">

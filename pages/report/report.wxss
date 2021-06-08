@@ -132,7 +132,7 @@ assessor-info
 
 .box {
     position: relative;
-    padding: 40rpx 0 60rpx 50rpx;
+    padding: 40rpx 50rpx 60rpx 50rpx;
     background-color: #fff;
 }
 
@@ -227,7 +227,6 @@ assessor-info
     background: rgba(255, 255, 255, 1);
     box-shadow: 0px 4rpx 16rpx 0px rgba(207, 216, 240, 0.79);
     border-radius: 10rpx;
-    margin-right: 40rpx;
     box-sizing: border-box;
 }
 
@@ -235,6 +234,10 @@ assessor-info
     font-size: 30rpx;
     text-align: justify;
     line-height: 150%;
+}
+
+.time-wrapper{
+    margin-left: 20rpx;
 }
 
 .box .list .item .topView {

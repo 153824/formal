@@ -211,6 +211,51 @@ var getDesirabilityMsg= function(index) {
   }
   return msg
 };
+/**
+ * @Description: 计算MBTI报告图表样式
+ * @author: WE!D
+ * @name: computeMBTIChartPosition
+ * @args: Number
+ * @return: CSSStyle
+ * @date: 2020/6/2
+ */
+var computeMBTIChartPosition = function (barWidth, widthRate, rate) {
+  var borderStyle = '';
+  var char = widthRate < 0 ? ' - ' : ' + ';
+  var width = (barWidth / 2) * Math.abs(widthRate);
+  var direction = widthRate < 0 ? 'right: 0;' : 'left: 0;';
+  if(width === barWidth / 2 && widthRate < 0){
+    borderStyle = 'border-top-left-radius: 26rpx;border-bottom-left-radius: 26rpx;';
+    width = width - 5;
+    direction = 'left: 0;';
+  } else if (width === barWidth / 2 && widthRate > 0) {
+    borderStyle = 'border-top-right-radius: 26rpx;border-bottom-right-radius: 26rpx;';
+    width = width - 5;
+    direction = 'right: 0;';
+  }
+  return 'width: ' + width + 'rpx;' + direction + borderStyle;
+}
+
+/**
+ * @Description: 计算MBTI报告图表class
+ * @author: WE!D
+ * @name: computeChartClass
+ * @args: Number
+ * @return: ClassName
+ * @date: 2020/6/3
+ */
+var computeChartClass = function (value) {
+  var className = 'is-left-plain';
+  if (value < 0) {
+    className = 'is-right-plain';
+  }
+  console.log(Math.abs(value) <= 0.11);
+  if (Math.abs(value) <= 0.11 && Math.abs(value) != 0) {
+    return 'is-plain ' + className
+  }
+  return '';
+}
+
 module.exports = {
   getMonthAndDayByFrag: getMonthAndDayByFrag,
   getHourAndMinByFrag: getHourAndMinByFrag,
@@ -230,5 +275,7 @@ module.exports = {
   subString: subString,
   computeSteps: computeSteps,
   computeStepNumber: computeStepNumber,
-  isMiddleValue: isMiddleValue
+  isMiddleValue: isMiddleValue,
+  computeMBTIChartPosition: computeMBTIChartPosition,
+  computeChartClass: computeChartClass
 };

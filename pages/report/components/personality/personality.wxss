@@ -1,0 +1,4 @@
+.personality{
+    margin-top: 60rpx;
+    background-color: #fff;
+}

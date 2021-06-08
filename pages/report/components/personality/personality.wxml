@@ -1,0 +1,9 @@
+<view class="personality">
+    <hola-personality-type-tag traits="{{mbti.traits}}" personality="{{mbti.personality}}"/>
+    <view>
+        <hola-personality-chart indicators="{{mbti.indicators}}"/>
+    </view>
+    <view wx:for="{{mbti.descriptions}}" wx:for-item="descriptionItem" wx:for-index="descriptionIndex" wx:key="unique">
+        <hola-personality-interpret index="{{descriptionIndex}}" description="{{descriptionItem}}"/>
+    </view>
+</view>

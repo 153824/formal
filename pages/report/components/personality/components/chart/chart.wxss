@@ -1,0 +1,109 @@
+.mbti-chart__item{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 40rpx 0;
+}
+.mbti-chart__label{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #353EE8;
+}
+.mbti-chart__label text{
+    font-size: 30rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    line-height: 42rpx;
+}
+.mbti-chart__label .type{
+    font-size: 26rpx;
+    line-height: 36rpx;
+}
+.type-name-wrapper{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.type-name{
+    display: inline-block;
+    font-size: 28rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 40rpx;
+}
+.is-color{
+    color: #353EE8;
+}
+.is-plain{
+    position: absolute;
+    color: #353EE8;
+    /*background: transparent!important;*/
+}
+.is-left-plain{
+    left: 24rpx;
+}
+.is-right-plain{
+    right: 24rpx;
+}
+.is-plain text{
+    /*color: #353EE8;*/
+}
+.mbti-chart__bar{
+    flex: 1;
+    position: relative;
+    height: 40rpx;
+    width: 206rpx;
+    background: rgba(53, 62, 232, 0.1);
+}
+.mbti-chart__bar-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 412rpx;
+    margin: 0 24rpx;
+}
+.mbti-chart__bar-block{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, #6572F5 0%, #353EE8 100%);
+}
+/*.mbti-chart__bar-block::after{*/
+/*    display: inline-block;*/
+/*    content: attr(data-type);*/
+/*    font-size: 28rpx;*/
+/*    font-family: PingFangSC-Semibold, PingFang SC;*/
+/*    font-weight: 600;*/
+/*    color: #FFFFFF;*/
+/*    line-height: 40rpx;*/
+/*}*/
+.bar-line{
+    position: absolute;
+    top: 0;
+    left: calc(50% + 10rpx);
+    transform: translateX(-50%);
+    width: 20rpx;
+    height: 475rpx;
+    background-image: linear-gradient(to bottom, #ccc 0%, #ccc 50%, transparent 50%);
+    background-size: 2rpx 60rpx;
+    background-repeat: repeat-y;
+}
+.is-gray{
+    color: #B6B6B6;
+}
+.is-left{
+    border-top-left-radius: 26rpx;
+    border-bottom-left-radius: 26rpx;
+}
+.is-right{
+    border-top-right-radius: 26rpx;
+    border-bottom-right-radius: 26rpx;
+}

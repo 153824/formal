@@ -1,0 +1,8 @@
+<view class="type-tag">
+    <view class="type-wrapper">
+        <text>{{personality.type}}</text><text class="name">{{personality.label}}</text>
+    </view>
+    <view class="tag-wrapper">
+        <text wx:for="{{traits}}" wx:for-item="traitsItem" wx:key="unique">{{traitsItem}}</text>
+    </view>
+</view>

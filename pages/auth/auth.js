@@ -71,6 +71,12 @@ Page({
     prueLogin() {
         const pages = getCurrentPages();
         app.prueLogin().then(res=>{
+            if(pages.length === 0){
+                wx.switchTab({
+                    url: `/pages/work-base/work-base`
+                });
+                return;
+            }
             for(let i = pages.length - 1;i >= 0;i--){
                 if(pages[i].route.indexOf('pages/auth/auth') === -1){
                     console.log(pages[i]);
@@ -85,16 +91,12 @@ Page({
                             url: `/${pages[i].route}${query}`
                         });
                         return;
+                    } else {
+                        wx.navigateTo({
+                            url: `/${pages[i].route}${query}`
+                        });
+                        return;
                     }
-                    wx.navigateTo({
-                        url: `/${pages[i].route}${query}`
-                    });
-                    return;
-                }
-                if(i === 0){
-                    wx.switchTab({
-                        url: `/pages/work-base/work-base`
-                    });
                 }
             }
         })

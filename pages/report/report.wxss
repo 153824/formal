@@ -219,6 +219,17 @@ assessor-info
     margin-left: -20rpx;
 }
 
+.error-wrapper{
+    padding: unset!important;
+    overflow-x: unset!important;
+    margin-left: unset!important;
+    justify-content: space-around;
+}
+
+.flex-main {
+    margin: 0 10rpx;
+}
+
 .box .list .item {
     width: 190rpx;
     height: 258rpx;

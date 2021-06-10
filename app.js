@@ -77,6 +77,7 @@ App({
     wxWorkInfo: {
         isWxWork: false,
         isWxWorkAdmin: false,
+        isWxWorkSuperAdmin: false,
         wxWorkUserInfo: {},
     },
     wx3rdInfo: {
@@ -748,12 +749,20 @@ App({
         return false;
     },
 
+    checkSuperAdmin() {
+        if (wx.getStorageSync('userInfo')) {
+            return wx.getStorageSync('userInfo').isSuperAdmin
+        }
+        return false;
+    },
+
     setDataOfPlatformInfo(that) {
         // 获取getApp()实例，避免混淆this
         const app = getApp();
         const platformInfo = {
             isWxWork: app.wxWorkInfo.isWxWork,
             isWxWorkAdmin: app.checkAdmin(),
+            isWxWorkSuperAdmin: app.checkSuperAdmin(),
             is3rd: app.wx3rdInfo.is3rd,
             is3rdAdmin: app.checkAdmin(),
             isGetAccessToken: app.checkAccessToken()

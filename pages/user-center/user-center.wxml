@@ -122,7 +122,7 @@
             </scroll-view>
         </view>
     </view>
-    <hola-tab-bar active="{{ 2 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{isWxWorkAdmin}}"></hola-tab-bar>
+    <hola-tab-bar active="{{ isWxWorkSuperAdmin ? 2 : 1 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{isWxWorkAdmin}}"></hola-tab-bar>
 </view>
 <view wx:elif="{{ isWxWork && !isWxWorkAdmin }}">
     <view class="user-page-wrapper">

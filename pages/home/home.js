@@ -19,24 +19,27 @@ Page({
             const {isWxWork} = app.wxWorkInfo;
             const {is3rd} = app.wx3rdInfo;
             const isWxWorkAdmin = wx.getStorageSync('userInfo').isAdmin;
+            const isWxWorkSuperAdmin = wx.getStorageSync('userInfo').isSuperAdmin;
             this.check({
                 isWxWork,
                 isWxWorkAdmin,
-                is3rd
+                is3rd,
+                isWxWorkSuperAdmin
             })
         }else{
             app.checkUserInfo=(res)=>{
                 this.check({
                     isWxWork: res.isWxWork,
                     isWxWorkAdmin: res.userInfo.isAdmin,
-                    is3rd: res.is3rd
+                    is3rd: res.is3rd,
+                    isWxWorkSuperAdmin: res.userInfo.isSuperAdmin
                 })
             };
         }
     },
-    check({isWxWork, isWxWorkAdmin,is3rd}) {
+    check({isWxWork, isWxWorkAdmin, isWxWorkSuperAdmin, is3rd}) {
         const that = this;
-        if (is3rd || isWxWork && !isWxWorkAdmin) {
+        if (is3rd || isWxWork && isWxWorkAdmin && !isWxWorkSuperAdmin) {
             let flag = false
             let url = isWxWork ? "/pages/account/account" : "/pages/auth/auth?type=auth"
             if (app.checkAccessToken()) {
@@ -61,7 +64,8 @@ Page({
             }
             return
         }
-        if (!is3rd) {
+        if (!is3rd || isWxWork && isWxWorkSuperAdmin) {
+            console.log('isWxWorkSuperAdmin: ', isWxWorkSuperAdmin);
             let homePagesPromiseList = [];
             const homePagesPromise = new Promise(function (resolve, reject) {
                 app.doAjax({

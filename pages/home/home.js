@@ -30,9 +30,9 @@ Page({
             app.checkUserInfo=(res)=>{
                 this.check({
                     isWxWork: res.isWxWork,
-                    isWxWorkAdmin: res.userInfo.isAdmin,
+                    isWxWorkAdmin: res.isAdmin,
                     is3rd: res.is3rd,
-                    isWxWorkSuperAdmin: res.userInfo.isSuperAdmin
+                    isWxWorkSuperAdmin: res.isSuperAdmin
                 })
             };
         }

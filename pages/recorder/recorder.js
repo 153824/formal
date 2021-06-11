@@ -107,7 +107,7 @@ Page({
         const _this = this;
         const {receiveRecordId} = this.data;
         if (!userId) {
-            userId = (wx.getStorageSync("userInfo") || app.globalData.userInfo || app.globalData.userMsg).id;
+            userId = (wx.getStorageSync("userInfo") || app.globalData.userInfo || app.globalData.userMsg).userId;
         }
         app.doAjax({
             url: `wework/evaluations/fetch/info/participant`,
@@ -283,7 +283,7 @@ Page({
     },
 
     _preloadUserInfo: function () {
-        const userId = app.globalData.userInfo.id || wx.getStorageSync("userInfo").id;
+        const userId = app.globalData.userInfo.userId || wx.getStorageSync("userInfo").userId;
         const preloadInfo = new Promise((resolve, reject) => {
             const _this = this;
             app.doAjax({

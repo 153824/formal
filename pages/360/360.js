@@ -42,7 +42,7 @@ Page({
                 url: `wework/evaluations/360/fetch/${smsCode}/temptation`,
                 method: 'GET',
                 data: {
-                    userId: userInfo.id
+                    userId: userInfo.userId
                 },
                 success(res) {
                     resolve(res)
@@ -196,7 +196,7 @@ Page({
                 method: 'POST',
                 data: {
                     surveyId: surveyId,
-                    userId: userInfo.id
+                    userId: userInfo.userId
                 },
                 success(res) {
                     switch (res.message) {

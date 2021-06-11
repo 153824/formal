@@ -123,7 +123,10 @@ Component({
             const teamId = this.data.teamMap[teamIndex].id;
             app.switchTeam(teamId).then(res=>{
                 wx.clearStorageSync();
-                wx.setStorageSync('userInfo', res);
+                const userInfo = {
+                    tokenInfo: res
+                };
+                wx.setStorageSync('userInfo', userInfo);
                 wx.reLaunch({
                     url: '/pages/home/home',
                 })

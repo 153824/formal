@@ -245,7 +245,7 @@ Page({
     onShow: function () {
         const that = this;
         app.doAjax({
-            url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
+            url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.userId}`,
             method: "get",
             success: function (res) {
                 that.setData({

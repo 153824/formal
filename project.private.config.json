@@ -53,7 +53,7 @@
         {
           "name": "小程序码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "scene=60c09f2bbf3dcb51fdaa58e3",
+          "query": "scene=60c1cf6c92f2705539f09da4",
           "scene": null
         },
         {
@@ -199,12 +199,6 @@
           "name": "加入团队",
           "pathName": "pages/user/components/teamInvite/teamInvite",
           "query": "key=teamMsg__2",
-          "scene": null
-        },
-        {
-          "name": "分享报告",
-          "pathName": "pages/report/components/shareReport/shareReport",
-          "query": "id=6093ad69229a141271a4644f",
           "scene": null
         },
         {

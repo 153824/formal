@@ -54,7 +54,7 @@ App({
     isReLaunch: false,
     otherPageReLaunchTrigger: true,
     quitPage: "",
-    host: (()=>{
+    host: (() => {
         if (wx.getAccountInfoSync().miniProgram.appId === 'wx85cde7d3e8f3d949') {
             return "https://api.haola101.com";
         } else {
@@ -99,6 +99,9 @@ App({
         uploadUserInfo: true // 自动上传用户信息，设为false取消上传，默认为false
     },
     onLaunch: function (options) {
+        // wx.setBackgroundFetchToken({
+        //     token: ''
+        // })
         const referrerInfo = options.referrerInfo;
         const menuBtnObj = wx.getMenuButtonBoundingClientRect();
         const sysMsg = wx.getSystemInfoSync();
@@ -111,7 +114,7 @@ App({
         if (referrerInfo && referrerInfo.appid) {
             this.fromAppId = referrerInfo.appid
         }
-        if (wx.getExtConfigSync().isCustomVersion === 'true' || (wx.getExtConfigSync().isCustomVersion && wx.getExtConfigSync().isCustomVersion.toString() === 'true') ) {
+        if (wx.getExtConfigSync().isCustomVersion === 'true' || (wx.getExtConfigSync().isCustomVersion && wx.getExtConfigSync().isCustomVersion.toString() === 'true')) {
             console.error('wx.getExtConfigSync().isCustomVersion: ', wx.getExtConfigSync().isCustomVersion)
             this.wx3rdInfo.is3rd = true;
         }
@@ -224,48 +227,35 @@ App({
      */
     userLogin: function (code) {
         const that = this;
-        return new Promise((resolve, reject) => {
-            that.doAjax({
-                url: 'wework/auth/ma_auth_code',
-                method: 'POST',
-                data: {
-                    type: 'WECHAT',
-                    appId: that.globalData.appid,
-                    code: code,
-                },
-                noLoading: true,
-                success: function (res) {
-                    const {authCode, tokenInfo, userInfo} = res;
-                    if(tokenInfo && tokenInfo.accessToken){
-                        userInfo.tokenInfo = tokenInfo
-                        wx.setStorageSync('userInfo', userInfo)
+        let targetTokenInfo = {}
+        this.getPrueAuthCode(code)
+            .then(res=>{
+                try{
+                    const userInfo = wx.getStorageSync('userInfo') || {};
+                    const {authCode, tokenInfo} = res;
+                    if (tokenInfo && tokenInfo.accessToken) {
+                        targetTokenInfo = tokenInfo;
+                        userInfo.tokenInfo = tokenInfo;
+                        wx.setStorageSync('userInfo', userInfo);
                     }
                     wx.setStorageSync('authCode', authCode);
-                    if (res.isNew) {
-                        wx.uma.trackEvent("1606212682385");
-                    }
-                    if (that.checkUserInfo) {
-                        res.isWxWork = false;
-                        res.is3rd = that.wx3rdInfo.is3rd;
-                        that.checkUserInfo(res);
-                    }
-                    resolve();
-                },
-                error: function () {
-                    wx.showModal({
-                        title: '登入失败！',
-                        content: '网络故障，请退出重新进入小程序。',
-                        showCancel: !1,
-                        confirmText: '确定',
-                        confirmColor: 'rgb(0,153,255)',
-                    });
-                    reject()
-                },
-                complete: function () {
-                    wx.hideLoading()
-                },
+                }
+                catch (e) {
+                    return Promise.reject(e);
+                }
+                return Promise.resolve();
             })
-        });
+            .then(res=>{
+                return this.getAdminInfo();
+            })
+            .then(res=>{
+                if (that.checkUserInfo) {
+                    res.isWxWork = false;
+                    res.is3rd = that.wx3rdInfo.is3rd;
+                    res.tokenInfo = targetTokenInfo;
+                    that.checkUserInfo(res);
+                }
+            });
     },
 
     /**
@@ -277,37 +267,36 @@ App({
      * @date: 2020/9/8
      */
     wxWorkUserLogin: function (code) {
+        let targetTokenInfo = {}
         const that = this;
-        return new Promise((resolve, reject) => {
-            that.doAjax({
-                url: `wework/auth/ma_auth_code`,
-                method: 'POST',
-                data: {
-                    type: 'WEWORK',
-                    appId: that.globalData.appid,
-                    code: code,
-                },
-                noLoading: true,
-                success: function (res) {
-                    const {authCode, tokenInfo, userInfo} = res;
-                    if(tokenInfo && tokenInfo.accessToken){
-                        userInfo.tokenInfo = tokenInfo
-                        wx.setStorageSync('userInfo', userInfo)
+        this.getPrueAuthCode(code)
+            .then(res=>{
+                try{
+                    const userInfo = wx.getStorageSync('userInfo') || {};
+                    const {authCode, tokenInfo} = res;
+                    if (tokenInfo && tokenInfo.accessToken) {
+                        targetTokenInfo = tokenInfo;
+                        userInfo.tokenInfo = tokenInfo;
+                        wx.setStorageSync('userInfo', userInfo);
                     }
                     wx.setStorageSync('authCode', authCode);
-                    if (that.checkUserInfo) {
-                        res.isWxWork = true;
-                        res.is3rd = that.wx3rdInfo.is3rd;
-                        that.checkUserInfo(res);
-                    }
-                    resolve();
-                },
-                error: function (err) {
-                    console.error("error: ", err);
-                    reject(err);
                 }
+                catch (e) {
+                    return Promise.reject(e);
+                }
+                return Promise.resolve();
             })
-        });
+            .then(res=>{
+                return this.getAdminInfo();
+            })
+            .then(res=>{
+                if (that.checkUserInfo) {
+                    res.isWxWork = true;
+                    res.is3rd = that.wx3rdInfo.is3rd;
+                    res.tokenInfo = targetTokenInfo;
+                    that.checkUserInfo(res);
+                }
+            });
     },
 
     /**
@@ -369,12 +358,12 @@ App({
             url = `${this.host}/${params.url}`;
         }
         params.data = params.data || {};
-        if(params.url.split('?')[0].slice(-6)!=='drafts'){
-            params.data['userId'] = params.data['userId'] || wx.getStorageSync("userInfo").id || "";
+        if (params.url.split('?')[0].slice(-6) !== 'drafts') {
+            params.data['userId'] = params.data['userId'] || wx.getStorageSync("userInfo").userId || "";
             params.data['teamId'] = params.data['teamId'] || wx.getStorageSync("userInfo").teamId || "";
         }
-        let accessToken = '';
-        if (wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').tokenInfo) {
+        let accessToken = params.data && params.data.accessToken ? params.data.accessToken : '';
+        if (!accessToken && wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').tokenInfo) {
             accessToken = wx.getStorageSync('userInfo').tokenInfo.accessToken;
         }
         if (accessToken) {
@@ -396,18 +385,18 @@ App({
                 }
                 if (ret.statusCode === 401) {
                     const pages = getCurrentPages()
-                    if(pages[pages.length-1].route.indexOf('pages/auth/auth') === -1){
+                    if (pages[pages.length - 1].route.indexOf('pages/auth/auth') === -1) {
                         that.toast('登录信息已失效~');
-                        setTimeout(()=>{
+                        setTimeout(() => {
                             wx.navigateTo({
                                 url: '/pages/auth/auth?type=getToken'
                             })
                         }, 2000)
                     }
                 }
-                if(ret.statusCode === 400 && ret.data.code === '402002'){
+                if (ret.statusCode === 400 && ret.data.code === '402002') {
                     let boundInfo = JSON.stringify({});
-                    if(ret.data.data){
+                    if (ret.data.data) {
                         boundInfo = JSON.stringify(ret.data.data);
                     }
                     wx.navigateTo({
@@ -417,7 +406,7 @@ App({
                 var retData = ret.data;
                 if (ret.statusCode >= 400) {
                     params.toastTrigger = retData.code == '401111' ? false : true;
-                    if(params.toastTrigger){
+                    if (params.toastTrigger) {
                         wx.showToast({
                             title: retData.msg,
                             icon: 'none',
@@ -498,10 +487,38 @@ App({
         }
     },
 
+    getAdminInfo(tokenInfo={}) {
+        const that = this;
+        const p = new Promise((resolve, reject) => {
+            this.doAjax({
+                url: 'wework/users/adminInfo',
+                method: 'GET',
+                data: {
+                    accessToken: tokenInfo.accessToken || ''
+                },
+                success(res) {
+                    let userInfo = {};
+                    const tokenInfo = wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').tokenInfo ? wx.getStorageSync('userInfo').tokenInfo : ''
+                    userInfo = {...res, tokenInfo}
+                    wx.setStorageSync('userInfo', userInfo);
+                    that.globalData.userInfo = userInfo;
+                    resolve(res)
+                },
+                fail(err) {
+                    reject(err)
+                },
+                error(err) {
+                    reject(err)
+                }
+            })
+        })
+        return p;
+    },
+
     getAccessToken(e) {
         const that = this;
         const {iv, encryptedData} = e.detail;
-        if(e.detail.errMsg.indexOf('fail') !== -1){
+        if (e.detail.errMsg.indexOf('fail') !== -1) {
             return Promise.reject({code: ''});
         }
         const accessTokenPromise = new Promise((resolve, reject) => {
@@ -513,10 +530,22 @@ App({
                     iv,
                     encryptedData,
                 },
-                success(res) {
-                    wx.setStorageSync('userInfo', res);
-                    that.globalData.userInfo = res;
-                    resolve(res)
+                success(tokenInfo) {
+                    let userInfo = wx.getStorageSync('userInfo') || {};
+                    if (tokenInfo) {
+                        that.getAdminInfo(tokenInfo)
+                            .then(res=>{
+                                userInfo = res
+                                userInfo.tokenInfo = tokenInfo;
+                                wx.setStorageSync('userInfo', userInfo);
+                                that.globalData.userInfo = res;
+                                resolve(tokenInfo)
+                            })
+                            .catch(err=>{
+                                resolve(err)
+                            })
+                    }
+                    resolve(tokenInfo)
                 },
                 fail(err) {
                     reject(err)
@@ -542,8 +571,9 @@ App({
                     phone: phone,
                 },
                 success(res) {
-                    wx.setStorageSync('userInfo', res);
-                    that.globalData.userInfo = res;
+                    const userInfo = wx.getStorageSync('userInfo') || {};
+                    userInfo.tokenInfo = res;
+                    wx.setStorageSync('userInfo', userInfo);
                     resolve(res)
                 },
                 fail(err) {
@@ -587,7 +617,7 @@ App({
                 url: 'wework/auth/mobile',
                 method: "post",
                 data: {
-                    userId: wx.getStorageSync("userInfo").id,
+                    userId: wx.getStorageSync("userInfo").userId,
                     teamId: wx.getStorageSync("userInfo").teamId,
                     sessionKey: this.globalData.userMsg.session_key,
                     iv,
@@ -605,7 +635,7 @@ App({
     },
 
     getMiniProgramSetting(releaseRecordId) {
-        if(!releaseRecordId){
+        if (!releaseRecordId) {
             return Promise.reject('releaseRecordId is null');
         }
         const miniProgramSettingPromise = new Promise((resolve, reject) => {
@@ -621,7 +651,7 @@ App({
                 error(err) {
                     reject(err);
                 },
-                fail(err){
+                fail(err) {
                     reject(err);
                 }
             })
@@ -648,7 +678,7 @@ App({
 
     updateUserInfo(e) {
         let userInfo = {};
-        if(wx.getUserProfile) {
+        if (wx.getUserProfile) {
             userInfo = e.userInfo
         } else {
             userInfo = e.detail.userInfo
@@ -696,7 +726,7 @@ App({
     getUserInfoOfPhone() {
         const p = new Promise((resolve, reject) => {
             this.doAjax({
-                url: `wework/users/${wx.getStorageSync('userInfo').id}`,
+                url: `wework/users/${wx.getStorageSync('userInfo').userId}`,
                 method: "get",
                 success: function (res) {
                     that.setData({
@@ -773,44 +803,28 @@ App({
     },
 
     getAuthCode() {
-        if(this.checkAccessToken()){
+        if (this.checkAccessToken()) {
             return;
         }
-        const that = this;
-        const p = new Promise((resolve, reject) => {
-            if (that.wxWorkInfo.isWxWork) {
-                wx.qy.login({
-                    success: res => {
-                        that.wxWorkUserLogin(res.code).then(res=>{
-                            resolve()
-                        }).catch(err => {
-                            console.log(err);
-                            reject(err)
-                        });
-                    },
-                    fail: function (err) {
-                        reject(err)
-                    }
-                })
-            } else {
-                wx.login({
-                    success: res => {
-                        that.userLogin(res.code).then(res=>{
-                            resolve()
-                        }).catch(err => {
-                            console.error(err);
-                            reject(err)
-                        });
-                    },
-                    fail: err=>{
-
-                        console.error(err);
-                        reject(err)
-                    }
-                });
-            }
-        })
-        return p;
+        const targetWxLoginFunc = this.wxWorkInfo.isWxWork ? wx.qy.login : wx.login;
+        const targetGetAuthCodeFunc = this.wxWorkInfo.isWxWork ? this.wxWorkUserLogin : this.userLogin;
+        const wxLogin = new Promise((resolve, reject) => {
+            targetWxLoginFunc({
+                success(res) {
+                    resolve(res.code);
+                },
+                fail(err) {
+                    reject(err);
+                }
+            })
+        });
+        wxLogin
+            .then(code => {
+                return targetGetAuthCodeFunc(code)
+            })
+            .catch(err => {
+                console.error('获取authCode失败：', err)
+            });
     },
 
     getPrueAuthCode(code) {
@@ -830,8 +844,18 @@ App({
                     resolve(res)
                 },
                 error: function (err) {
-                    reject(err);
-                }
+                    wx.showModal({
+                        title: '登入失败！',
+                        content: '网络故障，请退出重新进入小程序。',
+                        showCancel: !1,
+                        confirmText: '确定',
+                        confirmColor: 'rgb(0,153,255)',
+                    });
+                    reject(err)
+                },
+                complete: function () {
+                    wx.hideLoading()
+                },
             });
         });
         return p;
@@ -839,51 +863,30 @@ App({
 
     prueLogin() {
         const that = this;
-        const p = new Promise((resolve, reject) => {
-            if (this.wxWorkInfo.isWxWork) {
-                wx.qy.login({
-                    success: res => {
-                        that.getPrueAuthCode(res.code).then(res=>{
-                            const {authCode, tokenInfo, userInfo} = res;
-                            if(tokenInfo && tokenInfo.accessToken){
-                                userInfo.tokenInfo = tokenInfo
-                                wx.setStorageSync('userInfo', userInfo)
-                            }
-                            wx.setStorageSync('authCode', authCode)
-                            resolve()
-                        }).catch(err=>{
-                            reject(err)
-                        });
-                    },
-                    fail: function (err) {
-                        console.error(err);
+        const targetWxLoginFunc = this.wxWorkInfo.isWxWork ? wx.qy.login : wx.login;
+        const wxLogin = new Promise((resolve, reject) => {
+            targetWxLoginFunc({
+                success: res => {
+                    that.getPrueAuthCode(res.code).then(res => {
+                        const userInfo = wx.getStorageSync('userInfo') || {};
+                        const {authCode, tokenInfo} = res;
+                        if (tokenInfo && tokenInfo.accessToken) {
+                            userInfo.tokenInfo = tokenInfo
+                            wx.setStorageSync('userInfo', userInfo)
+                        }
+                        wx.setStorageSync('authCode', authCode)
+                        resolve()
+                    }).catch(err => {
                         reject(err)
-                    }
-                })
-            }
-            else {
-                wx.login({
-                    success: res => {
-                        that.getPrueAuthCode(res.code).then(res=>{
-                            const {authCode, tokenInfo, userInfo} = res;
-                            if(tokenInfo && tokenInfo.accessToken){
-                                userInfo.tokenInfo = tokenInfo
-                                wx.setStorageSync('userInfo', userInfo)
-                            }
-                            wx.setStorageSync('authCode', authCode)
-                            resolve()
-                        }).catch(err=>{
-                            reject(err)
-                        })
-                    },
-                    fail: function (err) {
-                        reject(err)
-                        console.error(err);
-                    }
-                })
-            }
+                    });
+                },
+                fail: function (err) {
+                    console.error('获取authCode失败：', err);
+                    reject(err)
+                }
+            })
         });
-        return p;
+        return wxLogin;
     },
 
     getSMSCode(phone) {
@@ -898,7 +901,7 @@ App({
                 success(res) {
                     resolve(res)
                 },
-                error(err){
+                error(err) {
                     reject(err)
                 }
             })

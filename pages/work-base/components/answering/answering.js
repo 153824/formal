@@ -626,7 +626,7 @@ Page({
         if(chapterId){
             const p = new Promise((resolve, reject) => {
                 app.doAjax({
-                    url: `../hola/receive_records/chapters/answers?receiveRecordId=${receiveRecordId}&chapterId=${chapterId}&userId=${wx.getStorageSync("userInfo").id || ""}`,
+                    url: `../hola/receive_records/chapters/answers?receiveRecordId=${receiveRecordId}&chapterId=${chapterId}&userId=${wx.getStorageSync("userInfo").userId || ""}`,
                     method: 'POST',
                     data: {
                         responds: answerSheet,
@@ -655,7 +655,7 @@ Page({
         }else{
             const p = new Promise((resolve, reject) => {
                 app.doAjax({
-                    url: `../hola/receive_records/answers?receiveRecordId=${receiveRecordId}&userId=${wx.getStorageSync("userInfo").id || ""}`,
+                    url: `../hola/receive_records/answers?receiveRecordId=${receiveRecordId}&userId=${wx.getStorageSync("userInfo").userId || ""}`,
                     method: 'POST',
                     data: {
                         responds: answerSheet,

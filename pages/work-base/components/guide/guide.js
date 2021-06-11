@@ -212,7 +212,7 @@ Page({
             noLoading: true,
             data: {
                 releaseRecordId: releaseRecordId,
-                userId: userInfo.id
+                userId: userInfo.userId
             },
             success: function (res) {
                 const {evaluationId, receiveRecordId, reportPermit, status} = res;

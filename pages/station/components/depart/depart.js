@@ -118,7 +118,11 @@ Page({
         targetDepart.then(res => {
             this.setData({
                 routeMap: root ? []:routeMap.slice(0, index+1),
-                childDepart: res.data,
+                childDepart: [],
+            },()=>{
+                this.setData({
+                    childDepart: res.data,
+                })
             });
         }).catch(err => {
             throw err;

@@ -25,7 +25,9 @@ Page({
         dispatchInfo: {},
         defaultDeptId: "",
         rootBindTpDepartId: 1,
-        corpid: "wwfaa9224ffb93c5b3"
+        bindTpDepartId: 1,
+        corpid: "",
+        openDataKey: new Date().getTime()
     },
 
     /**
@@ -49,33 +51,39 @@ Page({
             isWxWork: app.wxWorkInfo.isWxWork,
             reportMeet: app.wxWorkInfo.isWxWork || app.wx3rdInfo.is3rd ? 2 : 1,
         });
+        let targetBindTpDepartId = '';
         let storageInfo = wx.getStorageInfoSync().keys;
-        let departInfo = wx.getStorageSync(`checked-depart-info-${id}`);
+        let departInfo = wx.getStorageSync(`checked-depart-info-${id}`) || {};
         const reg = /^checked-depart-info-.*/ig;
         storageInfo.forEach((item, key) => {
             if (reg.test(item) && !departInfo) {
                 wx.removeStorageSync(item);
             }
         });
-        if (!departInfo) {
-            this._loadRootDepart().then(res => {
-                const {label, value, bindTpDepartId} = res.data[0];
-                this.setData({
-                    dropDownOps: [
-                        {
-                            text: label,
-                            value: value,
-
-                        }
-                    ],
-                    dropdownValue: value,
-                    defaultDeptId: value,
-                    rootBindTpDepartId: bindTpDepartId,
-                    corpid: res.corpid
-                })
-                this.loadDispatchInfo(value);
+        this._loadRootDepart().then(res => {
+            const {label, value, bindTpDepartId} = res.data[0];
+            targetBindTpDepartId = bindTpDepartId;
+            this.setData({
+                dropDownOps: [
+                    {
+                        text: label,
+                        value: value,
+                    }
+                ],
+                dropdownValue: value,
+                defaultDeptId: value,
+                corpid: res.corpId
             })
-        }
+            if(departInfo && departInfo.bindTpDepartId){
+                targetBindTpDepartId = departInfo.bindTpDepartId
+            }
+            this.setData({
+                bindTpDepartId: targetBindTpDepartId
+            })
+            this.loadDispatchInfo(value);
+        }).catch(err=>{
+            console.error(err)
+        })
         this._loadEvaluationDetail(id);
     },
 
@@ -93,11 +101,20 @@ Page({
         const {evaluationId, isWxWork, is3rd} = this.data;
         const dropDownOps = wx.getStorageSync(`checked-depart-info-${evaluationId}`);
         if (dropDownOps && (isWxWork || is3rd)) {
-            this.loadDispatchInfo(dropDownOps.value);
-            this.setData({
-                dropDownOps: [dropDownOps],
-                dropdownValue: dropDownOps.value
-            });
+            this._loadRootDepart()
+                .then(res=>{
+                    this.setData({
+                        corpid: res.corpId
+                    })
+                    return this.loadDispatchInfo(dropDownOps.value);
+                })
+                .then(res=>{
+                    this.setData({
+                        dropDownOps: [dropDownOps],
+                        dropdownValue: dropDownOps.value,
+                        bindTpDepartId: dropDownOps.bindTpDepartId || res.data[0].bindTpDepartId
+                    });
+                })
         }
     },
 
@@ -278,9 +295,15 @@ Page({
     },
 
     open: function () {
+        const that = this;
         const {evaluationId, corpid} = this.data;
         wx.navigateTo({
             url: `/pages/station/components/depart/depart?evaluationId=${evaluationId}&corpid=${corpid}`,
+            success(res) {
+                that.setData({
+                    corpid: ''
+                })
+            }
         })
     },
 

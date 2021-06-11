@@ -59,7 +59,7 @@
         {
           "name": "二维码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "q=https://api.luoke101.com/s/60bf322cbf3dcb51fdaa58b8",
+          "query": "q=https://api.luoke101.com/s/60c312caca7e6e2a090df9d0",
           "scene": null
         },
         {
@@ -211,6 +211,12 @@
           "name": "邀请加入团队",
           "pathName": "pages/user/components/teamInvite/teamInvite",
           "query": "inviteId=60938eed8e650e4ff94a9c2d",
+          "scene": null
+        },
+        {
+          "name": "pages/station/components/sharePaper/sharePaper",
+          "pathName": "pages/station/components/sharePaper/sharePaper",
+          "query": "scene=60c1cf6c92f2705539f09da4",
           "scene": null
         }
       ]

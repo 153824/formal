@@ -5,7 +5,9 @@ Page({
         checkedDepart: "",
         routeMap: [],
         evaluationId: "",
-        corpid: ""
+        corpid: "",
+        rootDepartId: '',
+        rootBindTpDepartId: '',
     },
     onLoad: function (options) {
 
@@ -21,12 +23,25 @@ Page({
             })
         }
         this._loadRootDepart().then(res => {
+            console.log('_loadRootDepart： ',res);
             this.setData({
                 childDepart: res.data,
+                rootBindTpDepartId: res.data && res.data[0] ? res.data[0].bindTpDepartId : '',
+                rootDepartId: res.data && res.data[0] ? res.data[0].value : '',
             })
         }).catch(err => {
             console.error(err);
         })
+    },
+    onUnload() {
+        const {evaluationId, rootDepartId, rootBindTpDepartId} = this.data;
+        const flag = wx.getStorageSync(`checked-depart-info-${evaluationId}`)
+        if (!flag) {
+            wx.setStorageSync(`checked-depart-info-${evaluationId}`, {
+                value: rootDepartId,
+                bindTpDepartId: rootBindTpDepartId
+            });
+        }
     },
     _loadRootDepart() {
         const rootDepart = new Promise((resolve, reject) => {
@@ -80,16 +95,21 @@ Page({
         const {depart} = e.currentTarget.dataset;
         const {routeMap} = this.data;
         const childDepart = this.loadDepart(e);
-        childDepart.then(res => {
-            routeMap.push(depart);
-            console.log('routeMap.push: ',routeMap);
-            this.setData({
-                routeMap: [...routeMap],
-                childDepart: res.data,
-            })
-        }).catch(err => {
-            throw err;
-        });
+        this.setData({
+            childDepart: [],
+        }, ()=>{
+            childDepart.then(res => {
+                routeMap.push(depart);
+                console.log('routeMap.push: ',routeMap);
+                console.log('loadChildDepart： ',res.data);
+                this.setData({
+                    routeMap: [...routeMap],
+                    childDepart: res.data,
+                })
+            }).catch(err => {
+                throw err;
+            });
+        })
     },
     loadTargetDepart(e) {
         const {routeMap} = this.data;
@@ -131,10 +151,12 @@ Page({
     submit(e) {
         const {evaluationId} = this.data;
         this._loadDepartInfo().then(res=>{
-            const {deptName,deptId} = res.data;
+            console.log('_loadDepartInfo: ', res.data);
+            const {deptName,deptId, bindTpDepartId} = res.data;
             wx.setStorageSync(`checked-depart-info-${evaluationId}`, {
                 text: deptName,
-                value: deptId
+                value: deptId,
+                bindTpDepartId
             });
             wx.navigateBack();
         }).catch(err=>{

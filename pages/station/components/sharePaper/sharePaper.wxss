@@ -235,9 +235,16 @@
   align-items: center;
 }
 .depart{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   width: 100%;
   margin-top: 70rpx;
+  padding: 20rpx 0rpx;
+  background: #fff;
+  border-radius: 10rpx;
+  height: 60rpx
 }
 .van-dropdown-item--down{
   top: 510px !important;

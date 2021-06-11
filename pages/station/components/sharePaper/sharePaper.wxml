@@ -33,10 +33,7 @@
         <view wx:if="{{isWxWork || is3rd}}" class="department-wrapper">
             <text class="title">被测者归属部门</text>
             <view class="depart" bind:tap="open">
-                <van-dropdown-menu direction="down" overlay="{{false}}" active-color="rgba(53, 62, 232, 1)" custom-class="van-dropdown-menu">
-                    <ww-open-data type="departmentName" openid="{{1}}" corpid="{{corpid}}"/>
-<!--                    <van-dropdown-item id="drop-item" bind:open="open" value="{{ dropdownValue }}" options="{{ dropDownOps }}"/>-->
-                </van-dropdown-menu>
+                <ww-open-data wx:if="{{corpid && bindTpDepartId}}" type="departmentName" openid="{{bindTpDepartId}}" corpid="{{corpid}}"/>
             </view>
         </view>
         <view class="dispatch-info-wrapper" wx:if="{{isWxWork || is3rd}}">

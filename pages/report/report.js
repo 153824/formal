@@ -549,18 +549,13 @@ Page({
             res["teamRole"] = (app.teamId == res.releaseTeamId) ? app.teamRole : 1;
             res.maskTrigger = false;
             that.setData(res);
-            if(res.coordinate.graphQuadrants){
-                that.setData({
-                    graphQuadrants:res.coordinate.graphQuadrants.reverse()
-                })
-            }
             setTimeout(()=>{
                 that.setData({
                     maskTrigger: false,
                     analysisCount:analysisCount,
                 })
             },500)
-            if(res.coordinate.display){
+            if(res.coordinate.display&&res.coordinate.graphQuadrants){
                 setTimeout(()=>{
                     that.setData({
                         graphQuadrants: res.coordinate.graphQuadrants.reverse(),

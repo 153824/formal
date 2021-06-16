@@ -55,7 +55,7 @@ Page({
                 })
             }
         });
-        if(!app.checkAccessToken() && (app.wxWorkInfo.isWxWork || app.wx3rdInfo.is3rd)){
+        if (!app.checkAccessToken() && (app.wxWorkInfo.isWxWork || app.wx3rdInfo.is3rd)) {
             wx.navigateTo({
                 url: '/pages/auth/auth?type=auth'
             });
@@ -73,7 +73,7 @@ Page({
             windowHeight,
             safeAreaDiff: isIPhoneXModel ? Math.abs(safeArea.height - safeArea.bottom) : 0,
         })
-        if(!app.checkAccessToken() && (app.wxWorkInfo.isWxWork || app.wx3rdInfo.is3rd)){
+        if (!app.checkAccessToken() && (app.wxWorkInfo.isWxWork || app.wx3rdInfo.is3rd)) {
             return;
         }
         app.setDataOfPlatformInfo(this);
@@ -330,7 +330,7 @@ Page({
                 maskTrigger: false
             })
         }
-        if(app.checkAccessToken()){
+        if (app.checkAccessToken()) {
             console.log('work-base->getTeamList')
             app.getTeamList().then(res => {
                 console.log(res);
@@ -352,7 +352,8 @@ Page({
         })
     },
 
-    onHide() {},
+    onHide() {
+    },
 
     editTeamName() {
         this.setData({
@@ -378,25 +379,30 @@ Page({
     },
 
     getPhoneNumber(e) {
+        debugger
         const that = this;
         let {authCodeCounter} = this.data;
-        if(authCodeCounter > 5){
+        if (authCodeCounter > 5) {
             return
         }
-        app.getAccessToken(e).then(res => {
-            wx.reLaunch({
-                url: '/pages/home/home'
-            })
-        }).catch(err=>{
-            if(err.code === '401111'){
-                app.prueLogin().then(res=>{
-                    this.getPhoneNumber(e)
-                });
-                that.setData({
-                    authCodeCounter: authCodeCounter++
+
+        app.getAccessToken(e)
+            .then(res => {
+                wx.reLaunch({
+                    url: '/pages/home/home'
                 })
-            }
-        })
+            })
+            .catch(err => {
+                console.error(err);
+                if (err.code === '401111') {
+                    app.prueLogin().then(res => {
+                        this.getPhoneNumber(e)
+                    });
+                    that.setData({
+                        authCodeCounter: authCodeCounter++
+                    })
+                }
+            })
     },
 
     getUserInfo: function (e) {
@@ -411,7 +417,8 @@ Page({
             });
             return;
         }
-        app.updateUserInfo(e).then(res=>{}).catch(err=>{
+        app.updateUserInfo(e).then(res => {
+        }).catch(err => {
             console.error(err);
         });
     },
@@ -453,7 +460,15 @@ Page({
     },
 
     goToSharePaper: function (e) {
-        const {available, norms, quesCount, estimatedTime, evaluationId, evaluationName, type} = this.data.myEvaluation[e.currentTarget.dataset.index];
+        const {
+            available,
+            norms,
+            quesCount,
+            estimatedTime,
+            evaluationId,
+            evaluationName,
+            type
+        } = this.data.myEvaluation[e.currentTarget.dataset.index];
         const necessaryInfo = {
             count: available,
             norms: norms,

@@ -243,10 +243,18 @@ App({
                 catch (e) {
                     return Promise.reject(e);
                 }
-                return Promise.resolve();
+                return Promise.resolve(res);
             })
             .then(res=>{
-                return this.getAdminInfo();
+                if(res && res.tokenInfo){
+                    return this.getAdminInfo();
+                }
+                const targetRes = {
+                    isWxWork: false,
+                    is3rd: that.wx3rdInfo.is3rd,
+                    tokenInfo: {}
+                }
+                return Promise.resolve(targetRes);
             })
             .then(res=>{
                 if (that.checkUserInfo) {
@@ -255,6 +263,9 @@ App({
                     res.tokenInfo = targetTokenInfo;
                     that.checkUserInfo(res);
                 }
+            })
+            .catch(err=>{
+                console.log(err);
             });
     },
 
@@ -287,7 +298,15 @@ App({
                 return Promise.resolve();
             })
             .then(res=>{
-                return this.getAdminInfo();
+                if(res && res.tokenInfo){
+                    return this.getAdminInfo();
+                }
+                const targetRes = {
+                    isWxWork: true,
+                    is3rd: that.wx3rdInfo.is3rd,
+                    tokenInfo: {}
+                }
+                return Promise.resolve(targetRes);
             })
             .then(res=>{
                 if (that.checkUserInfo) {

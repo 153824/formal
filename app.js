@@ -229,8 +229,8 @@ App({
         const that = this;
         let targetTokenInfo = {}
         this.getPrueAuthCode(code)
-            .then(res=>{
-                try{
+            .then(res => {
+                try {
                     const userInfo = wx.getStorageSync('userInfo') || {};
                     const {authCode, tokenInfo} = res;
                     if (tokenInfo && tokenInfo.accessToken) {
@@ -239,14 +239,13 @@ App({
                         wx.setStorageSync('userInfo', userInfo);
                     }
                     wx.setStorageSync('authCode', authCode);
-                }
-                catch (e) {
+                } catch (e) {
                     return Promise.reject(e);
                 }
                 return Promise.resolve(res);
             })
-            .then(res=>{
-                if(res && res.tokenInfo){
+            .then(res => {
+                if (res && res.tokenInfo) {
                     return this.getAdminInfo();
                 }
                 const targetRes = {
@@ -256,7 +255,7 @@ App({
                 }
                 return Promise.resolve(targetRes);
             })
-            .then(res=>{
+            .then(res => {
                 if (that.checkUserInfo) {
                     res.isWxWork = false;
                     res.is3rd = that.wx3rdInfo.is3rd;
@@ -264,7 +263,7 @@ App({
                     that.checkUserInfo(res);
                 }
             })
-            .catch(err=>{
+            .catch(err => {
                 console.log(err);
             });
     },
@@ -281,8 +280,8 @@ App({
         let targetTokenInfo = {}
         const that = this;
         this.getPrueAuthCode(code)
-            .then(res=>{
-                try{
+            .then(res => {
+                try {
                     const userInfo = wx.getStorageSync('userInfo') || {};
                     const {authCode, tokenInfo} = res;
                     if (tokenInfo && tokenInfo.accessToken) {
@@ -291,14 +290,13 @@ App({
                         wx.setStorageSync('userInfo', userInfo);
                     }
                     wx.setStorageSync('authCode', authCode);
-                }
-                catch (e) {
+                } catch (e) {
                     return Promise.reject(e);
                 }
                 return Promise.resolve(res);
             })
-            .then(res=>{
-                if(res && res.tokenInfo){
+            .then(res => {
+                if (res && res.tokenInfo) {
                     return this.getAdminInfo();
                 }
                 const targetRes = {
@@ -308,7 +306,7 @@ App({
                 }
                 return Promise.resolve(targetRes);
             })
-            .then(res=>{
+            .then(res => {
                 if (that.checkUserInfo) {
                     res.isWxWork = true;
                     res.is3rd = that.wx3rdInfo.is3rd;
@@ -506,7 +504,7 @@ App({
         }
     },
 
-    getAdminInfo(tokenInfo={}) {
+    getAdminInfo(tokenInfo = {}) {
         const that = this;
         const p = new Promise((resolve, reject) => {
             this.doAjax({
@@ -553,18 +551,17 @@ App({
                     let userInfo = wx.getStorageSync('userInfo') || {};
                     if (tokenInfo) {
                         that.getAdminInfo(tokenInfo)
-                            .then(res=>{
+                            .then(res => {
                                 userInfo = res
                                 userInfo.tokenInfo = tokenInfo;
                                 wx.setStorageSync('userInfo', userInfo);
                                 that.globalData.userInfo = res;
                                 resolve(tokenInfo)
                             })
-                            .catch(err=>{
+                            .catch(err => {
                                 resolve(err)
                             })
                     }
-                    resolve(tokenInfo)
                 },
                 fail(err) {
                     reject(err)
@@ -814,6 +811,7 @@ App({
             isWxWorkSuperAdmin: app.checkSuperAdmin(),
             is3rd: app.wx3rdInfo.is3rd,
             is3rdAdmin: app.checkAdmin(),
+            is3rdSuperAdmin: app.checkSuperAdmin(),
             isGetAccessToken: app.checkAccessToken()
         };
         that.setData({

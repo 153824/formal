@@ -38,6 +38,6 @@
         </scroll-view>
     </view>
     <block wx:if="{{(isWxWork || is3rd)&&tabBarTrigger}}">
-        <hola-tab-bar id="hola-tab-bar" active="{{ isWxWork && isWxWorkAdmin ? 1 : 0 }}" morePath="../../../" isWxWork="{{isWxWork}}"></hola-tab-bar>
+        <hola-tab-bar id="hola-tab-bar" active="{{ 0 }}" morePath="../../../" isWxWork="{{isWxWork}}"></hola-tab-bar>
     </block>
 </view>

@@ -379,7 +379,6 @@ Page({
     },
 
     getPhoneNumber(e) {
-        debugger
         const that = this;
         let {authCodeCounter} = this.data;
         if (authCodeCounter > 5) {

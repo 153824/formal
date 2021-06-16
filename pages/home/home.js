@@ -48,19 +48,9 @@ Page({
                     url: url
                 });
             } else {
-                app.checkUserInfo = (res) => {
-                    flag = res && res.tokenInfo;
-                    if (flag) {
-                        url = '/pages/work-base/work-base'
-                        wx.switchTab({
-                            url: url
-                        });
-                    } else {
-                        wx.navigateTo({
-                            url: url
-                        });
-                    }
-                };
+                wx.navigateTo({
+                    url: url
+                });
             }
             return
         }

@@ -1194,9 +1194,10 @@ swiper, swiper-item {
 
 .compare {
     display: inline-block;
-    height: 46rpx;
+    min-height: 46rpx;
     line-height: 46rpx;
     padding: 0 20rpx;
+    margin-right:50rpx;
     background: rgba(233, 233, 233, 1);
     border-radius: 10rpx;
     font-size: 26rpx;

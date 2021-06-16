@@ -295,7 +295,7 @@ App({
                 catch (e) {
                     return Promise.reject(e);
                 }
-                return Promise.resolve();
+                return Promise.resolve(res);
             })
             .then(res=>{
                 if(res && res.tokenInfo){

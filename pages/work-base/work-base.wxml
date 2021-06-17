@@ -351,12 +351,8 @@
                             <view class="evaluation-name user-info-wrapper">
                                 <view class="user-info">
                                     <text>{{reportItem.participant || "好啦访客"}}</text>
-                                    <text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{
-                                        reportItem.summary }}
-                                    </text>
-                                    <text wx:if="{{ reportItem.showGrade }}" class="recommend-grade recommend-score">
-                                        {{reportItem.grade}}分
-                                    </text>
+                                    <text wx:if="{{ reportItem.showSummary }}" class="recommend-grade">{{ reportItem.summary }}</text>
+                                    <text wx:if="{{ reportItem.showGrade }}" class="recommend-grade recommend-score">{{reportItem.grade}}分</text>
                                 </view>
                             </view>
                             <view class="user-answer-evaluation">
@@ -398,11 +394,7 @@
                                 <text class="count" style="margin-left: 10rpx;">{{trackItem.finished}}</text>
                             </view>
                             <view class="reply-track-info">
-                                发放时间:
-                                <text class="date" style="margin-left: 10rpx;">
-                                    {{util.getFullDateByFrag(trackItem.createdAt,"/",true)}}
-                                    {{util.getHourAndMinByFrag(trackItem.createdAt,":",true)}}
-                                </text>
+                                发放时间:<text class="date" style="margin-left: 10rpx;">{{util.getFullDateByFrag(trackItem.createdAt,"/",true)}} {{util.getHourAndMinByFrag(trackItem.createdAt,":",true)}}</text>
                             </view>
                         </view>
                         <view class="send-evaluation">

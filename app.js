@@ -766,7 +766,7 @@ App({
                 success(res) {
                     resolve(res);
                 },
-                resolve(err) {
+                error(err) {
                     reject(err);
                 }
             })

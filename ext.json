@@ -1,5 +1,5 @@
 {
-  "extEnable": true,
+  "extEnable": false,
   "extAppid": "wx0ef45039046afc95",
   "directCommit": true,
   "ext": {

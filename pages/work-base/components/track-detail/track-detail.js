@@ -230,6 +230,7 @@ Page({
                     that.setData({
                         status: res.status,
                         amount: res.amount,
+                        revoked: res.revoked,
                         available: res.available,
                         QRCode: res.QRCode,
                         cover: res.smallImg,

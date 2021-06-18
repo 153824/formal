@@ -232,7 +232,7 @@ assessor-info
 
 .box .list .item {
     width: 190rpx;
-    height: 258rpx;
+    height: 250rpx;
     white-space: nowrap;
     text-align: center;
     background: rgba(255, 255, 255, 1);

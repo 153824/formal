@@ -20,10 +20,9 @@
           "scene": null
         },
         {
-          "id": -1,
           "name": "加入团队",
           "pathName": "pages/user/components/teamInvite/teamInvite",
-          "query": "key=teamMsg_5f51ada624e15034a2a33827_2",
+          "query": "inviteId=5eab9d54eb4b2d000887bd46",
           "scene": null
         },
         {
@@ -53,7 +52,7 @@
         {
           "name": "小程序码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "scene=60cc18206875d21bab99ce71",
+          "query": "scene=60cc1a5c6875d21bab99ce79",
           "scene": null
         },
         {
@@ -198,7 +197,7 @@
         {
           "name": "加入团队",
           "pathName": "pages/user/components/teamInvite/teamInvite",
-          "query": "key=teamMsg__2",
+          "query": "key=teamMsg_5eab9d54eb4b2d000887bd46_2",
           "scene": null
         },
         {

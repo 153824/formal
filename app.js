@@ -892,7 +892,7 @@ App({
                             wx.setStorageSync('userInfo', userInfo)
                         }
                         wx.setStorageSync('authCode', authCode)
-                        resolve()
+                        resolve(res)
                     }).catch(err => {
                         reject(err)
                     });

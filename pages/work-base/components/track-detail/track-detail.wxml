@@ -7,7 +7,7 @@
             <view class="title">{{ evaluationName }}</view>
             <view class="count">
                 <text>发放数量：{{ amount }}份</text>
-                <text wx:if="{{ status === 'REVOKED' }}" style="color: rgba(255,0,0,1);"> ( 已撤回{{ amount-finishCount-examiningCount }}份 )
+                <text wx:if="{{ status === 'REVOKED' }}" style="color: rgba(255,0,0,1);"> ( 已撤回{{ revoked }}份 )
                 </text>
             </view>
             <view>
@@ -16,6 +16,7 @@
                 <text wx:elif="{{type === 'contacts'}}">通讯录</text>
                 <text wx:elif="{{type === 'email'}}">邮件</text>
                 <text wx:elif="{{type === 'qrcode'}}">二维码</text>
+                <text wx:elif="{{type === 'ticket'}}">答题账号</text>
                 <block wx:if="{{type === 'qrcode'||type === 'email'}}">
                     <text class="code" bindtap="loadQrcode">【查看二维码】</text>
                 </block>
@@ -25,8 +26,7 @@
     <view class="use-history-content-wrapper">
         <view class="nav">
             <view bindtap="changeTab" wx:for="{{ nav }}" wx:key="id" data-id="{{ item.id }}"
-                  class="{{ item.checked ? 'checked' : '' }}"
-            >
+                  class="{{ item.checked ? 'checked' : '' }}">
                 <block wx:if="{{ item.id === 0 }}">
                     {{ item.name }}({{ finishCount }})
                 </block>
@@ -34,7 +34,7 @@
                     {{ item.name }}({{ examiningCount }})
                 </block>
                 <block wx:if="{{ item.id === 2 }}">
-                    {{ item.name }}({{ status == "REVOKED" ? '0' : (amount-finishCount-examiningCount) }})
+                    {{ item.name }}({{ status === "REVOKED" ? '0' : (amount-finishCount-examiningCount) }})
                 </block>
             </view>
         </view>

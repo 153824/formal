@@ -264,6 +264,7 @@ Page({
 
     /*禁止手指滑动翻页*/
     pageTouch() {return},
+
     loadQuestionChapter(chapterId,receiveRecordId) {
         const p = new Promise((resolve, reject) => {
             app.doAjax({
@@ -282,6 +283,7 @@ Page({
         });
         return p;
     },
+
     loadQuestion(receiveRecordId) {
         receiveRecordId = this.data.receiveRecordId || receiveRecordId;
         const p = new Promise((resolve, reject) => {
@@ -412,15 +414,18 @@ Page({
     }),
 
     onSorted(e) {
+        console.log(e);
         const {listData} = e.detail;
         const {answerSheet, questions, questionStep} = this.data;
+        console.log(answerSheet);
         const targetItem = this.answerSheetItem(questionStep);
-        const targetSheet = [...answerSheet];
+        console.log(targetItem);
+        const targetSheet = {...answerSheet};
         if(Object.keys(answerSheet).length - 1 < questionStep){
             targetItem.indexes = listData.map(item=>{
                 return item.index
             });
-            targetSheet.push(targetItem);
+            targetSheet[targetItem.questionId] = targetItem;
         }
         if(Object.keys(answerSheet).length - 1 >= questionStep){
             targetSheet[questionStep].indexes = listData.map(item=>{

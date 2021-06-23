@@ -7,10 +7,12 @@ Page({
         evaluationId: "",
         corpid: "",
         rootDepartId: '',
+        rootDepartName: '',
         rootBindTpDepartId: '',
+        is3rd: app.wx3rdInfo.is3rd,
+        isWxWork: app.wxWorkInfo.isWxWork,
     },
     onLoad: function (options) {
-
         const {evaluationId, corpid} = options;
         if(corpid){
             this.setData({
@@ -23,24 +25,23 @@ Page({
             })
         }
         this._loadRootDepart().then(res => {
-            console.log('_loadRootDepart： ',res);
+            console.log('_loadRootDepart： ',res.data[0].label);
             this.setData({
                 childDepart: res.data,
                 rootBindTpDepartId: res.data && res.data[0] ? res.data[0].bindTpDepartId : '',
                 rootDepartId: res.data && res.data[0] ? res.data[0].value : '',
+                rootDepartName: res.data && res.data[0] ? res.data[0].label : '',
             })
         }).catch(err => {
             console.error(err);
         })
     },
     onUnload() {
-        const {evaluationId, rootDepartId, rootBindTpDepartId} = this.data;
+        const {evaluationId, rootDepartId, rootDepartName, rootBindTpDepartId, is3rd} = this.data;
+        const data = is3rd ? {text: rootDepartName, value: rootDepartId} : {value: rootDepartId, bindTpDepartId: rootBindTpDepartId};
         const flag = wx.getStorageSync(`checked-depart-info-${evaluationId}`)
         if (!flag) {
-            wx.setStorageSync(`checked-depart-info-${evaluationId}`, {
-                value: rootDepartId,
-                bindTpDepartId: rootBindTpDepartId
-            });
+            wx.setStorageSync(`checked-depart-info-${evaluationId}`, data);
         }
     },
     _loadRootDepart() {

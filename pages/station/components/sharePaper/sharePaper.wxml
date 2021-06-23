@@ -33,7 +33,8 @@
         <view wx:if="{{isWxWork || is3rd}}" class="department-wrapper">
             <text class="title">被测者归属部门</text>
             <view class="depart" bind:tap="open">
-                <ww-open-data wx:if="{{corpid && bindTpDepartId}}" type="departmentName" openid="{{bindTpDepartId}}" corpid="{{corpid}}"/>
+                <text wx:if="{{is3rd}}">{{dropDownOps[0].text}}</text>
+                <ww-open-data wx:if="{{isWxWork && corpid && bindTpDepartId}}" type="departmentName" openid="{{bindTpDepartId}}" corpid="{{corpid}}"/>
             </view>
         </view>
         <view class="dispatch-info-wrapper" wx:if="{{isWxWork || is3rd}}">

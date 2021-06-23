@@ -478,7 +478,7 @@ Page({
             isFree: type === "FREE",
             hadBuyout: type === "BY_COUNT" ? false : true,
         };
-        if (!available && !necessaryInfo.hadBuyout && !necessaryInfo.isFree && !this.data.isWxWork) {
+        if (!available && !necessaryInfo.hadBuyout && !necessaryInfo.isFree && !this.data.isWxWork && !this.data.is3rd) {
             app.toast("测评可用数量不足");
             return;
         }

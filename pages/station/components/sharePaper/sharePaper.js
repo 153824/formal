@@ -62,6 +62,7 @@ Page({
         });
         this._loadRootDepart().then(res => {
             const {label, value, bindTpDepartId} = res.data[0];
+            console.log(label, value);
             targetBindTpDepartId = bindTpDepartId;
             this.setData({
                 dropDownOps: [
@@ -109,17 +110,32 @@ Page({
                     return this.loadDispatchInfo(dropDownOps.value);
                 })
                 .then(res=>{
-                    this.setData({
-                        dropDownOps: [dropDownOps],
-                        dropdownValue: dropDownOps.value,
-                        bindTpDepartId: dropDownOps.bindTpDepartId || res.data[0].bindTpDepartId
-                    });
+                    try{
+                        this.setData({
+                            dropDownOps: [dropDownOps],
+                            dropdownValue: dropDownOps.value,
+                            bindTpDepartId: isWxWork ? dropDownOps.bindTpDepartId || res.data[0].bindTpDepartId : ''
+                        });
+                    }
+                    catch (e) {
+
+                    }
                 })
         }
     },
 
     onHide() {
         this.selectComponent("#drop-item").toggle(false);
+    },
+
+    onUnload() {
+        const {evaluationId} = this.data;
+        try {
+            wx.removeStorageSync(`checked-depart-info-${evaluationId}`);
+        }
+        catch (e) {
+            console.error(e);
+        }
     },
 
     changeCount: function (e) {

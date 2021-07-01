@@ -40,11 +40,6 @@ Page({
             })
         }
         app.setDataOfPlatformInfo(this);
-        // if(isWxWork){
-        //     this.setData({
-        //         phoneNumber:
-        //     })
-        // }
         this._checkUserIsAuthPhone();
     },
 
@@ -84,23 +79,6 @@ Page({
                 })
             }
         })
-    },
-
-    _checkEvaluationType: function () {
-        const _this = this;
-        const {receiveRecordId} = this.data;
-        app.doAjax({
-            url: 'reports/check_type',
-            method: 'get',
-            data: {
-                receiveRecordId: receiveRecordId
-            },
-            success: function (res) {
-                _this.setData({
-                    isSelf: res.data.type
-                });
-            }
-        });
     },
 
     _checkUserIsAuthPhone: function (userId) {
@@ -251,16 +229,25 @@ Page({
                         })
                     }).then(res => {
                         if(res){
-                            url = `/pages/work-base/components/chapter/chapter?evaluationId=${evaluationId}&receiveRecordId=${receiveRecordId}`;
+                            url = `/pages/work-base/components/chapter/chapter`;
                         }else{
-                            url = `/pages/work-base/components/answering/answering?&receiveRecordId=${receiveRecordId}`
+                            url = `/pages/work-base/components/answering/answering`
                         }
                         _this.setData({
                             receiveRecordId: res.receiveRecordId
                         });
+                        let targetURL = {
+                            isChapter: url.indexOf('chapter') > -1,
+                            url: url,
+                            evaluationId: evaluationId,
+                            receiveRecordId: receiveRecordId,
+                        }
+                        targetURL = JSON.stringify(targetURL);
                         resolve({receiveRecordId});
+                        const goldenURL = `/pages/recorder/subpages/golden/golden?redirect=${targetURL}`;
+                        console.log('goldenURL: ',goldenURL);
                         wx.redirectTo({
-                            url: url
+                            url: goldenURL,
                         })
                     })
                 },
@@ -280,48 +267,6 @@ Page({
             });
         }));
         return verifyPromise;
-    },
-
-    _preloadUserInfo: function () {
-        const userId = app.globalData.userInfo.userId || wx.getStorageSync("userInfo").userId;
-        const preloadInfo = new Promise((resolve, reject) => {
-            const _this = this;
-            app.doAjax({
-                url: `wework/evaluations/fetch/info/participant/${userId}`,
-                data: {
-                    receiveRecordId: ""
-                },
-                success: function (res) {
-                    const result = res;
-                    const {educationName, username} = res;
-                    const {eduArr} = _this.data;
-                    const copy = {
-                        username: "",
-                        // phone: "",
-                        birthday: "",
-                        educationName: "",
-                        gender: "",
-                        education: -1
-                    };
-                    if (!username) {
-                        reject(copy);
-                        return;
-                    }
-                    if (educationName) {
-                        eduArr.forEach((item, key) => {
-                            if (item === educationName) {
-                                result.education = key;
-                            }
-                        })
-                    }
-                    resolve(result);
-                },
-                fail: function (err) {
-                    reject(err);
-                }
-            })
-        });
-        return preloadInfo;
     },
 
     getUserInfo(e) {

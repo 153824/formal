@@ -94,7 +94,7 @@ Page({
                         resolve();
                         app.toast('测评可用');
                         break;
-                    case 'FETCHED':
+                    case 'RESPONDING':
                         resolve();
                         app.toast('测评已领取');
                         break;
@@ -140,7 +140,7 @@ Page({
                 case 'UNCLAIMED':
                     app.toast('测评可用');
                     return Promise.resolve();
-                case 'FETCHED':
+                case 'RESPONDING':
                     this.goToReady(surveyInfo);
                     app.toast('测评已领取');
                     return Promise.reject();
@@ -169,7 +169,7 @@ Page({
             }
         }).catch(err => {
             switch (err.message) {
-                case 'FETCHED':
+                case 'RESPONDING':
                     this.goToReady(surveyInfo);
                     break;
                 case 'UNAVAILABLE':
@@ -209,7 +209,7 @@ Page({
                         case 'UNAVAILABLE':
                             reject(res);
                             break;
-                        case 'FETCHED':
+                        case 'RESPONDING':
                             reject(res);
                             break;
                     }

@@ -9,8 +9,6 @@ Page({
         optionsAry: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
         phoneModel: app.isIphoneX,
         isSelf: "",
-        sandGlass: 0,
-        fetchedAt: 0,
         questions: [],
         countdownEnabled: false,
         countdownInSeconds: 0,
@@ -24,7 +22,7 @@ Page({
         size: 1,
         extraNodes: [],
         pageMetaScrollTop: 0,
-        scrollTop: 0, 
+        scrollTop: 0,
         receiveRecordId: '',
         hasVanishImageSetting:[],
         /*遮罩控制，防止用户多次滑动swiper-item，导致答题流程错误*/
@@ -190,7 +188,7 @@ Page({
     onShow() {
         if (wx.canIUse('hideHomeButton')) {
             wx.hideHomeButton();
-        } 
+        }
     },
 
     openImg(event) {
@@ -225,40 +223,6 @@ Page({
                     isSelf: res.data.type
                 });
             }
-        });
-    },
-
-    _checkReceiveInfo(receiveRecordId) {
-        const that = this;
-        let {countdownInSeconds, countdownEnabled} = this.data;
-        receiveRecordId = receiveRecordId || this.data.receiveRecordId;
-        app.doAjax({
-            url: `wework/evaluations/receive_info/${receiveRecordId}`,
-            method: "get",
-            success: function (res) {
-                if(!countdownEnabled){
-                    return;
-                }
-                try{
-                    let sandGlass = countdownInSeconds * 60 * 1000 - (new Date().getTime() - res.fetchedAt);
-                    that.setData({
-                        sandGlass: sandGlass,
-                        fetchedAt: res.fetchedAt
-                    });
-                }catch (e) {
-                    console.error(e);
-                }
-            },
-            fail: function (err) {
-                throw err
-            }
-        })
-    },
-
-    getScrollTop(e) {
-        console.log('getScrollTop: ',e);
-        this.setData({
-            computeScrollTop: e.detail
         });
     },
 
@@ -549,7 +513,7 @@ Page({
                     }
                 })
             })
-            
+
         }
         return p
     },

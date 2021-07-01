@@ -1,5 +1,5 @@
 <view class="chapters">
-  <view class="chapters-header"> 
+  <view class="chapters-header">
     <text class="chapters-chapterName">{{evaluationName}}</text>
     <text class="chapters-part">本测评分为以下{{synopses.length}}个部分</text>
   </view>
@@ -25,7 +25,7 @@
           <text>开始作答</text>
           <image src="../../images/chapter-enter.png"></image>
         </view>
-        <view wx:elif="{{synopsesItem.status === 'RELAY'}}" class="chapters-chapterStatus" data-chapter-id="{{synopsesItem.chapterId}}" data-chapter-index="{{synopsesIndex}}" data-chapter-total="{{synopses.length}}" bindtap="toAnswer">
+        <view wx:elif="{{synopsesItem.status === 'RESPONDING'}}" class="chapters-chapterStatus" data-chapter-id="{{synopsesItem.chapterId}}" data-chapter-index="{{synopsesIndex}}" data-chapter-total="{{synopses.length}}" bindtap="toAnswer">
           <text>继续作答</text>
           <image src="../../images/chapter-enter.png"></image>
         </view>

@@ -1,0 +1,31 @@
+.maintain{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.maintain-img{
+    width: 400rpx;
+    height: 308rpx;
+}
+.maintain-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 120rpx;
+}
+.title{
+    font-size: 32rpx;
+    font-weight: 600;
+}
+.date{
+    font-size: 32rpx;
+    line-height: 44rpx;
+    margin-top: 20rpx;
+}

@@ -16,12 +16,12 @@
                     </view>
                     <view class="btnView btnView1" bindtap="changePage"
                           data-url="/pages/work-base/components/guide/guide?releaseRecordId={{item.releaseRecordId}}&receiveRecordId={{ item.receiveRecordId }}&evaluationId={{item.evaluationId}}"
-                          wx:if="{{item.status==='FETCHED'}}">继续作答
+                          wx:if="{{item.status==='RESPONDING'}}">继续作答
                     </view>
                     <view class="btnView btnView1" bindtap="changePage"
                           data-url="/pages/work-base/components/guide/guide?releaseRecordId={{item.releaseRecordId}}&receiveRecordId={{ item.receiveRecordId }}&evaluationId={{item.evaluationId}}"
-                          wx:elif="{{item.status==='FETCHED'}}">
-                        继续作答
+                          wx:elif="{{item.status==='PREPARED'}}">
+                        开始作答
                     </view>
                     <view class="btnView btnView1" bindtap="changePage"
                           data-url="/pages/work-base/components/guide/guide?releaseRecordId={{item.releaseRecordId}}&receiveRecordId={{ item.receiveRecordId }}&evaluationId={{item.evaluationId}}"

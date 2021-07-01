@@ -420,6 +420,11 @@ App({
                         url: `/pages/account/subpages/unbound/unbound?boundInfo=${boundInfo}`
                     })
                 }
+                if(ret.statusCode === 400 && ret.data.code === '909001'){
+                    wx.navigateTo({
+                        url: `/pages/auth/subpages/maintain/maintain?tip=${ret.data.msg}`
+                    })
+                }
                 var retData = ret.data;
                 if (ret.statusCode >= 400) {
                     params.toastTrigger = retData.code == '401111' ? false : true;

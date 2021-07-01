@@ -161,20 +161,34 @@ Page({
     },
 
     goToReplying: function (e) {
-        var receiveRecordId = this.data.receiveRecordId;
+        const {type} = e.currentTarget.dataset;
+        const receiveRecordId = this.data.receiveRecordId;
         const p = new Promise((resolve, reject) => {
             app.doAjax({
                 url: `../wework/evaluations/${receiveRecordId}/check_if_chapter_enabled`,
                 method: 'GET',
                 success(res){
+                    let url = '';
+                    let source = '';
                     if(!res){
-                        const url = `/pages/work-base/components/answering/answering?&receiveRecordId=${receiveRecordId}`;
-                        wx.redirectTo({
-                          url: url
-                        });
+                        url = `/pages/work-base/components/answering/answering?receiveRecordId=${receiveRecordId}`;
+                        source = '/pages/work-base/components/answering/answering'
                     }else{
-                        const url = `/pages/work-base/components/chapter/chapter?&receiveRecordId=${receiveRecordId}`;
+                        url = `/pages/work-base/components/chapter/chapter?receiveRecordId=${receiveRecordId}`;
+                        source = '/pages/work-base/components/chapter/chapter'
                         wx.setStorageSync(receiveRecordId, res.draft);
+                    }
+                    let targetURL = {
+                        url: source,
+                        receiveRecordId: receiveRecordId,
+                        evaluationId: ''
+                    }
+                    targetURL = JSON.stringify(targetURL);
+                    if(type === 'golden'){
+                        wx.redirectTo({
+                            url: `/pages/recorder/subpages/golden/golden?redirect=${targetURL}`
+                        });
+                    } else {
                         wx.redirectTo({
                             url: url
                         });
@@ -346,9 +360,6 @@ Page({
                     case "UNAVAILABLE":
                         text = "分享已失效";
                         break;
-                    case "FETCHED":
-                        text = "继续作答";
-                        break;
                     case "APPLYING":
                         text = "等待hr通过申请";
                         break;
@@ -363,6 +374,12 @@ Page({
                         break;
                     case "DISABLE":
                         text = "申请查看报告";
+                        break;
+                    case "PREPARED":
+                        text = " 开始作答 ";
+                        break;
+                    case "RESPONDING":
+                        text = "继续作答";
                         break;
                 }
                 _this.setData({
@@ -460,17 +477,38 @@ Page({
         if(authCodeCounter > 5){
             return
         }
-        app.getAccessToken(e).then(res => {
-            this.goToRecorder()
-        }).catch(err=>{
-            if(err.code === '401111'){
-                app.prueLogin().then(res=>{
-                    that.getPhoneNumber(e)
-                });
-                that.setData({
-                    authCodeCounter: authCodeCounter++
-                })
-            }
-        })
+        app.getAccessToken(e)
+            .then(res => {
+                try{
+                    this.getTemptation()
+                } catch (e) {
+                    return Promise.reject();
+                }
+                return Promise.resolve();
+            })
+            .then(res=>{
+                const {evaluationStatus} = this.data;
+                switch (evaluationStatus) {
+                    case 'UNCLAIMED':
+                    case 'VERIFY':
+                        this.goToRecorder();
+                        break;
+                    case 'RESPONDING':
+                        this.goToReplying(e);
+                        break;
+                    case 'PREPARED':
+                        this.goToReplying({currentTarget:{dataset: {type: 'golden'}}});
+                }
+            })
+            .catch(err=>{
+                if(err.code === '401111'){
+                    app.prueLogin().then(res=>{
+                        that.getPhoneNumber(e)
+                    });
+                    that.setData({
+                        authCodeCounter: authCodeCounter++
+                    })
+                }
+            })
     },
 });

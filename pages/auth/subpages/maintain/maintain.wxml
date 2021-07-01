@@ -1,0 +1,7 @@
+<view class="maintain">
+    <image class="maintain-img" src="https://ihola.luoke101.com/icon%40maintain.png"/>
+    <view class="maintain-info">
+        <text class="title">系统维护升级中</text>
+        <text class="date">{{tip}}</text>
+    </view>
+</view>

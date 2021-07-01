@@ -1,0 +1,11 @@
+<view class="golden">
+    <view class="golden-text-wrapper">
+        <view class="golden-title">
+            <text class="title">作答承诺书</text>
+        </view>
+        <view class="golden-text-group">
+            <text>{{goldenText}}</text>
+        </view>
+    </view>
+    <view class="golden-agree" bind:tap="goToReplying">同意</view>
+</view>

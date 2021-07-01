@@ -320,11 +320,9 @@ Page({
         }
         if(questionIndex+1 === questions.length){
             this.judge().then(({fill})=>{
-                if(fill){
-                    this.setData({
-                        fill: true
-                    })
-                }
+                this.setData({
+                    fill: fill
+                })
             })
         }
     },0,{
@@ -555,6 +553,7 @@ Page({
                         } else {
                             flag = true;
                         }
+                        console.log('QUES_TYPE: ', flag)
                         /*是否完成所有题目*/
                         if(questionStep+1 === questions.length && flag) {
                             fill = true;

@@ -121,7 +121,7 @@
                         </block>
                     </swiper-item>
                 </block>
-            </swiper> 
+            </swiper>
         </view>
         <view class="bottombtn {{phoneModel ? 'isiphoneX':''}}">
             <view class="btnprev" bind:tap="preQues" data-question-step="{{questionStep}}"

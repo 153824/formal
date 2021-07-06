@@ -193,7 +193,7 @@
                           wx:if="{{!item.lvDesc&&!item.showTotal&&!item.rankOrg&&!item.rankAll&&item.chartType==1}}"></view>
                     <!-- 维度 -->
                     {{item.chartSetting.chartType}}
-                    <view class="list" wx:if="{{item.display&&item.chartSetting.type!==2}}">
+                    <view class="list" wx:if="{{item.display&&shareInfo.evaluationId !== filterEvaluationId[0]}}">
                         <block  wx:for="{{item.subclasses}}" wx:key="unique"
                                wx:for-item="node" wx:for-index="i">
                             <view class="item">

@@ -349,7 +349,9 @@ Page({
         currentActive: "",
         reportCopyrightTxt: "",
         options: {},
-        analysisCount:0
+        analysisCount:0,
+        // 适配事业驱动力测评无需显示维度
+        filterEvaluationId: ['5efdab04c4d9660006a48f4f']
     },
     properties: {
 		commond: {            // 额外节点

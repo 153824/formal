@@ -45,6 +45,9 @@ Component({
             });
             const {histogramYAxis, limit, histogramValues, lines, direction} = that.properties;
             let barColors = that.properties.colors;
+            if(wx.getStorageSync(`mychart-${index}-direction`) === 'column'){
+                barColors = [];
+            }
             const series = [
                 {
                     name: "受测者得分",
@@ -182,16 +185,17 @@ Component({
                         textStyle: {
                             color: function (res,dataIndex) {
                                 if (!barColors.length) {
-                                    return {
-                                        colorStops: [
-                                            {
-                                                offset: 1, color: "rgba(154, 161, 244, 1)"
-                                            },
-                                            {
-                                                offset: 0, color: "rgba(109, 115, 229, 1)"
-                                            },
-                                        ]
-                                    }
+                                    // return {
+                                    //     colorStops: [
+                                    //         {
+                                    //             offset: 1, color: "rgba(154, 161, 244, 1)"
+                                    //         },
+                                    //         {
+                                    //             offset: 0, color: "rgba(109, 115, 229, 1)"
+                                    //         },
+                                    //     ]
+                                    // }
+                                    return 'rgba(53, 62, 232, 1)'
                                 } else {
                                     barColors = wx.getStorageSync(`mychart-${index}-colors`)
                                     if (wx.getStorageSync(`mychart-${index}-direction`) === "column") {

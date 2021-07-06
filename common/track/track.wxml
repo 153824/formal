@@ -5,7 +5,7 @@
               data-track-index="{{trackIndex}}">
             <view class="evaluation-wrapper">
                 <view class="evaluation-name">
-                    {{ trackItem.evaluationName }}
+                    {{ trackItem.releaseName }}
                 </view>
                 <view class="reply-track-info">
                     发放数量:

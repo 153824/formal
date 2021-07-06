@@ -100,7 +100,8 @@
                 >
                     <view class="evaluation-wrapper track-info-wrapper">
                         <view class="evaluation-name">
-                            {{ trackItem.evaluationName }}
+<!--                            {{ trackItem.evaluationName }}-->
+                            {{ trackItem.releaseName }}
                         </view>
                         <view class="reply-track-info">
                             发放数量:<text class="count" style="margin: 0 10rpx;">{{trackItem.amount}}</text>完成数量:<text class="count" style="margin-left: 10rpx;">{{trackItem.finished}}</text>
@@ -227,7 +228,8 @@
                 >
                     <view class="evaluation-wrapper track-info-wrapper">
                         <view class="evaluation-name">
-                            {{ trackItem.evaluationName }}
+<!--                            {{ trackItem.evaluationName }}-->
+                            {{ trackItem.releaseName }}
                         </view>
                         <view class="reply-track-info">
                             发放数量:<text class="count" style="margin: 0 10rpx;">{{trackItem.amount}}</text>完成数量:<text class="count" style="margin-left: 10rpx;">{{trackItem.finished}}</text>
@@ -385,7 +387,8 @@
                     >
                         <view class="evaluation-wrapper track-info-wrapper">
                             <view class="evaluation-name">
-                                {{ trackItem.evaluationName }}
+<!--                                {{ trackItem.evaluationName }}-->
+                                {{ trackItem.releaseName }}
                             </view>
                             <view class="reply-track-info">
                                 发放数量:

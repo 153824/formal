@@ -8,17 +8,17 @@ Page({
             '小学',
             '初中',
             '高中',
-            '中技（中专 / 技校 / 职高）',
+            '中专',
             '大专',
             '本科',
-            '硕士研究生',
-            'MBA',
-            '博士研究生'
+            '硕士',
+            '博士',
+            '其他'
         ],
         birthday: '1995-01',
         education: -1,
         sex: ["男", "女"],
-        checkedSex: 0,
+        checkedSex: -1,
         // isGetPhone: false,
         // phoneNumber: "微信一键授权",
         verify: false,
@@ -94,7 +94,7 @@ Page({
                 receiveRecordId: receiveRecordId || ""
             },
             success: function (res) {
-                const {educationName, username, phone, birthday} = res;
+                const {educationName, username, phone, birthday, gender} = res;
                 const {eduArr} = _this.data;
                 const localUserInfo = wx.getStorageSync("userBaseInfo")
                 if (!birthday) {
@@ -106,6 +106,11 @@ Page({
                     } catch (e) {
                         console.error(e)
                     }
+                }
+                if(gender){
+                    _this.setData({
+                        checkedSex: gender === '男' ? 0 : 1,
+                    })
                 }
                 // if (!phone) {
                 //     res.phone = "微信一键授权";

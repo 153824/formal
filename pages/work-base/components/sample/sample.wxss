@@ -204,7 +204,9 @@
   font-weight: 600;
   color:rgba(118,118,118,1);
 }
-
+.question-stem-rich-text-img{
+  max-width: 100%;
+}
 /* 选中后的样式 */
 
 .container .selectItem.active {

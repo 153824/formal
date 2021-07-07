@@ -589,7 +589,7 @@ Page({
         return p;
     },
 
-    save() {
+    save(automatic=false) {
         const {answerSheet, receiveRecordId, chapterId} = this.data;
         if(chapterId){
             const p = new Promise((resolve, reject) => {
@@ -597,6 +597,7 @@ Page({
                     url: `../hola/receive_records/chapters/answers?receiveRecordId=${receiveRecordId}&chapterId=${chapterId}&userId=${wx.getStorageSync("userInfo").userId || ""}`,
                     method: 'POST',
                     data: {
+                        automatic,
                         responds: answerSheet,
                     },
                     success(res) {
@@ -626,6 +627,7 @@ Page({
                     url: `../hola/receive_records/answers?receiveRecordId=${receiveRecordId}&userId=${wx.getStorageSync("userInfo").userId || ""}`,
                     method: 'POST',
                     data: {
+                        automatic,
                         responds: answerSheet,
                     },
                     success(res) {
@@ -652,7 +654,7 @@ Page({
             content: '作答时间到，已自动提交',
             showCancel: false,
             success: ()=> {
-                this.save()
+                this.save(true)
             }
         })
     },

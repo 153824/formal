@@ -55,3 +55,11 @@ page{
 .user-info-button::after{
     border: unset !important;
 }
+.version{
+    position: absolute;
+    left: 50%;
+    bottom: 200rpx;
+    transform: translateX(-50%);
+    color: #CCC;
+    font-size: 30rpx;
+}

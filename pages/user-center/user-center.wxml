@@ -1,312 +1,315 @@
 <view wx:if="{{ !isWxWork && !is3rd }}">
-    <view class="user-page-wrapper">
-        <view class="head">
-            <view class="user-personal-info">
-                <block wx:if="{{!isGetUserInfo}}">
-                    <block wx:if="{{canIUseGetUserProfile}}">
-                        <button class="user-info-button" bind:tap="getUserProfile">
-                            <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
-                                   style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                            <text>点击授权头像</text>
-                        </button>
+        <view class="user-page-wrapper">
+            <view class="head">
+                <view class="user-personal-info">
+                    <block wx:if="{{!isGetUserInfo}}">
+                        <block wx:if="{{canIUseGetUserProfile}}">
+                            <button class="user-info-button" bind:tap="getUserProfile">
+                                <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                                       style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                                <text>点击授权头像</text>
+                            </button>
+                        </block>
+                        <block wx:else>
+                            <button class="user-info-button" open-type="getUserInfo"
+                                    bindgetuserinfo="getUserInfo">
+                                <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                                       style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                                <text>点击授权头像</text>
+                            </button>
+                        </block>
                     </block>
-                    <block wx:else>
-                        <button class="user-info-button" open-type="getUserInfo"
-                                bindgetuserinfo="getUserInfo">
-                            <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
-                                   style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                            <text>点击授权头像</text>
-                        </button>
+                    <block wx:if="{{isGetUserInfo}}">
+                        <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                               style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                        <text>{{userBaseInfo.nickname || userBaseInfo.realname}}</text>
                     </block>
-                </block>
-                <block wx:if="{{isGetUserInfo}}">
-                    <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
-                           style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                    <text>{{userBaseInfo.nickname || userBaseInfo.realname}}</text>
-                </block>
+                </view>
+            </view>
+            <view class="content">
+                <scroll-view class="content-scroll-area" scroll-y>
+                    <view class="user-action-item" bindtap="goToReceiveReports">
+                        <view class="title">
+                            <image src="./images/user@othors-invite-to-read-report.png"
+                                   style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                            <text>他人分享给我的报告</text>
+                        </view>
+                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                    </view>
+                    <view class="user-action-item" bindtap="goToReceiveEvaluation">
+                        <view class="title">
+                            <image src="./images/user@othors-invite-to-reply-report.png"
+                                   style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                            <text>他人邀请我参加的测评</text>
+                        </view>
+                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                    </view>
+                    <view class="user-action-item" bindtap="showServing">
+                        <view class="title">
+                            <image src="./images/user@connect-serving.png"
+                                   style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                            <text>企业套餐/定制咨询</text>
+                        </view>
+                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                    </view>
+                    <view class="user-action-item" bindtap="goToSetting">
+                        <view class="title">
+                            <image src="./images/user@othors-invite-to-reply-report.png"
+                                   style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                            <text>个人设置</text>
+                        </view>
+                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                    </view>
+                </scroll-view>
             </view>
         </view>
-        <view class="content">
-            <scroll-view class="content-scroll-area" scroll-y>
-                <view class="user-action-item" bindtap="goToReceiveReports">
-                    <view class="title">
-                        <image src="./images/user@othors-invite-to-read-report.png"
-                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
-                        <text>他人分享给我的报告</text>
-                    </view>
-                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
-                </view>
-                <view class="user-action-item" bindtap="goToReceiveEvaluation">
-                    <view class="title">
-                        <image src="./images/user@othors-invite-to-reply-report.png"
-                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
-                        <text>他人邀请我参加的测评</text>
-                    </view>
-                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
-                </view>
-                <view class="user-action-item" bindtap="showServing">
-                    <view class="title">
-                        <image src="./images/user@connect-serving.png"
-                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
-                        <text>企业套餐/定制咨询</text>
-                    </view>
-                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
-                </view>
-                <view class="user-action-item" bindtap="goToSetting">
-                    <view class="title">
-                        <image src="./images/user@othors-invite-to-reply-report.png"
-                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
-                        <text>个人设置</text>
-                    </view>
-                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
-                </view>
-            </scroll-view>
-        </view>
+        <hola-tab-bar active="{{ 3 }}" isWxWork="{{!isWxWork}}"></hola-tab-bar>
     </view>
-    <hola-tab-bar active="{{ 3 }}" isWxWork="{{!isWxWork}}"></hola-tab-bar>
-</view>
 <view wx:elif="{{ isWxWork && isWxWorkAdmin }}">
-    <view class="user-page-wrapper">
-        <view class="head">
-            <view class="user-personal-info">
-                <block wx:if="{{!isGetUserInfo}}">
-                    <block wx:if="{{canIUseGetUserProfile}}">
-                        <button class="user-info-button" bind:tap="getUserProfile">
-                            <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
-                                   style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                            <text>点击授权头像</text>
-                        </button>
+        <view class="user-page-wrapper">
+            <view class="head">
+                <view class="user-personal-info">
+                    <block wx:if="{{!isGetUserInfo}}">
+                        <block wx:if="{{canIUseGetUserProfile}}">
+                            <button class="user-info-button" bind:tap="getUserProfile">
+                                <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                                       style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                                <text>点击授权头像</text>
+                            </button>
+                        </block>
+                        <block wx:else>
+                            <button class="user-info-button" open-type="getUserInfo"
+                                    bindgetuserinfo="getUserInfo">
+                                <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                                       style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                                <text>点击授权头像</text>
+                            </button>
+                        </block>
                     </block>
-                    <block wx:else>
-                        <button class="user-info-button" open-type="getUserInfo"
-                                bindgetuserinfo="getUserInfo">
-                            <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
-                                   style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                            <text>点击授权头像</text>
-                        </button>
+                    <block wx:if="{{isGetUserInfo}}">
+                        <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                               style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                        <text>{{userBaseInfo.nickname || userBaseInfo.realname}}</text>
                     </block>
-                </block>
-                <block wx:if="{{isGetUserInfo}}">
-                    <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
-                           style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                    <text>{{userBaseInfo.nickname || userBaseInfo.realname}}</text>
-                </block>
+                </view>
+            </view>
+            <view class="content">
+                <scroll-view class="content-scroll-area" scroll-y>
+                    <view class="user-action-item" bindtap="goToReceiveReports">
+                        <view class="title">
+                            <image src="./images/user@othors-invite-to-read-report.png"
+                                   style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                            <text>他人分享给我的报告</text>
+                        </view>
+                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                    </view>
+                    <view class="user-action-item" bindtap="goToReceiveEvaluation">
+                        <view class="title">
+                            <image src="./images/user@othors-invite-to-reply-report.png"
+                                   style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                            <text>他人邀请我参加的测评</text>
+                        </view>
+                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                    </view>
+                    <view class="user-action-item" bindtap="showServing">
+                        <view class="title">
+                            <image src="./images/user@connect-serving.png"
+                                   style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                            <text>联系专属客服</text>
+                        </view>
+                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                    </view>
+                </scroll-view>
             </view>
         </view>
-        <view class="content">
-            <scroll-view class="content-scroll-area" scroll-y>
-                <view class="user-action-item" bindtap="goToReceiveReports">
-                    <view class="title">
-                        <image src="./images/user@othors-invite-to-read-report.png"
-                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
-                        <text>他人分享给我的报告</text>
-                    </view>
-                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
-                </view>
-                <view class="user-action-item" bindtap="goToReceiveEvaluation">
-                    <view class="title">
-                        <image src="./images/user@othors-invite-to-reply-report.png"
-                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
-                        <text>他人邀请我参加的测评</text>
-                    </view>
-                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
-                </view>
-                <view class="user-action-item" bindtap="showServing">
-                    <view class="title">
-                        <image src="./images/user@connect-serving.png"
-                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
-                        <text>联系专属客服</text>
-                    </view>
-                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
-                </view>
-            </scroll-view>
-        </view>
+        <hola-tab-bar active="{{ isWxWorkSuperAdmin ? 2 : 1 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{isWxWorkAdmin}}"></hola-tab-bar>
     </view>
-    <hola-tab-bar active="{{ isWxWorkSuperAdmin ? 2 : 1 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{isWxWorkAdmin}}"></hola-tab-bar>
-</view>
 <view wx:elif="{{ isWxWork && !isWxWorkAdmin }}">
-    <view class="user-page-wrapper">
-        <view class="head">
-            <view class="user-personal-info">
-                <block wx:if="{{!isGetUserInfo}}">
-                    <block wx:if="{{canIUseGetUserProfile}}">
-                        <button class="user-info-button" bind:tap="getUserProfile">
-                            <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
-                                   style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                            <text>点击授权头像</text>
-                        </button>
+        <view class="user-page-wrapper">
+            <view class="head">
+                <view class="user-personal-info">
+                    <block wx:if="{{!isGetUserInfo}}">
+                        <block wx:if="{{canIUseGetUserProfile}}">
+                            <button class="user-info-button" bind:tap="getUserProfile">
+                                <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                                       style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                                <text>点击授权头像</text>
+                            </button>
+                        </block>
+                        <block wx:else>
+                            <button class="user-info-button" open-type="getUserInfo"
+                                    bindgetuserinfo="getUserInfo">
+                                <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                                       style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                                <text>点击授权头像</text>
+                            </button>
+                        </block>
                     </block>
-                    <block wx:else>
-                        <button class="user-info-button" open-type="getUserInfo"
-                                bindgetuserinfo="getUserInfo">
-                            <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
-                                   style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                            <text>点击授权头像</text>
-                        </button>
+                    <block wx:if="{{isGetUserInfo}}">
+                        <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                               style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                        <text>{{userBaseInfo.nickname || userBaseInfo.realname}}</text>
                     </block>
-                </block>
-                <block wx:if="{{isGetUserInfo}}">
-                    <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
-                           style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                    <text>{{userBaseInfo.nickname || userBaseInfo.realname}}</text>
-                </block>
+                </view>
+            </view>
+            <view class="content">
+                <scroll-view class="content-scroll-area" scroll-y>
+                    <view class="user-action-item" bindtap="goToReceiveReports">
+                        <view class="title">
+                            <image src="./images/user@othors-invite-to-read-report.png"
+                                   style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                            <text>他人分享给我的报告</text>
+                        </view>
+                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                    </view>
+                    <view class="user-action-item" bindtap="showServing">
+                        <view class="title">
+                            <image src="./images/user@connect-serving.png"
+                                   style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                            <text>联系专属客服</text>
+                        </view>
+                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                    </view>
+                    <view class="user-action-item" bindtap="goToSetting">
+                        <view class="title">
+                            <image src="./images/user@othors-invite-to-reply-report.png"
+                                   style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                            <text>个人设置</text>
+                        </view>
+                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                    </view>
+                </scroll-view>
             </view>
         </view>
-        <view class="content">
-            <scroll-view class="content-scroll-area" scroll-y>
-                <view class="user-action-item" bindtap="goToReceiveReports">
-                    <view class="title">
-                        <image src="./images/user@othors-invite-to-read-report.png"
-                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
-                        <text>他人分享给我的报告</text>
-                    </view>
-                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
-                </view>
-                <view class="user-action-item" bindtap="showServing">
-                    <view class="title">
-                        <image src="./images/user@connect-serving.png"
-                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
-                        <text>联系专属客服</text>
-                    </view>
-                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
-                </view>
-                <view class="user-action-item" bindtap="goToSetting">
-                    <view class="title">
-                        <image src="./images/user@othors-invite-to-reply-report.png"
-                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
-                        <text>个人设置</text>
-                    </view>
-                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
-                </view>
-            </scroll-view>
-        </view>
+        <hola-tab-bar active="{{ 1 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{!isWxWorkAdmin}}"></hola-tab-bar>
     </view>
-    <hola-tab-bar active="{{ 1 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{!isWxWorkAdmin}}"></hola-tab-bar>
-</view>
 <view wx:elif="{{ is3rd && is3rdAdmin }}">
-    <view class="user-page-wrapper">
-        <view class="head">
-            <view class="user-personal-info">
-                <block wx:if="{{!isGetUserInfo}}">
-                    <block wx:if="{{canIUseGetUserProfile}}">
-                        <button class="user-info-button" bind:tap="getUserProfile">
-                            <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
-                                   style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                            <text>授权登录以显示头像昵称</text>
-                        </button>
+        <view class="user-page-wrapper">
+            <view class="head">
+                <view class="user-personal-info">
+                    <block wx:if="{{!isGetUserInfo}}">
+                        <block wx:if="{{canIUseGetUserProfile}}">
+                            <button class="user-info-button" bind:tap="getUserProfile">
+                                <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                                       style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                                <text>授权登录以显示头像昵称</text>
+                            </button>
+                        </block>
+                        <block wx:else>
+                            <button class="user-info-button" open-type="getUserInfo"
+                                    bindgetuserinfo="getUserInfo">
+                                <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                                       style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                                <text>授权登录以显示头像昵称</text>
+                            </button>
+                        </block>
                     </block>
-                    <block wx:else>
-                        <button class="user-info-button" open-type="getUserInfo"
-                                bindgetuserinfo="getUserInfo">
-                            <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
-                                   style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                            <text>授权登录以显示头像昵称</text>
-                        </button>
+                    <block wx:if="{{isGetUserInfo}}">
+                        <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                               style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                        <text>{{userBaseInfo.nickname || userBaseInfo.realname || userBaseInfo.teamName + '的员工'}}</text>
                     </block>
-                </block>
-                <block wx:if="{{isGetUserInfo}}">
-                    <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
-                           style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                    <text>{{userBaseInfo.nickname || userBaseInfo.realname || userBaseInfo.teamName + '的员工'}}</text>
-                </block>
+                </view>
+            </view>
+            <view class="content">
+                <scroll-view class="content-scroll-area" scroll-y>
+                    <view class="user-action-item" bindtap="goToReceiveReports">
+                        <view class="title">
+                            <image src="./images/user@othors-invite-to-read-report.png"
+                                   style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                            <text>他人邀请我查看的报告</text>
+                        </view>
+                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                    </view>
+                    <view class="user-action-item" bindtap="goToReceiveEvaluation">
+                        <view class="title">
+                            <image src="./images/user@othors-invite-to-reply-report.png"
+                                   style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                            <text>他人邀请我参与的测评</text>
+                        </view>
+                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                    </view>
+                    <view class="user-action-item" bindtap="showServing">
+                        <view class="title">
+                            <image src="./images/user@connect-serving.png"
+                                   style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                            <text>联系客服</text>
+                        </view>
+                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                    </view>
+                    <view class="user-action-item" bindtap="goToSetting">
+                        <view class="title">
+                            <image src="./images/user@othors-invite-to-reply-report.png"
+                                   style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                            <text>个人设置</text>
+                        </view>
+                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                    </view>
+                </scroll-view>
             </view>
         </view>
-        <view class="content">
-            <scroll-view class="content-scroll-area" scroll-y>
-                <view class="user-action-item" bindtap="goToReceiveReports">
-                    <view class="title">
-                        <image src="./images/user@othors-invite-to-read-report.png"
-                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
-                        <text>他人邀请我查看的报告</text>
-                    </view>
-                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
-                </view>
-                <view class="user-action-item" bindtap="goToReceiveEvaluation">
-                    <view class="title">
-                        <image src="./images/user@othors-invite-to-reply-report.png"
-                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
-                        <text>他人邀请我参与的测评</text>
-                    </view>
-                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
-                </view>
-                <view class="user-action-item" bindtap="showServing">
-                    <view class="title">
-                        <image src="./images/user@connect-serving.png"
-                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
-                        <text>联系客服</text>
-                    </view>
-                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
-                </view>
-                <view class="user-action-item" bindtap="goToSetting">
-                    <view class="title">
-                        <image src="./images/user@othors-invite-to-reply-report.png"
-                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
-                        <text>个人设置</text>
-                    </view>
-                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
-                </view>
-            </scroll-view>
-        </view>
+        <hola-tab-bar active="{{ 1 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{isWxWorkAdmin}}"></hola-tab-bar>
     </view>
-    <hola-tab-bar active="{{ 1 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{isWxWorkAdmin}}"></hola-tab-bar>
-</view>
 <view wx:elif="{{ is3rd && !is3rdAdmin }}">
-    <view class="user-page-wrapper">
-        <view class="head">
-            <view class="user-personal-info">
-                <block wx:if="{{!isGetUserInfo}}">
-                    <block wx:if="{{canIUseGetUserProfile}}">
-                        <button class="user-info-button" bind:tap="getUserProfile">
-                            <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
-                                   style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                            <text>授权登录以显示头像昵称</text>
-                        </button>
+        <view class="user-page-wrapper">
+            <view class="head">
+                <view class="user-personal-info">
+                    <block wx:if="{{!isGetUserInfo}}">
+                        <block wx:if="{{canIUseGetUserProfile}}">
+                            <button class="user-info-button" bind:tap="getUserProfile">
+                                <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                                       style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                                <text>授权登录以显示头像昵称</text>
+                            </button>
+                        </block>
+                        <block wx:else>
+                            <button class="user-info-button" open-type="getUserInfo"
+                                    bindgetuserinfo="getUserInfo">
+                                <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                                       style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                                <text>授权登录以显示头像昵称</text>
+                            </button>
+                        </block>
                     </block>
-                    <block wx:else>
-                        <button class="user-info-button" open-type="getUserInfo"
-                                bindgetuserinfo="getUserInfo">
-                            <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
-                                   style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                            <text>授权登录以显示头像昵称</text>
-                        </button>
+                    <block wx:if="{{isGetUserInfo}}">
+                        <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
+                               style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
+                        <text>{{userBaseInfo.nickname || userBaseInfo.realname || userBaseInfo.teamName + '的员工'}}</text>
                     </block>
-                </block>
-                <block wx:if="{{isGetUserInfo}}">
-                    <image src="{{userBaseInfo.avatar || userBaseInfo.avatarUrl || '../report/images/report@icon-avatar.png'}}"
-                           style="margin-bottom: 32rpx;width: 128rpx;height: 128rpx;border-radius: 50%;"></image>
-                    <text>{{userBaseInfo.nickname || userBaseInfo.realname || userBaseInfo.teamName + '的员工'}}</text>
-                </block>
+                </view>
+            </view>
+            <view class="content">
+                <scroll-view class="content-scroll-area" scroll-y>
+                    <view class="user-action-item" bindtap="goToReceiveReports">
+                        <view class="title">
+                            <image src="./images/user@othors-invite-to-read-report.png"
+                                   style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                            <text>他人分享给我的报告</text>
+                        </view>
+                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                    </view>
+                    <view class="user-action-item" bindtap="showServing">
+                        <view class="title">
+                            <image src="./images/user@connect-serving.png"
+                                   style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                            <text>联系专属客服</text>
+                        </view>
+                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                    </view>
+                    <view class="user-action-item" bindtap="goToSetting">
+                        <view class="title">
+                            <image src="./images/user@othors-invite-to-reply-report.png"
+                                   style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                            <text>个人设置</text>
+                        </view>
+                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                    </view>
+                </scroll-view>
             </view>
         </view>
-        <view class="content">
-            <scroll-view class="content-scroll-area" scroll-y>
-                <view class="user-action-item" bindtap="goToReceiveReports">
-                    <view class="title">
-                        <image src="./images/user@othors-invite-to-read-report.png"
-                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
-                        <text>他人分享给我的报告</text>
-                    </view>
-                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
-                </view>
-                <view class="user-action-item" bindtap="showServing">
-                    <view class="title">
-                        <image src="./images/user@connect-serving.png"
-                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
-                        <text>联系专属客服</text>
-                    </view>
-                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
-                </view>
-                <view class="user-action-item" bindtap="goToSetting">
-                    <view class="title">
-                        <image src="./images/user@othors-invite-to-reply-report.png"
-                               style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
-                        <text>个人设置</text>
-                    </view>
-                    <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
-                </view>
-            </scroll-view>
-        </view>
+        <hola-tab-bar active="{{ 1 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{!isWxWorkAdmin}}"></hola-tab-bar>
     </view>
-    <hola-tab-bar active="{{ 1 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{!isWxWorkAdmin}}"></hola-tab-bar>
-</view>
 <hola-serving id="serving" visibility="hidden"></hola-serving>
+<view class='version'>
+    V{{version||'8.8.8'}}
+</view>

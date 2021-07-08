@@ -6,8 +6,7 @@ Page({
         isWxWork: false,
         isWxWorkAdmin: false,
         is3rd: false,
-        is3rdAdmin: false,
-        version: wx.getAccountInfoSync().miniProgram.version
+        is3rdAdmin: false
     },
     onLoad: function (options) {
         this.getBindInfo();

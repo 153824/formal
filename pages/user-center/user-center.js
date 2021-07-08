@@ -9,7 +9,8 @@ Page({
         userBaseInfo: {},
         isGetAccessToken: app.checkAccessToken(),
         isGetUserInfo: false,
-        canIUseGetUserProfile: !!wx.getUserProfile ? true : false
+        canIUseGetUserProfile: !!wx.getUserProfile ? true : false,
+        version: wx.getAccountInfoSync().miniProgram.version
     },
     onLoad: function (options) {
         app.setDataOfPlatformInfo(this);

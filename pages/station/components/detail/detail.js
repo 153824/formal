@@ -193,10 +193,6 @@ Page({
             app.doAjax({
                 url: `inventories/${that.data.evaluationId}`,
                 method: "get",
-                data: {
-                  userId: '5da95e38c8959c00748995c3',
-                  teamId: '5dc4fe9c844bb40075b98901'
-                },
                 success: function (res) {
                     const evaluationVoucherInfo = res;
                     let hasVoucher = true,

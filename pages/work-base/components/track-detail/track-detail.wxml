@@ -4,7 +4,7 @@
             <image style="height: 168rpx;width: 168rpx;border-radius: 10rpx;" src="{{ cover }}"></image>
         </view>
         <view class="info">
-            <view class="title">{{ evaluationName }}</view>
+            <view class="title">{{ releaseName }}</view>
             <view class="count">
                 <text>发放数量：{{ amount }}份</text>
                 <text wx:if="{{ status === 'REVOKED' }}" style="color: rgba(255,0,0,1);"> ( 已撤回{{ revoked }}份 )

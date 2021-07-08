@@ -358,7 +358,7 @@ Page({
                         text = "开始作答";
                         break;
                     case "UNAVAILABLE":
-                        text = "分享已失效";
+                        text = "测评可用数量不足";
                         break;
                     case "APPLYING":
                         text = "等待hr通过申请";

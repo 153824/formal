@@ -694,6 +694,7 @@
             <view wx:if="{{dlgName=='notOver'}}">
                 <view class="msgTitle">作答完成率</view>
                 <view class="msgStatusDanger">异常</view>
+                <view class="msg">本测评共{{respondAnalysis.completion.quesCount}}题，受测者仅完成了其中{{respondAnalysis.completion.respCount}}题</view>
             </view>
             <view wx:if="{{dlgName=='unTimeDlg'}}">
                 <view class="msgTitle">作答时长</view>

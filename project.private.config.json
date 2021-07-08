@@ -13,8 +13,7 @@
     "miniprogram": {
       "list": [
         {
-          "id": 0,
-          "name": "pages/home/home",
+          "name": "首页",
           "pathName": "pages/home/home",
           "query": "q=https://api.luoke101.com/s/5f6af8a433c1241d23572834",
           "scene": null

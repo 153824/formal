@@ -115,7 +115,7 @@ App({
                     }
                 }
             })
-        })
+        });
 
         updateManager.onUpdateFailed(function () {
             wx.showModal({
@@ -128,7 +128,7 @@ App({
                     }
                 }
             })
-        })
+        });
 
         const referrerInfo = options.referrerInfo;
         const menuBtnObj = wx.getMenuButtonBoundingClientRect();
@@ -188,6 +188,7 @@ App({
                 }
             },
         });
+
         /**
          * @Description: 获取设备信息
          * @author: WE!D

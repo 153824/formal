@@ -77,14 +77,6 @@ page{
     color: #313645!important;
     line-height: 44rpx!important;
 }
-.version{
-    position: absolute;
-    left: 50%;
-    bottom: 50rpx;
-    transform: translateX(-50%);
-    color: #CCC;
-    font-size: 30rpx;
-}
 /*.van-cell__value{*/
 /*    margin-left: 20rpx;*/
 /*}*/

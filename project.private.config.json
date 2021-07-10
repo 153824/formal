@@ -70,7 +70,7 @@
         {
           "name": "领取报告",
           "pathName": "pages/report/report",
-          "query": "receivedRecordId=607a8495d96e4a38348da895",
+          "query": "receivedRecordId=60e808820c294e5d6103f7d0",
           "scene": null
         },
         {

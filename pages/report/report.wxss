@@ -1470,4 +1470,36 @@ swiper, swiper-item {
 .histogram-row{
     height: 520rpx;
 }
-
+.usage-manual{
+    height: auto;
+}
+.usage-manual rich-text{
+    line-height: 48rpx!important;
+}
+.see-more-wrapper{
+    display: flex;
+    flex-direction: column;
+}
+.more{
+    align-self: flex-end;
+}
+.more{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.more text{
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #353EE8;
+    line-height: 40rpx;
+}
+.more > view{
+    display: flex;
+    align-items: center;
+}
+.usage-manual-max-height{
+    height: 240rpx;
+    overflow: hidden;
+}

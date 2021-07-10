@@ -73,7 +73,7 @@
 .van-grid-content-custom{
     transform-origin: center center;
     /*transform: rotate(90deg);*/
-    background-color: rgba(251, 251, 251, 1);
+    background-color: rgba(251, 251, 251, 1)!important;
     border-radius: 10rpx;
 }
 .van-grid-text-custom{

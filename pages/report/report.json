@@ -5,6 +5,7 @@
     "hola-radar": "./components/radar/radar",
     "hola-grid": "./components/grid/grid",
     "hola-mask": "../../common/mask/mask",
-    "hola-personality": "./components/personality/personality"
+    "hola-personality": "./components/personality/personality",
+    "van-icon": "/common/vant-weapp/dist/icon/index"
   }
 }

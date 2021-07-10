@@ -351,7 +351,10 @@ Page({
         options: {},
         analysisCount:0,
         // 适配事业驱动力测评无需显示维度
-        filterEvaluationId: ['5efdab04c4d9660006a48f4f']
+        filterEvaluationId: ['5efdab04c4d9660006a48f4f'],
+        canIUnfold: true,
+        maxHeight: 0,
+        seeItActive: true
     },
     properties: {
 		commond: {            // 额外节点
@@ -385,6 +388,46 @@ Page({
                 this.canIUseShareAt({id,options});
             };
         }
+    },
+
+    onReady() {
+        this.computeHeight()
+    },
+
+    seeIt() {
+        const {seeItActive} = this.data;
+        this.setData({
+            seeItActive: !seeItActive,
+        });
+    },
+
+    computeHeight() {
+        const that = this;
+        setTimeout(()=>{
+            const query = wx.createSelectorQuery()
+            query.select(`#usage-manual`).boundingClientRect(res=>{
+                console.log(res);
+                that.setData({
+                    canIUnfold: res.height / app.rate > 240,
+                    maxHeight: 240
+                })
+            }).exec();
+            that.setData({
+                seeItActive: false
+            })
+        }, 100)
+        // const query = wx.createSelectorQuery()
+        // query.selectAll(`#usage-manual`).fields({
+        //     size: true
+        // }).exec(function (res) {
+        //     for (let i = 0; i < res[0].length; i++) {
+        //         const contentHeight = res[0][i].height;
+        //         that.setData({
+        //             canIUnfold: contentHeight / app.rate > 240,
+        //             maxHeight: 240
+        //         })
+        //     }
+        // })
     },
 
     canIUseShareAt({options,id}) {
@@ -439,12 +482,6 @@ Page({
         return acceptReportPromise;
     },
 
-    onReady: function () {
-        let that = this;
-        setTimeout(function () {
-            that.scrollSelectItem(0, false);
-        }, 2000);
-    },
     /**
      * 获取报告详情
      */

@@ -34,6 +34,7 @@
  * ********************************************************************************************************************/
 const uma = require('umtrack-wx');
 const qiniuUpload = require("./utils/qiniuUpload");
+let isUpload = false;
 qiniuUpload.init({
     region: 'SCN',
     domain: 'ihola.luoke101.com',
@@ -102,9 +103,11 @@ App({
         // wx.setBackgroundFetchToken({
         //     token: ''
         // })
+
         const updateManager = wx.getUpdateManager();
 
         updateManager.onUpdateReady(function () {
+            isUpload = true;
             wx.showModal({
                 title: '更新提示',
                 content: '新版本已经准备好，是否重启应用？',
@@ -112,6 +115,8 @@ App({
                     if (res.confirm) {
                         // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
                         updateManager.applyUpdate()
+                    } else {
+                        isUpload = false
                     }
                 }
             })
@@ -125,6 +130,8 @@ App({
                     if (res.confirm) {
                         // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
                         updateManager.applyUpdate()
+                    } else {
+                        isUpload = false
                     }
                 }
             })
@@ -424,12 +431,12 @@ App({
             header: params.header || {},
             success: function (ret) {
                 wx.hideLoading();
-                if (ret.statusCode === 403) {
+                if (ret.statusCode === 403 && !isUpload) {
                     wx.reLaunch({
                         url: "/pages/forbidden/forbidden"
                     })
                 }
-                if (ret.statusCode === 401) {
+                if (ret.statusCode === 401 && !isUpload) {
                     const pages = getCurrentPages()
                     if (pages[pages.length - 1].route.indexOf('pages/auth/auth') === -1) {
                         that.toast('登录信息已失效~');
@@ -440,7 +447,7 @@ App({
                         }, 2000)
                     }
                 }
-                if (ret.statusCode === 400 && ret.data.code === '402002') {
+                if (ret.statusCode === 400 && ret.data.code === '402002' && !isUpload) {
                     let boundInfo = JSON.stringify({});
                     if (ret.data.data) {
                         boundInfo = JSON.stringify(ret.data.data);
@@ -449,7 +456,7 @@ App({
                         url: `/pages/account/subpages/unbound/unbound?boundInfo=${boundInfo}`
                     })
                 }
-                if(ret.statusCode === 400 && ret.data.code === '909001'){
+                if(ret.statusCode === 400 && ret.data.code === '909001' && !isUpload){
                     wx.navigateTo({
                         url: `/pages/auth/subpages/maintain/maintain?tip=${ret.data.msg}`
                     })
@@ -854,9 +861,9 @@ App({
     },
 
     getAuthCode() {
-        if (this.checkAccessToken()) {
-            return;
-        }
+        // if (this.checkAccessToken()) {
+        //     return;
+        // }
         const targetWxLoginFunc = this.wxWorkInfo.isWxWork ? wx.qy.login : wx.login;
         const targetGetAuthCodeFunc = this.wxWorkInfo.isWxWork ? this.wxWorkUserLogin : this.userLogin;
         const wxLogin = new Promise((resolve, reject) => {
@@ -924,6 +931,7 @@ App({
                         if (tokenInfo && tokenInfo.accessToken) {
                             userInfo.tokenInfo = tokenInfo
                             wx.setStorageSync('userInfo', userInfo)
+                            that.getAdminInfo(tokenInfo)
                         }
                         wx.setStorageSync('authCode', authCode)
                         resolve(res)

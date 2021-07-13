@@ -460,6 +460,7 @@ App({
                     wx.navigateTo({
                         url: `/pages/auth/subpages/maintain/maintain?tip=${ret.data.msg}`
                     })
+                    return;
                 }
                 var retData = ret.data;
                 if (ret.statusCode >= 400) {

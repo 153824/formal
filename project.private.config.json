@@ -216,6 +216,12 @@
           "pathName": "pages/station/components/sharePaper/sharePaper",
           "query": "scene=60c1cf6c92f2705539f09da4",
           "scene": null
+        },
+        {
+          "name": "系统维护",
+          "pathName": "pages/auth/subpages/maintain/maintain",
+          "query": "receivedRecordId=60e808820c294e5d6103f7d0",
+          "scene": null
         }
       ]
     }

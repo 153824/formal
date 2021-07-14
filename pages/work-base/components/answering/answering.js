@@ -192,21 +192,27 @@ Page({
     },
 
     openImg(event) {
+        const {questionStep} = event.currentTarget.dataset;
+        const {answerSheet, questions} = this.data;
+        answerSheet[questions[questionStep].id] = this.answerSheetItem(questionStep);
         var hasVanishImageSetting = this.data.hasVanishImageSetting
-        hasVanishImageSetting[event.currentTarget.dataset.questionStep].isShow = false
-        var time = hasVanishImageSetting[event.currentTarget.dataset.questionStep].standingInSeconds
+        hasVanishImageSetting[questionStep].isShow = false
+        var time = hasVanishImageSetting[questionStep].standingInSeconds
         var intervarl = setInterval(()=>{
             time--
             if(time===0){
                 clearInterval(intervarl)
             }
-            hasVanishImageSetting[event.currentTarget.dataset.questionStep].standingInSeconds = time
+            hasVanishImageSetting[questionStep].standingInSeconds = time
             this.setData({
                 hasVanishImageSetting
             })
         },1000)
         this.setData({
-            hasVanishImageSetting
+            hasVanishImageSetting,
+            answerSheet: {...answerSheet}
+        }, ()=>{
+            this.memory();
         });
     },
 
@@ -693,11 +699,15 @@ Page({
 
     answerSheetItem(questionIndex) {
         const {questions} = this.data;
+        console.log(questions[questionIndex].id);
         const {type, options, indexedOptions} = questions[questionIndex];
         const targetItem = {
             questionId: questions[questionIndex].id,
             indexes: type === 'PROPORTION' ? new Array(options.length).fill(0) : [],
         };
+        if (questions[questionIndex]['vanishImageSetting']) {
+            targetItem.exposed = true;
+        }
         if(type === 'SORTING'){
             targetItem.indexes = indexedOptions.map(item=>{
                 return item.index;

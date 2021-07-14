@@ -25,11 +25,11 @@
                                                nodes="<p>{{questions[questionStep].type === 'MULTIPLE'?multipleQuesHTML:''}}{{ questions[questionStep].type === 'PROPORTION' ? percentQuesHTML:'' }}{{util.richTextFilter(questions[questionStep].stem)}}</p>">
                                     </rich-text>
                                 </view>
-                                <view wx:if="{{hasVanishImageSetting[questionStep]&&hasVanishImageSetting[questionStep].isShow}}"
+                                <view wx:if="{{hasVanishImageSetting[questionStep]&&hasVanishImageSetting[questionStep].isShow&&!answerSheet[quesItem.id].exposed}}"
                                       data-question-step="{{questionStep}}" class="titleImgButton" bindtap="openImg">
                                     显示图片
                                 </view>
-                                <view wx:elif="{{hasVanishImageSetting[questionStep]&&hasVanishImageSetting[questionStep].standingInSeconds>0}}"
+                                <view wx:elif="{{hasVanishImageSetting[questionStep]&&hasVanishImageSetting[questionStep].standingInSeconds>0&&!answerSheet[quesItem.id].exposed}}"
                                       data-question-step="{{questionStep}}"  bindtap="openImg" class="showImg">
                                     <rich-text class="imgContent" space="nbsp"
                                                nodes="<p>{{util.richTextFilter(hasVanishImageSetting[questionStep].tag)}}</p>">

@@ -900,6 +900,7 @@ App({
                 },
                 noLoading: true,
                 success: function (res) {
+                    wx.setStorageSync('isNew', res.isNew);
                     resolve(res)
                 },
                 error: function (err) {

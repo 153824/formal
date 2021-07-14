@@ -27,7 +27,7 @@
         {
           "name": "报告详情",
           "pathName": "pages/report/report",
-          "query": "receiveRecordId=60e3b7dccbdefb66b556e087",
+          "query": "receiveRecordId=60ee9c29b0532565d83e4adc",
           "scene": null
         },
         {
@@ -51,7 +51,7 @@
         {
           "name": "小程序码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "scene=60ee7feb31e86e3a0e130da7",
+          "query": "scene=60eea62458d0d62d8502e332",
           "scene": null
         },
         {

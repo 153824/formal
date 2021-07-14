@@ -79,6 +79,12 @@ Page({
         app.setDataOfPlatformInfo(this);
         const that = this;
         let {isWxWorkAdmin, isWxWork, is3rd, is3rdAdmin} = this.data;
+        if (!app.checkAccessToken()) {
+            this.setData({
+                maskTrigger: false
+            })
+            return;
+        }
         if (!isWxWork && !is3rd) {
             // TODO UM埋点，跟踪哪个用户使用哪份常模
             const inventoriesPromise = new Promise((resolve, reject) => {

@@ -116,10 +116,10 @@
         </view>
         <!-- 未购买过测评的按钮组且未买断 -->
         <view class="buy-group"
-              wx:elif="{{ !evaluationVoucherInfo.hadConsumed && !evaluationVoucherInfo.buyoutInfo.hadBuyout }}">
+              wx:elif="{{ !evaluationVoucherInfo.hadConsumed && !evaluationVoucherInfo.buyoutInfo.hadBuyout || isNew }}">
             <button class="meal meal-button" style="background-color: rgba(255,243,224,1);outline: none;border: none;"
                     open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}" bindgetphonenumber="getPhoneNumber" bind:tap="{{isGetAccessToken ? 'getNewerTicket' : ''}}">
-                <meal isShow="{{ evaluationVoucherInfo.isBeginner }}" title="新用户领券，免费体验测评"
+                <meal isShow="{{ evaluationVoucherInfo.isBeginner || isNew }}" title="新用户领券，免费体验测评"
                       subIcon="../../images/icon/icon@banner-ticket.gif" subtitle="立即领券 >" icon="false"></meal>
             </button>
             <view class="meal" bindtap="buyByTicket">

@@ -35,7 +35,8 @@ Page({
         deprecatedTicket: 0,
         customNorms: [],
         isGetAccessToken: app.checkAccessToken(),
-        authCodeCounter: 0
+        authCodeCounter: 0,
+        isNew: wx.getStorageSync('isNew')
     },
 
     onLoad: function (options) {
@@ -57,6 +58,9 @@ Page({
     onShow: function () {
         const that = this;
         this._checkUserIsBindPhone();
+        this.setData({
+            isNew: wx.getStorageSync('isNew')
+        });
         const evaluationDetailPromise = new Promise((resolve, reject) => {
             app.doAjax({
                 url: 'evaluations/outline',
@@ -103,6 +107,10 @@ Page({
             });
         });
         const evaluationVoucherPromise = new Promise(((resolve, reject) => {
+            if (!app.checkAccessToken()) {
+                reject();
+                return;
+            }
             app.doAjax({
                 url: `inventories/${that.data.evaluationId}`,
                 method: "get",
@@ -154,19 +162,22 @@ Page({
                 }
             })
         }));
-        Promise.race([evaluationDetailPromise, evaluationVoucherPromise]).then(values => {
-            setTimeout(() => {
-                this.setData({
-                    loading: false,
-                })
-            }, 500)
-        }).catch(err => {
-            this.setData({
-                loading: false,
+        Promise.race([evaluationDetailPromise, evaluationVoucherPromise])
+            .then(values => {
+                setTimeout(() => {
+                    this.setData({
+                        loading: false,
+                    })
+                }, 500)
             })
-        });
+            .catch(err => {
+                setTimeout(() => {
+                    this.setData({
+                        loading: false,
+                    })
+                }, 500)
+            });
         this.setData({
-            // app.checkAccessToken()
             isGetAccessToken: app.checkAccessToken()
         })
     },
@@ -702,7 +713,7 @@ Page({
             }));
             getAccessToken.then(() => {
                 app.doAjax({
-                    url: `wework/users/${wx.getStorageSync('userInfo').id}`,
+                    url: `wework/users/${wx.getStorageSync('userInfo').userId}`,
                     method: "get",
                     success: function (res) {
                         if (res.phone && mark !== 'dont-get-ticket') {
@@ -745,6 +756,11 @@ Page({
                         }
                         that.setData({
                             isGetAccessToken: true
+                        })
+                        // 授权登录后，新用户设置为false，防止领券的提示语异常
+                        wx.setStorageSync('isNew', false);
+                        that.setData({
+                            isNew: false
                         })
                     }
                 })

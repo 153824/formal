@@ -27,7 +27,7 @@
         {
           "name": "报告详情",
           "pathName": "pages/report/report",
-          "query": "receiveRecordId=60ee9c29b0532565d83e4adc",
+          "query": "receiveRecordId=60e13fbacbdefb66b556de0a",
           "scene": null
         },
         {

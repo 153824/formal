@@ -111,8 +111,7 @@
             <view class="title" style="margin-top:80rpx;" wx:if="{{ usageManual.display }}">
                 <text class="underLineBg assessor-info">{{usageManual.headline}}</text>
             </view>
-            <view class="list flex see-more-wrapper" wx:if="{{ usageManual.display }}"
-                  style="padding-right: 54rpx;padding-left: 24rpx;">
+            <view class="list flex see-more-wrapper" wx:if="{{ usageManual.display }}">
                 <view id="usage-manual" class="usage-manual {{ seeItActive ? '' : 'usage-manual-max-height' }}">
                     <rich-text nodes="<p class='usage-manual {{ seeItActive ? '' : 'usage-manual-max-height' }}'>{{usageManual.description||''}}</p>" type="text"></rich-text>
                 </view>

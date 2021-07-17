@@ -53,6 +53,14 @@
                         </view>
                         <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
+                    <view class="user-action-item" bindtap="goToTicketCenter">
+                        <view class="title">
+                            <image src="https://ihola.luoke101.com/icon%40ticket.png"
+                                   style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                            <text>卡券中心</text>
+                        </view>
+                        <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                    </view>
                     <view class="user-action-item" bindtap="goToSetting">
                         <view class="title">
                             <image src="./images/user@othors-invite-to-reply-report.png"
@@ -110,6 +118,14 @@
                             <image src="./images/user@othors-invite-to-reply-report.png"
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
                             <text>他人邀请我参加的测评</text>
+                        </view>
+                        <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                    </view>
+                    <view wx:if="{{isWxWorkSuperAdmin}}" class="user-action-item" bindtap="goToTicketCenter">
+                        <view class="title">
+                            <image src="https://ihola.luoke101.com/icon%40ticket.png"
+                                   style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                            <text>卡券中心</text>
                         </view>
                         <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
@@ -238,6 +254,14 @@
                             <image src="./images/user@connect-serving.png"
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
                             <text>联系客服</text>
+                        </view>
+                        <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                    </view>
+                    <view wx:if="{{is3rdAdmin}}" class="user-action-item" bindtap="goToTicketCenter">
+                        <view class="title">
+                            <image src="https://ihola.luoke101.com/icon%40ticket.png"
+                                   style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
+                            <text>卡券中心</text>
                         </view>
                         <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>

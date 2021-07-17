@@ -101,7 +101,7 @@
             <van-image width="556rpx" height="990rpx" src="{{sharePaperImg}}" lazy-load show-loading use-loading-slot fill
                        show-menu-by-longpress="true">
                 <van-loading slot="loading" size="0" vertical>
-                    <image src="../../../../images/icon/icon@icon-loading.png" class="loading"></image>
+                    <image src="https://ihola.luoke101.com/icon%40icon-loading.png" class="loading"></image>
                 </van-loading>
             </van-image>
             <image class="close-icon" src="../../images/manager@icon-close.png" bindtap="closeQrcode"></image>

@@ -6,7 +6,7 @@ Component({
     properties: {
         image: {
             type: String,
-            value: "../../images/icon/icon@icon-serving.png"
+            value: "https://ihola.luoke101.com/icon%40icon-serving.png"
         },
         mobile: {
             type: String,

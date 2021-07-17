@@ -10,7 +10,7 @@
                     <view class="reportMsg">
                         <text class="paperName">《{{item.evaluationName}}》</text>
                         <image wx:if="{{item.status === 'FINISHED'}}" class="finishImg"
-                               src="../../images/report-list@icon-done.png"></image>
+                               src="https://ihola.luoke101.com/report-list%40icon-done.png"></image>
                         <text class="status" wx:elif="{{item.status === 'REVOKED'}}">已失效</text>
                         <text class="status" wx:else>未完成</text>
                     </view>

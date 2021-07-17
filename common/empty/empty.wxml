@@ -1,11 +1,11 @@
 <!--common/empty/empty.wxml-->
 <view wx:if="{{ type === 'default' && isShow }}" class="empty-wrapper {{ customClass ? customClass : '' }}">
-    <image src="../../images/icon/icon@icon-empty-type-1.png"></image>
+    <image src="https://ihola.luoke101.com/icon%40icon-empty-type-1.png"></image>
     <view>{{ title }}</view>
 </view>
 
 <view wx:if="{{ type === 'scan' && isShow }}" class="empty-wrapper">
-    <image src="../../images/icon/icon@icon-empty-type-2.png" style="height:230rpx;width:230rpx;margin-bottom: 20rpx;"></image>
+    <image src="https://ihola.luoke101.com/icon%40icon-empty-type-2.png" style="height:230rpx;width:230rpx;margin-bottom: 20rpx;"></image>
     <view style="margin-bottom: 46rpx;">
         {{ title }}
     </view>

@@ -21,7 +21,7 @@
                       data-count="{{ evaluationItem.available }}"
                       data-index="{{ evaluationIndex }}"
                 >
-                    <image src="../../images/work-base@icon-plane.png"
+                    <image src="https://ihola.luoke101.com/work-base%40icon-plane.png"
                            style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
                     <text>发测评</text>
                 </view>

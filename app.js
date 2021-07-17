@@ -34,6 +34,7 @@
  * ********************************************************************************************************************/
 const uma = require('umtrack-wx');
 const qiniuUpload = require("./utils/qiniuUpload");
+const plugin = requirePlugin("chatbot");
 let isUpload = false;
 qiniuUpload.init({
     region: 'SCN',
@@ -103,6 +104,25 @@ App({
         // wx.setBackgroundFetchToken({
         //     token: ''
         // })
+        plugin.init({
+            appid: "VEgbxLa9kYqzGOzstdeSF3xDbkS9zK", //机器人Id
+            openid: "o7Jo85PuWvi98dhA5SmLGcLDOkcQ", //用户的openid，必填项，可通过wx.login()获取code，然后通过后台接口获取openid
+            userHeader: "", // 用户头像
+            userName: "", // 用户昵称
+            anonymous: false, // 是否允许匿名用户评价，默认为false，设为ture时，未传递userName、userHeader两个字段时将弹出登录框
+            guideCardHeight: 50,
+            operateCardHeight: 120,
+            history: true,
+            historySize: 60,
+            guideList: [
+                "小微写诗",
+                "一江春水连海平",
+                "朋友",
+                "故乡",
+            ],
+            success: () => {}, //非必填
+            fail: (error) => {}, //非必填
+        });
 
         const updateManager = wx.getUpdateManager();
 

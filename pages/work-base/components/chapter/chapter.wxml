@@ -7,31 +7,31 @@
     <view wx:for="{{synopses}}" wx:for-index="synopsesIndex" wx:for-item="synopsesItem" wx:key="unique" class="chapters-contentItem">
       <view class="chapters-chapterTitle">
         <text>{{synopsesItem.title}}</text>
-        <image wx:if="{{synopsesItem.status === 'LOCKING'}}" src="../../images/chapter-suo.png"></image>
+        <image wx:if="{{synopsesItem.status === 'LOCKING'}}" src="https://ihola.luoke101.com/chapter-suo.png"></image>
       </view>
       <view class="chapters-chapterInfo">
         <view class="chapters-chapterCount">
           <view>
-            <image src="../../images/chapter-que.png"></image>
+            <image src="https://ihola.luoke101.com/chapter-que.png"></image>
             <text>题量：{{synopsesItem.questionCount}}题</text>
           </view>
           <view>
-            <image src="../../images/chapter-time.png"></image>
+            <image src="https://ihola.luoke101.com/chapter-time.png"></image>
             <text wx:if="{{synopsesItem.countdownEnabled}}">限时：{{synopsesItem.countdownInMinutes||0}}分钟</text>
             <text wx:else>不限时</text>
           </view>
         </view>
         <view wx:if="{{synopsesItem.status === 'PREPARED'}}" class="chapters-chapterStatus" data-chapter-id="{{synopsesItem.chapterId}}" data-introduction="{{synopsesItem.introduction}}" data-chapter-index="{{synopsesIndex}}" data-chapter-total="{{synopses.length}}" bindtap="toSample">
           <text>开始作答</text>
-          <image src="../../images/chapter-enter.png"></image>
+          <image src="https://ihola.luoke101.com/chapter-enter.png"></image>
         </view>
         <view wx:elif="{{synopsesItem.status === 'RESPONDING'}}" class="chapters-chapterStatus" data-chapter-id="{{synopsesItem.chapterId}}" data-chapter-index="{{synopsesIndex}}" data-chapter-total="{{synopses.length}}" bindtap="toAnswer">
           <text>继续作答</text>
-          <image src="../../images/chapter-enter.png"></image>
+          <image src="https://ihola.luoke101.com/chapter-enter.png"></image>
         </view>
         <view wx:elif="{{synopsesItem.status === 'FINISHED'}}" class="chapters-chapterStatus chapters-chapterStatus-success">
           <text>已完成</text>
-          <image src="../../images/chapter-success.png"></image>
+          <image src="https://ihola.luoke101.com/chapter-success.png"></image>
         </view>
         <view wx:elif="{{synopsesItem.status === 'LOCKING'}}" class="chapters-chapterStatus chapters-chapterStatus-lock">
           <text>完成上一部分后解锁</text>

@@ -1,7 +1,7 @@
 <view wx:if="{{oldTeamMsg}}" class="oldTeamMsg">
     <!-- 旧企业认证信息 -->
     <view class="title flex">
-        <image src="../../images/teams-cert@icon-done.png"></image>
+        <image src="https://ihola.luoke101.com/teams-cert%40icon-done.png"></image>
         企业认证信息
     </view>
     <view style="height:20rpx;"></view>
@@ -21,20 +21,20 @@
 </view>
 <view class="container font" wx:else>
     <view class="header" wx:if="{{isNew}}">
-        <image src="../../images/teams-cert@icon-background.png"></image>
+        <image src="https://ihola.luoke101.com/teams-cert%40icon-background.png"></image>
         <view class="headbox">
             <view class="headboxtop">
                 <view class="headboxtoptext">企业认证</view>
-                <image src="../../images/teams-cert@icon-cert-mark.png"></image>
+                <image src="https://ihola.luoke101.com/teams-cert%40icon-cert-mark.png"></image>
             </view>
             <view class="headboxtoptext">领取专属权益</view>
             <view class="headlist" bindtap="changePage" data-url="../teamTicket/teamTicket">
                 <view>5张通用测评兑换券</view>
-                <image src="../../images/teams-cert@icon-left-arrow.png"></image>
+                <image src="https://ihola.luoke101.com/teams-cert%40icon-left-arrow.png"></image>
             </view>
             <view class="headlist" bindtap="changePage" data-url="../teamTitle/teamTitle">
                 <view>专属测评封面</view>
-                <image src="../../images/teams-cert@icon-left-arrow.png"></image>
+                <image src="https://ihola.luoke101.com/teams-cert%40icon-left-arrow.png"></image>
             </view>
         </view>
     </view>
@@ -69,7 +69,7 @@
         <view class="takephoto">
             <view class="takephototext">请上传营业执照</view>
             <view class="takephotobox" bindtap="takephoto">
-                <image wx:if="{{!imgurl}}" class="takeicon" src="../../images/teams-cert@icon-upload.png"></image>
+                <image wx:if="{{!imgurl}}" class="takeicon" src="https://ihola.luoke101.com/teams-cert%40icon-upload.png"></image>
                 <view wx:if="{{!imgurl}}">点击上传营业执照</view>
                 <image class="photo" wx:if="{{imgurl}}" src="{{imgurl}}"></image>
             </view>

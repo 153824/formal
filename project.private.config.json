@@ -51,13 +51,13 @@
         {
           "name": "小程序码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "scene=60eea62458d0d62d8502e332",
+          "query": "scene=60f10b1684ea000f5d3e7079",
           "scene": null
         },
         {
           "name": "二维码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "q=https://api.luoke101.com/s/60ee622431e86e3a0e130d92",
+          "query": "q=https://api.luoke101.com/s/60f10d3984ea000f5d3e707c",
           "scene": null
         },
         {
@@ -221,6 +221,12 @@
           "name": "系统维护",
           "pathName": "pages/auth/subpages/maintain/maintain",
           "query": "receivedRecordId=60e808820c294e5d6103f7d0",
+          "scene": null
+        },
+        {
+          "name": "客服",
+          "pathName": "pages/customer-service/customer-service",
+          "query": "",
           "scene": null
         }
       ]

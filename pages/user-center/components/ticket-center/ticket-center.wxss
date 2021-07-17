@@ -1,0 +1,67 @@
+.ticket{
+    padding: 40rpx 40rpx;
+}
+.ticket-scroll{
+    height: calc(100vh - 80rpx);
+}
+.ticket-item{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 30rpx 40rpx;
+    margin-bottom: 20rpx;
+    background: #FFFFFF;
+    box-shadow: 0rpx 4rpx 20rpx 0rpx rgba(22, 49, 128, 0.14);
+    border-radius: 9px;
+}
+.ticket-item__title{
+    margin-bottom: 18rpx;
+    font-size: 32rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #323541;
+    line-height: 44rpx;
+}
+.ticket-item__info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.ticket-item__info text{
+    font-size: 26rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #5C6171;
+    line-height: 36rpx;
+}
+.ticket-item__info-left{
+    display: flex;
+    flex-direction: column;
+}
+
+.ticket-item__info-right{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+.ticket-item__info-right text{
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #353EE8;
+}
+.number {
+    font-size: 56rpx!important;
+    line-height: 80rpx!important;
+}
+.text {
+    font-size: 28rpx!important;
+    line-height: 40rpx!important;
+}
+.expire{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 188rpx;
+    height: 66rpx;
+}

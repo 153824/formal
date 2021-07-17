@@ -1,5 +1,5 @@
 <view class="forbidden-wrapper">
-    <image wx:if="{{isWxWork}}" src="{{'/images/icon/icon@icon-wechat-forbidden.png'}}" style="width: 200rpx;height: 200rpx;"/>
+    <image wx:if="{{isWxWork}}" src="{{'https://ihola.luoke101.com/icon%40icon-wechat-forbidden.png'}}" style="width: 200rpx;height: 200rpx;"/>
     <view wx:else style="font-size: 50rpx;font-weight: bold;">
         403
     </view>

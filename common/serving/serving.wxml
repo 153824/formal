@@ -9,7 +9,7 @@
     <view class="flex">
         <view class="flex-main">
             <view class="callMobile">
-                <image class="callMobile-img" src="../../images/icon/icon@icon-call.png"></image>
+                <image class="callMobile-img" src="https://ihola.luoke101.com/icon%40icon-call.png"></image>
                 点击拨打电话
             </view>
             <view class="kefuMobile" bindtap="callIt">{{ mobile }}</view>
@@ -19,7 +19,7 @@
     <view class="flex" style="display: flex;">
         <view class="flex-main">
             <view class="callWX">
-                <image class="wechat-img" src="../../images/icon/icon@icon-wechat.png"></image>
+                <image class="wechat-img" src="https://ihola.luoke101.com/icon%40icon-wechat.png"></image>
                 客服微信
             </view>
             <view class="kefuWX">{{ wechat }}</view>

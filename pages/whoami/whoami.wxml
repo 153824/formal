@@ -1,5 +1,5 @@
 <view class="teamInvite">
-  <image src="../work-base/images/teams-cert@icon-team-invite.png"/>
+  <image src="https://ihola.luoke101.com/teams-cert%40icon-team-invite.png"/>
   <view class="bottomView">
     <view class="mind1">授权登录，查看报告</view>
   </view>

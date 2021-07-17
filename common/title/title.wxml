@@ -11,7 +11,7 @@
                             wx:if="{{ teamMap.length > 1 }}"
                             style="display: inline-block;"
                             class="company-picker-image"
-                            src="../../images/icon/icon@icon-bototm-arrow.png"/>
+                            src="https://ihola.luoke101.com/icon%40icon-bototm-arrow.png"/>
                 </view>
             </picker>
         </view>
@@ -27,7 +27,7 @@
                         wx:if="{{ teamMap.length > 1 }}"
                         style="display: inline-block;"
                         class="company-picker-image"
-                        src="../../images/icon/icon@icon-bototm-arrow.png"/>
+                        src="https://ihola.luoke101.com/icon%40icon-bototm-arrow.png"/>
             </view>
         </picker>
     </block>

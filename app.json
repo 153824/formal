@@ -56,7 +56,9 @@
     "pages/360/subpages/end/end",
     "pages/home/subpages/all",
     "pages/auth/subpages/maintain/maintain",
-    "pages/recorder/subpages/golden/golden"
+    "pages/recorder/subpages/golden/golden",
+    "pages/user-center/components/ticket-center/ticket-center",
+    "pages/customer-service/customer-service"
   ],
   "tabBar": {
     "custom": true,
@@ -108,9 +110,10 @@
     "wx0ef45039046afc95"
   ],
   "plugins": {
-    "contactPlugin": {
-        "version": "1.2.1",
-        "provider": "wx5917c8c26f85c588"
+    "chatbot": {
+      "version": "1.1.4",
+      "provider": "wx8c631f7e9f2465e1"
     }
-}
+  },
+  "requiredBackgroundModes": ["audio"]
 }

@@ -1,3 +1,4 @@
+<!--微信小程序端-->
 <view wx:if="{{ !isWxWork && !is3rd }}">
         <view class="user-page-wrapper">
             <view class="head">
@@ -34,7 +35,7 @@
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
                             <text>他人分享给我的报告</text>
                         </view>
-                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                        <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
                     <view class="user-action-item" bindtap="goToReceiveEvaluation">
                         <view class="title">
@@ -42,7 +43,7 @@
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
                             <text>他人邀请我参加的测评</text>
                         </view>
-                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                        <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
                     <view class="user-action-item" bindtap="showServing">
                         <view class="title">
@@ -50,7 +51,7 @@
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
                             <text>企业套餐/定制咨询</text>
                         </view>
-                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                        <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
                     <view class="user-action-item" bindtap="goToSetting">
                         <view class="title">
@@ -58,13 +59,14 @@
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
                             <text>个人设置</text>
                         </view>
-                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                        <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
                 </scroll-view>
             </view>
         </view>
         <hola-tab-bar active="{{ 3 }}" isWxWork="{{!isWxWork}}"></hola-tab-bar>
     </view>
+<!--企业微信管理员端-->
 <view wx:elif="{{ isWxWork && isWxWorkAdmin }}">
         <view class="user-page-wrapper">
             <view class="head">
@@ -101,7 +103,7 @@
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
                             <text>他人分享给我的报告</text>
                         </view>
-                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                        <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
                     <view class="user-action-item" bindtap="goToReceiveEvaluation">
                         <view class="title">
@@ -109,7 +111,7 @@
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
                             <text>他人邀请我参加的测评</text>
                         </view>
-                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                        <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
                     <view class="user-action-item" bindtap="showServing">
                         <view class="title">
@@ -117,13 +119,14 @@
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
                             <text>联系专属客服</text>
                         </view>
-                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                        <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
                 </scroll-view>
             </view>
         </view>
         <hola-tab-bar active="{{ isWxWorkSuperAdmin ? 2 : 1 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{isWxWorkAdmin}}"></hola-tab-bar>
     </view>
+<!--企业微信非管理员端-->
 <view wx:elif="{{ isWxWork && !isWxWorkAdmin }}">
         <view class="user-page-wrapper">
             <view class="head">
@@ -160,7 +163,7 @@
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
                             <text>他人分享给我的报告</text>
                         </view>
-                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                        <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
                     <view class="user-action-item" bindtap="showServing">
                         <view class="title">
@@ -168,7 +171,7 @@
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
                             <text>联系专属客服</text>
                         </view>
-                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                        <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
                     <view class="user-action-item" bindtap="goToSetting">
                         <view class="title">
@@ -176,13 +179,14 @@
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
                             <text>个人设置</text>
                         </view>
-                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                        <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
                 </scroll-view>
             </view>
         </view>
         <hola-tab-bar active="{{ 1 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{!isWxWorkAdmin}}"></hola-tab-bar>
     </view>
+<!--第三方管理员端-->
 <view wx:elif="{{ is3rd && is3rdAdmin }}">
         <view class="user-page-wrapper">
             <view class="head">
@@ -219,7 +223,7 @@
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
                             <text>他人邀请我查看的报告</text>
                         </view>
-                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                        <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
                     <view class="user-action-item" bindtap="goToReceiveEvaluation">
                         <view class="title">
@@ -227,7 +231,7 @@
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
                             <text>他人邀请我参与的测评</text>
                         </view>
-                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                        <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
                     <view class="user-action-item" bindtap="showServing">
                         <view class="title">
@@ -235,7 +239,7 @@
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
                             <text>联系客服</text>
                         </view>
-                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                        <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
                     <view class="user-action-item" bindtap="goToSetting">
                         <view class="title">
@@ -243,13 +247,14 @@
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
                             <text>个人设置</text>
                         </view>
-                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                        <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
                 </scroll-view>
             </view>
         </view>
         <hola-tab-bar active="{{ 1 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{isWxWorkAdmin}}"></hola-tab-bar>
     </view>
+<!--第三方非管理员端-->
 <view wx:elif="{{ is3rd && !is3rdAdmin }}">
         <view class="user-page-wrapper">
             <view class="head">
@@ -286,7 +291,7 @@
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
                             <text>他人分享给我的报告</text>
                         </view>
-                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                        <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
                     <view class="user-action-item" bindtap="showServing">
                         <view class="title">
@@ -294,7 +299,7 @@
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
                             <text>联系专属客服</text>
                         </view>
-                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                        <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
                     <view class="user-action-item" bindtap="goToSetting">
                         <view class="title">
@@ -302,7 +307,7 @@
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
                             <text>个人设置</text>
                         </view>
-                        <image src="../../images/icon/icon@arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
+                        <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
                 </scroll-view>
             </view>

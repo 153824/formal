@@ -42,7 +42,7 @@
                 </view>
             </view>
             <view class="send-evaluation">
-                <image src="/pages/work-base/images/work-base@icon-arrow.png"
+                <image src="https://ihola.luoke101.com/work-base%40icon-arrow.png"
                        style="width: 32rpx;height: 32rpx;"></image>
             </view>
             <view wx:if="{{ util.isSameDays(reportItem.reportGeneratedAt) && reportItem.unread }}"
@@ -76,7 +76,7 @@
                 </view>
             </view>
             <view class="send-evaluation">
-                <image src="/pages/work-base/images/work-base@icon-arrow.png"
+                <image src="https://ihola.luoke101.com/work-base%40icon-arrow.png"
                        style="width: 32rpx;height: 32rpx;"></image>
             </view>
             <view wx:if="{{ util.isSameDays(reportItem.reportGeneratedAt) && reportItem.unread }}"

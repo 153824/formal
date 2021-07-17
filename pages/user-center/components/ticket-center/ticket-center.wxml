@@ -1,0 +1,18 @@
+<view class="ticket">
+    <scroll-view scroll-x="false" class="ticket-scroll">
+        <view class="ticket-item">
+            <text class="ticket-item__title">通用兑换券</text>
+            <view class="ticket-item__info">
+                <view class="ticket-item__info-left">
+                    <text>·可用于兑换平台上任一测评</text>
+                    <text>·2019-09-09 10:48 过期</text>
+                </view>
+                <view class="ticket-item__info-right">
+                    <text class="number">3</text>
+                    <text class="text">张</text>
+                </view>
+            </view>
+            <image src="https://ihola.luoke101.com/icon%40icon-expire.png" class="expire"/>
+        </view>
+    </scroll-view>
+</view>

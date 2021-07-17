@@ -3,7 +3,7 @@ Page({
     data: {
         page: 0,
         tickets: [],
-        isEmpty: true,
+        isEmpty: false,
     },
     onLoad: function (options) {
         this.loadTickets();
@@ -28,6 +28,8 @@ Page({
                         tickets: targetTickets,
                         isEmpty: empty
                     });
+                } else {
+                    app.toast("已为您加载所有相关内容");
                 }
             },
             fail() {

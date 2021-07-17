@@ -604,7 +604,9 @@ Page({
         })
     },
     servingTrigger: function () {
-        this.selectComponent('#serving').callServing();
+        wx.navigateTo({
+            url: '/pages/customer-service/customer-service'
+        })
         this.setData({
             payTrigger: false
         })

@@ -118,7 +118,9 @@ Page({
             }
         })
     },
-    showServing: function () {
-        this.selectComponent('#serving').callServing();
+    goToServing: function () {
+        wx.navigateTo({
+            url: '/pages/customer-service/customer-service'
+        })
     },
 });

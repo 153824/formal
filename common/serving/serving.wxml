@@ -1,30 +1,3 @@
-<!--common/serving/serving.wxml-->
-<view wx:if="{{ type === 'circle'}}" class="serving" bindtap="callServing" style="bottom:{{ bottom }};right: {{ right }};visibility: {{visibility === 'visible' ? 'visible' : 'hidden' }}">
+<view class="serving" bindtap="goToServer" style="bottom:{{ bottom }};right: {{ right }};visibility: {{visibility === 'visible' ? 'visible' : 'hidden' }}">
     <image src="{{ image }}" style="height: 50px;width: 50px;"></image>
-<!--    showDlg-->
-</view>
-<view class="coverView" wx:if="{{ showServing }}" bindtap="hideServing"></view>
-<view class="dlg" wx:if="{{ showServing }}">
-    <view class="title">客服联系方式</view>
-    <view class="flex">
-        <view class="flex-main">
-            <view class="callMobile">
-                <image class="callMobile-img" src="https://ihola.luoke101.com/icon%40icon-call.png"></image>
-                点击拨打电话
-            </view>
-            <view class="kefuMobile" bindtap="callIt">{{ mobile }}</view>
-        </view>
-    </view>
-    <view class="borderView"></view>
-    <view class="flex" style="display: flex;">
-        <view class="flex-main">
-            <view class="callWX">
-                <image class="wechat-img" src="https://ihola.luoke101.com/icon%40icon-wechat.png"></image>
-                客服微信
-            </view>
-            <view class="kefuWX">{{ wechat }}</view>
-        </view>
-        <view class="copyBtn" bindtap="copyIt" style="display: inline-block;">复制微信号</view>
-    </view>
-    <view class="mind">添加时，请备注公司所属行业和规模</view>
 </view>

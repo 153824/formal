@@ -101,9 +101,7 @@ App({
         uploadUserInfo: true // 自动上传用户信息，设为false取消上传，默认为false
     },
     onLaunch: function (options) {
-        // wx.setBackgroundFetchToken({
-        //     token: ''
-        // })
+        // 配置智能对话平台插件
         plugin.init({
             appid: "VEgbxLa9kYqzGOzstdeSF3xDbkS9zK", //机器人Id
             openid: "o7Jo85PuWvi98dhA5SmLGcLDOkcQ", //用户的openid，必填项，可通过wx.login()获取code，然后通过后台接口获取openid
@@ -114,6 +112,7 @@ App({
             operateCardHeight: 120,
             history: true,
             historySize: 60,
+            welcome: '请问有什么可以帮到你的~',
             guideList: [
                 "小微写诗",
                 "一江春水连海平",

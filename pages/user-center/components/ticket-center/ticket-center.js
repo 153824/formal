@@ -20,13 +20,15 @@ Page({
             },
             success(res) {
                 const {empty, page} = res;
-                const targetTickets = [...tickets, ...res.items]
-                console.log(targetTickets);
-                that.setData({
-                    page,
-                    tickets: targetTickets,
-                    isEmpty: empty
-                });
+                if (!empty) {
+                    const targetTickets = [...tickets, ...res.items]
+                    console.log(targetTickets);
+                    that.setData({
+                        page,
+                        tickets: targetTickets,
+                        isEmpty: empty
+                    });
+                }
             },
             fail() {
 

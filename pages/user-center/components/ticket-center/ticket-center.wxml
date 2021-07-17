@@ -1,5 +1,5 @@
 <view class="ticket">
-    <scroll-view scroll-x="false" class="ticket-scroll" bind:scrolltolower="goToNext">
+    <scroll-view scroll-x="false" scroll-y class="ticket-scroll" bind:scrolltolower="goToNext">
         <block wx:if="{{isEmpty}}">
             <view class="empty-wrapper">
                 <view class="empty-content">

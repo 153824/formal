@@ -45,7 +45,7 @@
                         </view>
                         <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
-                    <view class="user-action-item" bindtap="showServing">
+                    <view class="user-action-item" bindtap="goToServing">
                         <view class="title">
                             <image src="./images/user@connect-serving.png"
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
@@ -129,7 +129,7 @@
                         </view>
                         <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
-                    <view class="user-action-item" bindtap="showServing">
+                    <view class="user-action-item" bindtap="goToServing">
                         <view class="title">
                             <image src="./images/user@connect-serving.png"
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
@@ -181,7 +181,7 @@
                         </view>
                         <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
-                    <view class="user-action-item" bindtap="showServing">
+                    <view class="user-action-item" bindtap="goToServing">
                         <view class="title">
                             <image src="./images/user@connect-serving.png"
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
@@ -249,7 +249,7 @@
                         </view>
                         <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
-                    <view class="user-action-item" bindtap="showServing">
+                    <view class="user-action-item" bindtap="goToServing">
                         <view class="title">
                             <image src="./images/user@connect-serving.png"
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>
@@ -317,7 +317,7 @@
                         </view>
                         <image src="https://ihola.luoke101.com/icon%40arrow-left.png" style="width: 12rpx;height: 20rpx;"></image>
                     </view>
-                    <view class="user-action-item" bindtap="showServing">
+                    <view class="user-action-item" bindtap="goToServing">
                         <view class="title">
                             <image src="./images/user@connect-serving.png"
                                    style="width: 44rpx;height: 44rpx;margin-right: 20rpx;"></image>

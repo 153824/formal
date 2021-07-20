@@ -81,144 +81,27 @@
             </view>
         </view>
     </block>
-    <block wx:else>
-        <!-- 免费测评的按钮组 -->
-        <view class="button-group" wx:if="{{ evaluation.freeEvaluation }}">
-            <view class="button-group-child">
-                <button class="button-group-get-user-phone"
-                        data-mark="dont-get-ticket"
-                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
-                        bindgetphonenumber="getPhoneNumber"
-                        data-name="{{ evaluation.name }}"
-                        data-answering="{{ currAnsweringStatus }}"
-                        data-id="{{ evaluation.id }}"
-                        data-event-name="goToReplyingGuide"
-                        bindtap="{{isGetAccessToken ? 'goToTransit' : ''}}"
-                >
-                    <view class="gotoguide-btn">
-                        <press title="{{ currAnsweringStatus ? '继续体验' : '自己测'}}" bgColor="rgba(255,255,255,1)"
-                               color="rgba(53,62,232,1)"
-                               fontSize="32" fontWeight="600"></press>
-                    </view>
-                </button>
-                <button class="button-group-get-user-phone large-button-group-get-user-phone"
-                        data-mark="dont-get-ticket"
-                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
-                        bindgetphonenumber="getPhoneNumber"
-                        data-event-name="goToDaTi"
-                        bindtap="{{isGetAccessToken ? 'goToTransit' : ''}}"
-                >
-                    <view class="gotodati-btn">
-                        <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
-                    </view>
-                </button>
+    <block>
+        <!--未登录-->
+        <view class="button-group-wrapper">
+            <view class="button-group__is-left">
+                <text>免费体验</text>
+                <text>您有5张体验券可用于本测评</text>
+            </view>
+            <view class="button-group__is-right">
+                立即购买
             </view>
         </view>
-        <!-- 未购买过测评的按钮组且未买断 -->
-        <view class="buy-group"
-              wx:elif="{{ !evaluationVoucherInfo.hadConsumed && !evaluationVoucherInfo.buyoutInfo.hadBuyout || isNew }}">
-            <button class="meal meal-button" style="background-color: rgba(255,243,224,1);outline: none;border: none;"
-                    open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}" bindgetphonenumber="getPhoneNumber" bind:tap="{{isGetAccessToken ? 'getNewerTicket' : ''}}">
-                <meal isShow="{{ evaluationVoucherInfo.isBeginner || isNew }}" title="新用户领券，免费体验测评"
-                      subIcon="https://ihola.luoke101.com/icon%40banner-ticket.gif" subtitle="立即领券 >" icon="false"></meal>
-            </button>
-            <view class="meal" bindtap="buyByTicket">
-                <meal isShow="{{ hasVoucher && !evaluationVoucherInfo.isBeginner }}" icon="false"
-                      title="您有{{ voucher }}张体验券可用于本测评"
-                      subtitle="立即使用 >"></meal>
-            </view>
-            <view wx:if="{{ isIos }}">
-                <press title="由于相关规范，ios功能暂不可用" fontSize="32" fontWeight="600"></press>
-            </view>
-            <view wx:else>
-                <button class="button-group-get-user-phone" data-mark="dont-get-ticket"
-                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
-                        bindgetphonenumber="getPhoneNumber"
-                        data-event-name="payForEvaluation"
-                        bindtap="{{isGetAccessToken ? 'payForEvaluation' : ''}}"
-                >
-                    <press title="购买测评" fontSize="32" fontWeight="600"></press>
-                </button>
-            </view>
-        </view>
-        <!-- 购买过测评券的按钮组且未买断 -->
-        <view class="button-group"
-              wx:elif="{{ evaluationVoucherInfo.hadConsumed && !evaluationVoucherInfo.buyoutInfo.hadBuyout }}">
-            <view wx:if="{{ isIos }}" class="meal" bindtap="buyByTicket">
-                <meal isShow="{{ !evaluationVoucherInfo.buyoutInfo.hadBuyout }}" icon="false"
-                      title="剩余可用份数：{{ evaluationVoucherInfo.availableCount }}"
-                      subtitle="{{ isIos ? '用券继续兑换' : '购买更多 >' }}"></meal>
-            </view>
-            <view wx:else class="meal" bindtap="payForEvaluation">
-                <meal isShow="{{ !evaluationVoucherInfo.buyoutInfo.hadBuyout }}" icon="false"
-                      title="剩余可用份数：{{ evaluationVoucherInfo.availableCount }}"
-                      subtitle="{{ isIos ? '用券继续兑换' : '购买更多 >' }}"></meal>
-            </view>
-            <view class="button-group-child">
-                <button class="button-group-get-user-phone" data-mark="dont-get-ticket"
-                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
-                        bindgetphonenumber="getPhoneNumber"
-                        data-name="{{ evaluation.name }}"
-                        data-answering="{{ currAnsweringStatus }}"
-                        data-id="{{ evaluation.id }}"
-                        data-event-name="goToReplyingGuide"
-                        bindtap="{{isGetAccessToken ? 'goToTransit' : ''}}"
-                >
-                    <view class="gotoguide-btn">
-                        <press title="{{ currAnsweringStatus ? '继续体验' : '自己测'}}" bgColor="rgba(255,255,255,1)"
-                               color="rgba(53,62,232,1)"
-                               fontSize="32" fontWeight="600"></press>
-                    </view>
-                </button>
-                <button class="button-group-get-user-phone large-button-group-get-user-phone"
-                        data-mark="dont-get-ticket"
-                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
-                        bindgetphonenumber="getPhoneNumber"
-                        data-event-name="goToDaTi"
-                        bindtap="{{isGetAccessToken ? 'goToTransit' : ''}}"
-                >
-                    <view class="gotodati-btn">
-                        <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
-                    </view>
-                </button>
-            </view>
-        </view>
-        <!-- 买断 -->
-        <view class="button-group" wx:elif="{{ evaluationVoucherInfo.buyoutInfo.hadBuyout }}">
-            <view class="meal" bindtap="payForEvaluation">
-                <meal isShow="{{ evaluationVoucherInfo.buyoutInfo.hadBuyout }}" icon="false"
-                      title="有效期至：{{ isIos ? util.getFullDateByFrag(evaluationVoucherInfo.buyoutInfo.expiryDate,'.',true) : util.getFullDateByFrag(evaluationVoucherInfo.buyoutInfo.expiryDate,'.',true) }}"
-                      subtitle="{{ isIos ? '' : '续费' }}"></meal>
-            </view>
-            <view class="button-group-child">
-                <button class="button-group-get-user-phone" data-mark="dont-get-ticket"
-                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
-                        bindgetphonenumber="getPhoneNumber"
-                        data-name="{{ evaluation.name }}"
-                        data-answering="{{ currAnsweringStatus }}"
-                        data-id="{{ evaluation.id }}"
-                        data-event-name="goToReplyingGuide"
-                        bindtap="{{isGetAccessToken ? 'goToTransit' : ''}}"
-                >
-                    <view class="gotoguide-btn">
-                        <press title="{{ currAnsweringStatus ? '继续体验' : '自己测'}}" bgColor="rgba(255,255,255,1)"
-                               color="rgba(53,62,232,1)"
-                               fontSize="32" fontWeight="600"></press>
-                    </view>
-                </button>
-                <button class="button-group-get-user-phone large-button-group-get-user-phone"
-                        data-mark="dont-get-ticket"
-                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
-                        bindgetphonenumber="getPhoneNumber"
-                        data-event-name="goToDaTi"
-                        bindtap="{{isGetAccessToken ? 'goToTransit' : ''}}"
-                >
-                    <view class="gotodati-btn">
-                        <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
-                    </view>
-                </button>
-            </view>
-        </view>
+        <!--有券-->
+<!--        <view class="button-group-wrapper">-->
+<!--            <button></button>-->
+<!--            <button></button>-->
+<!--        </view>-->
+        <!--有券有库存-->
+<!--        <view>-->
+<!--            <button></button>-->
+<!--            <button></button>-->
+<!--        </view>-->
     </block>
     <block>
         <van-overlay show="{{ payTrigger }}" bind:click="cancelPayForEvaluation" z-index="0"></van-overlay>

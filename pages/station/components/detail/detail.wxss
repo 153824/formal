@@ -1297,3 +1297,16 @@
 .large-button-group-get-user-phone{
   width: 70% !important;
 }
+.button-group-wrapper{
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 110rpx;
+}
+.button-group__is-left{
+  background: #FFF6E7;
+  box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(0, 0, 0, 0.5);
+}

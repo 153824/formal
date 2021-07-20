@@ -207,7 +207,7 @@ Page({
             this.setData({
                 hasVanishImageSetting
             })
-        },1000)
+        },1000);
         this.setData({
             hasVanishImageSetting,
             answerSheet: {...answerSheet}

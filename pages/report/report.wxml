@@ -690,7 +690,7 @@
             <view wx:if="{{dlgName=='timeDlg'}}">
                 <view class="msgTitle">作答时长</view>
                 <view class="msgStatusDanger">{{respondAnalysis.duration.standing}}分钟</view>
-                <view class="msg">{{util.getTimeMsg(respondAnalysis.duration.verdict)}}</view>
+                <view class="msg">{{util.getTimeMsg(respondAnalysis)}}</view>
             </view>
             <view wx:if="{{dlgName=='noMatchDlg'}}">
                 <view class="msgTitle">作答一致性</view>
@@ -710,7 +710,7 @@
             <view wx:if="{{dlgName=='unTimeDlg'}}">
                 <view class="msgTitle">作答时长</view>
                 <view class="msgStatusSuccess">{{respondAnalysis.duration.standing}}分钟</view>
-                <view class="msg">{{util.getTimeMsg(respondAnalysis.duration.verdict)}}</view>
+                <view class="msg">{{util.getTimeMsg(respondAnalysis)}}</view>
             </view>
             <view wx:if="{{dlgName=='unNoMatchDlg'}}">
                 <view class="msgTitle">作答一致性</view>

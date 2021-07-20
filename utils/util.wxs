@@ -177,17 +177,20 @@ var isMiddleValue = function(questionStep, questionIndex, length) {
   }
   return false;
 };
-var getTimeMsg= function(index) {
+var getTimeMsg= function(data) {
+  var verdict = data.duration.verdict;
+  var rationalShortest = data.duration.rationalShortest;
+  var rationalLongest = data.duration.rationalLongest;
   var msg = ''
-  switch(index){
+  switch(verdict){
     case 'OVERLONG':
-      msg='作答时长明显长于平均作答时间，在自我评价过程中可能存在过度思考，犹豫不决或中途长时间退出后复答的情况'
+      msg='作答时长明显长于平均作答时间（'+ rationalShortest + '-' + rationalLongest + '分钟），' + '在自我评价过程中可能存在过度思考，犹豫不决或中途长时间退出后复答的情况'
       break
     case 'DECENT':
       msg='作答时间正常'
       break
     case 'HASTY':
-      msg='作答时间明显短于平均作答时间，在自我评价过程中存在审题过快、不细致或选项习惯性（例如习惯性选中间项或最高项）的可能性'
+      msg='作答时间明显短于平均作答时间（'+ rationalShortest + '-' + rationalLongest + '分钟），在自我评价过程中存在审题过快、不细致或选项习惯性（例如习惯性选中间项或最高项）的可能性'
       break
   }
   return msg

@@ -689,7 +689,7 @@
             <view wx:if="{{dlgName=='timeDlg'}}">
                 <view class="msgTitle">作答时长</view>
                 <view class="msgStatusDanger">{{respondAnalysis.duration.standing}}分钟</view>
-                <view class="msg">{{util.getTimeMsg(respondAnalysis.duration.verdict)}}</view>
+                <view class="msg">{{util.getTimeMsg(respondAnalysis)}}</view>
             </view>
             <view wx:if="{{dlgName=='noMatchDlg'}}">
                 <view class="msgTitle">作答一致性</view>
@@ -709,7 +709,7 @@
             <view wx:if="{{dlgName=='unTimeDlg'}}">
                 <view class="msgTitle">作答时长</view>
                 <view class="msgStatusSuccess">{{respondAnalysis.duration.standing}}分钟</view>
-                <view class="msg">{{util.getTimeMsg(respondAnalysis.duration.verdict)}}</view>
+                <view class="msg">{{util.getTimeMsg(respondAnalysis)}}</view>
             </view>
             <view wx:if="{{dlgName=='unNoMatchDlg'}}">
                 <view class="msgTitle">作答一致性</view>
@@ -724,6 +724,7 @@
             <view wx:if="{{dlgName=='unNotOver'}}">
                 <view class="msgTitle">作答完成率</view>
                 <view class="msgStatusSuccess">正常</view>
+                <view class="msg">本测评共{{respondAnalysis.completion.quesCount}}题，受测者已完成所有题目</view>
             </view>
         </view>
     </view>

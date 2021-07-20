@@ -85,11 +85,11 @@
         <!--未登录-->
         <view class="button-group-wrapper">
             <view class="button-group__is-left">
-                <text>免费体验</text>
-                <text>您有5张体验券可用于本测评</text>
+                <text class="title">免费体验</text>
+                <text class="tips">您有5张体验券可用于本测评</text>
             </view>
             <view class="button-group__is-right">
-                立即购买
+                <text class="">立即购买</text>
             </view>
         </view>
         <!--有券-->

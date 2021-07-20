@@ -21,6 +21,7 @@ Page({
         ticketCount: 1,
         assistant: app.globalData.assistant,
         isPC: false,
+        iphonex: app.isIphoneX,
         statusbarHeight: app.globalData.statusbarHeight,
         titleHeight: app.globalData.titleHeight,
         windowHeight: app.globalData.windowHeight,
@@ -36,7 +37,11 @@ Page({
         customNorms: [],
         isGetAccessToken: app.checkAccessToken(),
         authCodeCounter: 0,
-        isNew: wx.getStorageSync('isNew')
+        isNew: wx.getStorageSync('isNew'),
+
+        avaliableVoucher: 0,
+        avaliableInventory: 20,
+        showSelectQuiz: false,
     },
 
     onLoad: function (options) {
@@ -319,8 +324,8 @@ Page({
             }
         });
     },
-    /** 体验测评 */
-    goToReplyingGuide: function (e) {
+    // 自己测
+    goToGuide: function (e) {
         const that = this;
         const {evaluation, customNorms} = this.data;
         app.doAjax({
@@ -450,10 +455,10 @@ Page({
     goToDaTi: function () {
         //发放测评
         const that = this;
-        const {evaluation, evaluationVoucherInfo, customNorms} = this.data;
+        const {evaluation, evaluationVoucherInfo, customNorms, avaliableVoucher, avaliableInventory} = this.data;
         const {availableCount, buyoutInfo} = evaluationVoucherInfo;
-        if (((availableCount || 0) === 0 && !evaluation.freeEvaluation) && !buyoutInfo.hadBuyout) {
-            app.toast("测评可用数量不足，请先购买或用券兑换测评");
+        if (avaliableVoucher <= 0 && avaliableInventory <= 0) {
+            app.toast("测评可用数量不足，请先购买测评");
             return;
         }
         const necessaryInfo = {
@@ -465,12 +470,10 @@ Page({
             norms: customNorms.length ? customNorms : evaluation.generalNorms,
             quesCount: evaluation.quesCount,
             estimatedTime: evaluation.estimatedTime,
-
         };
         wx.navigateTo({
             url: `../sharePaper/sharePaper?necessaryInfo=${JSON.stringify(necessaryInfo)}`,
         });
-        return;
     },
     /**
      * 查看大图
@@ -645,6 +648,70 @@ Page({
             ticketCount
         })
     },
+    authPhoneNumber(e) {
+        // enjoy-体验测评 contact-联系客服
+        const that = this;
+        const {type} = e.currentTarget.dataset;
+        let {authCodeCounter} = this.data;
+        if(authCodeCounter > 5){
+            return;
+        }
+        app.getAccessToken(e)
+           .then(res=>{
+               return that.loadInventory()
+           })
+           .then(res=>{
+               console.log(res)
+               res.avaliableVoucher = 0;
+               res.avaliableInventory = 0;
+               const {avaliableVoucher, avaliableInventory} = res;
+               if(type === 'enjoy'){
+                   if(avaliableVoucher <= 0){
+                       app.toast('您的免费体验券已用完');
+                   }
+                   if(avaliableVoucher > 0){
+                       that.setData({
+                           showSelectQuiz: true
+                       })
+                   }
+               }
+               if (type === 'contact') {
+                   wx.navigateTo({
+                       url: "/pages/customer-service/customer-service"
+                   })
+               }
+               that.setData({
+                   avaliableVoucher,
+                   avaliableInventory
+               });
+           })
+           .catch(err=>{
+               if(err.code === '401111'){
+                   app.prueLogin().then(res=>{
+                       this.authPhoneNumber(e)
+                   });
+                   that.setData({
+                       authCodeCounter: authCodeCounter++
+                   })
+               }
+           })
+    },
+    loadInventory() {
+        const that = this;
+        const p = new Promise((resolve, reject) => {
+            app.doAjax({
+                url: `inventories/${that.data.evaluationId}`,
+                method: "get",
+                success(res) {
+                    resolve(res);
+                },
+                fail(e) {
+                    reject(e);
+                }
+            });
+        });
+        return p;
+    },
     getPhoneNumber: function (e) {
         const that = this;
         const {mark, eventName} = e.currentTarget.dataset;
@@ -675,7 +742,7 @@ Page({
 
                     }
                     break;
-                case 'goToReplyingGuide':
+                case 'goToGuide':
                     try {
                         wx.uma.trackEvent('1602211853957', {name: evaluation.name});
                     } catch (e) {
@@ -736,13 +803,13 @@ Page({
                                     }
                                     that.goToDaTi(e);
                                     break;
-                                case 'goToReplyingGuide':
+                                case 'goToGuide':
                                     try {
                                         wx.uma.trackEvent('1602212048924', {name: evaluation.name});
                                     } catch (e) {
 
                                     }
-                                    that.goToReplyingGuide(e);
+                                    that.goToGuide(e);
                                     break;
                                 case 'payForEvaluation':
                                     try {
@@ -788,9 +855,9 @@ Page({
                     wx.uma.trackEvent('1602212461556', {name: evaluation.name, isFree: evaluation.freeEvaluation});
                     that.goToDaTi(e);
                     break;
-                case 'goToReplyingGuide':
+                case 'goToGuide':
                     wx.uma.trackEvent('1602212336204', {name: evaluation.name, isFree: evaluation.freeEvaluation});
-                    that.goToReplyingGuide(e);
+                    that.goToGuide(e);
                     break;
             }
         }

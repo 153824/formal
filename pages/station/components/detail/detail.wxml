@@ -81,27 +81,88 @@
             </view>
         </view>
     </block>
-    <block>
+    <block wx:if="{{isIos}}">
         <!--未登录-->
-        <view class="button-group-wrapper">
-            <view class="button-group__is-left">
+        <view wx:if="{{!isGetAccessToken}}" class="button-group-wrapper">
+            <button class="button-group__is-left {{iphonex ? 'is-iosx' : ''}}" bind:getphonenumber="authPhoneNumber" data-type="enjoy" open-type="getPhoneNumber">
                 <text class="title">免费体验</text>
-                <text class="tips">您有5张体验券可用于本测评</text>
-            </view>
-            <view class="button-group__is-right">
-                <text class="">立即购买</text>
-            </view>
+            </button>
+            <button class="button-group__is-right {{iphonex ? 'is-iosx' : ''}}" bind:getphonenumber="authPhoneNumber" data-type="contact" open-type="getPhoneNumber">
+                <text>联系客服</text>
+                <text>获取更多</text>
+            </button>
         </view>
         <!--有券-->
-<!--        <view class="button-group-wrapper">-->
-<!--            <button></button>-->
-<!--            <button></button>-->
-<!--        </view>-->
-        <!--有券有库存-->
-<!--        <view>-->
-<!--            <button></button>-->
-<!--            <button></button>-->
-<!--        </view>-->
+        <view wx:elif="{{isGetAccessToken && avaliableVoucher > 0}}" class="button-group-wrapper">
+            <button class="button-group__is-left {{iphonex ? 'is-iosx' : ''}}" open-type="getPhoneNumber">
+                <text class="title">免费体验</text>
+                <text class="tips">您有{{avaliableVoucher}}张体验券可用于本测评</text>
+            </button>
+            <view class="button-group__is-right {{iphonex ? 'is-iosx' : ''}}">
+                <text>联系客服</text>
+                <text>获取更多</text>
+            </view>
+        </view>
+        <!--无券有库存-->
+        <view wx:elif="{{isGetAccessToken && avaliableVoucher <= 0 && avaliableInventory > 0}}" class="button-group-wrapper">
+            <button class="button-group__is-left {{iphonex ? 'is-iosx' : ''}}" open-type="getPhoneNumber">
+                <text class="title">立即使用</text>
+                <text class="tips">剩余可用份数：{{avaliableInventory}}</text>
+            </button>
+            <view class="button-group__is-right {{iphonex ? 'is-iosx' : ''}}">
+                <text>联系客服</text>
+                <text>获取更多</text>
+            </view>
+        </view>
+        <!--无券无库存-->
+        <view wx:elif="{{isGetAccessToken && avaliableVoucher <= 0 && avaliableInventory <= 0}}" class="button-group-wrapper is-increase-height">
+            <button class="button-group__is-left is-least-area">
+                <text class="tips is-main">剩余可用份数：{{avaliableInventory}}</text>
+            </button>
+            <view class="button-group__is-right is-more-area">
+                <text>联系客服获取更多</text>
+            </view>
+        </view>
+    </block>
+    <block wx:if="{{!isIos}}">
+        <!--未登录-->
+        <button wx:if="{{!isGetAccessToken}}" class="button-group-wrapper is-increase-height">
+            <button class="button-group__is-left" bind:getphonenumber="authPhoneNumber" data-type="enjoy" open-type="getPhoneNumber">
+                <text class="title">免费体验</text>
+            </button>
+            <button class="button-group__is-right" bind:getphonenumber="authPhoneNumber" data-type="contact" open-type="getPhoneNumber">
+                <text>立即购买</text>
+            </button>
+        </button>
+        <!--有券-->
+        <view wx:elif="{{isGetAccessToken && avaliableVoucher > 0}}" class="button-group-wrapper">
+            <button class="button-group__is-left">
+                <text class="title">免费体验</text>
+                <text class="tips">您有{{avaliableVoucher}}张体验券可用于本测评</text>
+            </button>
+            <button class="button-group__is-right">
+                <text>立即购买</text>
+            </button>
+        </view>
+        <!--无券有库存-->
+        <view wx:elif="{{isGetAccessToken && avaliableVoucher <= 0 && avaliableInventory > 0}}" class="button-group-wrapper">
+            <button class="button-group__is-left">
+                <text class="title">立即使用</text>
+                <text class="tips">剩余可用份数：{{avaliableInventory}}</text>
+            </button>
+            <button class="button-group__is-right">
+                <text>购买更多</text>
+            </button>
+        </view>
+        <!--无券无库存-->
+        <view wx:elif="{{isGetAccessToken && avaliableVoucher <= 0 && avaliableInventory <= 0}}" class="button-group-wrapper is-increase-height">
+            <button class="button-group__is-left is-least-area">
+                <text class="tips is-main">剩余可用份数：0</text>
+            </button>
+            <button class="button-group__is-right is-more-area">
+                <text>购买更多</text>
+            </button>
+        </view>
     </block>
     <block>
         <van-overlay show="{{ payTrigger }}" bind:click="cancelPayForEvaluation" z-index="0"></van-overlay>
@@ -180,5 +241,23 @@
 <van-overlay show="{{ loading }}" custom-style="background-color: #fff;">
     <mask isShow="{{ loading }}" top="{{ (statusbarHeight + titleHeight)/pixelRate }}"
           height="{{ windowHeight - ( statusbarHeight + titleHeight) }}" backgroundColor="transparent"></mask>
+</van-overlay>
+<van-overlay show="{{ showSelectQuiz || true }}" custom-style="background-color: #00000055;">
+    <view class="quiz-wrapper">
+        <view class="quiz-wrapper-item" bind:tap="goToGuide">
+            <image class="self-img" src="https://ihola.luoke101.com/icon%40self.png"/>
+            <view class="quiz-info-wrapper">
+                <text class="quiz-title">自己测</text>
+                <text class="quiz-tips">完成后自动生成测评报告</text>
+            </view>
+        </view>
+        <view class="quiz-wrapper-item" bind:tap="goToDaTi">
+            <image class="other-img" src="https://ihola.luoke101.com/icon%40other.png"/>
+            <view class="quiz-info-wrapper">
+                <text class="quiz-title">测别人</text>
+                <text class="quiz-tips">一键邀请同事或外部应聘者参与测评</text>
+            </view>
+        </view>
+    </view>
 </van-overlay>
 <wxs src="../../../../utils/util.wxs" module="util"></wxs>

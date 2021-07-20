@@ -29,7 +29,7 @@
                                       data-question-step="{{questionStep}}" class="titleImgButton" bindtap="openImg">
                                     显示图片
                                 </view>
-                                <view wx:elif="{{hasVanishImageSetting[questionStep]&&hasVanishImageSetting[questionStep].standingInSeconds>0&&!answerSheet[quesItem.id].exposed}}"
+                                <view wx:elif="{{hasVanishImageSetting[questionStep]&&hasVanishImageSetting[questionStep].standingInSeconds>0&&!hasVanishImageSetting[questionStep].isShow}}"
                                       data-question-step="{{questionStep}}"  bindtap="openImg" class="showImg">
                                     <rich-text class="imgContent" space="nbsp"
                                                nodes="<p>{{util.richTextFilter(hasVanishImageSetting[questionStep].tag)}}</p>">

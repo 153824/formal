@@ -39,7 +39,7 @@ Page({
     },
     check({isWxWork, isWxWorkAdmin, isWxWorkSuperAdmin, is3rd}) {
         const that = this;
-        if (is3rd || isWxWork && isWxWorkAdmin && !isWxWorkSuperAdmin) {
+        if (is3rd || isWxWork) {
             let flag = false
             let url = isWxWork ? "/pages/account/account" : "/pages/auth/auth?type=auth"
             if (app.checkAccessToken()) {
@@ -54,7 +54,7 @@ Page({
             }
             return
         }
-        if (!is3rd || isWxWork && isWxWorkSuperAdmin) {
+        if (!is3rd && !isWxWork || !is3rd && isWxWork && isWxWorkSuperAdmin) {
             console.log('isWxWorkSuperAdmin: ', isWxWorkSuperAdmin);
             let homePagesPromiseList = [];
             const homePagesPromise = new Promise(function (resolve, reject) {

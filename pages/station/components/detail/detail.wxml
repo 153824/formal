@@ -15,15 +15,6 @@
             </view>
         </view>
         <view style="background-color: #fff;margin-top: 20rpx;">
-<!--            <block>-->
-<!--                <button wx:if="{{ (!evaluationVoucherInfo.isBeginner && !evaluation.freeEvaluation && isGetInAgainst === 'YES' && !evaluationVoucherInfo.hadShare) }}"-->
-<!--                        class="get-free-ticket"-->
-<!--                        open-type="share"-->
-<!--                        style="background: transparent;border: none !important;">-->
-<!--                    <ticket image="http://ihola.luoke101.com/icon%40icon-ticket-banner.png"></ticket>-->
-<!--                </button>-->
-<!--            </block>-->
-            <!--面试助手判断逻辑-->
             <block wx:if="{{ util.isIncludes(assistant,evaluation.evaluationInfo.id) }}">
                 <checkout title="测评简介" type="introduction" info="{{ evaluation.synopsis }}"></checkout>
                 <checkout title="例题" type="assistant" list="{{ evaluation.quesExamples }}" isShow="{{evaluation.quesExamples.length}}"></checkout>
@@ -93,33 +84,33 @@
             </button>
         </view>
         <!--有券-->
-        <view wx:elif="{{isGetAccessToken && avaliableVoucher > 0}}" class="button-group-wrapper">
-            <button class="button-group__is-left {{iphonex ? 'is-iosx' : ''}}" open-type="getPhoneNumber">
+        <view wx:elif="{{isGetAccessToken && availableVoucher > 0}}" class="button-group-wrapper">
+            <button class="button-group__is-left {{iphonex ? 'is-iosx' : ''}}" bind:tap="showSelectQuiz">
                 <text class="title">免费体验</text>
-                <text class="tips">您有{{avaliableVoucher}}张体验券可用于本测评</text>
+                <text class="tips">您有{{availableVoucher}}张体验券可用于本测评</text>
             </button>
-            <view class="button-group__is-right {{iphonex ? 'is-iosx' : ''}}">
+            <view class="button-group__is-right {{iphonex ? 'is-iosx' : ''}}" bind:tap="goToCustomerService">
                 <text>联系客服</text>
                 <text>获取更多</text>
             </view>
         </view>
         <!--无券有库存-->
-        <view wx:elif="{{isGetAccessToken && avaliableVoucher <= 0 && avaliableInventory > 0}}" class="button-group-wrapper">
-            <button class="button-group__is-left {{iphonex ? 'is-iosx' : ''}}" open-type="getPhoneNumber">
+        <view wx:elif="{{isGetAccessToken && availableVoucher <= 0 && availableInventory > 0}}" class="button-group-wrapper">
+            <button class="button-group__is-left {{iphonex ? 'is-iosx' : ''}}" bind:tap="showSelectQuiz">
                 <text class="title">立即使用</text>
-                <text class="tips">剩余可用份数：{{avaliableInventory}}</text>
+                <text class="tips">剩余可用份数：{{availableInventory}}</text>
             </button>
-            <view class="button-group__is-right {{iphonex ? 'is-iosx' : ''}}">
+            <view class="button-group__is-right {{iphonex ? 'is-iosx' : ''}}" bind:tap="goToCustomerService">
                 <text>联系客服</text>
                 <text>获取更多</text>
             </view>
         </view>
         <!--无券无库存-->
-        <view wx:elif="{{isGetAccessToken && avaliableVoucher <= 0 && avaliableInventory <= 0}}" class="button-group-wrapper is-increase-height">
+        <view wx:elif="{{isGetAccessToken && availableVoucher <= 0 && availableInventory <= 0}}" class="button-group-wrapper is-increase-height">
             <button class="button-group__is-left is-least-area">
-                <text class="tips is-main">剩余可用份数：{{avaliableInventory}}</text>
+                <text class="tips is-main">剩余可用份数：{{availableInventory}}</text>
             </button>
-            <view class="button-group__is-right is-more-area">
+            <view class="button-group__is-right is-more-area" bind:tap="goToCustomerService">
                 <text>联系客服获取更多</text>
             </view>
         </view>
@@ -135,31 +126,31 @@
             </button>
         </button>
         <!--有券-->
-        <view wx:elif="{{isGetAccessToken && avaliableVoucher > 0}}" class="button-group-wrapper">
-            <button class="button-group__is-left">
+        <view wx:elif="{{isGetAccessToken && availableVoucher > 0}}" class="button-group-wrapper">
+            <button class="button-group__is-left" bind:tap="showSelectQuiz">
                 <text class="title">免费体验</text>
-                <text class="tips">您有{{avaliableVoucher}}张体验券可用于本测评</text>
+                <text class="tips">您有{{availableVoucher}}张体验券可用于本测评</text>
             </button>
-            <button class="button-group__is-right">
+            <button class="button-group__is-right" bind:tap="payForEvaluation">
                 <text>立即购买</text>
             </button>
         </view>
         <!--无券有库存-->
-        <view wx:elif="{{isGetAccessToken && avaliableVoucher <= 0 && avaliableInventory > 0}}" class="button-group-wrapper">
-            <button class="button-group__is-left">
+        <view wx:elif="{{isGetAccessToken && availableVoucher <= 0 && availableInventory > 0}}" class="button-group-wrapper">
+            <button class="button-group__is-left" bind:tap="showSelectQuiz">
                 <text class="title">立即使用</text>
-                <text class="tips">剩余可用份数：{{avaliableInventory}}</text>
+                <text class="tips">剩余可用份数：{{availableInventory}}</text>
             </button>
-            <button class="button-group__is-right">
+            <button class="button-group__is-right" bind:tap="payForEvaluation">
                 <text>购买更多</text>
             </button>
         </view>
         <!--无券无库存-->
-        <view wx:elif="{{isGetAccessToken && avaliableVoucher <= 0 && avaliableInventory <= 0}}" class="button-group-wrapper is-increase-height">
+        <view wx:elif="{{isGetAccessToken && availableVoucher <= 0 && availableInventory <= 0}}" class="button-group-wrapper is-increase-height">
             <button class="button-group__is-left is-least-area">
                 <text class="tips is-main">剩余可用份数：0</text>
             </button>
-            <button class="button-group__is-right is-more-area">
+            <button class="button-group__is-right is-more-area" bind:tap="payForEvaluation">
                 <text>购买更多</text>
             </button>
         </view>
@@ -169,12 +160,6 @@
         <view wx:if="{{ payTrigger }}" class="new-pay-page {{ payTrigger ? 'popup-new-pay-page':'' }}">
             <view class="pay-title">
                 <text>购买测评</text>
-                <view style="display: flex;align-items: center;" bindtap="buyByTicket">
-                    <image style="width: 30rpx;height: 30rpx;" src="../../images/detail@icon-ticket.png"></image>
-                    <view style="font-weight: initial;font-size: 26rpx;color: rgba(157,157,157,1);line-height:36rpx;font-weight: 600">
-                        用券兑换
-                    </view>
-                </view>
             </view>
             <view wx:if="{{ buyByCounts }}" class="buy-by-counts">
                 <view class="total-counts">
@@ -185,12 +170,12 @@
                 </view>
                 <view class="total-operator">
                     <view bindtap="addcount" class="add">+</view>
-                    <input type="number" class="total-display" bindinput="inputprice" value="{{count}}"/>
-                    <view bindtap="jiancount" class="subtraction">-</view>
+                    <input type="number" class="total-display" bindinput="onCountChange" value="{{count}}"/>
+                    <view bindtap="subcount" class="subtraction">-</view>
                 </view>
             </view>
             <view class="pay-group">
-                <view wx:if="{{ buyByCounts }}" bindtap="payByCounts">
+                <view wx:if="{{ buyByCounts }}" bindtap="payForEvaluation">
                     <press title="微信支付" fontSize="32" fontWeight="600" letterSpacing="2" shadow=""></press>
                 </view>
                 <view bindtap="servingTrigger">
@@ -200,49 +185,13 @@
             </view>
         </view>
     </block>
-    <block>
-        <van-overlay show="{{ buyByTicket }}" bind:click="cancelBuyByTicket"></van-overlay>
-        <view wx:if="{{ buyByTicket }}" class="pay-by-ticket-page {{ buyByTicket ? 'popup-new-pay-page':'' }}">
-            <view class="head-wrapper">
-                <view class="title-wrapper">
-                    <text>{{ evaluation.name }}</text>
-                    <text style="font-size: 24rpx;font-weight: initial;margin: 10rpx 0 10rpx 0;letter-spacing: 4rpx;color: rgba(0,0,0,.4)">
-                        {{ voucher }}张券可用于本测评
-                    </text>
-                </view>
-                <image src="{{ evaluation.smallImg }}"
-                       style="width: 100rpx;height: 100rpx;background-color: #2f3038;border-radius: 10rpx;"></image>
-            </view>
-            <view class="operator-wrapper">
-                <view class="operator">
-                    <view class="ticket-sub" bindtap="subTicket">-</view>
-                    <input class="ticket-display" type="text" value="{{ ticketCount }}" bindinput="changeTicketCount"/>
-                    <view class="ticket-add" bindtap="addTicket">+</view>
-                </view>
-            </view>
-            <view bindtap="useticket">
-                <press title="{{ ticketCount ? '用券兑换'+ticketCount+'份' : '用券兑换' }}" height="90" fontSize="32"
-                       shadow="0px 4px 8px 0px rgba(192,192,192,0.97);"></press>
-            </view>
-        </view>
-    </block>
-    <view wx:if="{{ giftTrigger }}" class="gift-container">
-        <view class="image-container">
-            <image src="http://ihola.luoke101.com/20200709145310.png"
-                   style="width: 675rpx;height: 855rpx;margin-top: 52rpx;" bindtap="buyByTicket"></image>
-        </view>
-        <view class="mask" bindtap="closeGift"></view>
-    </view>
-    <!-- 新用户 || 有券 || (未买断&&买过测评) || 买断 以上这种情况出现均会出现小黄条 -->
-    <serving id="serving" mobile="{{ mobile }}" wechat="{{ wechat }}" area="detail"
-             bottom="{{ evaluationVoucherInfo.isBeginner || hasVoucher || (!evaluationVoucherInfo.buyoutInfo.hadBuyout&&evaluationVoucherInfo.hadConsumed) || evaluationVoucherInfo.buyoutInfo.hadBuyout ? '240rpx' : '180rpx'}}"></serving>
-
+    <serving area="detail" bottom="180rpx"></serving>
 </block>
 <van-overlay show="{{ loading }}" custom-style="background-color: #fff;">
     <mask isShow="{{ loading }}" top="{{ (statusbarHeight + titleHeight)/pixelRate }}"
           height="{{ windowHeight - ( statusbarHeight + titleHeight) }}" backgroundColor="transparent"></mask>
 </van-overlay>
-<van-overlay show="{{ showSelectQuiz || true }}" custom-style="background-color: #00000055;">
+<van-overlay show="{{ showSelectQuiz }}" custom-style="background-color: #00000055;" bind:click="hideSelectQuiz">
     <view class="quiz-wrapper">
         <view class="quiz-wrapper-item" bind:tap="goToGuide">
             <image class="self-img" src="https://ihola.luoke101.com/icon%40self.png"/>

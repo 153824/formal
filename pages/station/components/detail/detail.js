@@ -1,267 +1,53 @@
-// store/charge/charge.js
-//测评详情界面
-var app = getApp();
-var isFirstLoad = true;
+const app = getApp();
 Page({
     data: {
-        teamRole: app.teamRole,
-        isIos: false,
+        isIos: app.isIos,
         payTrigger: false,
         count: 1,
         name: "",
-        getPhoneNum: true,
-        loading: true,
-        mobile: "18559297592",
-        wechat: "haola72",
-        getInOnceAgainst: false,
-        subscribe: false,
-        giftTrigger: false,
+        loading: false,
         buyByCounts: true,
-        buyByTicket: false,
-        ticketCount: 1,
         assistant: app.globalData.assistant,
-        isPC: false,
+        isPC: app.isPC,
         iphonex: app.isIphoneX,
         statusbarHeight: app.globalData.statusbarHeight,
         titleHeight: app.globalData.titleHeight,
         windowHeight: app.globalData.windowHeight,
         evaluation: {},
-        evaluationVoucherInfo: {},
-        currAnsweringStatus: false,
+        evaluationId: '',
         releaseInfo: {},
-        experienceTicket: 0,
-        officialTicket: 0,
-        certificateTicket: 0,
-        shareTicket: 0,
-        deprecatedTicket: 0,
         customNorms: [],
         isGetAccessToken: app.checkAccessToken(),
         authCodeCounter: 0,
-        isNew: wx.getStorageSync('isNew'),
-
-        avaliableVoucher: 0,
-        avaliableInventory: 20,
+        availableVoucher: 0,
+        availableInventory: 0,
         showSelectQuiz: false,
     },
 
-    onLoad: function (options) {
-        var that = this;
-        var {resubscribe = 'false'} = options;
-        var userData = app.globalData.userInfo || wx.getStorageSync("userInfo");
-        var isGetInAgainst = wx.getStorageSync('isGetInAgainst') || 'NO';
-        this.setData({
-            isIos: app.isIos,
-            teamRole: app.teamRole,
-            userData: userData,
-            evaluationId: options.id,
-            getPhoneNum: true,
-            resubscribe: resubscribe === 'true' ? true : false,
-            isGetInAgainst,
-            isPC: app.isPC
-        });
-    },
-    onShow: function () {
+    onLoad(options) {
+        console.log(options)
         const that = this;
-        this._checkUserIsBindPhone();
-        this.setData({
-            isNew: wx.getStorageSync('isNew')
-        });
-        const evaluationDetailPromise = new Promise((resolve, reject) => {
-            app.doAjax({
-                url: 'evaluations/outline',
-                method: 'get',
-                data: {
-                    evaluationId: that.data.evaluationId
-                },
-                noLoading: true,
-                success: function (res) {
-                    let evaluation = res;
-                    let {id, name, freeEvaluation} = evaluation;
-                    if (freeEvaluation) {
-                        // 	访问免费测评
-                        try {
-                            wx.uma.trackEvent('1602211030236', {name: name})
-                        } catch (e) {
+        this.setData({evaluationId: options.id});
+    },
 
-                        }
-                    } else {
-                        // 	访问付费测评
-                        try {
-                            wx.uma.trackEvent('1602211124861', {name: name})
-                        } catch (e) {
-
-                        }
-                    }
-                    // 访问测评详情
-                    try {
-                        wx.uma.trackEvent('1602210780126', {name: name})
-                    } catch (e) {
-
-                    }
-                    that.setData({
-                        evaluation,
-                    });
-                    if (evaluation.freeEvaluation) {
-                    } else {
-                    }
-                    resolve("success");
-                },
-                fail: function (err) {
-                    reject("fail");
-                }
-            });
-        });
-        const evaluationVoucherPromise = new Promise(((resolve, reject) => {
-            if (!app.checkAccessToken()) {
-                reject();
-                return;
-            }
-            app.doAjax({
-                url: `inventories/${that.data.evaluationId}`,
-                method: "get",
-                success: function (res) {
-                    const evaluationVoucherInfo = res;
-                    let hasVoucher = true,
-                        voucher = 0,
-                        {voucherInfo} = evaluationVoucherInfo,
-                        isFreeTicket = false,
-                        shareTicket = 0,
-                        experienceTicket = 0,
-                        officialTicket = 0,
-                        deprecatedTicket = 0,
-                        certificateTicket = 0;
-                    let {id, name} = that.data.evaluation;
-                    if (Object.keys(voucherInfo).length <= 0) {
-                        hasVoucher = false;
-                    } else {
-                        for (let i in voucherInfo) {
-                            voucher += voucherInfo[i];
-                            if (i === 'BEGINNER') {
-                                officialTicket = voucherInfo[i];
-                            } else if (i === ' EXCLUSIVE') {
-                                shareTicket = voucherInfo[i];
-                            } else if (i === 'GIFT') {
-                                experienceTicket = voucherInfo[i];
-                            } else if (i === 'CERTIFICATE') {
-                                certificateTicket = voucherInfo[i];
-                            } else if (i === 'DEPRECATED') {
-                                deprecatedTicket = voucherInfo[i];
-                            }
-                            if (i === ' EXCLUSIVE' || i === 'GIFT') {
-                                isFreeTicket = true;
-                            }
-                        }
-                    }
-                    that.setData({
-                        evaluationVoucherInfo,
-                        hasVoucher,
-                        voucher,
-                        officialTicket,
-                        shareTicket,
-                        experienceTicket,
-                        certificateTicket,
-                        deprecatedTicket,
-                        customNorms: res.customNorms
-                    });
-                    resolve("success");
-                }
-            })
-        }));
-        Promise.race([evaluationDetailPromise, evaluationVoucherPromise])
-            .then(values => {
-                setTimeout(() => {
-                    this.setData({
-                        loading: false,
-                    })
-                }, 500)
-            })
-            .catch(err => {
-                setTimeout(() => {
-                    this.setData({
-                        loading: false,
-                    })
-                }, 500)
-            });
+    onShow() {
+        const that = this;
         this.setData({
             isGetAccessToken: app.checkAccessToken()
         })
-    },
-    onUnload: function () {
-        try {
-            const {isBeginner, hadShare} = this.data.evaluation;
-            if (!isBeginner && !hadShare) {
+        this.loadEvaluationInfo()
+            .then(res=>{
                 this.setData({
-                    isGetInAgainst: 'NO'
-                });
-                wx.setStorage({
-                    key: 'isGetInAgainst',
-                    data: 'YES'
+                    evaluation: res
                 })
-            }
-        } catch (e) {
-
-        }
-    },
-    toGetPaperDetail: function () {
-        const that = this;
-        const {evaluation} = this.data;
-        const getEvaluationPromise = new Promise(((resolve, reject) => {
-            app.doAjax({
-                url: `inventories/${that.data.evaluationId}`,
-                method: "get",
-                success: function (res) {
-                    const evaluationVoucherInfo = res;
-                    let hasVoucher = true,
-                        voucher = 0,
-                        {voucherInfo} = evaluationVoucherInfo,
-                        isFreeTicket = false,
-                        shareTicket = 0,
-                        experienceTicket = 0,
-                        officialTicket = 0,
-                        deprecatedTicket = 0,
-                        certificateTicket = 0;
-                    let {id, name} = that.data.evaluation;
-                    if (Object.keys(voucherInfo).length <= 0) {
-                        hasVoucher = false;
-                    } else {
-                        for (let i in voucherInfo) {
-                            voucher += voucherInfo[i];
-                            if (i === 'BEGINNER') {
-                                officialTicket = voucherInfo[i];
-                            } else if (i === ' EXCLUSIVE') {
-                                shareTicket = voucherInfo[i];
-                            } else if (i === 'GIFT') {
-                                experienceTicket = voucherInfo[i];
-                            } else if (i === 'CERTIFICATE') {
-                                certificateTicket = voucherInfo[i];
-                            } else if (i === 'DEPRECATED') {
-                                deprecatedTicket = voucherInfo[i];
-                            }
-                            if (i === ' EXCLUSIVE' || i === 'GIFT') {
-                                isFreeTicket = true;
-                            }
-                        }
-                    }
-                    that.setData({
-                        evaluationVoucherInfo,
-                        hasVoucher,
-                        voucher,
-                        officialTicket,
-                        shareTicket,
-                        experienceTicket,
-                        certificateTicket,
-                        deprecatedTicket,
-                        payTrigger: false
-                    });
-                    resolve("success");
-                },
-                fail: function () {
-                    reject("fail");
-                }
-            })
-        })).then(res => {
-            // do nothing
-        });
+            });
+        this.loadInventory()
+            .then(({availableVoucher, availableInventory})=>{
+                this.setData({
+                    availableVoucher,
+                    availableInventory
+                })
+            });
     },
 
     changePrice: function (e) {
@@ -287,102 +73,36 @@ Page({
             payTrigger: false,
         })
     },
-    /**
-     * 用券购买测评
-     */
-    useticket: function () {
-        var that = this;
-        var {ticketCount, voucher, evaluation} = this.data;
-        if (!ticketCount) return wx.showToast({
-            title: '购买数量不能为空',
-            icon: 'none',
-            duration: 1200
-        });
-        var maxCount = voucher;
-        if (ticketCount > maxCount) return wx.showToast({
-            title: '券数量不足，无法购买',
-            icon: 'none',
-            duration: 1200
-        });
-        app.doAjax({
-            url: "exchangeByVoucher",
-            method: "post",
-            data: {
-                evaluationId: evaluation.id,
-                count: ticketCount,
-            },
-            success: function (res) {
-                wx.showToast({
-                    title: '兑换成功',
-                });
-                that.setData({
-                    buyByTicket: false
-                });
-                setTimeout(function () {
-                    that.toGetPaperDetail(true);
-                }, 500);
-            }
-        });
-    },
-    // 自己测
-    goToGuide: function (e) {
+
+    goToGuide(e) {
         const that = this;
-        const {evaluation, customNorms} = this.data;
-        app.doAjax({
-            url: 'release/self',
-            method: 'post',
-            data: {
-                evaluationInfo: {
-                    evaluationId: evaluation.id,
-                    normId: evaluation.generalNorms.length ? evaluation.generalNorms[0].normId : customNorms[0].normId,
-                    freeEvaluation: evaluation.freeEvaluation,
-                    evaluationName: evaluation.name,
-                    quesCount: evaluation.quesCount,
-                    estimatedTime: evaluation.estimatedTime
-                }
-            },
-            success: function (res) {
-                that.setData({
-                    releaseInfo: res
-                });
-                const answeringURL = `/pages/work-base/components/guide/guide?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId }&type=self&releaseInfo=${JSON.stringify(res)}`;
+        const {evaluation} = this.data;
+        this.loadReleaseSelf()
+            .then(res=>{
+                const answeringURL = `/pages/work-base/components/guide/guide?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}&type=self&releaseInfo=${JSON.stringify(res)}`;
                 const sKey = "oldAnswer" + res.receiveRecordId;
-                if (res.msg==='RELAY') {
+                if (res.msg === 'RELAY') {
                     let oldData = wx.getStorageSync(sKey);
                     if (!oldData && res.draft instanceof Object) {
                         wx.setStorageSync(sKey, res.draft);
                     }
                 }
+                that.setData({
+                    releaseInfo: res
+                });
                 wx.navigateTo({
                     url: answeringURL
                 });
-            }
-        });
+            })
     },
 
-    _selfStart: function (receiveRecordId = "") {
-        app.doAjax({
-            url: 'release/self/start',
-            method: 'post',
-            data: {
-                receiveRecordId: receiveRecordId
-            },
-            success: function (res) {
-            },
-            fail: function (err) {
-                throw err;
-            }
-        });
-    },
-
-    /**购买数量+1 */
-    addcount: function () {
+    addcount() {
         this.setData({
             count: this.data.count + 1
         });
     },
-    /**购买数量-1 */
-    jiancount: function () {
+
+    subcount() {
         if (this.data.count <= 1) {
             this.setData({
                 count: 1
@@ -393,10 +113,8 @@ Page({
             })
         }
     },
-    /**
-     * 按份购买测评
-     */
-    payByCounts: function () {
+
+    payByCounts() {
         var that = this,
             {count, evaluation} = this.data;
         if (count !== 0) {
@@ -452,21 +170,22 @@ Page({
         }
     },
 
-    goToDaTi: function () {
+    goToDaTi() {
         //发放测评
         const that = this;
-        const {evaluation, evaluationVoucherInfo, customNorms, avaliableVoucher, avaliableInventory} = this.data;
-        const {availableCount, buyoutInfo} = evaluationVoucherInfo;
-        if (avaliableVoucher <= 0 && avaliableInventory <= 0) {
+        const {evaluation, customNorms, availableVoucher, availableInventory} = this.data;
+        console.log(availableVoucher, availableInventory);
+        if (availableVoucher <= 0 && availableInventory <= 0) {
             app.toast("测评可用数量不足，请先购买测评");
             return;
         }
         const necessaryInfo = {
             id: evaluation.id,
-            count: availableCount,
+            count: availableVoucher + availableInventory,
+            availableVoucher,
+            availableInventory,
             name: evaluation.name,
             isFree: evaluation.freeEvaluation,
-            hadBuyout: buyoutInfo.hadBuyout,
             norms: customNorms.length ? customNorms : evaluation.generalNorms,
             quesCount: evaluation.quesCount,
             estimatedTime: evaluation.estimatedTime,
@@ -475,38 +194,15 @@ Page({
             url: `../sharePaper/sharePaper?necessaryInfo=${JSON.stringify(necessaryInfo)}`,
         });
     },
-    /**
-     * 查看大图
-     */
-    showBigImg: function (e) {
+
+    showBigImg(e) {
         var url = e.currentTarget.dataset.url;
         if (!url) return;
         wx.previewImage({
             urls: [url]
         });
     },
-    /**
-     * 用户授权
-     */
-    getUserInfo: function (e) {
-        app.updateUserInfo().then(res=>{}).catch(err=>{
-            console.error(err);
-        });
-        this.getNewerTicket();
-    },
-    /**
-     * 复制微客服信号
-     */
-    copyIt: function (e) {
-        var that = this;
-        var txt = "haola72";
-        wx.setClipboardData({
-            data: txt,
-            success(res) {
 
-            }
-        });
-    },
     onShareAppMessage(options) {
         const evaluationInfo = this.data.evaluation;
         const {teamId} = app,
@@ -520,187 +216,92 @@ Page({
                 imageUrl: `${evaluationInfo.smallImg}`,
             }
         }
-        // 分享领券-开始
-        // app.doAjax({
-        //     url: `drawVoucher?paperId=${id}`,
-        //     success: function (res) {
-        //         app.toast(res);
-        //     },
-        //     fail: function (err) {
-        //         console.error(err);
-        //     }
-        // });
-        // setTimeout(() => {
-        //     wx.showModal({
-        //         title: '',
-        //         content: '领券成功，快去兑换测评吧',
-        //         confirmText: '立即兑换',
-        //         success(res) {
-        //             if (res.confirm) {
-        //                 that.setData({
-        //                     buyByTicket: true
-        //                 })
-        //             }
-        //         }
-        //     });
-        // }, 2000);
-        // 分享领券-结束
         return {
             title: "我发现一个不错的人才测评软件，快来看看吧~",
             path: "pages/home/home",
             imageUrl: "http://ihola.luoke101.com/wxShareImg.png",
         }
     },
-    /**继续体验 */
-    continueTest: function (e) {
-        var t = e.target.dataset.t;
-        if (t == 2) {
-            this.setData({
-                oldShareInfo: ""
-            });
-            return;
-        }
-        var id = this.data.oldShareInfo.id;
+
+    showSelectQuiz() {
+        this.setData({
+            showSelectQuiz: true
+        })
+    },
+
+    hideSelectQuiz() {
+        this.setData({
+            showSelectQuiz: false
+        })
+    },
+
+    goToCustomerService() {
         wx.navigateTo({
-            url: '../test/guide?id=' + id
-        });
-    },
-    getNewerTicket: function (e) {
-        var that = this;
-        var {name} = that.data.evaluation;
-        app.doAjax({
-            url: "drawNoviceVoucher",
-            method: "post",
-            data: {},
-            success: function (ret) {
-                that.setData({
-                    giftTrigger: true,
-                });
-            },
-            error: function (res) {
-                app.toast(res.msg);
-            }
-        });
-        wx.uma.trackEvent('1602211291284', {name: name});
-        that.onShow(false);
-    },
-    goToUserCenter: function () {
-        wx.switchTab({
-            url: "../user/index"
+            url: "/pages/customer-service/customer-service"
         })
     },
-    /**关闭测评体验券*/
-    closeGift: function () {
-        this.setData({
-            giftTrigger: false
-        });
-    },
-    /**召唤测评体验券*/
-    openGift: function () {
-        this.setData({
-            giftTrigger: true
-        })
-    },
-    buyByCounts: function () {
+
+    buyByCounts() {
         this.setData({
             buyByCounts: true
         })
     },
-    servingTrigger: function () {
-        wx.navigateTo({
-            url: '/pages/customer-service/customer-service'
-        })
-        this.setData({
-            payTrigger: false
-        })
-    },
-    buyByTicket: function () {
-        this.setData({
-            buyByTicket: true,
-            payTrigger: false,
-            giftTrigger: false
-        })
-    },
-    cancelBuyByTicket: function () {
-        this.setData({
-            buyByTicket: false,
-        })
-    },
-    subTicket: function () {
-        var {ticketCount} = this.data;
-        if (ticketCount <= 0) {
-            ticketCount = 0;
-        } else {
-            ticketCount = ticketCount - 1;
-        }
-        this.setData({
-            ticketCount
-        })
-    },
-    addTicket: function () {
-        var {voucher, ticketCount} = this.data;
-        if (ticketCount >= voucher) {
-            app.toast("最多只能兑换" + voucher + "份");
-        } else {
-            ticketCount = ticketCount + 1;
-        }
-        this.setData({
-            ticketCount
-        })
-    },
+
     authPhoneNumber(e) {
         // enjoy-体验测评 contact-联系客服
         const that = this;
         const {type} = e.currentTarget.dataset;
-        let {authCodeCounter} = this.data;
-        if(authCodeCounter > 5){
+        let {authCodeCounter, isIos} = this.data;
+        if (authCodeCounter > 5) {
             return;
         }
         app.getAccessToken(e)
-           .then(res=>{
-               return that.loadInventory()
-           })
-           .then(res=>{
-               console.log(res)
-               res.avaliableVoucher = 0;
-               res.avaliableInventory = 0;
-               const {avaliableVoucher, avaliableInventory} = res;
-               if(type === 'enjoy'){
-                   if(avaliableVoucher <= 0){
-                       app.toast('您的免费体验券已用完');
-                   }
-                   if(avaliableVoucher > 0){
-                       that.setData({
-                           showSelectQuiz: true
-                       })
-                   }
-               }
-               if (type === 'contact') {
-                   wx.navigateTo({
-                       url: "/pages/customer-service/customer-service"
-                   })
-               }
-               that.setData({
-                   avaliableVoucher,
-                   avaliableInventory
-               });
-           })
-           .catch(err=>{
-               if(err.code === '401111'){
-                   app.prueLogin().then(res=>{
-                       this.authPhoneNumber(e)
-                   });
-                   that.setData({
-                       authCodeCounter: authCodeCounter++
-                   })
-               }
-           })
+            .then(res => {
+                return that.loadInventory()
+            })
+            .then(res => {
+                const {availableVoucher, availableInventory} = res;
+                if (type === 'enjoy') {
+                    if (availableVoucher <= 0) {
+                        app.toast('您的免费体验券已用完');
+                    }
+                    if (availableVoucher > 0) {
+                        that.setData({
+                            showSelectQuiz: true
+                        })
+                    }
+                }
+                if (type === 'contact') {
+                    if (isIos) {
+                        wx.navigateTo({
+                            url: "/pages/customer-service/customer-service"
+                        })
+                    } else {
+                        that.payByCounts();
+                    }
+                }
+                that.setData({
+                    availableVoucher,
+                    availableInventory
+                });
+            })
+            .catch(err => {
+                if (err.code === '401111') {
+                    app.prueLogin().then(res => {
+                        this.authPhoneNumber(e)
+                    });
+                    that.setData({
+                        authCodeCounter: authCodeCounter++
+                    })
+                }
+            })
     },
+
     loadInventory() {
         const that = this;
         const p = new Promise((resolve, reject) => {
             app.doAjax({
-                url: `inventories/${that.data.evaluationId}`,
+                url: `../wework/inventories/${that.data.evaluationId}`,
                 method: "get",
                 success(res) {
                     resolve(res);
@@ -712,166 +313,53 @@ Page({
         });
         return p;
     },
-    getPhoneNumber: function (e) {
+
+    loadEvaluationInfo() {
         const that = this;
-        const {mark, eventName} = e.currentTarget.dataset;
-        const {iv, encryptedData} = e.detail;
-        let {evaluation,authCodeCounter} = this.data;
-        try {
-            // 唤起手机授权
-            wx.uma.trackEvent('1602747468531');
-        } catch (e) {
-            throw e
-        }
-        if(authCodeCounter > 5){
-            return;
-        }
-        if (mark !== 'dont-get-ticket') {
-            try {
-                wx.uma.trackEvent('1602211711933', {name: evaluation.name});
-            } catch (e) {
-
-            }
-        }
-        if (mark === 'dont-get-ticket') {
-            switch (eventName) {
-                case 'goToDaTi':
-                    try {
-                        wx.uma.trackEvent('1602211801893', {name: evaluation.name});
-                    } catch (e) {
-
-                    }
-                    break;
-                case 'goToGuide':
-                    try {
-                        wx.uma.trackEvent('1602211853957', {name: evaluation.name});
-                    } catch (e) {
-
-                    }
-                    break;
-                case 'payForEvaluation':
-                    try {
-                        wx.uma.trackEvent('1602211886750', {name: evaluation.name});
-                    } catch (e) {
-
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-        if (encryptedData) {
-            //用户授权手机号
-            var userMsg = app.globalData.userMsg || {};
-            userMsg["iv"] = iv;
-            userMsg["encryptedData"] = encryptedData;
-            try {
-                // 成功授权手机号
-                wx.uma.trackEvent('1602747651175')
-            } catch (e) {
-
-            }
-            const getAccessToken = new Promise(((resolve, reject) => {
-                app.getAccessToken(e).then(res=>{
-                    that.onShow();
-                    resolve(true);
-                }).catch(err=>{
+        const p = new Promise((resolve, reject) => {
+            app.doAjax({
+                url: 'evaluations/outline',
+                method: 'get',
+                data: {
+                    evaluationId: that.data.evaluationId
+                },
+                noLoading: true,
+                success: function (res) {
+                    resolve(res);
+                },
+                fail: function (err) {
                     reject(err);
-                    console.error(err);
-                });
-            }));
-            getAccessToken.then(() => {
-                app.doAjax({
-                    url: `wework/users/${wx.getStorageSync('userInfo').userId}`,
-                    method: "get",
-                    success: function (res) {
-                        if (res.phone && mark !== 'dont-get-ticket') {
-                            that.getNewerTicket();
-                            try {
-                                wx.uma.trackEvent('1602211933140', {name: evaluation.name});
-                            } catch (e) {
-
-                            }
-                        }
-                        if (mark === 'dont-get-ticket') {
-                            switch (eventName) {
-                                case 'goToDaTi':
-                                    try {
-                                        wx.uma.trackEvent('1602212015300', {name: evaluation.name});
-                                    } catch (e) {
-
-                                    }
-                                    that.goToDaTi(e);
-                                    break;
-                                case 'goToGuide':
-                                    try {
-                                        wx.uma.trackEvent('1602212048924', {name: evaluation.name});
-                                    } catch (e) {
-
-                                    }
-                                    that.goToGuide(e);
-                                    break;
-                                case 'payForEvaluation':
-                                    try {
-                                        wx.uma.trackEvent('1602212078917', {name: evaluation.name});
-                                    } catch (e) {
-
-                                    }
-                                    that.payForEvaluation();
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                        that.setData({
-                            isGetAccessToken: true
-                        })
-                        // 授权登录后，新用户设置为false，防止领券的提示语异常
-                        wx.setStorageSync('isNew', false);
-                        that.setData({
-                            isNew: false
-                        })
-                    }
-                })
-            }).catch(err=>{
-                if(err.code === '401111'){
-                    app.prueLogin().then(res=>{
-                        this.getPhoneNumber(e)
-                    });
-                    that.setData({
-                        authCodeCounter: authCodeCounter++
-                    })
                 }
             });
-        }
+        });
+        return p;
     },
-    goToTransit: function (e) {
+
+    loadReleaseSelf() {
         const that = this;
-        const {mark, eventName} = e.currentTarget.dataset;
-        const {evaluation} = this.data;
-        if (app.checkAccessToken()) {
-            switch (eventName) {
-                case 'goToDaTi':
-                    wx.uma.trackEvent('1602212461556', {name: evaluation.name, isFree: evaluation.freeEvaluation});
-                    that.goToDaTi(e);
-                    break;
-                case 'goToGuide':
-                    wx.uma.trackEvent('1602212336204', {name: evaluation.name, isFree: evaluation.freeEvaluation});
-                    that.goToGuide(e);
-                    break;
-            }
-        }
-    },
-    _checkUserIsBindPhone: function (userId) {
-        if(wx.getStorageSync('userInfo') && wx.getStorageSync('userInfo').tokenInfo && wx.getStorageSync('userInfo').tokenInfo.accessToken){
-            this.setData({
-                isGetAccessToken: true,
+        const {evaluation, customNorms} = this.data;
+        const p = new Promise((resolve, reject) => {
+            app.doAjax({
+                url: 'release/self',
+                method: 'post',
+                data: {
+                    evaluationInfo: {
+                        evaluationId: evaluation.id,
+                        normId: evaluation.generalNorms.length ? evaluation.generalNorms[0].normId : customNorms[0].normId,
+                        freeEvaluation: evaluation.freeEvaluation,
+                        evaluationName: evaluation.name,
+                        quesCount: evaluation.quesCount,
+                        estimatedTime: evaluation.estimatedTime
+                    }
+                },
+                success(res) {
+                    resolve(res);
+                },
+                fail(err) {
+                    reject(err);
+                }
             });
-        }
-    },
-    changeTicketCount: function (e) {
-        this.setData({
-            ticketCount: Number(e.detail.value)
         })
+        return p;
     }
 });

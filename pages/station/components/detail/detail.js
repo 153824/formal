@@ -50,7 +50,7 @@ Page({
             });
     },
 
-    changePrice: function (e) {
+    onCountChange(e) {
         this.setData({
             count: e.detail.value * 1
         })
@@ -115,7 +115,7 @@ Page({
     },
 
     payByCounts() {
-        var that = this,
+        const that = this,
             {count, evaluation} = this.data;
         if (count !== 0) {
             app.doAjax({
@@ -127,7 +127,7 @@ Page({
                     type: 1,
                     openid: wx.getStorageSync("userInfo").openid
                 },
-                success: function (res) {
+                success(res) {
                     wx.requestPayment({
                         appId: res.appId,
                         timeStamp: res.timeStamp,
@@ -141,11 +141,10 @@ Page({
                                 duration: 2000
                             });
                             setTimeout(function () {
-                                that.toGetPaperDetail();
+                                that.onShow();
                             }, 500);
-                            //这里完成跳转
                         },
-                        fail: function (res) {
+                        fail(res) {
                             if (res.errMsg == "requestPayment:fail cancel") {
                                 wx.showToast({
                                     title: '购买取消',

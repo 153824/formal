@@ -732,11 +732,13 @@ App({
 
     updateUserInfo(e) {
         let userInfo = {};
-        if (wx.getUserProfile) {
+        console.log('updateUserInfo: ', e);
+        if (wx.getUserProfile && e.type !== 'getuserinfo') {
             userInfo = e.userInfo
         } else {
             userInfo = e.detail.userInfo
         }
+        console.log(userInfo);
         userInfo.avatar = userInfo && userInfo.avatarUrl ? userInfo.avatarUrl : ''
         const p = new Promise((resolve, reject) => {
             this.doAjax({

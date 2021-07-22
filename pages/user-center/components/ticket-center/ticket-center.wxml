@@ -14,14 +14,19 @@
                 <view class="ticket-item__info">
                     <view class="ticket-item__info-left">
                         <text>· {{ticketItem.description}}</text>
-                        <text>· {{ticketItem.expiredTime}} 过期</text>
+                        <block wx:if="{{ticketItem.expiredStatus === 'UNLIMITED'}}">
+                            <text>· 无限期</text>
+                        </block>
+                        <block wx:elif="{{ticketItem.expiredStatus === 'AVAILABLE'}}">
+                            <text>· {{ticketItem.expiredTime}} 过期</text>
+                        </block>
                     </view>
                     <view class="ticket-item__info-right">
                         <text class="number">{{ticketItem.count}}</text>
                         <text class="text">张</text>
                     </view>
                 </view>
-                <image wx:if="{{ticketItem.expired}}" src="https://ihola.luoke101.com/icon%40icon-expire.png" class="expire"/>
+                <image wx:if="{{ticketItem.expiredStatus === 'EXPIRED'}}" src="https://ihola.luoke101.com/icon%40icon-expire.png" class="expire"/>
             </view>
         </block>
     </scroll-view>

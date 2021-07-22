@@ -20,6 +20,12 @@ Page({
             },
             success(res) {
                 const {empty, page} = res;
+                if(page - 1 === 0){
+                    console.log('empty: ',empty);
+                    that.setData({
+                        isEmpty: empty
+                    });
+                }
                 if (!empty) {
                     const targetTickets = [...tickets, ...res.items]
                     console.log(targetTickets);

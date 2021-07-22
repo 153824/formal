@@ -903,21 +903,19 @@ App({
                     // 配置智能对话平台插件
                     plugin.init({
                         appid: "TZ7JcEhg7kMjrLwsrAE7s8nz9N3LWc", //机器人Id
-                        openid: res.openid, //用户的openid，必填项，可通过wx.login()获取code，然后通过后台接口获取openid
+                        openid: res.openId, //用户的openid，必填项，可通过wx.login()获取code，然后通过后台接口获取openid
                         userHeader: "", // 用户头像
                         userName: "", // 用户昵称
                         anonymous: false, // 是否允许匿名用户评价，默认为false，设为ture时，未传递userName、userHeader两个字段时将弹出登录框
                         guideCardHeight: 50,
                         operateCardHeight: 120,
-                        history: true,
+                        history: false,
                         historySize: 60,
                         welcome: '请问有什么可以帮到你的~',
                         guideList: [
                             '转人工'
                         ],
-                        success: () => {
-                            
-                        }, //非必填
+                        success: (e) => {}, //非必填
                         fail: (error) => {}, //非必填
                     });
                     resolve(res)

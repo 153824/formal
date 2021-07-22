@@ -4,7 +4,7 @@ Page({
     data: {},
     onLoad: function (options) {},
     getQueryCallback: function(e) {
-        console.log(e);
+        console.log('getQueryCallback: ', e);
     },
     goBackHome: function () {
         // wx.navigateBack({

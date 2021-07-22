@@ -1,6 +1,6 @@
 <view class="container">
   <view class="answer" >
-    <image class="answerimage" src="https://res.wx.qq.com/mmspraiweb_node/dist/static/openaiplugin/img/answerImage.png"></image>
+    <image class="answerimage" src="https://res.wx.qq.com/mmspraiweb_node/dist/static/miniprogrampageImages/talk/leftHeader.png"></image>
     <view class="leftView" wx:if="{{!xiaoweiValue}}">
       <rich-text wx:if="{{isRitch}}" nodes="{{answer}}" bindtap="tap"></rich-text>
       <text wx:else>{{msg.content}}</text>

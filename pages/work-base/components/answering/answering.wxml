@@ -137,14 +137,14 @@
             <button class="btnnext btn-no-all-fill" data-n="finish"
                     wx:if="{{questionStep + 1 == questions.length && !fill && questions[questionStep].type !== 'SORTING'}}">提交
             </button>
-            <button wx:if="{{questionStep + 1 == questions.length && (fill || questions[questionStep].type === 'SORTING') && profileType === 'getUserInfo'}}"
-                    open-type="getUserInfo"
-                    bind:getuserinfo="authUserProfile"
+            <button wx:if="{{questionStep + 1 == questions.length && (fill || questions[questionStep].type === 'SORTING') && profileType === 'getUserProfile'}}"
+                    bind:tap="authUserProfile"
                     class="btnnext btnnextUp btn-is-all-fill">
                 提交
             </button>
-            <button wx:elif="{{questionStep + 1 == questions.length && (fill || questions[questionStep].type === 'SORTING') && profileType === 'getUserProfile'}}"
-                    bind:tap="authUserProfile"
+            <button wx:elif="{{questionStep + 1 == questions.length && (fill || questions[questionStep].type === 'SORTING') && profileType === 'getUserInfo'}}"
+                    open-type="getUserInfo"
+                    bind:getuserinfo="authUserProfile"
                     class="btnnext btnnextUp btn-is-all-fill">
                 提交
             </button>

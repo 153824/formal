@@ -38,8 +38,15 @@
             </view>
         </view>
         <view class="dispatch-info-wrapper" wx:if="{{isWxWork || is3rd}}">
-            可用数量：
-            <text class="{{dispatchInfo.deptId ? 'dispatch-count' : ''}}">{{dispatchInfo.deptId ? dispatchInfo.inventory : "选取部门后显示"}}</text>
+            <block wx:if="{{availableVoucher && !availableInventory}}">可用数量：</block>
+            <block wx:elif="{{availableVoucher && availableInventory}}">可体验数：</block>
+            <block wx:elif="{{!availableVoucher}}">可用数量：</block>
+            <text class="{{dispatchInfo.deptId ? 'dispatch-count' : ''}}">
+                <block wx:if="{{!dispatchInfo.deptId}}">选取部门后显示</block>
+                <block wx:elif="{{availableVoucher && !availableInventory}}">{{availableVoucher}}</block>
+                <block wx:elif="{{availableVoucher && availableInventory}}">{{maxCount}}</block>
+                <block wx:elif="{{!availableVoucher}}">{{availableInventory}}</block>
+            </text>
         </view>
     </view>
     <view class="inviteBtn" bindtap="toSharePaper">生成测评邀请函</view>

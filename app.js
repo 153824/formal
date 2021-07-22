@@ -902,7 +902,7 @@ App({
                     console.log(res);
                     // 配置智能对话平台插件
                     plugin.init({
-                        appid: "VEgbxLa9kYqzGOzstdeSF3xDbkS9zK", //机器人Id
+                        appid: "TZ7JcEhg7kMjrLwsrAE7s8nz9N3LWc", //机器人Id
                         openid: res.openid, //用户的openid，必填项，可通过wx.login()获取code，然后通过后台接口获取openid
                         userHeader: "", // 用户头像
                         userName: "", // 用户昵称
@@ -913,12 +913,11 @@ App({
                         historySize: 60,
                         welcome: '请问有什么可以帮到你的~',
                         guideList: [
-                            "小微写诗",
-                            "一江春水连海平",
-                            "朋友",
-                            "故乡",
+                            '转人工'
                         ],
-                        success: () => {}, //非必填
+                        success: () => {
+                            
+                        }, //非必填
                         fail: (error) => {}, //非必填
                     });
                     resolve(res)

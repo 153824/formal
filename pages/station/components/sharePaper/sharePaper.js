@@ -28,8 +28,8 @@ Page({
         bindTpDepartId: 1,
         corpid: "",
         openDataKey: new Date().getTime(),
-        avaliableVoucher: 0,
-        avaliableInventory: 0,
+        availableVoucher: 3,
+        availableInventory: 0,
     },
 
     /**
@@ -344,9 +344,12 @@ Page({
                 departmentId: departmentId
             },
             success: (res) => {
+                const {availableVoucher, availableInventory, total} = res;
                 _this.setData({
                     dispatchInfo: res,
-                    maxCount: res.inventory
+                    maxCount: total,
+                    availableVoucher,
+                    availableInventory
                 })
             }
         })

@@ -70,7 +70,7 @@
 .van-grid-content-custom-first-command{
     background-color: rgba(53, 62, 232, 0.1) !important;
 }
-.grid-active{
+.grid-active > view{
     background-color: rgba(53, 62, 232, 0.1) !important;
 }
 .van-grid-content-custom{

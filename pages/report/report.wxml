@@ -108,7 +108,7 @@
             </swiper>
             <view class="content" wx:if="{{respondAnalysis.syllabus.display}}">{{respondAnalysis.syllabus.annotation}}
             </view>
-            <view class="title" style="margin-top:80rpx;" wx:if="{{ usageManual.display }}">
+            <view class="title" style="{{respondAnalysis.display ? '' : 'margin-top:80rpx;'}}" wx:if="{{ usageManual.display }}">
                 <text class="underLineBg assessor-info">{{usageManual.headline}}</text>
             </view>
             <view class="list flex see-more-wrapper" wx:if="{{ usageManual.display }}"

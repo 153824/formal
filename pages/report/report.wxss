@@ -12,7 +12,7 @@ page, page > view {
     width: 100%!important;
 }
 .analysis-swiper{
-    width: 300rpx!important;
+    width: 321rpx!important;
     height: 258rpx!important;
     padding-right: 40rpx!important;
 }
@@ -874,7 +874,6 @@ assessor-info
 
 swiper, swiper-item {
     box-sizing: border-box;
-    height: 350rpx;
 }
 
 .dlgView {

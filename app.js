@@ -906,10 +906,10 @@ App({
                         openid: res.openId, //用户的openid，必填项，可通过wx.login()获取code，然后通过后台接口获取openid
                         userHeader: "", // 用户头像
                         userName: "", // 用户昵称
-                        anonymous: false, // 是否允许匿名用户评价，默认为false，设为ture时，未传递userName、userHeader两个字段时将弹出登录框
+                        anonymous: true, // 是否允许匿名用户评价，默认为false，设为ture时，未传递userName、userHeader两个字段时将弹出登录框
                         guideCardHeight: 50,
                         operateCardHeight: 120,
-                        history: false,
+                        history: true,
                         historySize: 60,
                         welcome: '请问有什么可以帮到你的~',
                         guideList: [
@@ -918,6 +918,10 @@ App({
                         success: (e) => {}, //非必填
                         fail: (error) => {}, //非必填
                     });
+                    if(!res.tokenInfo){
+                        // https://devops.aliyun.com/task/60fa593f9d8834004fb4c754
+                        wx.removeStorageSync('accessToken');
+                    }
                     resolve(res)
                 },
                 error: function (err) {

@@ -117,14 +117,14 @@
     </block>
     <block wx:if="{{!isIos}}">
         <!--未登录-->
-        <button wx:if="{{!isGetAccessToken}}" class="button-group-wrapper is-increase-height">
+        <view wx:if="{{!isGetAccessToken}}" class="button-group-wrapper is-increase-height">
             <button class="button-group__is-left" bind:getphonenumber="authPhoneNumber" data-type="enjoy" open-type="getPhoneNumber">
                 <text class="title">免费体验</text>
             </button>
             <button class="button-group__is-right" bind:getphonenumber="authPhoneNumber" data-type="contact" open-type="getPhoneNumber">
                 <text>立即购买</text>
             </button>
-        </button>
+        </view>
         <!--有券-->
         <view wx:elif="{{isGetAccessToken && availableVoucher > 0}}" class="button-group-wrapper">
             <button class="button-group__is-left" bind:tap="showSelectQuiz">

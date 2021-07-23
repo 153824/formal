@@ -41,13 +41,15 @@ Page({
                     evaluation: res
                 })
             });
-        this.loadInventory()
-            .then(({availableVoucher, availableInventory})=>{
-                this.setData({
-                    availableVoucher,
-                    availableInventory
-                })
-            });
+        if(app.checkAccessToken()) {
+            this.loadInventory()
+                .then(({availableVoucher, availableInventory})=>{
+                    this.setData({
+                        availableVoucher,
+                        availableInventory
+                    })
+                });
+        }
     },
 
     onCountChange(e) {

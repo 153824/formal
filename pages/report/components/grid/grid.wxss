@@ -70,6 +70,9 @@
 .van-grid-content-custom-first-command{
     background-color: rgba(53, 62, 232, 0.1) !important;
 }
+.grid-active{
+    background-color: rgba(53, 62, 232, 0.1) !important;
+}
 .van-grid-content-custom{
     transform-origin: center center;
     /*transform: rotate(90deg);*/

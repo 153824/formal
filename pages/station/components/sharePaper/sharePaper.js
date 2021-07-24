@@ -28,7 +28,7 @@ Page({
         bindTpDepartId: 1,
         corpid: "",
         openDataKey: new Date().getTime(),
-        availableVoucher: 3,
+        availableVoucher: 0,
         availableInventory: 0,
     },
 

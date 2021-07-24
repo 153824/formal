@@ -20,6 +20,9 @@
                         <block wx:elif="{{ticketItem.expiredStatus === 'AVAILABLE'}}">
                             <text>· {{ticketItem.expiredTime}} 过期</text>
                         </block>
+                        <block wx:else="{{ticketItem.expiredStatus === 'AVAILABLE'}}">
+                            <text>· 已于 {{ticketItem.expiredTime}} 过期</text>
+                        </block>
                     </view>
                     <view class="ticket-item__info-right">
                         <text class="number">{{ticketItem.count}}</text>

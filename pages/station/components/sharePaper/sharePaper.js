@@ -28,7 +28,7 @@ Page({
         bindTpDepartId: 1,
         corpid: "",
         openDataKey: new Date().getTime(),
-        availableVoucher: 3,
+        availableVoucher: 0,
         availableInventory: 0,
     },
 
@@ -73,31 +73,33 @@ Page({
                 wx.removeStorageSync(item);
             }
         });
-        this._loadRootDepart().then(res => {
-            const {label, value, bindTpDepartId} = res.data[0];
-            console.log(label, value);
-            targetBindTpDepartId = bindTpDepartId;
-            this.setData({
-                dropDownOps: [
-                    {
-                        text: label,
-                        value: value,
-                    }
-                ],
-                dropdownValue: value,
-                defaultDeptId: value,
-                corpid: res.corpId
+        if(this.data.isWxWork){
+            this._loadRootDepart().then(res => {
+                const {label, value, bindTpDepartId} = res.data[0];
+                console.log(label, value);
+                targetBindTpDepartId = bindTpDepartId;
+                this.setData({
+                    dropDownOps: [
+                        {
+                            text: label,
+                            value: value,
+                        }
+                    ],
+                    dropdownValue: value,
+                    defaultDeptId: value,
+                    corpid: res.corpId
+                })
+                if(departInfo && departInfo.bindTpDepartId){
+                    targetBindTpDepartId = departInfo.bindTpDepartId
+                }
+                this.setData({
+                    bindTpDepartId: targetBindTpDepartId
+                })
+                this.loadDispatchInfo(value);
+            }).catch(err=>{
+                console.error(err)
             })
-            if(departInfo && departInfo.bindTpDepartId){
-                targetBindTpDepartId = departInfo.bindTpDepartId
-            }
-            this.setData({
-                bindTpDepartId: targetBindTpDepartId
-            })
-            this.loadDispatchInfo(value);
-        }).catch(err=>{
-            console.error(err)
-        })
+        }
         this._loadEvaluationDetail(id);
     },
 
@@ -335,7 +337,10 @@ Page({
 
     loadDispatchInfo(departmentId) {
         const _this = this;
-        const {evaluationId} = this.data;
+        const {evaluationId, isWxWork} = this.data;
+        if(!isWxWork){
+            return Promise.reject();
+        }
         app.doAjax({
             url: `wework/evaluations/${evaluationId}/inventory/available/ma`,
             method: "get",
@@ -356,6 +361,9 @@ Page({
     },
 
     _loadRootDepart() {
+        if(!this.data.isWxWork){
+            return Promise.reject();
+        }
         const rootDepart = new Promise((resolve, reject) => {
             app.doAjax({
                 url: 'departments/subdivision',

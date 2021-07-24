@@ -107,7 +107,7 @@
         </view>
         <!--无券无库存-->
         <view wx:elif="{{isGetAccessToken && availableVoucher <= 0 && availableInventory <= 0}}" class="button-group-wrapper is-increase-height">
-            <button class="button-group__is-left is-least-area">
+            <button class="button-group__is-left is-least-area" bind:tap="showSelectQuiz">
                 <text class="tips is-main">剩余可用份数：{{availableInventory}}</text>
             </button>
             <view class="button-group__is-right is-more-area" bind:tap="goToCustomerService">
@@ -147,7 +147,7 @@
         </view>
         <!--无券无库存-->
         <view wx:elif="{{isGetAccessToken && availableVoucher <= 0 && availableInventory <= 0}}" class="button-group-wrapper is-increase-height">
-            <button class="button-group__is-left is-least-area">
+            <button class="button-group__is-left is-least-area" bind:tap="showSelectQuiz">
                 <text class="tips is-main">剩余可用份数：0</text>
             </button>
             <button class="button-group__is-right is-more-area" bind:tap="payForEvaluation">

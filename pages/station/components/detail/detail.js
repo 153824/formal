@@ -279,7 +279,9 @@ Page({
                             url: "/pages/customer-service/customer-service"
                         })
                     } else {
-                        that.payByCounts();
+                        that.setData({
+                            payTrigger: true
+                        })
                     }
                 }
                 that.setData({

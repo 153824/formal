@@ -270,7 +270,7 @@ Page({
     closeQrCode: function (e) {
         const that = this;
         wx.redirectTo({
-            url: `../../../work-base/components/track-detail/track-detail?trackId=${that.data.sharePaperInfo.releaseRecordId}`
+            url: `../../../work-base/components/track-detail/track-detail?trackId=${that.data.sharePaperInfo.releaseRecordId}&tabIndex=2`
         })
     },
 

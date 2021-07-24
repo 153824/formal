@@ -42,13 +42,24 @@ Page({
         isWxWork: false,
         isWxWorkAdmin: false,
         is3rd: false,
-        is3rdAdmin: false
+        is3rdAdmin: false,
+        tabIndex: 1
     },
 
     onLoad: function (options) {
         const that = this;
-        const {releaseRecordId, sharedAt,trackId} = options;
+        const {releaseRecordId, sharedAt,trackId, tabIndex} = options;
         const {examiningDetail, finishedDetail, digestDetail} = this;
+        if (tabIndex > 0) {
+            const targetNav = this.data.nav.map(item=>{
+                item.checked = item.id === Number(tabIndex)
+                return {...item}
+            })
+            this.setData({
+                nav: targetNav,
+                checkedItem: Number(tabIndex)
+            })
+        }
         if (sharedAt) {
             this.setData({
                 releaseRecordId,

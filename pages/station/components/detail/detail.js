@@ -190,6 +190,7 @@ Page({
             norms: customNorms.length ? customNorms : evaluation.generalNorms,
             quesCount: evaluation.quesCount,
             estimatedTime: evaluation.estimatedTime,
+            useVoucher: true
         };
         wx.navigateTo({
             url: `../sharePaper/sharePaper?necessaryInfo=${JSON.stringify(necessaryInfo)}`,

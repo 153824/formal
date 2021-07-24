@@ -30,6 +30,7 @@ Page({
         openDataKey: new Date().getTime(),
         availableVoucher: 0,
         availableInventory: 0,
+        useVoucher: false,
     },
 
     /**
@@ -47,6 +48,7 @@ Page({
             estimatedTime = 7,
             avaliableVoucher = 0,
             avaliableInventory = 0,
+            useVoucher
         } = JSON.parse(necessaryInfo);
         this.setData({
             maxCount: count,
@@ -58,6 +60,7 @@ Page({
             estimatedTime: estimatedTime,
             avaliableVoucher,
             avaliableInventory,
+            useVoucher
         });
         this.setData({
             is3rd: app.wx3rdInfo.is3rd,
@@ -202,7 +205,8 @@ Page({
             dispatchInfo,
             isWxWork,
             is3rd,
-            defaultDeptId
+            defaultDeptId,
+            useVoucher
         } = that.data;
         let costNum = count;
         if (!costNum && !isFree) {
@@ -238,7 +242,8 @@ Page({
             normId: norms[0].normId,
             permitSetting: Number(reportMeet) === 1 ? "LOOSE" : "STRICT",
             releaseCount: costNum,
-            entrance: "WECHAT_MA"
+            entrance: "WECHAT_MA",
+            useVoucher
         };
         if (this.data.isWxWork || this.data.is3rd) {
             try {
@@ -346,7 +351,7 @@ Page({
             method: "get",
             data: {
                 evaluationId: evaluationId,
-                departmentId: departmentId
+                departmentId: departmentId,
             },
             success: (res) => {
                 const {availableVoucher, availableInventory, total} = res;

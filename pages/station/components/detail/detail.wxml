@@ -1,6 +1,6 @@
 <!--station/report.wxml-->
 <block wx:if="{{ !loading }}">
-    <scroll-view style="background-color: rgba(7,9,34,0.05);margin-bottom: 188rpx;">
+    <scroll-view style="background-color: rgba(7,9,34,0.05);margin-bottom: 200rpx;">
         <view class="header">
             <view class="header-wrapper">
                 <view class="cover-wrapper">
@@ -20,7 +20,7 @@
                 <checkout title="例题" type="assistant" list="{{ evaluation.quesExamples }}" isShow="{{evaluation.quesExamples.length}}"></checkout>
             </block>
             <block wx:else>
-                <checkout title="报价方案" type="price" isShow="{{ !evaluation.freeEvaluation }}"
+                <checkout title="报价方案" type="price" isShow="{{ !evaluation.freeEvaluation && !isIos }}"
                           data="{{ evaluation }}"></checkout>
                 <checkout title="测评简介" type="introduction" info="{{ evaluation.synopsis }}"></checkout>
                 <checkout title="测量维度" type="dimension" list="{{ evaluation.measureDimension }}"

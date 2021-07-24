@@ -38,9 +38,9 @@
             </view>
         </view>
         <view class="dispatch-info-wrapper" wx:if="{{isWxWork || is3rd}}">
-            <block wx:if="{{availableVoucher && !availableInventory}}">可用数量：</block>
-            <block wx:elif="{{availableVoucher && availableInventory}}">可体验数：</block>
-            <block wx:elif="{{!availableVoucher}}">可用数量：</block>
+            <block wx:if="{{availableVoucher && !availableInventory}}">可用份数：</block>
+            <block wx:elif="{{availableVoucher && availableInventory}}">可体验份数：</block>
+            <block wx:elif="{{!availableVoucher}}">可用份数：</block>
             <text class="{{dispatchInfo.deptId ? 'dispatch-count' : ''}}">
                 <block wx:if="{{!dispatchInfo.deptId}}">选取部门后显示</block>
                 <block wx:elif="{{availableVoucher && !availableInventory}}">{{availableVoucher}}</block>

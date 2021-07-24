@@ -15,15 +15,6 @@
             </view>
         </view>
         <view style="background-color: #fff;margin-top: 20rpx;">
-<!--            <block>-->
-<!--                <button wx:if="{{ (!evaluationVoucherInfo.isBeginner && !evaluation.freeEvaluation && isGetInAgainst === 'YES' && !evaluationVoucherInfo.hadShare) }}"-->
-<!--                        class="get-free-ticket"-->
-<!--                        open-type="share"-->
-<!--                        style="background: transparent;border: none !important;">-->
-<!--                    <ticket image="http://ihola.luoke101.com/icon%40icon-ticket-banner.png"></ticket>-->
-<!--                </button>-->
-<!--            </block>-->
-            <!--面试助手判断逻辑-->
             <block wx:if="{{ util.isIncludes(assistant,evaluation.evaluationInfo.id) }}">
                 <checkout title="测评简介" type="introduction" info="{{ evaluation.synopsis }}"></checkout>
                 <checkout title="例题" type="assistant" list="{{ evaluation.quesExamples }}" isShow="{{evaluation.quesExamples.length}}"></checkout>
@@ -47,7 +38,7 @@
     <block wx:if="{{ util.isIncludes(assistant,evaluation.id) }}">
         <view class="button-group">
             <view class="meal" bindtap="servingTrigger">
-                <meal isShow="{{ true }}" icon="../../images/icon/icon@icon-meal.png" title="定制个性化问题，开启候选人视频作答"
+                <meal isShow="{{ true }}" icon="https://ihola.luoke101.com/icon%40icon-meal.png" title="定制个性化问题，开启候选人视频作答"
                       subtitle="➜" align="center" subMargin="0 20rpx 0 0">
                 </meal>
             </view>
@@ -81,143 +72,87 @@
             </view>
         </view>
     </block>
-    <block wx:else>
-        <!-- 免费测评的按钮组 -->
-        <view class="button-group" wx:if="{{ evaluation.freeEvaluation }}">
-            <view class="button-group-child">
-                <button class="button-group-get-user-phone"
-                        data-mark="dont-get-ticket"
-                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
-                        bindgetphonenumber="getPhoneNumber"
-                        data-name="{{ evaluation.name }}"
-                        data-answering="{{ currAnsweringStatus }}"
-                        data-id="{{ evaluation.id }}"
-                        data-event-name="goToReplyingGuide"
-                        bindtap="{{isGetAccessToken ? 'goToTransit' : ''}}"
-                >
-                    <view class="gotoguide-btn">
-                        <press title="{{ currAnsweringStatus ? '继续体验' : '自己测'}}" bgColor="rgba(255,255,255,1)"
-                               color="rgba(53,62,232,1)"
-                               fontSize="32" fontWeight="600"></press>
-                    </view>
-                </button>
-                <button class="button-group-get-user-phone large-button-group-get-user-phone"
-                        data-mark="dont-get-ticket"
-                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
-                        bindgetphonenumber="getPhoneNumber"
-                        data-event-name="goToDaTi"
-                        bindtap="{{isGetAccessToken ? 'goToTransit' : ''}}"
-                >
-                    <view class="gotodati-btn">
-                        <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
-                    </view>
-                </button>
-            </view>
-        </view>
-        <!-- 未购买过测评的按钮组且未买断 -->
-        <view class="buy-group"
-              wx:elif="{{ !evaluationVoucherInfo.hadConsumed && !evaluationVoucherInfo.buyoutInfo.hadBuyout || isNew }}">
-            <button class="meal meal-button" style="background-color: rgba(255,243,224,1);outline: none;border: none;"
-                    open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}" bindgetphonenumber="getPhoneNumber" bind:tap="{{isGetAccessToken ? 'getNewerTicket' : ''}}">
-                <meal isShow="{{ evaluationVoucherInfo.isBeginner || isNew }}" title="新用户领券，免费体验测评"
-                      subIcon="../../images/icon/icon@banner-ticket.gif" subtitle="立即领券 >" icon="false"></meal>
+    <block wx:if="{{isIos}}">
+        <!--未登录-->
+        <view wx:if="{{!isGetAccessToken}}" class="button-group-wrapper">
+            <button class="button-group__is-left {{iphonex ? 'is-iosx' : ''}}" bind:getphonenumber="authPhoneNumber" data-type="enjoy" open-type="getPhoneNumber">
+                <text class="title">免费体验</text>
             </button>
-            <view class="meal" bindtap="buyByTicket">
-                <meal isShow="{{ hasVoucher && !evaluationVoucherInfo.isBeginner }}" icon="false"
-                      title="您有{{ voucher }}张体验券可用于本测评"
-                      subtitle="立即使用 >"></meal>
-            </view>
-            <view wx:if="{{ isIos }}">
-                <press title="由于相关规范，ios功能暂不可用" fontSize="32" fontWeight="600"></press>
-            </view>
-            <view wx:else>
-                <button class="button-group-get-user-phone" data-mark="dont-get-ticket"
-                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
-                        bindgetphonenumber="getPhoneNumber"
-                        data-event-name="payForEvaluation"
-                        bindtap="{{isGetAccessToken ? 'payForEvaluation' : ''}}"
-                >
-                    <press title="购买测评" fontSize="32" fontWeight="600"></press>
-                </button>
+            <button class="button-group__is-right {{iphonex ? 'is-iosx' : ''}}" bind:getphonenumber="authPhoneNumber" data-type="contact" open-type="getPhoneNumber">
+                <text>联系客服</text>
+                <text>获取更多</text>
+            </button>
+        </view>
+        <!--有券-->
+        <view wx:elif="{{isGetAccessToken && availableVoucher > 0}}" class="button-group-wrapper">
+            <button class="button-group__is-left {{iphonex ? 'is-iosx' : ''}}" bind:tap="showSelectQuiz">
+                <text class="title">免费体验</text>
+                <text class="tips">您有{{availableVoucher}}张体验券可用于本测评</text>
+            </button>
+            <view class="button-group__is-right {{iphonex ? 'is-iosx' : ''}}" bind:tap="goToCustomerService">
+                <text>联系客服</text>
+                <text>获取更多</text>
             </view>
         </view>
-        <!-- 购买过测评券的按钮组且未买断 -->
-        <view class="button-group"
-              wx:elif="{{ evaluationVoucherInfo.hadConsumed && !evaluationVoucherInfo.buyoutInfo.hadBuyout }}">
-            <view wx:if="{{ isIos }}" class="meal" bindtap="buyByTicket">
-                <meal isShow="{{ !evaluationVoucherInfo.buyoutInfo.hadBuyout }}" icon="false"
-                      title="剩余可用份数：{{ evaluationVoucherInfo.availableCount }}"
-                      subtitle="{{ isIos ? '用券继续兑换' : '购买更多 >' }}"></meal>
-            </view>
-            <view wx:else class="meal" bindtap="payForEvaluation">
-                <meal isShow="{{ !evaluationVoucherInfo.buyoutInfo.hadBuyout }}" icon="false"
-                      title="剩余可用份数：{{ evaluationVoucherInfo.availableCount }}"
-                      subtitle="{{ isIos ? '用券继续兑换' : '购买更多 >' }}"></meal>
-            </view>
-            <view class="button-group-child">
-                <button class="button-group-get-user-phone" data-mark="dont-get-ticket"
-                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
-                        bindgetphonenumber="getPhoneNumber"
-                        data-name="{{ evaluation.name }}"
-                        data-answering="{{ currAnsweringStatus }}"
-                        data-id="{{ evaluation.id }}"
-                        data-event-name="goToReplyingGuide"
-                        bindtap="{{isGetAccessToken ? 'goToTransit' : ''}}"
-                >
-                    <view class="gotoguide-btn">
-                        <press title="{{ currAnsweringStatus ? '继续体验' : '自己测'}}" bgColor="rgba(255,255,255,1)"
-                               color="rgba(53,62,232,1)"
-                               fontSize="32" fontWeight="600"></press>
-                    </view>
-                </button>
-                <button class="button-group-get-user-phone large-button-group-get-user-phone"
-                        data-mark="dont-get-ticket"
-                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
-                        bindgetphonenumber="getPhoneNumber"
-                        data-event-name="goToDaTi"
-                        bindtap="{{isGetAccessToken ? 'goToTransit' : ''}}"
-                >
-                    <view class="gotodati-btn">
-                        <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
-                    </view>
-                </button>
+        <!--无券有库存-->
+        <view wx:elif="{{isGetAccessToken && availableVoucher <= 0 && availableInventory > 0}}" class="button-group-wrapper">
+            <button class="button-group__is-left {{iphonex ? 'is-iosx' : ''}}" bind:tap="showSelectQuiz">
+                <text class="title">立即使用</text>
+                <text class="tips">剩余可用份数：{{availableInventory}}</text>
+            </button>
+            <view class="button-group__is-right {{iphonex ? 'is-iosx' : ''}}" bind:tap="goToCustomerService">
+                <text>联系客服</text>
+                <text>获取更多</text>
             </view>
         </view>
-        <!-- 买断 -->
-        <view class="button-group" wx:elif="{{ evaluationVoucherInfo.buyoutInfo.hadBuyout }}">
-            <view class="meal" bindtap="payForEvaluation">
-                <meal isShow="{{ evaluationVoucherInfo.buyoutInfo.hadBuyout }}" icon="false"
-                      title="有效期至：{{ isIos ? util.getFullDateByFrag(evaluationVoucherInfo.buyoutInfo.expiryDate,'.',true) : util.getFullDateByFrag(evaluationVoucherInfo.buyoutInfo.expiryDate,'.',true) }}"
-                      subtitle="{{ isIos ? '' : '续费' }}"></meal>
+        <!--无券无库存-->
+        <view wx:elif="{{isGetAccessToken && availableVoucher <= 0 && availableInventory <= 0}}" class="button-group-wrapper is-increase-height">
+            <button class="button-group__is-left is-least-area">
+                <text class="tips is-main">剩余可用份数：{{availableInventory}}</text>
+            </button>
+            <view class="button-group__is-right is-more-area" bind:tap="goToCustomerService">
+                <text>联系客服获取更多</text>
             </view>
-            <view class="button-group-child">
-                <button class="button-group-get-user-phone" data-mark="dont-get-ticket"
-                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
-                        bindgetphonenumber="getPhoneNumber"
-                        data-name="{{ evaluation.name }}"
-                        data-answering="{{ currAnsweringStatus }}"
-                        data-id="{{ evaluation.id }}"
-                        data-event-name="goToReplyingGuide"
-                        bindtap="{{isGetAccessToken ? 'goToTransit' : ''}}"
-                >
-                    <view class="gotoguide-btn">
-                        <press title="{{ currAnsweringStatus ? '继续体验' : '自己测'}}" bgColor="rgba(255,255,255,1)"
-                               color="rgba(53,62,232,1)"
-                               fontSize="32" fontWeight="600"></press>
-                    </view>
-                </button>
-                <button class="button-group-get-user-phone large-button-group-get-user-phone"
-                        data-mark="dont-get-ticket"
-                        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
-                        bindgetphonenumber="getPhoneNumber"
-                        data-event-name="goToDaTi"
-                        bindtap="{{isGetAccessToken ? 'goToTransit' : ''}}"
-                >
-                    <view class="gotodati-btn">
-                        <press title="测别人(微信/智联/BOSS/51...)" fontSize="32" fontWeight="600"></press>
-                    </view>
-                </button>
-            </view>
+        </view>
+    </block>
+    <block wx:if="{{!isIos}}">
+        <!--未登录-->
+        <view wx:if="{{!isGetAccessToken}}" class="button-group-wrapper is-increase-height">
+            <button class="button-group__is-left" bind:getphonenumber="authPhoneNumber" data-type="enjoy" open-type="getPhoneNumber">
+                <text class="title">免费体验</text>
+            </button>
+            <button class="button-group__is-right" bind:getphonenumber="authPhoneNumber" data-type="contact" open-type="getPhoneNumber">
+                <text>立即购买</text>
+            </button>
+        </view>
+        <!--有券-->
+        <view wx:elif="{{isGetAccessToken && availableVoucher > 0}}" class="button-group-wrapper">
+            <button class="button-group__is-left" bind:tap="showSelectQuiz">
+                <text class="title">免费体验</text>
+                <text class="tips">您有{{availableVoucher}}张体验券可用于本测评</text>
+            </button>
+            <button class="button-group__is-right" bind:tap="payForEvaluation">
+                <text>立即购买</text>
+            </button>
+        </view>
+        <!--无券有库存-->
+        <view wx:elif="{{isGetAccessToken && availableVoucher <= 0 && availableInventory > 0}}" class="button-group-wrapper">
+            <button class="button-group__is-left" bind:tap="showSelectQuiz">
+                <text class="title">立即使用</text>
+                <text class="tips">剩余可用份数：{{availableInventory}}</text>
+            </button>
+            <button class="button-group__is-right" bind:tap="payForEvaluation">
+                <text>购买更多</text>
+            </button>
+        </view>
+        <!--无券无库存-->
+        <view wx:elif="{{isGetAccessToken && availableVoucher <= 0 && availableInventory <= 0}}" class="button-group-wrapper is-increase-height">
+            <button class="button-group__is-left is-least-area">
+                <text class="tips is-main">剩余可用份数：0</text>
+            </button>
+            <button class="button-group__is-right is-more-area" bind:tap="payForEvaluation">
+                <text>购买更多</text>
+            </button>
         </view>
     </block>
     <block>
@@ -225,77 +160,53 @@
         <view wx:if="{{ payTrigger }}" class="new-pay-page {{ payTrigger ? 'popup-new-pay-page':'' }}">
             <view class="pay-title">
                 <text>购买测评</text>
-                <view style="display: flex;align-items: center;" bindtap="buyByTicket">
-                    <image style="width: 30rpx;height: 30rpx;" src="../../images/detail@icon-ticket.png"></image>
-                    <view style="font-weight: initial;font-size: 26rpx;color: rgba(157,157,157,1);line-height:36rpx;font-weight: 600">
-                        用券兑换
-                    </view>
-                </view>
             </view>
             <view wx:if="{{ buyByCounts }}" class="buy-by-counts">
                 <view class="total-counts">
                     <view>合计</view>
                     <view>￥{{ util.toFix((evaluation.price||0) * count) }}</view>
-                    <view style="color: rgba(247,181,0,1);font-size: 26rpx;" bindtap="servingTrigger">联系客服，获取按年买断优惠报价
+                    <view style="color: rgba(247,181,0,1);font-size: 26rpx;" bindtap="goToCustomerService">联系客服，获取按年买断优惠报价
                     </view>
                 </view>
                 <view class="total-operator">
                     <view bindtap="addcount" class="add">+</view>
-                    <input type="number" class="total-display" bindinput="inputprice" value="{{count}}"/>
-                    <view bindtap="jiancount" class="subtraction">-</view>
+                    <input type="number" class="total-display" bindinput="onCountChange" value="{{count}}"/>
+                    <view bindtap="subcount" class="subtraction">-</view>
                 </view>
             </view>
             <view class="pay-group">
                 <view wx:if="{{ buyByCounts }}" bindtap="payByCounts">
                     <press title="微信支付" fontSize="32" fontWeight="600" letterSpacing="2" shadow=""></press>
                 </view>
-                <view bindtap="servingTrigger">
+                <view bindtap="goToCustomerService">
                     <press title="对公转账" fontSize="32" color="rgba(53,62,232,1)" bgColor="rgb(255,255,255)" border="none"
                            fontWeight="600" letterSpacing="2"></press>
                 </view>
             </view>
         </view>
     </block>
-    <block>
-        <van-overlay show="{{ buyByTicket }}" bind:click="cancelBuyByTicket"></van-overlay>
-        <view wx:if="{{ buyByTicket }}" class="pay-by-ticket-page {{ buyByTicket ? 'popup-new-pay-page':'' }}">
-            <view class="head-wrapper">
-                <view class="title-wrapper">
-                    <text>{{ evaluation.name }}</text>
-                    <text style="font-size: 24rpx;font-weight: initial;margin: 10rpx 0 10rpx 0;letter-spacing: 4rpx;color: rgba(0,0,0,.4)">
-                        {{ voucher }}张券可用于本测评
-                    </text>
-                </view>
-                <image src="{{ evaluation.smallImg }}"
-                       style="width: 100rpx;height: 100rpx;background-color: #2f3038;border-radius: 10rpx;"></image>
-            </view>
-            <view class="operator-wrapper">
-                <view class="operator">
-                    <view class="ticket-sub" bindtap="subTicket">-</view>
-                    <input class="ticket-display" type="text" value="{{ ticketCount }}" bindinput="changeTicketCount"/>
-                    <view class="ticket-add" bindtap="addTicket">+</view>
-                </view>
-            </view>
-            <view bindtap="useticket">
-                <press title="{{ ticketCount ? '用券兑换'+ticketCount+'份' : '用券兑换' }}" height="90" fontSize="32"
-                       shadow="0px 4px 8px 0px rgba(192,192,192,0.97);"></press>
-            </view>
-        </view>
-    </block>
-    <view wx:if="{{ giftTrigger }}" class="gift-container">
-        <view class="image-container">
-            <image src="http://ihola.luoke101.com/20200709145310.png"
-                   style="width: 675rpx;height: 855rpx;margin-top: 52rpx;" bindtap="buyByTicket"></image>
-        </view>
-        <view class="mask" bindtap="closeGift"></view>
-    </view>
-    <!-- 新用户 || 有券 || (未买断&&买过测评) || 买断 以上这种情况出现均会出现小黄条 -->
-    <serving id="serving" mobile="{{ mobile }}" wechat="{{ wechat }}" area="detail"
-             bottom="{{ evaluationVoucherInfo.isBeginner || hasVoucher || (!evaluationVoucherInfo.buyoutInfo.hadBuyout&&evaluationVoucherInfo.hadConsumed) || evaluationVoucherInfo.buyoutInfo.hadBuyout ? '240rpx' : '180rpx'}}"></serving>
-
+    <serving area="detail" bottom="180rpx"></serving>
 </block>
 <van-overlay show="{{ loading }}" custom-style="background-color: #fff;">
     <mask isShow="{{ loading }}" top="{{ (statusbarHeight + titleHeight)/pixelRate }}"
           height="{{ windowHeight - ( statusbarHeight + titleHeight) }}" backgroundColor="transparent"></mask>
+</van-overlay>
+<van-overlay show="{{ showSelectQuiz }}" custom-style="background-color: #00000055;" bind:click="hideSelectQuiz">
+    <view class="quiz-wrapper">
+        <view class="quiz-wrapper-item" bind:tap="goToGuide">
+            <image class="self-img" src="https://ihola.luoke101.com/icon%40self.png"/>
+            <view class="quiz-info-wrapper">
+                <text class="quiz-title">自己测</text>
+                <text class="quiz-tips">完成后自动生成测评报告</text>
+            </view>
+        </view>
+        <view class="quiz-wrapper-item" bind:tap="goToDaTi">
+            <image class="other-img" src="https://ihola.luoke101.com/icon%40other.png"/>
+            <view class="quiz-info-wrapper">
+                <text class="quiz-title">测别人</text>
+                <text class="quiz-tips">一键邀请同事或外部应聘者参与测评</text>
+            </view>
+        </view>
+    </view>
 </van-overlay>
 <wxs src="../../../../utils/util.wxs" module="util"></wxs>

@@ -1,0 +1,33 @@
+<view class="ticket">
+    <scroll-view scroll-x="false" scroll-y class="ticket-scroll" bind:scrolltolower="goToNext">
+        <block wx:if="{{isEmpty}}">
+            <view class="empty-wrapper">
+                <view class="empty-content">
+                    <image class="empty" src="https://ihola.luoke101.com/icon%40ticket-empty.png"/>
+                    <text class="empty-text">您还没有卡券哦</text>
+                </view>
+            </view>
+        </block>
+        <block wx:else>
+            <view class="ticket-item" wx:for="{{tickets}}" wx:for-item="ticketItem" wx:key="unique">
+                <text class="ticket-item__title">{{ticketItem.name}}</text>
+                <view class="ticket-item__info">
+                    <view class="ticket-item__info-left">
+                        <text>· {{ticketItem.description}}</text>
+                        <block wx:if="{{ticketItem.expiredStatus === 'UNLIMITED'}}">
+                            <text>· 无限期</text>
+                        </block>
+                        <block wx:elif="{{ticketItem.expiredStatus === 'AVAILABLE'}}">
+                            <text>· {{ticketItem.expiredTime}} 过期</text>
+                        </block>
+                    </view>
+                    <view class="ticket-item__info-right">
+                        <text class="number">{{ticketItem.count}}</text>
+                        <text class="text">张</text>
+                    </view>
+                </view>
+                <image wx:if="{{ticketItem.expiredStatus === 'EXPIRED'}}" src="https://ihola.luoke101.com/icon%40icon-expire.png" class="expire"/>
+            </view>
+        </block>
+    </scroll-view>
+</view>

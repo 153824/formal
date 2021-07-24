@@ -14,6 +14,23 @@ Page({
         column: [],
         trigger: true,
     },
+    onLoad: function () {
+        this.init();
+    },
+
+    onShow: function () {
+        app.freeTickId = "";
+        try {
+            wx.uma.trackEvent("1601368297264")
+        } catch (e) {
+            console.error("home.js -> 109", e);
+        }
+    },
+
+    onShareAppMessage(options) {
+        return app.defaultShareObj;
+    },
+
     init() {
         if(app.checkAccessToken()){
             const {isWxWork} = app.wxWorkInfo;
@@ -37,9 +54,10 @@ Page({
             };
         }
     },
+
     check({isWxWork, isWxWorkAdmin, isWxWorkSuperAdmin, is3rd}) {
         const that = this;
-        if (is3rd || isWxWork && isWxWorkAdmin && !isWxWorkSuperAdmin) {
+        if (is3rd || isWxWork && !isWxWorkSuperAdmin) {
             let flag = false
             let url = isWxWork ? "/pages/account/account" : "/pages/auth/auth?type=auth"
             if (app.checkAccessToken()) {
@@ -54,7 +72,7 @@ Page({
             }
             return
         }
-        if (!is3rd || isWxWork && isWxWorkSuperAdmin) {
+        if (!is3rd && !isWxWork || !is3rd && isWxWork && isWxWorkSuperAdmin) {
             console.log('isWxWorkSuperAdmin: ', isWxWorkSuperAdmin);
             let homePagesPromiseList = [];
             const homePagesPromise = new Promise(function (resolve, reject) {
@@ -114,23 +132,6 @@ Page({
                 }, 500);
             });
         }
-    },
-    onLoad: function () {
-        this.init();
-    },
-    onShow: function () {
-        app.freeTickId = "";
-        try {
-            wx.uma.trackEvent("1601368297264")
-        } catch (e) {
-            console.error("home.js -> 109", e);
-        }
-    },
-    onHide: function () {
-    },
-
-    onShareAppMessage(options) {
-        return app.defaultShareObj;
     },
 
     navWebView: function (e) {

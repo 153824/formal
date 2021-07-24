@@ -7,7 +7,7 @@
 }
 .head{
   position: relative;
-  z-index: 100;
+  z-index: 99;
 }
 .head > .title{
   height: 56rpx;

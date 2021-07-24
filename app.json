@@ -8,14 +8,11 @@
     "pages/manager/components/evaluationReport/evaluationReport",
     "pages/manager/components/useHistoryDetail/useHistoryDetail",
     "pages/report/report",
-    "pages/user/components/addGroup/addGroup",
-    "pages/user/components/invoice/invoice",
     "pages/user/components/myTeam/myTeam",
     "pages/user/components/selTeamAdmin/selTeamAdmin",
     "pages/user/components/teamInvite/teamInvite",
     "pages/user/components/teamTicket/teamTicket",
     "pages/user/components/teamTitle/teamTitle",
-    "pages/user/components/ticket/ticket",
     "pages/replying/replying",
     "pages/replying/components/finish/finish",
     "pages/replying/components/guide/guide",
@@ -56,7 +53,9 @@
     "pages/360/subpages/end/end",
     "pages/home/subpages/all",
     "pages/auth/subpages/maintain/maintain",
-    "pages/recorder/subpages/golden/golden"
+    "pages/recorder/subpages/golden/golden",
+    "pages/user-center/components/ticket-center/ticket-center",
+    "pages/customer-service/customer-service"
   ],
   "tabBar": {
     "custom": true,
@@ -108,9 +107,14 @@
     "wx0ef45039046afc95"
   ],
   "plugins": {
+    "chatbot": {
+      "version": "1.2.22",
+      "provider": "wx8c631f7e9f2465e1"
+    },
     "contactPlugin": {
-        "version": "1.2.1",
-        "provider": "wx5917c8c26f85c588"
+      "version": "1.2.1",
+      "provider": "wx5917c8c26f85c588"
     }
-}
+  },
+  "requiredBackgroundModes": ["audio"]
 }

@@ -2,7 +2,7 @@
 <view wx:if="{{ isWxWork && isWxWorkAdmin }}" class="home-page-wrapper">
     <view class="head" style="height: 112rpx;">
         <view class="head-company">
-            <image src="./images/work-base@@icon-company.png"
+            <image src="https://ihola.luoke101.com/work-base%40%40icon-company.png"
                    style="width: 50rpx;height: 44rpx;margin-right: 16rpx;"/><text>{{companyName}}</text>
         </view>
     </view>
@@ -38,7 +38,7 @@
                               data-count="{{ evaluationItem.available }}"
                               data-index="{{ evaluationIndex }}"
                         >
-                            <image src="./images/work-base@icon-plane.png"
+                            <image src="https://ihola.luoke101.com/work-base%40icon-plane.png"
                                    style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
                             <text>发测评</text>
                         </view>
@@ -75,7 +75,7 @@
                         </view>
                     </view>
                     <view class="send-evaluation">
-                        <image src="./images/work-base@icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
+                        <image src="https://ihola.luoke101.com/work-base%40icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
                     <view wx:if="{{ false }}" class="new-adding-mark">
                         <text>新</text>
@@ -112,7 +112,7 @@
                         </view>
                     </view>
                     <view class="send-evaluation">
-                        <image src="./images/work-base@icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
+                        <image src="https://ihola.luoke101.com/work-base%40icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
                 </view>
                 <view>
@@ -130,7 +130,7 @@
 <block wx:elif="{{ !isWxWork && !is3rd }}">
     <view class="head">
         <view class="head-company">
-            <image src="./images/work-base@@icon-company.png" style="width: 50rpx;height: 44rpx;margin-right: 16rpx;"/><block wx:if="{{isGetAccessToken}}"><text class="company-name">{{companyName}}</text><van-icon name="edit" color="rgba(53, 62, 232, 1)" bind:click="editTeamName"/></block><text wx:else>授权登录，创建团队</text>
+            <image src="https://ihola.luoke101.com/work-base%40%40icon-company.png" style="width: 50rpx;height: 44rpx;margin-right: 16rpx;"/><block wx:if="{{isGetAccessToken}}"><text class="company-name">{{companyName}}</text><van-icon name="edit" color="rgba(53, 62, 232, 1)" bind:click="editTeamName"/></block><text wx:else>授权登录，创建团队</text>
         </view>
         <view class="company-action">
             <text bindtap="setChildManager" style="font-weight: 600;">子管理员设置</text><text bindtap="setCompanyCert" style="margin: 0 30rpx;font-weight: 600;">企业认证</text><hola-title id="title" url="work-base/work-base" type="normal"></hola-title>
@@ -167,7 +167,7 @@
                               data-count="{{ evaluationItem.available }}"
                               data-index="{{ evaluationIndex }}"
                         >
-                            <image src="./images/work-base@icon-plane.png" style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"/><text>发测评</text>
+                            <image src="https://ihola.luoke101.com/work-base%40icon-plane.png" style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"/><text>发测评</text>
                         </view>
                     </view>
                 </view>
@@ -203,7 +203,7 @@
                         </view>
                     </view>
                     <view class="send-evaluation">
-                        <image src="./images/work-base@icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
+                        <image src="https://ihola.luoke101.com/work-base%40icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
                     <view wx:if="{{util.isSameDays(reportItem.reportGeneratedAt) && reportItem.unread}}"
                           class="new-adding-mark">
@@ -239,7 +239,7 @@
                         </view>
                     </view>
                     <view class="send-evaluation">
-                        <image src="./images/work-base@icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
+                        <image src="https://ihola.luoke101.com/work-base%40icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
                     </view>
                 </view>
                 <view>
@@ -285,7 +285,7 @@
     <view class="home-page-wrapper">
         <view class="head" style="height: 112rpx;">
             <view class="head-company">
-                <image src="./images/work-base@@icon-company.png"
+                <image src="https://ihola.luoke101.com/work-base%40%40icon-company.png"
                        style="width: 50rpx;height: 44rpx;margin-right: 16rpx;"></image>
                 <text>{{companyName}}</text>
             </view>
@@ -322,7 +322,7 @@
                                   data-count="{{ evaluationItem.available }}"
                                   data-index="{{ evaluationIndex }}"
                             >
-                                <image src="./images/work-base@icon-plane.png"
+                                <image src="https://ihola.luoke101.com/work-base%40icon-plane.png"
                                        style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"></image>
                                 <text>发测评</text>
                             </view>
@@ -362,7 +362,7 @@
                             </view>
                         </view>
                         <view class="send-evaluation">
-                            <image src="./images/work-base@icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
+                            <image src="https://ihola.luoke101.com/work-base%40icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
                         </view>
                         <view wx:if="{{ false }}" class="new-adding-mark">
                             <text>新</text>
@@ -401,7 +401,7 @@
                             </view>
                         </view>
                         <view class="send-evaluation">
-                            <image src="./images/work-base@icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
+                            <image src="https://ihola.luoke101.com/work-base%40icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
                         </view>
                     </view>
                     <view>

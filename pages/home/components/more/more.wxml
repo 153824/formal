@@ -68,7 +68,7 @@
                     <text>一键联系评估顾问</text><text>获取专属【风险识别落地方案】</text>
                 </view>
                 <view class="arrow-wrapper">
-                    <image src="/images/icon/icon@arrow.png" style="width: 64rpx;height: 54rpx;"></image>
+                    <image src="https://ihola.luoke101.com/icon%40arrow.png" style="width: 64rpx;height: 54rpx;"></image>
                 </view>
                 <i class="flash-across"></i>
             </view>

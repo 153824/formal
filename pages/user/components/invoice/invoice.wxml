@@ -1,6 +1,0 @@
-<!--user/invoice.wxml-->
-<view class="centerView">
-  <view class="mind">开发票请添加客服人员微信</view>
-  <view class="mind1">微信号：haola72</view>
-  <view class="toCopy" bindtap="copyIt">复制微信号</view>
-</view>

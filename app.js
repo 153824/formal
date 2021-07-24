@@ -34,6 +34,7 @@
  * ********************************************************************************************************************/
 const uma = require('umtrack-wx');
 const qiniuUpload = require("./utils/qiniuUpload");
+const plugin = requirePlugin("chatbot");
 let isUpload = false;
 qiniuUpload.init({
     region: 'SCN',
@@ -100,12 +101,7 @@ App({
         uploadUserInfo: true // 自动上传用户信息，设为false取消上传，默认为false
     },
     onLaunch: function (options) {
-        // wx.setBackgroundFetchToken({
-        //     token: ''
-        // })
-
         const updateManager = wx.getUpdateManager();
-
         updateManager.onUpdateReady(function () {
             isUpload = true;
             wx.showModal({
@@ -736,11 +732,13 @@ App({
 
     updateUserInfo(e) {
         let userInfo = {};
-        if (wx.getUserProfile) {
+        console.log('updateUserInfo: ', e);
+        if (wx.getUserProfile && e.type !== 'getuserinfo') {
             userInfo = e.userInfo
         } else {
             userInfo = e.detail.userInfo
         }
+        console.log(userInfo);
         userInfo.avatar = userInfo && userInfo.avatarUrl ? userInfo.avatarUrl : ''
         const p = new Promise((resolve, reject) => {
             this.doAjax({
@@ -901,6 +899,29 @@ App({
                 noLoading: true,
                 success: function (res) {
                     wx.setStorageSync('isNew', res.isNew);
+                    console.log(res);
+                    // 配置智能对话平台插件
+                    plugin.init({
+                        appid: "TZ7JcEhg7kMjrLwsrAE7s8nz9N3LWc", //机器人Id
+                        openid: res.openId, //用户的openid，必填项，可通过wx.login()获取code，然后通过后台接口获取openid
+                        userHeader: "", // 用户头像
+                        userName: "", // 用户昵称
+                        anonymous: true, // 是否允许匿名用户评价，默认为false，设为ture时，未传递userName、userHeader两个字段时将弹出登录框
+                        guideCardHeight: 50,
+                        operateCardHeight: 120,
+                        history: true,
+                        historySize: 60,
+                        welcome: '请问有什么可以帮到你的~',
+                        guideList: [
+                            '转人工'
+                        ],
+                        success: (e) => {}, //非必填
+                        fail: (error) => {}, //非必填
+                    });
+                    if(!res.tokenInfo){
+                        // https://devops.aliyun.com/task/60fa593f9d8834004fb4c754
+                        wx.removeStorageSync('accessToken');
+                    }
                     resolve(res)
                 },
                 error: function (err) {

@@ -1,6 +1,6 @@
 <view class="fullPage">
 	<view class="pageView">
-		<image src="../../../work-base/images/done@icon-done.png" />
+		<image src="https://ihola.luoke101.com/done%40icon-done.png" />
 		<view class="mindMsg">您的作答结果已提交</view>
 		<view class="mindMsg">感谢您的参与</view>
 	</view>

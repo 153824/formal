@@ -20,7 +20,7 @@
                 </view>
             </view>
             <view class="send-evaluation">
-                <image src="/pages/work-base/images/work-base@icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
+                <image src="https://ihola.luoke101.com/work-base%40icon-arrow.png" style="width: 32rpx;height: 32rpx;"></image>
             </view>
         </view>
     </scroll-view>

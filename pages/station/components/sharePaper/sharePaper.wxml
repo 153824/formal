@@ -38,8 +38,15 @@
             </view>
         </view>
         <view class="dispatch-info-wrapper" wx:if="{{isWxWork || is3rd}}">
-            可用数量：
-            <text class="{{dispatchInfo.deptId ? 'dispatch-count' : ''}}">{{dispatchInfo.deptId ? dispatchInfo.inventory : "选取部门后显示"}}</text>
+            <block wx:if="{{availableVoucher && !availableInventory}}">可用数量：</block>
+            <block wx:elif="{{availableVoucher && availableInventory}}">可体验数：</block>
+            <block wx:elif="{{!availableVoucher}}">可用数量：</block>
+            <text class="{{dispatchInfo.deptId ? 'dispatch-count' : ''}}">
+                <block wx:if="{{!dispatchInfo.deptId}}">选取部门后显示</block>
+                <block wx:elif="{{availableVoucher && !availableInventory}}">{{availableVoucher}}</block>
+                <block wx:elif="{{availableVoucher && availableInventory}}">{{maxCount}}</block>
+                <block wx:elif="{{!availableVoucher}}">{{availableInventory}}</block>
+            </text>
         </view>
     </view>
     <view class="inviteBtn" bindtap="toSharePaper">生成测评邀请函</view>
@@ -56,7 +63,7 @@
                    show-menu-by-longpress="{{isWxWork || is3rd ? false : true}}"
         >
             <van-loading slot="loading" type="spinner" size="88" vertical>
-                <image src="../../../../images/icon/icon@icon-loading.png" class="loading"></image>
+                <image src="https://ihola.luoke101.com/icon%40icon-loading.png" class="loading"></image>
             </van-loading>
         </van-image>
         <!--    <image class="daticenterboximg" src="{{sharePaperInfo.invitationImgUrl}}" show-menu-by-longpress="true"></image>-->
@@ -65,7 +72,7 @@
             <van-button custom-style="padding-left: 83rpx;"
                         custom-class="van-button-custom"
                         type="default" color="transparent"
-                        icon="/images/icon/icon@icon-save.png"
+                        icon="https://ihola.luoke101.com/icon%40icon-save.png"
                         bind:tap="saveToAlbum"
             >
                 保存到相册
@@ -74,7 +81,7 @@
                         custom-class="van-button-custom"
                         type="default"
                         color="transparent"
-                        icon="/images/icon/icon@icon-share.png"
+                        icon="https://ihola.luoke101.com/icon%40icon-share.png"
                         open-type="share"
                         bind:tap="share"
             >

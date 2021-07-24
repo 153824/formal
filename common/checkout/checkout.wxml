@@ -34,7 +34,7 @@
         <view class="scenarios-content">
             <view class="scenarios-child">
                 <image class="scenarios-icon"
-                       src="{{ applyitem.icon.length <= 0 ? '../../images/icon/icon@icon-edit.png' : applyitem.icon }}"></image>
+                       src="{{ applyitem.icon.length <= 0 ? 'https://ihola.luoke101.com/icon%40icon-edit.png' : applyitem.icon }}"></image>
                 <text class="scenarios-title">{{ applyitem.name }}</text>
             </view>
             <view class="scenarios-info">
@@ -79,7 +79,7 @@
     <view class="report-content">
         <view class="report-child" bindtap="changePage" data-name="{{ subtitle }}" data-id="{{ info }}">
             <text>{{ subtitle }}报告模板</text>
-            <image src="../../images/icon/icon@icon-right-arrow.png"></image>
+            <image src="https://ihola.luoke101.com/icon%40icon-right-arrow.png"></image>
         </view>
     </view>
 </view>

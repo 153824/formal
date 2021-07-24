@@ -55,6 +55,11 @@ Page({
             url: "/pages/user-center/components/serving-client/serving-client"
         })
     },
+    goToTicketCenter() {
+        wx.navigateTo({
+            url: "/pages/user-center/components/ticket-center/ticket-center"
+        })
+    },
     goToSetting() {
         if(!app.checkAccessToken()){
             wx.navigateTo({
@@ -113,7 +118,9 @@ Page({
             }
         })
     },
-    showServing: function () {
-        this.selectComponent('#serving').callServing();
+    goToServing: function () {
+        wx.navigateTo({
+            url: '/pages/customer-service/customer-service'
+        })
     },
 });

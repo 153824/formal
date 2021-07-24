@@ -13,10 +13,10 @@
             <van-cell title="关联账号:" size="large" border="{{false}}">
                 <view class="setting--bound-app__wrapper">
                     <view class="setting--bound-app__item {{util.isIncludes(binding, 'WEWORK') || isWxWork ? 'is-bound-wework' : 'is-unbound' }}">
-                        <image class="setting--bound-app" src="/images/icon/icon@wework.png"/>
+                        <image class="setting--bound-app" src="https://ihola.luoke101.com/icon%40wework.png"/>
                     </view>
                     <view class="setting--bound-app__item {{util.isIncludes(binding, 'WECHAT') || !isWxWork ? 'is-bound-wechat' : 'is-unbound' }}">
-                        <image class="setting--bound-app" src="/images/icon/icon@wechat.png"/>
+                        <image class="setting--bound-app" src="https://ihola.luoke101.com/icon%40wechat.png"/>
                     </view>
                 </view>
             </van-cell>

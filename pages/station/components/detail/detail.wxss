@@ -1297,3 +1297,134 @@
 .large-button-group-get-user-phone{
   width: 70% !important;
 }
+.button-group-wrapper{
+  display: flex;
+  flex-direction: row;
+  padding: unset!important;
+  margin: unset!important;
+  border-radius: unset!important;
+  border: unset!important;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+}
+.button-group-wrapper button {
+  border: unset!important;
+  border-radius: unset!important;
+}
+.button-group-wrapper button:after {
+  content: unset!important;
+}
+.button-group__is-left{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 65vw;
+  background: #FFF6E7;
+  box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(0, 0, 0, 0.5);
+  padding: 14rpx 0;
+}
+.button-group__is-left .title{
+  font-size: 28rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #B8702B;
+  line-height: 40rpx;
+  letter-spacing: 2rpx;
+}
+.button-group__is-left .tips{
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #B8702B;
+  line-height: 40rpx;
+}
+.button-group__is-right{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 35vw;
+  padding: 14rpx 0;
+  background-color: #353EE8FF;
+  font-size: 28rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #FEFFFE;
+  line-height: 44rpx;
+  letter-spacing: 2rpx;
+}
+.is-iosx{
+  padding-bottom: 30rpx;
+}
+.is-increase-height{
+  height: 115rpx;
+}
+.is-more-area{
+  width: 60% !important;
+}
+.is-least-area{
+  width: 40% !important;
+}
+.is-main{
+  font-size: 28rpx!important;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400!important;
+  color: #B8702B!important;
+  line-height: 40rpx!important;
+}
+.quiz-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: calc(100vh - 80rpx);
+}
+.quiz-wrapper-item{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  width: 630rpx;
+  margin-top: 40rpx;
+  box-shadow: 0rpx 4rpx 16rpx 0rpx rgba(0, 0, 0, 0.17);
+  border-radius: 30rpx;
+  background-color: #ffffff;
+}
+.quiz-info-wrapper{
+  display: flex;
+  flex-direction: column;
+  margin-top: 50rpx;
+}
+.self-img{
+  width: 280rpx;
+  height: 270rpx;
+}
+.other-img{
+  width: 400rpx;
+  height: 270rpx;
+}
+.quiz-info-wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.quiz-title{
+  margin-bottom: 20rpx;
+  font-size: 36rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #303113;
+  line-height: 50rpx;
+}
+.quiz-tips{
+  font-size: 26rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #808080;
+  line-height: 50rpx;
+}

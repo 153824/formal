@@ -4,7 +4,7 @@
             <scroll-view class="scroll-item" scroll-x="{{true}}" scroll-y="{{false}}">
                 <block>
                     <text bindtap="loadTargetDepart" data-root="{{true}}" data-index="{{index}}" data-depart="{{item}}">根部门</text>
-                    <image wx:if="{{routeMap.length}}" src="/images/icon/icon@icon-right-arrow.png" class="char-icon"/>
+                    <image wx:if="{{routeMap.length}}" src="https://ihola.luoke101.com/icon%40icon-right-arrow.png" class="char-icon"/>
                 </block>
                 <view wx:for="{{routeMap}}" class="open-data-wrapper"
                       bindtap="{{index+1 === routeMap.length ? '' : 'loadTargetDepart'}}" data-index="{{index}}"
@@ -13,7 +13,7 @@
                         {{item.label}}
                     </block>
                     <ww-open-data wx:if="{{isWxWork && corpid}}" corpid="{{corpid}}" type="departmentName" openid="{{item.bindTpDepartId}}"/>
-                    <image wx:if="{{index+1 !== routeMap.length}}" src="/images/icon/icon@icon-right-arrow.png"
+                    <image wx:if="{{index+1 !== routeMap.length}}" src="https://ihola.luoke101.com/icon%40icon-right-arrow.png"
                            class="char-icon"/>
                 </view>
             </scroll-view>
@@ -37,7 +37,7 @@
                             </van-radio>
                         </view>
                         <block wx:if="{{!item.leaf}}">
-                            <image src="/images/icon/icon@icon-right-arrow.png" style="width: 14rpx;height: 19rpx;"/>
+                            <image src="https://ihola.luoke101.com/icon%40icon-right-arrow.png" style="width: 14rpx;height: 19rpx;"/>
                         </block>
                     </view>
                 </van-radio-group>

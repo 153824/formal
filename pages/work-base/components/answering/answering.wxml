@@ -126,19 +126,32 @@
         <view class="bottombtn {{phoneModel ? 'isiphoneX':''}}">
             <view class="btnprev" bind:tap="preQues" data-question-step="{{questionStep}}"
                   style="display: flex;align-items: center;">
-                <image src="../../images/answering@icon-scroll-left.png" style="width: 48rpx;height: 48rpx;"></image>
+                <image src="https://ihola.luoke101.com/answering%40icon-scroll-left.png" style="width: 48rpx;height: 48rpx;"></image>
                 上一题
             </view>
             <view class="btnnext" data-question-step="{{questionStep}}" wx:if="{{(questionStep + 1) != questions.length}}"
                   bindtap="nextQues" style="display: flex;align-items: center;">
                 下一题
-                <image src="../../images/answering@icon-scroll-right.png" style="width: 48rpx;height: 48rpx;"></image>
+                <image src="https://ihola.luoke101.com/answering%40icon-scroll-right.png" style="width: 48rpx;height: 48rpx;"></image>
             </view>
             <button class="btnnext btn-no-all-fill" data-n="finish"
                     wx:if="{{questionStep + 1 == questions.length && !fill && questions[questionStep].type !== 'SORTING'}}">提交
             </button>
-            <button class="btnnext btnnextUp btn-is-all-fill"
-                    wx:if="{{questionStep + 1 == questions.length && (fill || questions[questionStep].type === 'SORTING')}}" bind:tap="save">提交
+            <button wx:if="{{questionStep + 1 == questions.length && (fill || questions[questionStep].type === 'SORTING') && profileType === 'getUserProfile'}}"
+                    bind:tap="authUserProfile"
+                    class="btnnext btnnextUp btn-is-all-fill">
+                提交
+            </button>
+            <button wx:elif="{{questionStep + 1 == questions.length && (fill || questions[questionStep].type === 'SORTING') && profileType === 'getUserInfo'}}"
+                    open-type="getUserInfo"
+                    bind:getuserinfo="authUserProfile"
+                    class="btnnext btnnextUp btn-is-all-fill">
+                提交
+            </button>
+            <button wx:elif="{{questionStep + 1 == questions.length && (fill || questions[questionStep].type === 'SORTING') && !profileType}}"
+                    class="btnnext btnnextUp btn-is-all-fill"
+                    bind:tap="save">
+                提交
             </button>
         </view>
     </form>

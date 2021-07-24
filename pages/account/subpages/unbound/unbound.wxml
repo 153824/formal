@@ -17,15 +17,15 @@
         </view>
         <view class="unbound__step--card">
             <text class="unbound__step--card-title">Step1 登录原账号，进入「我的」</text>
-            <image class="unbound__step-card--logo" src="/images/icon/icon@step-1.png"/>
+            <image class="unbound__step-card--logo" src="https://ihola.luoke101.com/icon%40step-1.png"/>
         </view>
         <view class="unbound__step--card">
             <text class="unbound__step--card-title">Step2 进入账号设置</text>
-            <image class="unbound__step-card--logo" src="/images/icon/icon@step-2.png"/>
+            <image class="unbound__step-card--logo" src="https://ihola.luoke101.com/icon%40step-2.png"/>
         </view>
         <view class="unbound__step--card">
             <text class="unbound__step--card-title">Step3 点击解绑，完成绑定关系解除</text>
-            <image class="unbound__step-card--logo" src="/images/icon/icon@step-3.png"/>
+            <image class="unbound__step-card--logo" src="https://ihola.luoke101.com/icon%40step-3.png"/>
         </view>
     </view>
     <view class="unbound-custom-van-button-group-wrapper">

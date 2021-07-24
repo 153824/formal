@@ -27,10 +27,14 @@ Page({
         hasVanishImageSetting:[],
         /*遮罩控制，防止用户多次滑动swiper-item，导致答题流程错误*/
         isChangeQue: false,
-        chapterId:''
+        chapterId:'',
+        isGetUserInfo: false,
+        canIUseGetUserProfile: !!wx.getUserProfile,
+        profileType: ''
     },
 
     onLoad: function (options) {
+        const that = this;
         if(options.chapterId){
             this.setData({
                 chapterId:options.chapterId,
@@ -183,11 +187,51 @@ Page({
                 });
         }
         this.init();
+        app.getUserInformation()
+            .then(res=>{
+                let {canIUseGetUserProfile, profileType} = this.data;
+                if(res.avatar){
+                    profileType = '';
+                } else if (!res.avatar && canIUseGetUserProfile) {
+                    profileType = 'getUserProfile';
+                } else if (!res.avatar && !canIUseGetUserProfile) {
+                    profileType = 'getUserInfo';
+                }
+                that.setData({
+                    profileType
+                })
+            })
     },
 
     onShow() {
         if (wx.canIUse('hideHomeButton')) {
             wx.hideHomeButton();
+        }
+    },
+
+    authUserProfile(e) {
+        const that = this;
+        const {profileType} = this.data;
+        if(profileType === 'getUserInfo'){
+            app.updateUserInfo(e)
+                .then(res=>{
+                    that.save()
+                })
+        } else {
+            wx.getUserProfile({
+                desc: "获取用户信息",
+                success: (res) => {
+                    app.updateUserInfo(res).then(res=>{
+                        that.save()
+                    })
+                },
+                error: (e) => {
+                    console.log(e);
+                },
+                fail: (e) => {
+                    console.log(e);
+                }
+            })
         }
     },
 
@@ -217,7 +261,7 @@ Page({
     },
 
     _checkType: function (options) {
-        const _this = this;
+        const that = this;
         app.doAjax({
             url: 'reports/check_type',
             method: 'get',
@@ -225,14 +269,13 @@ Page({
                 receiveRecordId: options.receiveRecordId || _this.data.receiveRecordId
             },
             success: function (res) {
-                _this.setData({
+                that.setData({
                     isSelf: res.data.type
                 });
             }
         });
     },
 
-    /*禁止手指滑动翻页*/
     pageTouch() {return},
 
     loadQuestionChapter(chapterId,receiveRecordId) {

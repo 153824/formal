@@ -124,15 +124,15 @@
                        show-menu-by-longpress="true">
                 <van-loading slot="loading" size="0" vertical>
                     <text wx:if="{{type === 'self'}}">自己测的测评，暂无二维码</text>
-                    <image wx:if="{{type !== 'self'}}" src="../../../../images/icon/icon@icon-loading.png" class="loading"></image>
+                    <image wx:if="{{type !== 'self'}}" src="https://ihola.luoke101.com/icon%40icon-loading.png" class="loading"></image>
                 </van-loading>
             </van-image>
-            <image class="close-icon" src="/images/icon/icon@icon-close.png" bindtap="closeQrcode"></image>
+            <image class="close-icon" src="https://ihola.luoke101.com/icon%40icon-close.png" bindtap="closeQrcode"></image>
         </view>
         <view wx:if="{{isWxWork}}" class="button-group">
             <van-button custom-class="van-button-custom"
                         type="default" color="transparent"
-                        icon="/images/icon/icon@icon-save.png"
+                        icon="https://ihola.luoke101.com/icon%40icon-save.png"
                         bind:tap="saveToAlbum"
             >
                 保存到相册
@@ -140,7 +140,7 @@
             <van-button custom-class="van-button-custom"
                         type="default"
                         color="transparent"
-                        icon="/images/icon/icon@icon-share.png"
+                        icon="https://ihola.luoke101.com/icon%40icon-share.png"
                         open-type="share"
                         bind:tap="share"
             >

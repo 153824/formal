@@ -3,7 +3,7 @@
     position: fixed;
     bottom: 180rpx;
     right: 50rpx;
-    z-index: 999999999;
+    z-index: 99;
 }
 .rectangle-serving{
     position: absolute;

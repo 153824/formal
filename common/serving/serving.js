@@ -6,15 +6,7 @@ Component({
     properties: {
         image: {
             type: String,
-            value: "../../images/icon/icon@icon-serving.png"
-        },
-        mobile: {
-            type: String,
-            value: "18559297592"
-        },
-        wechat: {
-            type: String,
-            value: "haola72"
+            value: "https://ihola.luoke101.com/icon%40icon-serving.png"
         },
         right: {
             type: String,
@@ -23,10 +15,6 @@ Component({
         bottom: {
             type: String,
             value: "50rpx"
-        },
-        type: {
-            type: String,
-            value: "circle"
         },
         area: {
             type: String,
@@ -78,30 +66,10 @@ Component({
                 showServing: true
             });
         },
-        hideServing: function (e) {
-            this.setData({
-                showServing: false
-            });
-        },
-        copyIt: function () {
-            var wechat = this.properties.wechat;
-            wx.setClipboardData({
-                data: wechat,
-                success(res) {
-
-                }
-            });
-        },
-        callIt: function () {
-            var phoneNumber = this.properties.mobile;
-            wx.makePhoneCall({
-                phoneNumber: phoneNumber //仅为示例，并非真实的电话号码
+        goToServer() {
+            wx.navigateTo({
+                url: '/pages/customer-service/customer-service'
             })
-        },
-        hideDlg: function () {
-            this.setData({
-                showServing: false
-            });
         }
     }
 });

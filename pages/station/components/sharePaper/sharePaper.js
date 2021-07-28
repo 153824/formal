@@ -222,12 +222,12 @@ Page({
             app.toast("测评可用数量不足!!");
             return;
         }
-        if ((isWxWork || is3rd) && !isFree && !dispatchInfo.inventory) {
+        if ((isWxWork || is3rd) && !isFree && !dispatchInfo.total) {
             console.error(JSON.stringify({
                 isWxWork,
                 is3rd,
                 isFree: isFree,
-                inventory: dispatchInfo.inventory
+                inventory: dispatchInfo.total
             }))
             app.toast("测评可用数量不足!");
             return;

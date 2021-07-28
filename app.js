@@ -908,7 +908,13 @@ App({
                     wx.uma.setOpenid(res.openId);
                     // 配置智能对话平台插件
                     plugin.init({
-                        appid: "TZ7JcEhg7kMjrLwsrAE7s8nz9N3LWc", //机器人Id
+                        appid: (() => {
+                            if (wx.getAccountInfoSync().miniProgram.appId === 'wx85cde7d3e8f3d949') {
+                                return "TZ7JcEhg7kMjrLwsrAE7s8nz9N3LWc";
+                            } else {
+                                return "YlEDY236AICZ8r1ODOvoVsuNfpcG8j";
+                            }
+                        })(), //机器人Id
                         openid: res.openId, //用户的openid，必填项，可通过wx.login()获取code，然后通过后台接口获取openid
                         userHeader: "", // 用户头像
                         userName: "", // 用户昵称

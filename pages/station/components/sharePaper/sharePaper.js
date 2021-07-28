@@ -243,7 +243,7 @@ Page({
             permitSetting: Number(reportMeet) === 1 ? "LOOSE" : "STRICT",
             releaseCount: costNum,
             entrance: "WECHAT_MA",
-            useVoucher
+            useVoucher: true
         };
         if (this.data.isWxWork || this.data.is3rd) {
             try {
@@ -252,6 +252,7 @@ Page({
                 throw e;
             }
             releaseInfo.entrance = "WEWORK_MA";
+            releaseInfo.useVoucher = wx.getStorageSync('userInfo').isSuperAdmin;
         }
         app.doAjax({
             url: "wework/evaluations/share/qr_code",

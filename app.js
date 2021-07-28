@@ -900,6 +900,7 @@ App({
                 success: function (res) {
                     wx.setStorageSync('isNew', res.isNew);
                     console.log(res);
+                    wx.uma.setOpenid(res.openId);
                     // 配置智能对话平台插件
                     plugin.init({
                         appid: "TZ7JcEhg7kMjrLwsrAE7s8nz9N3LWc", //机器人Id

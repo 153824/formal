@@ -35,12 +35,11 @@ Page({
      */
     onLoad: function (options) {
         const {necessaryInfo} = options;
-        const {count = 0, id = "", name = "", hadBuyout = false, isFree = false, norms = "", quesCount = 0, estimatedTime = 7} = JSON.parse(necessaryInfo);
+        const {count = 0, id = "", name = "", isFree = false, norms = "", quesCount = 0, estimatedTime = 7} = JSON.parse(necessaryInfo);
         this.setData({
             maxCount: count,
             evaluationId: id,
             evaluationName: name,
-            hadBuyout: hadBuyout,
             isFree: isFree,
             norms: norms,
             quesCount: quesCount,
@@ -141,7 +140,7 @@ Page({
     changeCount: function (e) {
         const that = this;
         const t = e.currentTarget.dataset.t;
-        let {maxCount = 0, count, hadBuyout, isFree} = that.data;
+        let {maxCount = 0, count, isFree} = that.data;
         if (t == 1) {
             count -= 1;
         } else if (t == 2) {
@@ -149,7 +148,7 @@ Page({
         } else {
             count = e.detail.value;
         }
-        if (count > parseInt(maxCount) && !hadBuyout && !isFree) {
+        if (count > parseInt(maxCount) && !isFree) {
             that.setData({
                 count: maxCount
             });
@@ -181,7 +180,6 @@ Page({
             evaluationName,
             norms,
             evaluationId,
-            hadBuyout,
             isFree,
             maxCount,
             reportMeet,
@@ -191,27 +189,25 @@ Page({
             defaultDeptId
         } = that.data;
         let costNum = count;
-        if (!costNum && !hadBuyout && !isFree) {
+        if (!costNum && !isFree) {
             return;
         }
-        if (!isWxWork && !is3rd && costNum > maxCount && !hadBuyout && !isFree) {
+        if (!isWxWork && !is3rd && costNum > maxCount && !isFree) {
             console.error(JSON.stringify({
                 isWxWork,
                 isFree: isFree,
-                hadBuyout: hadBuyout,
                 costNum,
                 maxCount,
             }))
             app.toast("测评可用数量不足!!");
             return;
         }
-        if ((isWxWork || is3rd) && !isFree && !hadBuyout && !dispatchInfo.inventory) {
+        if ((isWxWork || is3rd) && !isFree && !dispatchInfo.total) {
             console.error(JSON.stringify({
                 isWxWork,
                 is3rd,
                 isFree: isFree,
-                hadBuyout: hadBuyout,
-                inventory: dispatchInfo.inventory
+                inventory: dispatchInfo.total
             }))
             app.toast("测评可用数量不足!");
             return;

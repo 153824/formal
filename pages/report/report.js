@@ -403,19 +403,23 @@ Page({
 
     computeHeight() {
         const that = this;
-        setTimeout(()=>{
-            const query = wx.createSelectorQuery()
-            query.select(`#usage-manual`).boundingClientRect(res=>{
-                console.log(res);
+        try {
+            setTimeout(()=>{
+                const query = wx.createSelectorQuery()
+                query.select(`#usage-manual`).boundingClientRect(res=>{
+                    console.log(res);
+                    that.setData({
+                        canIUnfold: res.height / app.rate > 240,
+                        maxHeight: 240
+                    })
+                }).exec();
                 that.setData({
-                    canIUnfold: res.height / app.rate > 240,
-                    maxHeight: 240
+                    seeItActive: false
                 })
-            }).exec();
-            that.setData({
-                seeItActive: false
-            })
-        }, 100)
+            }, 100)
+        } catch (e) {
+            console.error(e);
+        }
         // const query = wx.createSelectorQuery()
         // query.selectAll(`#usage-manual`).fields({
         //     size: true

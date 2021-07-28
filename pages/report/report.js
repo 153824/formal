@@ -407,9 +407,8 @@ Page({
             setTimeout(()=>{
                 const query = wx.createSelectorQuery()
                 query.select(`#usage-manual`).boundingClientRect(res=>{
-                    console.log(res);
                     that.setData({
-                        canIUnfold: res.height / app.rate > 240,
+                        canIUnfold: res && res.height ? res.height / app.rate > 240 : false,
                         maxHeight: 240
                     })
                 }).exec();

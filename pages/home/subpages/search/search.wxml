@@ -1,0 +1,132 @@
+<scroll-view id="search-scroll" class="search-scroll-view" scroll-x="false" scroll-y="true" bind:scroll="onScroll">
+    <van-sticky scroll-top="{{ scrollTop }}" offset-top="{{ offsetTop }}" bind:scroll="onSticky" z-index="99999">
+        <view class="search-bar-wrapper {{isFixed ? 'is-padding' : ''}}">
+            <view class="search-bar__input">
+                <input placeholder="搜索（测评、岗位、类型、场景…)"/>
+            </view>
+            <text class="cancel">取消</text>
+        </view>
+    </van-sticky>
+    <block wx:if="{{keyword}}">
+        <scroll-view class="search__type-1" scroll-x="true" scroll-y="false">
+            <view class="search__type-1--content">
+                <view class="search__type-1--child">
+                    <view class="title-wrapper">
+                        <text class="title">最新上架</text>
+                        <text class="more">更多</text>
+                    </view>
+                    <view class="search-tag new">
+                        <view>销售管理岗特质测评</view>
+                        <view>学习元认知测评</view>
+                        <view>高潜核心素质测评</view>
+                        <view>贝尔宾团队角色测评</view>
+                    </view>
+                </view>
+                <view class="search__type-1--child">
+                    <view class="title-wrapper">
+                        <text class="title">最新上架</text>
+                        <text class="more">更多</text>
+                    </view>
+                    <view class="search-tag hot">
+                        <view>基层管理岗特质测评</view>
+                        <view>职业心理风险测评</view>
+                        <view>DISC行为风格测评</view>
+                        <view>创业力测评</view>
+                    </view>
+                </view>
+            </view>
+        </scroll-view>
+        <view class="search__type-2">
+            <view class="title-wrapper type-search">
+                <text class="title">分类搜索</text>
+            </view>
+            <view class="search__type-2--content">
+                <view class="search__type-2--child">
+                    <view class="work">岗位特质类</view>
+                    <view class="ability">能力素质类</view>
+                </view>
+                <view class="search__type-2--child">
+                    <view class="mine">心理特质类</view>
+                    <view class="knowledge">知识技能类</view>
+                </view>
+            </view>
+        </view>
+    </block>
+    <block wx:else>
+        <block wx:if="{{isEmpty}}">
+            <view class="search-result__is-empty">
+                <view class="empty-content">
+                    <image src="https://s.luoke101.com/search-empty.png" />
+                    <view class="empty-tips">
+                        <view>暂无{{keyword}}相关的测评</view>
+                        <view>您可以联系顾问进行测评定制</view>
+                    </view>
+                    <view class="contact" style="width: 80%;">一键联系专业测评顾问</view>
+                </view>
+                <view class="empty-extra">
+                    <view class="extra-title">发现更多测评</view>
+                    <scroll-view class="empty-extra-scroll-view">
+                        <view class="empty-extra__search-tag">
+                            <view>
+                                <view class="title-wrapper search-tag__title-wrapper">
+                                    <text class="title">最新上架</text>
+                                </view>
+                                <view class="search-tag new">
+                                    <view>销售管理岗特质测评</view>
+                                    <view>学习元认知测评</view>
+                                    <view>高潜核心素质测评</view>
+                                    <view>贝尔宾团队角色测评</view>
+                                </view>
+                            </view>
+                            <view>
+                                <view class="title-wrapper search-tag__title-wrapper">
+                                    <text class="title">最新上架</text>
+                                </view>
+                                <view class="search-tag hot">
+                                    <view>基层管理岗特质测评</view>
+                                    <view>职业心理风险测评</view>
+                                    <view>DISC行为风格测评</view>
+                                    <view>创业力测评</view>
+                                </view>
+                            </view>
+                        </view>
+                    </scroll-view>
+                    <view class="search__type-2">
+                        <view class="title-wrapper type-search empty-extra-type">
+                            <text class="title">测评分类</text>
+                        </view>
+                        <view class="search__type-2--content">
+                            <view class="search__type-2--child">
+                                <view class="work">岗位特质类</view>
+                                <view class="ability">能力素质类</view>
+                            </view>
+                            <view class="search__type-2--child">
+                                <view class="mine">心理特质类</view>
+                                <view class="knowledge">知识技能类</view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </block>
+        <block wx:else>
+            <view class="search-result__is-fill">
+                <view class="contact">联系专业顾问帮我策划方案</view>
+                <view class="content">
+                    <hola-card/>
+                    <hola-card/>
+                    <hola-card/>
+                    <hola-card/>
+                    <hola-card/>
+                    <hola-card/>
+                    <hola-card/>
+                    <hola-card/>
+                    <hola-card/>
+                    <hola-card/>
+                    <hola-card/>
+                    <hola-card/>
+                </view>
+            </view>
+        </block>
+    </block>
+</scroll-view>

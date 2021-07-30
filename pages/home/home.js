@@ -13,18 +13,46 @@ Page({
         active: 0,
         column: [],
         trigger: true,
+        scrollViewHeight: 'calc(100vh - 120rpx)',
+        scrollTop: 0,
+        offsetTop: 0,
+        isFixed: false
     },
     onLoad: function () {
         this.init();
     },
 
     onShow: function () {
+        const that = this;
         app.freeTickId = "";
         try {
             wx.uma.trackEvent("1601368297264")
         } catch (e) {
             console.error("home.js -> 109", e);
         }
+        setTimeout(()=>{
+            that.setData({
+                tabbarHeight: wx.getStorageSync('TAB_BAR_HEIGHT')
+            })
+        }, 0)
+    },
+
+    onScroll(event) {
+        wx.createSelectorQuery()
+            .select('#home-scroll')
+            .boundingClientRect((res) => {
+                this.setData({
+                    scrollTop: event.detail.scrollTop,
+                    offsetTop: res.top
+                });
+            })
+            .exec();
+    },
+
+    onSticky(e){
+        this.setData({
+            isFixed: e.detail.isFixed
+        });
     },
 
     onShareAppMessage(options) {

@@ -1,0 +1,14 @@
+<view class="card">
+    <view class="cover-wrapper">
+        <image src="http://img2.luoke101.com/2021-05-07T06:22:45.263ZnormalImg.241ZnormalImg"/>
+    </view>
+    <view class="info-wrapper">
+        <view class="info">
+            <text class="title">通用销售岗位匹配度测评</text>
+            <view class="tips">
+                <text>#岗位特质类</text>
+                <text>成就动机/收入驱动力/主动性….</text>
+            </view>
+        </view>
+    </view>
+</view>

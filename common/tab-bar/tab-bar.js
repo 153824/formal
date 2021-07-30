@@ -163,9 +163,11 @@ Component({
     pageLifetimes: {
         show: function () {
             app.setDataOfPlatformInfo(this);
-            wx.createSelectorQuery().in(this).select("#tabbar").boundingClientRect().exec(res => {
-                wx.setStorageSync("TAB_BAR_HEIGHT", res[0].height)
-            });
+            setTimeout(()=>{
+                wx.createSelectorQuery().in(this).select("#tabbar").boundingClientRect().exec(res => {
+                    wx.setStorageSync("TAB_BAR_HEIGHT", res[0].height)
+                });
+            }, 0);
         }
     },
     lifetimes: {

@@ -1,0 +1,231 @@
+page{
+    background: #F9FAFC;
+}
+.search-scroll-view{
+    padding: 0 40rpx;
+    width: calc(100vw - 80rpx);
+}
+.search-bar-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40rpx;
+    background: #F9FAFC;
+}
+.search-bar{
+    padding: 20rpx 50rpx;
+    background: #FFFFFF;
+    border-radius: 21px;
+}
+.search-bar__input{
+    flex: 1;
+    padding: 20rpx 50rpx;
+    background: #FFFFFF;
+    border-radius: 40rpx;
+}
+.search-bar__input > input{
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    line-height: 40rpx;
+}
+.search-bar__input > input::placeholder{
+    color: #D5D5D5;
+}
+.cancel{
+    padding-left: 30rpx;
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #303113;
+    line-height: 40rpx;
+}
+.search__type-1{
+    padding: 40rpx 0 30rpx 0;
+}
+.search__type-1--content{
+    display: flex;
+    flex-direction: row;
+}
+.search__type-1--child{
+    flex: 1;
+    margin-right: 30rpx;
+}
+.title-wrapper{
+    display: flex;
+    justify-content: space-between;
+    font-size: 28rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #000000;
+    line-height: 40rpx;
+}
+.title-wrapper .title{
+
+}
+.title-wrapper .more{
+    color: #BDBDBD;
+}
+.search-tag{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 30rpx;
+    width: calc(100% - 60rpx);
+    height: 210rpx;
+    padding: 30rpx 30rpx 40rpx 30rpx;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.search-tag view{
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #303113;
+    line-height: 40rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.search-tag.new{
+    background-image: url("https://s.luoke101.com/search-new.png");
+}
+.search-tag.hot{
+    background-image: url("https://s.luoke101.com/search-hot.png");
+}
+.search__type-2--content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.search__type-2--child{
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 24rpx;
+}
+.search__type-2--child > view{
+    display: flex;
+    width: 320rpx;
+    height: 80rpx;
+    align-items: center;
+    justify-content: center;
+    font-size: 28rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 40rpx;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.search__type-2--child > .work{
+    background-image: url("https://s.luoke101.com/search-work.png");
+}
+.search__type-2--child > .ability{
+    background-image: url("https://s.luoke101.com/search-ability.png");
+}
+.search__type-2--child > .mine{
+    background-image: url("https://s.luoke101.com/search-mine.png");
+}
+.search__type-2--child > .knowledge{
+    background-image: url("https://s.luoke101.com/search-knowledge.png");
+}
+.type-search{
+    margin-bottom: 30rpx;
+}
+.search-result__is-fill{
+    padding-top: 50rpx;
+}
+.contact{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80rpx;
+    background: #353EE8;
+    border-radius: 20rpx;
+    font-size: 28rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 40rpx;
+}
+.search-result__is-fill .content{
+    padding-top: 50rpx;
+}
+.is-padding{
+    padding-bottom: 25rpx;
+}
+.empty-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80rpx 0 104rpx 0;
+}
+.empty-content > image{
+    width: 388rpx;
+    height: 294rpx;
+}
+.empty-tips{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 40rpx 0;
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #797979;
+    line-height: 48rpx;
+}
+.empty-extra{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.extra-title{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 32rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #303113;
+    line-height: 44rpx;
+}
+.extra-title:after{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: block;
+    width: 280rpx;
+    height: 22rpx;
+    background: rgba(53, 62, 232, 0.15);
+    border-radius: 10rpx;
+}
+.empty-extra-scroll-view{
+    margin-top: 60rpx;
+}
+.empty-extra__search-tag{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.search-tag__title-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.empty-extra-type{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10rpx;
+}

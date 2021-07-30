@@ -1,0 +1,62 @@
+.card{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 130rpx;
+    padding: 30rpx 0rpx;
+    margin-bottom: 20rpx;
+}
+.cover-wrapper, .cover-wrapper > image{
+    width: 140rpx;
+    height: 140rpx;
+}
+.cover-wrapper{
+    position: absolute;
+    z-index: 1;
+}
+.cover-wrapper > image{
+    box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(0, 0, 0, 0.1);
+    border-radius: 16rpx;
+}
+.info-wrapper{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 20rpx;
+    right: 0;
+    box-shadow: 4rpx 4rpx 8rpx 0rpx rgba(0, 0, 0, 0.06);
+    border-radius: 12rpx;
+    background-color: #ffffff;
+    padding-left: 160rpx;
+}
+.info > .title{
+    font-size: 28rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #000000;
+    line-height: 40rpx;
+}
+.info > .tips{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-around;
+    font-size: 24rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #999999;
+    line-height: 34rpx;
+}
+.info-wrapper > text{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.info-wrapper > .info{
+    height: calc(100% - 60rpx);
+    padding: 30rpx 30rpx 30rpx 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

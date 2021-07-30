@@ -222,6 +222,11 @@
           "pathName": "pages/auth/subpages/maintain/maintain",
           "query": "receivedRecordId=60e808820c294e5d6103f7d0",
           "scene": null
+        },
+        {
+          "name": "首页搜索",
+          "pathName": "pages/home/subpages/search/search",
+          "scene": null
         }
       ]
     }

@@ -29,7 +29,7 @@
                         <text class="text">张</text>
                     </view>
                 </view>
-                <image wx:if="{{ticketItem.expiredStatus === 'EXPIRED'}}" src="https://ihola.luoke101.com/icon%40icon-expire.png" class="expire"/>
+                <image wx:if="{{ticketItem.expiredStatus === 'EXPIRED'}}" src="https://s.luoke101.com/icon-ticket-expire.png" class="expire"/>
             </view>
         </block>
     </scroll-view>

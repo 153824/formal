@@ -22,6 +22,7 @@ Page({
         availableVoucher: 0,
         availableInventory: 0,
         showSelectQuiz: false,
+        buttonGroupHeight: 0
     },
 
     onLoad(options) {
@@ -50,6 +51,13 @@ Page({
                     })
                 });
         }
+        let query = wx.createSelectorQuery();
+        query.select('.button-group-wrapper').boundingClientRect(rect=>{
+            console.log(rect);
+            that.setData({
+                buttonGroupHeight: rect.height
+            })
+        }).exec();
     },
 
     onCountChange(e) {

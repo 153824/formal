@@ -1299,7 +1299,7 @@
 }
 .button-group-wrapper{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding: unset!important;
   margin: unset!important;
   border-radius: unset!important;
@@ -1309,6 +1309,14 @@
   right: 0;
   bottom: 0;
   z-index: 99;
+}
+.button-group-wrapper__item{
+  display: flex;
+  flex-direction: row;
+  padding: unset!important;
+  margin: unset!important;
+  border-radius: unset!important;
+  border: unset!important;
 }
 .button-group-wrapper button {
   border: unset!important;
@@ -1324,7 +1332,7 @@
   justify-content: center;
   width: 65vw;
   background: #FFF6E7;
-  box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(0, 0, 0, 0.5);
+  /* box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(0, 0, 0, 0.5); */
   padding: 14rpx 0;
 }
 .button-group__is-left .title{

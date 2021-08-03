@@ -1,6 +1,6 @@
 <!--home.wxml-->
 <block>
-    <title id="title" url="home/home" ></title>
+    <title id="title" url="home/home" style="background-color: #F9FAFCFF;"></title>
 </block>
 <view>
     <scroll-view
@@ -9,6 +9,7 @@
             scroll-y
             scroll-x="false"
             bind:scroll="onScroll"
+            bind:scrolltolower="loadSection"
             style="margin-top:{{ (statusbarHeight + titleHeight) }}px;height: calc(100vh - {{(statusbarHeight + titleHeight + tabbarHeight)*1.1}}px);">
         <view class="home-item__1">
             <swiper class="home-swiper"
@@ -32,21 +33,21 @@
             </swiper>
         </view>
         <view class="home-item__2">
-            <view class="home-item__2-is-left">
+            <view class="home-item__2-is-left" data-type="brain" bind:tap="goToMore">
                 人才盘点
             </view>
             <view class="home-item__2-is-right">
-                <view class="school">校招选才</view>
-                <view class="social">社招选才</view>
+                <view class="school" data-type="school" bind:tap="goToMore">校招选才</view>
+                <view class="social" data-type="social" bind:tap="goToMore">社招选才</view>
             </view>
         </view>
         <van-sticky scroll-top="{{ scrollTop }}" offset-top="{{ offsetTop }}" bind:scroll="onSticky">
             <view class="home-item__3 {{isFixed ? 'is-padding' : ''}}">
-                <view class="home-search">
+                <view class="home-search" bind:tap="goToSearch">
                     <text>搜索（测评/岗位/类型/场景…)</text>
                     <van-icon name="search" size="20px"/>
                 </view>
-                <view class="home-contact">
+                <view class="home-contact" bind:tap="goToCustomerService">
                     <van-icon name="https://s.luoke101.com/ma/image/contact.png" size="16px"/>
                     <text>在线咨询</text>
                 </view>
@@ -55,19 +56,18 @@
         <view class="home-item__4">
             <view class="home-item__4--child">
                 <view class="title">
-                    人才测评
+                    {{evaluationSection.title}}
                 </view>
                 <view class="content">
-                    <hola-card />
-                    <hola-card />
-                    <hola-card />
-                    <hola-card />
-                    <hola-card />
-                    <hola-card />
-                    <hola-card />
-                    <hola-card />
-                    <hola-card />
-                    <hola-card />
+                    <block wx:for="{{evaluationSection.evaluations}}" wx:for-item="evaluationItem">
+                        <hola-card
+                                wx:key="unique"
+                                evaluationId="{{evaluationItem.evaluationId}}"
+                                topic="{{evaluationItem.type}}"
+                                tip="{{evaluationItem.description}}"
+                                cover="{{evaluationItem.imgUrl}}"
+                                title="{{evaluationItem.name}}"/>
+                    </block>
                 </view>
             </view>
         </view>

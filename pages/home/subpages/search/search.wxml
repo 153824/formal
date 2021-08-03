@@ -8,46 +8,36 @@
         </view>
     </van-sticky>
     <block wx:if="{{keyword}}">
-        <scroll-view class="search__type-1" scroll-x="true" scroll-y="false">
+        <scroll-view wx:if="{{!!tagSection.length}}" class="search__type-1" scroll-x="true" scroll-y="false">
             <view class="search__type-1--content">
-                <view class="search__type-1--child">
-                    <view class="title-wrapper">
-                        <text class="title">最新上架</text>
-                        <text class="more">更多</text>
+                <block wx:for="{{tagSection}}" wx:for-item="tagSectionItem">
+                    <view class="search__type-1--child">
+                        <view class="title-wrapper">
+                            <text class="title">{{tagSectionItem.columnName}}</text>
+                            <text class="more">更多</text>
+                        </view>
+                        <view class="search-tag new">
+                            <block wx:for="{{util.slice(tagSectionItem.evaluations, 4)}}" wx:for-item="evaluationItem">
+                                <view data-evaluation-id="{{evaluationItem.evaluationId}}"
+                                      bind:tap="goToEvaluationDetail">
+                                    {{evaluationItem.evaluationName}}
+                                </view>
+                            </block>
+                        </view>
                     </view>
-                    <view class="search-tag new">
-                        <view>销售管理岗特质测评</view>
-                        <view>学习元认知测评</view>
-                        <view>高潜核心素质测评</view>
-                        <view>贝尔宾团队角色测评</view>
-                    </view>
-                </view>
-                <view class="search__type-1--child">
-                    <view class="title-wrapper">
-                        <text class="title">最新上架</text>
-                        <text class="more">更多</text>
-                    </view>
-                    <view class="search-tag hot">
-                        <view>基层管理岗特质测评</view>
-                        <view>职业心理风险测评</view>
-                        <view>DISC行为风格测评</view>
-                        <view>创业力测评</view>
-                    </view>
-                </view>
+                    <view class="search__type-1--child"></view>
+                </block>
             </view>
         </scroll-view>
-        <view class="search__type-2">
+        <view wx:if="{{!!typeSection.length}}" class="search__type-2">
             <view class="title-wrapper type-search">
                 <text class="title">分类搜索</text>
             </view>
             <view class="search__type-2--content">
                 <view class="search__type-2--child">
-                    <view class="work">岗位特质类</view>
-                    <view class="ability">能力素质类</view>
-                </view>
-                <view class="search__type-2--child">
-                    <view class="mine">心理特质类</view>
-                    <view class="knowledge">知识技能类</view>
+                    <block wx:for="{{typeSection}}" wx:for-item="typeSectionItem">
+                        <view class="work">{{typeSectionItem.columnName}}</view>
+                    </block>
                 </view>
             </view>
         </view>
@@ -56,7 +46,7 @@
         <block wx:if="{{isEmpty}}">
             <view class="search-result__is-empty">
                 <view class="empty-content">
-                    <image src="https://s.luoke101.com/search-empty.png" />
+                    <image src="https://s.luoke101.com/search-empty.png"/>
                     <view class="empty-tips">
                         <view>暂无{{keyword}}相关的测评</view>
                         <view>您可以联系顾问进行测评定制</view>
@@ -130,3 +120,4 @@
         </block>
     </block>
 </scroll-view>
+<wxs src="../../../../utils/util.wxs" module="util"/>

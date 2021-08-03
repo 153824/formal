@@ -29,6 +29,10 @@ Component({
         moreType: {
             value: "",
             type: String
+        },
+        style: {
+            value: "",
+            type: String
         }
     },
     data: {

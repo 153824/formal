@@ -259,6 +259,14 @@ var computeChartClass = function (value) {
   return '';
 }
 
+var slice = function (arr, len) {
+  if(arr.length >= len) {
+    return arr.slice(0, len)
+  } else {
+    return arr
+  }
+}
+
 module.exports = {
   getMonthAndDayByFrag: getMonthAndDayByFrag,
   getHourAndMinByFrag: getHourAndMinByFrag,
@@ -280,5 +288,6 @@ module.exports = {
   computeStepNumber: computeStepNumber,
   isMiddleValue: isMiddleValue,
   computeMBTIChartPosition: computeMBTIChartPosition,
-  computeChartClass: computeChartClass
+  computeChartClass: computeChartClass,
+  slice: slice
 };

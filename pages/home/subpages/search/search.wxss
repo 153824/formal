@@ -41,7 +41,7 @@ page{
     line-height: 40rpx;
 }
 .search__type-1{
-    padding: 40rpx 0 30rpx 0;
+    padding: 40rpx 0 15rpx 0;
 }
 .search__type-1--content{
     display: flex;
@@ -73,8 +73,8 @@ page{
     justify-content: space-between;
     margin-top: 30rpx;
     width: calc(100% - 60rpx);
-    height: 210rpx;
-    padding: 30rpx 30rpx 40rpx 30rpx;
+    height: 270rpx;
+    padding: 30rpx 30rpx 50rpx 30rpx;
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -103,6 +103,7 @@ page{
     flex: 1;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
     margin-bottom: 24rpx;
 }
@@ -110,6 +111,8 @@ page{
     display: flex;
     width: 320rpx;
     height: 80rpx;
+    margin-top: 10rpx;
+    margin-bottom: 10rpx;
     align-items: center;
     justify-content: center;
     font-size: 28rpx;

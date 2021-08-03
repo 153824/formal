@@ -16,10 +16,18 @@ Page({
         scrollViewHeight: 'calc(100vh - 120rpx)',
         scrollTop: 0,
         offsetTop: 0,
-        isFixed: false
+        isFixed: false,
+        page: 0,
+        size: 10,
+        evaluationSection: {
+            title: '',
+            evaluations: []
+        }
     },
+
     onLoad: function () {
         this.init();
+        this.loadSection();
     },
 
     onShow: function () {
@@ -35,6 +43,16 @@ Page({
                 tabbarHeight: wx.getStorageSync('TAB_BAR_HEIGHT')
             })
         }, 0)
+    },
+
+    onUnload() {
+        const {isWxWork, is3rd} = app.wxWorkInfo;
+        if (isWxWork || is3rd) {
+            this.setData({
+                loading: true,
+                trigger: false
+            });
+        }
     },
 
     onScroll(event) {
@@ -71,7 +89,7 @@ Page({
                 is3rd,
                 isWxWorkSuperAdmin
             })
-        }else{
+        } else {
             app.checkUserInfo=(res)=>{
                 this.check({
                     isWxWork: res.isWxWork,
@@ -162,127 +180,60 @@ Page({
         }
     },
 
-    navWebView: function (e) {
-        const {url, name} = e.currentTarget.dataset;
-        try {
-            wx.uma.trackEvent('1601368427999', {"文章名称": name})
-        } catch (e) {
-            console.error('home.js -> 134', e)
-        }
-        wx.setStorageSync("webView_Url", url);
+    goToMore(e) {
+        const {type} = e.target.dataset;
         wx.navigateTo({
-            url: '../../common/webView',
+            url: `/pages/home/components/more/more?type=${type}`
         });
     },
-    /**继续体验 */
-    goToReplying: function (e) {
-        const {t} = e.target.dataset;
-        if (t === '2') {
-            wx.setStorageSync("hideLastTestMind", true);
-            this.setData({
-                oldShareInfo: ""
-            });
-            return;
-        }
-        const {id} = this.data.oldShareInfo;
+
+    goToSearch() {
         wx.navigateTo({
-            url: '../test/guide?id=' + id
-        });
-    },
-    gotoDetail: function (e) {
-        const {id} = e.currentTarget.dataset;
-        if (id.startsWith("http")) {
-            wx.setStorageSync("webView_Url", id);
-            wx.navigateTo({
-                url: '../../common/webView',
-            });
-            return;
-        }
-        wx.navigateTo({
-            url: `../station/components/detail/detail?id=${id}`,
-            success: function () {
-            }
-        });
-    },
-    goToAll(e) {
-        const {columnId} = e.currentTarget.dataset;
-        wx.navigateTo({
-            url: `/pages/home/subpages/all?columnId=${columnId}`
+            url: '/pages/home/subpages/search/search'
         })
     },
-    callServing: function (e) {
-        this.setData({
-            showServing: true
-        });
+
+    goToCustomerService() {
+        wx.navigateTo({
+            url: '/pages/customer-service/customer-service'
+        })
     },
-    hideServing: function (e) {
-        this.setData({
-            showServing: false
-        });
-    },
-    copyIt: function () {
-        const {wechat} = this.data;
-        wx.setClipboardData({
-            data: wechat,
+
+    loadSection() {
+        const that = this;
+        const {evaluationSection} = this.data;
+        const evaluationList = evaluationSection.evaluations;
+        const {page, size} = this.data;
+        app.doAjax({
+            url: '../wework/homepages/evaluations',
+            method: 'GET',
+            data: {
+                page: page + 1,
+                size,
+            },
             success(res) {
-            }
-        });
-    },
-    changePage: function (e) {
-        const {name, url, tab, n} = e.currentTarget.dataset;
-        if (url) {
-            if (url.indexOf('http') != -1) {
-                wx.setStorageSync("webView_Url", url);
-                wx.navigateTo({
-                    url: '../common/webView',
-                });
-            } else {
-                const {detail} = e;
-                try {
-                    wx.uma.trackEvent('1601368400960', {"测评名称": name})
-                } catch (e) {
-                    console.error('home.js -> 136', e)
+                const {evaluations, title} = res;
+                if(evaluations.length){
+                    const targetEvaluations = [...evaluationList, ...evaluations]
+                    evaluationSection.evaluations = targetEvaluations;
+                    evaluationSection.title = title
+                    console.log({...evaluationSection})
+                    that.setData({
+                        evaluationSection: {...evaluationSection},
+                        page: page + 1,
+                    })
+                } else {
+                    evaluationSection.title = title
+                    that.setData({
+                        evaluationSection: {...evaluationSection},
+                    })
+                    app.toast('已为您加载所有相关内容')
                 }
-                if ((!detail || !detail.encryptedData) && n == "getPhoneNumber") return;
-                if (detail && detail.encryptedData) {
-                    const iv = detail.iv;
-                    const encryptedData = detail.encryptedData;
-                    if (encryptedData) {
-                        const userMsg = app.globalData.userMsg || {};
-                        userMsg["iv"] = iv;
-                        userMsg["encryptedData"] = encryptedData;
-                        app.doAjax({
-                            url: "updatedUserMobile",
-                            data: userMsg,
-                            noLoading: true,
-                            success: function (res) {
-                                app.getUserInfo();
-                            }
-                        });
-                    }
-                }
-                wx.navigateTo({
-                    url: url
-                });
+                console.log(res);
+            },
+            error(err) {
+
             }
-        }
-        if (tab) {
-            wx.switchTab({
-                url: tab
-            });
-        }
-        this.setData({
-            showTopGift: true,
-            showGiftDlg: false
-        });
-    },
-    onUnload() {
-        const {isWxWork, is3rd} = app.wxWorkInfo;
-        if (isWxWork || is3rd) {
-            this.setData({
-                loading: true,
-                trigger: false
-            });
-        }
+        })
     }
 });

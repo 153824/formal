@@ -245,7 +245,7 @@
                                             </view>
                                             <image class="arrow" src="./images/report@icon-right-arrow.png"/>
                                         </view>
-                                        <view wx:if="{{top3Item.lvTexts.length && 'top-'+top3Index === currentActive}}"
+                                        <view wx:if="{{top3Item.lvTexts.length && util.isIncludes(currentActive, 'top-'+top3Index)}}"
                                               class="power-item-detail-wrapper {{opacityTrigger ? 'power-item-detail-wrapper-opacity' : ''}}">
                                             {{top3Item.lvTexts[0].content}}
                                         </view>
@@ -270,7 +270,7 @@
                                             </view>
                                             <image class="arrow" src="./images/report@icon-right-arrow.png"/>
                                         </view>
-                                        <view wx:if="{{belowItem.lvTexts.length && 'below-'+belowIndex === currentActive}}"
+                                        <view wx:if="{{belowItem.lvTexts.length && util.isIncludes(currentActive, 'below-'+belowIndex)}}"
                                               class="power-item-detail-wrapper {{opacityTrigger ? 'power-item-detail-wrapper-opacity' : ''}}">
                                             {{belowItem.lvTexts[0].content}}
                                         </view>
@@ -295,7 +295,7 @@
                                             </view>
                                             <image class="arrow" src="./images/report@icon-right-arrow.png"/>
                                         </view>
-                                        <view wx:if="{{othersItem.lvTexts.length && 'others-'+othersIndex === currentActive}}"
+                                        <view wx:if="{{othersItem.lvTexts.length && util.isIncludes(currentActive, 'others-'+othersIndex)}}"
                                               class="power-item-detail-wrapper {{opacityTrigger ? 'power-item-detail-wrapper-opacity' : ''}}">
                                             {{othersItem.lvTexts[0].content}}
                                         </view>

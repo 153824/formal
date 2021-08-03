@@ -346,7 +346,7 @@ Page({
         detailTrigger: false,
         opacityTrigger: true,
         incentives: {},
-        currentActive: "",
+        currentActive: [],
         reportCopyrightTxt: "",
         options: {},
         analysisCount:0,
@@ -572,7 +572,7 @@ Page({
                 });
                 objs[n].subclasses = newChild;
                 var keys = Object.keys(newChild);
-                objs[n].subclasses[keys[keys.length-1]]["active"] = "active";
+                objs[n].subclasses[keys[0]]["active"] = "active";
             }
             res["id"] = id;
             var proposal = res.proposal || [];
@@ -674,7 +674,8 @@ Page({
                 });
                 objs[n].subclass = newChild;
                 var keys = Object.keys(newChild);
-                objs[n].subclass[keys[keys.length-1]]["active"] = "active"
+                // 默认第一个展开
+                objs[n].subclass[keys[0]]["active"] = "active"
             }
             that.setData({
                 histogramYAxis: histogramYAxis,
@@ -1024,14 +1025,20 @@ Page({
     },
 
     callDetail: function(e) {
-        const {detailTrigger,opacityTrigger,incentives,currentActive} = this.data;
+        let {detailTrigger, currentActive} = this.data;
         let {mark} = e.currentTarget.dataset;
-        if(currentActive === mark){
-            mark = ""
+        console.log(mark);
+        if(currentActive.includes(mark)){
+            console.log(currentActive);
+            currentActive = currentActive.filter(item=>{
+                return item !== mark
+            })
+        } else {
+            currentActive.push(mark)
         }
         this.setData({
             detailTrigger: !detailTrigger,
-            currentActive: mark
+            currentActive: [...currentActive]
         });
         // setTimeout(()=>{
         //     this.setData({

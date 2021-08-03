@@ -51,5 +51,12 @@ Page({
         wx.navigateTo({
             url: `/pages/station/components/detail/detail?id=${evaluationId}`
         })
+    },
+
+    goToMore(e) {
+        const {sectionId} = e.currentTarget.dataset;
+        wx.navigateTo({
+            url: `/pages/home/subpages/section/section?sectionId=${sectionId}`
+        })
     }
 });

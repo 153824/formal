@@ -14,7 +14,7 @@
                     <view class="search__type-1--child">
                         <view class="title-wrapper">
                             <text class="title">{{tagSectionItem.columnName}}</text>
-                            <text class="more">更多</text>
+                            <text wx:if="{{tagSectionItem.evaluations.length > 4}}" class="more" data-section-id="{{tagSectionItem.columnId}}" bind:tap="goToMore">更多</text>
                         </view>
                         <view class="search-tag new">
                             <block wx:for="{{util.slice(tagSectionItem.evaluations, 4)}}" wx:for-item="evaluationItem">
@@ -36,7 +36,7 @@
             <view class="search__type-2--content">
                 <view class="search__type-2--child">
                     <block wx:for="{{typeSection}}" wx:for-item="typeSectionItem">
-                        <view class="work">{{typeSectionItem.columnName}}</view>
+                        <view class="work" data-section-id="{{typeSectionItem.columnId}}" bind:tap="goToMore">{{typeSectionItem.columnName}}</view>
                     </block>
                 </view>
             </view>

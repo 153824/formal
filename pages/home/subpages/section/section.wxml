@@ -1,0 +1,11 @@
+<scroll-view scroll-y scroll-x="false" bind:scrolltolower="loadEvaluation" style="height: calc(100vh - 30rpx)">
+    <view class="section-content">
+        <block wx:for="{{evaluations}}" wx:for-item="evaluationItem">
+            <hola-card
+                    evaluationId="{{evaluationItem.evaluationId}}"
+                    tip="{{evaluationItem.description}}"
+                    title="{{evaluationItem.name}}"
+                    cover="{{evaluationItem.imgUrl}}"/>
+        </block>
+    </view>
+</scroll-view>

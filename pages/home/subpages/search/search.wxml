@@ -25,7 +25,6 @@
                             </block>
                         </view>
                     </view>
-                    <view class="search__type-1--child"></view>
                 </block>
             </view>
         </scroll-view>

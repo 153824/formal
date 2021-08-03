@@ -395,11 +395,6 @@ Page({
             }
         }
         const time = new Date().getTime();
-        try {
-            wx.uma.trackEvent('1602216690926')
-        } catch (e) {
-
-        }
         return {
             title: `邀请您查看《${evaluationName}》的作答情况`,
             path: `pages/work-base/components/track-detail/track-detail?releaseRecordId=${trackId || releaseRecordId}&sharedAt=${time}&tabIndex=1`,

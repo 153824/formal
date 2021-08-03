@@ -328,11 +328,7 @@ Page({
         const {name} = e.target.dataset;
         let that = this;
         if (that.data.isSelf === "SHARE") {
-            try {
-                wx.uma.trackEvent('1602216442285')
-            } catch (e) {
 
-            }
         }
 
         function doNext() {
@@ -720,11 +716,7 @@ Page({
             data.username = wx.getStorageSync("userInfo")["nickname"]
         }
         if (data.isSelf === 'SELF') {
-            try {
-                wx.uma.trackEvent('1602214552285', {name: data.paperList.setting.name1})
-            } catch (e) {
 
-            }
         }
         app.doAjax({
             url: "receive_records/update_answer",
@@ -743,19 +735,6 @@ Page({
                 that.setData(ret);
             }
         });
-        if (that.data.isSelf === "SHARE") {
-            try {
-                wx.uma.trackEvent('1602216509662', {name: that.data.paperList.setting.name1});
-            } catch (e) {
-
-            }
-        } else {
-            try {
-                wx.uma.trackEvent('1602214552285', {name: that.data.paperList.setting.name1});
-            } catch (e) {
-
-            }
-        }
     },
     saveAnswerStorageSync: function () {
         let data = this.data;
@@ -841,20 +820,6 @@ Page({
 
     toAnswerIt: function (e, oldData) {
         const that = this;
-        const {name1} = this.data.paperList.setting;
-        if (that.data.isSelf !== 'SHARE') {
-            try {
-                wx.uma.trackEvent('1602214318372', {name: name1})
-            } catch (e) {
-
-            }
-        } else {
-            try {
-                wx.uma.trackEvent('1602215501397', {name: name1})
-            } catch (e) {
-
-            }
-        }
         if (answerTimeOut) {
             clearTimeout(answerTimeOut);
         }
@@ -1028,25 +993,11 @@ Page({
         const {name} = e.currentTarget.dataset;
         let that = this;
         let {authCodeCounter} = this.data;
-        if (this.data.isSelf === 'SHARE') {
-            try {
-                wx.uma.trackEvent('1602215557718')
-            } catch (e) {
-
-            }
-        }
         if (!that.data.getphoneNum) {
             if(authCodeCounter > 5){
                 return
             }
             app.getAccessToken(e).then(res=>{
-                if (that.data.isSelf === 'SHARE') {
-                    try {
-                        wx.uma.trackEvent('1602216242156')
-                    } catch (e) {
-
-                    }
-                }
                 app.doAjax({
                     url: `wework/users/${app.globalData.userMsg.id || app.globalData.userInfo.id}`,
                     method: "get",

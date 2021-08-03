@@ -902,11 +902,6 @@ Page({
         const that = this;
         const {participant, shareInfo, id, report,smallImg} = this.data;
         const time = new Date().getTime();
-        try{
-            wx.uma.trackEvent('1602216644404');
-        }catch (e) {
-
-        }
         return {
             title: `邀您查看${participant.filledName||participant.nickname||'好啦测评'}的《${shareInfo.evaluationName}》报告`,
             path: `pages/report/report?receivedRecordId=${id}&sharedAt=${time}`,

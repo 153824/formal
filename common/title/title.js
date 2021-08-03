@@ -70,47 +70,8 @@ Component({
             let text = "";
             let time = 0;
             const {moreType, startTime} = this.properties;
-            switch (moreType) {
-                case "school":
-                    text = "校招选才";
-                    try {
-                        wx.uma.trackEvent('1605666894656');
-                    } catch (e) {
-                        console.error(e);
-                    }
-                    break;
-                case "social":
-                    text = "社招选才"
-                    try {
-                        wx.uma.trackEvent('1605666964014');
-                    } catch (e) {
-                        console.error(e);
-                    }
-                    break;
-                case "brain":
-                    text = "人才盘点";
-                    try {
-                        wx.uma.trackEvent('1605666990624');
-                    } catch (e) {
-                        console.error(e);
-                    }
-                    break;
-                case "risk":
-                    text = "风险识别";
-                    try {
-                        wx.uma.trackEvent('1605667029152');
-                    } catch (e) {
-                        console.error(e);
-                    }
-                    break;
-            }
             if (startTime) {
                 time = (new Date().getTime() - startTime) / 1000;
-            }
-            try {
-                wx.uma.trackEvent('1605666844223', {name: text, time: time,});
-            } catch (e) {
-                console.error(e);
             }
             wx.switchTab({
                 url: "/pages/home/home"

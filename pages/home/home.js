@@ -33,11 +33,6 @@ Page({
     onShow: function () {
         const that = this;
         app.freeTickId = "";
-        try {
-            wx.uma.trackEvent("1601368297264")
-        } catch (e) {
-            console.error("home.js -> 109", e);
-        }
         setTimeout(()=>{
             that.setData({
                 tabbarHeight: wx.getStorageSync('TAB_BAR_HEIGHT')

@@ -63,11 +63,6 @@ Page({
         this.setData({
             payTrigger: true
         });
-        try {
-            wx.uma.trackEvent('1602213155213', {name: evaluation.name,})
-        } catch (e) {
-
-        }
     },
 
     cancelPayForEvaluation: function (e) {

@@ -488,7 +488,6 @@ Page({
             app.toast("测评可用数量不足");
             return;
         }
-        wx.uma.trackEvent('1602212565156', {name: evaluationName, isFree: type === "FREE"})
         wx.navigateTo({
             url: `../station/components/sharePaper/sharePaper?necessaryInfo=${JSON.stringify(necessaryInfo)}`,
         })

@@ -415,11 +415,6 @@ Page({
 
     goToRecorder: function () {
         const {releaseRecordId,demonstrateInfo,receiveRecordId} = this.data;
-        try {
-            wx.uma.trackEvent('1602215501397', {name: demonstrateInfo.evaluationName})
-        } catch (e) {
-
-        }
         if(this.data.type!=='self'){
             wx.redirectTo({
                 url: `/pages/recorder/recorder?releaseRecordId=${releaseRecordId}`

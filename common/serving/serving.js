@@ -39,29 +39,6 @@ Component({
     methods: {
         callServing: function (e) {
             const {area} = this.properties;
-            switch (area) {
-                case 'home':
-                    try {
-                        wx.uma.trackEvent('1601368464246');
-                    } catch (e) {
-
-                    }
-                    break;
-                case 'station':
-                    try {
-                        wx.uma.trackEvent('1602210565877');
-                    } catch (e) {
-
-                    }
-                    break;
-                case 'detail':
-                    try {
-                        wx.uma.trackEvent('1602213266068');
-                    } catch (e) {
-
-                    }
-                    break;
-            }
             this.setData({
                 showServing: true
             });

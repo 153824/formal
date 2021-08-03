@@ -232,11 +232,6 @@ Page({
             app.toast("测评可用数量不足!");
             return;
         }
-        try {
-            wx.uma.trackEvent('1602212964270', {name: evaluationName, isFree: isFree})
-        } catch (e) {
-
-        }
         const releaseInfo = {
             evaluationId: evaluationId,
             normId: norms[0].normId,

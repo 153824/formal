@@ -80,11 +80,7 @@ Page({
     toDetail: function (e) {
         const {receiveRecordId, isSelf, evaluationName} = this.data;
         if (isSelf && isSelf === "SELF") {
-            try {
-                wx.uma.trackEvent('1602214791798', {name: evaluationName})
-            } catch (e) {
 
-            }
         } else {
 
         }

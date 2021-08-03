@@ -132,11 +132,6 @@ Component({
                 wx.switchTab({
                     url: `${that.data.wxPage[active].path}`
                 });
-                try {
-                    wx.uma.trackEvent("1601368351375", {"导航栏名称": `${that.data.wxPage[active].text}`});
-                } catch (e) {
-                    console.error("tab-bar.js -> 85", e)
-                }
             } else if (isWxWork && isWxWorkAdmin && !isWxWorkSuperAdmin) {
                 wx.switchTab({
                     url: `${that.data.wxWorkPage.admin[active].path}`

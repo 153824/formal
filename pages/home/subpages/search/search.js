@@ -74,6 +74,8 @@ Page({
                 size
             },
             success(res) {
+                const umaConfig = umaEvent.searchKeyword;
+                wx.uma.trackEvent(umaConfig.tag, {content: `${umaConfig.content}${keyword}`, count: `${umaConfig.count}${res.length}`, env: getEnv(wx)});
                 if(res.length === 0 && page === 0) {
                     that.setData({
                         isEmpty: true
@@ -88,7 +90,7 @@ Page({
                     app.toast('已为您加载所有相关内容')
                 }
             },
-        })
+        });
     },
 
     loadSection() {

@@ -1,5 +1,5 @@
 import debounce from "../../../../utils/lodash/debounce";
-import {umaEvent} from "../../../../uma.config";
+import {getEnv, umaEvent} from "../../../../uma.config";
 
 const app = getApp();
 Page({
@@ -110,10 +110,13 @@ Page({
     },
 
     goToEvaluationDetail(e) {
-        const {evaluationId} = e.currentTarget.dataset;
+        const umaConfig = umaEvent.evaluationDetail;
+        const {evaluationId, sectionName} = e.currentTarget.dataset;
+        const type = sectionName === '最新上架' ? 'showcase' : 'hot';
         wx.navigateTo({
             url: `/pages/station/components/detail/detail?id=${evaluationId}`
-        })
+        });
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx)})
     },
 
     goToMore(e) {

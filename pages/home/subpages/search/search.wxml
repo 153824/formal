@@ -22,7 +22,7 @@
     <block wx:if="{{!keyword}}">
         <scroll-view wx:if="{{!!tagSection.length}}" class="search__type-1" scroll-x="true" scroll-y="false">
             <view class="search__type-1--content">
-                <block wx:for="{{tagSection}}" wx:for-item="tagSectionItem">
+                <block wx:for="{{tagSection}}" wx:for-item="tagSectionItem" wx:for-index="tagSectionIndex">
                     <view class="search__type-1--child">
                         <view class="title-wrapper">
                             <text class="title">{{tagSectionItem.columnName}}</text>
@@ -30,7 +30,7 @@
                         </view>
                         <view class="search-tag new">
                             <block wx:for="{{util.slice(tagSectionItem.evaluations, 4)}}" wx:for-item="evaluationItem">
-                                <view data-evaluation-id="{{evaluationItem.evaluationId}}"
+                                <view data-section-name="{{tagSectionItem.columnName}}" data-evaluation-id="{{evaluationItem.evaluationId}}"
                                       bind:tap="goToEvaluationDetail">
                                     {{evaluationItem.evaluationName}}
                                 </view>
@@ -75,7 +75,7 @@
                                     </view>
                                     <view class="search-tag new">
                                         <block wx:for="{{util.slice(tagSectionItem.evaluations, 4)}}" wx:for-item="evaluationItem">
-                                            <view data-evaluation-id="{{evaluationItem.evaluationId}}" bind:tap="goToEvaluationDetail">{{evaluationItem.evaluationName}}</view>
+                                            <view data-section-name="{{tagSectionItem.columnName}}" data-evaluation-id="{{evaluationItem.evaluationId}}" bind:tap="goToEvaluationDetail">{{evaluationItem.evaluationName}}</view>
                                         </block>
                                     </view>
                                 </view>
@@ -110,6 +110,7 @@
                     <block wx:for="{{searchRes}}" wx:for-item="searchItem">
                         <hola-card
                                 isRichTextModel="{{true}}"
+                                location="search"
                                 evaluationId="{{searchItem.evaluationId}}"
                                 title="{{searchItem.name}}"
                                 tip="{{searchItem.description}}"

@@ -62,6 +62,7 @@
                     <block wx:for="{{evaluationSection.evaluations}}" wx:for-item="evaluationItem">
                         <hola-card
                                 wx:key="unique"
+                                location="home"
                                 evaluationId="{{evaluationItem.evaluationId}}"
                                 topic="{{evaluationItem.type}}"
                                 tip="{{evaluationItem.description}}"

@@ -1,3 +1,5 @@
+import {getEnv, umaEvent} from "../../uma.config";
+
 /***********************************************************************************************************************
  * @NAME: WEID       /       @DATE: 2020/7/21      /       @DESC: 变量注释模板(新增变量务必添加)
  * shareId: 领取测评ID
@@ -45,7 +47,6 @@ Page({
 
     onLoad: function (option) {
         const that = this;
-        console.error('work-base')
         wx.getSystemInfo({
             success: function (res) {
                 const {isIPhoneXModel} = that.data;
@@ -498,6 +499,8 @@ Page({
         wx.navigateTo({
             url: `../station/components/detail/detail?id=${evaluationId}`,
         })
+        const umaConfig = umaEvent.evaluationDetail;
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.bench, env: getEnv(wx)});
     },
 
     goToReportMore: function (e) {

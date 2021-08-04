@@ -2,6 +2,7 @@
     <view class="section-content">
         <block wx:for="{{evaluations}}" wx:for-item="evaluationItem">
             <hola-card
+                    location="classify"
                     evaluationId="{{evaluationItem.evaluationId}}"
                     tip="{{evaluationItem.description}}"
                     title="{{evaluationItem.name}}"

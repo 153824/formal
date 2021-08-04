@@ -1,4 +1,4 @@
-import {umaEvent} from "../../../../uma.config";
+import {getEnv, umaEvent} from "../../../../uma.config";
 
 const app = getApp();
 Page({
@@ -27,8 +27,12 @@ Page({
     },
 
     onLoad(options) {
-        console.log(options)
         const that = this;
+        const {scene} = wx.getLaunchOptionsSync();
+        const umaConfig = umaEvent.evaluationDetail;
+        if (umaConfig.scene.includes(scene)) {
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.card, env: getEnv(wx)});
+        }
         this.setData({evaluationId: options.id});
     },
 

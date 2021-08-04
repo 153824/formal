@@ -1,5 +1,6 @@
 import {QUES_TYPE} from './const/index';
 import debounce from "../../../../utils/lodash/debounce";
+import {getEnv, umaEvent} from "../../../../uma.config";
 const app = getApp();
 Page({
     data: {
@@ -38,7 +39,7 @@ Page({
         if(options.chapterId){
             this.setData({
                 chapterId:options.chapterId,
-                type:options.type
+                type: options.type
             })
             this.loadQuestionChapter(options.chapterId,options.receiveRecordId)
             /*初始化题目*/
@@ -84,7 +85,6 @@ Page({
             /*初始化答题卡*/
             .then(res=>{
                 try{
-                    debounce
                     const {answerSheet} = this.data;
                     const {questions} = res;
                     if(Object.keys(answerSheet).length === questions.length){
@@ -639,8 +639,13 @@ Page({
     },
 
     save(automatic=false) {
-        const {answerSheet, receiveRecordId, chapterId} = this.data;
-        if(chapterId){
+        let type = 'scan'
+        const {answerSheet, receiveRecordId, chapterId, isSelf} = this.data;
+        const umaConfig = umaEvent.submitAnswer;
+        type = isSelf.toLowerCase() === 'self' ? 'self' : 'scan';
+        // ToDo 测评名称
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], name: 0, env: getEnv(wx)});
+        if(chapterId) {
             const p = new Promise((resolve, reject) => {
                 app.doAjax({
                     url: `../hola/receive_records/chapters/answers?receiveRecordId=${receiveRecordId}&chapterId=${chapterId}&userId=${wx.getStorageSync("userInfo").userId || ""}`,
@@ -670,7 +675,8 @@ Page({
                 })
             });
             return p;
-        }else{
+        }
+        else {
             const p = new Promise((resolve, reject) => {
                 app.doAjax({
                     url: `../hola/receive_records/answers?receiveRecordId=${receiveRecordId}&userId=${wx.getStorageSync("userInfo").userId || ""}`,
@@ -695,6 +701,7 @@ Page({
             });
             return p;
         }
+
     },
 
     forceSave() {

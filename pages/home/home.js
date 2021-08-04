@@ -1,3 +1,4 @@
+import {umaEvent} from "../../uma.config.js";
 const app = getApp();
 Page({
     data: {
@@ -150,9 +151,11 @@ Page({
     },
 
     goToCustomerService() {
+        const umaConfig = umaEvent['customerService'];
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.home})
         wx.navigateTo({
-            url: '/pages/customer-service/customer-service'
-        })
+            url: '/pages/customer-service/customer-service',
+        });
     },
 
     loadSection() {

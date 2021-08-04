@@ -1,3 +1,5 @@
+import {umaEvent} from "../../../../uma.config";
+
 const app = getApp()
 Page({
     data: {
@@ -70,5 +72,7 @@ Page({
         wx.navigateTo({
             url: '/common/webView',
         });
+        const umaConfig = umaEvent.customerService;
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type]});
     },
 });

@@ -1,4 +1,5 @@
 import debounce from "../../../../utils/lodash/debounce";
+import {umaEvent} from "../../../../uma.config";
 
 const app = getApp();
 Page({
@@ -122,7 +123,12 @@ Page({
         })
     },
 
-    goToCustomerService() {
+    goToCustomerService(e) {
+        const {isEmpty} = e.currentTarget.dataset;
+        if(isEmpty){
+            const umaConfig = umaEvent.customerService;
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.search});
+        }
         wx.navigateTo({
             url: '/pages/customer-service/customer-service'
         })

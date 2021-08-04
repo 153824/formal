@@ -1,3 +1,5 @@
+import {umaEvent} from "../../../../uma.config";
+
 const app = getApp();
 Page({
     data: {
@@ -233,9 +235,11 @@ Page({
     },
 
     goToCustomerService() {
+        const umaConfig = umaEvent.customerService;
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.evaluation});
         wx.navigateTo({
             url: "/pages/customer-service/customer-service"
-        })
+        });
     },
 
     buyByCounts() {

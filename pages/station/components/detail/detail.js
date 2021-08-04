@@ -240,7 +240,7 @@ Page({
 
     goToCustomerService() {
         const umaConfig = umaEvent.customerService;
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.evaluation});
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.evaluation, env: getEnv(wx)});
         wx.navigateTo({
             url: "/pages/customer-service/customer-service"
         });

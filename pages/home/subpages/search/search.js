@@ -130,7 +130,7 @@ Page({
         const {isEmpty} = e.currentTarget.dataset;
         if(isEmpty){
             const umaConfig = umaEvent.customerService;
-            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.search});
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.search, env: getEnv(wx)});
         }
         wx.navigateTo({
             url: '/pages/customer-service/customer-service'

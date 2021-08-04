@@ -163,7 +163,7 @@ Page({
             })
         });
         const umaConfig = umaEvent.clickStartReplying;
-        if(this.data.type === 'self'){
+        if(this.data.isSelf.toLowerCase() === 'self'){
             targetType = 'self'
         }
         wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[targetType], name: evaluationName, env: getEnv(wx)});
@@ -278,7 +278,7 @@ Page({
         let type = 'scan';
         const {releaseRecordId,demonstrateInfo,receiveRecordId} = this.data;
         const umaConfig = umaEvent.clickStartReplying;
-        if(this.data.type!=='self'){
+        if(this.data.isSelf.toLowerCase()!=='self'){
             wx.redirectTo({
                 url: `/pages/recorder/recorder?releaseRecordId=${releaseRecordId}`
             });
@@ -317,7 +317,7 @@ Page({
             })
             type = 'self';
         }
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], name: demonstrateInfo.evaluationName, env: getEnv(wx)});
     },
 
     getProgramSetting(releaseRecordId) {

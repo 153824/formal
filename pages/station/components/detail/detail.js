@@ -262,7 +262,15 @@ Page({
         }
         app.getAccessToken(e)
             .then(res => {
-                return that.loadInventory()
+                const umaConfig = umaEvent.authPhoneSuccess;
+                if(type === 'enjoy'){
+                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.experience, env: getEnv(wx)});
+                } else if(type === 'contact' && !isIos){
+                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.pay, env: getEnv(wx)});
+                } else if (type === 'contact' && isIos){
+                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.contact, env: getEnv(wx)});
+                }
+                return that.loadInventory();
             })
             .then(res => {
                 const {availableVoucher, availableInventory} = res;

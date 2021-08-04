@@ -391,15 +391,15 @@ Page({
         if (authCodeCounter > 5) {
             return
         }
-
         app.getAccessToken(e)
             .then(res => {
+                const umaConfig = umaEvent.authPhoneSuccess;
                 wx.reLaunch({
                     url: '/pages/home/home'
-                })
+                });
+                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.bench, env: getEnv(wx)});
             })
             .catch(err => {
-                console.error(err);
                 if (err.code === '401111') {
                     app.prueLogin().then(res => {
                         this.getPhoneNumber(e)

@@ -2,14 +2,14 @@ page{
     background: #F9FAFC;
 }
 .search-scroll-view{
-    padding: 0 40rpx;
+    padding: 30rpx 40rpx;
     width: calc(100vw - 80rpx);
 }
 .search-bar-wrapper{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 40rpx;
+    /* padding: 0 40rpx; */
     background: #F9FAFC;
 }
 .search-bar{
@@ -18,10 +18,17 @@ page{
     border-radius: 21px;
 }
 .search-bar__input{
+    position: relative;
     flex: 1;
     padding: 20rpx 50rpx;
     background: #FFFFFF;
     border-radius: 40rpx;
+}
+.search-clear{
+    position: absolute;
+    top: 50%;
+    right: 20rpx;
+    transform: translate3d(0%, -50%, 0);
 }
 .search-bar__input > input{
     font-size: 28rpx;
@@ -160,7 +167,7 @@ page{
     padding-top: 50rpx;
 }
 .is-padding{
-    padding-bottom: 25rpx;
+    padding: 30rpx 40rpx;
 }
 .empty-content{
     display: flex;

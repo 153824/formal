@@ -4,10 +4,20 @@
     </view>
     <view class="info-wrapper">
         <view class="info">
-            <text class="title">{{title}}</text>
+            <block wx:if="{{isRichTextModel}}">
+                <rich-text nodes="{{title}}"></rich-text>
+            </block>
+            <block wx:else>
+                <text class="title">{{title}}</text>
+            </block>
             <view class="tips">
-                <text>{{topic ? '#'+ topic : '' }}</text>
-                <text class="sub-tip">{{tip}}</text>
+                <text>{{topic ? '#'+ topic : '' }} </text>
+                <block wx:if="{{isRichTextModel}}">
+                    <rich-text nodes="{{util.gentRichText(tip)}}"></rich-text>
+                </block>
+                <block wx:else>
+                    <text class="sub-tip">{{tip}}</text>
+                </block>
             </view>
         </view>
     </view>
@@ -17,3 +27,4 @@
         </view>
     </block>
 </view>
+<wxs src="/utils/util.wxs" module="util"></wxs>

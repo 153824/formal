@@ -2,6 +2,7 @@
   "usingComponents": {
     "van-field": "/common/vant-weapp/dist/field",
     "van-button": "/common/vant-weapp/dist/button",
+    "van-icon": "/common/vant-weapp/dist/icon/index",
     "van-sticky": "/common/vant-weapp/dist/sticky/index",
     "hola-card": "../../components/card/card"
   },

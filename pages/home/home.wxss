@@ -21,7 +21,10 @@ page{
   justify-content: space-between;
   height: 120rpx;
   padding: 50rpx 50rpx;
-  background: linear-gradient(135deg, #3F2EA1 0%, #A587D8 100%);
+  /*background: linear-gradient(135deg, #3F2EA1 0%, #A587D8 100%);*/
+  background-image: url("http://ihola.luoke101.com/ban6.png");
+  background-size: cover;
+  background-repeat: no-repeat;
   box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(0, 0, 0, 0.1);
   border-radius: 20rpx;
 }
@@ -226,5 +229,5 @@ page{
   justify-content: space-between;
 }
 .is-padding{
-  padding: 20rpx 40rpx;
+  padding: 30rpx 40rpx;
 }

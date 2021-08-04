@@ -260,11 +260,18 @@ var computeChartClass = function (value) {
 }
 
 var slice = function (arr, len) {
+  console.log('slice: ',arr);
   if(arr.length >= len) {
     return arr.slice(0, len)
   } else {
     return arr
   }
+}
+
+var gentRichText= function (text) {
+  console.log(text);
+  console.log('<p style="font-weight: bold;">' + text + '</p>')
+  return '<p style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">' + text + '</p>'
 }
 
 module.exports = {
@@ -289,5 +296,6 @@ module.exports = {
   isMiddleValue: isMiddleValue,
   computeMBTIChartPosition: computeMBTIChartPosition,
   computeChartClass: computeChartClass,
-  slice: slice
+  slice: slice,
+  gentRichText: gentRichText
 };

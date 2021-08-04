@@ -22,17 +22,16 @@ Page({
         evaluationSection: {
             title: '',
             evaluations: []
-        }
+        },
+        bannerRes: []
     },
 
     onLoad: function () {
         this.init();
-        this.loadSection();
     },
 
     onShow: function () {
         const that = this;
-        app.freeTickId = "";
         setTimeout(()=>{
             that.setData({
                 tabbarHeight: wx.getStorageSync('TAB_BAR_HEIGHT')
@@ -97,7 +96,6 @@ Page({
     },
 
     check({isWxWork, isWxWorkAdmin, isWxWorkSuperAdmin, is3rd}) {
-        const that = this;
         if (is3rd || isWxWork && !isWxWorkSuperAdmin) {
             let flag = false
             let url = isWxWork ? "/pages/account/account" : "/pages/auth/auth?type=auth"
@@ -114,64 +112,8 @@ Page({
             return
         }
         if (!is3rd && !isWxWork || !is3rd && isWxWork && isWxWorkSuperAdmin) {
-            console.log('isWxWorkSuperAdmin: ', isWxWorkSuperAdmin);
-            let homePagesPromiseList = [];
-            const homePagesPromise = new Promise(function (resolve, reject) {
-                app.doAjax({
-                    url: "homePages",
-                    method: "get",
-                    noLoading: true,
-                    success: function (res) {
-                        resolve(res.resultObject);
-                    },
-                    fail: function (err) {
-                        reject(err)
-                    }
-                });
-            });
-            homePagesPromise.then(res => {
-                that.setData(res);
-                homePagesPromiseList = res.column.map((v, k) => {
-                    return new Promise((resolve, reject) => {
-                        app.doAjax({
-                            url: `homePages/columns/${v.column_id}/evaluations`,
-                            method: "get",
-                            noLoading: true,
-                            success: function (res) {
-                                resolve({columnId: v.column_id, data: res.data});
-                            },
-                            fail: function (err) {
-                                reject(err);
-                            }
-                        });
-                    })
-                });
-                return Promise.all(homePagesPromiseList)
-            }).then(res => {
-                const {column} = that.data;
-                const targetColumn = column;
-                for (let i = 0; i < res.length; i++) {
-                    for (let j = 0; j < column.length; j++) {
-                        if (res[i].columnId === targetColumn[j].column_id) {
-                            targetColumn[j]["data"] = res[i].data || [];
-                        }
-                    }
-                }
-                that.setData({
-                    column: targetColumn,
-                });
-                setTimeout(() => {
-                    that.setData({
-                        loading: false
-                    })
-                }, 500);
-            }).catch(err => {
-                setTimeout(() => {
-                    that.setData({
-                        loading: false
-                    })
-                }, 500);
-            });
+            this.loadSection();
+            this.loadBanner();
         }
     },
 
@@ -186,6 +128,25 @@ Page({
         wx.navigateTo({
             url: '/pages/home/subpages/search/search'
         })
+    },
+
+    goToWhere(e) {
+        const {bannerRes} = this.data;
+        const {index} = e.currentTarget.dataset;
+        if(bannerRes[index].linkId.indexOf('http') > -1) {
+            this.goToWebView(bannerRes[index].linkId)
+        } else {
+            wx.navigateTo({
+                url: `/pages/station/components/detail/detail?id=${bannerRes[index].id}`
+            })
+        }
+    },
+
+    goToWebView(url) {
+        wx.setStorageSync("webView_Url", url);
+        wx.navigateTo({
+            url: '/common/webView',
+        });
     },
 
     goToCustomerService() {
@@ -225,6 +186,28 @@ Page({
                     app.toast('已为您加载所有相关内容')
                 }
                 console.log(res);
+            },
+            error(err) {
+
+            }
+        })
+    },
+
+    loadBanner() {
+        const that = this;
+        app.doAjax({
+            url: "homePages",
+            method: "get",
+            noLoading: true,
+            success(res) {
+                const targetData = [];
+                const {data} = res.resultObject.banner;
+                data.forEach(item=>{
+                    targetData.push(item)
+                })
+                that.setData({
+                    bannerRes: data
+                })
             },
             error(err) {
 

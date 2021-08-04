@@ -6,6 +6,10 @@ Component({
         tip: String,
         cover: String,
         tag: String,
+        isRichTextModel: {
+            type: Boolean,
+            default: false
+        }
     },
     data: {},
     methods: {

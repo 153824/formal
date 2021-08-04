@@ -3,7 +3,7 @@ var app = getApp();
 var selNewImg = false;
 Page({
   data: {
-    isNew: true,
+    isNewCompany: true,
     selvocation: [],
     vocationAry: [
       [],
@@ -22,14 +22,14 @@ Page({
   },
   onLoad: function(options) {
     selNewImg = false;
-    var isNew = true;
+    var isNewCompany = true;
     var oldTeamMsg = wx.getStorageSync("oldTeamMsg");
     wx.removeStorageSync("oldTeamMsg");
     if (oldTeamMsg) {
-      isNew = false;
+      isNewCompany = false;
     }
     this.setData({
-      isNew: isNew,
+      isNewCompany: isNewCompany,
       oldTeamMsg: oldTeamMsg
     });
     this.loadIndustryList();

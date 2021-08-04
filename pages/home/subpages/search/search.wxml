@@ -1,13 +1,25 @@
-<scroll-view id="search-scroll" class="search-scroll-view" scroll-x="false" scroll-y="true" bind:scroll="onScroll">
+<scroll-view
+        id="search-scroll"
+        class="search-scroll-view"
+        style="height: calc(100vh - 60rpx)"
+        scroll-x="false"
+        scroll-y="true"
+        enhanced="{{false}}"
+        bounces="{{false}}"
+        bind:scroll="onScroll"
+        bind:scrolltolower="loadSearch">
     <van-sticky scroll-top="{{ scrollTop }}" offset-top="{{ offsetTop }}" bind:scroll="onSticky" z-index="99999">
         <view class="search-bar-wrapper {{isFixed ? 'is-padding' : ''}}">
             <view class="search-bar__input">
-                <input placeholder="搜索（测评、岗位、类型、场景…)"/>
+                <input placeholder="搜索（测评、岗位、类型、场景…)" model:value="{{keyword}}" bind:focus="onKeywordFocus" bind:input="onKeywordInput"/>
+                <view wx:if="{{keyword}}" class="search-clear" bind:tap="clear">
+                    <van-icon name="clear" color="#B4B4B4FF"/>
+                </view>
             </view>
-            <text class="cancel">取消</text>
+            <text bind:tap="cancel" class="cancel">取消</text>
         </view>
     </van-sticky>
-    <block wx:if="{{keyword}}">
+    <block wx:if="{{!keyword}}">
         <scroll-view wx:if="{{!!tagSection.length}}" class="search__type-1" scroll-x="true" scroll-y="false">
             <view class="search__type-1--content">
                 <block wx:for="{{tagSection}}" wx:for-item="tagSectionItem">
@@ -50,34 +62,24 @@
                         <view>暂无{{keyword}}相关的测评</view>
                         <view>您可以联系顾问进行测评定制</view>
                     </view>
-                    <view class="contact" style="width: 80%;">一键联系专业测评顾问</view>
+                    <view class="contact" style="width: 80%;" bind:tap="goToCustomerService">一键联系专业测评顾问</view>
                 </view>
                 <view class="empty-extra">
                     <view class="extra-title">发现更多测评</view>
                     <scroll-view class="empty-extra-scroll-view">
-                        <view class="empty-extra__search-tag">
-                            <view>
-                                <view class="title-wrapper search-tag__title-wrapper">
-                                    <text class="title">最新上架</text>
+                        <view class="empty-extra__search-tag" style="justify-content: {{tagSection.length <= 1 ? 'center' : 'space-between'}};">
+                            <block wx:for="{{tagSection}}" wx:for-item="tagSectionItem">
+                                <view style="width: 320rpx;">
+                                    <view class="title-wrapper search-tag__title-wrapper">
+                                        <text class="title">{{tagSectionItem.columnName}}</text>
+                                    </view>
+                                    <view class="search-tag new">
+                                        <block wx:for="{{util.slice(tagSectionItem.evaluations, 4)}}" wx:for-item="evaluationItem">
+                                            <view data-evaluation-id="{{evaluationItem.evaluationId}}" bind:tap="goToEvaluationDetail">{{evaluationItem.evaluationName}}</view>
+                                        </block>
+                                    </view>
                                 </view>
-                                <view class="search-tag new">
-                                    <view>销售管理岗特质测评</view>
-                                    <view>学习元认知测评</view>
-                                    <view>高潜核心素质测评</view>
-                                    <view>贝尔宾团队角色测评</view>
-                                </view>
-                            </view>
-                            <view>
-                                <view class="title-wrapper search-tag__title-wrapper">
-                                    <text class="title">最新上架</text>
-                                </view>
-                                <view class="search-tag hot">
-                                    <view>基层管理岗特质测评</view>
-                                    <view>职业心理风险测评</view>
-                                    <view>DISC行为风格测评</view>
-                                    <view>创业力测评</view>
-                                </view>
-                            </view>
+                            </block>
                         </view>
                     </scroll-view>
                     <view class="search__type-2">
@@ -86,13 +88,16 @@
                         </view>
                         <view class="search__type-2--content">
                             <view class="search__type-2--child">
-                                <view class="work">岗位特质类</view>
-                                <view class="ability">能力素质类</view>
+                                <block wx:for="{{typeSection}}" wx:for-item="typeSectionItem">
+                                    <view class="work" data-section-id="{{typeSectionItem.columnId}}" bind:tap="goToMore">{{typeSectionItem.columnName}}</view>
+                                </block>
+<!--                                <view class="work">岗位特质类</view>-->
+<!--                                <view class="ability">能力素质类</view>-->
                             </view>
-                            <view class="search__type-2--child">
-                                <view class="mine">心理特质类</view>
-                                <view class="knowledge">知识技能类</view>
-                            </view>
+<!--                            <view class="search__type-2&#45;&#45;child">-->
+<!--                                <view class="mine">心理特质类</view>-->
+<!--                                <view class="knowledge">知识技能类</view>-->
+<!--                            </view>-->
                         </view>
                     </view>
                 </view>
@@ -100,20 +105,17 @@
         </block>
         <block wx:else>
             <view class="search-result__is-fill">
-                <view class="contact">联系专业顾问帮我策划方案</view>
+                <view class="contact" bind:tap="goToCustomerService">联系专业顾问帮我策划方案</view>
                 <view class="content">
-                    <hola-card/>
-                    <hola-card/>
-                    <hola-card/>
-                    <hola-card/>
-                    <hola-card/>
-                    <hola-card/>
-                    <hola-card/>
-                    <hola-card/>
-                    <hola-card/>
-                    <hola-card/>
-                    <hola-card/>
-                    <hola-card/>
+                    <block wx:for="{{searchRes}}" wx:for-item="searchItem">
+                        <hola-card
+                                isRichTextModel="{{true}}"
+                                evaluationId="{{searchItem.evaluationId}}"
+                                title="{{searchItem.name}}"
+                                tip="{{searchItem.description}}"
+                                topic="{{searchItem.type}}"
+                                cover="{{searchItem.imgUrl}}" />
+                    </block>
                 </view>
             </view>
         </block>

@@ -644,7 +644,7 @@ Page({
         const umaConfig = umaEvent.submitAnswer;
         type = isSelf.toLowerCase() === 'self' ? 'self' : 'scan';
         // ToDo 测评名称
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], name: 0, env: getEnv(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], name: `${umaConfig.name}${'name'}`, env: getEnv(wx)});
         if(chapterId) {
             const p = new Promise((resolve, reject) => {
                 app.doAjax({

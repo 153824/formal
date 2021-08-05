@@ -68,6 +68,7 @@
                             data-is-empty="true"
                             class="contact"
                             style="width: 80%;"
+                            open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
                             bind:getphonenumber="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
                             bind:tap="{{isGetAccessToken ? 'goToCustomerService' : ''}}">
                         一键联系专业测评顾问

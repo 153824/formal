@@ -1,8 +1,7 @@
-// common/serving/serving.js
+import {getEnv, umaEvent} from "../../uma.config";
+
+const app = getApp();
 Component({
-    /**
-     * 组件的属性列表
-     */
     properties: {
         image: {
             type: String,
@@ -30,7 +29,9 @@ Component({
      * 组件的初始数据
      */
     data: {
-        showServing: false
+        showServing: false,
+        isGetAccessToken: app.checkAccessToken(),
+        authCodeCounter: 0
     },
 
     /**
@@ -47,6 +48,30 @@ Component({
             wx.navigateTo({
                 url: '/pages/customer-service/customer-service'
             })
-        }
+        },
+        getPhoneNumber(e) {
+            const that = this;
+            let {authCodeCounter} = this.data;
+            if(authCodeCounter > 5){
+                return;
+            }
+            app.getAccessToken(e).then(res=>{
+                that.setData({
+                    isGetAccessToken: true
+                });
+                that.goToCustomerService();
+                const umaConfig = umaEvent.authPhoneSuccess;
+                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.contact, env: getEnv(wx)});
+            }).catch(err=>{
+                if(err.code === '401111'){
+                    app.prueLogin().then(res=>{
+                        this.getPhoneNumber(e)
+                    });
+                    that.setData({
+                        authCodeCounter: authCodeCounter++
+                    })
+                }
+            })
+        },
     }
 });

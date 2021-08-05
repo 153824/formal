@@ -244,7 +244,7 @@ Page({
         })
     },
 
-    getPhoneNumber: function (e) {
+    getPhoneNumber(e) {
         const that = this;
         let {authCodeCounter} = this.data;
         if(authCodeCounter > 5){
@@ -258,6 +258,7 @@ Page({
             const umaConfig = umaEvent.authPhoneSuccess;
             wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.home, env: getEnv(wx)});
         }).catch(err=>{
+            console.log(err);
             if(err.code === '401111'){
                 app.prueLogin().then(res=>{
                     this.getPhoneNumber(e)

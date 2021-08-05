@@ -1,9 +1,15 @@
 /* common/serving/serving.wxss */
 .serving{
-    position: fixed;
-    bottom: 180rpx;
-    right: 50rpx;
-    z-index: 99;
+    position: fixed!important;
+    bottom: 180rpx!important;
+    right: 50rpx!important;
+    z-index: 99!important;
+    padding: unset!important;
+    margin: unset!important;
+    background: #00000000;
+}
+.serving:after{
+    content: unset!important;
 }
 .rectangle-serving{
     position: absolute;

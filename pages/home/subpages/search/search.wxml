@@ -11,7 +11,12 @@
     <van-sticky scroll-top="{{ scrollTop }}" offset-top="{{ offsetTop }}" bind:scroll="onSticky" z-index="99999">
         <view class="search-bar-wrapper {{isFixed ? 'is-padding' : ''}}">
             <view class="search-bar__input">
-                <input placeholder="搜索（测评、岗位、类型、场景…)" model:value="{{keyword}}" bind:focus="onKeywordFocus" bind:input="onKeywordInput"/>
+                <input placeholder="搜索（测评、岗位、类型、场景…)"
+                       model:value="{{keyword}}"
+                       bind:focus="onKeywordFocus"
+                       bind:input="onKeywordInput"
+                       auto-focus="{{true}}"
+                       bind:confirm="onKeywordConfirm"/>
                 <view wx:if="{{keyword}}" class="search-clear" bind:tap="clear">
                     <van-icon name="clear" color="#B4B4B4FF"/>
                 </view>
@@ -114,7 +119,10 @@
             </view>
         </block>
         <block wx:else>
-            <view class="search-result__is-fill">
+            <view class="loading-wrapper" wx:if="{{searchRes.length <= 0 && isConfirm}}">
+                <van-loading type="spinner" color="#1989fa" />
+            </view>
+            <view wx:elif="{{searchRes.length && !isConfirm}}" class="search-result__is-fill">
                 <view class="contact" bind:tap="goToCustomerService">联系专业顾问帮我策划方案</view>
                 <view class="content">
                     <block wx:for="{{searchRes}}" wx:for-item="searchItem">

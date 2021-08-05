@@ -243,3 +243,9 @@ page{
     justify-content: center;
     margin-top: 10rpx;
 }
+.loading-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100rpx;
+}

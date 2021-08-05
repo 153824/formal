@@ -34,7 +34,7 @@ Page({
             .exec();
     },
 
-    onSticky(e){
+    onSticky(e) {
         let {isFixed} = e.detail;
         this.setData({
             isFixed
@@ -53,14 +53,24 @@ Page({
         })
     },
 
-    onKeywordInput: debounce(function (e) {
+    onKeywordInput() {
+        this.setData({
+            page: 0,
+            isEmpty: false,
+            searchRes: [],
+            isConfirm: false
+        })
+    },
+
+    onKeywordConfirm: debounce(function (e) {
         const {value} = e.detail;
         this.setData({
-            keyword: e.detail.value,
             page: 0,
-            isEmpty: false
-        }, ()=>{
-            if(value) this.loadSearch()
+            isEmpty: false,
+            searchRes: [],
+            isConfirm: true
+        }, () => {
+            if (value) this.loadSearch()
         });
     }, 800, {trailing: true, leading: false}),
 
@@ -76,20 +86,30 @@ Page({
                 size
             },
             success(res) {
+                that.setData({
+                    isConfirm: false
+                })
                 const umaConfig = umaEvent.searchKeyword;
-                wx.uma.trackEvent(umaConfig.tag, {content: `${umaConfig.content}${keyword}`, count: `${umaConfig.count}${res.length}`, env: getEnv(wx), tag: getTag(wx)});
-                if(res.length === 0 && page === 0) {
+                wx.uma.trackEvent(umaConfig.tag, {
+                    content: `${umaConfig.content}${keyword}`,
+                    count: `${umaConfig.count}${res.length}`,
+                    env: getEnv(wx),
+                    tag: getTag(wx)
+                });
+                if (res.length === 0 && page === 0) {
                     that.setData({
                         isEmpty: true
                     })
                 }
-                if(res.length){
+                if (res.length) {
                     that.setData({
                         searchRes: [...searchRes, ...res],
                         page: page + 1
                     })
                 } else {
-                    app.toast('已为您加载所有相关内容')
+                    if(searchRes.length > 0){
+                        app.toast('已为您加载所有相关内容')
+                    }
                 }
             },
         });
@@ -110,7 +130,9 @@ Page({
     },
 
     cancel() {
-        this.clear();
+        wx.switchTab({
+            url: '/pages/home/home'
+        });
     },
 
     goToEvaluationDetail(e) {
@@ -123,7 +145,7 @@ Page({
         wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx), tag: getTag(wx)});
         {
             const isHot = sectionName === '热门测评';
-            if(isHot){
+            if (isHot) {
                 const umaConfig = umaEvent.searchGetInHotMore;
                 wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}`, env: getEnv(wx), tag: getTag(wx)});
             } else {
@@ -138,23 +160,31 @@ Page({
         wx.navigateTo({
             url: `/pages/home/subpages/section/section?sectionId=${sectionId}`
         })
-        if(sectionName){
+        if (sectionName) {
             const umaConfig = umaEvent.searchGetInTypeByHome;
-            wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}${sectionName}`, env: getEnv(wx), tag: getTag(wx)});
+            wx.uma.trackEvent(umaConfig.tag, {
+                name: `${umaConfig.name}${sectionName}`,
+                env: getEnv(wx),
+                tag: getTag(wx)
+            });
         } else {
-            if(moreType === '最新上架'){
+            if (moreType === '最新上架') {
                 const umaConfig = umaEvent.searchGetInShowcaseMore;
                 wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}最新上架`, env: getEnv(wx), tag: getTag(wx)});
             } else {
                 const umaConfig = umaEvent.searchGetInHotMore;
-                wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}${moreType}热门测评`, env: getEnv(wx), tag: getTag(wx)});
+                wx.uma.trackEvent(umaConfig.tag, {
+                    name: `${umaConfig.name}${moreType}热门测评`,
+                    env: getEnv(wx),
+                    tag: getTag(wx)
+                });
             }
         }
     },
 
     goToCustomerService(e) {
         const {isEmpty} = e.currentTarget.dataset;
-        if(isEmpty){
+        if (isEmpty) {
             const umaConfig = umaEvent.customerService;
             wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.search, env: getEnv(wx), tag: getTag(wx)});
         }
@@ -166,19 +196,19 @@ Page({
     getPhoneNumber(e) {
         const that = this;
         let {authCodeCounter} = this.data;
-        if(authCodeCounter > 5){
+        if (authCodeCounter > 5) {
             return;
         }
-        app.getAccessToken(e).then(res=>{
+        app.getAccessToken(e).then(res => {
             that.setData({
                 isGetAccessToken: true
             });
             that.goToCustomerService();
             const umaConfig = umaEvent.authPhoneSuccess;
             wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.search, env: getEnv(wx), tag: getTag(wx)});
-        }).catch(err=>{
-            if(err.code === '401111'){
-                app.prueLogin().then(res=>{
+        }).catch(err => {
+            if (err.code === '401111') {
+                app.prueLogin().then(res => {
                     this.getPhoneNumber(e)
                 });
                 that.setData({

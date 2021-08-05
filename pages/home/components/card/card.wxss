@@ -21,8 +21,13 @@
     font-weight: 400;
     color: #FFFFFF;
     line-height: 34rpx;
-    background: #FA6400;
     border-radius: 20rpx 0rpx 0rpx 20rpx;
+}
+.card .tag.hot{
+    background: #FA6400;
+}
+.card .tag.new{
+    background: #5AD8A6FF;
 }
 .cover-wrapper, .cover-wrapper > image{
     width: 140rpx;
@@ -81,5 +86,4 @@
     overflow:hidden;
     text-overflow:ellipsis;
     white-space: nowrap;
-    display:-webkit-box;
 }

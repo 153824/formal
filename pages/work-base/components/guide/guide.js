@@ -56,6 +56,9 @@ Page({
                     that.setData({
                         isSelf: res.data.type
                     });
+                    const type = res.data.type.toLowerCase() === 'self' ? 'self' : 'scan'
+                    const umaConfig = umaEvent.getInReplyGuide;
+                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx)});
                 }
             });
         }

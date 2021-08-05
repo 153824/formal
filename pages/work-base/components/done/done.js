@@ -1,5 +1,5 @@
 // test/finish.js
-import {getEnv, umaEvent} from "../../../../uma.config";
+import {getEnv, getTag, umaEvent} from "../../../../uma.config";
 
 var app = getApp();
 Page({
@@ -85,7 +85,7 @@ Page({
         wx.navigateTo({
             url: `/pages/report/report?receiveRecordId=${receiveRecordId}&isSelf=${isSelf}`
         });
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.self, name: `${umaConfig.name}${evaluationName}`, env: getEnv(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.self, name: `${umaConfig.name}${evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
     },
 
     _checkedReceiveInfo: function (receiveRecordId) {

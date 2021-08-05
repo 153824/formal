@@ -262,4 +262,8 @@ function getEnv(_wx,) {
     return text;
 }
 
-export {umaEvent, getEnv}
+function getTag(_wx) {
+    return wx.getStorageSync('traceData');
+}
+
+export {umaEvent, getEnv, getTag}

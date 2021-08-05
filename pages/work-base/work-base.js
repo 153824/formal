@@ -1,4 +1,4 @@
-import {getEnv, umaEvent} from "../../uma.config";
+import {getEnv, getTag, umaEvent} from "../../uma.config";
 
 /***********************************************************************************************************************
  * @NAME: WEID       /       @DATE: 2020/7/21      /       @DESC: 变量注释模板(新增变量务必添加)
@@ -397,7 +397,7 @@ Page({
                 wx.reLaunch({
                     url: '/pages/home/home'
                 });
-                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.bench, env: getEnv(wx)});
+                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.bench, env: getEnv(wx), tag: getTag(wx)});
             })
             .catch(err => {
                 if (err.code === '401111') {
@@ -478,7 +478,7 @@ Page({
             url: `../station/components/detail/detail?id=${evaluationId}`,
         })
         const umaConfig = umaEvent.evaluationDetail;
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.bench, env: getEnv(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.bench, env: getEnv(wx), tag: getTag(wx)});
     },
 
     goToReportMore: function (e) {
@@ -496,7 +496,7 @@ Page({
         wx.navigateTo({
             url: `../report/report?receiveRecordId=${receiveRecordId}`
         });
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.bench, name: `${umaConfig.name}${reportsList[index].evaluation}`, env: getEnv(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.bench, name: `${umaConfig.name}${reportsList[index].evaluation}`, env: getEnv(wx), tag: getTag(wx)});
     },
 
     setChildManager: function (e) {

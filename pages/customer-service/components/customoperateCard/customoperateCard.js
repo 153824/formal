@@ -1,4 +1,4 @@
-import {getEnv, umaEvent} from "../../../../uma.config";
+import {getEnv, getTag, umaEvent} from "../../../../uma.config";
 
 var plugin = requirePlugin("chatbot");
 Component({
@@ -30,10 +30,10 @@ Component({
       for (let i in umaConfig.route) {
         if(i === 'more'){
           const {type} = routeInfo.options;
-          wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx)});
+          wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx), tag: getTag(wx)});
         } else {
           if(umaConfig.route[i].includes(currentRoute)){
-            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[i], env: getEnv(wx)});
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[i], env: getEnv(wx), tag: getTag(wx)});
           }
         }
       }
@@ -71,10 +71,10 @@ Component({
       for (let i in umaConfig.route) {
         if(i === 'more'){
           const {type} = routeInfo.options;
-          wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx)});
+          wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx), tag: getTag(wx)});
         } else {
           if(umaConfig.route[i].includes(currentRoute)){
-            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[i], env: getEnv(wx)});
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[i], env: getEnv(wx), tag: getTag(wx)});
           }
         }
       }

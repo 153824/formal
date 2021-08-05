@@ -1,7 +1,7 @@
 import debounce from '../../utils/lodash/debounce';
 import * as echarts from '../../utils/ec-canvas/echarts';
 import {getAge} from "../../utils/utils";
-import {getEnv, umaEvent} from "../../uma.config";
+import {getEnv, getTag, umaEvent} from "../../uma.config";
 
 var app = getApp();
 var _this;
@@ -376,7 +376,7 @@ Page({
             const {scene} = wx.getLaunchOptionsSync();
             const umaConfig = umaEvent.getInReport;
             if (umaConfig.scene.includes(scene)) {
-                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.card, name: `${umaConfig.name}${evaluationName}`, scene, env: getEnv(wx)});
+                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.card, name: `${umaConfig.name}${evaluationName}`, scene, env: getEnv(wx), tag: getTag(wx)});
             }
         });
         this.setData({id});

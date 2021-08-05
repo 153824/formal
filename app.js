@@ -1,4 +1,5 @@
-import {getEnv, umaEvent} from "./uma.config";
+import {getEnv, getTag, umaEvent} from "./uma.config";
+import {scenceMap} from "./user.tag.config";
 
 /***********************************************************************************************************************
  * @NAME: WEID       /       @DATE: 2020/7/21      /       @DESC: 变量注释模板(新增变量务必添加)
@@ -349,10 +350,10 @@ App({
             .then(res => {
                 if(res.isAdmin){
                     const umaConfig = umaEvent.qyAdmainOpen;
-                    wx.uma.trackEvent(umaConfig.tag, {name: umaConfig.name, env: getEnv(wx)});
+                    wx.uma.trackEvent(umaConfig.tag, {name: umaConfig.name, env: getEnv(wx), tag: getTag(wx)});
                 } else {
                     const umaConfig = umaEvent.qyMemberOpen;
-                    wx.uma.trackEvent(umaConfig.tag, {name: umaConfig.name, env: getEnv(wx)});
+                    wx.uma.trackEvent(umaConfig.tag, {name: umaConfig.name, env: getEnv(wx), tag: getTag(wx)});
                 }
                 if (that.checkUserInfo) {
                     res.isWxWork = true;
@@ -918,6 +919,29 @@ App({
             });
     },
 
+    updateUserTag(authCode) {
+        let scence = '';
+        const {route} = getCurrentPages()[0];
+        for (let i in scenceMap) {
+            if(scenceMap[i].route === route) {
+                scence = scenceMap[i].name;
+            }
+        }
+        this.doAjax({
+            url: 'wework/auth/trace_data',
+            method: 'POST',
+            data: {
+                authCode,
+                properties: {
+                    scence,
+                }
+            },
+            success() {
+                wx.setStorageSync('traceData', scence)
+            }
+        })
+    },
+
     getPrueAuthCode(code) {
         const that = this;
         const type = this.wxWorkInfo.isWxWork ? 'WEWORK' : 'WECHAT';
@@ -935,6 +959,11 @@ App({
                     wx.setStorageSync('isNew', res.isNew);
                     console.log(res);
                     wx.uma.setOpenid(res.openId);
+                    if(!res.traceData || res.traceData.openIdFirstAccess || Object.keys(res.traceData.properties).length <= 0){
+                        that.updateUserTag(res.authCode);
+                    } else {
+                        wx.setStorageSync('traceData', res.traceData.properties.scence)
+                    }
                     // 配置智能对话平台插件
                     // plugin.init({
                     //     appid: (() => {

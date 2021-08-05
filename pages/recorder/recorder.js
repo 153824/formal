@@ -1,5 +1,5 @@
 import throttle from "../../utils/lodash/throttle";
-import {getEnv, umaEvent} from "../../uma.config";
+import {getEnv, getTag, umaEvent} from "../../uma.config";
 
 const app = getApp();
 Page({
@@ -279,7 +279,7 @@ Page({
         app.updateUserInfo(e).then(res=>{
             this.submit();
             const umaConfig = umaEvent.authUserInfoSuccess;
-            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.record, env: getEnv(wx)});
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.record, env: getEnv(wx), tag: getTag(wx)});
         }).catch(err=>{
             console.error(err)
         })

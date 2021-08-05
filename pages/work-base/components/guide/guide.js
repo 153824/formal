@@ -1,5 +1,5 @@
 // test/guide.js
-import {getEnv, umaEvent} from "../../../../uma.config";
+import {getEnv, getTag, umaEvent} from "../../../../uma.config";
 
 const app = getApp();
 var isHasApplyFor = false;
@@ -58,7 +58,7 @@ Page({
                     });
                     const type = res.data.type.toLowerCase() === 'self' ? 'self' : 'scan'
                     const umaConfig = umaEvent.getInReplyGuide;
-                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx)});
+                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx), tag: getTag(wx)});
                 }
             });
         }
@@ -169,7 +169,7 @@ Page({
         if(this.data.isSelf.toLowerCase() === 'self'){
             targetType = 'self'
         }
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[targetType], name: `${umaConfig.name}${evaluationName}`, env: getEnv(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[targetType], name: `${umaConfig.name}${evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
         return p;
     },
 
@@ -320,7 +320,7 @@ Page({
             })
             type = 'self';
         }
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], name: `${umaConfig.name}${demonstrateInfo.evaluationName}`, env: getEnv(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], name: `${umaConfig.name}${demonstrateInfo.evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
     },
 
     getProgramSetting(releaseRecordId) {

@@ -1,4 +1,4 @@
-import {umaEvent, getEnv} from "../../../../uma.config";
+import {umaEvent, getEnv, getTag} from "../../../../uma.config";
 
 Component({
     properties: {
@@ -24,7 +24,7 @@ Component({
             });
             if(location){
                 const umaConfig = umaEvent.evaluationDetail;
-                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[location], env: getEnv(wx)});
+                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[location], env: getEnv(wx), tag: getTag(wx)});
             }
         }
     }

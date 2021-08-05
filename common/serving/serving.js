@@ -1,4 +1,4 @@
-import {getEnv, umaEvent} from "../../uma.config";
+import {getEnv, getTag, umaEvent} from "../../uma.config";
 
 const app = getApp();
 Component({
@@ -61,7 +61,7 @@ Component({
                 });
                 that.goToCustomerService();
                 const umaConfig = umaEvent.authPhoneSuccess;
-                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.contact, env: getEnv(wx)});
+                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.contact, env: getEnv(wx), tag: getTag(wx)});
             }).catch(err=>{
                 if(err.code === '401111'){
                     app.prueLogin().then(res=>{

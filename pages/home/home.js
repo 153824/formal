@@ -1,4 +1,4 @@
-import {getEnv, umaEvent} from "../../uma.config.js";
+import {getEnv, getTag, umaEvent} from "../../uma.config.js";
 const app = getApp();
 Page({
     data: {
@@ -125,7 +125,7 @@ Page({
             this.loadBanner();
         }
         const umaConfig = umaEvent.launchHome;
-        wx.uma.trackEvent(umaConfig.tag, {env: getEnv(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {env: getEnv(wx), tag: getTag(wx)});
     },
 
     goToMore(e) {
@@ -146,7 +146,7 @@ Page({
                 break;
         }
         const umaConfig = umaEvent.getInNavigationByHome;
-        wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}${name}`, env: getEnv(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}${name}`, env: getEnv(wx), tag: getTag(wx)});
     },
 
     goToSearch() {
@@ -154,7 +154,7 @@ Page({
             url: '/pages/home/subpages/search/search'
         })
         const umaConfig = umaEvent.getInSearchByHome;
-        wx.uma.trackEvent(umaConfig.tag, {name: umaConfig.name, env: getEnv(wx)})
+        wx.uma.trackEvent(umaConfig.tag, {name: umaConfig.name, env: getEnv(wx), tag: getTag(wx)})
     },
 
     goToWhere(e) {
@@ -168,7 +168,7 @@ Page({
             })
         }
         const umaConfig = umaEvent.getInBannerByHome;
-        wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}${index}`, env: getEnv(wx)})
+        wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}${index}`, env: getEnv(wx), tag: getTag(wx)})
     },
 
     goToWebView(url) {
@@ -180,7 +180,7 @@ Page({
 
     goToCustomerService() {
         const umaConfig = umaEvent['customerService'];
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.home, env: getEnv(wx)})
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.home, env: getEnv(wx), tag: getTag(wx)})
         wx.navigateTo({
             url: '/pages/customer-service/customer-service',
         });
@@ -258,7 +258,7 @@ Page({
             });
             that.goToCustomerService();
             const umaConfig = umaEvent.authPhoneSuccess;
-            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.home, env: getEnv(wx)});
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.home, env: getEnv(wx), tag: getTag(wx)});
         }).catch(err=>{
             console.log(err);
             if(err.code === '401111'){

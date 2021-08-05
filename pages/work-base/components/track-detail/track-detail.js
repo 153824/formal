@@ -1,5 +1,5 @@
 // manager/useHistoryDetail.js
-import {getEnv, umaEvent} from "../../../../uma.config";
+import {getEnv, getTag, umaEvent} from "../../../../uma.config";
 
 const app = getApp();
 Page({
@@ -309,7 +309,7 @@ Page({
             url: `../../../report/report?receiveRecordId=${id}`
         })
         const umaConfig = umaEvent.getInReport;
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.record, name: `${umaConfig.name}${evaluationName}`, env: getEnv(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.record, name: `${umaConfig.name}${evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
     },
 
     /**

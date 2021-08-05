@@ -1,4 +1,4 @@
-import {getEnv, umaEvent} from "../../../../uma.config";
+import {getEnv, getTag, umaEvent} from "../../../../uma.config";
 
 const app = getApp()
 Page({
@@ -68,7 +68,7 @@ Page({
         const {type} = this.data;
         this.goToCustomerService();
         const umaConfig = umaEvent.customerService;
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx), tag: getTag(wx)});
     },
     goToCustomerService() {
         wx.navigateTo({

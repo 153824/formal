@@ -1,4 +1,4 @@
-import {getEnv, umaEvent} from "../../uma.config";
+import {getEnv, getTag, umaEvent} from "../../uma.config";
 
 const app = getApp();
 Page({
@@ -75,7 +75,7 @@ Page({
     getUserInfo: function(e) {
         app.updateUserInfo(e).then(res=>{
             const umaConfig = umaEvent.authUserInfoSuccess;
-            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.mine, env: getEnv(wx)});
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.mine, env: getEnv(wx), tag: getTag(wx)});
             return this.getUserInformation()
         }).then(res=>{
             if(res.avatar){
@@ -99,7 +99,7 @@ Page({
             success: (res) => {
                 app.updateUserInfo(res).then(res=>{
                     const umaConfig = umaEvent.authUserInfoSuccess;
-                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.mine, env: getEnv(wx)});
+                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.mine, env: getEnv(wx), tag: getTag(wx)});
                     return that.getUserInformation()
                 }).then(res=>{
                     if(res.avatar){
@@ -126,7 +126,7 @@ Page({
     },
     goToServing: function () {
         const umaConfig = umaEvent.customerService;
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.mine, env: getEnv(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.mine, env: getEnv(wx), tag: getTag(wx)});
         wx.navigateTo({
             url: '/pages/customer-service/customer-service'
         })

@@ -127,16 +127,16 @@ Page({
         switch (type) {
             case 'brain':
                 name = '人才盘点';
-                break
+                break;
             case 'school':
                 name = '校招选才';
-                break
+                break;
             case 'social':
                 name = '社招选才';
-                break
+                break;
         }
         const umaConfig = umaEvent.getInNavigationByHome;
-        wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}${name}`, env: getEnv(wx)})
+        wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}${name}`, env: getEnv(wx)});
     },
 
     goToSearch() {

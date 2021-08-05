@@ -113,19 +113,41 @@ Page({
 
     goToEvaluationDetail(e) {
         const umaConfig = umaEvent.evaluationDetail;
-        const {evaluationId, sectionName} = e.currentTarget.dataset;
+        const {evaluationId, sectionName, evaluationName} = e.currentTarget.dataset;
         const type = sectionName === '最新上架' ? 'showcase' : 'hot';
         wx.navigateTo({
             url: `/pages/station/components/detail/detail?id=${evaluationId}`
         });
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx)})
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx)});
+        {
+            const isHot = sectionName === '热门测评';
+            if(isHot){
+                const umaConfig = umaEvent.searchGetInHotMore;
+                wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}`, env: getEnv(wx)});
+            } else {
+                const umaConfig = umaEvent.searchGetInShowcaseMore;
+                wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}`, env: getEnv(wx)});
+            }
+        }
     },
 
     goToMore(e) {
-        const {sectionId} = e.currentTarget.dataset;
+        const {sectionId, sectionName, moreType} = e.currentTarget.dataset;
         wx.navigateTo({
             url: `/pages/home/subpages/section/section?sectionId=${sectionId}`
         })
+        if(sectionName){
+            const umaConfig = umaEvent.searchGetInTypeByHome;
+            wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}${sectionName}`, env: getEnv(wx)});
+        } else {
+            if(moreType === '最新上架'){
+                const umaConfig = umaEvent.searchGetInShowcaseMore;
+                wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}最新上架`, env: getEnv(wx)});
+            } else {
+                const umaConfig = umaEvent.searchGetInHotMore;
+                wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}${moreType}热门测评`, env: getEnv(wx)});
+            }
+        }
     },
 
     goToCustomerService(e) {

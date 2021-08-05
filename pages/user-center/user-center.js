@@ -74,6 +74,8 @@ Page({
     },
     getUserInfo: function(e) {
         app.updateUserInfo(e).then(res=>{
+            const umaConfig = umaEvent.authUserInfoSuccess;
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.mine, env: getEnv(wx)});
             return this.getUserInformation()
         }).then(res=>{
             if(res.avatar){
@@ -96,6 +98,8 @@ Page({
             desc: "获取用户信息",
             success: (res) => {
                 app.updateUserInfo(res).then(res=>{
+                    const umaConfig = umaEvent.authUserInfoSuccess;
+                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.mine, env: getEnv(wx)});
                     return that.getUserInformation()
                 }).then(res=>{
                     if(res.avatar){

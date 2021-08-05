@@ -215,6 +215,8 @@ Page({
         if(profileType === 'getUserInfo'){
             app.updateUserInfo(e)
                 .then(res=>{
+                    const umaConfig = umaEvent.authUserInfoSuccess;
+                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.submit, env: getEnv(wx)});
                     that.save()
                 })
         } else {
@@ -222,6 +224,8 @@ Page({
                 desc: "获取用户信息",
                 success: (res) => {
                     app.updateUserInfo(res).then(res=>{
+                        const umaConfig = umaEvent.authUserInfoSuccess;
+                        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.submit, env: getEnv(wx)});
                         that.save()
                     })
                 },

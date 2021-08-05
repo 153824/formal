@@ -143,6 +143,8 @@ Page({
                 url: `/pages/station/components/detail/detail?id=${bannerRes[index].id}`
             })
         }
+        const umaConfig = umaEvent.getInBannerByHome;
+        wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}${index}`, env: getEnv(wx)})
     },
 
     goToWebView(url) {

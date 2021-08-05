@@ -429,28 +429,6 @@ Page({
         });
     },
 
-    getNewlyReportNums: function (e) {
-        const that = this;
-        app.doAjax({
-            url: 'reports/today_newly',
-            method: 'get',
-            success: function (res) {
-                that.setData({
-                    newlyNums: res
-                })
-            }
-        })
-    },
-    /**
-     * 进入测评模拟测试
-     */
-    toTestIt: function (e) {
-        app.isTest = true;
-        wx.navigateTo({
-            url: './components/guide/guide'
-        });
-    },
-
     goToTrackMore: function (e) {
         wx.navigateTo({
             url: "./components/track-more/track-more"
@@ -510,10 +488,15 @@ Page({
     },
 
     goToReportDetail: function (e) {
+        const {reportsList} = this.data;
+        const umaConfig = umaEvent.getInReport;
         const receiveRecordId = e.currentTarget.dataset.id;
+        const {index} = e.currentTarget.dataset;
+        console.log(reportsList);
         wx.navigateTo({
             url: `../report/report?receiveRecordId=${receiveRecordId}`
-        })
+        });
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.bench, name: `${umaConfig.name}${reportsList[index].evaluation}`, env: getEnv(wx)});
     },
 
     setChildManager: function (e) {

@@ -59,8 +59,8 @@
                     </view>
                     <text wx:if="{{reportsListCount > 3}}" class="more" bindtap="goToReportMore">更多...</text>
                 </view>
-                <view class="program-body the-last-report" wx:for="{{ reportsList }}" wx:for-item="reportItem"
-                      wx:key="unique" data-id="{{reportItem.receiveRecordId}}" bindtap="goToReportDetail">
+                <view class="program-body the-last-report" wx:for="{{ reportsList }}" wx:for-item="reportItem" wx:for-index="reportIndex"
+                      wx:key="unique" data-index="{{reportIndex}}" data-id="{{reportItem.receiveRecordId}}" bindtap="goToReportDetail">
                     <view class="report-created-time">
                         <text>{{util.getMonthAndDayByFrag(reportItem.reportGeneratedAt,"/",true)}}</text><text>{{util.getHourAndMinByFrag(reportItem.reportGeneratedAt,":",true)}}</text>
                     </view>
@@ -187,7 +187,7 @@
                 </view>
                 <view class="program-body the-last-report" wx:if="{{reportsList.length}}" wx:for="{{ reportsList }}"
                       wx:for-item="reportItem"
-                      wx:key="unique" data-id="{{reportItem.receiveRecordId}}" bindtap="goToReportDetail"
+                      wx:key="unique" wx:for-index="reportIndex" data-index="{{reportIndex}}" data-id="{{reportItem.receiveRecordId}}" bindtap="goToReportDetail"
                 >
                     <view class="report-created-time">
                         <text>{{util.getMonthAndDayByFrag(reportItem.reportGeneratedAt,"/",true)}}</text><text>{{util.getHourAndMinByFrag(reportItem.reportGeneratedAt,":",true)}}</text>
@@ -344,7 +344,7 @@
                         <text wx:if="{{reportsListCount > 3}}" class="more" bindtap="goToReportMore">更多...</text>
                     </view>
                     <view class="program-body the-last-report" wx:for="{{ reportsList }}" wx:for-item="reportItem"
-                          wx:key="unique" data-id="{{reportItem.receiveRecordId}}" bindtap="goToReportDetail">
+                          wx:key="unique" wx:for-index="reportIndex" data-index="{{reportIndex}}" data-id="{{reportItem.receiveRecordId}}" bindtap="goToReportDetail">
                         <view class="report-created-time">
                             <text>{{util.getMonthAndDayByFrag(reportItem.reportGeneratedAt,"/",true)}}</text>
                             <text>{{util.getHourAndMinByFrag(reportItem.reportGeneratedAt,":",true)}}</text>

@@ -31,7 +31,7 @@ Page({
         const {scene} = wx.getLaunchOptionsSync();
         const umaConfig = umaEvent.evaluationDetail;
         if (umaConfig.scene.includes(scene)) {
-            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.card, env: getEnv(wx)});
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.card, scene, env: getEnv(wx)});
         }
         this.setData({evaluationId: options.id});
     },

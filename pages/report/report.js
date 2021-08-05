@@ -1,6 +1,7 @@
 import debounce from '../../utils/lodash/debounce';
 import * as echarts from '../../utils/ec-canvas/echarts';
 import {getAge} from "../../utils/utils";
+import {getEnv, umaEvent} from "../../uma.config";
 
 var app = getApp();
 var _this;
@@ -354,7 +355,8 @@ Page({
         filterEvaluationId: ['5efdab04c4d9660006a48f4f'],
         canIUnfold: true,
         maxHeight: 0,
-        seeItActive: true
+        seeItActive: true,
+        scene: ""
     },
     properties: {
 		commond: {            // 额外节点
@@ -362,19 +364,22 @@ Page({
 			value: ''
         }
     },
-    onLoad: function (options = {isSelf: ""}) {
+    onLoad: function (options) {
         const that = this;
         ctx = wx.createCanvasContext('canvasArcCir');
         const id = that.data.id || options.receiveRecordId || options.receivedRecordId;
-        if(options.isSelf){
+        app.checkOfferType(id).then(res=>{
+            const {type, evaluationName} = res;
             this.setData({
-                isSelf: options.isSelf
+                isSelf: type
             });
-        }
-        this.setData({
-            id,
-            options
+            const {scene} = wx.getLaunchOptionsSync();
+            const umaConfig = umaEvent.getInReport;
+            if (umaConfig.scene.includes(scene)) {
+                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.card, name: `${umaConfig.name}${evaluationName}`, scene, env: getEnv(wx)});
+            }
         });
+        this.setData({id});
     },
 
     onShow: function () {
@@ -874,9 +879,7 @@ Page({
         ctx.stroke();
         ctx.draw();
     },
-    /**
-     * 进入分享报告页面
-     */
+
     toShareReport: function () {
         const that = this;
         const {participant, shareInfo, paper, report,smallImg} = this.data;

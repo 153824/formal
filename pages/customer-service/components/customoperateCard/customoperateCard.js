@@ -1,3 +1,5 @@
+import {getEnv, umaEvent} from "../../../../uma.config";
+
 var plugin = requirePlugin("chatbot");
 Component({
   properties: {
@@ -22,6 +24,19 @@ Component({
       }
     },
     attached:function () {
+      const umaConfig = umaEvent.sendCustomerServiceMessage;
+      const routeInfo = getCurrentPages()[getCurrentPages().length - 2]
+      const currentRoute = routeInfo.route;
+      for (let i in umaConfig.route) {
+        if(i === 'more'){
+          const {type} = routeInfo.options;
+          wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx)});
+        } else {
+          if(umaConfig.route[i].includes(currentRoute)){
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[i], env: getEnv(wx)});
+          }
+        }
+      }
     }
   },
   methods: {
@@ -50,6 +65,19 @@ Component({
       that.setData({
         inputText: ''
       })
+      const umaConfig = umaEvent.sendCustomerServiceMessage;
+      const routeInfo = getCurrentPages()[getCurrentPages().length - 2]
+      const currentRoute = routeInfo.route;
+      for (let i in umaConfig.route) {
+        if(i === 'more'){
+          const {type} = routeInfo.options;
+          wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx)});
+        } else {
+          if(umaConfig.route[i].includes(currentRoute)){
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[i], env: getEnv(wx)});
+          }
+        }
+      }
     },
     // 返回首页
     showGuideView: function() {

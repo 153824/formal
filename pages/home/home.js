@@ -124,6 +124,8 @@ Page({
             this.loadSection();
             this.loadBanner();
         }
+        const umaConfig = umaEvent.launchHome;
+        wx.uma.trackEvent(umaConfig.tag, {env: getEnv(wx)});
     },
 
     goToMore(e) {

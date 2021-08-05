@@ -15,7 +15,7 @@
         {
           "name": "首页",
           "pathName": "pages/home/home",
-          "query": "q=https://api.luoke101.com/s/5f6af8a433c1241d23572834",
+          "query": "_ttn=610ba4a53451547e683c7554",
           "scene": null
         },
         {
@@ -226,6 +226,13 @@
         {
           "name": "首页搜索",
           "pathName": "pages/home/subpages/search/search",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "客户服务",
+          "pathName": "pages/customer-service/customer-service",
+          "query": "_ttn=610b9fef063bed4d8c0b4b15",
           "scene": null
         }
       ]

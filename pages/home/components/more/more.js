@@ -65,14 +65,14 @@ Page({
         })
     },
     goToWebView: function (e) {
-        const {general, url, type} = this.data;
-        const targetURL = e.currentTarget.dataset.url;
-        const isGeneral = targetURL === general ? true : false;
-        wx.setStorageSync("webView_Url", targetURL);
-        wx.navigateTo({
-            url: '/common/webView',
-        });
+        const {type} = this.data;
+        this.goToCustomerService();
         const umaConfig = umaEvent.customerService;
         wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx)});
     },
+    goToCustomerService() {
+        wx.navigateTo({
+            url: '/pages/customer-service/customer-service',
+        });
+    }
 });

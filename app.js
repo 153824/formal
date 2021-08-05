@@ -1,3 +1,5 @@
+import {getEnv, umaEvent} from "./uma.config";
+
 /***********************************************************************************************************************
  * @NAME: WEID       /       @DATE: 2020/7/21      /       @DESC: 变量注释模板(新增变量务必添加)
  * qiniuUpload: 七牛云
@@ -103,6 +105,7 @@ App({
         // 使用openid进行统计时，是否授权友盟自动获取Openid，
         // 如若需要，请到友盟后台"设置管理-应用信息"(https://mp.umeng.com/setting/appset)中设置appId及secret
         autoGetOpenid: true,
+        enableVerify: true,
         debug: false, //是否打开调试模式
         uploadUserInfo: true // 自动上传用户信息，设为false取消上传，默认为false
     },
@@ -344,6 +347,13 @@ App({
                 return Promise.resolve(targetRes);
             })
             .then(res => {
+                if(res.isAdmin){
+                    const umaConfig = umaEvent.qyAdmainOpen;
+                    wx.uma.trackEvent(umaConfig.tag, {name: umaConfig.name, env: getEnv(wx)});
+                } else {
+                    const umaConfig = umaEvent.qyMemberOpen;
+                    wx.uma.trackEvent(umaConfig.tag, {name: umaConfig.name, env: getEnv(wx)});
+                }
                 if (that.checkUserInfo) {
                     res.isWxWork = true;
                     res.is3rd = that.wx3rdInfo.is3rd;
@@ -351,6 +361,25 @@ App({
                     that.checkUserInfo(res);
                 }
             });
+    },
+
+    checkOfferType(receiveRecordId) {
+        const p = new Promise((resolve, reject) => {
+            this.doAjax({
+                url: 'reports/check_type',
+                method: 'get',
+                data: {
+                    receiveRecordId
+                },
+                success(res) {
+                    resolve(res.data)
+                },
+                error(err) {
+                    reject(err)
+                }
+            })
+        });
+        return p;
     },
 
     /**

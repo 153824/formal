@@ -97,6 +97,8 @@ Page({
                     url: answeringURL
                 });
             })
+        const umaConfig = umaEvent.clickSelfOffer;
+        wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}${evaluation.name}`, env: getEnv(wx)});
     },
 
     addcount() {
@@ -174,9 +176,9 @@ Page({
 
     goToDaTi() {
         //发放测评
-        const that = this;
         const {evaluation, customNorms, availableVoucher, availableInventory} = this.data;
-        console.log(availableVoucher, availableInventory);
+        const umaConfig = umaEvent.clickShareOffer;
+        wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}${evaluation.name}`, env: getEnv(wx)});
         if (availableVoucher <= 0 && availableInventory <= 0) {
             app.toast("测评可用数量不足，请先购买测评");
             return;

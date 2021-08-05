@@ -119,10 +119,24 @@ Page({
     },
 
     goToMore(e) {
+        let name = "";
         const {type} = e.target.dataset;
         wx.navigateTo({
             url: `/pages/home/components/more/more?type=${type}`
         });
+        switch (type) {
+            case 'brain':
+                name = '人才盘点';
+                break
+            case 'school':
+                name = '校招选才';
+                break
+            case 'social':
+                name = '社招选才';
+                break
+        }
+        const umaConfig = umaEvent.getInNavigationByHome;
+        wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}${name}`, env: getEnv(wx)})
     },
 
     goToSearch() {

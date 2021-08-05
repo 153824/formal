@@ -129,6 +129,8 @@ Page({
         wx.navigateTo({
             url: '/pages/home/subpages/search/search'
         })
+        const umaConfig = umaEvent.getInSearchByHome;
+        wx.uma.trackEvent(umaConfig.tag, {name: umaConfig.name, env: getEnv(wx)})
     },
 
     goToWhere(e) {

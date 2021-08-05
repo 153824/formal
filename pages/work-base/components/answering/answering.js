@@ -31,7 +31,8 @@ Page({
         chapterId:'',
         isGetUserInfo: false,
         canIUseGetUserProfile: !!wx.getUserProfile,
-        profileType: ''
+        profileType: '',
+        evaluationName: ''
     },
 
     onLoad: function (options) {
@@ -274,7 +275,8 @@ Page({
             },
             success: function (res) {
                 that.setData({
-                    isSelf: res.data.type
+                    isSelf: res.data.type,
+                    evaluationName: res.data.evaluationName
                 });
             }
         });
@@ -644,11 +646,10 @@ Page({
 
     save(automatic=false) {
         let type = 'scan'
-        const {answerSheet, receiveRecordId, chapterId, isSelf} = this.data;
+        const {answerSheet, receiveRecordId, chapterId, isSelf, evaluationName} = this.data;
         const umaConfig = umaEvent.submitAnswer;
         type = isSelf.toLowerCase() === 'self' ? 'self' : 'scan';
-        // ToDo 测评名称
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], name: `${umaConfig.name}${'name'}`, env: getEnv(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], name: `${umaConfig.name}${evaluationName}`, env: getEnv(wx)});
         if(chapterId) {
             const p = new Promise((resolve, reject) => {
                 app.doAjax({

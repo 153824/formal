@@ -151,17 +151,19 @@ page{
     padding-top: 50rpx;
 }
 .contact{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 80rpx;
-    background: #353EE8;
-    border-radius: 20rpx;
-    font-size: 28rpx;
-    font-family: PingFangSC-Semibold, PingFang SC;
-    font-weight: 600;
-    color: #FFFFFF;
-    line-height: 40rpx;
+    display: flex!important;
+    align-items: center!important;
+    justify-content: center!important;
+    height: 80rpx!important;
+    background: #353EE8!important;
+    border-radius: 20rpx!important;
+    font-size: 28rpx!important;
+    font-family: PingFangSC-Semibold, PingFang SC!important;
+    font-weight: 600!important;
+    color: #FFFFFF!important;
+    line-height: 40rpx!important;
+    padding: unset!important;
+    margin: unset!important;
 }
 .search-result__is-fill .content{
     padding-top: 50rpx;

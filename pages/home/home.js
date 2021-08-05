@@ -24,7 +24,9 @@ Page({
             title: '',
             evaluations: []
         },
-        bannerRes: []
+        bannerRes: [],
+        isGetAccessToken: app.checkAccessToken(),
+        authCodeCounter: 0
     },
 
     onLoad: function () {
@@ -84,6 +86,9 @@ Page({
                 is3rd,
                 isWxWorkSuperAdmin
             })
+            this.setData({
+                isGetAccessToken: true
+            })
         } else {
             app.checkUserInfo=(res)=>{
                 this.check({
@@ -91,6 +96,9 @@ Page({
                     isWxWorkAdmin: res.isAdmin,
                     is3rd: res.is3rd,
                     isWxWorkSuperAdmin: res.isSuperAdmin
+                })
+                this.setData({
+                    isGetAccessToken: res.tokenInfo && res.tokenInfo.accessToken
                 })
             };
         }
@@ -234,5 +242,30 @@ Page({
 
             }
         })
-    }
+    },
+
+    getPhoneNumber: function (e) {
+        const that = this;
+        let {authCodeCounter} = this.data;
+        if(authCodeCounter > 5){
+            return;
+        }
+        app.getAccessToken(e).then(res=>{
+            that.setData({
+                isGetAccessToken: true
+            });
+            that.goToCustomerService();
+            const umaConfig = umaEvent.authPhoneSuccess;
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.home, env: getEnv(wx)});
+        }).catch(err=>{
+            if(err.code === '401111'){
+                app.prueLogin().then(res=>{
+                    this.getPhoneNumber(e)
+                });
+                that.setData({
+                    authCodeCounter: authCodeCounter++
+                })
+            }
+        })
+    },
 });

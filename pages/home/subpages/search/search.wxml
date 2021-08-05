@@ -64,7 +64,14 @@
                         <view>暂无{{keyword}}相关的测评</view>
                         <view>您可以联系顾问进行测评定制</view>
                     </view>
-                    <view data-is-empty="true" class="contact" style="width: 80%;" bind:tap="goToCustomerService">一键联系专业测评顾问</view>
+                    <button
+                            data-is-empty="true"
+                            class="contact"
+                            style="width: 80%;"
+                            bind:getphonenumber="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
+                            bind:tap="{{isGetAccessToken ? 'goToCustomerService' : ''}}">
+                        一键联系专业测评顾问
+                    </button>
                 </view>
                 <view class="empty-extra">
                     <view class="extra-title">发现更多测评</view>

@@ -47,10 +47,10 @@
                     <text>搜索（测评/岗位/类型/场景…)</text>
                     <van-icon name="search" size="20px"/>
                 </view>
-                <view class="home-contact" bind:tap="goToCustomerService">
+                <button class="home-contact" bind:getphonenumber="{{isGetAccessToken ? '' : 'getPhoneNumber'}}" bind:tap="{{isGetAccessToken ? 'goToCustomerService' : ''}}" open-type="getPhoneNumber">
                     <van-icon name="https://s.luoke101.com/ma/image/contact.png" size="16px"/>
                     <text>在线咨询</text>
-                </view>
+                </button>
             </view>
         </van-sticky>
         <view class="home-item__4">

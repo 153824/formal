@@ -13,7 +13,9 @@ Page({
         typeSection: [],
         searchRes: [],
         page: 0,
-        size: 10
+        size: 10,
+        isGetAccessToken: app.checkAccessToken(),
+        authCodeCounter: 0
     },
 
     onLoad: function (options) {
@@ -161,4 +163,28 @@ Page({
         })
     },
 
+    getPhoneNumber(e) {
+        const that = this;
+        let {authCodeCounter} = this.data;
+        if(authCodeCounter > 5){
+            return;
+        }
+        app.getAccessToken(e).then(res=>{
+            that.setData({
+                isGetAccessToken: true
+            });
+            that.goToCustomerService();
+            const umaConfig = umaEvent.authPhoneSuccess;
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.search, env: getEnv(wx)});
+        }).catch(err=>{
+            if(err.code === '401111'){
+                app.prueLogin().then(res=>{
+                    this.getPhoneNumber(e)
+                });
+                that.setData({
+                    authCodeCounter: authCodeCounter++
+                })
+            }
+        })
+    },
 });

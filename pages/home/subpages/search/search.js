@@ -15,7 +15,8 @@ Page({
         page: 0,
         size: 10,
         isGetAccessToken: app.checkAccessToken(),
-        authCodeCounter: 0
+        authCodeCounter: 0,
+        backgroundImageClass: ['work', 'ability', 'mine', 'knowledge']
     },
 
     onLoad: function (options) {

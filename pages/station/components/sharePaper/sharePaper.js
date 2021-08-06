@@ -265,9 +265,9 @@ Page({
         const currentRoute = getCurrentPages()[getCurrentPages().length - 2].route;
 
         if(umaConfig.route.bench.includes(currentRoute)){
-            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.bench, name: `${umaConfig.name}${evaluationName}`, env: getEnv(wx), tag: getTag(wx)})
+            wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin.bench, "测评名称": `${evaluationName}`, "环境": getEnv(wx), "用户场景": getTag(wx)})
         } else {
-            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.detail, name: `${umaConfig.name}${evaluationName}`, env: getEnv(wx), tag: getTag(wx)})
+            wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin.detail, "测评名称": `${evaluationName}`, "环境": getEnv(wx), "用户场景": getTag(wx)})
         }
     },
     /**

@@ -1,7 +1,4 @@
-const role = {
-    reply: '答题用户',
-    travel: '非答题用户'
-}
+import {scenceMap} from "./user.tag.config";
 
 const umaEvent = {
     // 访问首页
@@ -38,7 +35,7 @@ const umaEvent = {
     },
 
     // 搜索
-    searchKeyword: {
+    searchByKeyword: {
         tag: 'SearchByKeyword',
         content: '搜索内容：',
         count: '搜索结果数：'
@@ -61,7 +58,7 @@ const umaEvent = {
     clickStartReplying: {
         tag: 'ClickStartReplying',
         origin: {
-            self: '详情页自己测',
+            self: '从详情页自己测',
             scan: '扫码进入'
         },
         name: '测评名称：'
@@ -120,7 +117,7 @@ const umaEvent = {
 
     // 首页点击导航
     getInNavigationByHome: {
-        tag: 'GetInBannerByHome',
+        tag: 'getInNavigationByHome',
         name: '导航名称：'
     },
 
@@ -144,7 +141,7 @@ const umaEvent = {
 
     // 搜索页点击最新上架更多
     searchGetInShowcaseMore: {
-        tag: 'SearchGetInPublishMore',
+        tag: 'SearchGetInShowcaseMore',
         name: '搜索页点击最新上架更多'
     },
 
@@ -180,6 +177,11 @@ const umaEvent = {
             record: '记录个人信息授权',
             submit: '提交作答授权',
         }
+    },
+
+    clickFreeEnjoy: {
+        tag: 'ClickFreeEnjoy',
+        name: '点击免费体验'
     },
 
     // 点击自己测
@@ -250,20 +252,23 @@ const umaEvent = {
 }
 
 function getEnv(_wx,) {
-    let text = 'wx';
+    let text = '微信';
     const isWxWork = _wx.getSystemInfoSync().system.environment === 'wxwork';
     const is3rd = _wx.getExtConfigSync().isCustomVersion === 'true' || (_wx.getExtConfigSync().isCustomVersion && _wx.getExtConfigSync().isCustomVersion.toString() === 'true');
     if(is3rd){
-        text = '3rd';
+        text = '第三方';
     }
     if(isWxWork){
-        text = 'wxwork';
+        text = '企业微信';
     }
     return text;
 }
 
 function getTag(_wx) {
-    return wx.getStorageSync('traceData');
+    let name = wx.getStorageSync('traceData').toLowerCase();
+    return scenceMap[name].alias;
 }
+
+
 
 export {umaEvent, getEnv, getTag}

@@ -34,9 +34,14 @@ Component({
         authCodeCounter: 0
     },
 
-    /**
-     * 组件的方法列表
-     */
+    pageLifetimes: {
+        show() {
+            this.setData({
+                isGetAccessToken: app.checkAccessToken(),
+            })
+        }
+    },
+
     methods: {
         callServing: function (e) {
             const {area} = this.properties;
@@ -61,7 +66,7 @@ Component({
                 });
                 that.goToCustomerService();
                 const umaConfig = umaEvent.authPhoneSuccess;
-                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.contact, env: getEnv(wx), tag: getTag(wx)});
+                wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin.contact, "环境": getEnv(wx), "用户场景": getTag(wx)});
             }).catch(err=>{
                 if(err.code === '401111'){
                     app.prueLogin().then(res=>{

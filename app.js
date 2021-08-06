@@ -350,10 +350,10 @@ App({
             .then(res => {
                 if(res.isAdmin){
                     const umaConfig = umaEvent.qyAdmainOpen;
-                    wx.uma.trackEvent(umaConfig.tag, {name: umaConfig.name, env: getEnv(wx), tag: getTag(wx)});
+                    wx.uma.trackEvent(umaConfig.tag, {"管理员打开": umaConfig.name, "环境": getEnv(wx), "用户场景": getTag(wx)});
                 } else {
                     const umaConfig = umaEvent.qyMemberOpen;
-                    wx.uma.trackEvent(umaConfig.tag, {name: umaConfig.name, env: getEnv(wx), tag: getTag(wx)});
+                    wx.uma.trackEvent(umaConfig.tag, {"非管理员打开": umaConfig.name, "环境": getEnv(wx), "用户场景": getTag(wx)});
                 }
                 if (that.checkUserInfo) {
                     res.isWxWork = true;
@@ -981,7 +981,15 @@ App({
                         operateCardHeight: 120,
                         history: true,
                         historySize: 60,
-                        welcome: '请问有什么可以帮到你的~',
+                        welcome: '欢迎语\n' +
+                            '\n' +
+                            '您来啦！ 我是罗课君，有什么可以帮到您？\n' +
+                            '回复对应数字，将有专属客服接待：\n' +
+                            '\n' +
+                            '【1】学习类：课程/培训/企业内训定制……\n' +
+                            '【2】测评类：免费试用/定制测评/企业采购……\n' +
+                            '\n' +
+                            '还有其他的吗？欢迎补充！',
                         guideList: [
                             '转人工'
                         ],

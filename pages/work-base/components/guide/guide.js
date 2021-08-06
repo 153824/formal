@@ -58,7 +58,7 @@ Page({
                     });
                     const type = res.data.type.toLowerCase() === 'self' ? 'self' : 'scan'
                     const umaConfig = umaEvent.getInReplyGuide;
-                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx), tag: getTag(wx)});
+                    wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin[type], "环境": getEnv(wx), "用户场景": getTag(wx)});
                 }
             });
         }
@@ -169,7 +169,7 @@ Page({
         if(this.data.isSelf.toLowerCase() === 'self'){
             targetType = 'self'
         }
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[targetType], name: `${umaConfig.name}${evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin[targetType], "测评名称": `${evaluationName}`, "环境": getEnv(wx), "用户场景": getTag(wx)});
         return p;
     },
 
@@ -320,7 +320,7 @@ Page({
             })
             type = 'self';
         }
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], name: `${umaConfig.name}${demonstrateInfo.evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin[type],  "测评名称": `${demonstrateInfo.evaluationName}`, "环境": getEnv(wx), "用户场景": getTag(wx)});
     },
 
     getProgramSetting(releaseRecordId) {

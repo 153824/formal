@@ -84,8 +84,8 @@
             </button>
         </view>
         <!--有券-->
-        <view wx:elif="{{isGetAccessToken && availableVoucher > 0}}" class="button-group-wrapper">
-            <button class="button-group__is-left {{iphonex ? 'is-iosx' : ''}}" bind:tap="showSelectQuiz">
+        <view wx:elif="{{isGetAccessToken && availableVoucher > 0 || true}}" class="button-group-wrapper">
+            <button class="button-group__is-left {{iphonex ? 'is-iosx' : ''}}" data-type="enjoy" bind:tap="showSelectQuiz">
                 <text class="title">免费体验</text>
                 <text class="tips">您有{{availableVoucher}}张体验券可用于本测评</text>
             </button>
@@ -127,7 +127,7 @@
         </view>
         <!--有券-->
         <view wx:elif="{{isGetAccessToken && availableVoucher > 0}}" class="button-group-wrapper">
-            <button class="button-group__is-left" bind:tap="showSelectQuiz">
+            <button class="button-group__is-left" data-type="enjoy" bind:tap="showSelectQuiz">
                 <text class="title">免费体验</text>
                 <text class="tips">您有{{availableVoucher}}张体验券可用于本测评</text>
             </button>
@@ -191,7 +191,7 @@
     <mask isShow="{{ loading }}" top="{{ (statusbarHeight + titleHeight)/pixelRate }}"
           height="{{ windowHeight - ( statusbarHeight + titleHeight) }}" backgroundColor="transparent"></mask>
 </van-overlay>
-<van-overlay show="{{ showSelectQuiz }}" custom-style="background-color: #00000055;" bind:click="hideSelectQuiz">
+<van-overlay show="{{ showSelectQuiz }}" custom-style="background-color: #00000080;" bind:click="hideSelectQuiz">
     <view class="quiz-wrapper">
         <view class="quiz-wrapper-item" bind:tap="goToGuide">
             <image class="self-img" src="https://ihola.luoke101.com/icon%40self.png"/>

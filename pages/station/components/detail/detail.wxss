@@ -1380,7 +1380,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   height: calc(100vh - 80rpx);
 }
 .quiz-wrapper-item{
@@ -1388,8 +1387,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex: 1;
   width: 630rpx;
+  height: 590rpx;
   margin-top: 40rpx;
   box-shadow: 0rpx 4rpx 16rpx 0rpx rgba(0, 0, 0, 0.17);
   border-radius: 30rpx;
@@ -1401,7 +1400,7 @@
   margin-top: 50rpx;
 }
 .self-img{
-  width: 280rpx;
+  width: 282.56rpx;
   height: 270rpx;
 }
 .other-img{

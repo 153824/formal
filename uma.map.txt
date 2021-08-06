@@ -1,4 +1,5 @@
 LaunchHome, 访问首页
+CustomerService, 联系客服
 EvaluationDetail, 访问测评详情页
 SearchByKeyword, 搜索
 AuthPhoneSuccess, 授权手机号成功
@@ -17,6 +18,7 @@ SearchGetInHotMore, 搜索页点击热门测评更多
 GetInReplyGuide, 访问作答准备页
 AgreeGolden, 点击同意承诺书
 AuthUserInfoSuccess, 授权头像成功
+ClickFreeEnjoy, 点击免费体验
 ClickSelfOffer, 点击自己测
 ClickShareOffer, 点击测别人
 QYAdmainOpen, 企业微信-管理员打开

@@ -19,8 +19,14 @@ Page({
         backgroundImageClass: ['work', 'ability', 'mine', 'knowledge']
     },
 
-    onLoad: function (options) {
+    onLoad(options) {
         this.loadSection();
+    },
+
+    onShow() {
+        this.setData({
+            isGetAccessToken: app.checkAccessToken(),
+        })
     },
 
     onScroll(event) {
@@ -87,12 +93,12 @@ Page({
                 size
             },
             success(res) {
-                const umaConfig = umaEvent.searchKeyword;
+                const umaConfig = umaEvent.searchByKeyword;
                 wx.uma.trackEvent(umaConfig.tag, {
-                    content: `${umaConfig.content}${keyword}`,
-                    count: `${umaConfig.count}${res.length}`,
-                    env: getEnv(wx),
-                    tag: getTag(wx)
+                    "搜索内容": `${keyword}`,
+                    "搜索数量": `${res.length}`,
+                    "环境": getEnv(wx),
+                    "用户场景": getTag(wx)
                 });
                 if (res.length === 0 && page === 0) {
                     that.setData({
@@ -140,15 +146,15 @@ Page({
         wx.navigateTo({
             url: `/pages/station/components/detail/detail?id=${evaluationId}`
         });
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx), tag: getTag(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin[type], "环境": getEnv(wx), "用户场景": getTag(wx)});
         {
             const isHot = sectionName === '热门测评';
             if (isHot) {
                 const umaConfig = umaEvent.searchGetInHotMore;
-                wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}`, env: getEnv(wx), tag: getTag(wx)});
+                wx.uma.trackEvent(umaConfig.tag, {"点击更多": `${umaConfig.name}`, "环境": getEnv(wx), "用户场景": getTag(wx)});
             } else {
                 const umaConfig = umaEvent.searchGetInShowcaseMore;
-                wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}`, env: getEnv(wx), tag: getTag(wx)});
+                wx.uma.trackEvent(umaConfig.tag, {"点击更多": `${umaConfig.name}`, "环境": getEnv(wx), "用户场景": getTag(wx)});
             }
         }
     },
@@ -161,20 +167,20 @@ Page({
         if (sectionName) {
             const umaConfig = umaEvent.searchGetInTypeByHome;
             wx.uma.trackEvent(umaConfig.tag, {
-                name: `${umaConfig.name}${sectionName}`,
-                env: getEnv(wx),
-                tag: getTag(wx)
+                "分类名称": `${sectionName}`,
+                "环境": getEnv(wx),
+                "用户场景": getTag(wx)
             });
         } else {
             if (moreType === '最新上架') {
                 const umaConfig = umaEvent.searchGetInShowcaseMore;
-                wx.uma.trackEvent(umaConfig.tag, {name: `${umaConfig.name}最新上架`, env: getEnv(wx), tag: getTag(wx)});
+                wx.uma.trackEvent(umaConfig.tag, {"点击更多": `${umaConfig.name}`, "环境": getEnv(wx), "用户场景": getTag(wx)});
             } else {
                 const umaConfig = umaEvent.searchGetInHotMore;
                 wx.uma.trackEvent(umaConfig.tag, {
-                    name: `${umaConfig.name}${moreType}热门测评`,
-                    env: getEnv(wx),
-                    tag: getTag(wx)
+                    "点击更多": `${umaConfig.name}`,
+                    "环境": getEnv(wx),
+                    "用户场景": getTag(wx)
                 });
             }
         }
@@ -184,7 +190,7 @@ Page({
         const {isEmpty} = e.currentTarget.dataset;
         if (isEmpty) {
             const umaConfig = umaEvent.customerService;
-            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.search, env: getEnv(wx), tag: getTag(wx)});
+            wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin.search, "环境": getEnv(wx), "用户场景": getTag(wx)});
         }
         wx.navigateTo({
             url: '/pages/customer-service/customer-service'
@@ -203,7 +209,7 @@ Page({
             });
             that.goToCustomerService();
             const umaConfig = umaEvent.authPhoneSuccess;
-            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.search, env: getEnv(wx), tag: getTag(wx)});
+            wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin.search, "环境": getEnv(wx), "用户场景": getTag(wx)});
         }).catch(err => {
             if (err.code === '401111') {
                 app.prueLogin().then(res => {

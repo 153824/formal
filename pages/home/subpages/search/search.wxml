@@ -31,7 +31,7 @@
                     <view class="search__type-1--child">
                         <view class="title-wrapper">
                             <text class="title">{{tagSectionItem.columnName}}</text>
-                            <text wx:if="{{tagSectionItem.evaluations.length > 4}}" class="more" data-more-type="{{tagSectionItem.columnName}}" data-section-id="{{tagSectionItem.columnId}}" bind:tap="goToMore">更多</text>
+                            <text wx:if="{{tagSectionItem.evaluations.length}}" class="more" data-more-type="{{tagSectionItem.columnName}}" data-section-id="{{tagSectionItem.columnId}}" bind:tap="goToMore">更多</text>
                         </view>
                         <view class="search-tag {{tagSectionItem.columnName === '热门测评' ? 'hot' : 'new'}}">
                             <block wx:for="{{util.slice(tagSectionItem.evaluations, 4)}}" wx:for-item="evaluationItem">

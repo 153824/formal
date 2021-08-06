@@ -376,7 +376,7 @@ Page({
             const {scene} = wx.getLaunchOptionsSync();
             const umaConfig = umaEvent.getInReport;
             if (umaConfig.scene.includes(scene)) {
-                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.card, name: `${umaConfig.name}${evaluationName}`, scene, env: getEnv(wx), tag: getTag(wx)});
+                wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin.card, "测评名称": `${evaluationName}`, scene, "环境": getEnv(wx), "用户场景": getTag(wx)});
             }
         });
         this.setData({id});

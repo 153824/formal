@@ -35,7 +35,7 @@ Component({
             })
             if(type === "receive-evaluation"){
                 const umaConfig = umaEvent.getInReport;
-                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.share, name: `${umaConfig.name}${reportList[index].evaluation}`, env: getEnv(wx), tag: getTag(wx)});
+                wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin.share, "测评名称": `${reportList[index].evaluation}`, "环境": getEnv(wx), "用户场景": getTag(wx)});
             }
         },
 

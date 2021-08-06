@@ -24,7 +24,7 @@
             <text bind:tap="cancel" class="cancel">取消</text>
         </view>
     </van-sticky>
-    <block wx:if="{{!keyword}}">
+    <block wx:if="{{!isConfirm}}">
         <scroll-view wx:if="{{!!tagSection.length}}" class="search__type-1" scroll-x="true" scroll-y="false">
             <view class="search__type-1--content">
                 <block wx:for="{{tagSection}}" wx:for-item="tagSectionItem" wx:for-index="tagSectionIndex">
@@ -119,10 +119,10 @@
             </view>
         </block>
         <block wx:else>
-            <view class="loading-wrapper" wx:if="{{searchRes.length <= 0 && isConfirm}}">
+            <view class="loading-wrapper" wx:if="{{searchRes.length <= 0}}">
                 <van-loading type="spinner" color="#1989fa" />
             </view>
-            <view wx:elif="{{searchRes.length && !isConfirm}}" class="search-result__is-fill">
+            <view wx:elif="{{searchRes.length}}" class="search-result__is-fill">
                 <view class="contact" bind:tap="goToCustomerService">联系专业顾问帮我策划方案</view>
                 <view class="content">
                     <block wx:for="{{searchRes}}" wx:for-item="searchItem">

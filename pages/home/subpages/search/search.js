@@ -50,7 +50,8 @@ Page({
 
     onKeywordFocus() {
         this.setData({
-            isEmpty: false
+            isEmpty: false,
+            isConfirm: false
         })
     },
 
@@ -59,7 +60,6 @@ Page({
             page: 0,
             isEmpty: false,
             searchRes: [],
-            isConfirm: false
         })
     },
 
@@ -87,9 +87,6 @@ Page({
                 size
             },
             success(res) {
-                that.setData({
-                    isConfirm: false
-                })
                 const umaConfig = umaEvent.searchKeyword;
                 wx.uma.trackEvent(umaConfig.tag, {
                     content: `${umaConfig.content}${keyword}`,

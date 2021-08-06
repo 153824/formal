@@ -279,7 +279,7 @@ Page({
         app.updateUserInfo(e).then(res=>{
             this.submit();
             const umaConfig = umaEvent.authUserInfoSuccess;
-            wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin.record, "环境": getEnv(wx), "用户场景": getTag(wx)});
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.record, env: getEnv(wx), tag: getTag(wx)});
         }).catch(err=>{
             console.error(err)
         })

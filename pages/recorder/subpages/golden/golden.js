@@ -29,7 +29,7 @@ Page({
         });
         const type = isSelf.toLowerCase() === 'self' ? 'self' : 'scan';
         const umaConfig = umaEvent.agreeGolden;
-        wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin[type], "环境": getEnv(wx), "用户场景": getTag(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx), tag: getTag(wx)});
     },
     getGolden(receiveRecordId) {
         const that = this;

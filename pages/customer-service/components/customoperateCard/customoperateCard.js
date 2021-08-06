@@ -30,10 +30,10 @@ Component({
       for (let i in umaConfig.route) {
         if(i === 'more'){
           const {type} = routeInfo.options;
-          wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin[type], "环境": getEnv(wx), "用户场景": getTag(wx)});
+          wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx), tag: getTag(wx)});
         } else {
           if(umaConfig.route[i].includes(currentRoute)){
-            wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin[i], "环境": getEnv(wx), "用户场景": getTag(wx)});
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[i], env: getEnv(wx), tag: getTag(wx)});
           }
         }
       }
@@ -71,10 +71,10 @@ Component({
       for (let i in umaConfig.route) {
         if(i === 'more'){
           const {type} = routeInfo.options;
-          wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin[type], "环境": getEnv(wx), "用户场景": getTag(wx)});
+          wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx), tag: getTag(wx)});
         } else {
           if(umaConfig.route[i].includes(currentRoute)){
-            wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin[i], "环境": getEnv(wx), "用户场景": getTag(wx)});
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[i], env: getEnv(wx), tag: getTag(wx)});
           }
         }
       }

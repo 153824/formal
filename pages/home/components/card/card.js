@@ -7,7 +7,7 @@ Component({
         topic: String,
         tip: String,
         cover: String,
-        "用户场景": String,
+        tag: String,
         location: String,
         isRichTextModel: {
             type: Boolean,
@@ -24,7 +24,7 @@ Component({
             });
             if(location){
                 const umaConfig = umaEvent.evaluationDetail;
-                wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin[location], "环境": getEnv(wx), "用户场景": getTag(wx)});
+                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[location], env: getEnv(wx), tag: getTag(wx)});
             }
         }
     }

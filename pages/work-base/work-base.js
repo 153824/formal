@@ -397,7 +397,7 @@ Page({
                 wx.reLaunch({
                     url: '/pages/home/home'
                 });
-                wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin.bench, "环境": getEnv(wx), "用户场景": getTag(wx)});
+                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.bench, env: getEnv(wx), tag: getTag(wx)});
             })
             .catch(err => {
                 if (err.code === '401111') {
@@ -478,7 +478,7 @@ Page({
             url: `../station/components/detail/detail?id=${evaluationId}`,
         })
         const umaConfig = umaEvent.evaluationDetail;
-        wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin.bench, "环境": getEnv(wx), "用户场景": getTag(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.bench, env: getEnv(wx), tag: getTag(wx)});
     },
 
     goToReportMore: function (e) {
@@ -496,7 +496,7 @@ Page({
         wx.navigateTo({
             url: `../report/report?receiveRecordId=${receiveRecordId}`
         });
-        wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin.bench, "测评名称": `${reportsList[index].evaluation}`, "环境": getEnv(wx), "用户场景": getTag(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.bench, name: `${reportsList[index].evaluation}`, env: getEnv(wx), tag: getTag(wx)});
     },
 
     setChildManager: function (e) {

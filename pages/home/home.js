@@ -125,7 +125,7 @@ Page({
             this.loadBanner();
         }
         const umaConfig = umaEvent.launchHome;
-        wx.uma.trackEvent(umaConfig.tag, {"环境": getEnv(wx), "用户场景": getTag(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {env: getEnv(wx), tag: getTag(wx)});
     },
 
     goToMore(e) {
@@ -146,7 +146,7 @@ Page({
                 break;
         }
         const umaConfig = umaEvent.getInNavigationByHome;
-        wx.uma.trackEvent(umaConfig.tag, {"导航名称": `${name}`, "环境": getEnv(wx), "用户场景": getTag(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {navigation: `${name}`, env: getEnv(wx), tag: getTag(wx)});
     },
 
     goToSearch() {
@@ -154,7 +154,7 @@ Page({
             url: '/pages/home/subpages/search/search'
         })
         const umaConfig = umaEvent.getInSearchByHome;
-        wx.uma.trackEvent(umaConfig.tag, {"首页点击搜索": umaConfig.name, "环境": getEnv(wx), "用户场景": getTag(wx)})
+        wx.uma.trackEvent(umaConfig.tag, {press: umaConfig.name, env: getEnv(wx), tag: getTag(wx)})
     },
 
     goToWhere(e) {
@@ -168,7 +168,7 @@ Page({
             })
         }
         const umaConfig = umaEvent.getInBannerByHome;
-        wx.uma.trackEvent(umaConfig.tag, {"banner序号": `${index}`, "环境": getEnv(wx), "用户场景": getTag(wx)})
+        wx.uma.trackEvent(umaConfig.tag, {order: `${index}`, env: getEnv(wx), tag: getTag(wx)})
     },
 
     goToWebView(url) {
@@ -180,7 +180,7 @@ Page({
 
     goToCustomerService() {
         const umaConfig = umaEvent['customerService'];
-        wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin.home, "环境": getEnv(wx), "用户场景": getTag(wx)})
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.home, env: getEnv(wx), tag: getTag(wx)})
         wx.navigateTo({
             url: '/pages/customer-service/customer-service',
         });
@@ -258,7 +258,7 @@ Page({
             });
             that.goToCustomerService();
             const umaConfig = umaEvent.authPhoneSuccess;
-            wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin.home, "环境": getEnv(wx), "用户场景": getTag(wx)});
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.home, env: getEnv(wx), tag: getTag(wx)});
         }).catch(err=>{
             console.log(err);
             if(err.code === '401111'){

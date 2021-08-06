@@ -350,10 +350,10 @@ App({
             .then(res => {
                 if(res.isAdmin){
                     const umaConfig = umaEvent.qyAdmainOpen;
-                    wx.uma.trackEvent(umaConfig.tag, {"管理员打开": umaConfig.name, "环境": getEnv(wx), "用户场景": getTag(wx)});
+                    wx.uma.trackEvent(umaConfig.tag, {open: umaConfig.name, env: getEnv(wx), tag: getTag(wx)});
                 } else {
                     const umaConfig = umaEvent.qyMemberOpen;
-                    wx.uma.trackEvent(umaConfig.tag, {"非管理员打开": umaConfig.name, "环境": getEnv(wx), "用户场景": getTag(wx)});
+                    wx.uma.trackEvent(umaConfig.tag, {open: umaConfig.name, env: getEnv(wx), tag: getTag(wx)});
                 }
                 if (that.checkUserInfo) {
                     res.isWxWork = true;

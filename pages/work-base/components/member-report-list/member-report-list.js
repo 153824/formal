@@ -78,7 +78,7 @@ Component({
       });
       if(this.properties.navigationBarTitleText === '他人邀请我参加的测评'){
         const umaConfig = umaEvent.getInReport;
-        wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin.invite, "测评名称": `${obj.evaluationName}`, "环境": getEnv(wx), "用户场景": getTag(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.invite, name: `${obj.evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
       }
     },
 

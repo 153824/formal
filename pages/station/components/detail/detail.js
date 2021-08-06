@@ -31,7 +31,7 @@ Page({
         const {scene} = wx.getLaunchOptionsSync();
         const umaConfig = umaEvent.evaluationDetail;
         if (umaConfig.scene.includes(scene)) {
-            wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin.card, scene, "环境": getEnv(wx), "用户场景": getTag(wx)});
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.card, scene, env: getEnv(wx), tag: getTag(wx)});
         }
         this.setData({evaluationId: options.id});
     },
@@ -98,7 +98,7 @@ Page({
                 });
             })
         const umaConfig = umaEvent.clickSelfOffer;
-        wx.uma.trackEvent(umaConfig.tag, {"测评名称": `${evaluation.name}`, "环境": getEnv(wx), "用户场景": getTag(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {name: `${evaluation.name}`, env: getEnv(wx), tag: getTag(wx)});
     },
 
     addcount() {
@@ -178,7 +178,7 @@ Page({
         //发放测评
         const {evaluation, customNorms, availableVoucher, availableInventory} = this.data;
         const umaConfig = umaEvent.clickShareOffer;
-        wx.uma.trackEvent(umaConfig.tag, {"测评名称": `${evaluation.name}`, "环境": getEnv(wx), "用户场景": getTag(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {name: `${evaluation.name}`, env: getEnv(wx), tag: getTag(wx)});
         if (availableVoucher <= 0 && availableInventory <= 0) {
             app.toast("测评可用数量不足，请先购买测评");
             return;
@@ -235,7 +235,7 @@ Page({
         })
         if(type === 'enjoy'){
             const umaConfig = umaEvent.clickFreeEnjoy;
-            wx.uma.trackEvent(umaConfig.tag, {"点击免费体验": umaConfig.name, "用户场景": getTag(wx), "环境": getEnv(wx),})
+            wx.uma.trackEvent(umaConfig.tag, {press: umaConfig.name, tag: getTag(wx), env: getEnv(wx),})
         }
     },
 
@@ -247,7 +247,7 @@ Page({
 
     goToCustomerService() {
         const umaConfig = umaEvent.customerService;
-        wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin.evaluation, "环境": getEnv(wx), "用户场景": getTag(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.evaluation, env: getEnv(wx), tag: getTag(wx)});
         wx.navigateTo({
             url: "/pages/customer-service/customer-service"
         });
@@ -271,11 +271,11 @@ Page({
             .then(res => {
                 const umaConfig = umaEvent.authPhoneSuccess;
                 if(type === 'enjoy'){
-                    wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin.experience, "环境": getEnv(wx), "用户场景": getTag(wx)});
+                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.experience, env: getEnv(wx), tag: getTag(wx)});
                 } else if(type === 'contact' && !isIos){
-                    wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin.pay, "环境": getEnv(wx), "用户场景": getTag(wx)});
+                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.pay, env: getEnv(wx), tag: getTag(wx)});
                 } else if (type === 'contact' && isIos){
-                    wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin.contact, "环境": getEnv(wx), "用户场景": getTag(wx)});
+                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.contact, env: getEnv(wx), tag: getTag(wx)});
                 }
                 return that.loadInventory();
             })

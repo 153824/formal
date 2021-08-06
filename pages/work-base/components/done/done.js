@@ -85,7 +85,7 @@ Page({
         wx.navigateTo({
             url: `/pages/report/report?receiveRecordId=${receiveRecordId}&isSelf=${isSelf}`
         });
-        wx.uma.trackEvent(umaConfig.tag, {"来源": umaConfig.origin.self, "测评名称": `${evaluationName}`, "环境": getEnv(wx), "用户场景": getTag(wx)});
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.self, name: `${evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
     },
 
     _checkedReceiveInfo: function (receiveRecordId) {

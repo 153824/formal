@@ -1,7 +1,6 @@
 {
   "pages": [
     "pages/home/home",
-    "pages/station/station",
     "pages/station/components/detail/detail",
     "pages/station/components/sharePaper/sharePaper",
     "pages/manager/manager",
@@ -71,12 +70,6 @@
         "text": "主页",
         "iconPath": "images/icon/icon@index-no-active.png",
         "selectedIconPath": "images/icon/icon@index-active.png"
-      },
-      {
-        "pagePath": "pages/station/station",
-        "text": "人岗匹配",
-        "iconPath": "images/icon/icon@person-job-no-active.png",
-        "selectedIconPath": "images/icon/icon@person-job-active.png"
       },
       {
         "pagePath": "pages/manager/manager",

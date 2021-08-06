@@ -9,12 +9,6 @@ Component({
                 path: "/pages/home/home"
             },
             {
-                text: "人岗匹配",
-                normal: '../../images/icon/icon@person-job-no-active.png',
-                active: '../../images/icon/icon@person-job-active.png',
-                path: "/pages/station/station"
-            },
-            {
                 text: "工作台",
                 normal: '../../images/icon/icon@evaluation-manager-no-active.png',
                 active: '../../images/icon/icon@evaluation-manager-active.png',

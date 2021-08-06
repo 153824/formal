@@ -72,7 +72,7 @@
                 </scroll-view>
             </view>
         </view>
-        <hola-tab-bar active="{{ 3 }}" isWxWork="{{!isWxWork}}"></hola-tab-bar>
+        <hola-tab-bar active="{{ 2 }}" isWxWork="{{!isWxWork}}"></hola-tab-bar>
     </view>
 <!--企业微信管理员端-->
 <view wx:elif="{{ isWxWork && isWxWorkAdmin }}">

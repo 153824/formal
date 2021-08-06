@@ -42,6 +42,12 @@ Component({
         }
     },
 
+    attached() {
+        this.setData({
+            isGetAccessToken: app.checkAccessToken(),
+        })
+    },
+
     methods: {
         callServing: function (e) {
             const {area} = this.properties;

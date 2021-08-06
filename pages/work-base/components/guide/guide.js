@@ -19,6 +19,7 @@ Page({
         isGetAccessToken: app.checkAccessToken(),
         authCodeCounter: 0,
         type:'',
+        countdownInMinutes: -1
     },
     onLoad: function (option) {
         const that = this;
@@ -191,8 +192,9 @@ Page({
             },
             success: function (res) {
                 _this.setData({
-                    demonstrateInfo: res,
-                    maskTrigger: false
+                    demonstrateInfo: res.demonstrateInfo,
+                    maskTrigger: false,
+                    countdownInMinutes: res.countdownInMinutes
                 });
             },
             complete: function () {},
@@ -251,7 +253,8 @@ Page({
                     evaluationStatus: msg,
                     evaluationStatusText: text,
                     receiveRecordId: receiveRecordId,
-                    maskTrigger: false
+                    maskTrigger: false,
+                    countdownInMinutes: res.countdownInMinutes
                 });
             },
             complete: function () {},

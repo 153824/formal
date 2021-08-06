@@ -19,7 +19,12 @@
         </view>
         <view class="topictime">
             <text class="bodytitle">用时</text>
-            <view class="smalltext">平均用时{{demonstrateInfo.estimatedTime}}分钟</view>
+            <view class="smalltext" wx:if="{{!countdownInMinutes}}">
+                平均用时{{demonstrateInfo.estimatedTime}}分钟
+            </view>
+            <view wx:else>
+                限时{{demonstrateInfo.estimatedTime}}分钟
+            </view>
         </view>
     </view>
     <block wx:if="{{isGetAccessToken}}">

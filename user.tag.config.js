@@ -1,6 +1,6 @@
 const scenceMap = {
     reply: {
-        name: 'REPLYING',
+        name: 'REPLY',
         alias: '答题',
         route: 'pages/work-base/components/guide/guide'
     },

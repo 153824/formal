@@ -53,6 +53,7 @@ Component({
             const {area} = this.properties;
             this.setData({
                 showServing: true
+
             });
         },
         goToServer() {

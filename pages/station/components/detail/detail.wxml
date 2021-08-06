@@ -77,6 +77,7 @@
         <view wx:if="{{!isGetAccessToken}}" class="button-group-wrapper">
             <button class="button-group__is-left {{iphonex ? 'is-iosx' : ''}}" bind:getphonenumber="authPhoneNumber" data-type="enjoy" open-type="getPhoneNumber">
                 <text class="title">免费体验</text>
+                <text class="tips">免费领取3张测评体验券</text>
             </button>
             <button class="button-group__is-right {{iphonex ? 'is-iosx' : ''}}" bind:getphonenumber="authPhoneNumber" data-type="contact" open-type="getPhoneNumber">
                 <text>联系客服</text>
@@ -84,7 +85,7 @@
             </button>
         </view>
         <!--有券-->
-        <view wx:elif="{{isGetAccessToken && availableVoucher > 0 || true}}" class="button-group-wrapper">
+        <view wx:elif="{{isGetAccessToken && availableVoucher > 0}}" class="button-group-wrapper">
             <button class="button-group__is-left {{iphonex ? 'is-iosx' : ''}}" data-type="enjoy" bind:tap="showSelectQuiz">
                 <text class="title">免费体验</text>
                 <text class="tips">您有{{availableVoucher}}张体验券可用于本测评</text>
@@ -120,6 +121,7 @@
         <view wx:if="{{!isGetAccessToken}}" class="button-group-wrapper is-increase-height">
             <button class="button-group__is-left" bind:getphonenumber="authPhoneNumber" data-type="enjoy" open-type="getPhoneNumber">
                 <text class="title">免费体验</text>
+                <text class="tips">免费领取3张测评体验券</text>
             </button>
             <button class="button-group__is-right" bind:getphonenumber="authPhoneNumber" data-type="contact" open-type="getPhoneNumber">
                 <text>立即购买</text>

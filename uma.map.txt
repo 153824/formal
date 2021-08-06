@@ -13,7 +13,7 @@ getInNavigationByHome, 首页点击导航
 SearchGetInTypeByHome, 搜索页点击分类搜索
 SearchGetInShowcaseEvaluation, 搜索页点击最新上架里的测评
 SearchGetInHotEvaluation, 搜索页点击热门测评里的测评
-SearchGetInPublishMore, 搜索页点击最新上架更多
+SearchGetInShowcaseMore, 搜索页点击最新上架更多
 SearchGetInHotMore, 搜索页点击热门测评更多
 GetInReplyGuide, 访问作答准备页
 AgreeGolden, 点击同意承诺书

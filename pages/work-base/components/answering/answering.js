@@ -216,18 +216,18 @@ Page({
         if(profileType === 'getUserInfo'){
             app.updateUserInfo(e)
                 .then(res=>{
+                    that.save()
                     const umaConfig = umaEvent.authUserInfoSuccess;
                     wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.submit, env: getEnv(wx), tag: getTag(wx)});
-                    that.save()
                 })
         } else {
             wx.getUserProfile({
                 desc: "获取用户信息",
                 success: (res) => {
                     app.updateUserInfo(res).then(res=>{
+                        that.save()
                         const umaConfig = umaEvent.authUserInfoSuccess;
                         wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.submit, env: getEnv(wx), tag: getTag(wx)});
-                        that.save()
                     })
                 },
                 error: (e) => {
@@ -648,8 +648,12 @@ Page({
         let type = 'scan'
         const {answerSheet, receiveRecordId, chapterId, isSelf, evaluationName} = this.data;
         const umaConfig = umaEvent.submitAnswer;
-        type = isSelf.toLowerCase() === 'self' ? 'self' : 'scan';
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], name: `${evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
+        try{
+            type = isSelf.toLowerCase() === 'self' ? 'self' : 'scan';
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], name: `${evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
+        }catch (e){
+            console.log(e);
+        }
         if(chapterId) {
             const p = new Promise((resolve, reject) => {
                 app.doAjax({

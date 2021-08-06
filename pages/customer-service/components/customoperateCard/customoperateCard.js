@@ -24,17 +24,18 @@ Component({
       }
     },
     attached:function () {
-      const umaConfig = umaEvent.sendCustomerServiceMessage;
+      const umaConfig = umaEvent.getInCustomerService;
       const routeInfo = getCurrentPages()[getCurrentPages().length - 2]
       const currentRoute = routeInfo.route;
       for (let i in umaConfig.route) {
         if(i === 'more'){
           const {type} = routeInfo.options;
           wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx), tag: getTag(wx)});
-        } else {
-          if(umaConfig.route[i].includes(currentRoute)){
-            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[i], env: getEnv(wx), tag: getTag(wx)});
-          }
+          return
+        }
+        if(umaConfig.route[i].includes(currentRoute)){
+          wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[i], env: getEnv(wx), tag: getTag(wx)});
+          return;
         }
       }
     }
@@ -72,10 +73,11 @@ Component({
         if(i === 'more'){
           const {type} = routeInfo.options;
           wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx), tag: getTag(wx)});
-        } else {
-          if(umaConfig.route[i].includes(currentRoute)){
-            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[i], env: getEnv(wx), tag: getTag(wx)});
-          }
+          return
+        }
+        if(umaConfig.route[i].includes(currentRoute)){
+          wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[i], env: getEnv(wx), tag: getTag(wx)});
+          return;
         }
       }
     },

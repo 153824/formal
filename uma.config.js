@@ -179,6 +179,7 @@ const umaEvent = {
         }
     },
 
+    // 点击免费体验
     clickFreeEnjoy: {
         tag: 'ClickFreeEnjoy',
         name: '点击免费体验'

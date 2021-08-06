@@ -95,8 +95,8 @@ Page({
             success(res) {
                 const umaConfig = umaEvent.searchByKeyword;
                 wx.uma.trackEvent(umaConfig.tag, {
-                    "搜索内容": `${keyword}`,
-                    "搜索数量": `${res.length}`,
+                    content: `${keyword}`,
+                    count: `${res.length}`,
                     env: getEnv(wx),
                     tag: getTag(wx)
                 });
@@ -149,12 +149,13 @@ Page({
         wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx), tag: getTag(wx)});
         {
             const isHot = sectionName === '热门测评';
+            console.log({name: `${evaluationName}`, env: getEnv(wx), tag: getTag(wx)})
             if (isHot) {
-                const umaConfig = umaEvent.searchGetInHotMore;
-                wx.uma.trackEvent(umaConfig.tag, {press: `${umaConfig.name}`, env: getEnv(wx), tag: getTag(wx)});
+                const umaConfig = umaEvent.searchGetInHotEvaluation;
+                wx.uma.trackEvent(umaConfig.tag, {name: `${evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
             } else {
-                const umaConfig = umaEvent.searchGetInShowcaseMore;
-                wx.uma.trackEvent(umaConfig.tag, {press: `${umaConfig.name}`, env: getEnv(wx), tag: getTag(wx)});
+                const umaConfig = umaEvent.searchGetInShowcaseEvaluation;
+                wx.uma.trackEvent(umaConfig.tag, {name: `${evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
             }
         }
     },
@@ -167,7 +168,7 @@ Page({
         if (sectionName) {
             const umaConfig = umaEvent.searchGetInTypeByHome;
             wx.uma.trackEvent(umaConfig.tag, {
-                "分类名称": `${sectionName}`,
+                section: `${sectionName}`,
                 env: getEnv(wx),
                 tag: getTag(wx)
             });
@@ -178,7 +179,7 @@ Page({
             } else {
                 const umaConfig = umaEvent.searchGetInHotMore;
                 wx.uma.trackEvent(umaConfig.tag, {
-                    "点击更多": `${umaConfig.name}`,
+                    press: `${umaConfig.name}`,
                     env: getEnv(wx),
                     tag: getTag(wx)
                 });

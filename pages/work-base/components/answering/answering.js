@@ -1,5 +1,6 @@
 import {QUES_TYPE} from './const/index';
 import debounce from "../../../../utils/lodash/debounce";
+import {getEnv, getTag, umaEvent} from "../../../../uma.config";
 const app = getApp();
 Page({
     data: {
@@ -30,7 +31,8 @@ Page({
         chapterId:'',
         isGetUserInfo: false,
         canIUseGetUserProfile: !!wx.getUserProfile,
-        profileType: ''
+        profileType: '',
+        evaluationName: ''
     },
 
     onLoad: function (options) {
@@ -38,7 +40,7 @@ Page({
         if(options.chapterId){
             this.setData({
                 chapterId:options.chapterId,
-                type:options.type
+                type: options.type
             })
             this.loadQuestionChapter(options.chapterId,options.receiveRecordId)
             /*初始化题目*/
@@ -84,7 +86,6 @@ Page({
             /*初始化答题卡*/
             .then(res=>{
                 try{
-                    debounce
                     const {answerSheet} = this.data;
                     const {questions} = res;
                     if(Object.keys(answerSheet).length === questions.length){
@@ -216,6 +217,8 @@ Page({
             app.updateUserInfo(e)
                 .then(res=>{
                     that.save()
+                    const umaConfig = umaEvent.authUserInfoSuccess;
+                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.submit, env: getEnv(wx), tag: getTag(wx)});
                 })
         } else {
             wx.getUserProfile({
@@ -223,6 +226,8 @@ Page({
                 success: (res) => {
                     app.updateUserInfo(res).then(res=>{
                         that.save()
+                        const umaConfig = umaEvent.authUserInfoSuccess;
+                        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.submit, env: getEnv(wx), tag: getTag(wx)});
                     })
                 },
                 error: (e) => {
@@ -270,7 +275,8 @@ Page({
             },
             success: function (res) {
                 that.setData({
-                    isSelf: res.data.type
+                    isSelf: res.data.type,
+                    evaluationName: res.data.evaluationName
                 });
             }
         });
@@ -639,8 +645,16 @@ Page({
     },
 
     save(automatic=false) {
-        const {answerSheet, receiveRecordId, chapterId} = this.data;
-        if(chapterId){
+        let type = 'scan'
+        const {answerSheet, receiveRecordId, chapterId, isSelf, evaluationName} = this.data;
+        const umaConfig = umaEvent.submitAnswer;
+        try{
+            type = isSelf.toLowerCase() === 'self' ? 'self' : 'scan';
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], name: `${evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
+        }catch (e){
+            console.log(e);
+        }
+        if(chapterId) {
             const p = new Promise((resolve, reject) => {
                 app.doAjax({
                     url: `../hola/receive_records/chapters/answers?receiveRecordId=${receiveRecordId}&chapterId=${chapterId}&userId=${wx.getStorageSync("userInfo").userId || ""}`,
@@ -670,7 +684,8 @@ Page({
                 })
             });
             return p;
-        }else{
+        }
+        else {
             const p = new Promise((resolve, reject) => {
                 app.doAjax({
                     url: `../hola/receive_records/answers?receiveRecordId=${receiveRecordId}&userId=${wx.getStorageSync("userInfo").userId || ""}`,
@@ -695,6 +710,7 @@ Page({
             });
             return p;
         }
+
     },
 
     forceSave() {

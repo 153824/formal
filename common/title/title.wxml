@@ -1,5 +1,5 @@
 <block wx:if="{{ type === 'status-bar' }}">
-    <view class="bar-wrapper" style="height: {{ statusbarHeight + titleHeight }}px;">
+    <view class="bar-wrapper" style="height: {{ statusbarHeight + titleHeight }}px;{{style}}">
         <view class="statusbar" style="height: {{ statusbarHeight }}px;visibility: {{visibility}};"></view>
         <view class="title-bar"
               style="height: {{ titleHeight }}px;top: {{ statusbarHeight }}px;visibility: {{visibility}};" bind:tap="getTeamList">

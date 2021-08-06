@@ -1,3 +1,5 @@
+import {getEnv, getTag, umaEvent} from "../../../../uma.config";
+
 const app = getApp();
 Page({
     /**
@@ -232,11 +234,6 @@ Page({
             app.toast("测评可用数量不足!");
             return;
         }
-        try {
-            wx.uma.trackEvent('1602212964270', {name: evaluationName, isFree: isFree})
-        } catch (e) {
-
-        }
         const releaseInfo = {
             evaluationId: evaluationId,
             normId: norms[0].normId,
@@ -263,7 +260,15 @@ Page({
                     sharePaperInfo: res
                 });
             }
-        })
+        });
+        const umaConfig = umaEvent.generateInvite;
+        const currentRoute = getCurrentPages()[getCurrentPages().length - 2].route;
+
+        if(umaConfig.route.bench.includes(currentRoute)){
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.bench, name: `${evaluationName}`, env: getEnv(wx), tag: getTag(wx)})
+        } else {
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.detail, name: `${evaluationName}`, env: getEnv(wx), tag: getTag(wx)})
+        }
     },
     /**
      * 隐藏分享码

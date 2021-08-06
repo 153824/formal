@@ -1,3 +1,6 @@
+import {getEnv, getTag, umaEvent} from "./uma.config";
+import {scenceMap} from "./user.tag.config";
+
 /***********************************************************************************************************************
  * @NAME: WEID       /       @DATE: 2020/7/21      /       @DESC: 变量注释模板(新增变量务必添加)
  * qiniuUpload: 七牛云
@@ -103,6 +106,7 @@ App({
         // 使用openid进行统计时，是否授权友盟自动获取Openid，
         // 如若需要，请到友盟后台"设置管理-应用信息"(https://mp.umeng.com/setting/appset)中设置appId及secret
         autoGetOpenid: true,
+        enableVerify: true,
         debug: false, //是否打开调试模式
         uploadUserInfo: true // 自动上传用户信息，设为false取消上传，默认为false
     },
@@ -344,6 +348,13 @@ App({
                 return Promise.resolve(targetRes);
             })
             .then(res => {
+                if(res.isAdmin){
+                    const umaConfig = umaEvent.qyAdmainOpen;
+                    wx.uma.trackEvent(umaConfig.tag, {open: umaConfig.name, env: getEnv(wx), tag: getTag(wx)});
+                } else {
+                    const umaConfig = umaEvent.qyMemberOpen;
+                    wx.uma.trackEvent(umaConfig.tag, {open: umaConfig.name, env: getEnv(wx), tag: getTag(wx)});
+                }
                 if (that.checkUserInfo) {
                     res.isWxWork = true;
                     res.is3rd = that.wx3rdInfo.is3rd;
@@ -351,6 +362,25 @@ App({
                     that.checkUserInfo(res);
                 }
             });
+    },
+
+    checkOfferType(receiveRecordId) {
+        const p = new Promise((resolve, reject) => {
+            this.doAjax({
+                url: 'reports/check_type',
+                method: 'get',
+                data: {
+                    receiveRecordId
+                },
+                success(res) {
+                    resolve(res.data)
+                },
+                error(err) {
+                    reject(err)
+                }
+            })
+        });
+        return p;
     },
 
     /**
@@ -889,6 +919,29 @@ App({
             });
     },
 
+    updateUserTag(authCode) {
+        let scence = '';
+        const {route} = getCurrentPages()[0];
+        for (let i in scenceMap) {
+            if(scenceMap[i].route === route) {
+                scence = scenceMap[i].name;
+            }
+        }
+        this.doAjax({
+            url: 'wework/auth/trace_data',
+            method: 'POST',
+            data: {
+                authCode,
+                properties: {
+                    scence,
+                }
+            },
+            success() {
+                wx.setStorageSync('traceData', scence)
+            }
+        })
+    },
+
     getPrueAuthCode(code) {
         const that = this;
         const type = this.wxWorkInfo.isWxWork ? 'WEWORK' : 'WECHAT';
@@ -906,6 +959,11 @@ App({
                     wx.setStorageSync('isNew', res.isNew);
                     console.log(res);
                     wx.uma.setOpenid(res.openId);
+                    if(!res.traceData || res.traceData.openIdFirstAccess || Object.keys(res.traceData.properties).length <= 0){
+                        that.updateUserTag(res.authCode);
+                    } else {
+                        wx.setStorageSync('traceData', res.traceData.properties.scence)
+                    }
                     // 配置智能对话平台插件
                     plugin.init({
                         appid: (() => {
@@ -923,7 +981,15 @@ App({
                         operateCardHeight: 120,
                         history: true,
                         historySize: 60,
-                        welcome: '请问有什么可以帮到你的~',
+                        welcome: '欢迎语\n' +
+                            '\n' +
+                            '您来啦！ 我是罗课君，有什么可以帮到您？\n' +
+                            '回复对应数字，将有专属客服接待：\n' +
+                            '\n' +
+                            '【1】学习类：课程/培训/企业内训定制……\n' +
+                            '【2】测评类：免费试用/定制测评/企业采购……\n' +
+                            '\n' +
+                            '还有其他的吗？欢迎补充！',
                         guideList: [
                             '转人工'
                         ],

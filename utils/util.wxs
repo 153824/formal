@@ -259,6 +259,25 @@ var computeChartClass = function (value) {
   return '';
 }
 
+var slice = function (arr, len) {
+  console.log('slice: ',arr);
+  if(arr.length >= len) {
+    return arr.slice(0, len)
+  } else {
+    return arr
+  }
+}
+
+var gentRichText= function (text, style) {
+  style = 'overflow: hidden;text-overflow: ellipsis;white-space: nowrap;' + style
+  return '<p style="' + style + '">' + text + '</p>'
+}
+
+var gentBackgroundImage = function (backgroundArr, index) {
+  var targetIndex = index%4;
+  return backgroundArr[targetIndex];
+}
+
 module.exports = {
   getMonthAndDayByFrag: getMonthAndDayByFrag,
   getHourAndMinByFrag: getHourAndMinByFrag,
@@ -280,5 +299,8 @@ module.exports = {
   computeStepNumber: computeStepNumber,
   isMiddleValue: isMiddleValue,
   computeMBTIChartPosition: computeMBTIChartPosition,
-  computeChartClass: computeChartClass
+  computeChartClass: computeChartClass,
+  slice: slice,
+  gentRichText: gentRichText,
+  gentBackgroundImage: gentBackgroundImage
 };

@@ -24,6 +24,7 @@
               wx:for-item="reportItem"
               wx:key="unique" data-receive-record-id="{{reportItem.receiveRecordId}}"
               wx:for-index="reportIndex"
+              data-index="{{reportIndex}}"
               class="program-body the-last-report {{reportIndex === 0 ? 'no-margin-top' : '' }}"
         >
             <view class="report-created-time">
@@ -59,6 +60,7 @@
               wx:for-item="reportItem"
               wx:key="unique" data-receive-record-id="{{reportItem.receiveRecordId}}"
               wx:for-index="reportIndex"
+              data-index="{{reportIndex}}"
         >
             <view class="report-created-time">
                 <text>{{util.getMonthAndDayByFrag(reportItem.reportGeneratedAt,"/",true)}}</text>

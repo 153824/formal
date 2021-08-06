@@ -1,4 +1,5 @@
 import debounce from "../../utils/lodash/debounce";
+import {getEnv, getTag, umaEvent} from "../../uma.config";
 
 const app = getApp();
 Component({
@@ -26,10 +27,16 @@ Component({
     },
     methods: {
         goToReport: function (e) {
-            const {receiveRecordId} = e.currentTarget.dataset;
+            const {reportList} = this.data;
+            const {type} = this.properties;
+            const {receiveRecordId, index} = e.currentTarget.dataset;
             wx.navigateTo({
                 url: `/pages/report/report?receiveRecordId=${receiveRecordId}`
             })
+            if(type === "receive-evaluation"){
+                const umaConfig = umaEvent.getInReport;
+                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.share, name: `${reportList[index].evaluation}`, env: getEnv(wx), tag: getTag(wx)});
+            }
         },
 
         loadReportList: function (page) {

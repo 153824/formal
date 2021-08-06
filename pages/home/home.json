@@ -7,7 +7,11 @@
     "mask": "../../common/mask/mask",
     "serving": "../../common/serving/serving",
     "van-skeleton": "../../common/vant-weapp/dist/skeleton/index",
-    "hola-tab-bar": "../../common/tab-bar/tab-bar"
+    "van-search": "/common/vant-weapp/dist/search/index",
+    "van-sticky": "/common/vant-weapp/dist/sticky/index",
+    "van-icon": "/common/vant-weapp/dist/icon/index",
+    "hola-tab-bar": "../../common/tab-bar/tab-bar",
+    "hola-card": "./components/card/card"
   },
   "navigationStyle": "custom"
 }

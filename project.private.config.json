@@ -15,7 +15,7 @@
         {
           "name": "首页",
           "pathName": "pages/home/home",
-          "query": "q=https://api.luoke101.com/s/5f6af8a433c1241d23572834",
+          "query": "_ttn=610ba4a53451547e683c7554",
           "scene": null
         },
         {
@@ -27,7 +27,7 @@
         {
           "name": "报告详情",
           "pathName": "pages/report/report",
-          "query": "receiveRecordId=61020722578eeb4d25fb9487",
+          "query": "receiveRecordId=60e13fbacbdefb66b556de0a",
           "scene": null
         },
         {
@@ -39,7 +39,7 @@
         {
           "name": "测评详情",
           "pathName": "pages/station/components/detail/detail",
-          "query": "id=5efed573b1ef0200062a85f7",
+          "query": "id=5ee71745e5071b000690f8d3&_ttn=610ccdc93451547e683e0450",
           "scene": null
         },
         {
@@ -51,7 +51,7 @@
         {
           "name": "小程序码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "scene=60f6324aa5567c40a4280cca",
+          "query": "scene=610cf7c8257c165d4bdfd6fd",
           "scene": null
         },
         {
@@ -221,6 +221,18 @@
           "name": "系统维护",
           "pathName": "pages/auth/subpages/maintain/maintain",
           "query": "receivedRecordId=60e808820c294e5d6103f7d0",
+          "scene": null
+        },
+        {
+          "name": "首页搜索",
+          "pathName": "pages/home/subpages/search/search",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "客户服务",
+          "pathName": "pages/customer-service/customer-service",
+          "query": "_ttn=610b9fef063bed4d8c0b4b15",
           "scene": null
         }
       ]

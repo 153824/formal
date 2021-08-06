@@ -20,7 +20,7 @@
     <view class="takephotobtn" bindtap="reset">重新认证</view>
 </view>
 <view class="container font" wx:else>
-    <view class="header" wx:if="{{isNew}}">
+    <view class="header" wx:if="{{isNewCompany}}">
         <image src="https://ihola.luoke101.com/teams-cert%40icon-background.png"></image>
         <view class="headbox">
             <view class="headboxtop">

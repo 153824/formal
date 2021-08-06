@@ -1,3 +1,5 @@
+import {getEnv, getTag, umaEvent} from "../../../../uma.config";
+
 const app = getApp();
 let page = 1, paperId;
 Component({
@@ -66,9 +68,7 @@ Component({
         }
       });
     },
-    /**
-     * 进入报告详情
-     */
+
     goToReportDetail: function(e) {
       const index = e.currentTarget.dataset.index;
       const obj = this.data.evaluationTask[index];
@@ -76,18 +76,18 @@ Component({
       wx.navigateTo({
         url: '/pages/report/report?receiveRecordId=' + obj.receiveRecordId + "&name=" + obj.evaluationName
       });
+      if(this.properties.navigationBarTitleText === '他人邀请我参加的测评'){
+        const umaConfig = umaEvent.getInReport;
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.invite, name: `${obj.evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
+      }
     },
-    /**
-     * 页面切换
-     */
+
     changePage: function(e) {
       app.isTest = false;
-      const url = e.currentTarget.dataset.url; 
+      const url = e.currentTarget.dataset.url;
       app.changePage(url);
     },
-    /**
-     * 申请查看报告
-     */
+
     toApply: function(e) {
       const id = e.currentTarget.dataset.id;
       const that = this;
@@ -105,17 +105,13 @@ Component({
         }
       });
     },
-    /**
-     * 弹窗隐藏
-     */
+
     hideDlg: function(e) {
       this.setData({
         showDlg: false
       });
     },
-    /**
-     * 进入测评模拟测试
-     */
+
     toTestIt: function(e) {
       app.isTest = true;
       wx.navigateTo({

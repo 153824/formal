@@ -1,4 +1,6 @@
 // test/guide.js
+import {getEnv, getTag, umaEvent} from "../../../../uma.config";
+
 const app = getApp();
 var isHasApplyFor = false;
 Page({
@@ -17,7 +19,7 @@ Page({
         isGetAccessToken: app.checkAccessToken(),
         authCodeCounter: 0,
         type:'',
-        demonstrateInfo:{}
+        countdownInMinutes: -1
     },
     onLoad: function (option) {
         const that = this;
@@ -55,6 +57,9 @@ Page({
                     that.setData({
                         isSelf: res.data.type
                     });
+                    const type = res.data.type.toLowerCase() === 'self' ? 'self' : 'scan'
+                    const umaConfig = umaEvent.getInReplyGuide;
+                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx), tag: getTag(wx)});
                 }
             });
         }
@@ -98,9 +103,6 @@ Page({
         })
     },
 
-    /**
-     * 申请查看报告
-     */
     toApply: function (e) {
         if (isHasApplyFor) {
             app.toast("已申请，请等待审核");
@@ -121,46 +123,10 @@ Page({
             }
         });
     },
-    /**
-     *获取测评详情
-     */
-    getPaperMsg: function (params) {
-        params = params || {};
-        const that = this;
-        app.shareId = null;
-        app.doAjax({
-            url: "paperQues",
-            method: "get",
-            noLoading: true,
-            data: {
-                id: params.evaluationId || "",
-                isTest: app.isTest
-            },
-            success: function (res) {
-                that.setData({
-                    status: params.status,
-                    isTest: app.isTest,
-                    draftAnswer: params.draftAnswer,
-                    reportPermit: params.reportPermit,
-                    releaseRecordId: params.releaseRecordId || "",
-                    evaluationId: params.evaluationId || "",
-                    evaluationList: res,
-                    receiveRecordId: params.receiveRecordId
-                });
-            }
-        });
-    },
-
-    verifyUserInfo: function (e) {
-        const {evaluationId,} = this.data.demonstrateInfo;
-        const {releaseRecordId, reportPermit, status,} = this.data;
-        const url = `/pages/work-base/components/answering/answering?evaluationId=${evaluationId}&releaseRecordId=${releaseRecordId}&reportPermit=${reportPermit}&status=${status}&verify=true`;
-        wx.redirectTo({
-            url: url
-        });
-    },
 
     goToReplying: function (e) {
+        let targetType = 'scan';
+        const {evaluationName} = this.data.demonstrateInfo;
         const {type} = e.currentTarget.dataset;
         const receiveRecordId = this.data.receiveRecordId;
         const p = new Promise((resolve, reject) => {
@@ -200,119 +166,18 @@ Page({
                 }
             })
         });
+        const umaConfig = umaEvent.clickStartReplying;
+        if(this.data.isSelf.toLowerCase() === 'self'){
+            targetType = 'self'
+        }
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[targetType], name: `${evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
         return p;
     },
-    /**
-     * 进入报告详情
-     */
+
     toDetail: function (e) {
         var {receiveRecordId} = this.data;
         wx.redirectTo({
             url: '/pages/report/report?receiveRecordId=' + receiveRecordId,
-        });
-    },
-
-    fetchEvaluation: function (userInfo) {
-        const that = this;
-        const {releaseRecordId} = this.data;
-        if (!userInfo) {
-            userInfo = {
-                id: ""
-            };
-        }
-        app.doAjax({
-            url: "release/fetch",
-            method: "post",
-            noLoading: true,
-            data: {
-                releaseRecordId: releaseRecordId,
-                userId: userInfo.userId
-            },
-            success: function (res) {
-                const {evaluationId, receiveRecordId, reportPermit, status} = res;
-                let text = "";
-                if (!res.receiveRecordId && res.msg !== 'qualification needed') {
-                    app.toast("该分享已失效！");
-                    wx.redirectTo({
-                        url: "/pages/work-base/work-base"
-                    });
-                    return;
-                } else if (!res.receiveRecordId && res.msg === 'qualification needed') {
-                    that.setData({
-                        isEmail: true,
-                    })
-                }
-                const sKey = "oldAnswer" + res.receiveRecordId;
-                const oldData = wx.getStorageSync(sKey);
-                that.setData({
-                    reportPermit: res.reportPermit,
-                });
-                setTimeout(() => {
-                    that.setData({
-                        maskTrigger: false
-                    })
-                }, 500);
-                if (oldData && res.status !== 'FINISHED') {
-                    setTimeout(() => {
-                        const url = `../answering/answering?evaluationId=${evaluationId}&releaseRecordId=${releaseRecordId}&receiveRecordId=${receiveRecordId}&reportPermit=${reportPermit}&status=${status}`;
-                        wx.redirectTo({
-                            url: url,
-                        });
-                    }, 500);
-                    return;
-                }
-                const oldPeopleMsg = res.participantInfo;
-                if (oldPeopleMsg && oldPeopleMsg.username) {
-                    wx.setStorageSync("oldPeopleMsg", oldPeopleMsg);
-                }
-                switch (res.msg) {
-                    case 'continue examining':
-                        text = "继续作答";
-                        break;
-                    case 'show report':
-                        text = "查看报告";
-                        break;
-                    case 'apply to view report':
-                        text = "申请查看报告";
-                        break;
-                    case 'wait for approving view report':
-                        text = "等待hr通过申请";
-                        break;
-                    case 'not available':
-                        text = "分享已失效";
-                        app.toast("该分享已失效！")
-                        wx.switchTab({
-                            url: "/pages/home/home"
-                        });
-                        break;
-                    case 'qualification needed':
-                        text = "立即验证";
-                        break;
-                    case 'fetch success':
-                        text = "开始作答";
-                        break;
-                }
-                that.getPaperMsg({
-                    status: res.status,
-                    reportPermit: res.reportPermit,
-                    draftAnswer: res.draft,
-                    evaluationId: res.evaluationId,
-                    releaseRecordId: releaseRecordId,
-                    receiveRecordId: res.receiveRecordId,
-                });
-                that.setData({
-                    avatar: res.avatar,
-                    teamName: res.teamName,
-                    text: text
-                })
-            },
-            fail: function (err) {
-                setTimeout(() => {
-                    that.setData({
-                        maskTrigger: false
-                    })
-                }, 500);
-            }
         });
     },
 
@@ -327,8 +192,9 @@ Page({
             },
             success: function (res) {
                 _this.setData({
-                    demonstrateInfo: res,
-                    maskTrigger: false
+                    demonstrateInfo: res.demonstrateInfo,
+                    maskTrigger: false,
+                    countdownInMinutes: res.countdownInMinutes
                 });
             },
             complete: function () {},
@@ -387,7 +253,8 @@ Page({
                     evaluationStatus: msg,
                     evaluationStatusText: text,
                     receiveRecordId: receiveRecordId,
-                    maskTrigger: false
+                    maskTrigger: false,
+                    countdownInMinutes: res.countdownInMinutes
                 });
             },
             complete: function () {},
@@ -414,13 +281,10 @@ Page({
     },
 
     goToRecorder: function () {
+        let type = 'scan';
         const {releaseRecordId,demonstrateInfo,receiveRecordId} = this.data;
-        try {
-            wx.uma.trackEvent('1602215501397', {name: demonstrateInfo.evaluationName})
-        } catch (e) {
-
-        }
-        if(this.data.type!=='self'){
+        const umaConfig = umaEvent.clickStartReplying;
+        if(this.data.isSelf.toLowerCase()!=='self'){
             wx.redirectTo({
                 url: `/pages/recorder/recorder?releaseRecordId=${releaseRecordId}`
             });
@@ -457,7 +321,9 @@ Page({
                     })
                 }
             })
+            type = 'self';
         }
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type],  name: `${demonstrateInfo.evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
     },
 
     getProgramSetting(releaseRecordId) {

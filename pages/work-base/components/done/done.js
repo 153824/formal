@@ -1,4 +1,6 @@
 // test/finish.js
+import {getEnv, getTag, umaEvent} from "../../../../uma.config";
+
 var app = getApp();
 Page({
     data: {
@@ -78,19 +80,12 @@ Page({
      * 进入报告详情
      */
     toDetail: function (e) {
+        const umaConfig = umaEvent.getInReport;
         const {receiveRecordId, isSelf, evaluationName} = this.data;
-        if (isSelf && isSelf === "SELF") {
-            try {
-                wx.uma.trackEvent('1602214791798', {name: evaluationName})
-            } catch (e) {
-
-            }
-        } else {
-
-        }
         wx.navigateTo({
             url: `/pages/report/report?receiveRecordId=${receiveRecordId}&isSelf=${isSelf}`
         });
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.self, name: `${evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
     },
 
     _checkedReceiveInfo: function (receiveRecordId) {

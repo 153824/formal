@@ -55,7 +55,9 @@
     "pages/auth/subpages/maintain/maintain",
     "pages/recorder/subpages/golden/golden",
     "pages/user-center/components/ticket-center/ticket-center",
-    "pages/customer-service/customer-service"
+    "pages/customer-service/customer-service",
+    "pages/home/subpages/search/search",
+    "pages/home/subpages/section/section"
   ],
   "tabBar": {
     "custom": true,

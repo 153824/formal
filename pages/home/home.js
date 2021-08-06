@@ -1,3 +1,4 @@
+import {getEnv, getTag, umaEvent} from "../../uma.config.js";
 const app = getApp();
 Page({
     data: {
@@ -13,18 +14,60 @@ Page({
         active: 0,
         column: [],
         trigger: true,
+        scrollViewHeight: 'calc(100vh - 120rpx)',
+        scrollTop: 0,
+        offsetTop: 0,
+        isFixed: false,
+        page: 0,
+        size: 10,
+        evaluationSection: {
+            title: '',
+            evaluations: []
+        },
+        bannerRes: [],
+        isGetAccessToken: app.checkAccessToken(),
+        authCodeCounter: 0
     },
+
     onLoad: function () {
         this.init();
     },
 
     onShow: function () {
-        app.freeTickId = "";
-        try {
-            wx.uma.trackEvent("1601368297264")
-        } catch (e) {
-            console.error("home.js -> 109", e);
+        const that = this;
+        setTimeout(()=>{
+            that.setData({
+                tabbarHeight: wx.getStorageSync('TAB_BAR_HEIGHT')
+            })
+        }, 0)
+    },
+
+    onUnload() {
+        const {isWxWork, is3rd} = app.wxWorkInfo;
+        if (isWxWork || is3rd) {
+            this.setData({
+                loading: true,
+                trigger: false
+            });
         }
+    },
+
+    onScroll(event) {
+        wx.createSelectorQuery()
+            .select('#home-scroll')
+            .boundingClientRect((res) => {
+                this.setData({
+                    scrollTop: event.detail.scrollTop,
+                    offsetTop: res.top
+                });
+            })
+            .exec();
+    },
+
+    onSticky(e){
+        this.setData({
+            isFixed: e.detail.isFixed
+        });
     },
 
     onShareAppMessage(options) {
@@ -43,7 +86,10 @@ Page({
                 is3rd,
                 isWxWorkSuperAdmin
             })
-        }else{
+            this.setData({
+                isGetAccessToken: true
+            })
+        } else {
             app.checkUserInfo=(res)=>{
                 this.check({
                     isWxWork: res.isWxWork,
@@ -51,12 +97,14 @@ Page({
                     is3rd: res.is3rd,
                     isWxWorkSuperAdmin: res.isSuperAdmin
                 })
+                this.setData({
+                    isGetAccessToken: res.tokenInfo && res.tokenInfo.accessToken
+                })
             };
         }
     },
 
     check({isWxWork, isWxWorkAdmin, isWxWorkSuperAdmin, is3rd}) {
-        const that = this;
         if (is3rd || isWxWork && !isWxWorkSuperAdmin) {
             let flag = false
             let url = isWxWork ? "/pages/account/account" : "/pages/auth/auth?type=auth"
@@ -73,188 +121,154 @@ Page({
             return
         }
         if (!is3rd && !isWxWork || !is3rd && isWxWork && isWxWorkSuperAdmin) {
-            console.log('isWxWorkSuperAdmin: ', isWxWorkSuperAdmin);
-            let homePagesPromiseList = [];
-            const homePagesPromise = new Promise(function (resolve, reject) {
-                app.doAjax({
-                    url: "homePages",
-                    method: "get",
-                    noLoading: true,
-                    success: function (res) {
-                        resolve(res.resultObject);
-                    },
-                    fail: function (err) {
-                        reject(err)
-                    }
-                });
-            });
-            homePagesPromise.then(res => {
-                that.setData(res);
-                homePagesPromiseList = res.column.map((v, k) => {
-                    return new Promise((resolve, reject) => {
-                        app.doAjax({
-                            url: `homePages/columns/${v.column_id}/evaluations`,
-                            method: "get",
-                            noLoading: true,
-                            success: function (res) {
-                                resolve({columnId: v.column_id, data: res.data});
-                            },
-                            fail: function (err) {
-                                reject(err);
-                            }
-                        });
-                    })
-                });
-                return Promise.all(homePagesPromiseList)
-            }).then(res => {
-                const {column} = that.data;
-                const targetColumn = column;
-                for (let i = 0; i < res.length; i++) {
-                    for (let j = 0; j < column.length; j++) {
-                        if (res[i].columnId === targetColumn[j].column_id) {
-                            targetColumn[j]["data"] = res[i].data || [];
-                        }
-                    }
-                }
-                that.setData({
-                    column: targetColumn,
-                });
-                setTimeout(() => {
-                    that.setData({
-                        loading: false
-                    })
-                }, 500);
-            }).catch(err => {
-                setTimeout(() => {
-                    that.setData({
-                        loading: false
-                    })
-                }, 500);
-            });
+            this.loadSection();
+            this.loadBanner();
         }
+        const umaConfig = umaEvent.launchHome;
+        wx.uma.trackEvent(umaConfig.tag, {env: getEnv(wx), tag: getTag(wx)});
     },
 
-    navWebView: function (e) {
-        const {url, name} = e.currentTarget.dataset;
-        try {
-            wx.uma.trackEvent('1601368427999', {"文章名称": name})
-        } catch (e) {
-            console.error('home.js -> 134', e)
+    goToMore(e) {
+        let name = "";
+        const {type} = e.target.dataset;
+        wx.navigateTo({
+            url: `/pages/home/components/more/more?type=${type}`
+        });
+        switch (type) {
+            case 'brain':
+                name = '人才盘点';
+                break;
+            case 'school':
+                name = '校招选才';
+                break;
+            case 'social':
+                name = '社招选才';
+                break;
         }
+        const umaConfig = umaEvent.getInNavigationByHome;
+        wx.uma.trackEvent(umaConfig.tag, {navigation: `${name}`, env: getEnv(wx), tag: getTag(wx)});
+    },
+
+    goToSearch() {
+        wx.navigateTo({
+            url: '/pages/home/subpages/search/search'
+        })
+        const umaConfig = umaEvent.getInSearchByHome;
+        wx.uma.trackEvent(umaConfig.tag, {press: umaConfig.name, env: getEnv(wx), tag: getTag(wx)})
+    },
+
+    goToWhere(e) {
+        const {bannerRes} = this.data;
+        const {index} = e.currentTarget.dataset;
+        if(bannerRes[index].linkId.indexOf('http') > -1) {
+            this.goToWebView(bannerRes[index].linkId)
+        } else {
+            wx.navigateTo({
+                url: `/pages/station/components/detail/detail?id=${bannerRes[index].id}`
+            })
+        }
+        const umaConfig = umaEvent.getInBannerByHome;
+        wx.uma.trackEvent(umaConfig.tag, {order: `${index}`, env: getEnv(wx), tag: getTag(wx)})
+    },
+
+    goToWebView(url) {
         wx.setStorageSync("webView_Url", url);
         wx.navigateTo({
-            url: '../../common/webView',
+            url: '/common/webView',
         });
     },
-    /**继续体验 */
-    goToReplying: function (e) {
-        const {t} = e.target.dataset;
-        if (t === '2') {
-            wx.setStorageSync("hideLastTestMind", true);
-            this.setData({
-                oldShareInfo: ""
-            });
-            return;
-        }
-        const {id} = this.data.oldShareInfo;
+
+    goToCustomerService() {
+        const umaConfig = umaEvent['customerService'];
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.home, env: getEnv(wx), tag: getTag(wx)})
         wx.navigateTo({
-            url: '../test/guide?id=' + id
+            url: '/pages/customer-service/customer-service',
         });
     },
-    gotoDetail: function (e) {
-        const {id} = e.currentTarget.dataset;
-        if (id.startsWith("http")) {
-            wx.setStorageSync("webView_Url", id);
-            wx.navigateTo({
-                url: '../../common/webView',
-            });
-            return;
-        }
-        wx.navigateTo({
-            url: `../station/components/detail/detail?id=${id}`,
-            success: function () {
+
+    loadSection() {
+        const that = this;
+        const {evaluationSection} = this.data;
+        const evaluationList = evaluationSection.evaluations;
+        const {page, size} = this.data;
+        app.doAjax({
+            url: '../wework/homepages/evaluations',
+            method: 'GET',
+            data: {
+                page: page + 1,
+                size,
+            },
+            success(res) {
+                const {evaluations, title} = res;
+                if(evaluations.length){
+                    const targetEvaluations = [...evaluationList, ...evaluations]
+                    evaluationSection.evaluations = targetEvaluations;
+                    evaluationSection.title = title
+                    console.log({...evaluationSection})
+                    that.setData({
+                        evaluationSection: {...evaluationSection},
+                        page: page + 1,
+                    })
+                } else {
+                    evaluationSection.title = title
+                    that.setData({
+                        evaluationSection: {...evaluationSection},
+                    })
+                    app.toast('已为您加载所有相关内容')
+                }
+                console.log(res);
+            },
+            error(err) {
+
             }
-        });
-    },
-    goToAll(e) {
-        const {columnId} = e.currentTarget.dataset;
-        wx.navigateTo({
-            url: `/pages/home/subpages/all?columnId=${columnId}`
         })
     },
-    callServing: function (e) {
-        this.setData({
-            showServing: true
-        });
-    },
-    hideServing: function (e) {
-        this.setData({
-            showServing: false
-        });
-    },
-    copyIt: function () {
-        const {wechat} = this.data;
-        wx.setClipboardData({
-            data: wechat,
+
+    loadBanner() {
+        const that = this;
+        app.doAjax({
+            url: "homePages",
+            method: "get",
+            noLoading: true,
             success(res) {
+                const targetData = [];
+                const {data} = res.resultObject.banner;
+                data.forEach(item=>{
+                    targetData.push(item)
+                })
+                that.setData({
+                    bannerRes: data
+                })
+            },
+            error(err) {
+
             }
-        });
+        })
     },
-    changePage: function (e) {
-        const {name, url, tab, n} = e.currentTarget.dataset;
-        if (url) {
-            if (url.indexOf('http') != -1) {
-                wx.setStorageSync("webView_Url", url);
-                wx.navigateTo({
-                    url: '../common/webView',
+
+    getPhoneNumber(e) {
+        const that = this;
+        let {authCodeCounter} = this.data;
+        if(authCodeCounter > 5){
+            return;
+        }
+        app.getAccessToken(e).then(res=>{
+            that.setData({
+                isGetAccessToken: true
+            });
+            that.goToCustomerService();
+            const umaConfig = umaEvent.authPhoneSuccess;
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.home, env: getEnv(wx), tag: getTag(wx)});
+        }).catch(err=>{
+            console.log(err);
+            if(err.code === '401111'){
+                app.prueLogin().then(res=>{
+                    this.getPhoneNumber(e)
                 });
-            } else {
-                const {detail} = e;
-                try {
-                    wx.uma.trackEvent('1601368400960', {"测评名称": name})
-                } catch (e) {
-                    console.error('home.js -> 136', e)
-                }
-                if ((!detail || !detail.encryptedData) && n == "getPhoneNumber") return;
-                if (detail && detail.encryptedData) {
-                    const iv = detail.iv;
-                    const encryptedData = detail.encryptedData;
-                    if (encryptedData) {
-                        const userMsg = app.globalData.userMsg || {};
-                        userMsg["iv"] = iv;
-                        userMsg["encryptedData"] = encryptedData;
-                        app.doAjax({
-                            url: "updatedUserMobile",
-                            data: userMsg,
-                            noLoading: true,
-                            success: function (res) {
-                                app.getUserInfo();
-                            }
-                        });
-                    }
-                }
-                wx.navigateTo({
-                    url: url
-                });
+                that.setData({
+                    authCodeCounter: authCodeCounter++
+                })
             }
-        }
-        if (tab) {
-            wx.switchTab({
-                url: tab
-            });
-        }
-        this.setData({
-            showTopGift: true,
-            showGiftDlg: false
-        });
+        })
     },
-    onUnload() {
-        const {isWxWork, is3rd} = app.wxWorkInfo;
-        if (isWxWork || is3rd) {
-            this.setData({
-                loading: true,
-                trigger: false
-            });
-        }
-    }
 });

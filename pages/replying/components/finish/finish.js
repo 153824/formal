@@ -32,11 +32,7 @@ Page({
     toReportDetail: function (e) {
         const {id, name, isSelf} = this.data;
         if(isSelf && isSelf === "SELF"){
-            try{
-                wx.uma.trackEvent('1602214791798',{name: name})
-            }catch (e) {
 
-            }
         }
         wx.navigateTo({
             url: `/pages/report/report?receiveRecordId=${id}&isSelf=${isSelf}`,

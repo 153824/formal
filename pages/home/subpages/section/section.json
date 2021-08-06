@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "hola-card": "../../components/card/card"
+  },
+  "navigationBarBackgroundColor": "#F9FAFCFF"
+}

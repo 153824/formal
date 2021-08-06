@@ -3,7 +3,7 @@ var app = getApp();
 var selNewImg = false;
 Page({
   data: {
-    isNew: true,
+    isNewCompany: true,
     selvocation: [],
     vocationAry: [
       [],
@@ -250,7 +250,7 @@ Page({
         success: function (res) {
           that.setData({
             oldTeamMsg: res.data.certConfig,
-            isNew: false,
+            isNewCompany: false,
           });
           resolve(true);
         },

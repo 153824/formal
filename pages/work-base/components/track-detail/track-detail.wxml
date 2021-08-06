@@ -45,7 +45,7 @@
                 <block wx:if="{{ checkedItem === 0 }}">
                     <block wx:if="{{ finishList.length > 0 }}">
                         <view wx:for="{{ finishList }}" wx:for-item="finishedItem" wx:key="unique"
-                              class="content-child" data-id="{{ finishedItem.receiveRecordId }}" bindtap="changePage">
+                              class="content-child" data-evaluation-name data-id="{{ finishedItem.receiveRecordId }}" bindtap="changePage">
                             <view class="title">
                                 <text>{{ finishedItem.participant }}</text>
                                 <image src="../../images/manager@icon-left-arrow.png"></image>

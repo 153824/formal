@@ -1,4 +1,6 @@
 // manager/useHistoryDetail.js
+import {getEnv, getTag, umaEvent} from "../../../../uma.config";
+
 const app = getApp();
 Page({
     data: {
@@ -301,10 +303,13 @@ Page({
      * @date: 2020/8/27
      */
     changePage: function (e) {
+        const {evaluationName} = this.data;
         const {id} = e.currentTarget.dataset;
         wx.navigateTo({
             url: `../../../report/report?receiveRecordId=${id}`
         })
+        const umaConfig = umaEvent.getInReport;
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.record, name: `${evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
     },
 
     /**
@@ -395,11 +400,6 @@ Page({
             }
         }
         const time = new Date().getTime();
-        try {
-            wx.uma.trackEvent('1602216690926')
-        } catch (e) {
-
-        }
         return {
             title: `邀请您查看《${evaluationName}》的作答情况`,
             path: `pages/work-base/components/track-detail/track-detail?releaseRecordId=${trackId || releaseRecordId}&sharedAt=${time}&tabIndex=1`,

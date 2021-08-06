@@ -1,0 +1,31 @@
+<view class="card" data-evaluation-id="{{evaluationId}}" bind:tap="goToEvaluationDetail">
+    <view class="cover-wrapper">
+        <image src="{{cover}}"/>
+    </view>
+    <view class="info-wrapper">
+        <view class="info">
+            <block wx:if="{{isRichTextModel}}">
+                <rich-text nodes="{{util.gentRichText(title, 'font-size: 28rpx;font-weight: 600;')}}"></rich-text>
+            </block>
+            <block wx:else>
+                <text class="title">{{title}}</text>
+            </block>
+            <view class="tips">
+                <block wx:if="{{isRichTextModel}}">
+                    <rich-text nodes="{{util.gentRichText(topic ? '#'+ topic : '')}}"></rich-text>
+                    <rich-text nodes="{{util.gentRichText(tip)}}"></rich-text>
+                </block>
+                <block wx:else>
+                    <text>{{topic ? '#'+ topic : '' }} </text>
+                    <text class="sub-tip">{{tip}}</text>
+                </block>
+            </view>
+        </view>
+    </view>
+    <block wx:if="{{!!tag}}">
+        <view class="tag {{tag === '热门' ? 'hot' : 'new' }}">
+            {{tag}}
+        </view>
+    </block>
+</view>
+<wxs src="/utils/util.wxs" module="util"></wxs>

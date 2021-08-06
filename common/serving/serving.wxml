@@ -1,3 +1,8 @@
-<view class="serving" bindtap="goToServer" style="bottom:{{ bottom }};right: {{ right }};visibility: {{visibility === 'visible' ? 'visible' : 'hidden' }}">
+<button
+        class="serving"
+        open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
+        bind:getphonenumber="{{isGetAccessToken ? '' : 'getPhoneNumber'}}"
+        bind:tap="{{isGetAccessToken ? 'goToServer' : ''}}"
+        style="bottom:{{ bottom }};right: {{ right }};visibility: {{visibility === 'visible' ? 'visible' : 'hidden' }}">
     <image src="{{ image }}" style="height: 50px;width: 50px;"></image>
-</view>
+</button>

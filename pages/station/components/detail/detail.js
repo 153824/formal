@@ -1,3 +1,5 @@
+import {getEnv, getTag, umaEvent} from "../../../../uma.config";
+
 const app = getApp();
 Page({
     data: {
@@ -26,8 +28,12 @@ Page({
     },
 
     onLoad(options) {
-        console.log(options)
         const that = this;
+        const {scene} = wx.getLaunchOptionsSync();
+        const umaConfig = umaEvent.evaluationDetail;
+        if (umaConfig.scene.includes(scene)) {
+            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.card, scene, env: getEnv(wx), tag: getTag(wx)});
+        }
         this.setData({evaluationId: options.id});
     },
 
@@ -71,11 +77,6 @@ Page({
         this.setData({
             payTrigger: true
         });
-        try {
-            wx.uma.trackEvent('1602213155213', {name: evaluation.name,})
-        } catch (e) {
-
-        }
     },
 
     cancelPayForEvaluation: function (e) {
@@ -104,6 +105,8 @@ Page({
                     url: answeringURL
                 });
             })
+        const umaConfig = umaEvent.clickSelfOffer;
+        wx.uma.trackEvent(umaConfig.tag, {name: `${evaluation.name}`, env: getEnv(wx), tag: getTag(wx)});
     },
 
     addcount() {
@@ -181,9 +184,9 @@ Page({
 
     goToDaTi() {
         //发放测评
-        const that = this;
         const {evaluation, customNorms, availableVoucher, availableInventory} = this.data;
-        console.log(availableVoucher, availableInventory);
+        const umaConfig = umaEvent.clickShareOffer;
+        wx.uma.trackEvent(umaConfig.tag, {name: `${evaluation.name}`, env: getEnv(wx), tag: getTag(wx)});
         if (availableVoucher <= 0 && availableInventory <= 0) {
             app.toast("测评可用数量不足，请先购买测评");
             return;
@@ -233,10 +236,15 @@ Page({
         }
     },
 
-    showSelectQuiz() {
+    showSelectQuiz(e) {
+        const {type} = e.currentTarget.dataset;
         this.setData({
             showSelectQuiz: true
         })
+        if(type === 'enjoy'){
+            const umaConfig = umaEvent.clickFreeEnjoy;
+            wx.uma.trackEvent(umaConfig.tag, {press: umaConfig.name, tag: getTag(wx), env: getEnv(wx),})
+        }
     },
 
     hideSelectQuiz() {
@@ -246,9 +254,11 @@ Page({
     },
 
     goToCustomerService() {
+        const umaConfig = umaEvent.customerService;
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.evaluation, env: getEnv(wx), tag: getTag(wx)});
         wx.navigateTo({
             url: "/pages/customer-service/customer-service"
-        })
+        });
     },
 
     buyByCounts() {
@@ -267,7 +277,15 @@ Page({
         }
         app.getAccessToken(e)
             .then(res => {
-                return that.loadInventory()
+                const umaConfig = umaEvent.authPhoneSuccess;
+                if(type === 'enjoy'){
+                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.experience, env: getEnv(wx), tag: getTag(wx)});
+                } else if(type === 'contact' && !isIos){
+                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.pay, env: getEnv(wx), tag: getTag(wx)});
+                } else if (type === 'contact' && isIos){
+                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.contact, env: getEnv(wx), tag: getTag(wx)});
+                }
+                return that.loadInventory();
             })
             .then(res => {
                 const {availableVoucher, availableInventory} = res;

@@ -132,11 +132,6 @@ Component({
                 wx.switchTab({
                     url: `${that.data.wxPage[active].path}`
                 });
-                try {
-                    wx.uma.trackEvent("1601368351375", {"导航栏名称": `${that.data.wxPage[active].text}`});
-                } catch (e) {
-                    console.error("tab-bar.js -> 85", e)
-                }
             } else if (isWxWork && isWxWorkAdmin && !isWxWorkSuperAdmin) {
                 wx.switchTab({
                     url: `${that.data.wxWorkPage.admin[active].path}`
@@ -163,9 +158,11 @@ Component({
     pageLifetimes: {
         show: function () {
             app.setDataOfPlatformInfo(this);
-            wx.createSelectorQuery().in(this).select("#tabbar").boundingClientRect().exec(res => {
-                wx.setStorageSync("TAB_BAR_HEIGHT", res[0].height)
-            });
+            setTimeout(()=>{
+                wx.createSelectorQuery().in(this).select("#tabbar").boundingClientRect().exec(res => {
+                    wx.setStorageSync("TAB_BAR_HEIGHT", res[0].height)
+                });
+            }, 0);
         }
     },
     lifetimes: {

@@ -1,3 +1,5 @@
+import {getEnv, getTag, umaEvent} from "../../uma.config";
+
 /***********************************************************************************************************************
  * @NAME: WEID       /       @DATE: 2020/7/21      /       @DESC: 变量注释模板(新增变量务必添加)
  * shareId: 领取测评ID
@@ -45,7 +47,6 @@ Page({
 
     onLoad: function (option) {
         const that = this;
-        console.error('work-base')
         wx.getSystemInfo({
             success: function (res) {
                 const {isIPhoneXModel} = that.data;
@@ -390,15 +391,15 @@ Page({
         if (authCodeCounter > 5) {
             return
         }
-
         app.getAccessToken(e)
             .then(res => {
+                const umaConfig = umaEvent.authPhoneSuccess;
                 wx.reLaunch({
                     url: '/pages/home/home'
-                })
+                });
+                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.bench, env: getEnv(wx), tag: getTag(wx)});
             })
             .catch(err => {
-                console.error(err);
                 if (err.code === '401111') {
                     app.prueLogin().then(res => {
                         this.getPhoneNumber(e)
@@ -425,28 +426,6 @@ Page({
         app.updateUserInfo(e).then(res => {
         }).catch(err => {
             console.error(err);
-        });
-    },
-
-    getNewlyReportNums: function (e) {
-        const that = this;
-        app.doAjax({
-            url: 'reports/today_newly',
-            method: 'get',
-            success: function (res) {
-                that.setData({
-                    newlyNums: res
-                })
-            }
-        })
-    },
-    /**
-     * 进入测评模拟测试
-     */
-    toTestIt: function (e) {
-        app.isTest = true;
-        wx.navigateTo({
-            url: './components/guide/guide'
         });
     },
 
@@ -488,7 +467,6 @@ Page({
             app.toast("测评可用数量不足");
             return;
         }
-        wx.uma.trackEvent('1602212565156', {name: evaluationName, isFree: type === "FREE"})
         wx.navigateTo({
             url: `../station/components/sharePaper/sharePaper?necessaryInfo=${JSON.stringify(necessaryInfo)}`,
         })
@@ -499,6 +477,8 @@ Page({
         wx.navigateTo({
             url: `../station/components/detail/detail?id=${evaluationId}`,
         })
+        const umaConfig = umaEvent.evaluationDetail;
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.bench, env: getEnv(wx), tag: getTag(wx)});
     },
 
     goToReportMore: function (e) {
@@ -508,10 +488,15 @@ Page({
     },
 
     goToReportDetail: function (e) {
+        const {reportsList} = this.data;
+        const umaConfig = umaEvent.getInReport;
         const receiveRecordId = e.currentTarget.dataset.id;
+        const {index} = e.currentTarget.dataset;
+        console.log(reportsList);
         wx.navigateTo({
             url: `../report/report?receiveRecordId=${receiveRecordId}`
-        })
+        });
+        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.bench, name: `${reportsList[index].evaluation}`, env: getEnv(wx), tag: getTag(wx)});
     },
 
     setChildManager: function (e) {

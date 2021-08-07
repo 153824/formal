@@ -234,6 +234,12 @@
           "pathName": "pages/customer-service/customer-service",
           "query": "_ttn=610b9fef063bed4d8c0b4b15",
           "scene": null
+        },
+        {
+          "name": "从小程序卡片进入报告",
+          "pathName": "pages/report/report",
+          "query": "receiveRecordId=610e00a8405ce65bbecef8f2&_ttn=610ba4a53451547e683c7554",
+          "scene": 1007
         }
       ]
     }

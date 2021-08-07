@@ -1299,7 +1299,7 @@
 }
 .button-group-wrapper{
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   padding: unset!important;
   margin: unset!important;
   border-radius: unset!important;

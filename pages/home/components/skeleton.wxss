@@ -2,17 +2,10 @@
     overflow: hidden !important;
 }
 .skeleton-banner-wrapper{
-    height: 255rpx;
-    padding: 40rpx 40rpx;
-    background-color: #fff;
-    box-shadow:0px 2px 8px 0px rgba(53,62,232,0.1);
-    border-radius:0px 0px 40px 40px;
-}
-.skeleton-banner-wrapper .van-skeleton{
-    padding: unset !important;
+    margin: 40rpx 0;
 }
 .skeleton-banner .van-skeleton__row,.van-skeleton__title{
-    height: 320rpx !important;
+    height: 200rpx !important;
     border-radius: 20rpx !important;
 }
 .skeleton-functional{

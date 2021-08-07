@@ -412,7 +412,7 @@
                 <!--End: 作答跟踪-->
             </scroll-view>
         </view>
-        <hola-tab-bar active="{{ 1 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{isWxWorkAdmin}}"></hola-tab-bar>
+        <hola-tab-bar active="{{ 0 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{isWxWorkAdmin}}"></hola-tab-bar>
     </view>
 </block>
 <!--End: 代小程序管理员页工作台-->

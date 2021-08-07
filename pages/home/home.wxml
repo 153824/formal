@@ -10,13 +10,13 @@
             scroll-x="false"
             bind:scroll="onScroll"
             bind:scrolltolower="loadSection"
-            style="margin-top:{{ (statusbarHeight + titleHeight) }}px;height: calc(100vh - {{(statusbarHeight + titleHeight + tabbarHeight)*1.1}}px);">
+            style="margin-top:{{ (statusbarHeight + titleHeight) }}px;height: calc(100vh - {{(statusbarHeight + titleHeight + tabbarHeight)*1}}px);">
         <view class="home-item__1">
             <swiper class="home-swiper"
                     indicator-dots="{{false}}"
-                    autoplay="{{false}}"
-                    interval="{{true}}"
-                    duration="{{duration}}">
+                    autoplay="{{true}}"
+                    interval="{{5000}}"
+                    duration="{{1000}}">
                 <block wx:for="{{bannerRes}}" wx:for-item="bannerItem" wx:for-index="bannerIndex" wx:key="unique">
                     <swiper-item>
                         <view bind:tap="goToWhere" data-index="{{bannerIndex}}" class="home-swiper-item" style="background-image: url({{bannerItem.picture}});">

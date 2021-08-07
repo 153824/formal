@@ -154,6 +154,7 @@
 
 .van-tabbar-item__text{
   font-weight: normal !important;
+  font-size: 22rpx;
 }
 
 .recommend-grade {

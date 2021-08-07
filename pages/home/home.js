@@ -240,7 +240,6 @@ Page({
                         that.setData({
                             evaluationSection: {...evaluationSection},
                         })
-                        app.toast('已为您加载所有相关内容')
                     }
                     resolve(res);
                 },

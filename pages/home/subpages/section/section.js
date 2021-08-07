@@ -29,8 +29,6 @@ Page({
                         evaluations: [...evaluations, ...res],
                         page: page + 1
                     })
-                } else {
-                    app.toast('已为您加载所有相关内容')
                 }
             }
         })

@@ -136,7 +136,6 @@ Component({
                             searchReportList: searchReportList,
                             searchPage: searchPage
                         });
-                        app.toast("已为您加载所有相关内容");
                     } else {
                         that.setData({
                             searchReportList: searchReportList.concat(res.data),

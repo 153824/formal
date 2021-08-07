@@ -9,8 +9,8 @@ page{
   color:transparent;
 }
 .home-scroll-view{
-  width: calc(100vw - 80rpx);
-  padding: 30rpx 40rpx;
+  /* width: calc(100vw - 80rpx);
+  padding: 30rpx 40rpx; */
 }
 .home-swiper{
   height: 220rpx;
@@ -58,16 +58,24 @@ page{
   background: #FFFFFF;
   border-radius: 26rpx;
 }
+.home-item__1{
+  padding: 30rpx 40rpx 0 40rpx;
+}
 .home-item__2{
   display: flex;
   flex-direction: row;
   margin-top: 60rpx;
+  padding: 0 40rpx;
   margin-bottom: 30rpx;
   font-size: 32rpx;
   font-family: PingFangSC-Semibold, PingFang SC;
   font-weight: 600;
   color: #FFFFFF;
   line-height: 44rpx;
+}
+.home-item__3{
+  /* padding: 0 40rpx; */
+  margin: 0 40rpx;
 }
 .home-item__2 > view{
   flex: 1;
@@ -138,6 +146,7 @@ page{
   background: rgba(53, 62, 232, 0.9)!important;
   box-shadow: 0rpx 0rpx 10rpx 0rpx rgba(0, 0, 0, 0.2)!important;
   border-radius: 20rpx!important;
+  margin: 0 0;
 }
 .home-contact > text{
   font-size: 24rpx;
@@ -147,7 +156,7 @@ page{
   line-height: 34rpx;
 }
 .home-item__4{
-  padding: 0 0 30rpx 0;
+  padding: 0 40rpx 30rpx 40rpx;
 }
 .home-item__4 .content{
   padding: 30rpx 0;
@@ -230,5 +239,8 @@ page{
   justify-content: space-between;
 }
 .is-padding{
-  padding: 30rpx 40rpx;
+  padding: 20rpx 0rpx;
+}
+.van-sticky-wrap{
+  background: #F9FAFC;
 }

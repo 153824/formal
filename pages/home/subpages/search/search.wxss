@@ -53,10 +53,10 @@ page{
 .search__type-1--content{
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 .search__type-1--child{
     flex: 1;
-    margin-right: 30rpx;
     max-width: 320rpx;
 }
 .title-wrapper{

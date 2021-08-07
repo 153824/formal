@@ -29,17 +29,18 @@
 .card .tag.new{
     background: #5AD8A6FF;
 }
-.cover-wrapper, .cover-wrapper > image{
-    width: 140rpx;
-    height: 140rpx;
-}
 .cover-wrapper{
     position: absolute;
+    width: 140rpx;
+    height: 140rpx;
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(0, 0, 0, 0.1);
+    border-radius: 16rpx;
     z-index: 1;
 }
 .cover-wrapper > image{
     box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(0, 0, 0, 0.1);
-    border-radius: 16rpx;
 }
 .info-wrapper{
     position: absolute;
@@ -53,7 +54,7 @@
     padding-left: 160rpx;
 }
 .info > .title{
-    font-size: 28rpx;
+    font-size: 30rpx;
     font-family: PingFangSC-Semibold, PingFang SC;
     font-weight: 600;
     color: #000000;
@@ -63,8 +64,9 @@
     display: flex;
     flex-direction: column;
     flex: 1;
-    justify-content: space-around;
-    font-size: 24rpx;
+    justify-content: center;
+    margin-top: 18rpx;
+    font-size: 26rpx;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: #999999;
@@ -83,6 +85,7 @@
     justify-content: space-between;
 }
 .sub-tip{
+    margin-top: 8rpx;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space: nowrap;

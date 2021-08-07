@@ -110,10 +110,6 @@ Page({
                         searchRes: [...searchRes, ...res],
                         page: page + 1
                     })
-                } else {
-                    if(searchRes.length > 0){
-                        app.toast('已为您加载所有相关内容')
-                    }
                 }
             },
         });

@@ -24,7 +24,7 @@
             <text bind:tap="cancel" class="cancel">取消</text>
         </view>
     </van-sticky>
-    <block wx:if="{{!isConfirm}}">
+    <block wx:if="{{!isConfirm&&searchRes.length<=0}}">
         <scroll-view wx:if="{{!!tagSection.length}}" class="search__type-1" scroll-x="true" scroll-y="false">
             <view class="search__type-1--content">
                 <block wx:for="{{tagSection}}" wx:for-item="tagSectionItem" wx:for-index="tagSectionIndex">

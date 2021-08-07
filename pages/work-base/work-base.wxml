@@ -123,9 +123,7 @@
             <!--End: 作答跟踪-->
         </scroll-view>
     </view>
-    <view wx:if="{{isShowTabbar}}">
-        <hola-tab-bar active="{{ isWxWorkSuperAdmin ? 1 : 0 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{isWxWorkAdmin}}"/>
-    </view>
+    <hola-tab-bar active="{{ isWxWorkSuperAdmin ? 1 : 0 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{isWxWorkAdmin}}"/>
 </view>
 <!--End: 企业微信端管理员页工作台-->
 <!--Start: 企业微信端非管理员页工作台-测评列表-->
@@ -252,9 +250,7 @@
             <!--End: 作答跟踪-->
         </scroll-view>
     </view>
-    <view wx:if="{{isShowTabbar}}">
-        <hola-tab-bar active="{{1}}"/>
-    </view>
+    <hola-tab-bar active="{{1}}"/>
     <button wx:if="{{!isGetAccessToken}}"
             open-type="getPhoneNumber"
             bind:getphonenumber="getPhoneNumber"
@@ -416,9 +412,7 @@
                 <!--End: 作答跟踪-->
             </scroll-view>
         </view>
-        <view wx:if="{{isShowTabbar}}">
-            <hola-tab-bar active="{{ 0 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{isWxWorkAdmin}}"></hola-tab-bar>
-        </view>
+        <hola-tab-bar active="{{ 0 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{isWxWorkAdmin}}"></hola-tab-bar>
     </view>
 </block>
 <!--End: 代小程序管理员页工作台-->

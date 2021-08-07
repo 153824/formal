@@ -75,7 +75,7 @@
         </view>
     </scroll-view>
 </view>
-<view wx:if="{{isShowTabbar&&!loading}}" id="hola-tab-bar">
+<view wx:if="{{!loading}}" id="hola-tab-bar">
     <hola-tab-bar active="{{ 0 }}"></hola-tab-bar>
 </view>
 <view wx:if="{{ loading }}" class="skeleton-index-page-wrapper"

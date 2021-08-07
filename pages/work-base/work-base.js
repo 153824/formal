@@ -42,8 +42,7 @@ Page({
         showEditDialog: false,
         editedTeamName: '',
         companyName: '好啦访客',
-        authCodeCounter: 0,
-        isShowTabbar: false
+        authCodeCounter: 0
     },
 
     onLoad: function (option) {
@@ -80,13 +79,7 @@ Page({
         }
         const that = this;
         let {isWxWorkAdmin, isWxWork, is3rd, is3rdAdmin} = this.data;
-        app.setDataOfPlatformInfo(this).then(res=>{
-            setTimeout(()=>{
-                that.setData({
-                    isShowTabbar: true
-                })
-            }, 0)
-        });
+        app.setDataOfPlatformInfo(this);
         if (!app.checkAccessToken()) {
             this.setData({
                 maskTrigger: false

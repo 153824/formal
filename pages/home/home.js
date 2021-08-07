@@ -26,8 +26,7 @@ Page({
         },
         bannerRes: [],
         isGetAccessToken: app.checkAccessToken(),
-        authCodeCounter: 0,
-        isShowTabbar: false
+        authCodeCounter: 0
     },
 
     onLoad: function () {
@@ -94,10 +93,6 @@ Page({
                 isWxWorkAdmin,
                 is3rd,
                 isWxWorkSuperAdmin
-            }, ()=>{
-                that.setData({
-                    isShowTabbar: true
-                })
             })
         } else {
             app.checkUserInfo=(res)=>{
@@ -114,10 +109,6 @@ Page({
                     isWxWorkAdmin: res.isAdmin,
                     is3rd: res.is3rd,
                     isWxWorkSuperAdmin: res.isSuperAdmin
-                }, ()=>{
-                    that.setData({
-                        isShowTabbar: true
-                    })
                 })
             };
         }
@@ -144,6 +135,7 @@ Page({
         if (!is3rd && !isWxWork || !is3rd && isWxWork && isWxWorkSuperAdmin) {
             this.loadSection()
                 .then(res=>{
+                    console.log("loadBanner");
                     return this.loadBanner()
                 })
                 .then(res=>{

@@ -442,7 +442,7 @@ Page({
         const flag = app.checkAccessToken();
         if(!flag){
             wx.navigateTo({
-                url: '/pages/whoami/whoami'
+                url: '/pages/auth/auth?type=auth'
             });
             return
         }

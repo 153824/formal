@@ -43,6 +43,7 @@ Page({
         editedTeamName: '',
         companyName: '好啦访客',
         authCodeCounter: 0,
+        isShowTabbar: false
     },
 
     onLoad: function (option) {
@@ -77,9 +78,15 @@ Page({
         if (!app.checkAccessToken() && (app.wxWorkInfo.isWxWork || app.wx3rdInfo.is3rd)) {
             return;
         }
-        app.setDataOfPlatformInfo(this);
         const that = this;
         let {isWxWorkAdmin, isWxWork, is3rd, is3rdAdmin} = this.data;
+        app.setDataOfPlatformInfo(this).then(res=>{
+            setTimeout(()=>{
+                that.setData({
+                    isShowTabbar: true
+                })
+            }, 0)
+        });
         if (!app.checkAccessToken()) {
             this.setData({
                 maskTrigger: false

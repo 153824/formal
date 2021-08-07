@@ -878,22 +878,25 @@ App({
     },
 
     setDataOfPlatformInfo(that) {
-        // 获取getApp()实例，避免混淆this
-        const app = getApp();
-        const platformInfo = {
-            isWxWork: app.wxWorkInfo.isWxWork,
-            isWxWorkAdmin: app.checkAdmin(),
-            isWxWorkSuperAdmin: app.checkSuperAdmin(),
-            is3rd: app.wx3rdInfo.is3rd,
-            is3rdAdmin: app.checkAdmin(),
-            is3rdSuperAdmin: app.checkSuperAdmin(),
-            isGetAccessToken: app.checkAccessToken()
-        };
-        console.log(platformInfo)
-
-        that.setData({
-            ...platformInfo
+        const p = new Promise((resolve, reject) => {
+            // 获取getApp()实例，避免混淆this
+            const app = getApp();
+            const platformInfo = {
+                isWxWork: app.wxWorkInfo.isWxWork,
+                isWxWorkAdmin: app.checkAdmin(),
+                isWxWorkSuperAdmin: app.checkSuperAdmin(),
+                is3rd: app.wx3rdInfo.is3rd,
+                is3rdAdmin: app.checkAdmin(),
+                is3rdSuperAdmin: app.checkSuperAdmin(),
+                isGetAccessToken: app.checkAccessToken()
+            };
+            console.log(platformInfo)
+            that.setData({
+                ...platformInfo
+            })
+            resolve(platformInfo)
         })
+        return p;
     },
 
     getAuthCode() {

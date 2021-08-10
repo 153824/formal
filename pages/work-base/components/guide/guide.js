@@ -29,7 +29,8 @@ Page({
                 type:option.type,
                 demonstrateInfo:JSON.parse(option.releaseInfo).demonstrateInfo,
                 isGetAccessToken:true,
-                evaluationStatusText:JSON.parse(option.releaseInfo).msg==='RELAY'?'继续作答':'开始作答'
+                evaluationStatusText:JSON.parse(option.releaseInfo).msg==='RELAY'?'继续作答':'开始作答',
+                countdownInMinutes: JSON.parse(option.releaseInfo).countdownInMinutes
             })
         }
         if (option.q) {

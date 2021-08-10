@@ -3,10 +3,12 @@ import {scenceMap} from "./user.tag.config";
 const umaEvent = {
     // 访问首页
     launchHome: {
+        key: '访问首页',
         tag: 'LaunchHome',
     },
     // 联系客服
     customerService: {
+        key: '联系客服',
         tag: 'CustomerService',
         origin: {
             home: '从首页',
@@ -21,6 +23,7 @@ const umaEvent = {
 
     // 访问测评详情页
     evaluationDetail: {
+        key: '访问测评详情页',
         tag: 'EvaluationDetail',
         origin: {
             home: '从首页',
@@ -36,6 +39,7 @@ const umaEvent = {
 
     // 搜索
     searchByKeyword: {
+        key: '搜索',
         tag: 'SearchByKeyword',
         content: '搜索内容：',
         count: '搜索结果数：'
@@ -43,6 +47,7 @@ const umaEvent = {
 
     // 授权手机号成功
     authPhoneSuccess: {
+        key: '授权手机号成功',
         tag: 'AuthPhoneSuccess',
         origin: {
             experience: '免费体验',
@@ -56,6 +61,7 @@ const umaEvent = {
 
     // 点击开始作答
     clickStartReplying: {
+        key: '点击开始作答',
         tag: 'ClickStartReplying',
         origin: {
             self: '从详情页自己测',
@@ -66,6 +72,7 @@ const umaEvent = {
 
     // 点击提交作答
     submitAnswer: {
+        key: '点击提交作答',
         tag: 'SubmitAnswer',
         origin: {
             self: '从详情页自己测',
@@ -76,6 +83,7 @@ const umaEvent = {
 
     // 进入报告详情页
     getInReport: {
+        key: '进入报告详情页',
         tag: 'GetInReport',
         origin: {
             self: '从详情页自己测',
@@ -91,6 +99,7 @@ const umaEvent = {
 
     // 生成测评邀请函
     generateInvite: {
+        key: '生成测评邀请函',
         tag: 'GenerateInvite',
         origin: {
             detail: '从详情页',
@@ -105,54 +114,63 @@ const umaEvent = {
 
     // 首页点击搜索
     getInSearchByHome: {
+        key: '首页点击搜索',
         tag: 'GetInSearchByHome',
         name: '首页点击搜索'
     },
 
     // 首页点击Banner
     getInBannerByHome: {
+        key: '首页点击Banner',
         tag: 'GetInBannerByHome',
         name: 'banner序号：'
     },
 
     // 首页点击导航
     getInNavigationByHome: {
+        key: '首页点击导航',
         tag: 'getInNavigationByHome',
         name: '导航名称：'
     },
 
     // 搜索页点击分类搜索
     searchGetInTypeByHome: {
+        key: '搜索页点击分类搜索',
         tag: 'SearchGetInTypeByHome',
         name: '分类名称：'
     },
 
     // 搜索页点击最新上架里的测评
     searchGetInShowcaseEvaluation: {
+        key: '搜索页点击最新上架里的测评',
         tag: 'SearchGetInShowcaseEvaluation',
         name: '测评名称：'
     },
 
     // 搜索页点击热门测评里的测评
     searchGetInHotEvaluation: {
+        key: '搜索页点击热门测评里的测评',
         tag: 'SearchGetInHotEvaluation',
         name: '测评名称：'
     },
 
     // 搜索页点击最新上架更多
     searchGetInShowcaseMore: {
+        key: '搜索页点击最新上架更多',
         tag: 'SearchGetInShowcaseMore',
         name: '搜索页点击最新上架更多'
     },
 
     // 搜索页点击热门测评更多
     searchGetInHotMore: {
+        key: '搜索页点击热门测评更多',
         tag: 'SearchGetInHotMore',
         name: '搜索页点击热门测评更多'
     },
 
     // 访问作答准备页
     getInReplyGuide: {
+        key: '访问作答准备页',
         tag: 'GetInReplyGuide',
         origin: {
             self: '从详情页自己测',
@@ -162,6 +180,7 @@ const umaEvent = {
 
     // 点击同意承诺书
     agreeGolden: {
+        key: '点击同意承诺书',
         tag: 'AgreeGolden',
         origin: {
             self: "从详情页自己测",
@@ -171,6 +190,7 @@ const umaEvent = {
 
     // 授权头像成功
     authUserInfoSuccess: {
+        key: '授权头像成功',
         tag: 'AuthUserInfoSuccess',
         origin: {
             mine: '个人中心授权',
@@ -181,36 +201,42 @@ const umaEvent = {
 
     // 点击免费体验
     clickFreeEnjoy: {
+        key: '点击免费体验',
         tag: 'ClickFreeEnjoy',
         name: '点击免费体验'
     },
 
     // 点击自己测
     clickSelfOffer: {
+        key: '点击自己测',
         tag: 'ClickSelfOffer',
         name: '点击自己测'
     },
 
     // 点击测别人
     clickShareOffer: {
+        key: '点击测别人',
         tag: 'ClickShareOffer',
         name: '点击别人'
     },
 
     // 企业微信-管理员打开
     qyAdmainOpen: {
+        key: '企业微信-管理员打开',
         tag: 'QYAdmainOpen',
         name: '管理员打开'
     },
 
     // 企业微信-非管理员打开
     qyMemberOpen: {
+        key: '企业微信-非管理员打开',
         tag: 'QYMemberOpen',
         name: '非管理员打开'
     },
 
     // 聊天界面发送消息
     sendCustomerServiceMessage: {
+        key: '聊天界面发送消息',
         tag: 'SendCustomerServiceMessage',
         origin: {
             home: '从首页',
@@ -232,6 +258,7 @@ const umaEvent = {
 
     // 进入客服聊天界面
     getInCustomerService: {
+        key: '进入客服聊天界面',
         tag: 'GetInCustomerService',
         origin: {
             home: '从首页',
@@ -252,10 +279,10 @@ const umaEvent = {
     }
 }
 
-function getEnv(_wx,) {
+function getEnv(_wx_) {
     let text = '微信';
-    const isWxWork = _wx.getSystemInfoSync().system.environment === 'wxwork';
-    const is3rd = _wx.getExtConfigSync().isCustomVersion === 'true' || (_wx.getExtConfigSync().isCustomVersion && _wx.getExtConfigSync().isCustomVersion.toString() === 'true');
+    const isWxWork = _wx_.getSystemInfoSync().system.environment === 'wxwork';
+    const is3rd = _wx_.getExtConfigSync().isCustomVersion === 'true' || (_wx_.getExtConfigSync().isCustomVersion && _wx_.getExtConfigSync().isCustomVersion.toString() === 'true');
     if(is3rd){
         text = '第三方';
     }
@@ -265,11 +292,69 @@ function getEnv(_wx,) {
     return text;
 }
 
-function getTag(_wx) {
+function getTag(_wx_) {
     let name = wx.getStorageSync('traceData').toLowerCase();
     return scenceMap[name].alias;
 }
 
+class Tracker {
+    constructor(instance) {
+        this.instance = instance;
+        this.env = this.getEnv();
+        this.tag = this.getTag();
+        this.preset = ['env', 'tag']
+    }
 
+    generate(tagName, extraData) {
+        const instance = this.instance
+        if(!instance.getStorageSync('traceEnabled')){
+            console.warn('内部人员不计入数据统计');
+            return;
+        }
+        let targetData = {
+            env: this.getEnv(),
+            tag: this.getTag()
+        };
+        switch (tagName) {
+            case 'LaunchHome':
+            case 'CustomerService':
+            case 'evaluationDetail':
+            case 'searchByKeyword':
+            case 'authPhoneSuccess':
+            case 'clickStartReplying':
+            case 'submitAnswer':
+            case 'getInReport':
+            default:
+                targetData = Object.assign(targetData, extraData);
+        }
+        console.log('generate: ',targetData);
+        instance.uma.trackEvent(tagName, targetData)
+    }
 
-export {umaEvent, getEnv, getTag}
+    getEnv() {
+        let text = '微信';
+        const instance = this.instance
+        const isWxWork = instance.getSystemInfoSync().system.environment === 'wxwork';
+        const is3rd = instance.getExtConfigSync().isCustomVersion === 'true' || (instance.getExtConfigSync().isCustomVersion && instance.getExtConfigSync().isCustomVersion.toString() === 'true');
+        if(is3rd){
+            text = '第三方';
+        }
+        if(isWxWork){
+            text = '企业微信';
+        }
+        return text;
+    }
+
+    getTag() {
+        const {instance} = this;
+        console.log(instance.getStorageSync('traceData'));
+        let name = instance.getStorageSync('traceData').toLowerCase();
+        return scenceMap[name].alias;
+    }
+
+    static isInsider() {
+        console.log("isInsider:",this.instance);
+    }
+}
+
+export {umaEvent, getEnv, getTag, Tracker}

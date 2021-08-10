@@ -1,7 +1,7 @@
 import debounce from '../../utils/lodash/debounce';
 import * as echarts from '../../utils/ec-canvas/echarts';
 import {getAge} from "../../utils/utils";
-import {getEnv, getTag, umaEvent} from "../../uma.config";
+import {getEnv, getTag, Tracker, umaEvent} from "../../uma.config";
 
 var app = getApp();
 var _this;
@@ -368,15 +368,22 @@ Page({
         const that = this;
         ctx = wx.createCanvasContext('canvasArcCir');
         const id = that.data.id || options.receiveRecordId || options.receivedRecordId;
+        if(options.isSelf){
+            this.setData({
+                isSelf: options.isSelf
+            })
+        }
         app.checkOfferType(id).then(res=>{
             const {type, evaluationName} = res;
-            this.setData({
-                isSelf: type
-            });
             const {scene} = wx.getLaunchOptionsSync();
             const umaConfig = umaEvent.getInReport;
             if (umaConfig.scene.includes(scene)) {
-                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.card, name: `${evaluationName}`, scene, env: getEnv(wx), tag: getTag(wx)});
+                try{
+                    new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.card, name: `${evaluationName}`});
+                }
+                catch (e) {
+                    console.log('友盟数据统计',e);
+                }
             }
         });
         this.setData({id});

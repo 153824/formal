@@ -1,5 +1,5 @@
 import debounce from "../../utils/lodash/debounce";
-import {getEnv, getTag, umaEvent} from "../../uma.config";
+import {getEnv, getTag, Tracker, umaEvent} from "../../uma.config";
 
 const app = getApp();
 Component({
@@ -35,7 +35,12 @@ Component({
             })
             if(type === "receive-evaluation"){
                 const umaConfig = umaEvent.getInReport;
-                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.share, name: `${reportList[index].evaluation}`, env: getEnv(wx), tag: getTag(wx)});
+                try{
+                    new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.share, name: `${reportList[index].evaluation}`});
+                }
+                catch (e) {
+                    console.log('友盟数据统计',e);
+                }
             }
         },
 

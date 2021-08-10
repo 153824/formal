@@ -1,4 +1,4 @@
-import {getEnv, getTag, umaEvent} from "../../../../uma.config";
+import {getEnv, getTag, Tracker, umaEvent} from "../../../../uma.config";
 
 const app = getApp();
 let page = 1, paperId;
@@ -78,7 +78,12 @@ Component({
       });
       if(this.properties.navigationBarTitleText === '他人邀请我参加的测评'){
         const umaConfig = umaEvent.getInReport;
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.invite, name: `${obj.evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
+        try{
+          new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.invite, name: `${obj.evaluationName}`});
+        }
+        catch (e) {
+          console.log('友盟数据统计',e);
+        }
       }
     },
 

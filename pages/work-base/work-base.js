@@ -1,4 +1,4 @@
-import {getEnv, getTag, umaEvent} from "../../uma.config";
+import {getEnv, getTag, Tracker, umaEvent} from "../../uma.config";
 
 /***********************************************************************************************************************
  * @NAME: WEID       /       @DATE: 2020/7/21      /       @DESC: 变量注释模板(新增变量务必添加)
@@ -397,7 +397,12 @@ Page({
                 wx.reLaunch({
                     url: '/pages/home/home'
                 });
-                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.bench, env: getEnv(wx), tag: getTag(wx)});
+                try{
+                    new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.bench});
+                }
+                catch (e) {
+                    console.log('友盟数据统计',e);
+                }
             })
             .catch(err => {
                 if (err.code === '401111') {
@@ -477,8 +482,13 @@ Page({
         wx.navigateTo({
             url: `../station/components/detail/detail?id=${evaluationId}`,
         })
-        const umaConfig = umaEvent.evaluationDetail;
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.bench, env: getEnv(wx), tag: getTag(wx)});
+        try{
+            const umaConfig = umaEvent.evaluationDetail;
+            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.bench});
+        }
+        catch (e) {
+            console.log('友盟数据统计',e);
+        }
     },
 
     goToReportMore: function (e) {
@@ -492,11 +502,15 @@ Page({
         const umaConfig = umaEvent.getInReport;
         const receiveRecordId = e.currentTarget.dataset.id;
         const {index} = e.currentTarget.dataset;
-        console.log(reportsList);
         wx.navigateTo({
             url: `../report/report?receiveRecordId=${receiveRecordId}`
         });
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.bench, name: `${reportsList[index].evaluation}`, env: getEnv(wx), tag: getTag(wx)});
+        try{
+            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.bench, name: `${reportsList[index].evaluation}`});
+        }
+        catch (e) {
+            console.log('友盟数据统计',e);
+        }
     },
 
     setChildManager: function (e) {

@@ -1,5 +1,5 @@
 // test/guide.js
-import {getEnv, getTag, umaEvent} from "../../../../uma.config";
+import {getEnv, getTag, Tracker, umaEvent} from "../../../../uma.config";
 
 const app = getApp();
 var isHasApplyFor = false;
@@ -59,7 +59,12 @@ Page({
                     });
                     const type = res.data.type.toLowerCase() === 'self' ? 'self' : 'scan'
                     const umaConfig = umaEvent.getInReplyGuide;
-                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx), tag: getTag(wx)});
+                    try{
+                        new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[type]});
+                    }
+                    catch (e) {
+                        console.log('友盟数据统计',e);
+                    }
                 }
             });
         }
@@ -170,7 +175,12 @@ Page({
         if(this.data.isSelf.toLowerCase() === 'self'){
             targetType = 'self'
         }
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[targetType], name: `${evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
+        try{
+            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[targetType], name: `${evaluationName}`});
+        }
+        catch (e) {
+            console.log('友盟数据统计',e);
+        }
         return p;
     },
 
@@ -323,7 +333,12 @@ Page({
             })
             type = 'self';
         }
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type],  name: `${demonstrateInfo.evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
+        try{
+            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[type], name: `${demonstrateInfo.evaluationName}`});
+        }
+        catch (e) {
+            console.log('友盟数据统计',e);
+        }
     },
 
     getProgramSetting(releaseRecordId) {

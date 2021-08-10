@@ -1,4 +1,4 @@
-import {getEnv, getTag, umaEvent} from "../../uma.config";
+import {getEnv, getTag, Tracker, umaEvent} from "../../uma.config";
 
 const app = getApp();
 Page({
@@ -75,7 +75,12 @@ Page({
     getUserInfo: function(e) {
         app.updateUserInfo(e).then(res=>{
             const umaConfig = umaEvent.authUserInfoSuccess;
-            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.mine, env: getEnv(wx), tag: getTag(wx)});
+            try{
+                new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.mine});
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
             return this.getUserInformation()
         }).then(res=>{
             if(res.avatar){
@@ -99,7 +104,12 @@ Page({
             success: (res) => {
                 app.updateUserInfo(res).then(res=>{
                     const umaConfig = umaEvent.authUserInfoSuccess;
-                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.mine, env: getEnv(wx), tag: getTag(wx)});
+                    try{
+                        new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.mine});
+                    }
+                    catch (e) {
+                        console.log('友盟数据统计',e);
+                    }
                     return that.getUserInformation()
                 }).then(res=>{
                     if(res.avatar){
@@ -125,8 +135,13 @@ Page({
         })
     },
     goToServing: function () {
-        const umaConfig = umaEvent.customerService;
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.mine, env: getEnv(wx), tag: getTag(wx)});
+        try {
+            const umaConfig = umaEvent.customerService;
+            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.mine});
+        }
+        catch (e) {
+            console.log("友盟数据统计：", e)
+        }
         wx.navigateTo({
             url: '/pages/customer-service/customer-service'
         })

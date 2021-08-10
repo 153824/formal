@@ -1,4 +1,4 @@
-import {getEnv, getTag, umaEvent} from "../../uma.config";
+import {getEnv, getTag, Tracker, umaEvent} from "../../uma.config";
 
 const app = getApp();
 Component({
@@ -72,8 +72,13 @@ Component({
                     isGetAccessToken: true
                 });
                 that.goToCustomerService();
-                const umaConfig = umaEvent.authPhoneSuccess;
-                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.contact, env: getEnv(wx), tag: getTag(wx)});
+                try{
+                    const umaConfig = umaEvent.authPhoneSuccess;
+                    new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.contact});
+                }
+                catch (e) {
+                    console.log('友盟数据统计',e);
+                }
             }).catch(err=>{
                 if(err.code === '401111'){
                     app.prueLogin().then(res=>{

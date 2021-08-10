@@ -1,4 +1,4 @@
-import {getEnv, getTag, umaEvent} from "../../uma.config.js";
+import {getEnv, getTag, umaEvent, Tracker} from "../../uma.config.js";
 const app = getApp();
 Page({
     data: {
@@ -133,11 +133,7 @@ Page({
             return
         }
         if (!is3rd && !isWxWork || !is3rd && isWxWork && isWxWorkSuperAdmin) {
-            this.loadSection()
-                .then(res=>{
-                    console.log("loadBanner");
-                    return this.loadBanner()
-                })
+            Promise.race([this.loadSection(), this.loadBanner()])
                 .then(res=>{
                     that.setData({
                         loading: false
@@ -148,9 +144,11 @@ Page({
                         loading: false
                     })
                 })
+            setTimeout(()=>{
+                const umaConfig = umaEvent.launchHome;
+                new Tracker(wx).generate(umaConfig.tag);
+            }, 10000);
         }
-        const umaConfig = umaEvent.launchHome;
-        wx.uma.trackEvent(umaConfig.tag, {env: getEnv(wx), tag: getTag(wx)});
     },
 
     goToMore(e) {
@@ -171,7 +169,12 @@ Page({
                 break;
         }
         const umaConfig = umaEvent.getInNavigationByHome;
-        wx.uma.trackEvent(umaConfig.tag, {navigation: `${name}`, env: getEnv(wx), tag: getTag(wx)});
+        try{
+            new Tracker(wx).generate(umaConfig.tag, {navigation: `${name}`});
+        }
+        catch (e) {
+            console.log('友盟数据统计',e);
+        }
     },
 
     goToSearch() {
@@ -179,7 +182,12 @@ Page({
             url: '/pages/home/subpages/search/search'
         })
         const umaConfig = umaEvent.getInSearchByHome;
-        wx.uma.trackEvent(umaConfig.tag, {press: umaConfig.name, env: getEnv(wx), tag: getTag(wx)})
+        try{
+            new Tracker(wx).generate(umaConfig.tag);
+        }
+        catch (e) {
+            console.log('友盟数据统计',e);
+        }
     },
 
     goToWhere(e) {
@@ -193,7 +201,12 @@ Page({
             })
         }
         const umaConfig = umaEvent.getInBannerByHome;
-        wx.uma.trackEvent(umaConfig.tag, {order: `${index}`, env: getEnv(wx), tag: getTag(wx)})
+        try{
+            new Tracker(wx).generate(umaConfig.tag, {order: `${index}`});
+        }
+        catch (e) {
+            console.log('友盟数据统计',e);
+        }
     },
 
     goToWebView(url) {
@@ -204,8 +217,13 @@ Page({
     },
 
     goToCustomerService() {
-        const umaConfig = umaEvent['customerService'];
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.home, env: getEnv(wx), tag: getTag(wx)})
+        try{
+            const umaConfig = umaEvent.customerService;
+            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.home});
+        }
+        catch (e) {
+            console.log('友盟数据统计',e);
+        }
         wx.navigateTo({
             url: '/pages/customer-service/customer-service',
         });
@@ -288,8 +306,13 @@ Page({
                 isGetAccessToken: true
             });
             that.goToCustomerService();
-            const umaConfig = umaEvent.authPhoneSuccess;
-            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.home, env: getEnv(wx), tag: getTag(wx)});
+            try{
+                const umaConfig = umaEvent.authPhoneSuccess;
+                new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.home});
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
         }).catch(err=>{
             console.log(err);
             if(err.code === '401111'){

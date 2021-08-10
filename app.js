@@ -1,4 +1,4 @@
-import {getEnv, getTag, umaEvent} from "./uma.config";
+import {getEnv, getTag, Tracker, umaEvent} from "./uma.config";
 import {scenceMap} from "./user.tag.config";
 
 /***********************************************************************************************************************
@@ -350,10 +350,20 @@ App({
             .then(res => {
                 if(res.isAdmin){
                     const umaConfig = umaEvent.qyAdmainOpen;
-                    wx.uma.trackEvent(umaConfig.tag, {open: umaConfig.name, env: getEnv(wx), tag: getTag(wx)});
+                    try{
+                        new Tracker(wx).generate(umaConfig.tag);
+                    }
+                    catch (e) {
+                        console.log('友盟数据统计',e);
+                    }
                 } else {
                     const umaConfig = umaEvent.qyMemberOpen;
-                    wx.uma.trackEvent(umaConfig.tag, {open: umaConfig.name, env: getEnv(wx), tag: getTag(wx)});
+                    try{
+                        new Tracker(wx).generate(umaConfig.tag);
+                    }
+                    catch (e) {
+                        console.log('友盟数据统计',e);
+                    }
                 }
                 if (that.checkUserInfo) {
                     res.isWxWork = true;
@@ -961,8 +971,7 @@ App({
                 },
                 noLoading: true,
                 success: function (res) {
-                    wx.setStorageSync('isNew', res.isNew);
-                    console.log(res);
+                    wx.setStorageSync('traceEnabled', res.traceEnabled);
                     wx.uma.setOpenid(res.openId);
                     if(!res.traceData || res.traceData.openIdFirstAccess || Object.keys(res.traceData.properties).length <= 0){
                         that.updateUserTag(res.authCode);

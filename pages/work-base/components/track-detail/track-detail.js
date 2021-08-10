@@ -1,5 +1,5 @@
 // manager/useHistoryDetail.js
-import {getEnv, getTag, umaEvent} from "../../../../uma.config";
+import {getEnv, getTag, Tracker, umaEvent} from "../../../../uma.config";
 
 const app = getApp();
 Page({
@@ -309,7 +309,12 @@ Page({
             url: `../../../report/report?receiveRecordId=${id}`
         })
         const umaConfig = umaEvent.getInReport;
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.record, name: `${evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
+        try{
+            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.record, name: `${evaluationName}`});
+        }
+        catch (e) {
+            console.log('友盟数据统计',e);
+        }
     },
 
     /**

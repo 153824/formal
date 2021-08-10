@@ -1,5 +1,5 @@
 // test/finish.js
-import {getEnv, getTag, umaEvent} from "../../../../uma.config";
+import {getEnv, getTag, Tracker, umaEvent} from "../../../../uma.config";
 
 var app = getApp();
 Page({
@@ -85,7 +85,12 @@ Page({
         wx.navigateTo({
             url: `/pages/report/report?receiveRecordId=${receiveRecordId}&isSelf=${isSelf}`
         });
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.self, name: `${evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
+        try{
+            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.self, name: `${evaluationName}`});
+        }
+        catch (e) {
+            console.log('友盟数据统计',e);
+        }
     },
 
     _checkedReceiveInfo: function (receiveRecordId) {

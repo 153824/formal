@@ -1,5 +1,5 @@
 import debounce from "../../../../utils/lodash/debounce";
-import {getEnv, getTag, umaEvent} from "../../../../uma.config";
+import {getEnv, getTag, Tracker, umaEvent} from "../../../../uma.config";
 
 const app = getApp();
 Page({
@@ -93,13 +93,13 @@ Page({
                 size
             },
             success(res) {
-                const umaConfig = umaEvent.searchByKeyword;
-                wx.uma.trackEvent(umaConfig.tag, {
-                    content: `${keyword}`,
-                    count: `${res.length}`,
-                    env: getEnv(wx),
-                    tag: getTag(wx)
-                });
+                try{
+                    const umaConfig = umaEvent.searchByKeyword;
+                    new Tracker(wx).generate(umaConfig.tag, {content: `${keyword}`, count: `${res.length}`,});
+                }
+                catch (e) {
+                    console.log('友盟数据统计',e);
+                }
                 if (res.length === 0 && page === 0) {
                     that.setData({
                         isEmpty: true
@@ -142,16 +142,31 @@ Page({
         wx.navigateTo({
             url: `/pages/station/components/detail/detail?id=${evaluationId}`
         });
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx), tag: getTag(wx)});
+        try{
+            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[type]});
+        }
+        catch (e) {
+            console.log('友盟数据统计',e);
+        }
         {
             const isHot = sectionName === '热门测评';
             console.log({name: `${evaluationName}`, env: getEnv(wx), tag: getTag(wx)})
             if (isHot) {
                 const umaConfig = umaEvent.searchGetInHotEvaluation;
-                wx.uma.trackEvent(umaConfig.tag, {name: `${evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
+                try{
+                    new Tracker(wx).generate(umaConfig.tag, {name: `${evaluationName}`});
+                }
+                catch (e) {
+                    console.log('友盟数据统计',e);
+                }
             } else {
                 const umaConfig = umaEvent.searchGetInShowcaseEvaluation;
-                wx.uma.trackEvent(umaConfig.tag, {name: `${evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
+                try{
+                    new Tracker(wx).generate(umaConfig.tag, {name: `${evaluationName}`});
+                }
+                catch (e) {
+                    console.log('友盟数据统计',e);
+                }
             }
         }
     },
@@ -163,22 +178,29 @@ Page({
         })
         if (sectionName) {
             const umaConfig = umaEvent.searchGetInTypeByHome;
-            wx.uma.trackEvent(umaConfig.tag, {
-                section: `${sectionName}`,
-                env: getEnv(wx),
-                tag: getTag(wx)
-            });
+            try{
+                new Tracker(wx).generate(umaConfig.tag, {section: `${sectionName}`,});
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
         } else {
             if (moreType === '最新上架') {
                 const umaConfig = umaEvent.searchGetInShowcaseMore;
-                wx.uma.trackEvent(umaConfig.tag, {press: `${umaConfig.name}`, env: getEnv(wx), tag: getTag(wx)});
+                try{
+                    new Tracker(wx).generate(umaConfig.tag);
+                }
+                catch (e) {
+                    console.log('友盟数据统计',e);
+                }
             } else {
                 const umaConfig = umaEvent.searchGetInHotMore;
-                wx.uma.trackEvent(umaConfig.tag, {
-                    press: `${umaConfig.name}`,
-                    env: getEnv(wx),
-                    tag: getTag(wx)
-                });
+                try{
+                    new Tracker(wx).generate(umaConfig.tag);
+                }
+                catch (e) {
+                    console.log('友盟数据统计',e);
+                }
             }
         }
     },
@@ -186,8 +208,13 @@ Page({
     goToCustomerService(e) {
         const {isEmpty} = e.currentTarget.dataset;
         if (isEmpty) {
-            const umaConfig = umaEvent.customerService;
-            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.search, env: getEnv(wx), tag: getTag(wx)});
+            try{
+                const umaConfig = umaEvent.customerService;
+                new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.search});
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
         }
         wx.navigateTo({
             url: '/pages/customer-service/customer-service'
@@ -205,8 +232,13 @@ Page({
                 isGetAccessToken: true
             });
             that.goToCustomerService();
-            const umaConfig = umaEvent.authPhoneSuccess;
-            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.search, env: getEnv(wx), tag: getTag(wx)});
+            try{
+                const umaConfig = umaEvent.authPhoneSuccess;
+                new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.search});
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
         }).catch(err => {
             if (err.code === '401111') {
                 app.prueLogin().then(res => {

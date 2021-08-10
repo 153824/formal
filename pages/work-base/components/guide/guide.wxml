@@ -22,8 +22,8 @@
             <view class="smalltext" wx:if="{{!countdownInMinutes}}">
                 平均用时{{demonstrateInfo.estimatedTime}}分钟
             </view>
-            <view wx:else>
-                限时{{demonstrateInfo.estimatedTime}}分钟
+            <view class="smalltext" wx:else>
+                限时{{demonstrateInfo.countdownInMinutes}}分钟
             </view>
         </view>
     </view>

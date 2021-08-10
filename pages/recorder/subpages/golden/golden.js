@@ -1,4 +1,4 @@
-import {getEnv, getTag, umaEvent} from "../../../../uma.config";
+import {getEnv, getTag, Tracker, umaEvent} from "../../../../uma.config";
 
 const app = getApp();
 Page({
@@ -29,7 +29,12 @@ Page({
         });
         const type = isSelf.toLowerCase() === 'self' ? 'self' : 'scan';
         const umaConfig = umaEvent.agreeGolden;
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx), tag: getTag(wx)});
+        try{
+            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[type]});
+        }
+        catch (e) {
+            console.log('友盟数据统计',e);
+        }
     },
     getGolden(receiveRecordId) {
         const that = this;

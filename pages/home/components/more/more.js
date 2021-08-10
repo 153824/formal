@@ -1,4 +1,4 @@
-import {getEnv, getTag, umaEvent} from "../../../../uma.config";
+import {getEnv, getTag, Tracker, umaEvent} from "../../../../uma.config";
 
 const app = getApp()
 Page({
@@ -67,8 +67,13 @@ Page({
     goToWebView: function (e) {
         const {type} = this.data;
         this.goToCustomerService();
-        const umaConfig = umaEvent.customerService;
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx), tag: getTag(wx)});
+        try{
+            const umaConfig = umaEvent.customerService;
+            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[type]});
+        }
+        catch (e) {
+            console.log('友盟数据统计',e);
+        }
     },
     goToCustomerService() {
         wx.navigateTo({

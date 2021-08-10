@@ -1,6 +1,6 @@
 import {QUES_TYPE} from './const/index';
 import debounce from "../../../../utils/lodash/debounce";
-import {getEnv, getTag, umaEvent} from "../../../../uma.config";
+import {getEnv, getTag, Tracker, umaEvent} from "../../../../uma.config";
 const app = getApp();
 Page({
     data: {
@@ -218,7 +218,12 @@ Page({
                 .then(res=>{
                     that.save()
                     const umaConfig = umaEvent.authUserInfoSuccess;
-                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.submit, env: getEnv(wx), tag: getTag(wx)});
+                    try{
+                        new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.submit});
+                    }
+                    catch (e) {
+                        console.log('友盟数据统计',e);
+                    }
                 })
         } else {
             wx.getUserProfile({
@@ -227,7 +232,12 @@ Page({
                     app.updateUserInfo(res).then(res=>{
                         that.save()
                         const umaConfig = umaEvent.authUserInfoSuccess;
-                        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.submit, env: getEnv(wx), tag: getTag(wx)});
+                        try{
+                            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.submit});
+                        }
+                        catch (e) {
+                            console.log('友盟数据统计',e);
+                        }
                     })
                 },
                 error: (e) => {
@@ -650,7 +660,12 @@ Page({
         const umaConfig = umaEvent.submitAnswer;
         try{
             type = isSelf.toLowerCase() === 'self' ? 'self' : 'scan';
-            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], name: `${evaluationName}`, env: getEnv(wx), tag: getTag(wx)});
+            try{
+                new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[type], name: `${evaluationName}`});
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
         }catch (e){
             console.log(e);
         }

@@ -1,4 +1,4 @@
-import {getEnv, getTag, umaEvent} from "../../../../uma.config";
+import {getEnv, getTag, Tracker, umaEvent} from "../../../../uma.config";
 
 var plugin = requirePlugin("chatbot");
 Component({
@@ -30,11 +30,21 @@ Component({
       for (let i in umaConfig.route) {
         if(i === 'more'){
           const {type} = routeInfo.options;
-          wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx), tag: getTag(wx)});
+          try{
+            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[type]});
+          }
+          catch (e) {
+            console.log('友盟数据统计',e);
+          }
           return
         }
         if(umaConfig.route[i].includes(currentRoute)){
-          wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[i], env: getEnv(wx), tag: getTag(wx)});
+          try{
+            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[i]});
+          }
+          catch (e) {
+            console.log('友盟数据统计',e);
+          }
           return;
         }
       }
@@ -72,11 +82,21 @@ Component({
       for (let i in umaConfig.route) {
         if(i === 'more'){
           const {type} = routeInfo.options;
-          wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[type], env: getEnv(wx), tag: getTag(wx)});
+          try{
+            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[type]});
+          }
+          catch (e) {
+            console.log('友盟数据统计',e);
+          }
           return
         }
         if(umaConfig.route[i].includes(currentRoute)){
-          wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[i], env: getEnv(wx), tag: getTag(wx)});
+          try{
+            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[i]});
+          }
+          catch (e) {
+            console.log('友盟数据统计',e);
+          }
           return;
         }
       }

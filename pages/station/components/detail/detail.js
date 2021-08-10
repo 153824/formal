@@ -1,4 +1,4 @@
-import {getEnv, getTag, umaEvent} from "../../../../uma.config";
+import {getEnv, getTag, Tracker, umaEvent} from "../../../../uma.config";
 
 const app = getApp();
 Page({
@@ -32,7 +32,12 @@ Page({
         const {scene} = wx.getLaunchOptionsSync();
         const umaConfig = umaEvent.evaluationDetail;
         if (umaConfig.scene.includes(scene)) {
-            wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.card, scene, env: getEnv(wx), tag: getTag(wx)});
+            try{
+                new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.card, scene});
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
         }
         this.setData({evaluationId: options.id});
     },
@@ -106,7 +111,12 @@ Page({
                 });
             })
         const umaConfig = umaEvent.clickSelfOffer;
-        wx.uma.trackEvent(umaConfig.tag, {name: `${evaluation.name}`, env: getEnv(wx), tag: getTag(wx)});
+        try{
+            new Tracker(wx).generate(umaConfig.tag, {name: `${evaluation.name}`});
+        }
+        catch (e) {
+            console.log('友盟数据统计',e);
+        }
     },
 
     addcount() {
@@ -186,7 +196,12 @@ Page({
         //发放测评
         const {evaluation, customNorms, availableVoucher, availableInventory} = this.data;
         const umaConfig = umaEvent.clickShareOffer;
-        wx.uma.trackEvent(umaConfig.tag, {name: `${evaluation.name}`, env: getEnv(wx), tag: getTag(wx)});
+        try{
+            new Tracker(wx).generate(umaConfig.tag, {name: `${evaluation.name}`});
+        }
+        catch (e) {
+            console.log('友盟数据统计',e);
+        }
         if (availableVoucher <= 0 && availableInventory <= 0) {
             app.toast("测评可用数量不足，请先购买测评");
             return;
@@ -243,7 +258,12 @@ Page({
         })
         if(type === 'enjoy'){
             const umaConfig = umaEvent.clickFreeEnjoy;
-            wx.uma.trackEvent(umaConfig.tag, {press: umaConfig.name, tag: getTag(wx), env: getEnv(wx),})
+            try{
+                new Tracker(wx).generate(umaConfig.tag);
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
         }
     },
 
@@ -254,8 +274,13 @@ Page({
     },
 
     goToCustomerService() {
-        const umaConfig = umaEvent.customerService;
-        wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.evaluation, env: getEnv(wx), tag: getTag(wx)});
+        try{
+            const umaConfig = umaEvent.customerService;
+            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.evaluation});
+        }
+        catch (e) {
+            console.log('友盟数据统计',e);
+        }
         wx.navigateTo({
             url: "/pages/customer-service/customer-service"
         });
@@ -279,11 +304,26 @@ Page({
             .then(res => {
                 const umaConfig = umaEvent.authPhoneSuccess;
                 if(type === 'enjoy'){
-                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.experience, env: getEnv(wx), tag: getTag(wx)});
+                    try{
+                        new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.experience});
+                    }
+                    catch (e) {
+                        console.log('友盟数据统计',e);
+                    }
                 } else if(type === 'contact' && !isIos){
-                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.pay, env: getEnv(wx), tag: getTag(wx)});
+                    try{
+                        new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.pay});
+                    }
+                    catch (e) {
+                        console.log('友盟数据统计',e);
+                    }
                 } else if (type === 'contact' && isIos){
-                    wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin.contact, env: getEnv(wx), tag: getTag(wx)});
+                    try{
+                        new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.contact});
+                    }
+                    catch (e) {
+                        console.log('友盟数据统计',e);
+                    }
                 }
                 return that.loadInventory();
             })

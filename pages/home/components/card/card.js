@@ -1,4 +1,4 @@
-import {umaEvent, getEnv, getTag} from "../../../../uma.config";
+import {umaEvent, getEnv, getTag, Tracker} from "../../../../uma.config";
 
 Component({
     properties: {
@@ -23,8 +23,13 @@ Component({
                 url: `/pages/station/components/detail/detail?id=${evaluationId}`
             });
             if(location){
-                const umaConfig = umaEvent.evaluationDetail;
-                wx.uma.trackEvent(umaConfig.tag, {origin: umaConfig.origin[location], env: getEnv(wx), tag: getTag(wx)});
+                try{
+                    const umaConfig = umaEvent.evaluationDetail;
+                    new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[location]});
+                }
+                catch (e) {
+                    console.log('友盟数据统计',e);
+                }
             }
         }
     }

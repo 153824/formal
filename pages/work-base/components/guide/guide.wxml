@@ -23,7 +23,7 @@
                 平均用时{{demonstrateInfo.estimatedTime}}分钟
             </view>
             <view class="smalltext" wx:else>
-                限时{{demonstrateInfo.countdownInMinutes}}分钟
+                限时{{countdownInMinutes}}分钟
             </view>
         </view>
     </view>

@@ -195,15 +195,15 @@
 </van-overlay>
 <van-overlay show="{{ showSelectQuiz }}" custom-style="background-color: #00000080;" bind:click="hideSelectQuiz">
     <view class="quiz-wrapper">
-        <view class="quiz-wrapper-item" bind:tap="goToGuide">
-            <image class="self-img" src="https://ihola.luoke101.com/icon%40self.png"/>
+        <view style=" margin-bottom: 40rpx;" class="quiz-wrapper-item" bind:tap="goToGuide">
+            <image class="self-img" src="https://s.luoke101.com/icon%40detail-self.png"/>
             <view class="quiz-info-wrapper">
                 <text class="quiz-title">自己测</text>
                 <text class="quiz-tips">完成后自动生成测评报告</text>
             </view>
         </view>
         <view class="quiz-wrapper-item" bind:tap="goToDaTi">
-            <image class="other-img" src="https://ihola.luoke101.com/icon%40other.png"/>
+            <image class="other-img" src="https://s.luoke101.com/icon%40detail-share.png"/>
             <view class="quiz-info-wrapper">
                 <text class="quiz-title">测别人</text>
                 <text class="quiz-tips">一键邀请同事或外部应聘者参与测评</text>

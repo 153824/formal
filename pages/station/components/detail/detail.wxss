@@ -1388,7 +1388,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: calc(100vh - 80rpx);
+  justify-content: center;
+  height: calc(100vh - 0rpx);
 }
 .quiz-wrapper-item{
   display: flex;
@@ -1397,7 +1398,6 @@
   justify-content: center;
   width: 630rpx;
   height: 590rpx;
-  margin-top: 40rpx;
   box-shadow: 0rpx 4rpx 16rpx 0rpx rgba(0, 0, 0, 0.17);
   border-radius: 30rpx;
   background-color: #ffffff;

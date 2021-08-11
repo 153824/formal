@@ -88,7 +88,7 @@
                                     <view class="title-wrapper search-tag__title-wrapper">
                                         <text class="title">{{tagSectionItem.columnName}}</text>
                                     </view>
-                                    <view class="search-tag new">
+                                    <view class="search-tag {{util.gentClassOfType(tagSectionItem.columnName)}}">
                                         <block wx:for="{{util.slice(tagSectionItem.evaluations, 4)}}" wx:for-item="evaluationItem">
                                             <view data-section-name="{{tagSectionItem.columnName}}" data-evaluation-id="{{evaluationItem.evaluationId}}" bind:tap="goToEvaluationDetail">{{evaluationItem.evaluationName}}</view>
                                         </block>

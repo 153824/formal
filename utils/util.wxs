@@ -278,6 +278,15 @@ var gentBackgroundImage = function (backgroundArr, index) {
   return backgroundArr[targetIndex];
 }
 
+var gentClassOfType = function (string, query) {
+  if(string.indexOf("热门") > -1){
+    return 'hot'
+  }
+  if(string.indexOf("最新") > -1){
+    return 'new'
+  }
+}
+
 module.exports = {
   getMonthAndDayByFrag: getMonthAndDayByFrag,
   getHourAndMinByFrag: getHourAndMinByFrag,
@@ -302,5 +311,6 @@ module.exports = {
   computeChartClass: computeChartClass,
   slice: slice,
   gentRichText: gentRichText,
-  gentBackgroundImage: gentBackgroundImage
+  gentBackgroundImage: gentBackgroundImage,
+  gentClassOfType: gentClassOfType
 };

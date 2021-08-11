@@ -32,7 +32,7 @@
             <view class="title" style="margin-top:100rpx;" wx:if="{{respondAnalysis.display}}">
                 <text class="underLineBg assessor-info">{{respondAnalysis.title}}</text>
             </view>
-            <view class="list flex error-wrapper" wx:if="{{respondAnalysis.display&&analysisCount<=2}}">
+            <view class="list flex error-wrapper" style="{{mbti ? 'margin-bottom: 50rpx' : ''}}" wx:if="{{respondAnalysis.display&&analysisCount<=2}}">
                 <view class="item flex-main" wx:if="{{respondAnalysis.duration.display}}" bindtap="showDlg"
                       data-n="{{respondAnalysis.duration.valid?'unTimeDlg':'timeDlg'}}">
                     <view class="topView {{respondAnalysis.duration.valid?'':'topView1'}}"></view>

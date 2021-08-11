@@ -3,7 +3,7 @@
         <text>{{description.title}}</text>
     </view>
     <view id="{{'detail-'+ index}}" class="detail {{active ? 'detail--is-active' : ''}} {{maxHeight > 0 ? 'detail-max-height' : ''}}">
-        {{description.content}}
+        <rich-text nodes="{{description.content}}"></rich-text>
     </view>
     <view class="more" bind:tap="seeIt">
         <view wx:if="{{canIUnfold}}">

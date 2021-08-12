@@ -481,11 +481,13 @@ App({
                     const pages = getCurrentPages()
                     if (pages[pages.length - 1].route.indexOf('pages/auth/auth') === -1) {
                         that.toast('登录信息已失效~');
-                        setTimeout(() => {
-                            wx.navigateTo({
-                                url: '/pages/auth/auth?type=getToken'
-                            })
-                        }, 2000)
+                        if(getCurrentPages()[getCurrentPages().length - 1].route !== 'pages/auth/auth'){
+                            setTimeout(() => {
+                                wx.navigateTo({
+                                    url: '/pages/auth/auth?type=getToken'
+                                })
+                            }, 2000)
+                        }
                     }
                 }
                 if (ret.statusCode === 400 && ret.data.code === '402002' && !isUpload) {

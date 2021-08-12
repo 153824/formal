@@ -72,7 +72,7 @@ Page({
         const pages = getCurrentPages();
         app.prueLogin().then(res=>{
             if(pages.length === 0){
-                wx.switchTab({
+                wx.reLaunch({
                     url: `/pages/work-base/work-base`
                 });
                 return;
@@ -87,12 +87,12 @@ Page({
                         query = `${query}${item}=${options[item]}${key===optionKeys.length ? '' : '&'}`
                     });
                     if(switchTabPages.includes(`${pages[i].route}`)){
-                        wx.switchTab({
+                        wx.reLaunch({
                             url: `/${pages[i].route}${query}`
                         });
                         return;
                     } else {
-                        wx.navigateTo({
+                        wx.reLaunch({
                             url: `/${pages[i].route}${query}`
                         });
                         return;

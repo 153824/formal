@@ -202,7 +202,7 @@
         {
           "name": "授权手机",
           "pathName": "pages/auth/auth",
-          "query": "",
+          "query": "type=getToken",
           "scene": null
         },
         {

@@ -334,7 +334,7 @@ class Tracker {
     getEnv() {
         let text = '微信';
         const instance = this.instance
-        const isWxWork = instance.getSystemInfoSync().system.environment === 'wxwork';
+        const isWxWork = instance.getSystemInfoSync().environment === 'wxwork';
         const is3rd = instance.getExtConfigSync().isCustomVersion === 'true' || (instance.getExtConfigSync().isCustomVersion && instance.getExtConfigSync().isCustomVersion.toString() === 'true');
         if(is3rd){
             text = '第三方';
@@ -347,13 +347,8 @@ class Tracker {
 
     getTag() {
         const {instance} = this;
-        console.log(instance.getStorageSync('traceData'));
         let name = instance.getStorageSync('traceData').toLowerCase();
         return scenceMap[name].alias;
-    }
-
-    static isInsider() {
-        console.log("isInsider:",this.instance);
     }
 }
 

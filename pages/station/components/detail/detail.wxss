@@ -1389,7 +1389,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 0rpx);
+  height: calc(100vh - 80rpx);
+  padding-top: 40rpx;
+  padding-bottom: 40rpx;
 }
 .quiz-wrapper-item{
   display: flex;

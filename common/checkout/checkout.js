@@ -48,8 +48,11 @@ Component({
     changePage: function (e) {
       const { id,subtitle } = e.currentTarget.dataset;
       wx.navigateTo({
-        url: `/pages/report/report?receiveRecordId=${ id }&command=close`
-      });
+        url: '/pages/customer-service/customer-service'
+      })
+      // wx.navigateTo({
+      //   url: `/pages/report/report?receiveRecordId=${ id }&command=close`
+      // });
     }
   }
 });

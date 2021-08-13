@@ -20,8 +20,8 @@
                 <checkout title="例题" type="assistant" list="{{ evaluation.quesExamples }}" isShow="{{evaluation.quesExamples.length}}"></checkout>
             </block>
             <block wx:else>
-                <checkout title="报价方案" type="price" isShow="{{ !evaluation.freeEvaluation && !isIos }}"
-                          data="{{ evaluation }}"></checkout>
+<!--                <checkout title="报价方案" type="price" isShow="{{ !evaluation.freeEvaluation && !isIos }}"-->
+<!--                          data="{{ evaluation }}"></checkout>-->
                 <checkout title="测评简介" type="introduction" info="{{ evaluation.synopsis }}"></checkout>
                 <checkout title="测量维度" type="dimension" list="{{ evaluation.measureDimension }}"
                           isShow="{{evaluation.measureDimension.length}}"></checkout>
@@ -72,7 +72,7 @@
             </view>
         </view>
     </block>
-    <block wx:if="{{isIos}}">
+    <block wx:if="{{isIos||1}}">
         <!--未登录-->
         <view wx:if="{{!isGetAccessToken}}" class="button-group-wrapper">
             <button class="button-group__is-left {{iphonex ? 'is-iosx' : ''}}" bind:getphonenumber="authPhoneNumber" data-type="enjoy" open-type="getPhoneNumber">
@@ -116,7 +116,7 @@
             </view>
         </view>
     </block>
-    <block wx:if="{{!isIos}}">
+    <block wx:if="{{!isIos&&false}}">
         <!--未登录-->
         <view wx:if="{{!isGetAccessToken}}" class="button-group-wrapper is-increase-height">
             <button class="button-group__is-left" bind:getphonenumber="authPhoneNumber" data-type="enjoy" open-type="getPhoneNumber">

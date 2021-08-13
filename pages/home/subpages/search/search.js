@@ -143,7 +143,7 @@ Page({
             url: `/pages/station/components/detail/detail?id=${evaluationId}`
         });
         try{
-            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[type]});
+            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[type], name: evaluationName});
         }
         catch (e) {
             console.log('友盟数据统计',e);
@@ -249,5 +249,14 @@ Page({
                 })
             }
         })
+        if(authCodeCounter <= 0){
+            try{
+                const umaConfig = umaEvent.authPhoneCount;
+                new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.search});
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
+        }
     },
 });

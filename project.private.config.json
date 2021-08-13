@@ -39,8 +39,8 @@
         {
           "name": "测评详情",
           "pathName": "pages/station/components/detail/detail",
-          "query": "id=5ee71745e5071b000690f8d3&_ttn=610ccdc93451547e683e0450",
-          "scene": null
+          "query": "id=5d786ea66e9ba10069596a61&_ttn=610ccdc93451547e683e0450",
+          "scene": 1007
         },
         {
           "name": "分享-报告详情",

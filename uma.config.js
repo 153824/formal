@@ -276,6 +276,20 @@ const umaEvent = {
             search: ["pages/home/subpages/search/search"],
             more: ["pages/home/components/more/more"]
         }
+    },
+
+    // 弹出授权手机弹窗
+    authPhoneCount: {
+        key: '弹出授权手机弹窗',
+        tag: 'AuthPhoneCount',
+        origin: {
+            experience: '免费体验',
+            pay: '购买测评',
+            contact: '详情页联系客服',
+            home: '首页在线咨询',
+            search: '搜索无结果页联系顾问',
+            bench: '工作台登录',
+        }
     }
 }
 

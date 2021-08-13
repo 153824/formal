@@ -31,14 +31,19 @@ Page({
         const that = this;
         const {scene} = wx.getLaunchOptionsSync();
         const umaConfig = umaEvent.evaluationDetail;
-        if (umaConfig.scene.includes(scene)) {
-            try{
-                new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.card, scene});
+        this.loadEvaluationName(options.id).then(res=>{
+            if (umaConfig.scene.includes(scene)) {
+                try{
+                    console.log({origin: umaConfig.origin.card, scene, name: res.name})
+                    new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.card, scene, name: res.name});
+                }
+                catch (e) {
+                    console.log('友盟数据统计',e);
+                }
             }
-            catch (e) {
-                console.log('友盟数据统计',e);
-            }
-        }
+        }).catch(e=>{
+            console.log(e);
+        })
         this.setData({evaluationId: options.id});
     },
 
@@ -75,6 +80,22 @@ Page({
         this.setData({
             count: e.detail.value * 1
         })
+    },
+
+    loadEvaluationName(evaluationId) {
+        const p = new Promise((resolve, reject) => {
+            app.doAjax({
+                method: 'GET',
+                url: `../wework/evaluations/${evaluationId}/info`,
+                success(res) {
+                    resolve(res)
+                },
+                error(e) {
+                    reject(e)
+                }
+            })
+        })
+        return p
     },
 
     payForEvaluation: function () {
@@ -310,14 +331,23 @@ Page({
                     catch (e) {
                         console.log('友盟数据统计',e);
                     }
-                } else if(type === 'contact' && !isIos){
+                    try{
+                        const umaConfig = umaEvent.clickFreeEnjoy;
+                        new Tracker(wx).generate(umaConfig.tag);
+                    }
+                    catch (e) {
+                        console.log('友盟数据统计',e);
+                    }
+                }
+                else if(type === 'contact' && !isIos){
                     try{
                         new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.pay});
                     }
                     catch (e) {
                         console.log('友盟数据统计',e);
                     }
-                } else if (type === 'contact' && isIos){
+                }
+                else if (type === 'contact' && isIos){
                     try{
                         new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.contact});
                     }
@@ -365,6 +395,33 @@ Page({
                     })
                 }
             })
+            if(authCodeCounter <= 0){
+                const umaConfig = umaEvent.authPhoneCount;
+                if(type === 'enjoy'){
+                    try{
+                        new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.experience});
+                    }
+                    catch (e) {
+                        console.log('友盟数据统计',e);
+                    }
+                }
+                else if (type === 'contact' && !isIos) {
+                    try{
+                        new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.pay});
+                    }
+                    catch (e) {
+                        console.log('友盟数据统计',e);
+                    }
+                }
+                else if (type === 'contact' && isIos) {
+                    try{
+                        new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.contact});
+                    }
+                    catch (e) {
+                        console.log('友盟数据统计',e);
+                    }
+                }
+            }
     },
 
     loadInventory() {

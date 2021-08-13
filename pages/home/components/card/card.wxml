@@ -1,4 +1,4 @@
-<view class="card" data-evaluation-id="{{evaluationId}}" bind:tap="goToEvaluationDetail">
+<view class="card" data-evaluation-id="{{evaluationId}}" data-evaluation-name="{{title}}" bind:tap="goToEvaluationDetail">
     <view class="cover-wrapper" style="background-image: url('{{cover}}')"></view>
     <view class="info-wrapper">
         <view class="info">

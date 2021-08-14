@@ -1,0 +1,64 @@
+<scroll-view>
+    <view class="generate-header">
+        <view style="margin-top: 92rpx;">
+            <image src="https://s.luoke101.com/generate%40send.png" style="width: 160rpx;height: 160rpx;"></image>
+            <view class="header-tips">
+                <text>测评发放配置</text>
+                <text class="tip">通过二维码发放测评，受测者扫码即可答题</text>
+            </view>
+        </view>
+        <image class="header-bg" src="https://s.luoke101.com/generate%40bg.png" style="width: 506rpx;height: 378rpx;"></image>
+    </view>
+    <view class="generate-join">
+        <view class="step-1">
+            <view class="step-title">
+                <text>您想让多少人参与测评</text>
+            </view>
+            <view class="step-operate-wrapper">
+                <view class="step-operate">
+                    <view class="step-sub">
+                        -
+                    </view>
+                    <input />
+                    <view class="step-increase">
+                        +
+                    </view>
+                </view>
+                <view class="step-count">
+                    <text class="label">可用：</text>
+                    <text class="count">150</text>
+                </view>
+            </view>
+        </view>
+        <view class="step-2">
+            <view class="step-title">
+                <text>答题结束直接查看报告</text>
+            </view>
+            <view class="step-button-group">
+                <view class="agree"><text>允许</text></view>
+                <view class="refuse active"><text>不允许</text></view>
+            </view>
+        </view>
+        <view class="advance-setting">
+            <text>更多高级配置</text>
+            <van-icon name="arrow-down" />
+        </view>
+    </view>
+    <view class="generate-advance-setting">
+<!--        <view class="advance-line">-->
+<!--            <view>高级配置</view>-->
+<!--            <view class="line"></view>-->
+<!--        </view>-->
+        <view class="advance-setting-step">
+            <view>
+                <view class="step-title">
+                    <text>受测者归属部门</text>
+                </view>
+                <view class="team">
+                    7592的团队
+                    <van-icon name="arrow-down" />
+                </view>
+            </view>
+        </view>
+    </view>
+</scroll-view>

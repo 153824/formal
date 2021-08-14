@@ -89,6 +89,15 @@ Component({
                     })
                 }
             })
+            if(authCodeCounter <= 0){
+                try{
+                    const umaConfig = umaEvent.authPhoneCount;
+                    new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.contact});
+                }
+                catch (e) {
+                    console.log('友盟数据统计',e);
+                }
+            }
         },
     }
 });

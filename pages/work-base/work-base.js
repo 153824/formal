@@ -414,6 +414,15 @@ Page({
                     })
                 }
             })
+        if(authCodeCounter <= 0){
+            try{
+                const umaConfig = umaEvent.authPhoneCount;
+                new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.bench});
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
+        }
     },
 
     getUserInfo: function (e) {
@@ -478,13 +487,13 @@ Page({
     },
 
     goToEvaluationDetail: function (e) {
-        const {evaluationId} = e.currentTarget.dataset;
+        const {evaluationId, evaluationName} = e.currentTarget.dataset;
         wx.navigateTo({
             url: `../station/components/detail/detail?id=${evaluationId}`,
         })
         try{
             const umaConfig = umaEvent.evaluationDetail;
-            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.bench});
+            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.bench, name: evaluationName});
         }
         catch (e) {
             console.log('友盟数据统计',e);

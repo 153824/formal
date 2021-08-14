@@ -18,14 +18,14 @@ Component({
     methods: {
         goToEvaluationDetail(e) {
             const {location} = this.properties;
-            const {evaluationId} = e.currentTarget.dataset;
+            const {evaluationId, evaluationName} = e.currentTarget.dataset;
             wx.navigateTo({
                 url: `/pages/station/components/detail/detail?id=${evaluationId}`
             });
             if(location){
                 try{
                     const umaConfig = umaEvent.evaluationDetail;
-                    new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[location]});
+                    new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[location], name: evaluationName});
                 }
                 catch (e) {
                     console.log('友盟数据统计',e);

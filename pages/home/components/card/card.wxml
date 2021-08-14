@@ -11,7 +11,7 @@
             <view class="tips">
                 <block wx:if="{{isRichTextModel}}">
                     <rich-text nodes="{{util.gentRichText(topic ? '#'+ topic : '')}}"></rich-text>
-                    <rich-text nodes="{{util.gentRichText(tip)}}"></rich-text>
+                    <rich-text nodes="{{util.gentRichText(tip, 'height:17px;')}}"></rich-text>
                 </block>
                 <block wx:else>
                     <text>{{topic ? '#'+ topic : '' }} </text>

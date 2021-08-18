@@ -193,6 +193,9 @@ var getTimeMsg= function(data) {
       msg='作答时间明显短于平均作答时间（'+ rationalShortest + '-' + rationalLongest + '分钟），在自我评价过程中存在审题过快、不细致或选项习惯性（例如习惯性选中间项或最高项）的可能性'
       break
   }
+  if (data.duration.countdownEnabled) {
+    msg = "-"
+  }
   return msg
 };
 

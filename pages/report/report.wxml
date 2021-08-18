@@ -34,12 +34,12 @@
             </view>
             <view class="list flex error-wrapper" style="{{mbti ? 'margin-bottom: 50rpx' : ''}}" wx:if="{{respondAnalysis.display&&analysisCount<=2}}">
                 <view class="item flex-main" wx:if="{{respondAnalysis.duration.display}}" bindtap="showDlg"
-                      data-n="{{respondAnalysis.duration.valid?'unTimeDlg':'timeDlg'}}">
-                    <view class="topView {{respondAnalysis.duration.valid?'':'topView1'}}"></view>
+                      data-n="{{respondAnalysis.duration.valid||respondAnalysis.duration.countdownEnabled?'unTimeDlg':'timeDlg'}}">
+                    <view class="topView {{respondAnalysis.duration.valid||respondAnalysis.duration.countdownEnabled?'':'topView1'}}"></view>
                     <view class="name">作答时长</view>
-                    <view class="msg" wx:if="{{respondAnalysis.duration.valid}}">{{respondAnalysis.duration.standing}}分钟（正常）</view>
+                    <view class="msg" wx:if="{{respondAnalysis.duration.valid||respondAnalysis.duration.countdownEnabled}}">{{respondAnalysis.duration.standing}}分钟（正常）</view>
                     <view class="msg msg1" wx:else>{{respondAnalysis.duration.standing}}分钟{{respondAnalysis.duration.verdict=="OVERLONG"?'（过长）':"（过短）"}}</view>
-                    <image src="./images/report@icon-{{respondAnalysis.duration.valid?'success':'thinking'}}.png"></image>
+                    <image src="./images/report@icon-{{respondAnalysis.duration.valid||respondAnalysis.duration.countdownEnabled?'success':'thinking'}}.png"></image>
                 </view>
                 <view class="item flex-main" wx:if="{{respondAnalysis.discordant.display}}" bindtap="showDlg"
                       data-n="{{respondAnalysis.discordant.valid?'unNoMatchDlg':'noMatchDlg'}}">
@@ -68,12 +68,12 @@
             <swiper class="list flex" wx:if="{{respondAnalysis.display&&analysisCount>2}}">
                 <swiper-item class="analysis-swiper"  wx:if="{{respondAnalysis.duration.display}}" >
                     <view class="item flex-main analysis-swiper-item" bindtap="showDlg"
-                      data-n="{{respondAnalysis.duration.valid?'unTimeDlg':'timeDlg'}}">
-                        <view class="topView {{respondAnalysis.duration.valid?'':'topView1'}}"></view>
+                      data-n="{{respondAnalysis.duration.valid||respondAnalysis.duration.countdownEnabled?'unTimeDlg':'timeDlg'}}">
+                        <view class="topView {{respondAnalysis.duration.valid||respondAnalysis.duration.countdownEnabled?'':'topView1'}}"></view>
                         <view class="name">作答时长</view>
-                        <view class="msg" wx:if="{{respondAnalysis.duration.valid}}">{{respondAnalysis.duration.standing}}分钟（正常）</view>
+                        <view class="msg" wx:if="{{respondAnalysis.duration.valid||respondAnalysis.duration.countdownEnabled}}">{{respondAnalysis.duration.standing}}分钟（正常）</view>
                         <view class="msg msg1" wx:else>{{respondAnalysis.duration.standing}}分钟{{respondAnalysis.duration.verdict=="OVERLONG"?'（过长）':"（过短）"}}</view>
-                        <image src="./images/report@icon-{{respondAnalysis.duration.valid?'success':'thinking'}}.png"></image>
+                        <image src="./images/report@icon-{{respondAnalysis.duration.valid||respondAnalysis.duration.countdownEnabled?'success':'thinking'}}.png"></image>
                     </view>
                 </swiper-item>
                 <swiper-item class="analysis-swiper" wx:if="{{respondAnalysis.discordant.display}}" >

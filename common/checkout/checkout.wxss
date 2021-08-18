@@ -121,15 +121,7 @@
   margin-right: 20rpx;
 }
 .report-child{
-  display: flex;
-  justify-content: space-between;
-  padding: 10rpx 15rpx 10rpx 40rpx;
-  align-items: center;
-  height: 70rpx;
-  margin-top: 40rpx;
-  box-shadow:0px 0px 7px 0px rgba(167,185,237,0.36);
-  border-radius: 16rpx;
-  background:rgba(254,255,254,1);
+
 }
 .report-child > image{
   width: 19.6rpx;

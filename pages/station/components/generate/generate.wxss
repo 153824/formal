@@ -1,6 +1,3 @@
-page{
-    background-color: #F9FAFCFF;
-}
 .generate-header{
     position: relative;
     padding: 40rpx 0rpx 40rpx 50rpx;
@@ -30,7 +27,6 @@ page{
     right: 0;
 }
 .generate-join{
-    margin-top: 20rpx;
     padding: 60rpx 50rpx 30rpx 50rpx;
     background-color: #ffffff;
 }
@@ -117,7 +113,7 @@ page{
     display: flex;
     align-items: center;
     height: 88rpx;
-    margin: 30rpx 0;
+    margin: 30rpx 0 0 0;
 }
 .step-button-group > view{
     display: flex;
@@ -152,6 +148,7 @@ page{
     font-weight: 400;
     color: #6D6D6D;
     line-height: 40rpx;
+    margin: 30rpx 0;
 }
 .advance-setting > text{
     margin-right: 10rpx;
@@ -164,16 +161,31 @@ page{
 }
 .advance-line{
     position: relative;
+    margin: 45rpx 0;
 }
 .advance-line > view{
     position: absolute;
 }
+.advance-line > .text{
+    padding: 0 50rpx;
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #6D6D6D;
+    line-height: 40rpx;
+    top: -20rpx;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffffff;
+    z-index: 2;
+}
 .line{
-    width: 100vw;
+    width: 100%;
     height: 2rpx;
     background-color: #DFDFDFFF;
 }
 .team{
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -181,4 +193,59 @@ page{
     background: #F9FAFC;
     border-radius: 20rpx;
     margin: 30rpx 0;
+    font-size: 32rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #12132F;
+    line-height: 44rpx;
+}
+.team-icon{
+    position: absolute;
+    right: 44rpx;
+}
+.timeout{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #B2B2B2;
+    line-height: 44rpx;
+    height: 88rpx;
+    background: #F9FAFC;
+    border-radius: 20rpx;
+    margin-top: 30rpx;
+}
+.timeout > view{
+    flex: 1;
+}
+.is-picked{
+    color: #12132F;
+}
+.generate-it-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 0rpx;
+    left: 0rpx;
+    right: 0rpx;
+    height: 256rpx;
+    background-color: #ffffff;
+}
+.generate-it{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 96rpx;
+    width: calc(100vw - 100rpx);
+    background: #353EE8;
+    border-radius: 10rpx;
+    font-size: 32rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 44rpx;
+    letter-spacing: 2rpx;
 }

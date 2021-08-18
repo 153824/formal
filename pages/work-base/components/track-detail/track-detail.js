@@ -274,14 +274,6 @@ Page({
         }
     },
 
-    /**
-     * @Description:  切换tab页
-     * @author: WE!D
-     * @name:  changeTab
-     * @args:  e视图层数据绑定
-     * @return:
-     * @date: 2020/8/27
-     */
     changeTab: function (e) {
         const targetValue = e.currentTarget.dataset.id,
             {nav} = this.data;
@@ -294,14 +286,6 @@ Page({
         })
     },
 
-    /**
-     * @Description:  页面跳转
-     * @author: WE!D
-     * @name:  changePage
-     * @args:  e视图层数据绑定
-     * @return:
-     * @date: 2020/8/27
-     */
     changePage: function (e) {
         const {evaluationName} = this.data;
         const {id} = e.currentTarget.dataset;
@@ -317,14 +301,6 @@ Page({
         }
     },
 
-    /**
-     * @Description:  跳转至测评详情页
-     * @author: WE!D
-     * @name:  gotoDetail
-     * @args:  e视图层数据绑定
-     * @return:
-     * @date: 2020/8/27
-     */
     gotoDetail: function (e) {
         const {id} = e.currentTarget.dataset;
         wx.redirectTo({
@@ -332,14 +308,6 @@ Page({
         });
     },
 
-    /**
-     * @Description:  加载二维码
-     * @author: WE!D
-     * @name:  loadQrcode
-     * @args:
-     * @return:
-     * @date: 2020/8/27
-     */
     loadQrcode: function () {
         this.setData({
             imageTrigger: true,
@@ -351,14 +319,6 @@ Page({
         }, 500);
     },
 
-    /**
-     * @Description:  关闭二维码
-     * @author: WE!D
-     * @name:  closeQrcode
-     * @args:
-     * @return:
-     * @date: 2020/8/27
-     */
     closeQrcode: function (e) {
         this.setData({
             imageTrigger: false

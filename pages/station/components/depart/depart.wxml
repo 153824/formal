@@ -12,6 +12,9 @@
                     <block wx:if="{{is3rd}}">
                         {{item.label}}
                     </block>
+                    <block wx:if="{{!is3rd&&!isWxWork}}">
+                        {{item.label}}
+                    </block>
                     <ww-open-data wx:if="{{isWxWork && corpid}}" corpid="{{corpid}}" type="departmentName" openid="{{item.bindTpDepartId}}"/>
                     <image wx:if="{{index+1 !== routeMap.length}}" src="https://ihola.luoke101.com/icon%40icon-right-arrow.png"
                            class="char-icon"/>
@@ -29,6 +32,9 @@
                                       catchtap="{{ item.leaf ? '' : 'loadChildDepart' }}" open-type="departmentName"
                                       openid="{{item.bindTpDepartId}}">
                                     <block wx:if="{{is3rd}}">
+                                        {{item.label}}
+                                    </block>
+                                    <block wx:if="{{!is3rd&&!isWxWork}}">
                                         {{item.label}}
                                     </block>
                                     <ww-open-data wx:if="{{isWxWork && item.bindTpDepartId}}" corpid="{{corpid}}"

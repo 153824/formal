@@ -1,0 +1,119 @@
+<scroll-view scroll-y style="height: calc(100vh - 130rpx)">
+    <view class="track-header">
+        <view class="track-info-wrapper">
+            <view class="track-info">
+                <view class="track-info-left">
+                    <view class="title">0819-基层管理岗特质测评</view>
+                    <view class="record">
+                        <view>发放记录：</view>
+                        <view>2020/08/08 19:00</view>
+                    </view>
+                    <view class="way">
+                        <view>发放方式：</view>
+                        <view>二维码</view>
+                        <view style="margin-left:20rpx;color:#353EE8FF;">
+                            <text>查看二维码</text>
+                            <text style="margin-left:20rpx;">撤回测评</text>
+                        </view>
+                    </view>
+                </view>
+                <view class="track-info-right">
+                    <view>发放数量</view>
+                    <view>50</view>
+                </view>
+                <image class="plane" src="https://s.luoke101.com/track-detail%40plane.png" style="width:100rpx;height:100rpx;"></image>
+            </view>
+        </view>
+        <image src="https://s.luoke101.com/track-detail%40header.png" style="width:100vw;"/>
+    </view>
+    <view class="track-content">
+        <view class="track-tab">
+            <block wx:for="{{nav}}" wx:for-item="navItem" wx:for-index="navIndex">
+                <view class="{{navItem.name==='已完成'?'done':'replying'}} {{navItem.checked ? 'tab-line-active':''}}"
+                      data-index="{{navIndex}}" data-name="{{navItem.name==='已完成'?'done':'replying'}}" bind:tap="onChangeTab">
+                    <text>{{navItem.name}}</text>
+                    <text style="margin:20rpx;">3</text>
+                    <text class="tab-line {{navItem.checked ? 'active':''}}"></text>
+                </view>
+            </block>
+        </view>
+        <view class="track-body">
+            <view class="track-body-item">
+                <image src="https://pic2.zhimg.com/v2-adc6b47c4d8517f278d430c74d8d9648_is.jpg" style="width:80rpx;height:80rpx;border-radius:50%;"></image>
+                <view class="detail-wrapper">
+                    <view class="name">UNTARGET</view>
+                    <view class="endtime">完成时间：2020/02/02 19:05</view>
+                </view>
+                <view class="arrow">
+                    <image src="https://s.luoke101.com/arrow-left.png" style="width:28rpx;height:28rpx;"/>
+                </view>
+            </view>
+            <view class="track-body-item">
+                <image src="https://pic2.zhimg.com/v2-adc6b47c4d8517f278d430c74d8d9648_is.jpg" style="width:80rpx;height:80rpx;border-radius:50%;"></image>
+                <view class="detail-wrapper">
+                    <view class="name">UNTARGET</view>
+                    <view class="endtime">完成时间：2020/02/02 19:05</view>
+                </view>
+                <view class="arrow">
+                    <image src="https://s.luoke101.com/arrow-left.png" style="width:28rpx;height:28rpx;"/>
+                </view>
+            </view>
+            <view class="track-body-item">
+                <image src="https://pic2.zhimg.com/v2-adc6b47c4d8517f278d430c74d8d9648_is.jpg" style="width:80rpx;height:80rpx;border-radius:50%;"></image>
+                <view class="detail-wrapper">
+                    <view class="name">UNTARGET</view>
+                    <view class="endtime">完成时间：2020/02/02 19:05</view>
+                </view>
+                <view class="arrow">
+                    <image src="https://s.luoke101.com/arrow-left.png" style="width:28rpx;height:28rpx;"/>
+                </view>
+            </view>
+            <view class="track-body-item">
+                <image src="https://pic2.zhimg.com/v2-adc6b47c4d8517f278d430c74d8d9648_is.jpg" style="width:80rpx;height:80rpx;border-radius:50%;"></image>
+                <view class="detail-wrapper">
+                    <view class="name">UNTARGET</view>
+                    <view class="endtime">完成时间：2020/02/02 19:05</view>
+                </view>
+                <view class="arrow">
+                    <image src="https://s.luoke101.com/arrow-left.png" style="width:28rpx;height:28rpx;"/>
+                </view>
+            </view>
+            <view class="track-body-item">
+                <image src="https://pic2.zhimg.com/v2-adc6b47c4d8517f278d430c74d8d9648_is.jpg" style="width:80rpx;height:80rpx;border-radius:50%;"></image>
+                <view class="detail-wrapper">
+                    <view class="name">UNTARGET</view>
+                    <view class="endtime">完成时间：2020/02/02 19:05</view>
+                </view>
+                <view class="arrow">
+                    <image src="https://s.luoke101.com/arrow-left.png" style="width:28rpx;height:28rpx;"/>
+                </view>
+            </view>
+            <view class="track-body-item">
+                <image src="https://pic2.zhimg.com/v2-adc6b47c4d8517f278d430c74d8d9648_is.jpg" style="width:80rpx;height:80rpx;border-radius:50%;"></image>
+                <view class="detail-wrapper">
+                    <view class="name">UNTARGET</view>
+                    <view class="endtime">完成时间：2020/02/02 19:05</view>
+                </view>
+                <view class="arrow">
+                    <image src="https://s.luoke101.com/arrow-left.png" style="width:28rpx;height:28rpx;"/>
+                </view>
+            </view>
+            <view class="track-body-item">
+                <image src="https://pic2.zhimg.com/v2-adc6b47c4d8517f278d430c74d8d9648_is.jpg" style="width:80rpx;height:80rpx;border-radius:50%;"></image>
+                <view class="detail-wrapper">
+                    <view class="name">UNTARGET</view>
+                    <view class="endtime">完成时间：2020/02/02 19:05</view>
+                </view>
+                <view class="arrow">
+                    <image src="https://s.luoke101.com/arrow-left.png" style="width:28rpx;height:28rpx;"/>
+                </view>
+            </view>
+        </view>
+    </view>
+</scroll-view>
+<view class="follow-button">
+    <text>点击关注公众号，接收「测评实时完成通知」</text>
+</view>
+<view class="invite-button">
+    邀请同事一起接收查看报告
+</view>

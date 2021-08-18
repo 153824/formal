@@ -246,6 +246,11 @@
           "pathName": "pages/station/components/generate/generate",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "发放记录",
+          "pathName": "pages/work-base/components/grant/grant",
+          "scene": null
         }
       ]
     }

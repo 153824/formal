@@ -2,6 +2,10 @@
   "usingComponents": {
     "van-icon": "/common/vant-weapp/dist/icon/index",
     "van-datetime-picker": "/common/vant-weapp/dist/datetime-picker",
-    "ww-open-data":"plugin://contactPlugin/ww-open-data"
+    "ww-open-data": "plugin://contactPlugin/ww-open-data",
+    "van-image": "/common/vant-weapp/dist/image/index",
+    "van-button": "/common/vant-weapp/dist/button/index",
+    "van-loading": "/common/vant-weapp/dist/loading/index",
+    "hola-preview-image": "/common/preview-image/index"
   }
 }

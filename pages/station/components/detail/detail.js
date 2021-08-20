@@ -21,10 +21,10 @@ Page({
         customNorms: [],
         isGetAccessToken: app.checkAccessToken(),
         authCodeCounter: 0,
-        availableVoucher: 0,
-        availableInventory: 0,
         showSelectQuiz: false,
-        buttonGroupHeight: 0
+        buttonGroupHeight: 0,
+        buttonType: '', // beginner: 免费体验 / upgraded: 立即使用 / unavailable: 联系客服 / available: 剩余可用份数
+        availableTotal: '',
     },
 
     onLoad(options) {
@@ -55,10 +55,10 @@ Page({
             });
         if(app.checkAccessToken()) {
             this.loadInventory()
-                .then(({availableVoucher, availableInventory})=>{
+                .then(({type, count})=>{
                     this.setData({
-                        availableVoucher,
-                        availableInventory
+                        buttonType: type,
+                        availableTotal: count
                     })
                 });
         }
@@ -194,7 +194,7 @@ Page({
 
     goToDaTi() {
         //发放测评
-        const {evaluation, customNorms, availableVoucher, availableInventory} = this.data;
+        const {evaluation, customNorms, availableTotal} = this.data;
         const umaConfig = umaEvent.clickShareOffer;
         try{
             new Tracker(wx).generate(umaConfig.tag, {name: `${evaluation.name}`});
@@ -202,24 +202,16 @@ Page({
         catch (e) {
             console.log('友盟数据统计',e);
         }
-        if (availableVoucher <= 0 && availableInventory <= 0) {
+        if (availableTotal <= 0) {
             app.toast("测评可用数量不足，请先购买测评");
             return;
         }
         const necessaryInfo = {
-            id: evaluation.id,
-            count: availableVoucher + availableInventory,
-            availableVoucher,
-            availableInventory,
-            name: evaluation.name,
-            isFree: evaluation.freeEvaluation,
+            evaluationId: evaluation.id,
             norms: customNorms.length ? customNorms : evaluation.generalNorms,
-            quesCount: evaluation.quesCount,
-            estimatedTime: evaluation.estimatedTime,
-            useVoucher: true
         };
         wx.navigateTo({
-            url: `../sharePaper/sharePaper?necessaryInfo=${JSON.stringify(necessaryInfo)}`,
+            url: `/pages/station/components/generate/generate?necessaryInfo=${JSON.stringify(necessaryInfo)}`,
         });
     },
 
@@ -328,12 +320,12 @@ Page({
                 return that.loadInventory();
             })
             .then(res => {
-                const {availableVoucher, availableInventory} = res;
+                const {availableTotal} = res;
                 if (type === 'enjoy') {
-                    if (availableVoucher <= 0) {
+                    if (availableTotal <= 0) {
                         app.toast('您的免费体验券已用完');
                     }
-                    if (availableVoucher > 0) {
+                    if (availableTotal > 0) {
                         that.setData({
                             showSelectQuiz: true
                         })
@@ -350,10 +342,6 @@ Page({
                         })
                     }
                 }
-                that.setData({
-                    availableVoucher,
-                    availableInventory
-                });
             })
             .catch(err => {
                 if (err.code === '401111') {

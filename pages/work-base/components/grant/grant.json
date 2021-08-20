@@ -1,4 +1,10 @@
 {
   "usingComponents": {
+    "empty": "/common/empty/empty",
+    "van-image": "/common/vant-weapp/dist/image/index",
+    "van-loading": "/common/vant-weapp/dist/loading/index",
+    "van-overlay": "/common/vant-weapp/dist/overlay/index",
+    "van-button": "/common/vant-weapp/dist/button/index",
+    "hola-preview-image": "/common/preview-image/index"
   }
 }

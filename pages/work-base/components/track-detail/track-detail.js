@@ -51,7 +51,6 @@ Page({
     onLoad: function (options) {
         const that = this;
         const {releaseRecordId, sharedAt,trackId, tabIndex} = options;
-        const {examiningDetail, finishedDetail, digestDetail} = this;
         if (tabIndex > 0) {
             const targetNav = this.data.nav.map(item=>{
                 item.checked = item.id === Number(tabIndex)

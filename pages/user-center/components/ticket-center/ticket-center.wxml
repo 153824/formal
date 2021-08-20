@@ -9,20 +9,23 @@
             </view>
         </block>
         <block wx:else>
-            <view class="ticket-item" wx:for="{{tickets}}" wx:for-item="ticketItem" wx:key="unique">
+            <view class="ticket-item" wx:for="{{tickets}}" wx:for-item="ticketItem" wx:for-index="ticketIndex" wx:key="unique">
                 <text class="ticket-item__title">{{ticketItem.name}}</text>
                 <view class="ticket-item__info">
                     <view class="ticket-item__info-left">
-                        <text>· {{ticketItem.description}}</text>
                         <block wx:if="{{ticketItem.expiredStatus === 'UNLIMITED'}}">
-                            <text>· 无限期</text>
+                            <text>· 长期可用</text>
                         </block>
                         <block wx:elif="{{ticketItem.expiredStatus === 'AVAILABLE'}}">
                             <text>· {{ticketItem.expiredTime}} 过期</text>
                         </block>
-                        <block wx:else="{{ticketItem.expiredStatus === 'AVAILABLE'}}">
+                        <block wx:elif="{{ticketItem.expiredStatus === 'AVAILABLE'}}">
                             <text>· 已于 {{ticketItem.expiredTime}} 过期</text>
                         </block>
+                        <view>
+                            <text>· {{ticketItem.description}}</text>
+                            <text wx:if="{{!util.isIncludes(showMoreMap, ticketIndex)}}" class="see-it" data-index="{{ticketIndex}}" bind:tap="seeIt">查看</text>
+                        </view>
                     </view>
                     <view class="ticket-item__info-right">
                         <text class="number">{{ticketItem.count}}</text>
@@ -30,7 +33,11 @@
                     </view>
                 </view>
                 <image wx:if="{{ticketItem.expiredStatus === 'EXPIRED'}}" src="https://s.luoke101.com/icon-ticket-expire.png" class="expire"/>
+                <view wx:if="{{util.isIncludes(showMoreMap, ticketIndex)}}" class="more-info">
+                    《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》
+                </view>
             </view>
         </block>
     </scroll-view>
 </view>
+<wxs src="../../../../utils/util.wxs" module="util"/>

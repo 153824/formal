@@ -441,10 +441,9 @@ Page({
     },
 
     goToTrackDetail: function (e) {
-        const {trackId, trackIndex} = e.currentTarget.dataset;
-        const trackInfo = JSON.stringify(this.data.evaluationTrack[trackIndex]);
+        const {releaseRecordId} = e.currentTarget.dataset;
         wx.navigateTo({
-            url: `./components/track-detail/track-detail?trackId=${trackId}&trackInfo=${trackInfo}`,
+            url: `./components/grant/grant?releaseRecordId=${releaseRecordId}`,
         })
     },
 
@@ -452,29 +451,19 @@ Page({
         const {
             available,
             norms,
-            quesCount,
-            estimatedTime,
             evaluationId,
-            evaluationName,
-            type
         } = this.data.myEvaluation[e.currentTarget.dataset.index];
-        const necessaryInfo = {
-            count: available,
-            norms: norms,
-            quesCount: quesCount,
-            estimatedTime: estimatedTime,
-            id: evaluationId,
-            name: evaluationName,
-            isFree: type === "FREE",
-            hadBuyout: type === "BY_COUNT" ? false : true,
-        };
-        if (!available && !necessaryInfo.hadBuyout && !necessaryInfo.isFree && !this.data.isWxWork && !this.data.is3rd) {
+        if (!available && !this.data.isWxWork && !this.data.is3rd) {
             app.toast("测评可用数量不足");
             return;
         }
+        const necessaryInfo = {
+            evaluationId: evaluationId,
+            norms,
+        };
         wx.navigateTo({
-            url: `../station/components/sharePaper/sharePaper?necessaryInfo=${JSON.stringify(necessaryInfo)}`,
-        })
+            url: `/pages/station/components/generate/generate?necessaryInfo=${JSON.stringify(necessaryInfo)}`,
+        });
     },
 
     goToEvaluationDetail: function (e) {

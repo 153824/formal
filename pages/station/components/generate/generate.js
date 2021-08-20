@@ -5,8 +5,7 @@ Page({
         scrollToIndex: '',
         showAdvance: false,
         headerHeight: 0,
-        inviteCount: 0,
-        maxCount: 15,
+        inviteCount: 1,
         canUSeeReport: 'refuse', // refuse 不允许；agree 允许；
         expireModel: 'short', // forever 长期有效；short 时间期内有效；
         minHour: 10,
@@ -18,8 +17,8 @@ Page({
         endTime: -1,
         timeModel: 'start', // start 开始时间; end 结束时间;
         canIUsePicker: false,
-        // app.globalData.isWxWork
-        isWxWork: true,
+        isWxWork: app.globalData.isWxWork,
+        is3rd: app.globalData.is3rd,
         selectedTeam: {
             label: "",
             leaf: true,
@@ -34,10 +33,18 @@ Page({
             value: "",
             bindTpDepartId: ""
         },
-        corpid: ''
+        corpid: '',
+        norms: [],
+        evaluationId: '',
+        evaluationName: '',
+        maxCount: 15,
+        shareCover: '',
+        releaseRecordId: ''
     },
     onLoad(options) {
         const that = this;
+        console.log(options);
+        const {norms=[], evaluationId=""} = options && options.necessaryInfo ? JSON.parse(options.necessaryInfo) : {};
         setTimeout(()=>{
             wx.createSelectorQuery().select('#generate-header').boundingClientRect(res=>{
                 that.setData({
@@ -46,7 +53,9 @@ Page({
             }).exec();
         }, 500);
         this.setData({
-            isWxWork: true
+            isWxWork: true,
+            norms,
+            evaluationId
         });
         this.loadRootDepart()
             .then(res=>{
@@ -55,12 +64,32 @@ Page({
                     rootTeam: {...res.data[0]},
                     corpid: res.corpId,
                 });
+                return Promise.resolve(res);
+            })
+            .then(res=>{
+                const {selectedTeam} = this.data;
+                return this.loadDispatchInfo(selectedTeam.value);
+            })
+            .then(res=>{
+                console.log(res);
             })
             .catch(err=>{
                 console.error(err);
-            })
+            });
+        this.loadEvaluationInfo(evaluationId);
+        this.loadEvaluationDetail(evaluationId);
+
     },
-    onShow() {},
+    onShow() {
+        const {evaluationId} = this.data;
+        const selectedTeam = wx.getStorageSync(`checked-depart-info-${evaluationId}`)
+        if(Object.keys(selectedTeam).length){
+            this.setData({
+                selectedTeam
+            });
+            this.loadDispatchInfo(selectedTeam.value);
+        }
+    },
     loadRootDepart() {
         if(!this.data.isWxWork){
             return Promise.reject();
@@ -83,6 +112,26 @@ Page({
         });
         return rootDepart;
     },
+    loadDispatchInfo(departmentId) {
+        const that = this;
+        const {evaluationId} = this.data;
+        console.log("departmentId, evaluationId: ", departmentId, evaluationId);
+        app.doAjax({
+            url: `wework/evaluations/${evaluationId}/inventory/available/ma`,
+            method: "get",
+            data: {
+                evaluationId: evaluationId,
+                departmentId: departmentId,
+            },
+            success: (res) => {
+                const {total} = res;
+                that.setData({
+                    dispatchInfo: res,
+                    maxCount: total
+                })
+            }
+        });
+    },
     goToAdvance() {
         const that = this;
         const {showAdvance, headerHeight} = this.data;
@@ -95,12 +144,9 @@ Page({
         })
     },
     goToDepart() {
-        const {selectedTeam, corpid} = this.data;
-        if(Object.keys(selectedTeam).length && !selectedTeam.leaf){
-            return
-        }
+        const {corpid, evaluationId} = this.data;
         wx.navigateTo({
-            url: `/pages/station/components/depart/depart?corpid=${corpid}&evaluationId=`
+            url: `/pages/station/components/depart/depart?corpid=${corpid}&evaluationId=${evaluationId}`
         })
     },
     onInviteInput(e) {
@@ -176,5 +222,76 @@ Page({
         this.setData({
             canIUsePicker: false
         })
+    },
+    invite() {
+        const that = this;
+        const {evaluationId, norms, inviteCount, canUSeeReport, isWxWork, is3rd, selectedTeam} = this.data;
+        const releaseInfo = {
+            evaluationId: evaluationId,
+            normId: norms[0].normId,
+            permitSetting: canUSeeReport === 'refuse' ? "STRICT" : "LOOSE",
+            releaseCount: inviteCount,
+            entrance: "WECHAT_MA",
+        };
+        try {
+            releaseInfo.deptId = selectedTeam.value;
+        } catch (e) {
+            throw e;
+        }
+        if (isWxWork||is3rd) {
+            releaseInfo.entrance = "WEWORK_MA";
+        }
+        app.doAjax({
+            url: "wework/evaluations/share/qr_code",
+            method: "post",
+            data: releaseInfo,
+            success(res) {
+                that.setData({
+                    qrcode: res.invitationImgUrl,
+                    releaseRecordId: res.releaseRecordId
+                });
+                that.showQRCode()
+            }
+        });
+    },
+    showQRCode() {
+        console.log(this.selectComponent('#preview-image'));
+        this.selectComponent('#preview-image').showQRCode();
+    },
+    loadEvaluationInfo(evaluationId) {
+        const that = this;
+        app.doAjax({
+            url: `../wework/evaluations/${evaluationId}/info`,
+            method: 'GET',
+            success(res) {
+                console.log(res);
+                that.setData({
+                    evaluationName: res.name
+                })
+            }
+        })
+    },
+    loadEvaluationDetail(evaluationId) {
+        const that = this;
+        app.doAjax({
+            url: "evaluations/outline",
+            method: "get",
+            data: {
+                evaluationId: evaluationId
+            },
+            success: res => {
+                that.setData({
+                    shareCover: res.smallImg
+                });
+            }
+        });
+    },
+    onShareAppMessage(options) {
+        const {evaluationName, shareCover, releaseRecordId} = this.data;
+        return {
+            title: `邀您参加《${evaluationName}》`,
+            path: `pages/work-base/components/guide/guide?releaseRecordId=${releaseRecordId}`,
+            imageUrl: shareCover,
+        }
     }
 });

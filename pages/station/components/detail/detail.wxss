@@ -1356,7 +1356,7 @@
   align-items: center;
   justify-content: center;
   width: 35vw;
-  padding: 14rpx 0;
+  padding: 30rpx 0;
   background-color: #353EE8FF;
   font-size: 28rpx;
   font-family: PingFangSC-Semibold, PingFang SC;
@@ -1436,4 +1436,7 @@
   font-weight: 400;
   color: #808080;
   line-height: 50rpx;
+}
+.more-padding{
+  padding-bottom: 50rpx;
 }

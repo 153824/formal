@@ -98,8 +98,9 @@
     />
 </view>
 <view class="generate-it-wrapper">
-    <view class="generate-it">
+    <view class="generate-it" bind:tap="invite">
         <text>生成测评邀请函</text>
     </view>
 </view>
+<hola-preview-image id="preview-image" qrcode="{{qrcode}}" releaseRecordId="{{releaseRecordId}}"></hola-preview-image>
 <wxs src="../../../../utils/util.wxs" module="utils"/>

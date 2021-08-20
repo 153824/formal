@@ -244,12 +244,13 @@
         {
           "name": "发放测评",
           "pathName": "pages/station/components/generate/generate",
-          "query": "",
+          "query": "evaluationId=5d9064b9d5de2b0073c8d711",
           "scene": null
         },
         {
           "name": "发放记录",
           "pathName": "pages/work-base/components/grant/grant",
+          "query": "releaseRecordId=61124b5709ffe7723fab15ad",
           "scene": null
         }
       ]

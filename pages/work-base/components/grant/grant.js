@@ -30,16 +30,72 @@ Page({
         reply: [],
         wait: [],
         digest: {},
-        imageTrigger: false
+        imageTrigger: false,
+        isShowQRCode: false
     },
     onLoad(options) {
         this.setData({
-            releaseRecordId: options.releaseRecordId
+            releaseRecordId: options.releaseRecordId,
+            sharedAt: options.sharedAt,
         });
-        this.loadDigest(options.releaseRecordId)
-        this.loadFinish(options.releaseRecordId)
-        this.loadReplying(options.releaseRecordId)
-        this.loadWait(options.releaseRecordId)
+        console.log(options);
+        const targetOptions = {
+            ...options,
+            userId: wx.getStorageSync('userInfo').userId,
+            teamId: wx.getStorageSync('userInfo').teamId,
+        }
+        if(app.checkAccessToken()){
+            this.init(targetOptions)
+        } else {
+            app.checkUserInfo = (userInfo) =>{
+                targetOptions.userId = userInfo.userId;
+                targetOptions.teamId = userInfo.teamId;
+                this.init(targetOptions)
+            }
+        }
+    },
+    init(options) {
+        if(options.sharedAt){
+            this.acceptEvaluationTrack(options)
+                .then(res=>{
+                    this.loadDigest(options.releaseRecordId)
+                    this.loadFinish(options.releaseRecordId)
+                    this.loadReplying(options.releaseRecordId)
+                    this.loadWait(options.releaseRecordId)
+                })
+        } else {
+            this.loadDigest(options.releaseRecordId)
+            this.loadFinish(options.releaseRecordId)
+            this.loadReplying(options.releaseRecordId)
+            this.loadWait(options.releaseRecordId)
+        }
+    },
+    acceptEvaluationTrack(options={trackId: "", releaseRecordId: "", sharedAt: "", userId: ""}) {
+        const that = this;
+        const {releaseRecordId, sharedAt, userId} = options;
+        const p = new Promise((resolve, reject) => {
+            app.doAjax({
+                url: "release_records/accept",
+                method: "post",
+                noLoading: true,
+                data: {
+                    userId: wx.getStorageSync("userInfo").id || userId,
+                    releaseRecordId: releaseRecordId || that.data.releaseRecordId,
+                    sharedAt: sharedAt
+                },
+                success(res) {
+                    resolve(true)
+                },
+                error(err) {
+                    console.error('领取使用记录错误:',err);
+                    wx.showToast({
+                        title: "领取使用记录错误！"
+                    });
+                    reject(false);
+                }
+            })
+        });
+        return p;
     },
     onChangeTab(e) {
         const {nav} = this.data;
@@ -167,22 +223,6 @@ Page({
             }
         });
     },
-    onShareAppMessage() {
-        const {releaseRecordId, digest} = this.data;
-        if(this.data.imageTrigger){
-            return {
-                title: `邀您参加《${digest.evaluationName}》`,
-                path: `pages/work-base/components/guide/guide?releaseRecordId=${releaseRecordId}`,
-                imageUrl: digest.smallImg,
-            }
-        }
-        const time = new Date().getTime();
-        return {
-            title: `邀请您查看《${digest.evaluationName}》的作答情况`,
-            path: `pages/work-base/components/grant/grant?releaseRecordId=${releaseRecordId}&sharedAt=${time}`,
-            imageUrl: digest.smallImg,
-        };
-    },
     next() {
         const {currentNav} = this.data;
         switch (currentNav) {
@@ -198,9 +238,38 @@ Page({
         }
     },
     showQRCode() {
+        this.setData({
+            isShowQRCode: true
+        })
         this.selectComponent('#preview-image').showQRCode()
     },
     hideQRCode() {
         this.selectComponent('#preview-image').hideQRCode()
-    }
+        this.setData({
+            isShowQRCode: false
+        })
+    },
+    goToReport(e) {
+        const {receiveRecordId} = e.currentTarget.dataset;
+        wx.navigateTo({
+            url: `/pages/report/report?receiveRecordId=${receiveRecordId}`
+        })
+    },
+    onShareAppMessage() {
+        const {releaseRecordId, digest, isShowQRCode} = this.data;
+        console.log('isShowQRCode: ',isShowQRCode);
+        if(isShowQRCode){
+            return {
+                title: `邀您参加《${digest.evaluationName}》`,
+                path: `pages/work-base/components/guide/guide?releaseRecordId=${releaseRecordId}`,
+                imageUrl: digest.smallImg,
+            }
+        }
+        const time = new Date().getTime();
+        return {
+            title: `邀请您查看《${digest.evaluationName}》的作答情况`,
+            path: `pages/work-base/components/grant/grant?releaseRecordId=${releaseRecordId}&sharedAt=${time}`,
+            imageUrl: digest.smallImg,
+        };
+    },
 });

@@ -24,7 +24,7 @@
                         </block>
                         <view>
                             <text>· {{ticketItem.description}}</text>
-                            <text wx:if="{{!util.isIncludes(showMoreMap, ticketIndex)}}" class="see-it" data-index="{{ticketIndex}}" bind:tap="seeIt">查看</text>
+                            <text wx:if="{{!util.isIncludes(showMoreMap, ticketIndex) && ticketItem.evaluations.length}}" class="see-it" data-index="{{ticketIndex}}" bind:tap="seeIt">查看</text>
                         </view>
                     </view>
                     <view class="ticket-item__info-right">
@@ -34,7 +34,7 @@
                 </view>
                 <image wx:if="{{ticketItem.expiredStatus === 'EXPIRED'}}" src="https://s.luoke101.com/icon-ticket-expire.png" class="expire"/>
                 <view wx:if="{{util.isIncludes(showMoreMap, ticketIndex)}}" class="more-info">
-                    《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》《任职心理风险测评》
+                    <text wx:for="{{ticketItem.evaluations}}" wx:for-item="evaluationItem" wx:key="unique">《{{evaluationItem}}》</text>
                 </view>
             </view>
         </block>

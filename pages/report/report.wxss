@@ -1502,3 +1502,19 @@ swiper, swiper-item {
     height: 240rpx;
     overflow: hidden;
 }
+.analyze{
+    background-color: #F9FAFCFF;
+    padding: 40rpx 60rpx 60rpx 60rpx;
+}
+.analyze > image{
+    border-radius: 40rpx;
+    box-shadow: 0rpx 4rpx 16rpx 4rpx rgba(0, 0, 0, 0.08);
+}
+.record-company{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+}

@@ -1,0 +1,44 @@
+<van-overlay show="{{ isShow }}" lock-scroll="{{true}}" bind:click="hide">
+    <view class="enter-wrapper">
+        <block wx:if="{{stepName==='record'}}">
+            <view class="enter-header">
+                <image src="https://s.luoke101.com/header%40enter.png" style="width:290rpx;height:258rpx;"/>
+            </view>
+            <view class="enter-body">
+                <view class="title">
+                    <text>请填写您的信息</text>
+                    <text>顾问将在一个工作日内与您联系</text>
+                </view>
+                <view class="form-wrapper">
+                    <view class="step">
+                        <text class="label">企业名称</text>
+                        <input class="company-input" placeholder="请输入"/>
+                    </view>
+                    <view class="step">
+                        <text class="label">您的职位</text>
+                        <input class="company-input" placeholder="请选择"/>
+                    </view>
+                </view>
+            </view>
+            <view class="enter-footer" catch:tap="submit">
+                <view class="submit">
+                    确认提交
+                </view>
+            </view>
+        </block>
+        <block wx:if="{{stepName==='done'}}">
+            <view class="enter-done">
+                <view class="enter-done-header">
+                    <image src="https://s.luoke101.com/enter%40done.png" style="width:400rpx;height:244rpx;"/>
+                </view>
+                <view class="enter-done-content">
+                    <text class="done">信息提交成功</text>
+                    <text class="tip">顾问将在一个工作日内与您联</text>
+                </view>
+                <view class="enter-done-footer" bind:tap="hide">
+                    确认
+                </view>
+            </view>
+        </block>
+    </view>
+</van-overlay>

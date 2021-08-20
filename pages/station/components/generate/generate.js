@@ -39,7 +39,8 @@ Page({
         evaluationName: '',
         maxCount: 15,
         shareCover: '',
-        releaseRecordId: ''
+        releaseRecordId: '',
+        gentKey: new Date().getTime()
     },
     onLoad(options) {
         const that = this;
@@ -64,11 +65,10 @@ Page({
                     rootTeam: {...res.data[0]},
                     corpid: res.corpId,
                 });
-                return Promise.resolve(res);
+                return Promise.resolve(res.data[0]);
             })
             .then(res=>{
-                const {selectedTeam} = this.data;
-                return this.loadDispatchInfo(selectedTeam.value);
+                return this.loadDispatchInfo(res.value);
             })
             .then(res=>{
                 console.log(res);
@@ -85,7 +85,12 @@ Page({
         const selectedTeam = wx.getStorageSync(`checked-depart-info-${evaluationId}`)
         if(Object.keys(selectedTeam).length){
             this.setData({
-                selectedTeam
+                selectedTeam: {...selectedTeam},
+                isShowWWOpenData: false
+            },()=>{
+                this.setData({
+                    isShowWWOpenData: true
+                })
             });
             this.loadDispatchInfo(selectedTeam.value);
         }

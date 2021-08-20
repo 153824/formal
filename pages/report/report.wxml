@@ -728,6 +728,10 @@
             </view>
         </view>
     </view>
+    <view class="analyze" bind:tap="goToAnalyze">
+        <image src="https://s.luoke101.com/analyze%40report.png" style="width:630rpx;height: 306rpx;"/>
+    </view>
 </block>
+<hola-enter id="hola-enter"></hola-enter>
 <hola-mask isShow="{{maskTrigger}}"></hola-mask>
 <wxs src="../../utils/util.wxs" module="util"></wxs>

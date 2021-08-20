@@ -250,7 +250,7 @@
         {
           "name": "发放记录",
           "pathName": "pages/work-base/components/grant/grant",
-          "query": "releaseRecordId=61124b5709ffe7723fab15ad",
+          "query": "releaseRecordId=611f55a99024b801ec36a4cc&sharedAt=10",
           "scene": null
         }
       ]

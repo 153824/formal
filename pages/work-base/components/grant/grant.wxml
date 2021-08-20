@@ -41,7 +41,7 @@
         <view class="track-body" style="{{currentNav===2||currentNav===1?'padding-right: 40rpx;':''}}">
             <block wx:if="{{currentNav === 0}}">
                 <block wx:if="{{finish.length}}" wx:for="{{finish}}" wx:for-item="finishItem" wx:for-index="finishIndex">
-                    <view class="track-body-item">
+                    <view class="track-body-item" data-receive-record-id="{{finishItem.receiveRecordId}}" bind:tap="goToReport">
                         <image src="{{finishItem.avatar}}" style="width:80rpx;height:80rpx;border-radius:50%;"/>
                         <view class="detail-wrapper">
                             <view class="name">{{finishItem.participant}}</view>

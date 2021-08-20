@@ -61,7 +61,9 @@
                         <text>受测者归属部门</text>
                     </view>
                     <view class="team" bind:tap="goToDepart">
-                        <ww-open-data wx:if="{{isWxWork && corpid}}" corpid="{{corpid}}" type="departmentName" openid="{{selectedTeam.bindTpDepartId}}"/>
+                        <view wx:if="{{isWxWork && corpid && isShowWWOpenData}}">
+                            <ww-open-data corpid="{{corpid}}" type="departmentName" openid="{{selectedTeam.bindTpDepartId}}"/>
+                        </view>
                         <block wx:else>{{selectedTeam.label}}</block>
                         <view class="team-icon">
                             <van-icon name="arrow-down" />

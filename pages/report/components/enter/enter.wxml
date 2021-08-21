@@ -12,11 +12,16 @@
                 <view class="form-wrapper">
                     <view class="step">
                         <text class="label">企业名称</text>
-                        <input class="company-input" placeholder="请输入"/>
+                        <input catch:tap value="{{currentKeyword}}" class="company-input" bind:input="loadCompany" placeholder="请输入"/>
+                        <scroll-view wx:if="{{selectCompanyTrigger}}" class="company-list" scroll-y="{{true}}" style="height: 360rpx">
+                            <block wx:for="{{companyList}}" wx:for-item="companyItem" wx:for-index="companyIndex">
+                                <view catch:tap="selectCompany" class="company-item" data-company="{{companyItem}}">{{companyItem}}</view>
+                            </block>
+                        </scroll-view>
                     </view>
                     <view class="step">
                         <text class="label">您的职位</text>
-                        <input class="company-input" placeholder="请选择"/>
+                        <input catch:tap class="company-input" placeholder="请选择"/>
                     </view>
                 </view>
             </view>

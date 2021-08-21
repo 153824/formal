@@ -13,7 +13,7 @@
     <view id="advance-setting" class="generate-join">
         <view class="step-1">
             <view class="step-title">
-                <text>您想让多少人参与测评</text>
+                <text>您想邀请多少人参与测评</text>
             </view>
             <view class="step-operate-wrapper">
                 <view class="step-operate">
@@ -33,7 +33,7 @@
         </view>
         <view class="step-2">
             <view class="step-title">
-                <text>答题结束直接查看报告</text>
+                <text>是否允许受测者查看报告</text>
             </view>
             <view class="step-button-group">
                 <view class="agree {{canUSeeReport==='agree'?'active':''}}" data-type="agree" bind:tap="setReportAuth">
@@ -58,7 +58,7 @@
             <view class="advance-setting-step">
                 <view>
                     <view class="step-title">
-                        <text>受测者归属部门</text>
+                        <text>受测者报告归属部门</text>
                     </view>
                     <view class="team" bind:tap="goToDepart">
                         <view wx:if="{{isWxWork && corpid && isShowWWOpenData}}">

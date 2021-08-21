@@ -27,7 +27,7 @@
                 </view>
                 <view class="step-count">
                     <text class="label">可用：</text>
-                    <text class="count">{{maxCount}}</text>
+                    <text class="count">{{dispatchInfo.type==='BY_TIME' ? '无限量' : maxCount}}</text>
                 </view>
             </view>
         </view>

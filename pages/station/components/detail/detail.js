@@ -55,11 +55,11 @@ Page({
             });
         if(app.checkAccessToken()) {
             this.loadInventory()
-                .then(({type, count})=>{
+                .then(({type, number})=>{
                     this.setData({
                         buttonType: type,
-                        availableTotal: count
-                    })
+                        availableTotal: number
+                    });
                 });
         }
         let query = wx.createSelectorQuery();

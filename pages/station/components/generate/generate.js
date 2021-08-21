@@ -37,7 +37,7 @@ Page({
         norms: [],
         evaluationId: '',
         evaluationName: '',
-        maxCount: 15,
+        maxCount: 0,
         shareCover: '',
         releaseRecordId: '',
         gentKey: new Date().getTime()
@@ -129,11 +129,11 @@ Page({
                 departmentId: departmentId,
             },
             success: (res) => {
-                const {total} = res;
+                const {number} = res;
                 that.setData({
                     dispatchInfo: res,
-                    maxCount: total
-                })
+                    maxCount: res.type === 'BY_TIME' ? 999999999 : number
+                });
             }
         });
     },
@@ -155,13 +155,21 @@ Page({
         })
     },
     onInviteInput(e) {
+        const nowTimestamp = new Date().getTime();
         const targetCount = Number(e.detail.value);
-        const {maxCount} = this.data;
-        if(targetCount > maxCount){
+        const {maxCount, dispatchInfo} = this.data;
+        if(targetCount > maxCount && dispatchInfo.type === 'BY_COUNT'){
             this.setData({
                 inviteCount: maxCount
             })
             app.toast(`最多可发放${maxCount}份`)
+            return
+        }
+        if(dispatchInfo.type !== 'BY_TIME' && dispatchInfo.number > nowTimestamp){
+            this.setData({
+                inviteCount: 0
+            })
+            app.toast(`买断方案已过期`)
             return
         }
         this.setData({
@@ -169,11 +177,11 @@ Page({
         })
     },
     addCount() {
-        const {inviteCount, maxCount} = this.data;
+        const {inviteCount, maxCount, dispatchInfo} = this.data;
         this.setData({
             inviteCount: inviteCount + 1 > maxCount  ? maxCount : inviteCount + 1
         })
-        if(inviteCount + 1 > maxCount){
+        if(inviteCount + 1 > maxCount && dispatchInfo.type === 'BY_COUNT'){
             app.toast(`最多可发放${maxCount}份`)
         }
     },
@@ -230,7 +238,7 @@ Page({
     },
     invite() {
         const that = this;
-        const {evaluationId, norms, inviteCount, canUSeeReport, isWxWork, is3rd, selectedTeam} = this.data;
+        const {evaluationId, norms, inviteCount, canUSeeReport, isWxWork, is3rd, selectedTeam, expireModel, startTime, endTime} = this.data;
         const releaseInfo = {
             evaluationId: evaluationId,
             normId: norms[0].normId,
@@ -245,6 +253,10 @@ Page({
         }
         if (isWxWork||is3rd) {
             releaseInfo.entrance = "WEWORK_MA";
+        }
+        if(expireModel === 'short'){
+            releaseInfo.beginTime = startTime;
+            releaseInfo.endTime = endTime;
         }
         app.doAjax({
             url: "wework/evaluations/share/qr_code",

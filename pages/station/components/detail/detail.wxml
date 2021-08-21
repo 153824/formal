@@ -106,6 +106,17 @@
                 <text>获取更多</text>
             </view>
         </view>
+        <!--无限使用-->
+        <view wx:elif="{{buttonType === 'buyout'}}" class="button-group-wrapper">
+            <button class="button-group__is-left {{iphonex ? 'is-iosx' : ''}}" bind:tap="showSelectQuiz">
+                <text class="title">立即使用</text>
+                <text class="tips">使用数量无限次</text>
+            </button>
+            <view class="button-group__is-right {{iphonex ? 'is-iosx' : ''}}" bind:tap="goToCustomerService">
+                <text>联系客服</text>
+                <text>获取更多</text>
+            </view>
+        </view>
         <!--无券无库存且未用过本测评-->
         <view wx:elif="{{buttonType === 'unavailable'}}" class="button-group-wrapper">
             <view class="button-group__is-right {{iphonex ? 'is-iosx more-padding' : ''}}"

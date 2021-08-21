@@ -87,14 +87,14 @@ Page({
             return;
         }
         if (!isWxWork && !is3rd) {
-            // TODO UM埋点，跟踪哪个用户使用哪份常模
             const inventoriesPromise = new Promise((resolve, reject) => {
                 app.doAjax({
-                    url: 'inventories',
+                    url: '/inventories/we_work',
                     method: 'get',
                     data: {
                         page: 1,
-                        pageSize: 3
+                        pageSize: 3,
+                        funcCode: 'evaluationManage'
                     },
                     noLoading: true,
                     success: function (res) {

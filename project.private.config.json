@@ -51,7 +51,7 @@
         {
           "name": "小程序码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "scene=6112491440e44843e39bf971",
+          "query": "scene=611f8254e80d611c7df97897",
           "scene": null
         },
         {
@@ -251,6 +251,12 @@
           "name": "发放记录",
           "pathName": "pages/work-base/components/grant/grant",
           "query": "releaseRecordId=611f55a99024b801ec36a4cc&sharedAt=10",
+          "scene": null
+        },
+        {
+          "name": "信息录入",
+          "pathName": "pages/recorder/recorder",
+          "query": "scene=611f8254e80d611c7df97897",
           "scene": null
         }
       ]

@@ -16,6 +16,7 @@
                        bind:focus="onKeywordFocus"
                        bind:input="onKeywordInput"
                        auto-focus="{{true}}"
+                       confirm-type="search"
                        bind:confirm="onKeywordConfirm"/>
                 <view wx:if="{{keyword}}" class="search-clear" bind:tap="clear">
                     <van-icon name="clear" color="#B4B4B4FF"/>

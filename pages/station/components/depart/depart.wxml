@@ -1,12 +1,13 @@
 <view class="depart-wrapper">
     <view>
         <view class="scroll-wrapper">
-            <scroll-view class="scroll-item" scroll-x="{{true}}" scroll-y="{{false}}">
+            <scroll-view class="scroll-item" scroll-x="{{true}}" scroll-y="{{false}}" scroll-into-view="{{scrollToRoute}}">
                 <block>
                     <text class="is__can-tap" bindtap="loadTargetDepart" data-root="{{true}}" data-index="{{index}}" data-depart="{{item}}">根部门</text>
                     <image wx:if="{{routeMap.length}}" src="https://ihola.luoke101.com/icon%40icon-right-arrow.png" class="char-icon"/>
                 </block>
                 <view wx:for="{{routeMap}}"
+                      id="route-map-{{index}}"
                       class="open-data-wrapper {{index+1!==routeMap.length?'is__can-tap':''}}"
                       bindtap="{{index+1 === routeMap.length ? '' : 'loadTargetDepart'}}"
                       data-index="{{index}}"

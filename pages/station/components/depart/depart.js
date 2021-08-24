@@ -11,6 +11,7 @@ Page({
         rootBindTpDepartId: '',
         is3rd: app.wx3rdInfo.is3rd,
         isWxWork: app.wxWorkInfo.isWxWork,
+        scrollToRoute: '',
     },
     onLoad: function (options) {
         const {evaluationId, corpid} = options;
@@ -86,7 +87,7 @@ Page({
         return departInfo;
     },
     loadChildDepart(e) {
-        console.log(e);
+        const that = this;
         const {depart} = e.currentTarget.dataset;
         const {routeMap} = this.data;
         const childDepart = this.loadDepart(e);
@@ -95,11 +96,14 @@ Page({
         }, ()=>{
             childDepart.then(res => {
                 routeMap.push(depart);
-                console.log('routeMap.push: ',routeMap);
-                console.log('loadChildDepart： ',res.data);
                 this.setData({
                     routeMap: [...routeMap],
                     childDepart: res.data,
+                },()=>{
+                    that.setData({
+                        scrollToRoute: `route-map-${routeMap.length - 1}`,
+                    })
+                    console.log(`route-map-${routeMap.length - 1}`)
                 })
             }).catch(err => {
                 throw err;
@@ -115,8 +119,10 @@ Page({
                 routeMap: root ? []:routeMap.slice(0, index+1),
                 childDepart: [],
             },()=>{
+                const index = this.data.routeMap.length - 1;
                 this.setData({
                     childDepart: res.data,
+                    scrollToRoute: `route-map-${index}`,
                 })
             });
         }).catch(err => {

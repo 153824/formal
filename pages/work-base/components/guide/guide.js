@@ -21,7 +21,9 @@ Page({
         type:'',
         countdownInMinutes: -1,
         expired: false,
-        expiredAt: -1
+        expiredAt: -1,
+        started: false,
+        startedAt: -1,
     },
     onLoad: function (option) {
         const that = this;
@@ -205,13 +207,14 @@ Page({
                 releaseRecordId: releaseRecordId,
             },
             success: function (res) {
-                console.log('demonstrateInfo: ',res);
                 _this.setData({
                     demonstrateInfo: res.demonstrateInfo,
                     maskTrigger: false,
                     countdownInMinutes: res.countdownInMinutes,
                     expired: res.expired,
-                    expiredAt: res.expiredAt
+                    expiredAt: res.expiredAt,
+                    started: res.started,
+                    startedAt: res.startedAt,
                 });
             },
             complete: function () {},
@@ -273,7 +276,9 @@ Page({
                     maskTrigger: false,
                     countdownInMinutes: res.countdownInMinutes,
                     expired: res.expired,
-                    expiredAt: res.expiredAt
+                    expiredAt: res.expiredAt,
+                    started: res.started,
+                    startedAt: res.startedAt,
                 });
             },
             complete: function () {},

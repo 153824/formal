@@ -28,7 +28,6 @@
     "common/tab-bar/tab-bar",
     "pages/user-center/user-center",
     "pages/work-base/components/track-more/track-more",
-    "pages/work-base/components/track-detail/track-detail",
     "pages/work-base/components/report-more/report-more",
     "pages/user-center/components/receive-reports/receive-reports",
     "pages/user-center/components/receive-evaluations/receive-evaluations",

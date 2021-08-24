@@ -53,3 +53,6 @@
     flex-direction: row;
     align-items: center;
 }
+.is__can-tap{
+    color: #353EE8FF;
+}

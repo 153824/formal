@@ -135,37 +135,6 @@
             </view>
         </view>
     </block>
-    <block>
-        <van-overlay show="{{ payTrigger }}" bind:click="cancelPayForEvaluation" z-index="0"></van-overlay>
-        <view wx:if="{{ payTrigger }}" class="new-pay-page {{ payTrigger ? 'popup-new-pay-page':'' }}">
-            <view class="pay-title">
-                <text>购买测评</text>
-            </view>
-            <view wx:if="{{ buyByCounts }}" class="buy-by-counts">
-                <view class="total-counts">
-                    <view>合计</view>
-                    <view>￥{{ util.toFix((evaluation.price||0) * count) }}</view>
-                    <view style="color: rgba(247,181,0,1);font-size: 26rpx;" bindtap="goToCustomerService">联系客服，获取按年买断优惠报价
-                    </view>
-                </view>
-                <view class="total-operator">
-                    <view bindtap="addcount" class="add">+</view>
-                    <input type="number" class="total-display" bindinput="onCountChange" value="{{count}}"/>
-                    <view bindtap="subcount" class="subtraction">-</view>
-                </view>
-            </view>
-            <view class="pay-group">
-                <view wx:if="{{ buyByCounts }}" bindtap="payByCounts">
-                    <press title="微信支付" fontSize="32" fontWeight="600" letterSpacing="2" shadow=""></press>
-                </view>
-                <view bindtap="goToCustomerService">
-                    <press title="对公转账" fontSize="32" color="rgba(53,62,232,1)" bgColor="rgb(255,255,255)" border="none"
-                           fontWeight="600" letterSpacing="2"></press>
-                </view>
-            </view>
-        </view>
-    </block>
-<!--    <serving area="detail" bottom="180rpx"></serving>-->
 </block>
 <van-overlay show="{{ loading }}" custom-style="background-color: #fff;">
     <mask isShow="{{ loading }}" top="{{ (statusbarHeight + titleHeight)/pixelRate }}"

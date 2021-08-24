@@ -1,3 +1,5 @@
+import {Tracker, umaEvent} from "../../../../uma.config";
+
 const app = getApp();
 Page({
     data: {
@@ -250,10 +252,18 @@ Page({
         })
     },
     goToReport(e) {
+        const {digest} = this.data;
         const {receiveRecordId} = e.currentTarget.dataset;
         wx.navigateTo({
             url: `/pages/report/report?receiveRecordId=${receiveRecordId}`
-        })
+        });
+        const umaConfig = umaEvent.getInReport;
+        try{
+            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.record, name: `${digest.evaluationName}`});
+        }
+        catch (e) {
+            console.log('友盟数据统计',e);
+        }
     },
     onShareAppMessage() {
         const {releaseRecordId, digest, isShowQRCode} = this.data;

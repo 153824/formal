@@ -88,13 +88,6 @@
           "scene": null
         },
         {
-          "id": 3,
-          "name": "作答記錄",
-          "pathName": "pages/work-base/components/track-detail/track-detail",
-          "query": "releaseRecordId=5f813067d5a972193142e46e&sharedAt=1602310089498&tabIndex=1",
-          "scene": null
-        },
-        {
           "id": 4,
           "name": "测评详情",
           "pathName": "pages/station/components/detail/detail",

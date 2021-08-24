@@ -16,7 +16,7 @@
           "name": "首页",
           "pathName": "pages/home/home",
           "query": "_ttn=6112353a063bed4d8c1294f4",
-          "scene": null
+          "scene": 1000
         },
         {
           "name": "加入团队",
@@ -28,12 +28,6 @@
           "name": "报告详情",
           "pathName": "pages/report/report",
           "query": "receiveRecordId=6112357a11e388253405132c",
-          "scene": null
-        },
-        {
-          "name": "作答記錄",
-          "pathName": "pages/work-base/components/track-detail/track-detail",
-          "query": "releaseRecordId=5f813067d5a972193142e46e&sharedAt=1602310089498&tabIndex=1",
           "scene": null
         },
         {

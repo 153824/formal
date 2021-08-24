@@ -3,11 +3,13 @@
         <view class="scroll-wrapper">
             <scroll-view class="scroll-item" scroll-x="{{true}}" scroll-y="{{false}}">
                 <block>
-                    <text bindtap="loadTargetDepart" data-root="{{true}}" data-index="{{index}}" data-depart="{{item}}">根部门</text>
+                    <text class="is__can-tap" bindtap="loadTargetDepart" data-root="{{true}}" data-index="{{index}}" data-depart="{{item}}">根部门</text>
                     <image wx:if="{{routeMap.length}}" src="https://ihola.luoke101.com/icon%40icon-right-arrow.png" class="char-icon"/>
                 </block>
-                <view wx:for="{{routeMap}}" class="open-data-wrapper"
-                      bindtap="{{index+1 === routeMap.length ? '' : 'loadTargetDepart'}}" data-index="{{index}}"
+                <view wx:for="{{routeMap}}"
+                      class="open-data-wrapper {{index+1!==routeMap.length?'is__can-tap':''}}"
+                      bindtap="{{index+1 === routeMap.length ? '' : 'loadTargetDepart'}}"
+                      data-index="{{index}}"
                       data-depart="{{item}}">
                     <block wx:if="{{is3rd}}">
                         {{item.label}}

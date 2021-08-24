@@ -28,7 +28,6 @@ Page({
     },
 
     onLoad(options) {
-        const that = this;
         const {scene} = wx.getLaunchOptionsSync();
         const umaConfig = umaEvent.evaluationDetail;
         if (umaConfig.scene.includes(scene)) {
@@ -71,28 +70,9 @@ Page({
         }).exec();
     },
 
-    onCountChange(e) {
-        this.setData({
-            count: e.detail.value * 1
-        })
-    },
-
-    payForEvaluation: function () {
-        const {evaluation} = this.data;
-        this.setData({
-            payTrigger: true
-        });
-    },
-
-    cancelPayForEvaluation: function (e) {
-        this.setData({
-            payTrigger: false,
-        })
-    },
-
     goToGuide(e) {
         const that = this;
-        const {evaluation} = this.data;
+        const {evaluation, availableTotal, buttonType} = this.data;
         this.loadReleaseSelf()
             .then(res=>{
                 const answeringURL = `/pages/work-base/components/guide/guide?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}&type=self&releaseInfo=${JSON.stringify(res)}`;
@@ -116,79 +96,6 @@ Page({
         }
         catch (e) {
             console.log('友盟数据统计',e);
-        }
-    },
-
-    addcount() {
-        this.setData({
-            count: this.data.count + 1
-        });
-    },
-
-    subcount() {
-        if (this.data.count <= 1) {
-            this.setData({
-                count: 1
-            });
-        } else {
-            this.setData({
-                count: this.data.count - 1
-            })
-        }
-    },
-
-    payByCounts() {
-        const that = this,
-            {count, evaluation} = this.data;
-        if (count !== 0) {
-            app.doAjax({
-                url: "buyPaper",
-                method: "post",
-                data: {
-                    id: evaluation.id,
-                    count: that.data.count,
-                    type: 1,
-                    openid: wx.getStorageSync("userInfo").openid
-                },
-                success(res) {
-                    wx.requestPayment({
-                        appId: res.appId,
-                        timeStamp: res.timeStamp,
-                        nonceStr: res.nonceStr,
-                        package: res.package,
-                        signType: 'MD5',
-                        paySign: res.paySign,
-                        success: function (res) {
-                            wx.showToast({
-                                title: '购买成功',
-                                duration: 2000
-                            });
-                            setTimeout(function () {
-                                that.onShow();
-                            }, 500);
-                        },
-                        fail(res) {
-                            if (res.errMsg == "requestPayment:fail cancel") {
-                                wx.showToast({
-                                    title: '购买取消',
-                                    icon: 'none',
-                                    duration: 1200
-                                })
-                            } else {
-                                wx.showToast({
-                                    title: '购买失败',
-                                    icon: 'none',
-                                    duration: 1200
-                                })
-                            }
-                            //支付失败
-                            console.error(res);
-                        },
-                        complete: function (res) {
-                        }
-                    })
-                }
-            })
         }
     },
 

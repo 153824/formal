@@ -207,7 +207,8 @@ Page({
         })
     },
     onConfirm(e) {
-        const targetTime = moment(e.detail).format('YYYY/MM/DD hh:mm');
+        const targetTime = moment(e.detail).format('YYYY/MM/DD HH:mm');
+        console.log(targetTime);
         const {timeModel, startTime, endTime} = this.data;
         if((startTime === targetTime || endTime === targetTime) && (startTime !== -1 || endTime !== -1)){
             app.toast('开始时间与结束时间不能相同');
@@ -218,11 +219,11 @@ Page({
         });
         if(timeModel === 'start'){
             this.setData({
-                startTime: moment(e.detail).format('YYYY/MM/DD hh:mm'),
+                startTime: moment(e.detail).format('YYYY/MM/DD HH:mm'),
             });
         } else {
             this.setData({
-                endTime: moment(e.detail).format('YYYY/MM/DD hh:mm'),
+                endTime: moment(e.detail).format('YYYY/MM/DD HH:mm'),
             });
         }
         this.onCancel()

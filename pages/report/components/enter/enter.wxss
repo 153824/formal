@@ -62,7 +62,11 @@
     text-align: center;
 }
 .company-input::placeholder{
-    color: #B4B4B4;
+    font-size: 28rpx!important;
+    font-family: PingFangSC-Regular, PingFang SC!important;
+    font-weight: 400!important;
+    color: #B4B4B4!important;
+    line-height: 40rpx!important;
 }
 .submit{
     display: flex;
@@ -109,7 +113,7 @@
     color: #FFFFFF;
     line-height: 44rpx;
 }
-.company-list{
+.company-list, .position-list{
     position: absolute;
     top: -315rpx;
     left: 0;
@@ -131,4 +135,28 @@
     color: #303113;
     line-height: 40rpx;
     border-bottom: 2rpx solid #E9E9E9FF;
+}
+.position-select{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 84rpx;
+    margin-top: 20rpx;
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC!important;
+    font-weight: 400!important;
+    color: #808080!important;
+    line-height: 40rpx!important;
+    background: #FFFFFF!important;
+    border-radius: 10rpx!important;
+    border: 2rpx solid #E6E6E6!important;
+}
+.position-name{
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.position-selected{
+    color: #000000;
 }

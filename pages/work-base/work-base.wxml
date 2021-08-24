@@ -35,7 +35,6 @@
                         <view style="width: 4rpx;height: 114rpx;background-color: #F4F4F4FF;margin-right: 20rpx;"></view>
                         <view class="send-evaluation" bindtap="goToSharePaper"
                               data-evaluation-id="{{ evaluationItem.evaluationId }}"
-                              data-count="{{ evaluationItem.available }}"
                               data-index="{{ evaluationIndex }}"
                         >
                             <image src="https://ihola.luoke101.com/work-base%40icon-plane.png"
@@ -157,13 +156,12 @@
                                 {{evaluationItem.evaluationName}}
                             </view>
                             <view class="evaluation-info">
-                                <text wx:if="{{evaluationItem.type==='BY_COUNT'}}">可发放数量：{{evaluationItem.available}}份</text><text wx:if="{{evaluationItem.type==='BY_TIME'||evaluationItem.type==='FREE'}}">可发放数量：不限量</text>
+                                <text>{{evaluationItem.quesCount}}题 {{evaluationItem.estimatedTime}}分钟</text>
                             </view>
                         </view>
                         <view style="width: 4rpx;height: 114rpx;background-color: #F4F4F4FF;margin-right: 20rpx;"></view>
                         <view class="send-evaluation" bindtap="goToSharePaper"
                               data-evaluation-id="{{ evaluationItem.evaluationId }}"
-                              data-count="{{ evaluationItem.available }}"
                               data-index="{{ evaluationIndex }}"
                         >
                             <image src="https://ihola.luoke101.com/work-base%40icon-plane.png" style="margin-bottom: 6rpx;width: 32rpx;height: 32rpx;"/><text>发测评</text>
@@ -233,7 +231,7 @@
                             发放数量:<text class="count" style="margin: 0 10rpx;">{{trackItem.amount}}</text>完成数量:<text class="count" style="margin-left: 10rpx;">{{trackItem.finished}}</text>
                         </view>
                         <view class="reply-track-info">
-                            发放时间:<text class="date" style="margin-left: 10rpx;">{{trackItem.createdAt}}</text>
+                            1发放时间:<text class="date" style="margin-left: 10rpx;">{{trackItem.createdAt}}</text>
                         </view>
                     </view>
                     <view class="send-evaluation">
@@ -317,7 +315,6 @@
                             <view style="width: 4rpx;height: 114rpx;background-color: #F4F4F4FF;margin-right: 20rpx;"></view>
                             <view class="send-evaluation" bindtap="goToSharePaper"
                                   data-evaluation-id="{{ evaluationItem.evaluationId }}"
-                                  data-count="{{ evaluationItem.available }}"
                                   data-index="{{ evaluationIndex }}"
                             >
                                 <image src="https://ihola.luoke101.com/work-base%40icon-plane.png"

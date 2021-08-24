@@ -449,14 +449,9 @@ Page({
 
     goToSharePaper: function (e) {
         const {
-            available,
             norms,
             evaluationId,
         } = this.data.myEvaluation[e.currentTarget.dataset.index];
-        if (!available && !this.data.isWxWork && !this.data.is3rd) {
-            app.toast("测评可用数量不足");
-            return;
-        }
         const necessaryInfo = {
             evaluationId: evaluationId,
             norms,

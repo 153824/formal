@@ -13,12 +13,24 @@ Component({
         isShow: false,
         stepName: 'record',
         lastKeyword: '',
-        lastResult: [],
         currentKeyword: '',
         companyList: [],
+        positionList: [
+            'HR专员(招聘/薪酬/培训/绩效)',
+            'HR主管/经理',
+            'HRBP',
+            'OD/TD/LD',
+            'HRD/HRM',
+            '业务部门负责人',
+            'CEO/老板',
+            '其他'
+        ],
+        lastResult: [],
         currentCompany: '',
         currentPosition: '',
-        selectCompanyTrigger: false
+        selectCompanyTrigger: false,
+        selectPositionTrigger: false,
+        evaluationId: ''
     },
     methods: {
         hide() {
@@ -115,5 +127,19 @@ Component({
                 selectCompanyTrigger: false
             })
         },
+
+        loadPosition() {
+            this.setData({
+                selectPositionTrigger: true
+            })
+        },
+        selectPosition(e) {
+            const {position} = e.currentTarget.dataset;
+            console.log(position);
+            this.setData({
+                currentPosition: position,
+                selectPositionTrigger: false
+            })
+        }
     }
 });

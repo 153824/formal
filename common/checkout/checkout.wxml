@@ -79,6 +79,9 @@
     <view class="report-content">
         <view class="report-child" bindtap="changePage" data-name="{{ subtitle }}" data-id="{{ info }}">
             联系客服获取报告模板
+            <view style="display: flex;background: #353EE8FF;align-items: center;justify-content: center;width: 84rpx;height: 84rpx;border-radius: 50%;">
+                <image src="https://s.luoke101.com/ma/image/contact.png" style="width: 40rpx;height: 40rpx;"/>
+            </view>
         </view>
     </view>
 </view>

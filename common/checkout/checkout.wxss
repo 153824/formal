@@ -121,7 +121,18 @@
   margin-right: 20rpx;
 }
 .report-child{
-
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 120rpx;
+  padding: 0 50rpx;
+  background: rgba(53, 62, 232, 0.05);
+  border-radius: 60rpx;
+  font-size: 30rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #353EE8;
+  line-height: 42rpx;
 }
 .report-child > image{
   width: 19.6rpx;

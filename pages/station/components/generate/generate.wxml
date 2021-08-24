@@ -1,4 +1,4 @@
-<scroll-view scroll-y scroll-into-view="{{scrollToIndex}}" style="{{showAdvance ? 'height: calc(100vh + 435rpx);padding-bottom: 435rpx;' : 'height: calc(100vh);'}}background-color: #fff">
+<scroll-view scroll-y scroll-into-view="{{scrollToIndex}}" style="height: calc(100vh + 435rpx);padding-bottom: 435rpx;background-color: #fff">
     <view id="generate-header" class="generate-header">
         <view style="margin-top: 92rpx;">
             <image src="https://s.luoke101.com/generate%40send.png" style="width: 160rpx;height: 160rpx;"></image>

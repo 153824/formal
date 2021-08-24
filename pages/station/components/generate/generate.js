@@ -7,7 +7,7 @@ Page({
         headerHeight: 0,
         inviteCount: 1,
         canUSeeReport: 'refuse', // refuse 不允许；agree 允许；
-        expireModel: 'short', // forever 长期有效；short 时间期内有效；
+        expireModel: 'forever', // forever 长期有效；short 时间期内有效；
         minHour: 10,
         maxHour: 20,
         minDate: new Date().getTime(),
@@ -158,30 +158,32 @@ Page({
         const nowTimestamp = new Date().getTime();
         const targetCount = Number(e.detail.value);
         const {maxCount, dispatchInfo} = this.data;
-        if(targetCount > maxCount && dispatchInfo.type === 'BY_COUNT'){
+        const isByCount = dispatchInfo.type === 'BY_COUNT';
+        if(targetCount > maxCount && isByCount){
             this.setData({
                 inviteCount: maxCount
             })
             app.toast(`最多可发放${maxCount}份`)
             return
         }
-        if(dispatchInfo.type !== 'BY_TIME' && dispatchInfo.number > nowTimestamp){
+        if(!isByCount && dispatchInfo.number < nowTimestamp){
             this.setData({
                 inviteCount: 0
-            })
+            });
             app.toast(`买断方案已过期`)
             return
         }
         this.setData({
             inviteCount: targetCount
-        })
+        });
     },
     addCount() {
         const {inviteCount, maxCount, dispatchInfo} = this.data;
+        const isByCount = dispatchInfo.type === 'BY_COUNT';
         this.setData({
             inviteCount: inviteCount + 1 > maxCount  ? maxCount : inviteCount + 1
         })
-        if(inviteCount + 1 > maxCount && dispatchInfo.type === 'BY_COUNT'){
+        if(inviteCount + 1 > maxCount && isByCount){
             app.toast(`最多可发放${maxCount}份`)
         }
     },
@@ -206,7 +208,7 @@ Page({
     onConfirm(e) {
         const targetTime = moment(e.detail).format('YYYY/MM/DD hh:mm');
         const {timeModel, startTime, endTime} = this.data;
-        if((startTime === targetTime || endTime === targetTime)){
+        if((startTime === targetTime || endTime === targetTime) && (startTime !== -1 || endTime !== -1)){
             app.toast('开始时间与结束时间不能相同');
             return;
         }
@@ -255,8 +257,8 @@ Page({
             releaseInfo.entrance = "WEWORK_MA";
         }
         if(expireModel === 'short'){
-            releaseInfo.beginTime = startTime;
-            releaseInfo.endTime = endTime;
+            releaseInfo.beginTime = moment(startTime).valueOf();
+            releaseInfo.endTime = moment(endTime).valueOf();
         }
         app.doAjax({
             url: "wework/evaluations/share/qr_code",

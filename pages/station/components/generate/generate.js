@@ -1,4 +1,5 @@
 import moment from '../../../../utils/moment'
+import {Tracker, umaEvent} from "../../../../uma.config";
 const app = getApp();
 Page({
     data: {
@@ -240,7 +241,8 @@ Page({
     },
     invite() {
         const that = this;
-        const {evaluationId, norms, inviteCount, canUSeeReport, isWxWork, is3rd, selectedTeam, expireModel, startTime, endTime} = this.data;
+        const umaConfig = umaEvent.generateInvite;
+        const {evaluationName, evaluationId, norms, inviteCount, canUSeeReport, isWxWork, is3rd, selectedTeam, expireModel, startTime, endTime} = this.data;
         const releaseInfo = {
             evaluationId: evaluationId,
             normId: norms[0].normId,
@@ -272,6 +274,22 @@ Page({
                 that.showQRCode()
             }
         });
+        const currentRoute = getCurrentPages()[getCurrentPages().length - 2].route;
+        if(umaConfig.route.bench.includes(currentRoute)){
+            try{
+                new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.bench, name: `${evaluationName}`,});
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
+        } else {
+            try{
+                new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.detail, name: `${evaluationName}`,});
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
+        }
     },
     showQRCode() {
         console.log(this.selectComponent('#preview-image'));

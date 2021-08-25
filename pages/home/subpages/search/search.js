@@ -70,14 +70,15 @@ Page({
     },
 
     onKeywordConfirm: debounce(function (e) {
-        const {value} = e.detail;
+        let value = e.detail.value;
+        value = value ? value : this.data.keyword;
         this.setData({
             page: 0,
             isEmpty: false,
             searchRes: [],
             isConfirm: true
         }, () => {
-            if (value) this.loadSearch()
+            if (value) this.loadSearch();
         });
     }, 800, {trailing: true, leading: false}),
 

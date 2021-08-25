@@ -22,7 +22,7 @@ Page({
         countdownInMinutes: -1,
         expired: false,
         expiredAt: -1,
-        started: false,
+        started: true,
         startedAt: -1,
     },
     onLoad: function (option) {

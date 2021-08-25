@@ -265,6 +265,12 @@ Page({
             console.log('友盟数据统计',e);
         }
     },
+    follow() {
+        wx.setStorageSync('webView_Url', 'https://mp.weixin.qq.com/s/0gO2v6kVZS4ULJLP3l-IPg')
+        wx.navigateTo({
+            url: '/common/webView'
+        })
+    },
     onShareAppMessage() {
         const {releaseRecordId, digest, isShowQRCode} = this.data;
         console.log('isShowQRCode: ',isShowQRCode);

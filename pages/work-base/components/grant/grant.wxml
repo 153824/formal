@@ -53,7 +53,7 @@
                     </view>
                 </block>
                 <block wx:if="{{!finish.length}}">
-                    <empty type="default" title="受测者完成答题后将在此显示报告" subtitle="撤回测评"></empty>
+                    <empty type="default" title="受测者完成答题后将在此显示报告"/>
                 </block>
             </block>
             <block wx:if="{{currentNav === 1}}">
@@ -67,7 +67,7 @@
                     </view>
                 </block>
                 <block wx:if="{{!reply.length}}">
-                    <empty type="default" title="受测者完成未完成答题将在此显示" subtitle="撤回测评"></empty>
+                    <empty type="default" title="受测者完成未完成答题将在此显示"/>
                 </block>
             </block>
             <block wx:if="{{currentNav === 2}}">
@@ -78,20 +78,17 @@
                             <view class="name">{{waitItem.participant}}</view>
                             <view class="endtime">发放时间：{{waitItem.time}}</view>
                         </view>
-<!--                        <view class="arrow">-->
-<!--                            <image src="https://s.luoke101.com/arrow-left.png" style="width:28rpx;height:28rpx;"/>-->
-<!--                        </view>-->
                     </view>
                 </block>
                 <block wx:if="{{!wait.length}}">
-                    <empty type="default" title="受测者未领取测评将在此显示" subtitle="撤回测评"></empty>
+                    <empty type="default" title="受测者未领取测评将在此显示"/>
                 </block>
             </block>
         </view>
     </view>
 </scroll-view>
 <hola-preview-image id="preview-image" qrcode="{{digest.QRCode}}"></hola-preview-image>
-<view class="follow-button">
+<view class="follow-button" bind:tap="follow">
     <text>点击关注公众号，接收「测评实时完成通知」</text>
 </view>
 <button class="invite-button" open-type="share">

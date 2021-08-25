@@ -231,7 +231,7 @@
                             发放数量:<text class="count" style="margin: 0 10rpx;">{{trackItem.amount}}</text>完成数量:<text class="count" style="margin-left: 10rpx;">{{trackItem.finished}}</text>
                         </view>
                         <view class="reply-track-info">
-                            1发放时间:<text class="date" style="margin-left: 10rpx;">{{trackItem.createdAt}}</text>
+                            发放时间:<text class="date" style="margin-left: 10rpx;">{{trackItem.createdAt}}</text>
                         </view>
                     </view>
                     <view class="send-evaluation">

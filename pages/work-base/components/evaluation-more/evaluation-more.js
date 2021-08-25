@@ -1,4 +1,5 @@
 const app = getApp();
+
 Page({
     data: {
         page: 1,
@@ -8,6 +9,7 @@ Page({
         isWxWork: app.wxWorkInfo.isWxWork,
         is3rd: app.wx3rdInfo.is3rd
     },
+
     onLoad: function (options) {
         this.loadMyEvaluation();
         const systemInfo = wx.getSystemInfoSync();
@@ -24,9 +26,10 @@ Page({
                 page = this.data.page;
             }
             app.doAjax({
-                url: 'inventories',
+                url: 'inventories/we_work',
                 method: 'get',
                 data: {
+                    funcCode: "evaluationManage",
                     teamId: app.teamId || wx.getStorageSync("GET_MY_TEAM_LIST").objectId,
                     page: page,
                     pageSize: 8,

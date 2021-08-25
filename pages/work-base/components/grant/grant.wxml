@@ -5,7 +5,7 @@
                 <view class="track-info-left">
                     <view class="title">{{digest.releaseName}}</view>
                     <view class="record">
-                        <view>发放记录：</view>
+                        <view>发放时间：</view>
                         <view>{{digest.createdAt}}</view>
                     </view>
                     <view class="way">

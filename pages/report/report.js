@@ -1066,6 +1066,10 @@ Page({
         });
     },
 
+    goToAnalyze() {
+        this.selectComponent('#hola-enter').show()
+    },
+
     onUnload: function () {
         const {isSelf} = this.data;
         if (isSelf && isSelf === "SELF") {

@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "van-image": "/common/vant-weapp/dist/image/index",
+    "van-button": "/common/vant-weapp/dist/button/index",
+    "van-loading": "/common/vant-weapp/dist/loading/index"
+  }
+}

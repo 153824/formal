@@ -108,7 +108,7 @@ const umaEvent = {
         name: '测评名称：',
         route: {
             detail: ['pages/station/components/detail/detail'],
-            bench: ['pages/work-base/components/evaluation-more/evaluation-more']
+            bench: ['pages/work-base/components/evaluation-more/evaluation-more','pages/work-base/work-base']
         }
     },
 

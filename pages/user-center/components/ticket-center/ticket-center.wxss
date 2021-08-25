@@ -88,3 +88,19 @@
     color: #90919C;
     line-height: 44rpx;
 }
+.see-it{
+    margin-left: 20rpx;
+    font-size: 26rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #353EE8!important;
+    line-height: 36rpx;
+}
+.more-info{
+    margin-top: 40rpx;
+    font-size: 26rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #5C6171;
+    line-height: 36rpx;
+}

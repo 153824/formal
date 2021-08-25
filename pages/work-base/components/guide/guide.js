@@ -19,7 +19,11 @@ Page({
         isGetAccessToken: app.checkAccessToken(),
         authCodeCounter: 0,
         type:'',
-        countdownInMinutes: -1
+        countdownInMinutes: -1,
+        expired: false,
+        expiredAt: -1,
+        started: true,
+        startedAt: -1,
     },
     onLoad: function (option) {
         const that = this;
@@ -73,6 +77,7 @@ Page({
     onShow: function () {
         const that = this;
         const {releaseRecordId,demonstrateInfo} = that.data;
+        console.log(demonstrateInfo);
         if (wx.canIUse('hideHomeButton')) {
             wx.hideHomeButton();
         }
@@ -205,7 +210,11 @@ Page({
                 _this.setData({
                     demonstrateInfo: res.demonstrateInfo,
                     maskTrigger: false,
-                    countdownInMinutes: res.countdownInMinutes
+                    countdownInMinutes: res.countdownInMinutes,
+                    expired: res.expired,
+                    expiredAt: res.expiredAt,
+                    started: res.started,
+                    startedAt: res.startedAt,
                 });
             },
             complete: function () {},
@@ -265,7 +274,11 @@ Page({
                     evaluationStatusText: text,
                     receiveRecordId: receiveRecordId,
                     maskTrigger: false,
-                    countdownInMinutes: res.countdownInMinutes
+                    countdownInMinutes: res.countdownInMinutes,
+                    expired: res.expired,
+                    expiredAt: res.expiredAt,
+                    started: res.started,
+                    startedAt: res.startedAt,
                 });
             },
             complete: function () {},

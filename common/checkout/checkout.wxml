@@ -72,14 +72,16 @@
 
 <view class="report" wx:if="{{ type === 'report' && isShow }}">
     <view class="head">
-        <text class="title">报告示例</text>
+        <text class="title">报告模板</text>
         <text class="line"></text>
         <text class="title-bg">Report</text>
     </view>
     <view class="report-content">
         <view class="report-child" bindtap="changePage" data-name="{{ subtitle }}" data-id="{{ info }}">
-            <text>{{ subtitle }}报告模板</text>
-            <image src="https://ihola.luoke101.com/icon%40icon-right-arrow.png"></image>
+            联系客服获取报告模板
+            <view style="display: flex;background: #353EE8FF;align-items: center;justify-content: center;width: 84rpx;height: 84rpx;border-radius: 50%;">
+                <image src="https://s.luoke101.com/ma/image/contact.png" style="width: 40rpx;height: 40rpx;"/>
+            </view>
         </view>
     </view>
 </view>

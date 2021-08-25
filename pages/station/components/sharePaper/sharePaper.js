@@ -297,7 +297,7 @@ Page({
         })
     },
 
-    saveToAlbum: function () {
+    saveToAlbum() {
         let {invitationImgUrl} = this.data.sharePaperInfo;
         wx.downloadFile({
             url: invitationImgUrl,

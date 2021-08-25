@@ -1,0 +1,97 @@
+<scroll-view scroll-y style="height: calc(100vh - 130rpx)" bind:scrolltolower="next">
+    <view class="track-header">
+        <view class="track-info-wrapper">
+            <view class="track-info">
+                <view class="track-info-left">
+                    <view class="title">{{digest.releaseName}}</view>
+                    <view class="record">
+                        <view>发放记录：</view>
+                        <view>{{digest.createdAt}}</view>
+                    </view>
+                    <view class="way">
+                        <view>发放方式：</view>
+                        <view>{{util.gentReleaseType(digest.type)}}</view>
+                        <view style="margin-left:20rpx;color:#353EE8FF;">
+                            <text wx:if="{{digest.status !== 'REVOKED'}}" bind:tap="showQRCode">{{digest.type === 'EMAIL' || digest.type === 'QRCODE' ? "查看二维码" : ""}}</text>
+                            <text wx:if="{{digest.status === 'AVAILABLE'}}" style="margin-left:20rpx;" bind:tap="revoke">撤回测评</text>
+                            <text style="color:red;" wx:elif="{{digest.status === 'REVOKED'}}">(已撤回)</text>
+                        </view>
+                    </view>
+                </view>
+                <view class="track-info-right">
+                    <view>发放数量</view>
+                    <view>{{digest.amount}}</view>
+                </view>
+                <image class="plane" src="https://s.luoke101.com/track-detail%40plane.png" style="width:100rpx;height:100rpx;"></image>
+            </view>
+        </view>
+        <image src="https://s.luoke101.com/track-detail%40header.png" style="width:100vw;"/>
+    </view>
+    <view class="track-content">
+        <view class="track-tab">
+            <block wx:for="{{nav}}" wx:for-item="navItem" wx:for-index="navIndex">
+                <view class="{{navItem.code}} {{navItem.checked ? 'tab-line-active':''}}"
+                      data-index="{{navIndex}}" data-name="{{navItem.code}}" bind:tap="onChangeTab">
+                    <text>{{navItem.name}}</text>
+                    <text style="margin:20rpx;">{{util.getCount(navIndex, [finishCount, replyCount, waitCount])}}</text>
+                    <text class="tab-line {{navItem.checked ? 'active':''}}"></text>
+                </view>
+            </block>
+        </view>
+        <view class="track-body" style="{{currentNav===2||currentNav===1?'padding-right: 40rpx;':''}}">
+            <block wx:if="{{currentNav === 0}}">
+                <block wx:if="{{finish.length}}" wx:for="{{finish}}" wx:for-item="finishItem" wx:for-index="finishIndex">
+                    <view class="track-body-item" data-receive-record-id="{{finishItem.receiveRecordId}}" bind:tap="goToReport">
+                        <image src="{{finishItem.avatar}}" style="width:80rpx;height:80rpx;border-radius:50%;"/>
+                        <view class="detail-wrapper">
+                            <view class="name">{{finishItem.participant}}</view>
+                            <view class="endtime">完成时间：{{finishItem.time}}</view>
+                        </view>
+                        <view class="arrow">
+                            <image src="https://s.luoke101.com/arrow-left.png" style="width:28rpx;height:28rpx;"/>
+                        </view>
+                    </view>
+                </block>
+                <block wx:if="{{!finish.length}}">
+                    <empty type="default" title="受测者完成答题后将在此显示报告"/>
+                </block>
+            </block>
+            <block wx:if="{{currentNav === 1}}">
+                <block wx:if="{{reply.length}}" wx:for="{{reply}}" wx:for-item="replyItem" wx:for-index="replyIndex">
+                    <view class="track-body-item">
+                        <image src="{{replyItem.avatar}}" style="width:80rpx;height:80rpx;border-radius:50%;"/>
+                        <view class="detail-wrapper">
+                            <view class="name">{{replyItem.participant}}</view>
+                            <view class="endtime">领取时间：{{replyItem.time}}</view>
+                        </view>
+                    </view>
+                </block>
+                <block wx:if="{{!reply.length}}">
+                    <empty type="default" title="受测者完成未完成答题将在此显示"/>
+                </block>
+            </block>
+            <block wx:if="{{currentNav === 2}}">
+                <block wx:if="{{wait.length}}" wx:for="{{wait}}" wx:for-item="waitItem" wx:for-index="waitIndex">
+                    <view class="track-body-item">
+                        <image src="{{waitItem.avatar}}" style="width:80rpx;height:80rpx;border-radius:50%;"/>
+                        <view class="detail-wrapper">
+                            <view class="name">{{waitItem.participant}}</view>
+                            <view class="endtime">发放时间：{{waitItem.time}}</view>
+                        </view>
+                    </view>
+                </block>
+                <block wx:if="{{!wait.length}}">
+                    <empty type="default" title="受测者未领取测评将在此显示"/>
+                </block>
+            </block>
+        </view>
+    </view>
+</scroll-view>
+<hola-preview-image id="preview-image" qrcode="{{digest.QRCode}}"></hola-preview-image>
+<view class="follow-button" bind:tap="follow">
+    <text>点击关注公众号，接收「测评实时完成通知」</text>
+</view>
+<button class="invite-button" open-type="share">
+    邀请同事一起接收查看报告
+</button>
+<wxs src="../../../../utils/util.wxs" module="util"></wxs>

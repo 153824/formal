@@ -87,14 +87,14 @@ Page({
             return;
         }
         if (!isWxWork && !is3rd) {
-            // TODO UM埋点，跟踪哪个用户使用哪份常模
             const inventoriesPromise = new Promise((resolve, reject) => {
                 app.doAjax({
-                    url: 'inventories',
+                    url: '/inventories/we_work',
                     method: 'get',
                     data: {
                         page: 1,
-                        pageSize: 3
+                        pageSize: 3,
+                        funcCode: 'evaluationManage'
                     },
                     noLoading: true,
                     success: function (res) {
@@ -450,40 +450,24 @@ Page({
     },
 
     goToTrackDetail: function (e) {
-        const {trackId, trackIndex} = e.currentTarget.dataset;
-        const trackInfo = JSON.stringify(this.data.evaluationTrack[trackIndex]);
+        const {releaseRecordId} = e.currentTarget.dataset;
         wx.navigateTo({
-            url: `./components/track-detail/track-detail?trackId=${trackId}&trackInfo=${trackInfo}`,
+            url: `./components/grant/grant?releaseRecordId=${releaseRecordId}`,
         })
     },
 
     goToSharePaper: function (e) {
         const {
-            available,
             norms,
-            quesCount,
-            estimatedTime,
             evaluationId,
-            evaluationName,
-            type
         } = this.data.myEvaluation[e.currentTarget.dataset.index];
         const necessaryInfo = {
-            count: available,
-            norms: norms,
-            quesCount: quesCount,
-            estimatedTime: estimatedTime,
-            id: evaluationId,
-            name: evaluationName,
-            isFree: type === "FREE",
-            hadBuyout: type === "BY_COUNT" ? false : true,
+            evaluationId: evaluationId,
+            norms,
         };
-        if (!available && !necessaryInfo.hadBuyout && !necessaryInfo.isFree && !this.data.isWxWork && !this.data.is3rd) {
-            app.toast("测评可用数量不足");
-            return;
-        }
         wx.navigateTo({
-            url: `../station/components/sharePaper/sharePaper?necessaryInfo=${JSON.stringify(necessaryInfo)}`,
-        })
+            url: `/pages/station/components/generate/generate?necessaryInfo=${JSON.stringify(necessaryInfo)}`,
+        });
     },
 
     goToEvaluationDetail: function (e) {

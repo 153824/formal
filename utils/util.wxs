@@ -290,6 +290,34 @@ var gentClassOfType = function (string, query) {
   }
 }
 
+var gentReleaseType = function (code) {
+  var text = '';
+  code = code.toLowerCase();
+  switch (code) {
+    case 'self':
+      text = '自己测';
+      break;
+    case 'contacts':
+      text = '通讯录';
+      break;
+    case 'email':
+      text = '邮件';
+      break;
+    case 'qrcode':
+      text = '二维码';
+      break;
+    case 'ticket':
+      text = '答题账号';
+      break;
+  }
+  return text;
+}
+
+var getCount = function (index, arr) {
+  console.log(arr[index]);
+  return arr[index]
+}
+
 module.exports = {
   getMonthAndDayByFrag: getMonthAndDayByFrag,
   getHourAndMinByFrag: getHourAndMinByFrag,
@@ -315,5 +343,7 @@ module.exports = {
   slice: slice,
   gentRichText: gentRichText,
   gentBackgroundImage: gentBackgroundImage,
-  gentClassOfType: gentClassOfType
+  gentClassOfType: gentClassOfType,
+  gentReleaseType: gentReleaseType,
+  getCount: getCount
 };

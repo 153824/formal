@@ -4,12 +4,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: 116rpx;
+    padding-top: 120rpx;
 }
 .empty-wrapper > image{
     width: 190rpx;
     height: 246rpx;
-    margin-bottom: 116rpx;
+    margin-top: 40rpx;
 }
 .work-base-empty{
     display: flex;
@@ -22,4 +22,11 @@
     width: 133rpx;
     height: 172rpx;
     margin-bottom: 60rpx;
+}
+.title{
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #AAAAAA;
+    line-height: 40rpx;
 }

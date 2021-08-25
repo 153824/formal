@@ -44,34 +44,5 @@ Component({
   /**
    * 组件的方法列表
    */
-  methods: {
-    recallEvaluation: function(e) {
-      const that = this;
-      wx.showModal({
-        title: '提示',
-        content: '确认撤销该分享？',
-        success: function(ret) {
-          if (ret.confirm) {
-            app.doAjax({
-              url: 'release/revoke',
-              method: 'post',
-              data: {
-                releaseRecordId: that.properties.paperId
-              },
-              success: function(res) {
-                app.toast('撤回成功，测评已返还');
-                setTimeout(that.onShow, 1500);
-                that.setData({
-                  isCancel: true
-                });
-                wx.redirectTo({
-                  url: `track-detail?status=REVOKED&trackId=${that.properties.paperId}`,
-                })
-              }
-            });
-          }
-        }
-      });
-    },
-  }
+  methods: {}
 })

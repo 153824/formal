@@ -13,10 +13,9 @@ Component({
     },
     methods: {
         goToTrackDetail: function (e) {
-            const { trackId,trackIndex } = e.currentTarget.dataset;
-            const trackInfo = JSON.stringify(this.data.evaluationTrack[trackIndex]);
+            const { releaseRecordId } = e.currentTarget.dataset;
             wx.navigateTo({
-                url: `/pages/work-base/components/track-detail/track-detail?trackId=${trackId}&trackInfo=${trackInfo}`,
+                url: `/pages/work-base/components/grant/grant?releaseRecordId=${releaseRecordId}`,
             })
         },
         loadEvaluationTrack: function (page) {

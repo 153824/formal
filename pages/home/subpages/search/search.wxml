@@ -22,7 +22,7 @@
                     <van-icon name="clear" color="#B4B4B4FF"/>
                 </view>
             </view>
-            <text bind:tap="cancel" class="cancel">取消</text>
+            <text bind:tap="onKeywordConfirm" class="cancel">搜索</text>
         </view>
     </van-sticky>
     <block wx:if="{{!isConfirm&&searchRes.length<=0}}">

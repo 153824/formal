@@ -266,10 +266,15 @@ Page({
         }
     },
     follow() {
-        wx.setStorageSync('webView_Url', 'https://mp.weixin.qq.com/s/0gO2v6kVZS4ULJLP3l-IPg')
+        let url = 'https://mp.weixin.qq.com/s/0gO2v6kVZS4ULJLP3l-IPg';
+        const appId = wx.getAccountInfoSync().miniProgram.appId;
+        if(appId.indexOf('2d32') > -1){
+            url = 'https://mp.weixin.qq.com/s/RtW69M0UsFvLzLnMTuyp3A';
+        }
+        wx.setStorageSync('webView_Url', url);
         wx.navigateTo({
             url: '/common/webView'
-        })
+        });
     },
     onShareAppMessage() {
         const {releaseRecordId, digest, isShowQRCode} = this.data;

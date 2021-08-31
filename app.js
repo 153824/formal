@@ -37,7 +37,7 @@ import {scenceMap} from "./user.tag.config";
  * ********************************************************************************************************************/
 const uma = require('umtrack-wx');
 const qiniuUpload = require("./utils/qiniuUpload");
-// const plugin = requirePlugin("chatbot");
+const plugin = requirePlugin("chatbot");
 let isUpload = false;
 qiniuUpload.init({
     region: 'SCN',
@@ -981,36 +981,34 @@ App({
                         wx.setStorageSync('traceData', res.traceData.properties.scence)
                     }
                     // 配置智能对话平台插件
-                    // plugin.init({
-                    //     appid: (() => {
-                    //         if (wx.getAccountInfoSync().miniProgram.appId === 'wx85cde7d3e8f3d949') {
-                    //             return "YlEDY236AICZ8r1ODOvoVsuNfpcG8j";
-                    //         } else {
-                    //             return "TZ7JcEhg7kMjrLwsrAE7s8nz9N3LWc";
-                    //         }
-                    //     })(), //机器人Id
-                    //     openid: res.openId, //用户的openid，必填项，可通过wx.login()获取code，然后通过后台接口获取openid
-                    //     userHeader: "", // 用户头像
-                    //     userName: "", // 用户昵称
-                    //     anonymous: true, // 是否允许匿名用户评价，默认为false，设为ture时，未传递userName、userHeader两个字段时将弹出登录框
-                    //     guideCardHeight: 50,
-                    //     operateCardHeight: 120,
-                    //     history: true,
-                    //     historySize: 60,
-                    //     welcome: '您来啦！ 我是罗课君，有什么可以帮到您？\n' +
-                    //         '回复对应数字，将有专属客服接待：\n' +
-                    //         '\n' +
-                    //         '【1】培训类：课程/培训/企业内训定制……\n' +
-                    //         '【2】测评类：免费试用/定制测评/企业采购……\n' +
-                    //         '【3】商务合作类：资源互换、市场联动……\n' +
-                    //         '\n' +
-                    //         '还有其他的吗？欢迎补充！',
-                    //     guideList: [
-                    //         '转人工'
-                    //     ],
-                    //     success: (e) => {}, //非必填
-                    //     fail: (error) => {}, //非必填
-                    // });
+                    plugin.init({
+                        appid: (() => {
+                            if (wx.getAccountInfoSync().miniProgram.appId === 'wx85cde7d3e8f3d949') {
+                                return "YlEDY236AICZ8r1ODOvoVsuNfpcG8j";
+                            } else {
+                                return "TZ7JcEhg7kMjrLwsrAE7s8nz9N3LWc";
+                            }
+                        })(), //机器人Id
+                        openid: res.openId, //用户的openid，必填项，可通过wx.login()获取code，然后通过后台接口获取openid
+                        userHeader: "", // 用户头像
+                        userName: "", // 用户昵称
+                        anonymous: true, // 是否允许匿名用户评价，默认为false，设为ture时，未传递userName、userHeader两个字段时将弹出登录框
+                        guideCardHeight: 50,
+                        operateCardHeight: 120,
+                        history: true,
+                        historySize: 60,
+                        welcome: `
+                            您来啦！ 我是罗课君，有什么可以帮到您？
+                            回复对应数字，将有专属客服接待：
+    
+                            1——软件使用类：使用手册/操作演示/问题反馈......
+                            2——测评合作类：报价咨询/测评定制/项目落地/测评+培训……
+                            3——其他问题： 人工客服介入为您解答
+                            
+                        `,
+                        success: (e) => {}, //非必填
+                        fail: (error) => {}, //非必填
+                    });
                     if(!res.tokenInfo){
                         // https://devops.aliyun.com/task/60fa593f9d8834004fb4c754
                         wx.removeStorageSync('accessToken');

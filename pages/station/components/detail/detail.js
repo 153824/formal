@@ -286,6 +286,15 @@ Page({
                 console.log('友盟数据统计',e);
             }
         }
+        if(type === 'using'){
+            const umaConfig = umaEvent.clickUsingRightNow;
+            try{
+                new Tracker(wx).generate(umaConfig.tag);
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
+        }
     },
 
     hideSelectQuiz() {
@@ -320,6 +329,15 @@ Page({
         let {authCodeCounter, isIos} = this.data;
         if (authCodeCounter > 5) {
             return;
+        }
+        if(authCodeCounter < 1){
+            const umaConfig = umaEvent.authPhoneDialog;
+            try{
+                new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[type]});
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
         }
         app.getAccessToken(e)
             .then(res => {

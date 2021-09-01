@@ -175,7 +175,8 @@ const umaEvent = {
         origin: {
             self: '从详情页自己测',
             scan: '扫码进入'
-        }
+        },
+        scene: [1007,1011,1012,1013,1047,1048,1049]
     },
 
     // 点击同意承诺书
@@ -290,8 +291,26 @@ const umaEvent = {
             search: '搜索无结果页联系顾问',
             bench: '工作台登录',
         }
+    },
+
+    // 点击立即使用
+    clickUsingRightNow: {
+        key: '点击立即使用',
+        tag: 'ClickUsingRightNow'
+    },
+
+    // 触发授权手机弹窗
+    authPhoneDialog: {
+        key: '触发授权手机弹窗',
+        tag: 'AuthPhoneDialog',
+        origin: {
+            enjoy: '免费体验',
+            contact: '联系客服'
+        }
     }
 }
+
+const scanScene = [1007,1011,1012,1013,1047,1048,1049]
 
 function getEnv(_wx_) {
     let text = '微信';
@@ -366,4 +385,4 @@ class Tracker {
     }
 }
 
-export {umaEvent, getEnv, getTag, Tracker}
+export {umaEvent, getEnv, getTag, Tracker, scanScene}

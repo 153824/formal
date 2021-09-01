@@ -97,7 +97,7 @@
         </view>
         <!--无券有库存-->
         <view wx:elif="{{isGetAccessToken && availableVoucher <= 0 && availableInventory > 0}}" class="button-group-wrapper">
-            <button class="button-group__is-left {{iphonex ? 'is-iosx' : ''}}" bind:tap="showSelectQuiz">
+            <button class="button-group__is-left {{iphonex ? 'is-iosx' : ''}}" data-type="using" bind:tap="showSelectQuiz">
                 <text class="title">立即使用</text>
                 <text class="tips">剩余可用份数：{{availableInventory}}</text>
             </button>

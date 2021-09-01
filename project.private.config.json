@@ -51,8 +51,8 @@
         {
           "name": "小程序码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "scene=6112491440e44843e39bf971",
-          "scene": null
+          "query": "scene=612f311e63d963787dafbd5b",
+          "scene": 1047
         },
         {
           "name": "二维码领取测评",

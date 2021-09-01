@@ -26,3 +26,5 @@ QYMemberOpen, 企业微信-非管理员打开
 SendCustomerServiceMessage, 聊天界面发送消息
 GetInCustomerService, 进入客服聊天界面
 AuthPhoneCount, 弹出授权手机弹窗
+ClickUsingRightNow, 点击立即使用
+AuthPhoneDialog, 触发授权手机弹窗

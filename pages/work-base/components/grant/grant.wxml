@@ -12,15 +12,15 @@
                         <view>发放方式：</view>
                         <view>{{util.gentReleaseType(digest.type)}}</view>
                         <view style="margin-left:20rpx;color:#353EE8FF;">
-                            <text wx:if="{{digest.status !== 'REVOKED'}}" bind:tap="showQRCode">{{digest.type === 'EMAIL' || digest.type === 'QRCODE' ? "查看二维码" : ""}}</text>
-                            <text wx:if="{{digest.status === 'AVAILABLE'}}" style="margin-left:20rpx;" bind:tap="revoke">撤回测评</text>
-                            <text style="color:red;" wx:elif="{{digest.status === 'REVOKED'}}">(已撤回)</text>
+                            <text class="evaluation-operator" wx:if="{{digest.status !== 'REVOKED'}}" bind:tap="showQRCode">{{digest.type === 'EMAIL' || digest.type === 'QRCODE' ? "查看二维码" : ""}}</text>
+                            <text class="evaluation-operator" wx:if="{{digest.status === 'AVAILABLE'}}" style="margin-left:20rpx;" bind:tap="revoke">撤回测评</text>
+                            <text class="evaluation-operator" style="color:red;" wx:elif="{{digest.status === 'REVOKED'}}">(已撤回)</text>
                         </view>
                     </view>
                 </view>
                 <view class="track-info-right">
                     <view>发放数量</view>
-                    <view>{{digest.amount}}</view>
+                    <view class="release-count">{{digest.amount}}</view>
                 </view>
                 <image class="plane" src="https://s.luoke101.com/track-detail%40plane.png" style="width:100rpx;height:100rpx;"></image>
             </view>
@@ -38,7 +38,7 @@
                 </view>
             </block>
         </view>
-        <view class="track-body" style="{{currentNav===2||currentNav===1?'padding-right: 40rpx;':''}}">
+        <view class="track-body">
             <block wx:if="{{currentNav === 0}}">
                 <block wx:if="{{finish.length}}" wx:for="{{finish}}" wx:for-item="finishItem" wx:for-index="finishIndex">
                     <view class="track-body-item" data-receive-record-id="{{finishItem.receiveRecordId}}" bind:tap="goToReport">

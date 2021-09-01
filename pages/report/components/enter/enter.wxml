@@ -1,4 +1,4 @@
-<van-overlay show="{{ isShow }}" lock-scroll="{{true}}" bind:click="hide">
+<van-overlay show="{{ isShow }}" lock-scroll="{{true}}" catch:click="hide">
     <view class="enter-wrapper">
         <block wx:if="{{stepName==='record'}}">
             <view class="enter-header">

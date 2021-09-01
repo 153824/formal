@@ -36,11 +36,25 @@ Page({
         isShowQRCode: false
     },
     onLoad(options) {
+        const route = 'pages/station/components/generate/generate';
+        const currentPage = getCurrentPages()[getCurrentPages().length - 2].route;
+        console.log(currentPage);
         this.setData({
             releaseRecordId: options.releaseRecordId,
             sharedAt: options.sharedAt,
         });
-        console.log(options);
+
+        if(route === currentPage){
+            const nav = this.data.nav.map(((item, index)=>{
+                return {
+                    ...item,
+                    checked: index === 1
+                }
+            }))
+            this.setData({
+                nav
+            })
+        }
         const targetOptions = {
             ...options,
             userId: wx.getStorageSync('userInfo').userId,

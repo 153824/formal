@@ -28,4 +28,5 @@ GetInCustomerService, 进入客服聊天界面
 AuthPhoneCount, 弹出授权手机弹窗
 ClickUsingRightNow, 点击立即使用
 AuthPhoneDialog, 触发授权手机弹窗
-ClickMasterParse, 点击专家点评
+ClickMasterParse, 点击报告解读
+SubmitReportForm, 提交报告表单

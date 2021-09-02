@@ -1,4 +1,5 @@
 import debounce from "../../../../utils/lodash/debounce";
+import {Tracker, umaEvent} from "../../../../uma.config";
 
 const app = getApp();
 
@@ -61,6 +62,13 @@ Component({
                     that.setData({
                         stepName: 'done'
                     });
+                    try {
+                        const umaConfig = umaEvent.submitReportForm;
+                        new Tracker(wx).generate(umaConfig.tag)
+                    }
+                    catch (e) {
+                        console.log('友盟埋点统计')
+                    }
                 },
                 error(e) {
 

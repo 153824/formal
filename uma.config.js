@@ -311,8 +311,14 @@ const umaEvent = {
 
     // 点击专家解读
     clickMasterParse: {
-        key: '点击专家解读',
-        tag: 'ClickMasterParse',
+        key: '点击报告解读',
+        tag: 'ClickReportParse',
+    },
+
+    // 提交报告表单
+    submitReportForm: {
+        key: '点击报告解读',
+        tag: 'SubmitReportForm',
     }
 }
 

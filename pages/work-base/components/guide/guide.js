@@ -1,4 +1,5 @@
-import {getEnv, getTag, Tracker, umaEvent, scanScene} from "../../../../uma.config";
+// test/guide.js
+import {getEnv, getTag, Tracker, umaEvent} from "../../../../uma.config";
 
 const app = getApp();
 var isHasApplyFor = false;
@@ -20,7 +21,6 @@ Page({
         type:'',
         countdownInMinutes: -1
     },
-
     onLoad: function (option) {
         const that = this;
         let releaseEvaluationId = "";
@@ -47,24 +47,29 @@ Page({
                 receiveRecordId: option.receiveRecordId || ""
             });
         }
-        const umaConfig = umaEvent.getInReplyGuide;
-        if (this.isScanQRCode()) {
-            try{
-                new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.scan});
-            }
-            catch (e) {
-                console.log('友盟数据统计',e);
-            }
-        } else {
-            try{
-                new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.self});
-            }
-            catch (e) {
-                console.log('友盟数据统计',e);
-            }
+        if (option.receiveRecordId) {
+            app.doAjax({
+                url: 'reports/check_type',
+                method: 'get',
+                data: {
+                    receiveRecordId: option.receiveRecordId || ""
+                },
+                success: function (res) {
+                    that.setData({
+                        isSelf: res.data.type
+                    });
+                    const type = res.data.type.toLowerCase() === 'self' ? 'self' : 'scan'
+                    const umaConfig = umaEvent.getInReplyGuide;
+                    try{
+                        new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[type]});
+                    }
+                    catch (e) {
+                        console.log('友盟数据统计',e);
+                    }
+                }
+            });
         }
     },
-
     onShow: function () {
         const that = this;
         const {releaseRecordId,demonstrateInfo} = that.data;
@@ -104,11 +109,6 @@ Page({
         })
     },
 
-    isScanQRCode() {
-        const {scene} = wx.getLaunchOptionsSync();
-        return scanScene.includes(scene);
-    },
-
     toApply: function (e) {
         if (isHasApplyFor) {
             app.toast("已申请，请等待审核");
@@ -131,7 +131,7 @@ Page({
     },
 
     goToReplying: function (e) {
-        let targetType = 'self';
+        let targetType = 'scan';
         const {evaluationName} = this.data.demonstrateInfo;
         const {type} = e.currentTarget.dataset;
         const receiveRecordId = this.data.receiveRecordId;
@@ -173,8 +173,8 @@ Page({
             })
         });
         const umaConfig = umaEvent.clickStartReplying;
-        if(this.isScanQRCode()){
-            targetType = 'scan'
+        if(this.data.isSelf.toLowerCase() === 'self'){
+            targetType = 'self'
         }
         try{
             new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[targetType], name: `${evaluationName}`});
@@ -295,7 +295,7 @@ Page({
         let type = 'scan';
         const {releaseRecordId,demonstrateInfo,receiveRecordId} = this.data;
         const umaConfig = umaEvent.clickStartReplying;
-        if(this.isScanQRCode()){
+        if(this.data.isSelf.toLowerCase()!=='self'){
             wx.redirectTo({
                 url: `/pages/recorder/recorder?releaseRecordId=${releaseRecordId}`
             });

@@ -307,6 +307,12 @@ const umaEvent = {
             enjoy: '免费体验',
             contact: '联系客服'
         }
+    },
+
+    // 点击专家解读
+    clickMasterParse: {
+        key: '点击专家解读',
+        tag: 'ClickMasterParse',
     }
 }
 

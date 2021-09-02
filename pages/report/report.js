@@ -1067,6 +1067,14 @@ Page({
     },
 
     goToAnalyze() {
+        try {
+            const umaConfig = umaEvent.clickMasterParse;
+            new Tracker(wx).generate(umaConfig.tag)
+        }
+        catch (e) {
+            console.log('友盟埋点统计')
+        }
+
         this.selectComponent('#hola-enter').show()
     },
 

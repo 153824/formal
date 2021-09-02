@@ -1310,6 +1310,9 @@
   bottom: 0;
   z-index: 99;
 }
+.is-button-group__iosx{
+  height: 108rpx;
+}
 .button-group-wrapper__item{
   display: flex;
   flex-direction: row;

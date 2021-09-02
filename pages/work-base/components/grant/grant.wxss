@@ -74,6 +74,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-size: 14px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #8C8C8C;
+    line-height: 20px;
 }
 .track-tab > text{
     font-size: 28rpx;
@@ -91,11 +96,16 @@
     background-color:  #353EE8;
 }
 .tab-line-active{
+    font-size: 14px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #353EE8;
+    line-height: 20px;
     color: #353EE8;
     border-radius: 4px;
 }
 .track-body{
-    padding: 0 70rpx 0 40rpx;
+    padding: 0 40rpx 0 40rpx;
 }
 .track-body-item{
     position: relative;
@@ -134,6 +144,7 @@
     color: #FFFFFF;
     line-height: 44rpx;
     background: #353EE8;
+    border-radius: unset!important;
 }
 .detail-wrapper{
     margin-left: 30rpx;
@@ -173,4 +184,14 @@
     font-weight: 600;
     color: #B8702B;
     line-height: 40rpx;
+}
+.release-count{
+    font-size: 20px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #353EE8;
+    line-height: 28px;
+}
+.evaluation-operator{
+    font-weight: bold;
 }

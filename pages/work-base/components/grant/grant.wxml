@@ -88,7 +88,7 @@
     </view>
 </scroll-view>
 <hola-preview-image id="preview-image" qrcode="{{digest.QRCode}}"></hola-preview-image>
-<view wx:if="{{digest.followedMp}}" class="follow-button" bind:tap="follow">
+<view wx:if="{{!digest.followedMp}}" class="follow-button" bind:tap="follow">
     <text>点击关注公众号，接收「测评实时完成通知」</text>
 </view>
 <button class="invite-button" open-type="share">

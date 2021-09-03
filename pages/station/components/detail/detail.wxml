@@ -21,7 +21,7 @@
             </block>
             <block wx:else>
 <!--                <checkout title="报价方案" type="price" isShow="{{ !evaluation.freeEvaluation && !isIos }}"-->
-<!--                          data="{{ evaluation }}"></checkout>--> 
+<!--                          data="{{ evaluation }}"></checkout>-->
                 <checkout title="测评简介" type="introduction" info="{{ evaluation.synopsis }}"></checkout>
                 <checkout title="测量维度" type="dimension" list="{{ evaluation.measureDimension }}"
                           isShow="{{evaluation.measureDimension.length}}"></checkout>
@@ -128,6 +128,7 @@
         <!--无券无库存但有用过本测评-->
         <view wx:elif="{{buttonType === 'available'}}" class="button-group-wrapper is-increase-height {{!iphonex ? 'is-button-group__iosx' : ''}}">
             <button class="button-group__is-left is-least-area" bind:tap="showSelectQuiz">
+                <text wx:if="{{availableTotal>0}}" class="title">立即使用</text>
                 <text class="tips is-main">剩余可用份数：{{availableTotal}}</text>
             </button>
             <view class="button-group__is-right is-more-area" bind:tap="goToCustomerService">

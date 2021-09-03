@@ -48,13 +48,17 @@ Component({
 
         submit() {
             const that = this;
-            const {currentCompany, currentPosition} = this.data;
+            const {currentCompany, currentPosition, lastKeyword, currentKeyword} = this.data;
             const {evaluationId} = this.properties;
+            if((currentCompany || lastKeyword || currentKeyword).length <= 2){
+                app.toast('企业名称至少为2个字');
+                return
+            }
             app.doAjax({
                 url: '../wework/potential_customer',
                 method: 'POST',
                 data: {
-                    companyName: currentCompany,
+                    companyName: currentCompany || lastKeyword || currentKeyword,
                     position: currentPosition,
                     evaluationId: evaluationId,
                 },

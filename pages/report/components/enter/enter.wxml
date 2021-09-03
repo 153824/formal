@@ -12,8 +12,8 @@
                 <view class="form-wrapper">
                     <view class="step">
                         <text class="label">企业名称</text>
-                        <input catch:tap value="{{currentKeyword}}" class="company-input" bind:input="loadCompany" placeholder="请输入"/>
-                        <scroll-view wx:if="{{selectCompanyTrigger}}" class="company-list" scroll-y="{{true}}" style="height: 360rpx">
+                        <input value="{{currentKeyword}}" class="company-input" bind:input="loadCompany" placeholder="请输入"/>
+                        <scroll-view wx:if="{{selectCompanyTrigger && companyList.length}}" class="company-list" scroll-y="{{true}}" style="height: 360rpx">
                             <block wx:if="{{companyList.length}}">
                                 <block wx:for="{{companyList}}" wx:for-item="companyItem" wx:for-index="companyIndex">
                                     <view catch:tap="selectCompany" class="company-item" data-company="{{companyItem}}">{{companyItem}}</view>

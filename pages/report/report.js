@@ -375,6 +375,10 @@ Page({
         }
         app.checkOfferType(id).then(res=>{
             const {type, evaluationName} = res;
+            that.setData({
+                isSelf: type
+            })
+            console.log('checkOfferType: ', type);
             const {scene} = wx.getLaunchOptionsSync();
             const umaConfig = umaEvent.getInReport;
             if (umaConfig.scene.includes(scene)) {

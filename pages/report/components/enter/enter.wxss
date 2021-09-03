@@ -8,7 +8,7 @@
     flex-direction: column;
     justify-content: center;
     margin: auto 60rpx;
-    padding: 100rpx 40rpx;
+    padding: 100rpx 40rpx 50rpx 40rpx;
     background: #FFFFFF;
     border-radius: 20rpx;
 }

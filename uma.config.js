@@ -108,7 +108,7 @@ const umaEvent = {
         name: '测评名称：',
         route: {
             detail: ['pages/station/components/detail/detail'],
-            bench: ['pages/work-base/components/evaluation-more/evaluation-more']
+            bench: ['pages/work-base/components/evaluation-more/evaluation-more','pages/work-base/work-base']
         }
     },
 
@@ -307,6 +307,18 @@ const umaEvent = {
             enjoy: '免费体验',
             contact: '联系客服'
         }
+    },
+
+    // 点击专家解读
+    clickMasterParse: {
+        key: '点击报告解读',
+        tag: 'ClickReportParse',
+    },
+
+    // 提交报告表单
+    submitReportForm: {
+        key: '点击报告解读',
+        tag: 'SubmitReportForm',
     }
 }
 

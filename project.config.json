@@ -23,7 +23,7 @@
     "compileHotReLoad": false,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
-    "useApiHostProcess": true,
+    "useApiHostProcess": false,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -40,7 +40,7 @@
   },
   "compileType": "miniprogram",
   "libVersion": "2.16.0",
-  "appid": "wx85cde7d3e8f3d949",
+  "appid": "wxdb1dcb4a9e212d32",
   "projectname": "luoke-haola-wx-admin",
   "debugOptions": {
     "hidedInDevtools": []
@@ -85,13 +85,6 @@
           "name": "报告详情",
           "pathName": "pages/report/report",
           "query": "receiveRecordId=609b7bcc0da054559ea64d3d",
-          "scene": null
-        },
-        {
-          "id": 3,
-          "name": "作答記錄",
-          "pathName": "pages/work-base/components/track-detail/track-detail",
-          "query": "releaseRecordId=5f813067d5a972193142e46e&sharedAt=1602310089498&tabIndex=1",
           "scene": null
         },
         {

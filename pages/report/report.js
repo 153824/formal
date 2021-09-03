@@ -375,6 +375,10 @@ Page({
         }
         app.checkOfferType(id).then(res=>{
             const {type, evaluationName} = res;
+            that.setData({
+                isSelf: type
+            })
+            console.log('checkOfferType: ', type);
             const {scene} = wx.getLaunchOptionsSync();
             const umaConfig = umaEvent.getInReport;
             if (umaConfig.scene.includes(scene)) {
@@ -1064,6 +1068,18 @@ Page({
         }).catch(err=>{
             console.error(err)
         });
+    },
+
+    goToAnalyze() {
+        try {
+            const umaConfig = umaEvent.clickMasterParse;
+            new Tracker(wx).generate(umaConfig.tag)
+        }
+        catch (e) {
+            console.log('友盟埋点统计')
+        }
+
+        this.selectComponent('#hola-enter').show()
     },
 
     onUnload: function () {

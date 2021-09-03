@@ -1,7 +1,7 @@
 <view wx:if="{{evaluationTrack.length}}" class="program-wrapper">
     <scroll-view scroll-y bindscrolltolower="nextPage" style="height:{{windowHeight*pixelRate - 44}}rpx">
         <view bindtap="goToTrackDetail" wx:for="{{ evaluationTrack }}" wx:for-item="trackItem" wx:key="unique"
-              class="program-body reply-track-body" data-track-id="{{trackItem.releaseRecordId}}"
+              class="program-body reply-track-body" data-release-record-id="{{trackItem.releaseRecordId}}"
               data-track-index="{{trackIndex}}">
             <view class="evaluation-wrapper">
                 <view class="evaluation-name">

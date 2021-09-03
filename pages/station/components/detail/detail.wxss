@@ -1310,6 +1310,9 @@
   bottom: 0;
   z-index: 99;
 }
+.is-button-group__iosx{
+  height: 108rpx;
+}
 .button-group-wrapper__item{
   display: flex;
   flex-direction: row;
@@ -1356,7 +1359,7 @@
   align-items: center;
   justify-content: center;
   width: 35vw;
-  padding: 14rpx 0;
+  padding: 30rpx 0;
   background-color: #353EE8FF;
   font-size: 28rpx;
   font-family: PingFangSC-Semibold, PingFang SC;
@@ -1389,7 +1392,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 0rpx);
+  height: calc(100vh - 80rpx);
+  padding-top: 40rpx;
+  padding-bottom: 40rpx;
 }
 .quiz-wrapper-item{
   display: flex;
@@ -1434,4 +1439,7 @@
   font-weight: 400;
   color: #808080;
   line-height: 50rpx;
+}
+.more-padding{
+  padding-bottom: 50rpx;
 }

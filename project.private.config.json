@@ -16,7 +16,7 @@
           "name": "首页",
           "pathName": "pages/home/home",
           "query": "_ttn=6112353a063bed4d8c1294f4",
-          "scene": null
+          "scene": 1000
         },
         {
           "name": "加入团队",
@@ -27,19 +27,13 @@
         {
           "name": "报告详情",
           "pathName": "pages/report/report",
-          "query": "receiveRecordId=61124b5709ffe7723fab15ae",
-          "scene": null
-        },
-        {
-          "name": "作答記錄",
-          "pathName": "pages/work-base/components/track-detail/track-detail",
-          "query": "releaseRecordId=5f813067d5a972193142e46e&sharedAt=1602310089498&tabIndex=1",
+          "query": "receiveRecordId=6112357a11e388253405132c",
           "scene": null
         },
         {
           "name": "测评详情",
           "pathName": "pages/station/components/detail/detail",
-          "query": "id=5d9064b9d5de2b0073c8d711&_ttn=610ccdc93451547e683e0450",
+          "query": "id=5d786ea66e9ba10069596a61&_ttn=610ccdc93451547e683e0450",
           "scene": 1007
         },
         {
@@ -51,8 +45,8 @@
         {
           "name": "小程序码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "scene=6130a6d463d963787dafc2a6",
-          "scene": 1047
+          "query": "scene=6124bcd45f7d7d14a7a92a15",
+          "scene": null
         },
         {
           "name": "二维码领取测评",
@@ -240,6 +234,24 @@
           "pathName": "pages/report/report",
           "query": "receiveRecordId=610e00a8405ce65bbecef8f2&_ttn=610ba4a53451547e683c7554",
           "scene": 1007
+        },
+        {
+          "name": "发放测评",
+          "pathName": "pages/station/components/generate/generate",
+          "query": "evaluationId=5d9064b9d5de2b0073c8d711",
+          "scene": null
+        },
+        {
+          "name": "发放记录",
+          "pathName": "pages/work-base/components/grant/grant",
+          "query": "releaseRecordId=611f55a99024b801ec36a4cc&sharedAt=10",
+          "scene": null
+        },
+        {
+          "name": "信息录入",
+          "pathName": "pages/recorder/recorder",
+          "query": "scene=611f8254e80d611c7df97897",
+          "scene": null
         }
       ]
     }

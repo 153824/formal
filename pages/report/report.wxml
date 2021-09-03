@@ -108,7 +108,7 @@
             </swiper>
             <view class="content" wx:if="{{respondAnalysis.syllabus.display}}">{{respondAnalysis.syllabus.annotation}}
             </view>
-            <view class="title" style="{{respondAnalysis.display ? '' : 'margin-top:80rpx;'}}" wx:if="{{ usageManual.display }}">
+            <view class="title" style="{{respondAnalysis.display ? 'margin-top:80rpx;' : 'margin-top:80rpx;'}}" wx:if="{{ usageManual.display }}">
                 <text class="underLineBg assessor-info">{{usageManual.headline}}</text>
             </view>
             <view class="list flex see-more-wrapper" wx:if="{{ usageManual.display }}">
@@ -728,6 +728,10 @@
             </view>
         </view>
     </view>
+    <view wx:if="{{isSelf==='SELF'}}" class="analyze" bind:tap="goToAnalyze">
+        <image src="https://s.luoke101.com/analyze%40report.png" style="width:630rpx;height: 306rpx;"/>
+    </view>
 </block>
+<hola-enter id="hola-enter" evaluationId="{{shareInfo.evaluationId}}"></hola-enter>
 <hola-mask isShow="{{maskTrigger}}"></hola-mask>
 <wxs src="../../utils/util.wxs" module="util"></wxs>

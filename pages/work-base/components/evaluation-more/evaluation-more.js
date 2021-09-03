@@ -1,4 +1,5 @@
 const app = getApp();
+
 Page({
     data: {
         page: 1,
@@ -8,6 +9,7 @@ Page({
         isWxWork: app.wxWorkInfo.isWxWork,
         is3rd: app.wx3rdInfo.is3rd
     },
+
     onLoad: function (options) {
         this.loadMyEvaluation();
         const systemInfo = wx.getSystemInfoSync();
@@ -24,9 +26,10 @@ Page({
                 page = this.data.page;
             }
             app.doAjax({
-                url: 'inventories',
+                url: 'inventories/we_work',
                 method: 'get',
                 data: {
+                    funcCode: "evaluationManage",
                     teamId: app.teamId || wx.getStorageSync("GET_MY_TEAM_LIST").objectId,
                     page: page,
                     pageSize: 8,
@@ -57,24 +60,14 @@ Page({
     },
 
     goToSharePaper: function (e) {
-        const {available, norms, quesCount, estimatedTime, evaluationId, evaluationName, type} = this.data.myEvaluation[e.currentTarget.dataset.index];
+        const {norms, evaluationId} = this.data.myEvaluation[e.currentTarget.dataset.index];
         const necessaryInfo = {
-            count: available,
-            norms: norms,
-            quesCount: quesCount,
-            estimatedTime: estimatedTime,
-            id: evaluationId,
-            name: evaluationName,
-            isFree: type === "FREE",
-            hadBuyout: type === "BY_COUNT" ? false : true,
+            evaluationId: evaluationId,
+            norms,
         };
-        if (!available && !necessaryInfo.hadBuyout && !necessaryInfo.isFree && !this.data.isWxWork && !this.data.is3rd) {
-            app.toast("测评可用数量不足");
-            return;
-        }
         wx.navigateTo({
-            url: `/pages/station/components/sharePaper/sharePaper?necessaryInfo=${JSON.stringify(necessaryInfo)}`,
-        })
+            url: `/pages/station/components/generate/generate?necessaryInfo=${JSON.stringify(necessaryInfo)}`,
+        });
     },
 
     goToEvaluationDetail: function (e) {

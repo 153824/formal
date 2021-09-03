@@ -1,0 +1,108 @@
+<scroll-view scroll-y scroll-into-view="{{scrollToIndex}}" style="height: calc(100vh + 435rpx);padding-bottom: 435rpx;background-color: #fff">
+    <view id="generate-header" class="generate-header">
+        <view style="margin-top: 92rpx;">
+            <image src="https://s.luoke101.com/generate%40send.png" style="width: 160rpx;height: 160rpx;"></image>
+            <view class="header-tips">
+                <text>测评发放配置</text>
+                <text class="tip">通过二维码发放测评，受测者扫码即可答题</text>
+            </view>
+        </view>
+        <image class="header-bg" src="https://s.luoke101.com/generate%40bg.png" style="width: 506rpx;height: 378rpx;"></image>
+    </view>
+    <view style="height: 20px;background: #F9FAFC;"/>
+    <view id="advance-setting" class="generate-join">
+        <view class="step-1">
+            <view class="step-title">
+                <text>您想邀请多少人参与测评</text>
+            </view>
+            <view class="step-operate-wrapper">
+                <view class="step-operate">
+                    <view class="step-sub" bind:tap="subCount">
+                        -
+                    </view>
+                    <input type="digit" bind:input="onInviteInput" value="{{inviteCount}}"/>
+                    <view class="step-increase" bind:tap="addCount">
+                        +
+                    </view>
+                </view>
+                <view class="step-count">
+                    <text class="label">可用：</text>
+                    <text class="count">{{dispatchInfo.type==='BY_TIME' ? '无限量' : maxCount}}</text>
+                </view>
+            </view>
+        </view>
+        <view class="step-2">
+            <view class="step-title">
+                <text>是否允许受测者查看报告</text>
+            </view>
+            <view class="step-button-group">
+                <view class="agree {{canUSeeReport==='agree'?'active':''}}" data-type="agree" bind:tap="setReportAuth">
+                    <text>允许</text>
+                </view>
+                <view class="refuse {{canUSeeReport==='refuse'?'active':''}}" data-type="refuse" bind:tap="setReportAuth">
+                    <text>不允许</text>
+                </view>
+            </view>
+        </view>
+        <view wx:if="{{!showAdvance}}" class="advance-setting" bind:tap="goToAdvance">
+            <text>更多高级配置</text>
+            <van-icon name="arrow-down" />
+        </view>
+        <view wx:else class="advance-line" bind:tap="goToAdvance">
+            <view class="text">高级配置</view>
+            <view class="line"></view>
+        </view>
+    </view>
+    <block wx:if="{{showAdvance}}">
+        <view class="generate-advance-setting">
+            <view class="advance-setting-step">
+                <view>
+                    <view class="step-title">
+                        <text>受测者报告归属部门</text>
+                    </view>
+                    <view class="team" bind:tap="goToDepart">
+                        <view wx:if="{{isWxWork && corpid && isShowWWOpenData}}">
+                            <ww-open-data corpid="{{corpid}}" type="departmentName" openid="{{selectedTeam.bindTpDepartId}}"/>
+                        </view>
+                        <block wx:else>{{selectedTeam.label}}</block>
+                        <view class="team-icon">
+                            <image src="https://s.luoke101.com/depart%40arrow-down.png" style="width:30rpx;height: 30rpx;"></image>
+                        </view>
+                    </view>
+                </view>
+                <view>
+                    <view class="step-title">
+                        <text>二维码有效期</text>
+                    </view>
+                    <view class="step-button-group">
+                        <view bind:tap="setExpireModel" data-type="forever" class="agree {{expireModel==='forever'?'active':''}}"><text>长期有效</text></view>
+                        <view bind:tap="setExpireModel" data-type="short" class="refuse  {{expireModel==='short'?'active':''}}"><text>时间期内有效</text></view>
+                    </view>
+                    <view wx:if="{{expireModel==='short'}}" class="timeout">
+                        <view style="text-align: center;" bind:tap="setTime" data-model="start" class="{{startTime!==-1?'is-picked':''}}">{{startTime!==-1?startTime:'开始时间'}}</view>
+                        <text>-</text>
+                        <view style="text-align: center;" bind:tap="setTime" data-model="end" class="{{endTime!==-1?'is-picked':''}}">{{endTime!==-1?endTime:'结束时间'}}</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </block>
+</scroll-view>
+<view wx:if="{{canIUsePicker}}" style="position: fixed;bottom: 0;left:0;right: 0;z-index:999;box-shadow: 0rpx -4rpx 8rpx 0rpx rgba(0, 0, 0, 0.1);">
+    <van-datetime-picker
+            type="datetime"
+            title="{{timeModel==='start'?'开始时间':'结束时间'}}"
+            value="{{ currentDate }}"
+            min-date="{{ minDate }}"
+            max-date="{{ maxDate }}"
+            bind:confirm="onConfirm"
+            bind:cancel="onCancel"
+    />
+</view>
+<view class="generate-it-wrapper">
+    <view class="generate-it" bind:tap="invite">
+        <text>生成测评邀请函</text>
+    </view>
+</view>
+<hola-preview-image id="preview-image" qrcode="{{qrcode}}" releaseRecordId="{{releaseRecordId}}"></hola-preview-image>
+<wxs src="../../../../utils/util.wxs" module="utils"/>

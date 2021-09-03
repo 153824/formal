@@ -4,6 +4,7 @@ Page({
         page: 0,
         tickets: [],
         isEmpty: false,
+        showMoreMap: [],
     },
     onLoad: function (options) {
         this.loadTickets();
@@ -43,5 +44,12 @@ Page({
     },
     goToNext() {
         this.loadTickets();
+    },
+    seeIt(e) {
+        const {index} = e.currentTarget.dataset;
+        const {showMoreMap} = this.data;
+        this.setData({
+            showMoreMap: [...showMoreMap, index]
+        })
     }
 });

@@ -28,7 +28,6 @@
     "common/tab-bar/tab-bar",
     "pages/user-center/user-center",
     "pages/work-base/components/track-more/track-more",
-    "pages/work-base/components/track-detail/track-detail",
     "pages/work-base/components/report-more/report-more",
     "pages/user-center/components/receive-reports/receive-reports",
     "pages/user-center/components/receive-evaluations/receive-evaluations",
@@ -56,7 +55,9 @@
     "pages/user-center/components/ticket-center/ticket-center",
     "pages/customer-service/customer-service",
     "pages/home/subpages/search/search",
-    "pages/home/subpages/section/section"
+    "pages/home/subpages/section/section",
+    "pages/station/components/generate/generate",
+    "pages/work-base/components/grant/grant"
   ],
   "tabBar": {
     "custom": true,

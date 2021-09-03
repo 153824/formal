@@ -21,29 +21,23 @@ Page({
         customNorms: [],
         isGetAccessToken: app.checkAccessToken(),
         authCodeCounter: 0,
-        availableVoucher: 0,
-        availableInventory: 0,
         showSelectQuiz: false,
-        buttonGroupHeight: 0
+        buttonGroupHeight: 0,
+        buttonType: '', // beginner: 免费体验 / upgraded: 立即使用 / unavailable: 联系客服 / available: 剩余可用份数
+        availableTotal: '',
     },
 
     onLoad(options) {
-        const that = this;
         const {scene} = wx.getLaunchOptionsSync();
         const umaConfig = umaEvent.evaluationDetail;
-        this.loadEvaluationName(options.id).then(res=>{
-            if (umaConfig.scene.includes(scene)) {
-                try{
-                    console.log({origin: umaConfig.origin.card, scene, name: res.name})
-                    new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.card, scene, name: res.name});
-                }
-                catch (e) {
-                    console.log('友盟数据统计',e);
-                }
+        if (umaConfig.scene.includes(scene)) {
+            try{
+                new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.card, scene});
             }
-        }).catch(e=>{
-            console.log(e);
-        })
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
+        }
         this.setData({evaluationId: options.id});
     },
 
@@ -60,11 +54,11 @@ Page({
             });
         if(app.checkAccessToken()) {
             this.loadInventory()
-                .then(({availableVoucher, availableInventory})=>{
+                .then(({type, number})=>{
                     this.setData({
-                        availableVoucher,
-                        availableInventory
-                    })
+                        buttonType: type,
+                        availableTotal: number
+                    });
                 });
         }
         let query = wx.createSelectorQuery();
@@ -76,44 +70,9 @@ Page({
         }).exec();
     },
 
-    onCountChange(e) {
-        this.setData({
-            count: e.detail.value * 1
-        })
-    },
-
-    loadEvaluationName(evaluationId) {
-        const p = new Promise((resolve, reject) => {
-            app.doAjax({
-                method: 'GET',
-                url: `../wework/evaluations/${evaluationId}/info`,
-                success(res) {
-                    resolve(res)
-                },
-                error(e) {
-                    reject(e)
-                }
-            })
-        })
-        return p
-    },
-
-    payForEvaluation: function () {
-        const {evaluation} = this.data;
-        this.setData({
-            payTrigger: true
-        });
-    },
-
-    cancelPayForEvaluation: function (e) {
-        this.setData({
-            payTrigger: false,
-        })
-    },
-
     goToGuide(e) {
         const that = this;
-        const {evaluation} = this.data;
+        const {evaluation, availableTotal, buttonType} = this.data;
         this.loadReleaseSelf()
             .then(res=>{
                 const answeringURL = `/pages/work-base/components/guide/guide?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}&type=self&releaseInfo=${JSON.stringify(res)}`;
@@ -140,82 +99,9 @@ Page({
         }
     },
 
-    addcount() {
-        this.setData({
-            count: this.data.count + 1
-        });
-    },
-
-    subcount() {
-        if (this.data.count <= 1) {
-            this.setData({
-                count: 1
-            });
-        } else {
-            this.setData({
-                count: this.data.count - 1
-            })
-        }
-    },
-
-    payByCounts() {
-        const that = this,
-            {count, evaluation} = this.data;
-        if (count !== 0) {
-            app.doAjax({
-                url: "buyPaper",
-                method: "post",
-                data: {
-                    id: evaluation.id,
-                    count: that.data.count,
-                    type: 1,
-                    openid: wx.getStorageSync("userInfo").openid
-                },
-                success(res) {
-                    wx.requestPayment({
-                        appId: res.appId,
-                        timeStamp: res.timeStamp,
-                        nonceStr: res.nonceStr,
-                        package: res.package,
-                        signType: 'MD5',
-                        paySign: res.paySign,
-                        success: function (res) {
-                            wx.showToast({
-                                title: '购买成功',
-                                duration: 2000
-                            });
-                            setTimeout(function () {
-                                that.onShow();
-                            }, 500);
-                        },
-                        fail(res) {
-                            if (res.errMsg == "requestPayment:fail cancel") {
-                                wx.showToast({
-                                    title: '购买取消',
-                                    icon: 'none',
-                                    duration: 1200
-                                })
-                            } else {
-                                wx.showToast({
-                                    title: '购买失败',
-                                    icon: 'none',
-                                    duration: 1200
-                                })
-                            }
-                            //支付失败
-                            console.error(res);
-                        },
-                        complete: function (res) {
-                        }
-                    })
-                }
-            })
-        }
-    },
-
     goToDaTi() {
         //发放测评
-        const {evaluation, customNorms, availableVoucher, availableInventory} = this.data;
+        const {evaluation, customNorms, availableTotal} = this.data;
         const umaConfig = umaEvent.clickShareOffer;
         try{
             new Tracker(wx).generate(umaConfig.tag, {name: `${evaluation.name}`});
@@ -223,24 +109,16 @@ Page({
         catch (e) {
             console.log('友盟数据统计',e);
         }
-        if (availableVoucher <= 0 && availableInventory <= 0) {
+        if (availableTotal <= 0) {
             app.toast("测评可用数量不足，请先购买测评");
             return;
         }
         const necessaryInfo = {
-            id: evaluation.id,
-            count: availableVoucher + availableInventory,
-            availableVoucher,
-            availableInventory,
-            name: evaluation.name,
-            isFree: evaluation.freeEvaluation,
+            evaluationId: evaluation.id,
             norms: customNorms.length ? customNorms : evaluation.generalNorms,
-            quesCount: evaluation.quesCount,
-            estimatedTime: evaluation.estimatedTime,
-            useVoucher: true
         };
         wx.navigateTo({
-            url: `../sharePaper/sharePaper?necessaryInfo=${JSON.stringify(necessaryInfo)}`,
+            url: `/pages/station/components/generate/generate?necessaryInfo=${JSON.stringify(necessaryInfo)}`,
         });
     },
 
@@ -341,6 +219,9 @@ Page({
         }
         app.getAccessToken(e)
             .then(res => {
+                that.setData({
+                    isGetAccessToken: true
+                })
                 const umaConfig = umaEvent.authPhoneSuccess;
                 if(type === 'enjoy'){
                     try{
@@ -349,23 +230,14 @@ Page({
                     catch (e) {
                         console.log('友盟数据统计',e);
                     }
-                    try{
-                        const umaConfig = umaEvent.clickFreeEnjoy;
-                        new Tracker(wx).generate(umaConfig.tag);
-                    }
-                    catch (e) {
-                        console.log('友盟数据统计',e);
-                    }
-                }
-                else if(type === 'contact' && !isIos){
+                } else if(type === 'contact' && !isIos){
                     try{
                         new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.pay});
                     }
                     catch (e) {
                         console.log('友盟数据统计',e);
                     }
-                }
-                else if (type === 'contact' && isIos){
+                } else if (type === 'contact' && isIos){
                     try{
                         new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.contact});
                     }
@@ -376,12 +248,12 @@ Page({
                 return that.loadInventory();
             })
             .then(res => {
-                const {availableVoucher, availableInventory} = res;
+                const {availableTotal} = res;
                 if (type === 'enjoy') {
-                    if (availableVoucher <= 0) {
+                    if (availableTotal <= 0) {
                         app.toast('您的免费体验券已用完');
                     }
-                    if (availableVoucher > 0) {
+                    if (availableTotal > 0) {
                         that.setData({
                             showSelectQuiz: true
                         })
@@ -398,10 +270,6 @@ Page({
                         })
                     }
                 }
-                that.setData({
-                    availableVoucher,
-                    availableInventory
-                });
             })
             .catch(err => {
                 if (err.code === '401111') {
@@ -413,33 +281,6 @@ Page({
                     })
                 }
             })
-            if(authCodeCounter <= 0){
-                const umaConfig = umaEvent.authPhoneCount;
-                if(type === 'enjoy'){
-                    try{
-                        new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.experience});
-                    }
-                    catch (e) {
-                        console.log('友盟数据统计',e);
-                    }
-                }
-                else if (type === 'contact' && !isIos) {
-                    try{
-                        new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.pay});
-                    }
-                    catch (e) {
-                        console.log('友盟数据统计',e);
-                    }
-                }
-                else if (type === 'contact' && isIos) {
-                    try{
-                        new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.contact});
-                    }
-                    catch (e) {
-                        console.log('友盟数据统计',e);
-                    }
-                }
-            }
     },
 
     loadInventory() {

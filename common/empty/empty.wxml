@@ -1,18 +1,5 @@
 <!--common/empty/empty.wxml-->
 <view wx:if="{{ type === 'default' && isShow }}" class="empty-wrapper {{ customClass ? customClass : '' }}">
+    <view class="title">{{ title }}</view>
     <image src="https://ihola.luoke101.com/icon%40icon-empty-type-1.png"></image>
-    <view>{{ title }}</view>
-</view>
-
-<view wx:if="{{ type === 'scan' && isShow }}" class="empty-wrapper">
-    <image src="https://ihola.luoke101.com/icon%40icon-empty-type-2.png" style="height:230rpx;width:230rpx;margin-bottom: 20rpx;"></image>
-    <view style="margin-bottom: 46rpx;">
-        {{ title }}
-    </view>
-    <view wx:if="{{ isCancel }}" style="color: rgba(0,0,0,.5);font-size: 32rpx;">
-        已全部撤回
-    </view>
-    <view wx:else style="color: #353EE8FF;font-size: 32rpx;" data-id="{{ paperId }}" bindtap="recallEvaluation">
-        撤回测评
-    </view>
 </view>

@@ -108,6 +108,15 @@
   letter-spacing: 1px;
 }
 
+.disabled{
+  background: rgba(231, 231, 231, 1);
+  border-radius: 8rpx;
+  text-align: center;
+  line-height: 94rpx;
+  color: #90919c;
+  box-shadow: 0 4rpx 8rpx 0 rgba(0, 0, 0, 0.05);
+}
+
 .infotext {
   font-size: 24rpx;
   color: #90919c;

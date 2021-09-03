@@ -28,7 +28,9 @@
         </view>
     </view>
     <block wx:if="{{isGetAccessToken}}">
-        <view wx:if="{{evaluationStatusText === '测评可用数量不足'}}" class="begin">测评可用数量不足</view>
+        <view wx:if="{{expired}}" class="begin disabled">测评已于{{expiredAt}}过期</view>
+        <view wx:elif="{{!started}}" class="begin">测评将于{{startedAt}}开始</view>
+        <view wx:elif="{{evaluationStatusText === '测评可用数量不足'&&false}}" class="begin">测评可用数量不足</view>
         <view wx:elif="{{evaluationStatusText === '等待hr通过申请'}}" class="begin">等待hr通过申请</view>
         <view wx:elif="{{evaluationStatusText === '查看报告'}}" class="begin" bindtap="toDetail">查看报告</view>
         <view wx:elif="{{evaluationStatusText === '申请查看报告'}}" class="begin" bindtap="toApply" data-id="{{receiveRecordId}}">向HR申请查看报告</view>

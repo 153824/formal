@@ -122,14 +122,17 @@
 }
 .report-child{
   display: flex;
-  justify-content: space-between;
-  padding: 10rpx 15rpx 10rpx 40rpx;
   align-items: center;
-  height: 70rpx;
-  margin-top: 40rpx;
-  box-shadow:0px 0px 7px 0px rgba(167,185,237,0.36);
-  border-radius: 16rpx;
-  background:rgba(254,255,254,1);
+  justify-content: space-between;
+  height: 120rpx;
+  padding: 0 50rpx;
+  background: rgba(53, 62, 232, 0.05);
+  border-radius: 60rpx;
+  font-size: 30rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #353EE8;
+  line-height: 42rpx;
 }
 .report-child > image{
   width: 19.6rpx;

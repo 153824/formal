@@ -81,6 +81,11 @@
     color: #FFFFFF;
     line-height: 44rpx;
 }
+.close{
+    background: #00000000;
+    color: #353EE8;
+    font-size: 28rpx;
+}
 .enter-done{
     padding: 0rpx 50rpx;
 }

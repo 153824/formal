@@ -1,4 +1,4 @@
-<van-overlay show="{{ isShow }}" lock-scroll="{{true}}" catch:click="hide">
+<van-overlay show="{{ isShow }}" lock-scroll="{{true}}">
     <view class="enter-wrapper">
         <block wx:if="{{stepName==='record'}}">
             <view class="enter-header">
@@ -41,9 +41,12 @@
                     </view>
                 </view>
             </view>
-            <view class="enter-footer" catch:tap="submit">
-                <view class="submit">
+            <view class="enter-footer">
+                <view class="submit" catch:tap="submit">
                     确认提交
+                </view>
+                <view class="submit close" catch:tap="hide">
+                    关闭
                 </view>
             </view>
         </block>

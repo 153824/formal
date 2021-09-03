@@ -219,6 +219,9 @@ Page({
         }
         app.getAccessToken(e)
             .then(res => {
+                that.setData({
+                    isGetAccessToken: true
+                })
                 const umaConfig = umaEvent.authPhoneSuccess;
                 if(type === 'enjoy'){
                     try{

@@ -21,7 +21,7 @@
             </block>
             <block wx:else>
 <!--                <checkout title="报价方案" type="price" isShow="{{ !evaluation.freeEvaluation && !isIos }}"-->
-<!--                          data="{{ evaluation }}"></checkout>-->
+<!--                          data="{{ evaluation }}"></checkout>--> 
                 <checkout title="测评简介" type="introduction" info="{{ evaluation.synopsis }}"></checkout>
                 <checkout title="测量维度" type="dimension" list="{{ evaluation.measureDimension }}"
                           isShow="{{evaluation.measureDimension.length}}"></checkout>
@@ -120,7 +120,7 @@
         <!--无券无库存且未用过本测评-->
         <view wx:elif="{{buttonType === 'unavailable'}}" class="button-group-wrapper {{!iphonex ? 'is-button-group__iosx' : ''}}">
             <view class="button-group__is-right {{iphonex ? 'is-iosx more-padding' : ''}}"
-                  style="width: 100vw;"
+                  style="width: 100vw;font-size:32rpx;"
                   bind:tap="goToCustomerService">
                 <text>联系客服体验测评</text>
             </view>

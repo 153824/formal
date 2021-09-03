@@ -79,9 +79,9 @@
                         <view bind:tap="setExpireModel" data-type="short" class="refuse  {{expireModel==='short'?'active':''}}"><text>时间期内有效</text></view>
                     </view>
                     <view wx:if="{{expireModel==='short'}}" class="timeout">
-                        <view style="text-align: right;" bind:tap="setTime" data-model="start" class="{{startTime!==-1?'is-picked':''}}">{{startTime!==-1?startTime:'开始时间'}}</view>
+                        <view style="text-align: center;" bind:tap="setTime" data-model="start" class="{{startTime!==-1?'is-picked':''}}">{{startTime!==-1?startTime:'开始时间'}}</view>
                         <text>-</text>
-                        <view style="text-align: left;" bind:tap="setTime" data-model="end" class="{{endTime!==-1?'is-picked':''}}">{{endTime!==-1?endTime:'结束时间'}}</view>
+                        <view style="text-align: center;" bind:tap="setTime" data-model="end" class="{{endTime!==-1?'is-picked':''}}">{{endTime!==-1?endTime:'结束时间'}}</view>
                     </view>
                 </view>
             </view>

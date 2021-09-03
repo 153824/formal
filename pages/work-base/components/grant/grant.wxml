@@ -67,7 +67,7 @@
                     </view>
                 </block>
                 <block wx:if="{{!reply.length}}">
-                    <empty type="default" title="受测者完成未完成答题将在此显示"/>
+                    <empty type="default" title="受测者开始作答后将在此显示"/>
                 </block>
             </block>
             <block wx:if="{{currentNav === 2}}">

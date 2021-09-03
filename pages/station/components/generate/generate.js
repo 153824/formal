@@ -243,7 +243,7 @@ Page({
     invite() {
         const that = this;
         const umaConfig = umaEvent.generateInvite;
-        const {evaluationName, evaluationId, norms, inviteCount, canUSeeReport, isWxWork, is3rd, selectedTeam, expireModel, startTime, endTime} = this.data;
+        const {maxCount, evaluationName, evaluationId, norms, inviteCount, canUSeeReport, isWxWork, is3rd, selectedTeam, expireModel, startTime, endTime} = this.data;
         const releaseInfo = {
             evaluationId: evaluationId,
             normId: norms[0].normId,
@@ -251,6 +251,14 @@ Page({
             releaseCount: inviteCount,
             entrance: "WECHAT_MA",
         };
+        if(!inviteCount){
+            app.toast('邀请参与测评的人数最少为 1')
+            return
+        }
+        if(!maxCount){
+            app.toast('可用份数为 0')
+            return
+        }
         try {
             releaseInfo.deptId = selectedTeam.value;
         } catch (e) {

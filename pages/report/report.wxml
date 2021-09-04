@@ -728,7 +728,7 @@
             </view>
         </view>
     </view>
-    <view wx:if="{{isSelf==='SELF'}}" class="analyze" bind:tap="goToAnalyze">
+    <view wx:if="{{isShowAnalyze}}" class="analyze" bind:tap="goToAnalyze">
         <image src="https://s.luoke101.com/analyze%40report.png" style="width:630rpx;height: 306rpx;"/>
     </view>
 </block>

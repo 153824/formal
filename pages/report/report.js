@@ -356,7 +356,8 @@ Page({
         canIUnfold: true,
         maxHeight: 0,
         seeItActive: true,
-        scene: ""
+        scene: "",
+        isShowAnalyze: false
     },
     properties: {
 		commond: {            // 额外节点
@@ -376,7 +377,7 @@ Page({
         app.checkOfferType(id).then(res=>{
             const {type, evaluationName} = res;
             that.setData({
-                isSelf: type
+                isShowAnalyze: type === 'SELF'
             })
             console.log('checkOfferType: ', type);
             const {scene} = wx.getLaunchOptionsSync();

@@ -57,7 +57,7 @@
                 </view>
                 <view class="enter-done-content">
                     <text class="done">信息提交成功</text>
-                    <text class="tip">顾问将在一个工作日内与您联</text>
+                    <text class="tip">顾问将在一个工作日内与您联系</text>
                 </view>
                 <view class="enter-done-footer" bind:tap="hide">
                     确认

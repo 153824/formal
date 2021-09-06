@@ -15,8 +15,7 @@
                 </view>
                 <view class="reply-track-info">
                     发放时间:
-                    <text class="date" style="margin-left: 10rpx;">{{ util.getFullDateByFrag(trackItem.createdAt,"/",true) }}-{{
-                        util.getHourAndMinByFrag(trackItem.createdAt,":",true) }}</text>
+                    <text class="date" style="margin-left: 10rpx;">{{trackItem.createdAt}}</text>
                 </view>
             </view>
             <view class="send-evaluation">

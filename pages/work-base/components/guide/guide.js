@@ -24,6 +24,7 @@ Page({
         expiredAt: -1,
         started: true,
         startedAt: -1,
+        illegalPhone: ''
     },
     onLoad: function (option) {
         const that = this;
@@ -267,6 +268,15 @@ Page({
                     case "RESPONDING":
                         text = "继续作答";
                         break;
+                    case "UNBIND":
+                        text = '微信一键授权作答';
+                        break;
+                    case 'DENIED':
+                        text = '重新授权其他手机号';
+                        break;
+                    case 'SNATCHED':
+                        text = '该测评已被其他用户领取';
+                        break;
                 }
                 _this.setData({
                     demonstrateInfo: res.demonstrateInfo,
@@ -279,6 +289,7 @@ Page({
                     expiredAt: res.expiredAt,
                     started: res.started,
                     startedAt: res.startedAt,
+                    illegalPhone: res.phone
                 });
             },
             complete: function () {},
@@ -406,4 +417,17 @@ Page({
                 }
             })
     },
+
+    getPhoneNumberForRec(e) {
+        if(!e.detail.iv) return
+        const {releaseRecordId} = this.data;
+        app.prueLogin()
+            .then(res=>{
+                const data = {...e.detail, releaseRecordId, authCode: res.authCode}
+                return app.authPhoneForRec(data)
+            })
+            .then(res=>{
+
+            })
+    }
 });

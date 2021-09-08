@@ -290,6 +290,7 @@ const umaEvent = {
             home: '首页在线咨询',
             search: '搜索无结果页联系顾问',
             bench: '工作台登录',
+            enjoy: '免费体验',
         }
     },
 
@@ -297,16 +298,6 @@ const umaEvent = {
     clickUsingRightNow: {
         key: '点击立即使用',
         tag: 'ClickUsingRightNow'
-    },
-
-    // 触发授权手机弹窗
-    authPhoneDialog: {
-        key: '触发授权手机弹窗',
-        tag: 'AuthPhoneDialog',
-        origin: {
-            enjoy: '免费体验',
-            contact: '联系客服'
-        }
     },
 
     // 点击专家解读

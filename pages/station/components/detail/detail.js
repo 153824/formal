@@ -209,7 +209,7 @@ Page({
             return;
         }
         if(authCodeCounter < 1){
-            const umaConfig = umaEvent.authPhoneDialog;
+            const umaConfig = umaEvent.authPhoneCount;
             try{
                 new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[type]});
             }

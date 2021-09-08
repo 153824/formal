@@ -19,7 +19,7 @@
                         <block wx:elif="{{ticketItem.expiredStatus === 'AVAILABLE'}}">
                             <text>· {{ticketItem.expiredTime}} 过期</text>
                         </block>
-                        <block wx:elif="{{ticketItem.expiredStatus === 'AVAILABLE'}}">
+                        <block wx:elif="{{ticketItem.expiredStatus === 'EXPIRED'}}">
                             <text>· 已于 {{ticketItem.expiredTime}} 过期</text>
                         </block>
                         <view>

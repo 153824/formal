@@ -29,3 +29,5 @@ AuthPhoneCount, 弹出授权手机弹窗
 ClickUsingRightNow, 点击立即使用
 ClickMasterParse, 点击报告解读
 SubmitReportForm, 提交报告表单
+EvaluationDetailByHome, 首页访问详情页
+EvaluationDetailByBeginner, 访问测评详情页（新人券）

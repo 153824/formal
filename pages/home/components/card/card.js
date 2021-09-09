@@ -26,6 +26,10 @@ Component({
                 try{
                     const umaConfig = umaEvent.evaluationDetail;
                     new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[location], name: evaluationName});
+                    if(location === 'home'){
+                        const umaConfig = umaEvent.evaluationDetailByHome;
+                        new Tracker(wx).generate(umaConfig.tag);
+                    }
                 }
                 catch (e) {
                     console.log('友盟数据统计',e);

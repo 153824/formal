@@ -310,7 +310,19 @@ const umaEvent = {
     submitReportForm: {
         key: '点击报告解读',
         tag: 'SubmitReportForm',
-    }
+    },
+
+    // 首页访问详情页
+    evaluationDetailByHome: {
+        key: '首页访问详情页',
+        tag: 'EvaluationDetailByHome'
+    },
+
+    // 访问测评详情页（新人券）
+    evaluationDetailByBeginner: {
+        key: '访问测评详情页（新人券）',
+        tag: 'EvaluationDetailByBeginner'
+    },
 }
 
 const scanScene = [1007,1011,1012,1013,1047,1048,1049]

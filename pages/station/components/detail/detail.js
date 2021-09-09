@@ -59,6 +59,15 @@ Page({
                         buttonType: type,
                         availableTotal: number
                     });
+                    if(type === 'beginner'){
+                        const umaConfig = umaEvent.evaluationDetailByBeginner;
+                        try{
+                            new Tracker(wx).generate(umaConfig.tag);
+                        }
+                        catch (e) {
+                            console.log('友盟数据统计',e);
+                        }
+                    }
                 });
         }
         let query = wx.createSelectorQuery();

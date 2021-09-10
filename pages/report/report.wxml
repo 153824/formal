@@ -217,6 +217,12 @@
                                     </block>
                                 </view>
                                 <view class="contentMsg" wx:if="{{node.active}}">
+                                    <block wx:if="{{node.definition}}">
+                                        <view class="title1">
+                                            <text class="underLineBg">定义：</text>
+                                        </view>
+                                        <rich-text class="msg" nodes="<p>{{node.definition}}</p>"></rich-text>
+                                    </block>
                                     <block wx:for="{{node.conclusions}}" wx:key="unique" wx:for-item="n" wx:for-index="j">
                                         <view class="title1">
                                             <text class="underLineBg">{{n.title}}：</text>

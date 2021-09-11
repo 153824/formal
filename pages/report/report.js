@@ -357,7 +357,9 @@ Page({
         maxHeight: 0,
         seeItActive: true,
         scene: "",
-        isShowAnalyze: false
+        isShowAnalyze: false,
+        distributeHeight: 142,
+        barXAxisWidth: 0
     },
     properties: {
 		commond: {            // 额外节点
@@ -502,9 +504,6 @@ Page({
         return acceptReportPromise;
     },
 
-    /**
-     * 获取报告详情
-     */
     getReport: function (id) {
         let that = this;
         id = id || that.data.id;
@@ -718,21 +717,198 @@ Page({
             for (let i = 0; i < 4; i++) {
                 res.fillBlank.push("");
             }
+            res.summaries =  [
+
+                // DISTRIBUTE_CHART 维度分布图
+                {
+                    "type": "DISTRIBUTE_CHART",
+                    "title": "图表标题",
+                    "subtitle": "图表副标题",
+                    "intervals": [                        // X 轴 (表头)
+                        {
+                            "rank": "等级名称",
+                            "low": 0,
+                            "high": 4
+                        },
+                        {
+                            "rank": "有待改善",
+                            "low": 4,
+                            "high": 8
+                        },
+                        {
+                            "rank": "善加应用",
+                            "low": 8,
+                            "high": 10
+                        }
+                    ],
+                    "factors": [
+                        {
+                            "name": "持续优化",
+                            "distributions": [
+                                ["扛焦耐虑","迭代优化"],
+                                [],
+                                ["专注聚集"]
+                            ]
+                        },
+                        {
+                            "name": "第二行",
+                            "distributions": [
+                                [],
+                                [],
+                                ["专注聚集"]
+                            ]
+                        }
+                    ]
+                },
+
+                // RANK_CHART 排名图
+                {
+                    "type": "RANK_CHART",
+                    "title": "图表标题",
+                    "subtitle": "图表副标题",
+                    "factors": [
+                        {
+                            "name": "持续优化",
+                            "rankings": [
+                                {
+                                    "subclass": "扛焦耐虑",
+                                    "grade": 4.25
+                                },
+                                {
+                                    "subclass": "专注聚集",
+                                    "grade": 4.11
+                                },
+                                {
+                                    "subclass": "扛焦耐虑",
+                                    "grade": 4.25
+                                },
+                                {
+                                    "subclass": "专注聚集",
+                                    "grade": 4.11
+                                },
+                                {
+                                    "subclass": "扛焦耐虑",
+                                    "grade": 4.25
+                                },
+                                {
+                                    "subclass": "专注聚集",
+                                    "grade": 4.11
+                                },
+                            ]
+                        },
+                        {
+                            "name": "第二行",
+                            "rankings": [
+                                {
+                                    "subclass": "扛焦耐虑",
+                                    "grade": 4.25
+                                },
+                                {
+                                    "subclass": "专注聚集",
+                                    "grade": 4.11
+                                },
+                            ]
+                        }
+                    ]
+                },
+
+                // BAR_CHART 柱状图
+                {
+                    "type": "BAR_CHART",
+                    "title": "图表标题",
+                    "subtitle": "图表副标题",
+                    "height": 122,                      // 图表高度
+                    "intervals": [                      // Y 轴
+                        {
+                            "rank": "善加应用",
+                            "low": 8,
+                            "high": 10
+                        },
+                        {
+                            "rank": "有待改善",
+                            "low": 4,
+                            "high": 8
+                        },
+                        {
+                            "rank": "等级名称",
+                            "low": 0,
+                            "high": 4
+                        },
+                    ],
+                    "factors": [
+                        {
+                            "name": "持续优化",
+                            "grade": 4.25,
+                        },
+                        {
+                            "name": "第二根柱子",
+                            "grade": 4.95,
+
+                        },
+                        {
+                            "name": "持续优化",
+                            "grade": 4.25,
+                        },
+                        {
+                            "name": "第二根柱子",
+                            "grade": 4.95,
+
+                        },
+                        {
+                            "name": "持续优化",
+                            "grade": 4.25,
+                        },
+                        {
+                            "name": "第二根柱子",
+                            "grade": 4.95,
+
+                        },
+                    ]
+                },
+
+                // DELIMITATION 分页符
+                {
+                    "type": "DELIMITATION"
+                }
+            ]
             that.setData(res);
             setTimeout(()=>{
                 that.setData({
                     maskTrigger: false
-                })
-            },500)
+                });
+                that.getDistributeRowItemHeight();
+                that.getBarXAxisWidth();
+            },500);
             this.getEvaluationQues();
         }).catch(err=>{
             console.error(err);
             app.toast("获取测评错误")
         });
     },
-    /**
-     * 是否在团队里
-     */
+
+    getDistributeRowItemHeight() {
+        let that = this;
+        let maxHeight = 0;
+        wx.createSelectorQuery().selectAll('.distribute-row-item').boundingClientRect((res)=>{
+            res.forEach(item=>{
+                maxHeight = item.height > maxHeight ? item.height : maxHeight
+            })
+            that.setData({
+                distributeHeight: `${(maxHeight + 20)/app.rate}`
+            })
+        }).exec()
+
+    },
+
+    getBarXAxisWidth() {
+        let that = this;
+        wx.createSelectorQuery().select('.x-axis').boundingClientRect((res)=>{
+            that.setData({
+                barXAxisWidth: `${(res.width)/app.rate}`
+            })
+        }).exec()
+    },
+
     isInTeams: function (teamInfo) {
         let {shareKey = ''} = this.data;
         if (teamInfo && teamInfo.type == "noTeamMember") {
@@ -751,18 +927,14 @@ Page({
             return false;
         }
     },
-    /**
-     * 图片大图查看
-     */
+
     showBigImg: function (e) {
         var url = e.currentTarget.dataset.url;
         wx.previewImage({
             urls: [url]
         });
     },
-    /**
-     * 展开显示维度信息
-     */
+
     activeItem: function (e) {
         var d = e.currentTarget.dataset;
         var index = d.index;
@@ -780,9 +952,7 @@ Page({
             dimensions: dimensions
         });
     },
-    /**
-     * 展开显示维度信息(兼容新的数据结构)
-     */
+
     activeNewItem: function (e) {
         var d = e.currentTarget.dataset;
         var index = d.index;
@@ -799,9 +969,7 @@ Page({
             report: list
         });
     },
-    /**
-     * 显示作答分析弹窗
-     */
+
     showDlg: function (e) {
         var n = e.currentTarget.dataset.n;
         if (!n) return;
@@ -810,18 +978,14 @@ Page({
             dlgName: n
         });
     },
-    /**
-     * 隐藏作答分析弹窗
-     */
+
     hideDlg: function (e) {
         this.setData({
             showDlg: false,
             dlgName: ""
         });
     },
-    /**
-     * 建议切换显示
-     */
+
     changeProposal: function (e) {
         var i = e.currentTarget.dataset.i;
         var current = e.detail.current;
@@ -836,9 +1000,7 @@ Page({
             });
         }
     },
-    /**
-     * 审核申请查看报告
-     */
+
     applyReportAudit: function (e) {
         const receiveRecordId = this.data.id;
         var that = this;
@@ -868,9 +1030,7 @@ Page({
         });
 
     },
-    /**
-     * 百分比进度条显示
-     */
+
     drawCircle: function (num) {
         var width = 20;
         var w = 90;
@@ -903,7 +1063,7 @@ Page({
             imageUrl: report.smallImg,
         }
     },
-    /**测测他人 */
+
     toTestOtherUser: function () {
         var {shareInfo} = this.data;
         var userPapersNum = this.data.userPapersNum;
@@ -911,9 +1071,7 @@ Page({
             url: '../station/components/detail/detail?id=' + shareInfo.evaluationId,
         });
     },
-    /**
-     * 分享
-     */
+
     onShareAppMessage: function (options) {
         const that = this;
         const {participant, shareInfo, id, report,smallImg} = this.data;

@@ -318,6 +318,73 @@ var getCount = function (index, arr) {
   return arr[index]
 }
 
+var gentDistributeClass = function (rowIndex, columnIndex, rowCount, columnCount) {
+  var className = '';
+  rowCount = Number(rowCount - 1);
+  columnCount = Number(columnCount - 1);
+  rowIndex = Number(rowIndex);
+  columnIndex = Number(columnIndex);
+  if(columnIndex === 0){
+    className = className + ' first-column';
+  }
+  if(rowIndex === 0 && columnIndex === 0){
+    className = className + ' first-column-first-row';
+  }
+  if(columnCount === columnIndex && rowIndex === 0){
+    className = className + ' last-column-first-row';
+  }
+  if(columnIndex === 0 && rowCount === rowIndex){
+    className = className + ' first-column-last-row';
+  }
+  if(columnCount === columnIndex && rowCount === rowIndex){
+    className = className + ' last-column-last-row';
+  }
+  if(columnIndex === 1){
+    className = className + ' second-column';
+  }
+  if(columnIndex === columnCount){
+    className = className + ' last-column';
+  }
+  // wxs无法循环object故而放弃
+  // var classNameMap = {
+  //   'first-column': columnIndex === 0,
+  //   'first-column-first-row': rowIndex === 0 && columnIndex === 0,
+  //   'last-column-first-row': columnCount === columnIndex && rowIndex === 0,
+  //   'first-column-last-row': columnIndex === 0 && rowCount === rowIndex,
+  //   'last-column-last-row': columnCount === columnIndex && rowCount === rowIndex,
+  //   'second-column': columnIndex === 1,
+  //   'last-column': columnIndex === columnIndex
+  // }
+
+  return className;
+}
+
+var gentDistributeStyle = function (rowCount, columnCount) {
+  var style = 'grid-template-columns: 80rpx repeat(' + columnCount +', minmax(168rpx, auto));grid-template-rows: 160rpx repeat('+ rowCount +', minmax(140rpx， auto));';
+  return style
+}
+
+var gentRankStyle = function (columnCount) {
+  var style = 'grid-template-columns: repeat(' + columnCount +', minmax(100rpx, auto));';
+  return style;
+}
+
+var gentBarStyle = function (data, grade, height) {
+  var itemHeight = height / data.intervals[0].high;
+  return 'height: ' + itemHeight * grade + 'rpx;';
+}
+
+var gentBarYAxisStyle = function (data, height) {
+  var itemHeight = height / data.intervals[0].high;
+  var style = '';
+  // grid-template-rows: repeat(3, 107rpx);
+  data.intervals.forEach(function (item) {
+    var rowHeight = (item.high - item.low) * itemHeight + 'rpx ';
+    style = style + rowHeight
+  });
+  return 'grid-template-rows: '+ style +';'
+}
+
 module.exports = {
   getMonthAndDayByFrag: getMonthAndDayByFrag,
   getHourAndMinByFrag: getHourAndMinByFrag,
@@ -345,5 +412,10 @@ module.exports = {
   gentBackgroundImage: gentBackgroundImage,
   gentClassOfType: gentClassOfType,
   gentReleaseType: gentReleaseType,
-  getCount: getCount
+  getCount: getCount,
+  gentDistributeClass: gentDistributeClass,
+  gentDistributeStyle: gentDistributeStyle,
+  gentRankStyle: gentRankStyle,
+  gentBarStyle: gentBarStyle,
+  gentBarYAxisStyle: gentBarYAxisStyle
 };

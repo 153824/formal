@@ -134,11 +134,6 @@
             <view class="title report-summary">
                 <text>{{summary.title}}</text>
             </view>
-            <view wx:if="{{coordinate.display}}" class="chartImg" style="display: flex;justify-content: center;align-items: center;margin-top: 40rpx;">
-                <hola-grid axis="{{coordinate.graphAxis}}" area="{{graphQuadrants}}" coordinate="{{coordinate.graphCoordinateIdx}}" type="{{coordinate.graphAxis[0].areas.length===3?'nineCell':'fourCell'}}">
-
-                </hola-grid>
-            </view>
             <view class="flex temple"
                   wx:if="{{summary.display}}">
                 <view class="flex-main item noramlTem"
@@ -158,6 +153,131 @@
             <view class="content" wx:if="{{summary.display&&summary.annotation}}">
                 <rich-text nodes="{{summary.annotation}}"></rich-text>
             </view>
+            <view wx:if="{{coordinate.display}}" class="chartImg" style="display: flex;justify-content: center;align-items: center;margin-top: 40rpx;">
+                <hola-grid axis="{{coordinate.graphAxis}}" area="{{graphQuadrants}}" coordinate="{{coordinate.graphCoordinateIdx}}" type="{{coordinate.graphAxis[0].areas.length===3?'nineCell':'fourCell'}}"></hola-grid>
+            </view>
+            <block wx:for="{{summaries}}" wx:for-item="summaryItem" wx:for-index="summaryIndex">
+                <view wx:if="{{summaryItem.type === 'DISTRIBUTE_CHART'}}" wx:key="unique" class="summary-chart distribute">
+                    <view class="summary-chart__title-wrapper">
+                        <view class="summary-chart__title">{{summaryItem.title}}</view>
+                        <view class="summary-chart__tips">
+                            {{summaryItem.subtitle}}
+                        </view>
+                    </view>
+                    <scroll-view scroll-x="{{true}}" style="width:100%;">
+                        <view class="distribute-group" style="{{util.gentDistributeStyle(summaryItem.factors.length, summaryItem.intervals.length)}}">
+                            <!--标题行-->
+                            <view class="distribute-title"></view>
+                            <block wx:for="{{summaryItem.intervals}}" wx:for-item="intervalItem" wx:for-index="intervalIndex">
+                                <view wx:key="unique" class="distribute-title">{{intervalItem.rank}}</view>
+                            </block>
+                            <!--内容行-->
+                            <block wx:for="{{summaryItem.factors}}" wx:for-item="factorItem" wx:for-index="factorIndex">
+                                <!--标题列-->
+                                <view class="distribute-row-title">{{factorItem.name}}</view>
+                                <block wx:for="{{factorItem.distributions}}" wx:for-item="distributeItem" wx:for-index="distributeIndex">
+                                    <!--内容列-->
+                                    <view style="height: {{distributeHeight}}rpx;" class="distribute-row-item {{util.gentDistributeClass(factorIndex, distributeIndex, summaryItem.factors.length,summaryItem.intervals.length)}}">
+                                        <block wx:for="{{distributeItem}}" wx:for-item="distributeTag" wx:for-index="distributeIndex">
+                                            <!--等级名-->
+                                            <view class="distribute-item">{{distributeTag}}</view>
+                                        </block>
+                                    </view>
+                                </block>
+                            </block>
+                        </view>
+                    </scroll-view>
+                </view>
+                <view wx:elif="{{summaryItem.type === 'RANK_CHART'}}" wx:key="unique" class="summary-chart rank">
+                    <view class="summary-chart__title-wrapper rank-chart__title">
+                        <view class="summary-chart__title">{{summaryItem.title}}</view>
+                        <view class="summary-chart__tips">
+                            {{summaryItem.subtitle}}
+                        </view>
+                    </view>
+                    <view>
+                        <block wx:for="{{summaryItem.factors}}" wx:for-item="factorItem" wx:for-index="factorIndex">
+                            <view class="rank-item__wrapper">
+                                <text class="rank-item__title">{{factorItem.name}}</text>
+                                <view class="rank-item">
+                                    <block wx:for="{{factorItem.rankings}}" wx:for-item="rankItem" wx:for-index="rankIndex">
+                                        <view class="rank-block">
+                                            {{rankItem.subclass}}
+                                            <view class="rank-grade">{{rankItem.grade}}分</view>
+                                        </view>
+                                    </block>
+                                </view>
+                            </view>
+                        </block>
+<!--                        <view class="rank-item__wrapper">-->
+<!--                            <text class="rank-item__title">得分前三项</text>-->
+<!--                            <scroll-view scroll-x="{{true}}" class="rank-scroll-view">-->
+<!--                                <view class="rank-item">-->
+<!--                                    <view class="rank-block">-->
+<!--                                        抗焦耐挫-->
+<!--                                        <view class="rank-grade">4.52分</view>-->
+<!--                                    </view>-->
+<!--                                    <view class="rank-block">-->
+<!--                                        抗焦耐挫-->
+<!--                                        <view class="rank-grade">4.52分</view>-->
+<!--                                    </view>-->
+<!--                                    <view class="rank-block">-->
+<!--                                        抗焦耐挫-->
+<!--                                        <view class="rank-grade">4.52分</view>-->
+<!--                                    </view>-->
+<!--                                </view>-->
+<!--                            </scroll-view>-->
+<!--                        </view>-->
+<!--                        <view class="rank-item__wrapper">-->
+<!--                            <text class="rank-item__title">得分后三项</text>-->
+<!--                            <scroll-view scroll-x="{{true}}" class="rank-scroll-view">-->
+<!--                                <view class="rank-item">-->
+<!--                                    <view class="rank-block">-->
+<!--                                        抗焦耐挫-->
+<!--                                        <view class="rank-grade">4.52分</view>-->
+<!--                                    </view>-->
+<!--                                    <view class="rank-block">-->
+<!--                                        抗焦耐挫-->
+<!--                                        <view class="rank-grade">4.52分</view>-->
+<!--                                    </view>-->
+<!--                                    <view class="rank-block">-->
+<!--                                        抗焦耐挫-->
+<!--                                        <view class="rank-grade">4.52分</view>-->
+<!--                                    </view>-->
+<!--                                </view>-->
+<!--                            </scroll-view>-->
+<!--                        </view>-->
+                    </view>
+                </view>
+                <view wx:elif="{{summaryItem.type === 'BAR_CHART'}}" wx:key="unique" class="summary-chart bar">
+                    <view class="summary-chart__title-wrapper">
+                        <view class="summary-chart__title">{{summaryItem.title}}</view>
+                        <view class="summary-chart__tips">
+                            {{summaryItem.subtitle}}
+                        </view>
+                    </view>
+                    <view class="bar-group">
+                        <view class="x-axis">
+                            <view class="x-axis__is-empty"></view>
+                            <block wx:for="{{summaryItem.factors}}" wx:for-item="factorItem" wx:for-index="factorIndex">
+                                <view class="x-axis-tick">
+                                    {{factorItem.name}}
+                                    <view class="bar-item" style="{{util.gentBarStyle(summaryItem, factorItem.grade, 420 - 60 - 40)}}" data-grade="{{factorItem.grade}}"></view>
+                                </view>
+                            </block>
+                        </view>
+                        <view class="y-axis" style="{{util.gentBarYAxisStyle(summaryItem, 420 - 60 - 40)}};grid-template-columns: {{barXAxisWidth}}rpx;">
+                            <block wx:for="{{summaryItem.intervals}}" wx:for-item="intervalItem" wx:for-index="intervalIndex">
+                                <view class="y-axis__item" style="{{intervalIndex===0?'border-top: unset;':''}}">
+                                    <view class="y-axis__grade-tick">{{intervalItem.high}}</view>
+                                    <view class="y-axis__grade-level">{{intervalItem.rank}}</view>
+                                    <view wx:if="{{intervalIndex === summaryItem.intervals.length - 1}}" class="is-zero">{{intervalItem.low}}</view>
+                                </view>
+                            </block>
+                        </view>
+                    </view>
+                </view>
+            </block>
         </view>
         <!-- 维度分析 -->
         <view class="box3">

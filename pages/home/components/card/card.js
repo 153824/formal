@@ -28,7 +28,7 @@ Component({
                     new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[location], name: evaluationName});
                     if(location === 'home'){
                         const umaConfig = umaEvent.evaluationDetailByHome;
-                        new Tracker(wx).generate(umaConfig.tag);
+                        new Tracker(wx).generate(umaConfig.tag, {name: evaluationName});
                     }
                 }
                 catch (e) {

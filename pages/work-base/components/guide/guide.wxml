@@ -27,21 +27,30 @@
             </view>
         </view>
     </view>
-    <block wx:if="{{isGetAccessToken}}">
-        <view wx:if="{{expired}}" class="begin disabled">测评已于{{expiredAt}}过期</view>
-        <view wx:elif="{{!started}}" class="begin">测评将于{{startedAt}}开始</view>
-        <view wx:elif="{{evaluationStatusText === '测评可用数量不足'&&false}}" class="begin">测评可用数量不足</view>
-        <view wx:elif="{{evaluationStatusText === '等待hr通过申请'}}" class="begin">等待hr通过申请</view>
-        <view wx:elif="{{evaluationStatusText === '查看报告'}}" class="begin" bindtap="toDetail">查看报告</view>
-        <view wx:elif="{{evaluationStatusText === '申请查看报告'}}" class="begin" bindtap="toApply" data-id="{{receiveRecordId}}">向HR申请查看报告</view>
-        <view wx:elif="{{evaluationStatusText === '立即验证'}}" class="begin" bindtap="goToRecorder">立即验证</view>
-        <view wx:elif="{{evaluationStatusText === '继续作答'}}" data-type="" class="begin" bindtap="goToReplying">继续作答</view>
-        <view wx:elif="{{evaluationStatusText === '开始作答'}}" class="begin" bindtap="goToRecorder" data-mark="begin">开始作答</view>
-        <view wx:elif="{{evaluationStatusText === ' 开始作答 '}}" data-type="golden" class="begin" bindtap="goToReplying" data-mark="begin">开始作答</view>
-    </block>
-    <block wx:else>
-        <button class="begin" open-type="getPhoneNumber" bind:getphonenumber="getPhoneNumber">微信一键授权登录作答</button>
-    </block>
+    <view wx:if="{{evaluationStatusText === '重新授权其他手机号'}}" class="fail-auth">
+        <text>您授权登录的手机号：{{illegalPhone}}</text>
+        <text>无权限参与本次测评，请重新确认</text>
+    </view>
+    <view style="margin-top: {{ evaluationStatusText !== '重新授权其他手机号' ? 70 : 30}}rpx;">
+        <block wx:if="{{isGetAccessToken}}">
+            <view wx:if="{{expired}}" class="begin disabled">测评已于{{expiredAt}}过期</view>
+            <view wx:elif="{{!started}}" class="begin">测评将于{{startedAt}}开始</view>
+            <view wx:elif="{{evaluationStatusText === '测评可用数量不足'}}" class="begin">测评可用数量不足</view>
+            <view wx:elif="{{evaluationStatusText === '等待hr通过申请'}}" class="begin">等待hr通过申请</view>
+            <view wx:elif="{{evaluationStatusText === '查看报告'}}" class="begin" bindtap="toDetail">查看报告</view>
+            <view wx:elif="{{evaluationStatusText === '申请查看报告'}}" class="begin" bindtap="toApply" data-id="{{receiveRecordId}}">向HR申请查看报告</view>
+            <view wx:elif="{{evaluationStatusText === '立即验证'}}" class="begin" bindtap="goToRecorder">立即验证</view>
+            <view wx:elif="{{evaluationStatusText === '继续作答'}}" data-type="" class="begin" bindtap="goToReplying">继续作答</view>
+            <view wx:elif="{{evaluationStatusText === '开始作答'}}" class="begin" bindtap="goToRecorder" data-mark="begin">开始作答</view>
+            <view wx:elif="{{evaluationStatusText === ' 开始作答 '}}" data-type="golden" class="begin" bindtap="goToReplying" data-mark="begin">开始作答</view>
+            <button wx:elif="{{evaluationStatusText === '微信一键授权作答'}}" class="begin" open-type="getPhoneNumber" bind:getphonenumber="getPhoneNumberForRec">微信一键授权作答</button>
+            <button wx:elif="{{evaluationStatusText === '重新授权其他手机号'}}" class="begin" open-type="getPhoneNumber" bind:getphonenumber="getPhoneNumberForRec">重新授权其他手机号</button>
+            <view wx:elif="{{evaluationStatusText === '该测评已被其他用户领取'}}" class="begin disabled">该测评已被其他用户领取</view>
+        </block>
+        <block wx:else>
+            <button class="begin" open-type="getPhoneNumber" bind:getphonenumber="getPhoneNumber">微信一键授权登录作答</button>
+        </block>
+    </view>
     <text class="infotext">{{respondPreparingPageTxt}}</text>
 </view>
 <hola-mask isShow="{{ maskTrigger }}"></hola-mask>

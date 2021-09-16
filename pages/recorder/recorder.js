@@ -311,14 +311,6 @@ Page({
     },
 
     submit: function () {
-        if (!this._checkUserInfo) {
-            return;
-        } else {
-            this._fetchVerify().then(res => {
-                this._pushMessagesFetched(res.receiveRecordId)
-            }).catch(err => {
-                throw err
-            });
-        }
+        if (this._checkUserInfo) this._fetchVerify()
     }
 });

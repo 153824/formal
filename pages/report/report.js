@@ -358,7 +358,7 @@ Page({
         seeItActive: true,
         scene: "",
         isShowAnalyze: false,
-        distributeHeight: 142,
+        distributeHeight: 0,
         barXAxisWidth: 0
     },
     properties: {
@@ -737,6 +737,7 @@ Page({
         let maxHeight = 0;
         wx.createSelectorQuery().selectAll('.distribute-row-item').boundingClientRect((res)=>{
             res.forEach(item=>{
+                console.log('item: ', item.height)
                 maxHeight = item.height > maxHeight ? item.height : maxHeight
             })
             that.setData({

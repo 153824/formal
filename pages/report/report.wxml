@@ -177,7 +177,7 @@
                                 <view class="distribute-row-title">{{factorItem.name}}</view>
                                 <block wx:for="{{factorItem.distributions}}" wx:for-item="distributeItem" wx:for-index="distributeIndex">
                                     <!--内容列-->
-                                    <view style="height: {{distributeHeight}}rpx;" class="distribute-row-item {{util.gentDistributeClass(factorIndex, distributeIndex, summaryItem.factors.length,summaryItem.intervals.length)}}">
+                                    <view style="{{distributeHeight > 0 ? 'height:'+distributeHeight+ 'rpx;' : ''}}" class="distribute-row-item {{util.gentDistributeClass(factorIndex, distributeIndex, summaryItem.factors.length,summaryItem.intervals.length)}}">
                                         <block wx:for="{{distributeItem}}" wx:for-item="distributeTag" wx:for-index="distributeIndex">
                                             <!--等级名-->
                                             <view class="distribute-item">{{distributeTag}}</view>

@@ -7,7 +7,7 @@ Page({
         showAdvance: false,
         headerHeight: 0,
         inviteCount: 1,
-        canUSeeReport: 'refuse', // refuse 不允许；agree 允许；
+        canUSeeReport: 'agree', // refuse 不允许；agree 允许；
         expireModel: 'forever', // forever 长期有效；short 时间期内有效；
         minHour: 10,
         maxHour: 20,

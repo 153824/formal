@@ -224,9 +224,7 @@ Page({
         catch (e) {
             console.log('友盟数据统计',e);
         }
-        wx.navigateTo({
-            url: '/pages/customer-service/customer-service',
-        });
+        app.openContactService()
     },
 
     loadSection() {

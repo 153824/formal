@@ -25,6 +25,7 @@ Page({
         buttonGroupHeight: 0,
         buttonType: '', // beginner: 免费体验 / upgraded: 立即使用 / unavailable: 联系客服 / available: 剩余可用份数
         availableTotal: '',
+        shareInfo: {}
     },
 
     onLoad(options) {
@@ -41,10 +42,13 @@ Page({
         this.setData({evaluationId: options.id});
     },
 
-    onShow() {
+    async onShow() {
         const that = this;
+        const res = await app.loadEvaluationInfo(this.data.evaluationId)
+        console.log(res);
         this.setData({
-            isGetAccessToken: app.checkAccessToken()
+            isGetAccessToken: app.checkAccessToken(),
+            shareInfo: res
         })
         this.loadEvaluationInfo()
             .then(res=>{
@@ -140,16 +144,13 @@ Page({
     },
 
     onShareAppMessage(options) {
-        const evaluationInfo = this.data.evaluation;
-        const {teamId} = app,
-            {userInfo} = app.globalData,
-            that = this;
-        const {id, name} = this.data.evaluation;
+        const {shareInfo} = this.data;
+        const {id} = this.data.evaluation;
         if (options.from !== 'button') {
             return {
-                title: `邀您体验《${evaluationInfo.name}》测评~`,
+                title: `邀您体验《${shareInfo.name}》测评~`,
                 path: `pages/station/components/detail/detail?id=${id}`,
-                imageUrl: `${evaluationInfo.smallImg}`,
+                imageUrl: `${shareInfo.rectangleImage}`,
             }
         }
         return {
@@ -198,9 +199,7 @@ Page({
         catch (e) {
             console.log('友盟数据统计',e);
         }
-        wx.navigateTo({
-            url: "/pages/customer-service/customer-service"
-        });
+        app.openContactService()
     },
 
     buyByCounts() {
@@ -270,9 +269,7 @@ Page({
                 }
                 if (type === 'contact') {
                     if (isIos) {
-                        wx.navigateTo({
-                            url: "/pages/customer-service/customer-service"
-                        })
+                        app.openContactService()
                     } else {
                         that.setData({
                             payTrigger: true

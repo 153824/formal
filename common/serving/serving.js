@@ -57,9 +57,7 @@ Component({
             });
         },
         goToServer() {
-            wx.navigateTo({
-                url: '/pages/customer-service/customer-service'
-            })
+            app.openContactService()
         },
         getPhoneNumber(e) {
             const that = this;
@@ -71,7 +69,7 @@ Component({
                 that.setData({
                     isGetAccessToken: true
                 });
-                that.goToCustomerService();
+                app.openContactService();
                 try{
                     const umaConfig = umaEvent.authPhoneSuccess;
                     new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.contact});

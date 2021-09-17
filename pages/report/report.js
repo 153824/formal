@@ -359,7 +359,8 @@ Page({
         scene: "",
         isShowAnalyze: false,
         distributeHeight: 0,
-        barXAxisWidth: 0
+        barXAxisWidth: 0,
+        shareMessage: {}
     },
     properties: {
 		commond: {            // 额外节点
@@ -411,6 +412,13 @@ Page({
 
     onReady() {
         this.computeHeight()
+    },
+
+    async loadEvaluationInfo(evaluationId) {
+        const res = await app.loadEvaluationInfo(evaluationId)
+        this.setData({
+            shareMessage: res
+        })
     },
 
     seeIt() {
@@ -517,6 +525,7 @@ Page({
                 },
                 success: function (res) {
                     that.getProgramSetting(res.releaseRecordId)
+                    that.loadEvaluationInfo(res.shareInfo.evaluationId)
                     resolve(res);
                 },
                 fail: function (err) {
@@ -900,33 +909,14 @@ Page({
         ctx.draw();
     },
 
-    toShareReport: function () {
-        const that = this;
-        const {participant, shareInfo, paper, report,smallImg} = this.data;
-        const {globalData} = app;
-        return {
-            title: `${globalData.team.name}邀您看${participant.filledName||participant.nickname||'好啦访客'}的《${shareInfo.evaluationName}》报告`,
-            path: `pages/report/report`,
-            imageUrl: report.smallImg,
-        }
-    },
-
-    toTestOtherUser: function () {
-        var {shareInfo} = this.data;
-        var userPapersNum = this.data.userPapersNum;
-        wx.navigateTo({
-            url: '../station/components/detail/detail?id=' + shareInfo.evaluationId,
-        });
-    },
-
     onShareAppMessage: function (options) {
         const that = this;
-        const {participant, shareInfo, id, report,smallImg} = this.data;
+        const {participant, shareInfo, id, report,smallImg, shareMessage} = this.data;
         const time = new Date().getTime();
         return {
             title: `邀您查看${participant.filledName||participant.nickname||'好啦测评'}的《${shareInfo.evaluationName}》报告`,
             path: `pages/report/report?receivedRecordId=${id}&sharedAt=${time}`,
-            imageUrl:smallImg,
+            imageUrl: shareMessage.rectangleImage,
         }
     },
     /**

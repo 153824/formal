@@ -1098,5 +1098,58 @@ App({
             })
         });
         return p;
+    },
+
+    openContactService() {
+        wx.openCustomerServiceChat({
+            extInfo:{url:'https://work.weixin.qq.com/kfid/kfcb69223c539250934'},
+            corpId:'ww9732798a4d1ac47d',
+            success(res){
+                const umaConfig = umaEvent.getInCustomerService;
+                const routeInfo = getCurrentPages()[getCurrentPages().length - 2];
+                const currentRoute = routeInfo.route;
+                for (let i in umaConfig.route) {
+                    if(i === 'more'){
+                        const {type} = routeInfo.options;
+                        try{
+                            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[type]});
+                        }
+                        catch (e) {
+                            console.log('友盟数据统计',e);
+                        }
+                        return
+                    }
+                    if(umaConfig.route[i].includes(currentRoute)){
+                        try{
+                            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[i]});
+                        }
+                        catch (e) {
+                            console.log('友盟数据统计',e);
+                        }
+                        return;
+                    }
+                }
+            },
+            fail(e){
+                console.error(e)
+            }
+        })
+    },
+
+    loadEvaluationInfo(evaluationId) {
+        const that = this;
+        const p = new Promise((resolve, reject) => {
+            that.doAjax({
+                url: `../wework/evaluations/${evaluationId}/info`,
+                method: 'GET',
+                success(res) {
+                    resolve(res)
+                },
+                error(err) {
+                    reject(err)
+                }
+            })
+        })
+        return p;
     }
 });

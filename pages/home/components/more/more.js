@@ -76,8 +76,6 @@ Page({
         }
     },
     goToCustomerService() {
-        wx.navigateTo({
-            url: '/pages/customer-service/customer-service',
-        });
+        app.openContactService()
     }
 });

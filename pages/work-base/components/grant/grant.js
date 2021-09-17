@@ -138,6 +138,7 @@ Page({
                 that.setData({
                     digest: res
                 })
+                that.loadEvaluationInfo(res.evaluationId)
                 if(res.type!=='EMAIL'){
                    that.setData({
                        nav: nav.slice(0, nav.length - 1)
@@ -290,21 +291,27 @@ Page({
             url: '/common/webView'
         });
     },
+    async loadEvaluationInfo(evaluationId) {
+        const res = await app.loadEvaluationInfo(evaluationId)
+        this.setData({
+            shareInfo: res
+        })
+    },
     onShareAppMessage() {
-        const {releaseRecordId, digest, isShowQRCode} = this.data;
+        const {releaseRecordId, digest, isShowQRCode, shareInfo} = this.data;
         console.log('isShowQRCode: ',isShowQRCode);
         if(isShowQRCode){
             return {
                 title: `邀您参加《${digest.evaluationName}》`,
                 path: `pages/work-base/components/guide/guide?releaseRecordId=${releaseRecordId}`,
-                imageUrl: digest.smallImg,
+                imageUrl: shareInfo.rectangleImage,
             }
         }
         const time = new Date().getTime();
         return {
             title: `邀请您查看《${digest.evaluationName}》的作答情况`,
             path: `pages/work-base/components/grant/grant?releaseRecordId=${releaseRecordId}&sharedAt=${time}`,
-            imageUrl: digest.smallImg,
+            imageUrl: shareInfo.rectangleImage,
         };
     },
 });

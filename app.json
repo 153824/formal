@@ -56,7 +56,8 @@
     "pages/home/subpages/search/search",
     "pages/home/subpages/section/section",
     "pages/station/components/generate/generate",
-    "pages/work-base/components/grant/grant"
+    "pages/work-base/components/grant/grant",
+    "pages/report/components/door/door"
   ],
   "tabBar": {
     "custom": true,
@@ -102,10 +103,6 @@
     "wx0ef45039046afc95"
   ],
   "plugins": {
-    "chatbot": {
-      "version": "1.2.22",
-      "provider": "wx8c631f7e9f2465e1"
-    },
     "contactPlugin": {
       "version": "1.2.1",
       "provider": "wx5917c8c26f85c588"

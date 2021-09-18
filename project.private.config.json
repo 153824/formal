@@ -68,7 +68,7 @@
           "scene": null
         },
         {
-          "name": "小层序码领取测评",
+          "name": "小程序码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
           "query": "scene=6066ce4068deda392eea5d19",
           "scene": null
@@ -78,13 +78,6 @@
           "name": "分享图片",
           "pathName": "common/webView",
           "query": "img=https://ihola.luoke101.com/holateam/tmp1602645968770.png&title=true",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "pages/forbidden/forbidden",
-          "pathName": "pages/forbidden/forbidden",
-          "query": "scene=5f8428e5164cf1025532e138",
           "scene": null
         },
         {
@@ -206,12 +199,6 @@
           "scene": null
         },
         {
-          "name": "pages/station/components/sharePaper/sharePaper",
-          "pathName": "pages/station/components/sharePaper/sharePaper",
-          "query": "scene=60c1cf6c92f2705539f09da4",
-          "scene": null
-        },
-        {
           "name": "系统维护",
           "pathName": "pages/auth/subpages/maintain/maintain",
           "query": "receivedRecordId=60e808820c294e5d6103f7d0",
@@ -248,9 +235,9 @@
           "scene": null
         },
         {
-          "name": "pages/home/components/more/more",
-          "pathName": "pages/home/components/more/more",
-          "query": "type=brain",
+          "name": "作答跟踪",
+          "pathName": "pages/work-base/components/grant/grant",
+          "query": "releaseRecordId=61385672755bf903ca4c6358",
           "scene": null
         }
       ]

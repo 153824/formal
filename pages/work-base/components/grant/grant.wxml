@@ -96,12 +96,8 @@
 <button class="invite-button" open-type="share">
     邀请同事一起接收查看报告
 </button>
-<van-dialog
-        use-slot
-        title="编辑发放批次名称"
-        show-confirm-button="{{false}}"
-        show="{{ isShowEditDialog }}">
-        <view class="edit-dialog__wrapper">
+<van-dialog use-slot title="编辑发放批次名称" show-confirm-button="{{false}}" show="{{ isShowEditDialog }}">
+    <view class="edit-dialog__wrapper">
             <input class="release-name__input" placeholder="请输入"/>
             <view class="edit-dialog__bottom">
                 <button bind:tap="hideEditDialog">取消</button>

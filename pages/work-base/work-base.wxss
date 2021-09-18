@@ -557,3 +557,79 @@ page {
     padding: unset;
     outline: unset;
 }
+.report-title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.chart-analyze{
+    display: flex;
+    align-items: center;
+    padding: 6rpx 20rpx;
+    margin-left: 28rpx;
+    font-size: 26rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 36rpx;
+    background: #5AD8A6;
+    border-radius: 24rpx;
+}
+.chart-analyze > image {
+    width: 28rpx;
+    height: 28rpx;
+    margin-right: 10rpx;
+}
+.chart-analyze__wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 44rpx 80rpx;
+}
+.chart-analyze__cover{
+    width: 100%;
+}
+.chart-analyze__text-group{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 72rpx 0 82rpx 0;
+    font-size: 32rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #333333;
+    line-height: 52rpx;
+}
+.contact-service{
+    width: 100%;
+    font-size: 32rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 44rpx;
+    background: #353EE8;
+    border-radius: 8rpx;
+}
+.contact-service:after{
+    content: unset!important;
+}
+.contact-service:before{
+    content: unset!important;
+}
+.overlay-index--van-overlay{
+    z-index: 9999!important;
+}
+.dialog-index--van-dialog{
+    z-index: 10000!important;
+}
+.contact-service__is-cancel{
+    text-align: center;
+    font-size: 28rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #353EE8;
+    line-height: 44rpx;
+    background: #FFFFFF;
+    border-radius: 8rpx;
+}

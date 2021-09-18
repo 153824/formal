@@ -239,6 +239,12 @@
           "pathName": "pages/work-base/components/grant/grant",
           "query": "releaseRecordId=61385672755bf903ca4c6358",
           "scene": null
+        },
+        {
+          "name": "更多测评",
+          "pathName": "pages/work-base/components/report-more/report-more",
+          "query": "",
+          "scene": null
         }
       ]
     }

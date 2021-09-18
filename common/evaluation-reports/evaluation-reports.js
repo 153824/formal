@@ -23,7 +23,81 @@ Component({
         pixelRate: app.globalData.pixelRate,
         searchReportList: [],
         keyword: "",
-        searchPage: 1
+        searchPage: 1,
+        evaluationGroup: [
+            {
+                id: '',
+                name: '全部测评'
+            },
+            {
+                id: '5f6d5db901f500c06fbe0f4b',
+                name: '设计师测评'
+            },
+            {
+                id: '5f6d5db901f500c06fbe0f4c',
+                name: '基层管理特质'
+            },
+            {
+                id: '5f6d5db901f500c06fbe06267',
+                name: '设计师测评'
+            },
+            {
+                id: '5f6d5db901f500c06fbe0f9d',
+                name: '基层管理特质'
+            },
+            {
+                id: '5f6d5db901f500c06fbe0f8w',
+                name: '设计师测评'
+            },
+            {
+                id: '5f6d5db901f500c06fbe0f3w',
+                name: '基层管理特质'
+            },
+            {
+                id: '5f6d5db901f500c06fbe0f4v',
+                name: '设计师测评'
+            },
+            {
+                id: '5f6d5db901f500c06fbe0f4m',
+                name: '基层管理特质'
+            },
+            {
+                id: '5f6d5db901f500c06fbe0f4p',
+                name: '设计师测评'
+            },
+            {
+                id: '5f6d5db901f500c06fbe0f4c',
+                name: '基层管理特质'
+            },
+            {
+                id: '5f6d5db901f500c06fbe0f4p',
+                name: '设计师测评'
+            },
+            {
+                id: '5f6d5db901f500c06fbe0f4c',
+                name: '基层管理特质'
+            },
+            {
+                id: '5f6d5db901f500c06fbe0f4p',
+                name: '设计师测评'
+            },
+            {
+                id: '5f6d5db901f500c06fbe0f4c',
+                name: '基层管理特质'
+            },
+            {
+                id: '5f6d5db901f500c06fbe0f4p',
+                name: '设计师测评'
+            },
+            {
+                id: '5f6d5db901f500c06fbe0f4c',
+                name: '基层管理特质'
+            }
+        ],
+        selectEvaluation: {
+            id: '',
+            name: '全部测评'
+        }
     },
     methods: {
         goToReport: function (e) {
@@ -157,6 +231,26 @@ Component({
                 const page = 1;
                 this.loadReportList(page);
             }
+        },
+
+        onEvaluationTap() {
+            const {isShowEvaluationSelect} = this.data;
+            this.setData({
+                isShowEvaluationSelect: !isShowEvaluationSelect
+            })
+        },
+
+        selectEvaluation(e) {
+            this.setData({
+                selectEvaluation: e.currentTarget.dataset.item
+            })
+            this.hideSelect()
+        },
+
+        hideSelect() {
+            this.setData({
+                isShowEvaluationSelect: false
+            })
         }
     },
     pageLifetimes: {

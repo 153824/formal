@@ -1,22 +1,37 @@
-<view class="program-wrapper {{type ==='report-more' ? 'more-report-wrapper' : ''}}">
-    <van-search
-            wx:if="{{search}}"
-            value="{{keyword}}"
-            input-align="center"
-            placeholder="按姓名搜索"
-            custom-class="van-search-custom"
-            field-class="van-search-field-custom"
-            bind:change="searchReport"
-            bind:focus="clearContent"
-            bind:blur="getReportListAgain"
-            use-right-icon-slot
-            left-icon=""
-            right-icon=""
-            maxlength="8"
-            custom-class="van-search-custom"
-            input-class="van-search-custom-input"
-            field-class="van-search-custom-field"
-    />
+<view class="program-wrapper {{!type ==='report-more' ? 'more-report-wrapper' : ''}}">
+<!--    <van-search-->
+<!--            wx:if="{{search}}"-->
+<!--            value="{{keyword}}"-->
+<!--            input-align="center"-->
+<!--            placeholder="按姓名搜索"-->
+<!--            custom-class="van-search-custom"-->
+<!--            field-class="van-search-field-custom"-->
+<!--            bind:change="searchReport"-->
+<!--            bind:focus="clearContent"-->
+<!--            bind:blur="getReportListAgain"-->
+<!--            use-right-icon-slot-->
+<!--            left-icon=""-->
+<!--            right-icon=""-->
+<!--            maxlength="8"-->
+<!--            custom-class="van-search-custom"-->
+<!--            input-class="van-search-custom-input"-->
+<!--            field-class="van-search-custom-field"/>-->
+    <view class="search-report__wrapper">
+        <view class="seacr-report__input search-report__by-name">
+            <input placeholder="搜索姓名"/>
+        </view>
+        <view class="seacr-report__input search-report__by-evaluation" style="{{isShowEvaluationSelect ? 'flex: unset;width: 60%;' : ''}}">
+            <input value="{{selectEvaluation.name}}" placeholder="搜索测评" bind:tap="onEvaluationTap" style="{{isShowEvaluationSelect ? 'text-align: left;' : ''}}"/>
+            <van-icon name="{{isShowEvaluationSelect ? 'arrow-up' : 'arrow-down'}}"/>
+            <van-overlay show="{{ isShowEvaluationSelect }}" lock-scroll="{{false}}" custom-style="background-color: #00000000;">
+                <scroll-view scroll-y="{{true}}" class="search-by-evaluation-result__wrapper">
+                    <block wx:for="{{evaluationGroup}}" wx:for-item="evaluationItem" wx:for-index="evaluationIndex" wx:key="unique">
+                        <view class="evaluation-item {{selectEvaluation.id === evaluationItem.id ? 'is-selected' : ''}}" bind:tap="selectEvaluation" data-item="{{evaluationItem}}">{{evaluationItem.name}}</view>
+                    </block>
+                </scroll-view>
+            </van-overlay>
+        </view>
+    </view>
     <scroll-view wx:if="{{!keyword}}" class="report-content-wrapper" scroll-y bindscrolltolower="nextPage"
                  style="height: {{windowHeight * pixelRate - 50 - 148}}rpx;">
         <view bindtap="goToReport"

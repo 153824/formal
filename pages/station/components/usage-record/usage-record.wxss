@@ -3,11 +3,13 @@ page{
 }
 .usage-record{
     position: relative;
-    padding: 34rpx 40rpx;
+    padding: 0 0;
+    width: unset!important;
 }
 .usage-record__header{
     display: flex;
     flex-direction: row;
+    padding: 34rpx 40rpx 0 40rpx;
 }
 .usage-record__cover{
     width: 140rpx;
@@ -70,10 +72,107 @@ page{
 }
 .ticket-info__wrapper{
     position: relative;
+    height: 200rpx;
 }
 .ticket-info{
     position: absolute;
-    flex: 1;
+    left: 0;
+    right: 0;
+    top: 50%;
+    padding: 0 70rpx;
+    transform: translateY(-50%);
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 30rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #B8702B;
+    line-height: 42rpx;
+}
+.ticket-info > image{
+    width: 90rpx;
+    height: 110rpx;
+}
+.count-item{
+    padding-bottom: 10rpx;
+}
+.count-item:after, .total:after{
+    content: attr(data-count);
+    font-size: 17px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #B9722D;
+    line-height: 24px;
+}
+.usage-record__container{
+    margin-top: 340rpx;
+    padding: 0 40rpx 0 40rpx;
+}
+.container-title{
+    text-align: center;
+    font-size: 34rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #070922;
+    line-height: 48rpx;
+}
+.container-item{
+
+}
+.container-item__title{
+    font-size: 26rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #6B6B6B;
+    line-height: 36rpx;
+}
+.container-item__card{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20rpx;
+    padding: 30rpx 40rpx;
+    background: #FFFFFF;
+    box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(0, 0, 0, 0.05);
+    border-radius: 20rpx;
+}
+.card-title{
+    margin-bottom: 16rpx;
+    font-size: 30rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #070922;
+    line-height: 42rpx;
+}
+.card-tip{
+    font-size: 26rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #AAABB0;
+    line-height: 36rpx;
+}
+.card-count{
+    font-size: 30rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #353EE8;
+    line-height: 42rpx;
+}
+.usage-record__footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 116rpx;
+    font-size: 32rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 44rpx;
+    background-color: #353EE8;
 }

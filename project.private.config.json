@@ -251,6 +251,12 @@
           "pathName": "pages/work-base/components/track-more/track-more",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "使用记录",
+          "pathName": "pages/station/components/usage-record/usage-record",
+          "query": "",
+          "scene": null
         }
       ]
     }

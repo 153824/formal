@@ -1,0 +1,79 @@
+page{
+    background: #F9FAFC;
+}
+.usage-record{
+    position: relative;
+    padding: 34rpx 40rpx;
+}
+.usage-record__header{
+    display: flex;
+    flex-direction: row;
+}
+.usage-record__cover{
+    width: 140rpx;
+    height: 140rpx;
+    margin-right: 30rpx;
+    border-radius: 20rpx;
+}
+.usage-record__title-wrapper{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.usage-record__title-wrapper > .title{
+    font-size: 46rpx;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #070922;
+    line-height: 64rpx;
+}
+.usage-record__title-wrapper > .tips{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 30rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(7, 9, 34, 0.6);
+    line-height: 42rpx;
+}
+.see-it{
+    font-size: 30rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #353EE8;
+    line-height: 42rpx;
+}
+.usage-record__background{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 390rpx;
+    background-color: #FFFFFF;
+    border-radius: 100% 100% 100% 100% / 0% 0% 30% 30%;
+    z-index: -1;
+}
+.ticket{
+    position: absolute;
+    top: 245rpx;
+    left: 50%;
+    width: 640rpx;
+    height: 200rpx;
+    transform: translateX(-50%);
+}
+.ticket-info__wrapper > image{
+    position: absolute;
+    width: 640rpx;
+    height: 200rpx;
+}
+.ticket-info__wrapper{
+    position: relative;
+}
+.ticket-info{
+    position: absolute;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+}

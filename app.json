@@ -57,7 +57,8 @@
     "pages/home/subpages/section/section",
     "pages/station/components/generate/generate",
     "pages/work-base/components/grant/grant",
-    "pages/report/components/door/door"
+    "pages/report/components/door/door",
+    "pages/station/components/usage-record/usage-record"
   ],
   "tabBar": {
     "custom": true,

@@ -1,0 +1,12 @@
+<view>
+    <view>
+        <image src=""/>
+        <view>
+            <text>业务代表测评</text>
+            <view>
+                <text>43题/预计用时20分钟</text>
+                <view>查看介绍</view>
+            </view>
+        </view>
+    </view>
+</view>

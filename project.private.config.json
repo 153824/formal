@@ -245,6 +245,12 @@
           "pathName": "pages/work-base/components/report-more/report-more",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "更多跟踪",
+          "pathName": "pages/work-base/components/track-more/track-more",
+          "query": "",
+          "scene": null
         }
       ]
     }

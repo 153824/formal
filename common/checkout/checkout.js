@@ -47,9 +47,7 @@ Component({
   methods: {
     changePage: function (e) {
       const { id,subtitle } = e.currentTarget.dataset;
-      wx.navigateTo({
-        url: '/pages/customer-service/customer-service'
-      })
+      app.openContactService()
       // wx.navigateTo({
       //   url: `/pages/report/report?receiveRecordId=${ id }&command=close`
       // });

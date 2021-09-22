@@ -57,9 +57,7 @@ Component({
             });
         },
         goToServer() {
-            wx.navigateTo({
-                url: '/pages/customer-service/customer-service'
-            })
+            app.openContactService()
         },
         getPhoneNumber(e) {
             const that = this;

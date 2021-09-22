@@ -357,7 +357,8 @@ Page({
         maxHeight: 0,
         seeItActive: true,
         scene: "",
-        isShowAnalyze: false
+        isShowAnalyze: false,
+        shareMessage: {}
     },
     properties: {
 		commond: {            // 额外节点
@@ -409,6 +410,13 @@ Page({
 
     onReady() {
         this.computeHeight()
+    },
+
+    async loadEvaluationInfo(evaluationId) {
+        const res = await app.loadEvaluationInfo(evaluationId)
+        this.setData({
+            shareMessage: res
+        })
     },
 
     seeIt() {
@@ -518,6 +526,7 @@ Page({
                 },
                 success: function (res) {
                     that.getProgramSetting(res.releaseRecordId)
+                    that.loadEvaluationInfo(res.shareInfo.evaluationId)
                     resolve(res);
                 },
                 fail: function (err) {
@@ -916,12 +925,12 @@ Page({
      */
     onShareAppMessage: function (options) {
         const that = this;
-        const {participant, shareInfo, id, report,smallImg} = this.data;
+        const {participant, shareInfo, id, report,smallImg, shareMessage} = this.data;
         const time = new Date().getTime();
         return {
             title: `邀您查看${participant.filledName||participant.nickname||'好啦测评'}的《${shareInfo.evaluationName}》报告`,
             path: `pages/report/report?receivedRecordId=${id}&sharedAt=${time}`,
-            imageUrl:smallImg,
+            imageUrl: shareMessage.rectangleImage,
         }
     },
     /**

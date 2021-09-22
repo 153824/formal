@@ -427,7 +427,9 @@ Page({
                 return app.authPhoneForRec(data)
             })
             .then(res=>{
-
+                wx.navigateTo({
+                    url: `/pages/recorder/recorder?releaseRecordId=${releaseRecordId}`
+                })
             })
     }
 });

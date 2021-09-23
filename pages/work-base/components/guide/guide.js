@@ -85,17 +85,24 @@ Page({
         if(this.data.type!=='self'){
             if(app.checkAccessToken()){
                 this.canIUseTemptation(releaseRecordId)
-            }else{
+            }
+            else{
                 app.checkUserInfo=(res)=>{
                     this.canIUseTemptation(releaseRecordId)
                 };
             }
-        }else{
+        }
+        else{
             this.setData({
-                maskTrigger:false,
-                demonstrateInfo:demonstrateInfo
+                maskTrigger: false,
+                demonstrateInfo: demonstrateInfo
             })
         }
+        setTimeout(()=>{
+            this.setData({
+                maskTrigger: false
+            })
+        }, 2000)
     },
 
     canIUseTemptation(releaseRecordId) {
@@ -199,7 +206,7 @@ Page({
     },
 
     getDemonstrate() {
-        const _this = this;
+        const that = this;
         const {releaseRecordId} = this.data;
         app.doAjax({
             url: "wework/evaluations/fetch/demonstrate",
@@ -208,7 +215,7 @@ Page({
                 releaseRecordId: releaseRecordId,
             },
             success: function (res) {
-                _this.setData({
+                that.setData({
                     demonstrateInfo: res.demonstrateInfo,
                     maskTrigger: false,
                     countdownInMinutes: res.countdownInMinutes,
@@ -218,15 +225,16 @@ Page({
                     startedAt: res.startedAt,
                 });
             },
-            complete: function () {},
-            fail: function (err) {
-                console.error(err);
+            error() {
+                that.setData({
+                    maskTrigger: false,
+                });
             }
         })
     },
 
     getTemptation: function (userInfo = {id: ""}) {
-        const _this = this;
+        const that = this;
         const {releaseRecordId} = this.data;
         app.doAjax({
             url: "wework/evaluations/fetch/temptation",
@@ -278,7 +286,7 @@ Page({
                         text = '该测评已被其他用户领取';
                         break;
                 }
-                _this.setData({
+                that.setData({
                     demonstrateInfo: res.demonstrateInfo,
                     evaluationStatus: msg,
                     evaluationStatusText: text,
@@ -292,9 +300,10 @@ Page({
                     illegalPhone: res.phone
                 });
             },
-            complete: function () {},
-            fail: function (err) {
-                console.error(err);
+            error() {
+                that.setData({
+                    maskTrigger: false,
+                });
             }
         })
     },

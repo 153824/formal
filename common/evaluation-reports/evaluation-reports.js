@@ -118,6 +118,22 @@ Component({
             }
         },
 
+        loadEvaluationGroup() {
+            const p = new Promise((resolve, reject) => {
+                app.doAjax({
+                    url: 'evaluations/list_by_teamId',
+                    method: 'GET',
+                    success(res) {
+                        resolve(res)
+                    },
+                    error(err) {
+                        reject(err)
+                    }
+                })
+            })
+            return p;
+        },
+
         loadReportList: function (page) {
             if (this.properties.type === "receive-evaluation") {
                 return;
@@ -235,8 +251,10 @@ Component({
 
         onEvaluationTap() {
             const {isShowEvaluationSelect} = this.data;
-            this.setData({
-                isShowEvaluationSelect: !isShowEvaluationSelect
+            this.loadEvaluationGroup().then(res=>{
+                this.setData({
+                    isShowEvaluationSelect: !isShowEvaluationSelect
+                })
             })
         },
 

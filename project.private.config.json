@@ -45,7 +45,7 @@
         {
           "name": "小程序码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "scene=61385672755bf903ca4c6358",
+          "query": "scene=614c1504c810634af6e69d5a",
           "scene": null
         },
         {
@@ -255,6 +255,12 @@
         {
           "name": "使用记录",
           "pathName": "pages/station/components/usage-record/usage-record",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "更多报告",
+          "pathName": "pages/work-base/components/report-more/report-more",
           "query": "",
           "scene": null
         }

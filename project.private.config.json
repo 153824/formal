@@ -258,6 +258,12 @@
           "pathName": "pages/home/components/more/more",
           "query": "type=brain",
           "scene": null
+        },
+        {
+          "name": "手机号已绑定",
+          "pathName": "pages/account/subpages/unbound/unbound",
+          "query": "scene=614c1da0c810634af6e69d81",
+          "scene": null
         }
       ]
     }

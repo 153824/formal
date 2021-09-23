@@ -16,7 +16,12 @@ Page({
             url
         })
     },
-    showServing: function () {
-        this.selectComponent('#serving').callServing();
+    goToCustomerService() {
+        try{
+            app.openContactService()
+        }
+        catch (err) {
+            console.error(err);
+        }
     }
 });

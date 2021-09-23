@@ -1642,7 +1642,7 @@ swiper, swiper-item {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 24rpx;
+    font-size: 26rpx;
     font-family: PingFangSC-Semibold, PingFang SC;
     font-weight: 600;
     color: #323541;
@@ -1652,7 +1652,7 @@ swiper, swiper-item {
 
 .rank-grade{
     margin-top: 20rpx;
-    font-size: 24rpx;
+    font-size: 26rpx;
     font-family: PingFangSC-Semibold, PingFang SC;
     font-weight: 600;
     color: #353EE8;

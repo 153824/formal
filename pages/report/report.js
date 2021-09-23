@@ -358,7 +358,6 @@ Page({
         seeItActive: true,
         scene: "",
         isShowAnalyze: false,
-        distributeHeight: 0,
         barXAxisWidth: 0
     },
     properties: {
@@ -722,7 +721,7 @@ Page({
                 that.setData({
                     maskTrigger: false
                 });
-                that.getDistributeRowItemHeight();
+                // that.getDistributeRowItemHeight();
                 that.getBarXAxisWidth();
             },500);
             this.getEvaluationQues();
@@ -730,21 +729,6 @@ Page({
             console.error(err);
             app.toast("获取测评错误")
         });
-    },
-
-    getDistributeRowItemHeight() {
-        let that = this;
-        let maxHeight = 0;
-        wx.createSelectorQuery().selectAll('.distribute-row-item').boundingClientRect((res)=>{
-            res.forEach(item=>{
-                console.log('item: ', item.height)
-                maxHeight = item.height > maxHeight ? item.height : maxHeight
-            })
-            that.setData({
-                distributeHeight: `${(maxHeight + 20)/app.rate}`
-            })
-        }).exec()
-
     },
 
     getBarXAxisWidth() {

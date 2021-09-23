@@ -96,7 +96,6 @@
                       data-release-record-id="{{trackItem.releaseRecordId}}">
                     <view class="evaluation-wrapper track-info-wrapper">
                         <view class="evaluation-name">
-<!--                            {{ trackItem.evaluationName }}-->
                             {{ trackItem.releaseName }}
                         </view>
                         <view class="reply-track-info">
@@ -223,7 +222,6 @@
                       data-release-record-id="{{trackItem.releaseRecordId}}">
                     <view class="evaluation-wrapper track-info-wrapper">
                         <view class="evaluation-name">
-<!--                            {{ trackItem.evaluationName }}-->
                             {{ trackItem.releaseName }}
                         </view>
                         <view class="reply-track-info">
@@ -379,7 +377,6 @@
                           data-release-record-id="{{trackItem.releaseRecordId}}">
                         <view class="evaluation-wrapper track-info-wrapper">
                             <view class="evaluation-name">
-<!--                                {{ trackItem.evaluationName }}-->
                                 {{ trackItem.releaseName }}
                             </view>
                             <view class="reply-track-info">

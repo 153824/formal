@@ -1,6 +1,3 @@
 <block>
-    <view class="track-search__wrapper">
-        <input class="track-search__input" placeholder="搜索发放批次名称"/>
-    </view>
-    <hola-track evaluationTrack="{{evaluationTrack}}"></hola-track>
+    <hola-track evaluationTrack="{{evaluationTrack}}" hasSearch="{{true}}"></hola-track>
 </block>

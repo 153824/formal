@@ -27,7 +27,7 @@
         {
           "name": "报告详情",
           "pathName": "pages/report/report",
-          "query": "receiveRecordId=6112357a11e388253405132c",
+          "query": "receiveRecordId=614305390fb2e836deb452c4",
           "scene": null
         },
         {
@@ -45,13 +45,13 @@
         {
           "name": "小程序码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "scene=6131c89f2413813152d9a858",
+          "query": "scene=614c1da0c810634af6e69d81",
           "scene": null
         },
         {
           "name": "二维码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "q=https://api.luoke101.com/s/60f631fba5567c40a4280cc5",
+          "query": "q=https://api.luoke101.com/s/6137384726e0980406728c32",
           "scene": null
         },
         {
@@ -64,7 +64,7 @@
         {
           "name": "领取报告",
           "pathName": "pages/report/report",
-          "query": "receivedRecordId=60e808820c294e5d6103f7d0",
+          "query": "receivedRecordId=614c2f0c305c99362ce5295d",
           "scene": null
         },
         {
@@ -251,6 +251,18 @@
           "name": "信息录入",
           "pathName": "pages/recorder/recorder",
           "query": "scene=611f8254e80d611c7df97897",
+          "scene": null
+        },
+        {
+          "name": "pages/home/components/more/more",
+          "pathName": "pages/home/components/more/more",
+          "query": "type=brain",
+          "scene": null
+        },
+        {
+          "name": "手机号已绑定",
+          "pathName": "pages/account/subpages/unbound/unbound",
+          "query": "scene=614c1da0c810634af6e69d81",
           "scene": null
         }
       ]

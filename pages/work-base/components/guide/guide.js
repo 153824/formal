@@ -24,7 +24,9 @@ Page({
         expiredAt: -1,
         started: true,
         startedAt: -1,
+        illegalPhone: ''
     },
+
     onLoad: function (option) {
         const that = this;
         let releaseEvaluationId = "";
@@ -74,6 +76,7 @@ Page({
             });
         }
     },
+
     onShow: function () {
         const that = this;
         const {releaseRecordId,demonstrateInfo} = that.data;
@@ -84,17 +87,24 @@ Page({
         if(this.data.type!=='self'){
             if(app.checkAccessToken()){
                 this.canIUseTemptation(releaseRecordId)
-            }else{
+            }
+            else{
                 app.checkUserInfo=(res)=>{
                     this.canIUseTemptation(releaseRecordId)
                 };
             }
-        }else{
+        }
+        else{
             this.setData({
-                maskTrigger:false,
-                demonstrateInfo:demonstrateInfo
+                maskTrigger: false,
+                demonstrateInfo: demonstrateInfo
             })
         }
+        setTimeout(()=>{
+            this.setData({
+                maskTrigger: false
+            })
+        }, 2000)
     },
 
     canIUseTemptation(releaseRecordId) {
@@ -198,7 +208,7 @@ Page({
     },
 
     getDemonstrate() {
-        const _this = this;
+        const that = this;
         const {releaseRecordId} = this.data;
         app.doAjax({
             url: "wework/evaluations/fetch/demonstrate",
@@ -207,7 +217,7 @@ Page({
                 releaseRecordId: releaseRecordId,
             },
             success: function (res) {
-                _this.setData({
+                that.setData({
                     demonstrateInfo: res.demonstrateInfo,
                     maskTrigger: false,
                     countdownInMinutes: res.countdownInMinutes,
@@ -217,15 +227,16 @@ Page({
                     startedAt: res.startedAt,
                 });
             },
-            complete: function () {},
-            fail: function (err) {
-                console.error(err);
+            error() {
+                that.setData({
+                    maskTrigger: false,
+                });
             }
         })
     },
 
     getTemptation: function (userInfo = {id: ""}) {
-        const _this = this;
+        const that = this;
         const {releaseRecordId} = this.data;
         app.doAjax({
             url: "wework/evaluations/fetch/temptation",
@@ -267,8 +278,17 @@ Page({
                     case "RESPONDING":
                         text = "继续作答";
                         break;
+                    case "UNBIND":
+                        text = '微信一键授权作答';
+                        break;
+                    case 'DENIED':
+                        text = '重新授权其他手机号';
+                        break;
+                    case 'SNATCHED':
+                        text = '该测评已被其他用户领取';
+                        break;
                 }
-                _this.setData({
+                that.setData({
                     demonstrateInfo: res.demonstrateInfo,
                     evaluationStatus: msg,
                     evaluationStatusText: text,
@@ -279,11 +299,13 @@ Page({
                     expiredAt: res.expiredAt,
                     started: res.started,
                     startedAt: res.startedAt,
+                    illegalPhone: res.phone
                 });
             },
-            complete: function () {},
-            fail: function (err) {
-                console.error(err);
+            error() {
+                that.setData({
+                    maskTrigger: false,
+                });
             }
         })
     },
@@ -379,6 +401,9 @@ Page({
                 } catch (e) {
                     return Promise.reject();
                 }
+                that.setData({
+                    isGetAccessToken: true
+                })
                 return Promise.resolve();
             })
             .then(res=>{
@@ -406,4 +431,19 @@ Page({
                 }
             })
     },
+
+    getPhoneNumberForRec(e) {
+        if(!e.detail.iv) return
+        const {releaseRecordId} = this.data;
+        app.prueLogin()
+            .then(res=>{
+                const data = {...e.detail, releaseRecordId, authCode: res.authCode}
+                return app.authPhoneForRec(data)
+            })
+            .then(res=>{
+                wx.navigateTo({
+                    url: `/pages/recorder/recorder?releaseRecordId=${releaseRecordId}`
+                })
+            })
+    }
 });

@@ -358,7 +358,7 @@ Page({
         seeItActive: true,
         scene: "",
         isShowAnalyze: false,
-        shareMessage: {}
+        barXAxisWidth: 0
     },
     properties: {
 		commond: {            // 额外节点
@@ -510,9 +510,6 @@ Page({
         return acceptReportPromise;
     },
 
-    /**
-     * 获取报告详情
-     */
     getReport: function (id) {
         let that = this;
         id = id || that.data.id;
@@ -731,17 +728,26 @@ Page({
             setTimeout(()=>{
                 that.setData({
                     maskTrigger: false
-                })
-            },500)
+                });
+                // that.getDistributeRowItemHeight();
+                that.getBarXAxisWidth();
+            },500);
             this.getEvaluationQues();
         }).catch(err=>{
             console.error(err);
             app.toast("获取测评错误")
         });
     },
-    /**
-     * 是否在团队里
-     */
+
+    getBarXAxisWidth() {
+        let that = this;
+        wx.createSelectorQuery().select('.x-axis').boundingClientRect((res)=>{
+            that.setData({
+                barXAxisWidth: `${(res.width)/app.rate}`
+            })
+        }).exec()
+    },
+
     isInTeams: function (teamInfo) {
         let {shareKey = ''} = this.data;
         if (teamInfo && teamInfo.type == "noTeamMember") {
@@ -760,18 +766,14 @@ Page({
             return false;
         }
     },
-    /**
-     * 图片大图查看
-     */
+
     showBigImg: function (e) {
         var url = e.currentTarget.dataset.url;
         wx.previewImage({
             urls: [url]
         });
     },
-    /**
-     * 展开显示维度信息
-     */
+
     activeItem: function (e) {
         var d = e.currentTarget.dataset;
         var index = d.index;
@@ -789,9 +791,7 @@ Page({
             dimensions: dimensions
         });
     },
-    /**
-     * 展开显示维度信息(兼容新的数据结构)
-     */
+
     activeNewItem: function (e) {
         var d = e.currentTarget.dataset;
         var index = d.index;
@@ -808,9 +808,7 @@ Page({
             report: list
         });
     },
-    /**
-     * 显示作答分析弹窗
-     */
+
     showDlg: function (e) {
         var n = e.currentTarget.dataset.n;
         if (!n) return;
@@ -819,18 +817,14 @@ Page({
             dlgName: n
         });
     },
-    /**
-     * 隐藏作答分析弹窗
-     */
+
     hideDlg: function (e) {
         this.setData({
             showDlg: false,
             dlgName: ""
         });
     },
-    /**
-     * 建议切换显示
-     */
+
     changeProposal: function (e) {
         var i = e.currentTarget.dataset.i;
         var current = e.detail.current;
@@ -845,9 +839,7 @@ Page({
             });
         }
     },
-    /**
-     * 审核申请查看报告
-     */
+
     applyReportAudit: function (e) {
         const receiveRecordId = this.data.id;
         var that = this;
@@ -877,9 +869,7 @@ Page({
         });
 
     },
-    /**
-     * 百分比进度条显示
-     */
+
     drawCircle: function (num) {
         var width = 20;
         var w = 90;
@@ -912,7 +902,7 @@ Page({
             imageUrl: report.smallImg,
         }
     },
-    /**测测他人 */
+
     toTestOtherUser: function () {
         var {shareInfo} = this.data;
         var userPapersNum = this.data.userPapersNum;
@@ -920,9 +910,7 @@ Page({
             url: '../station/components/detail/detail?id=' + shareInfo.evaluationId,
         });
     },
-    /**
-     * 分享
-     */
+
     onShareAppMessage: function (options) {
         const that = this;
         const {participant, shareInfo, id, report,smallImg, shareMessage} = this.data;

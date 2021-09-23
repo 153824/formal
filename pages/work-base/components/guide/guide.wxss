@@ -54,7 +54,7 @@
   background: rgba(255, 255, 255, 1);
   box-shadow: 0 4rpx 16rpx 0 rgba(204, 213, 237, 0.41);
   border-radius: 18rpx;
-  margin: 70rpx 58rpx 70rpx 60rpx;
+  margin: 70rpx 58rpx 0rpx 60rpx;
   padding: 40rpx 94rpx 56rpx 74rpx;
   box-sizing: border-box;
 }
@@ -238,4 +238,24 @@
   width: 410rpx;
   color: #5960ed;
   font-weight: 500;
+}
+
+.fail-auth{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 30rpx 60rpx;
+  height: 120rpx;
+  background: #FFF6E7;
+  box-shadow: 0rpx 4rpx 16rpx 0rpx rgba(204, 213, 237, 0.41);
+  border-radius: 10rpx;
+}
+
+.fail-auth > text {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #B8702B;
+  line-height: 44rpx;
 }

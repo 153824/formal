@@ -1103,5 +1103,23 @@ App({
             })
         })
         return p;
+    },
+
+    authPhoneForRec(data) {
+        const that = this;
+        const p = new Promise((resolve, reject) => {
+            that.doAjax({
+                url: '../wework/evaluations/fetch/probe',
+                method: 'POST',
+                data,
+                success(res) {
+                    resolve(res);
+                },
+                error(err) {
+                    reject(err);
+                }
+            })
+        });
+        return p;
     }
 });

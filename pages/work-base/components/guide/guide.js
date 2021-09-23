@@ -26,6 +26,7 @@ Page({
         startedAt: -1,
         illegalPhone: ''
     },
+
     onLoad: function (option) {
         const that = this;
         let releaseEvaluationId = "";
@@ -75,6 +76,7 @@ Page({
             });
         }
     },
+
     onShow: function () {
         const that = this;
         const {releaseRecordId,demonstrateInfo} = that.data;
@@ -399,6 +401,9 @@ Page({
                 } catch (e) {
                     return Promise.reject();
                 }
+                that.setData({
+                    isGetAccessToken: true
+                })
                 return Promise.resolve();
             })
             .then(res=>{

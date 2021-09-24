@@ -24,76 +24,7 @@ Component({
         searchReportList: [],
         keyword: "",
         searchPage: 1,
-        evaluationGroup: [
-            {
-                id: '',
-                name: '全部测评'
-            },
-            {
-                id: '5f6d5db901f500c06fbe0f4b',
-                name: '设计师测评'
-            },
-            {
-                id: '5f6d5db901f500c06fbe0f4c',
-                name: '基层管理特质'
-            },
-            {
-                id: '5f6d5db901f500c06fbe06267',
-                name: '设计师测评'
-            },
-            {
-                id: '5f6d5db901f500c06fbe0f9d',
-                name: '基层管理特质'
-            },
-            {
-                id: '5f6d5db901f500c06fbe0f8w',
-                name: '设计师测评'
-            },
-            {
-                id: '5f6d5db901f500c06fbe0f3w',
-                name: '基层管理特质'
-            },
-            {
-                id: '5f6d5db901f500c06fbe0f4v',
-                name: '设计师测评'
-            },
-            {
-                id: '5f6d5db901f500c06fbe0f4m',
-                name: '基层管理特质'
-            },
-            {
-                id: '5f6d5db901f500c06fbe0f4p',
-                name: '设计师测评'
-            },
-            {
-                id: '5f6d5db901f500c06fbe0f4c',
-                name: '基层管理特质'
-            },
-            {
-                id: '5f6d5db901f500c06fbe0f4p',
-                name: '设计师测评'
-            },
-            {
-                id: '5f6d5db901f500c06fbe0f4c',
-                name: '基层管理特质'
-            },
-            {
-                id: '5f6d5db901f500c06fbe0f4p',
-                name: '设计师测评'
-            },
-            {
-                id: '5f6d5db901f500c06fbe0f4c',
-                name: '基层管理特质'
-            },
-            {
-                id: '5f6d5db901f500c06fbe0f4p',
-                name: '设计师测评'
-            },
-            {
-                id: '5f6d5db901f500c06fbe0f4c',
-                name: '基层管理特质'
-            }
-        ],
+        evaluationGroup: [],
         selectEvaluation: {
             id: '',
             name: '全部测评'
@@ -119,10 +50,14 @@ Component({
         },
 
         loadEvaluationGroup() {
+            const {keyword} = this.data;
             const p = new Promise((resolve, reject) => {
                 app.doAjax({
-                    url: 'evaluations/list_by_teamId',
+                    url: 'wework/evaluations/list_by_teamId',
                     method: 'GET',
+                    data: {
+                        keyword: keyword
+                    },
                     success(res) {
                         resolve(res)
                     },
@@ -188,7 +123,7 @@ Component({
 
         searchReport: debounce(function (e,clean=true) {
             const that = this;
-            let {searchPage, searchReportList} = this.data;
+            let {searchPage, searchReportList, selectEvaluation} = this.data;
             if(clean){
                 searchReportList = [];
             }
@@ -217,6 +152,7 @@ Component({
                     page: searchPage,
                     pageSize: 8,
                     keyword: e.detail,
+                    evaluationId: selectEvaluation.id
                 },
                 success: function (res) {
                     if (!res.data.length && !searchReportList.length) {
@@ -249,18 +185,25 @@ Component({
             }
         },
 
-        onEvaluationTap() {
+        async onEvaluationTap() {
             const {isShowEvaluationSelect} = this.data;
-            this.loadEvaluationGroup().then(res=>{
+            if(!isShowEvaluationSelect){
+                const res = await this.loadEvaluationGroup()
                 this.setData({
-                    isShowEvaluationSelect: !isShowEvaluationSelect
+                    isShowEvaluationSelect: !isShowEvaluationSelect,
+                    evaluationGroup: [{id: '', name: '全部测评'}, ...res]
                 })
-            })
+            }
         },
 
         selectEvaluation(e) {
+            const {keyword} = this.data;
             this.setData({
-                selectEvaluation: e.currentTarget.dataset.item
+                selectEvaluation: e.currentTarget.dataset.item,
+                searchReportList: [],
+                searchPage: 1
+            },()=>{
+                this.searchReport({detail: keyword},false);
             })
             this.hideSelect()
         },

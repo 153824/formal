@@ -51,7 +51,7 @@
         {
           "name": "二维码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "q=https://api.luoke101.com/s/6137384726e0980406728c32",
+          "query": "q=https://api.luoke101.com/s/615011a0b6ab446f7616fa2e",
           "scene": null
         },
         {
@@ -262,6 +262,12 @@
           "name": "更多报告",
           "pathName": "pages/work-base/components/report-more/report-more",
           "query": "",
+          "scene": null
+        },
+        {
+          "name": "答题说明",
+          "pathName": "pages/work-base/components/sample/sample",
+          "query": "receiveRecordId=615011b1b6ab446f7616fa30&chapterIndex=0",
           "scene": null
         }
       ]

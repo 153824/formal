@@ -98,7 +98,7 @@
 </button>
 <van-dialog use-slot title="编辑发放批次名称" show-confirm-button="{{false}}" show="{{ isShowEditDialog }}">
     <view class="edit-dialog__wrapper">
-            <input class="release-name__input" placeholder="请输入"/>
+            <input value="{{releaseName}}" bind:input="onReleaseNameInput" class="release-name__input" placeholder="请输入"/>
             <view class="edit-dialog__bottom">
                 <button bind:tap="hideEditDialog">取消</button>
                 <button bind:tap="saveReleaseName" class="is-confirm">确认</button>

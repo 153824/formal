@@ -33,7 +33,8 @@ Page({
         wait: [],
         digest: {},
         imageTrigger: false,
-        isShowQRCode: false
+        isShowQRCode: false,
+        releaseName: ''
     },
     onLoad(options) {
         this.setData({
@@ -311,7 +312,24 @@ Page({
         })
     },
     saveReleaseName() {
-        this.hideEditDialog()
+        const that = this;
+        const {releaseRecordId, releaseName} = this.data
+        app.doAjax({
+            url: `wework/evaluations/release_records/${releaseRecordId}/names`,
+            method: 'PUT',
+            data: {
+                name: releaseName
+            },
+            success(res) {
+                that.hideEditDialog()
+                that.loadDigest(releaseRecordId)
+            }
+        })
+    },
+    onReleaseNameInput(e) {
+        this.setData({
+            releaseName: e.detail.value
+        })
     },
     onShareAppMessage() {
         const {releaseRecordId, digest, isShowQRCode, shareInfo} = this.data;

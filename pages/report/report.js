@@ -741,6 +741,10 @@ Page({
         });
     },
 
+    goToExperience() {
+        app.openContactService()
+    },
+
     getDistributeRowItemHeight() {
         let that = this;
         let maxHeight = 0;

@@ -1754,3 +1754,10 @@ swiper, swiper-item {
     color: #BBBBBB;
     line-height: 34rpx;
 }
+.exp-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+}

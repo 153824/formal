@@ -18,7 +18,7 @@
 <!--            field-class="van-search-custom-field"/>-->
     <view class="search-report__wrapper">
         <view class="seacr-report__input search-report__by-name">
-            <input placeholder="搜索姓名"/>
+            <input bind:input="searchReport" value="{{keyword}}" placeholder="搜索姓名"/>
         </view>
         <view class="seacr-report__input search-report__by-evaluation" style="{{isShowEvaluationSelect ? 'flex: unset;width: 60%;' : ''}}">
             <input value="{{selectEvaluation.name}}" placeholder="搜索测评" bind:tap="onEvaluationTap" style="{{isShowEvaluationSelect ? 'text-align: left;width: 95%;' : ''}}"/>
@@ -32,7 +32,7 @@
             </van-overlay>
         </view>
     </view>
-    <scroll-view wx:if="{{!keyword || !selectEvaluation.id}}" class="report-content-wrapper" scroll-y bindscrolltolower="nextPage"
+    <scroll-view wx:if="{{!keyword && !selectEvaluation.id}}" class="report-content-wrapper" scroll-y bindscrolltolower="nextPage"
                  style="height: {{windowHeight * pixelRate - 50 - 148}}rpx;">
         <view bindtap="goToReport"
               wx:for="{{reportList}}"
@@ -99,6 +99,7 @@
                 <text>新</text>
             </view>
         </view>
+        <hola-empty isShow="{{!searchReportList.length}}" title="暂无测评报告"></hola-empty>
     </scroll-view>
 </view>
 <wxs src="../../utils/util.wxs" module="util"></wxs>

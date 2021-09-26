@@ -109,7 +109,7 @@ Component({
             this.setData({
                 searchPage,
             });
-            this.searchReport({detail: e.currentTarget.dataset.keyword},false);
+            this.searchReport({detail: {value: e.currentTarget.dataset.keyword}},false);
         },
 
         clearContent: function () {
@@ -128,8 +128,9 @@ Component({
                 searchReportList = [];
             }
             try {
-                if (!e.detail) {
+                if (!e.detail && !selectEvaluation.id) {
                     that.setData({
+                        reportList: [],
                         searchReportList: [],
                         keyword: "",
                         searchPage: 1
@@ -137,8 +138,9 @@ Component({
                     this.loadReportList();
                     return;
                 } else {
+                    console.log(e);
                     that.setData({
-                        keyword: e.detail
+                        keyword: e.detail.value
                     });
                 }
             } catch (e) {
@@ -151,7 +153,7 @@ Component({
                     isEE: app.wxWorkInfo.isWxWork,
                     page: searchPage,
                     pageSize: 8,
-                    keyword: e.detail,
+                    keyword: e.detail.value,
                     evaluationId: selectEvaluation.id
                 },
                 success: function (res) {
@@ -203,7 +205,8 @@ Component({
                 searchReportList: [],
                 searchPage: 1
             },()=>{
-                this.searchReport({detail: keyword},false);
+                console.log(keyword);
+                this.searchReport({detail: {value: keyword}},false);
             })
             this.hideSelect()
         },

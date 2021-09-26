@@ -45,13 +45,13 @@
         {
           "name": "小程序码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "scene=61385672755bf903ca4c6358",
+          "query": "scene= 614dd96f130e111fafdac568",
           "scene": null
         },
         {
           "name": "二维码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "q=https://api.luoke101.com/s/6137384726e0980406728c32",
+          "query": "q=https://api.luoke101.com/s/614fec2f6263cb5c65c8946d",
           "scene": null
         },
         {
@@ -64,7 +64,7 @@
         {
           "name": "领取报告",
           "pathName": "pages/report/report",
-          "query": "receivedRecordId=60e808820c294e5d6103f7d0",
+          "query": "receivedRecordId=614c2f0c305c99362ce5295d",
           "scene": null
         },
         {
@@ -257,6 +257,12 @@
           "name": "pages/home/components/more/more",
           "pathName": "pages/home/components/more/more",
           "query": "type=brain",
+          "scene": null
+        },
+        {
+          "name": "手机号已绑定",
+          "pathName": "pages/account/subpages/unbound/unbound",
+          "query": "scene=614c1da0c810634af6e69d81",
           "scene": null
         }
       ]

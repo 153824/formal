@@ -33,9 +33,7 @@ Page({
             return;
         }
         app.getAccessToken(e).then(res=>{
-            wx.switchTab({
-                url: '/pages/work-base/work-base'
-            })
+            that.whereToGo();
         }).catch(err=>{
             if(err.code === '401111'){
                 app.prueLogin().then(res=>{
@@ -69,36 +67,41 @@ Page({
     },
 
     prueLogin() {
-        const pages = getCurrentPages();
+        const that = this;
         app.prueLogin().then(res=>{
-            if(pages.length === 0){
-                wx.reLaunch({
-                    url: `/pages/work-base/work-base`
+            that.whereToGo();
+        })
+    },
+
+    whereToGo() {
+        const pages = getCurrentPages();
+        if(pages.length === 0){
+            wx.reLaunch({
+                url: `/pages/work-base/work-base`
+            });
+            return;
+        }
+        for(let i = pages.length - 1;i >= 0;i--){
+            if(pages[i].route.indexOf('pages/auth/auth') === -1 || pages[i].route.indexOf('pages/account/subpages/unbound/unbound') === -1){
+                console.log(pages[i]);
+                const options = pages[i].options;
+                const optionKeys = Object.keys(pages[i].options);
+                let query = '?';
+                optionKeys.forEach((item, key)=>{
+                    query = `${query}${item}=${options[item]}${key===optionKeys.length ? '' : '&'}`
                 });
-                return;
-            }
-            for(let i = pages.length - 1;i >= 0;i--){
-                if(pages[i].route.indexOf('pages/auth/auth') === -1){
-                    console.log(pages[i]);
-                    const options = pages[i].options;
-                    const optionKeys = Object.keys(pages[i].options);
-                    let query = '?';
-                    optionKeys.forEach((item, key)=>{
-                        query = `${query}${item}=${options[item]}${key===optionKeys.length ? '' : '&'}`
+                if(switchTabPages.includes(`${pages[i].route}`)){
+                    wx.reLaunch({
+                        url: `/${pages[i].route}${query}`
                     });
-                    if(switchTabPages.includes(`${pages[i].route}`)){
-                        wx.reLaunch({
-                            url: `/${pages[i].route}${query}`
-                        });
-                        return;
-                    } else {
-                        wx.reLaunch({
-                            url: `/${pages[i].route}${query}`
-                        });
-                        return;
-                    }
+                    return;
+                } else {
+                    wx.reLaunch({
+                        url: `/${pages[i].route}${query}`
+                    });
+                    return;
                 }
             }
-        })
+        }
     }
 });

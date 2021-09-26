@@ -26,6 +26,7 @@ Page({
         startedAt: -1,
         illegalPhone: ''
     },
+
     onLoad: function (option) {
         const that = this;
         let releaseEvaluationId = "";
@@ -75,6 +76,7 @@ Page({
             });
         }
     },
+
     onShow: function () {
         const that = this;
         const {releaseRecordId,demonstrateInfo} = that.data;
@@ -85,17 +87,24 @@ Page({
         if(this.data.type!=='self'){
             if(app.checkAccessToken()){
                 this.canIUseTemptation(releaseRecordId)
-            }else{
+            }
+            else{
                 app.checkUserInfo=(res)=>{
                     this.canIUseTemptation(releaseRecordId)
                 };
             }
-        }else{
+        }
+        else{
             this.setData({
-                maskTrigger:false,
-                demonstrateInfo:demonstrateInfo
+                maskTrigger: false,
+                demonstrateInfo: demonstrateInfo
             })
         }
+        setTimeout(()=>{
+            this.setData({
+                maskTrigger: false
+            })
+        }, 2000)
     },
 
     canIUseTemptation(releaseRecordId) {
@@ -199,7 +208,7 @@ Page({
     },
 
     getDemonstrate() {
-        const _this = this;
+        const that = this;
         const {releaseRecordId} = this.data;
         app.doAjax({
             url: "wework/evaluations/fetch/demonstrate",
@@ -208,7 +217,7 @@ Page({
                 releaseRecordId: releaseRecordId,
             },
             success: function (res) {
-                _this.setData({
+                that.setData({
                     demonstrateInfo: res.demonstrateInfo,
                     maskTrigger: false,
                     countdownInMinutes: res.countdownInMinutes,
@@ -218,15 +227,73 @@ Page({
                     startedAt: res.startedAt,
                 });
             },
-            complete: function () {},
-            fail: function (err) {
-                console.error(err);
+            error() {
+                that.setData({
+                    maskTrigger: false,
+                });
             }
         })
     },
 
+    filterMessage(status) {
+        let text = '';
+        switch (status) {
+            case 'UNCLAIMED':
+                text = "开始作答";
+                break;
+            case "UNAVAILABLE":
+                text = "测评可用数量不足";
+                break;
+            case "APPLYING":
+                text = "等待hr通过申请";
+                break;
+            case "DISABLED":
+                text = "申请查看报告";
+                break;
+            case "VERIFY":
+                text = "开始作答";
+                break;
+            case "APPROVED":
+                text = "查看报告";
+                break;
+            case "DISABLE":
+                text = "申请查看报告";
+                break;
+            case "PREPARED":
+                text = " 开始作答 ";
+                break;
+            case "RESPONDING":
+                text = "继续作答";
+                break;
+            case "UNBIND":
+                text = '微信一键授权作答';
+                break;
+            case 'DENIED':
+                text = '重新授权其他手机号';
+                break;
+            case 'SNATCHED':
+                text = '该测评已被其他用户领取';
+                break;
+        }
+        return text;
+    },
+
+    goToWhere(evaluationStatus) {
+        switch (evaluationStatus) {
+            case 'UNCLAIMED':
+            case 'VERIFY':
+                this.goToRecorder();
+                break;
+            case 'RESPONDING':
+                this.goToReplying(e);
+                break;
+            case 'PREPARED':
+                this.goToReplying({currentTarget:{dataset: {type: 'golden'}}});
+        }
+    },
+
     getTemptation: function (userInfo = {id: ""}) {
-        const _this = this;
+        const that = this;
         const {releaseRecordId} = this.data;
         app.doAjax({
             url: "wework/evaluations/fetch/temptation",
@@ -240,48 +307,10 @@ Page({
                 let text = "";
                 let {msg} = res;
                 const {receiveRecordId=""} = res;
-                switch (msg) {
-                    case 'UNCLAIMED':
-                        text = "开始作答";
-                        break;
-                    case "UNAVAILABLE":
-                        text = "测评可用数量不足";
-                        break;
-                    case "APPLYING":
-                        text = "等待hr通过申请";
-                        break;
-                    case "DISABLED":
-                        text = "申请查看报告";
-                        break;
-                    case "VERIFY":
-                        text = "开始作答";
-                        break;
-                    case "APPROVED":
-                        text = "查看报告";
-                        break;
-                    case "DISABLE":
-                        text = "申请查看报告";
-                        break;
-                    case "PREPARED":
-                        text = " 开始作答 ";
-                        break;
-                    case "RESPONDING":
-                        text = "继续作答";
-                        break;
-                    case "UNBIND":
-                        text = '微信一键授权作答';
-                        break;
-                    case 'DENIED':
-                        text = '重新授权其他手机号';
-                        break;
-                    case 'SNATCHED':
-                        text = '该测评已被其他用户领取';
-                        break;
-                }
-                _this.setData({
+                that.setData({
                     demonstrateInfo: res.demonstrateInfo,
                     evaluationStatus: msg,
-                    evaluationStatusText: text,
+                    evaluationStatusText: that.filterMessage(msg),
                     receiveRecordId: receiveRecordId,
                     maskTrigger: false,
                     countdownInMinutes: res.countdownInMinutes,
@@ -292,9 +321,10 @@ Page({
                     illegalPhone: res.phone
                 });
             },
-            complete: function () {},
-            fail: function (err) {
-                console.error(err);
+            error() {
+                that.setData({
+                    maskTrigger: false,
+                });
             }
         })
     },
@@ -390,21 +420,14 @@ Page({
                 } catch (e) {
                     return Promise.reject();
                 }
+                that.setData({
+                    isGetAccessToken: true
+                })
                 return Promise.resolve();
             })
             .then(res=>{
                 const {evaluationStatus} = this.data;
-                switch (evaluationStatus) {
-                    case 'UNCLAIMED':
-                    case 'VERIFY':
-                        this.goToRecorder();
-                        break;
-                    case 'RESPONDING':
-                        this.goToReplying(e);
-                        break;
-                    case 'PREPARED':
-                        this.goToReplying({currentTarget:{dataset: {type: 'golden'}}});
-                }
+                that.goToWhere(evaluationStatus);
             })
             .catch(err=>{
                 if(err.code === '401111'){
@@ -419,17 +442,20 @@ Page({
     },
 
     getPhoneNumberForRec(e) {
-        if(!e.detail.iv) return
+        if(!e.detail.iv) return;
+        const that = this;
         const {releaseRecordId} = this.data;
         app.prueLogin()
             .then(res=>{
                 const data = {...e.detail, releaseRecordId, authCode: res.authCode}
-                return app.authPhoneForRec(data)
+                return app.authPhoneForRec(data);
             })
             .then(res=>{
-                wx.navigateTo({
-                    url: `/pages/recorder/recorder?releaseRecordId=${releaseRecordId}`
-                })
+                that.setData({
+                    evaluationStatus: res.msg,
+                    evaluationStatusText: that.filterMessage(res.msg)
+                });
+                that.goToWhere(res.msg);
             })
     }
 });

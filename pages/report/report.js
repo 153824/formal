@@ -358,7 +358,6 @@ Page({
         seeItActive: true,
         scene: "",
         isShowAnalyze: false,
-        distributeHeight: 0,
         barXAxisWidth: 0
     },
     properties: {
@@ -411,6 +410,13 @@ Page({
 
     onReady() {
         this.computeHeight()
+    },
+
+    async loadEvaluationInfo(evaluationId) {
+        const res = await app.loadEvaluationInfo(evaluationId)
+        this.setData({
+            shareMessage: res
+        })
     },
 
     seeIt() {
@@ -517,6 +523,7 @@ Page({
                 },
                 success: function (res) {
                     that.getProgramSetting(res.releaseRecordId)
+                    that.loadEvaluationInfo(res.shareInfo.evaluationId)
                     resolve(res);
                 },
                 fail: function (err) {
@@ -722,7 +729,7 @@ Page({
                 that.setData({
                     maskTrigger: false
                 });
-                that.getDistributeRowItemHeight();
+                // that.getDistributeRowItemHeight();
                 that.getBarXAxisWidth();
             },500);
             this.getEvaluationQues();
@@ -730,21 +737,6 @@ Page({
             console.error(err);
             app.toast("获取测评错误")
         });
-    },
-
-    getDistributeRowItemHeight() {
-        let that = this;
-        let maxHeight = 0;
-        wx.createSelectorQuery().selectAll('.distribute-row-item').boundingClientRect((res)=>{
-            res.forEach(item=>{
-                console.log('item: ', item.height)
-                maxHeight = item.height > maxHeight ? item.height : maxHeight
-            })
-            that.setData({
-                distributeHeight: `${(maxHeight + 20)/app.rate}`
-            })
-        }).exec()
-
     },
 
     getBarXAxisWidth() {
@@ -921,12 +913,12 @@ Page({
 
     onShareAppMessage: function (options) {
         const that = this;
-        const {participant, shareInfo, id, report,smallImg} = this.data;
+        const {participant, shareInfo, id, report,smallImg, shareMessage} = this.data;
         const time = new Date().getTime();
         return {
             title: `邀您查看${participant.filledName||participant.nickname||'好啦测评'}的《${shareInfo.evaluationName}》报告`,
             path: `pages/report/report?receivedRecordId=${id}&sharedAt=${time}`,
-            imageUrl:smallImg,
+            imageUrl: shareMessage.rectangleImage,
         }
     },
     /**

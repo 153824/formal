@@ -304,17 +304,10 @@ Page({
         console.log(this.selectComponent('#preview-image'));
         this.selectComponent('#preview-image').showQRCode();
     },
-    loadEvaluationInfo(evaluationId) {
-        const that = this;
-        app.doAjax({
-            url: `../wework/evaluations/${evaluationId}/info`,
-            method: 'GET',
-            success(res) {
-                console.log(res);
-                that.setData({
-                    evaluationName: res.name
-                })
-            }
+    async loadEvaluationInfo(evaluationId) {
+        const res = await app.loadEvaluationInfo(evaluationId)
+        this.setData({
+            evaluationName: res.name
         })
     },
     loadEvaluationDetail(evaluationId) {

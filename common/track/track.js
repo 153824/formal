@@ -55,14 +55,16 @@ Component({
             page++;
             this.loadEvaluationTrack(page);
         },
-        search: debounce(function () {
+        search: debounce(function (e) {
+            console.log(e);
             this.setData({
                 page: 1,
-                evaluationTrack: []
+                evaluationTrack: [],
+                keyword: e.detail.value
             },()=>{
                 this.loadEvaluationTrack()
             })
-        },100, {
+        },500, {
             leading: false,
             trailing: true
         })

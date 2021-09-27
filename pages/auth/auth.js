@@ -82,8 +82,14 @@ Page({
             return;
         }
         for(let i = pages.length - 1;i >= 0;i--){
-            if(pages[i].route.indexOf('pages/auth/auth') === -1 || pages[i].route.indexOf('pages/account/subpages/unbound/unbound') === -1){
-                console.log(pages[i]);
+            if(i === 0 && (pages[i].route.indexOf('pages/auth/auth') !== -1 && pages[i].route.indexOf('pages/account/subpages/unbound/unbound') !== -1)){
+                wx.reLaunch({
+                    url: `/pages/work-base/work-base`
+                });
+                console.log('1: ',pages[i].route);
+                return
+            }
+            if(pages[i].route.indexOf('pages/auth/auth') === -1 && pages[i].route.indexOf('pages/account/subpages/unbound/unbound') === -1){
                 const options = pages[i].options;
                 const optionKeys = Object.keys(pages[i].options);
                 let query = '?';
@@ -94,12 +100,15 @@ Page({
                     wx.reLaunch({
                         url: `/${pages[i].route}${query}`
                     });
+                    console.log('2: ',pages[i].route)
                     return;
                 } else {
+                    console.log(pages[i].route.indexOf('pages/auth/auth') === -1)
                     wx.reLaunch({
                         url: `/${pages[i].route}${query}`
                     });
-                    return;
+                    console.log('3: ',pages[i].route);
+                    return
                 }
             }
         }

@@ -360,7 +360,8 @@ Page({
         isShowAnalyze: false,
         distributeHeight: 0,
         barXAxisWidth: 0,
-        shareMessage: {}
+        shareMessage: {},
+        buttonType: ''
     },
     properties: {
 		commond: {            // 额外节点
@@ -533,8 +534,8 @@ Page({
                 }
             })
         });
-        getReportPromise.
-        then(res => {
+        getReportPromise
+            .then(res => {
             if (this.isInTeams(res)) {
                 return;
             }
@@ -631,7 +632,8 @@ Page({
                 },500)
             }
             return Promise.resolve(res)
-        }).then(res => {
+        })
+            .then(res => {
             if (!res || this.isInTeams(res)) {
                 return;
             }
@@ -739,6 +741,7 @@ Page({
             console.error(err);
             app.toast("获取测评错误")
         });
+        this.canIUseShareOrDiscover()
     },
 
     goToExperience() {
@@ -767,6 +770,20 @@ Page({
                 barXAxisWidth: `${(res.width)/app.rate}`
             })
         }).exec()
+    },
+
+    canIUseShareOrDiscover() {
+        const that = this;
+        const receiveRecordId = this.data.id;
+        app.doAjax({
+            url: `../wework/evaluations/report_button/${receiveRecordId}`,
+            method: 'GET',
+            success(res) {
+              that.setData({
+                  buttonType: res.buttonType
+              })
+            },
+        })
     },
 
     isInTeams: function (teamInfo) {

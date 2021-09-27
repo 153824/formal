@@ -166,31 +166,6 @@ Page({
         return true;
     },
 
-    _pushMessagesFetched: function (receiveRecordId) {
-        if (!receiveRecordId) {
-            console.error("消息推送，缺少receiveRecordId");
-            return;
-        }
-        const messagesPromise = new Promise(((resolve, reject) => {
-            app.doAjax({
-                url: "messages/fetched",
-                method: "post",
-                data: {
-                    receiveRecordId: receiveRecordId
-                },
-                success: function (res) {
-                    resolve({status: true});
-                    console.log("消息推送成功！");
-                },
-                fail: function (err) {
-                    resolve({status: false});
-                    console.error("消息推送失败", err);
-                }
-            })
-        }));
-        return messagesPromise;
-    },
-
     _fetchVerify: function () {
         const _this = this;
         const {releaseRecordId, username, birthday, sex, phoneNumber, checkedSex, eduArr, education} = this.data;
@@ -237,7 +212,7 @@ Page({
                         if(res){
                             url = `/pages/work-base/components/chapter/chapter`;
                         }else{
-                            url = `/pages/work-base/components/answering/answering`
+                            url = `/pages/work-base/components/sample/sample`
                         }
                         _this.setData({
                             receiveRecordId: res.receiveRecordId

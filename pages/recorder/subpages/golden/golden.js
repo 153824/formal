@@ -23,7 +23,8 @@ Page({
     goToReplying() {
         const {isSelf} = this.data;
         const {url, evaluationId, receiveRecordId, isChapter} = this.data.redirect;
-        const targetURL = isChapter ? `${url}?receiveRecordId=${receiveRecordId}&evaluationId=${evaluationId}` : `${url}?receiveRecordId=${receiveRecordId}`
+        const targetURL = isChapter ? `${url}?receiveRecordId=${receiveRecordId}&evaluationId=${evaluationId}&isChapter=${isChapter}` : `${url}?receiveRecordId=${receiveRecordId}&isChapter=${isChapter}`
+        console.log(targetURL);
         wx.redirectTo({
             url: targetURL
         });

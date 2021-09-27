@@ -156,7 +156,9 @@ Page({
                         source = '/pages/work-base/components/chapter/chapter'
                         wx.setStorageSync(receiveRecordId, res.draft);
                     }
+                    source = type === 'golden' ? '/pages/work-base/components/sample/sample' : source
                     let targetURL = {
+                        isChapter: url.indexOf('chapter') > -1,
                         url: source,
                         receiveRecordId: receiveRecordId,
                         evaluationId: ''

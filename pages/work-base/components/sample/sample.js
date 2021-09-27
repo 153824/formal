@@ -31,9 +31,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
+      this.setData({
         receiveRecordId:options.receiveRecordId,
-        isChapter: options.isChapter
+        isChapter: (()=>{
+            if(options.isChapter == 'false') {
+                options.isChapter = false
+                return false
+            }
+            options.isChapter = true
+            return options.isChapter
+        })()
     })
     this.loadQuestion(options.receiveRecordId).then(res=>{
         const {synopses} = res

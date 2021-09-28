@@ -27,7 +27,7 @@
         {
           "name": "报告详情",
           "pathName": "pages/report/report",
-          "query": "receiveRecordId=6150440516141166d6e6d6eb",
+          "query": "receiveRecordId= 6152ad4d554fc9541d62c35e",
           "scene": null
         },
         {
@@ -45,13 +45,13 @@
         {
           "name": "小程序码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "scene=614c1504c810634af6e69d5a",
+          "query": "scene=6152dc253d773538800a1857",
           "scene": null
         },
         {
           "name": "二维码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "q=https://api.luoke101.com/s/61518e40208d0e609015fd49",
+          "query": "q=https://api.luoke101.com/s/6152da5c3d773538800a1853",
           "scene": null
         },
         {
@@ -64,7 +64,7 @@
         {
           "name": "领取报告",
           "pathName": "pages/report/report",
-          "query": "receivedRecordId=60e808820c294e5d6103f7d0",
+          "query": "receivedRecordId=6152da6a3d773538800a1855",
           "scene": null
         },
         {

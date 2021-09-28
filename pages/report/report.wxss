@@ -1761,3 +1761,6 @@ swiper, swiper-item {
     justify-content: center;
     background-color: #ffffff;
 }
+.pie-wrapper, .radar-wrapper{
+    height: 600rpx;
+}

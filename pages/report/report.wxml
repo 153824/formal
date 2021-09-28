@@ -277,6 +277,32 @@
                         </view>
                     </view>
                 </view>
+                <view wx:elif="{{summaryItem.type === 'PIE_CHART'}}" wx:key="unique" class="summary-chart pie">
+                    <view class="summary-chart__title-wrapper">
+                        <view class="summary-chart__title">{{summaryItem.title}}</view>
+                        <view class="summary-chart__tips">
+                            {{summaryItem.subtitle}}
+                        </view>
+                    </view>
+                    <view class="pie-wrapper" style="height: {{summaryItem.height * 2}}rpx;">
+                        <hola-pie pieChartId="PIE_CHART-{{summaryIndex}}" pieData="{{summaryItem.factors}}"></hola-pie>
+                    </view>
+                </view>
+                <view wx:elif="{{summaryItem.type === 'RADAR_CHART'}}" wx:key="unique" class="summary-chart radar">
+                    <view class="summary-chart__title-wrapper">
+                        <view class="summary-chart__title">{{summaryItem.title}}</view>
+                        <view class="summary-chart__tips">
+                            {{summaryItem.subtitle}}
+                        </view>
+                    </view>
+                    <view class="radar-wrapper" style="height: {{summaryItem.height * 2}}rpx;">
+                        <hola-radar id="{{summaryIndex}}"
+                                    radarIndex="{{-1}}"
+                                    radarIndicator='{{summaryItem.factors}}'
+                                    radarValue="{{summaryItem.grades}}">
+                        </hola-radar>
+                    </view>
+                </view>
             </block>
         </view>
         <!-- 维度分析 -->

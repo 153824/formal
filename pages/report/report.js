@@ -361,7 +361,8 @@ Page({
         distributeHeight: 0,
         barXAxisWidth: 0,
         shareMessage: {},
-        buttonType: ''
+        buttonType: '',
+        radarData: [{name: "持续优化",max: 5},{name: "第二根柱子",max: 5},{name: "持续优化",max: 5},{name: "第二根柱子",max: 5}]
     },
     properties: {
 		commond: {            // 额外节点
@@ -590,8 +591,8 @@ Page({
                     newChild.push(node);
                 }
                 that.setData({
-                    radarIndicator: JSON.stringify(radarIndicator),
-                    radarValue: JSON.stringify(radarValue)
+                    radarIndicator: radarIndicator,
+                    radarValue: radarValue
                 })
                 newChild.sort(function (it1, it2) {
                     return it2.average - it1.average;
@@ -693,8 +694,8 @@ Page({
                 histogramValues.push(targetHistogramValuesArr);
                 lines.push(objs[n].scoreLinesObj);
                 that.setData({
-                    radarIndicator: JSON.stringify(radarIndicator),
-                    radarValue: JSON.stringify(radarValue),
+                    radarIndicator: radarIndicator,
+                    radarValue: radarValue,
                 });
                 newChild.sort(function (it1, it2) {
                     return it2.average - it1.average;

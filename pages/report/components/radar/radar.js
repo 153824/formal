@@ -8,19 +8,18 @@ Component({
           value: 0
         },
         radarValue: {
-            type: String,
-            value: ""
+            type: Array,
+            value: []
         },
         radarIndicator: {
-            type: String,
-            value: ""
+            type: Array,
+            value: []
         }
     },
     data: {},
     methods: {
         getRadarChartInfo (canvas, width, height) {
             const canvasId = canvas.canvasId;
-            const radarIndex = radarIndex
             const index = canvasId.replace("mychartcanvas", "");
             const chart = echarts.init(canvas, null, {
                 width: width,
@@ -28,9 +27,7 @@ Component({
                 devicePixelRatio: wx.getSystemInfoSync().pixelRatio
             });
             let {radarValue,radarIndicator} = _this.properties;
-            radarValue = JSON.parse(radarValue);
-            console.log(radarValue)
-            radarIndicator = JSON.parse(radarIndicator);
+            console.log(index, radarValue, radarIndicator);
             if (!app.rate) {
                 const sysMsg = wx.getSystemInfoSync();
                 app.rate = sysMsg.windowWidth / 750;
@@ -43,7 +40,7 @@ Component({
                         color: "#323541",
                         fontSize: +(24 * app.rate).toFixed(0),
                     },
-                    indicator: radarIndicator[index],
+                    indicator: index < 0 ? radarIndicator : radarIndicator[index],
                     splitArea: {
                         areaStyle: {
                             color: ['#fff',
@@ -69,21 +66,21 @@ Component({
                         trigger: 'item'
                     },
                     lineStyle: {
-                        color: "#FFCC20"
+                        color: "#77A2FAFF"
                     },
                     symbol: "roundRect",
                     itemStyle: {
                         normal: {
-                            color: "#FFCC20",
-                            borderColor: "#FFCC20",
+                            color: "#77A2FAFF",
+                            borderColor: "#77A2FAFF",
                             areaStyle: {
                                 type: 'default',
-                                color: "rgba(251, 178, 60, 0.5)"
+                                color: "rgba(119, 162, 250, 0.3)"
                             }
                         }
                     },
                     data: [{
-                        value: radarValue[index]
+                        value: index < 0 ? radarValue : radarValue[index]
                     }]
                 }]
             };

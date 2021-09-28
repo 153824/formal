@@ -84,6 +84,14 @@
                 <text>获取更多</text>
             </button>
         </view>
+        <!--企业微信非管理员-->
+        <view wx:elif="{{isWxWork && !isWxWorkAdmin}}" class="button-group-wrapper {{!iphonex ? 'is-button-group__iosx' : ''}}">
+            <view class="button-group__is-right {{iphonex ? 'is-iosx more-padding' : ''}}"
+                  style="width: 100vw;font-size:32rpx;"
+                  bind:tap="goToCustomerService">
+                <text>联系客服体验测评</text>
+            </view>
+        </view>
         <!--有新人券-->
         <view wx:elif="{{buttonType === 'beginner'}}" class="button-group-wrapper {{!iphonex ? 'is-button-group__iosx' : ''}}">
             <button class="button-group__is-left {{iphonex ? 'is-iosx' : ''}}" data-type="enjoy" bind:tap="showSelectQuiz">

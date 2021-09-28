@@ -9,8 +9,6 @@ Page({
         titleHeight: app.globalData.titleHeight,
         isIos: app.isIos,
         loading: true,
-        mobile: "18559297592",
-        wechat: "haola72",
         active: 0,
         column: [],
         trigger: true,
@@ -116,7 +114,7 @@ Page({
 
     check({isWxWork, isWxWorkAdmin, isWxWorkSuperAdmin, is3rd}) {
         const that = this;
-        if (is3rd || isWxWork && !isWxWorkSuperAdmin) {
+        if (is3rd) {
             let flag = false
             let url = isWxWork ? "/pages/account/account" : "/pages/auth/auth?type=auth"
             if (app.checkAccessToken()) {
@@ -132,7 +130,7 @@ Page({
             }
             return
         }
-        if (!is3rd && !isWxWork || !is3rd && isWxWork && isWxWorkSuperAdmin) {
+        if (!is3rd) {
             Promise.race([this.loadSection(), this.loadBanner()])
                 .then(res=>{
                     that.setData({

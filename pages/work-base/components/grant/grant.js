@@ -33,27 +33,31 @@ Page({
         wait: [],
         digest: {},
         imageTrigger: false,
-        isShowQRCode: false
+        isShowQRCode: false,
+        releaseName: ''
     },
     onLoad(options) {
-        const route = 'pages/station/components/generate/generate';
-        const currentPage = getCurrentPages()[getCurrentPages().length - 2].route;
-        console.log(currentPage);
         this.setData({
             releaseRecordId: options.releaseRecordId,
             sharedAt: options.sharedAt,
         });
-
-        if(route === currentPage){
-            const nav = this.data.nav.map(((item, index)=>{
-                return {
-                    ...item,
-                    checked: index === 1
-                }
-            }))
-            this.setData({
-                nav
-            })
+        try{
+            const route = 'pages/station/components/generate/generate';
+            const currentPage = getCurrentPages()[getCurrentPages().length - 2].route;
+            if(route === currentPage){
+                const nav = this.data.nav.map(((item, index)=>{
+                    return {
+                        ...item,
+                        checked: index === 1
+                    }
+                }))
+                this.setData({
+                    nav
+                })
+            }
+        }
+        catch (e) {
+            console.error(e);
         }
         const targetOptions = {
             ...options,
@@ -137,8 +141,8 @@ Page({
             success(res){
                 that.setData({
                     digest: res
-                });
-                that.loadEvaluationInfo(res.evaluationId);
+                })
+                that.loadEvaluationInfo(res.evaluationId)
                 if(res.type!=='EMAIL'){
                    that.setData({
                        nav: nav.slice(0, nav.length - 1)
@@ -295,6 +299,36 @@ Page({
         const res = await app.loadEvaluationInfo(evaluationId)
         this.setData({
             shareInfo: res
+        })
+    },
+    showEditDialog() {
+        this.setData({
+            isShowEditDialog: true,
+        })
+    },
+    hideEditDialog() {
+        this.setData({
+            isShowEditDialog: false,
+        })
+    },
+    saveReleaseName() {
+        const that = this;
+        const {releaseRecordId, releaseName} = this.data
+        app.doAjax({
+            url: `wework/evaluations/release_records/${releaseRecordId}/names`,
+            method: 'PUT',
+            data: {
+                name: releaseName
+            },
+            success(res) {
+                that.hideEditDialog()
+                that.loadDigest(releaseRecordId)
+            }
+        })
+    },
+    onReleaseNameInput(e) {
+        this.setData({
+            releaseName: e.detail.value
         })
     },
     onShareAppMessage() {

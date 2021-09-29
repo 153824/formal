@@ -358,7 +358,11 @@ Page({
         seeItActive: true,
         scene: "",
         isShowAnalyze: false,
-        barXAxisWidth: 0
+        distributeHeight: 0,
+        barXAxisWidth: 0,
+        shareMessage: {},
+        buttonType: '',
+        radarData: [{name: "持续优化",max: 5},{name: "第二根柱子",max: 5},{name: "持续优化",max: 5},{name: "第二根柱子",max: 5}]
     },
     properties: {
 		commond: {            // 额外节点
@@ -531,8 +535,8 @@ Page({
                 }
             })
         });
-        getReportPromise.
-        then(res => {
+        getReportPromise
+            .then(res => {
             if (this.isInTeams(res)) {
                 return;
             }
@@ -587,8 +591,8 @@ Page({
                     newChild.push(node);
                 }
                 that.setData({
-                    radarIndicator: JSON.stringify(radarIndicator),
-                    radarValue: JSON.stringify(radarValue)
+                    radarIndicator: radarIndicator,
+                    radarValue: radarValue
                 })
                 newChild.sort(function (it1, it2) {
                     return it2.average - it1.average;
@@ -629,7 +633,8 @@ Page({
                 },500)
             }
             return Promise.resolve(res)
-        }).then(res => {
+        })
+            .then(res => {
             if (!res || this.isInTeams(res)) {
                 return;
             }
@@ -689,8 +694,8 @@ Page({
                 histogramValues.push(targetHistogramValuesArr);
                 lines.push(objs[n].scoreLinesObj);
                 that.setData({
-                    radarIndicator: JSON.stringify(radarIndicator),
-                    radarValue: JSON.stringify(radarValue),
+                    radarIndicator: radarIndicator,
+                    radarValue: radarValue,
                 });
                 newChild.sort(function (it1, it2) {
                     return it2.average - it1.average;
@@ -729,7 +734,7 @@ Page({
                 that.setData({
                     maskTrigger: false
                 });
-                // that.getDistributeRowItemHeight();
+                that.getDistributeRowItemHeight();
                 that.getBarXAxisWidth();
             },500);
             this.getEvaluationQues();
@@ -737,6 +742,11 @@ Page({
             console.error(err);
             app.toast("获取测评错误")
         });
+        this.canIUseShareOrDiscover()
+    },
+
+    goToExperience() {
+        app.openContactService()
     },
 
     getBarXAxisWidth() {
@@ -746,6 +756,20 @@ Page({
                 barXAxisWidth: `${(res.width)/app.rate}`
             })
         }).exec()
+    },
+
+    canIUseShareOrDiscover() {
+        const that = this;
+        const receiveRecordId = this.data.id;
+        app.doAjax({
+            url: `../wework/evaluations/report_button/${receiveRecordId}`,
+            method: 'GET',
+            success(res) {
+              that.setData({
+                  buttonType: res.buttonType
+              })
+            },
+        })
     },
 
     isInTeams: function (teamInfo) {
@@ -890,25 +914,6 @@ Page({
         ctx.arc(w, w, r, 1.5 * Math.PI, endAngle * Math.PI, false);
         ctx.stroke();
         ctx.draw();
-    },
-
-    toShareReport: function () {
-        const that = this;
-        const {participant, shareInfo, paper, report,smallImg} = this.data;
-        const {globalData} = app;
-        return {
-            title: `${globalData.team.name}邀您看${participant.filledName||participant.nickname||'好啦访客'}的《${shareInfo.evaluationName}》报告`,
-            path: `pages/report/report`,
-            imageUrl: report.smallImg,
-        }
-    },
-
-    toTestOtherUser: function () {
-        var {shareInfo} = this.data;
-        var userPapersNum = this.data.userPapersNum;
-        wx.navigateTo({
-            url: '../station/components/detail/detail?id=' + shareInfo.evaluationId,
-        });
     },
 
     onShareAppMessage: function (options) {

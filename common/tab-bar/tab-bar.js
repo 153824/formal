@@ -44,6 +44,12 @@ Component({
             ],
             admin: [
                 {
+                    text: "主页",
+                    normal: '../../images/icon/icon@index-no-active.png',
+                    active: '../../images/icon/icon@index-active.png',
+                    path: "/pages/home/home"
+                },
+                {
                     text: "工作台",
                     normal: '../../images/icon/icon@evaluation-manager-no-active.png',
                     active: '../../images/icon/icon@evaluation-manager-active.png',
@@ -57,6 +63,12 @@ Component({
                 },
             ],
             member: [
+                {
+                    text: "主页",
+                    normal: '../../images/icon/icon@index-no-active.png',
+                    active: '../../images/icon/icon@index-active.png',
+                    path: "/pages/home/home"
+                },
                 {
                     text: "测评任务",
                     normal: '../../images/icon/icon@evaluation-manager-no-active.png',
@@ -74,6 +86,12 @@ Component({
         wx3rdPage: {
             admin: [
                 {
+                    text: "主页",
+                    normal: '../../images/icon/icon@index-no-active.png',
+                    active: '../../images/icon/icon@index-active.png',
+                    path: "/pages/home/home"
+                },
+                {
                     text: "工作台",
                     normal: '../../images/icon/icon@evaluation-manager-no-active.png',
                     active: '../../images/icon/icon@evaluation-manager-active.png',
@@ -87,6 +105,12 @@ Component({
                 },
             ],
             member: [
+                {
+                    text: "主页",
+                    normal: '../../images/icon/icon@index-no-active.png',
+                    active: '../../images/icon/icon@index-active.png',
+                    path: "/pages/home/home"
+                },
                 {
                     text: "测评任务",
                     normal: '../../images/icon/icon@evaluation-manager-no-active.png',

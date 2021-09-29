@@ -52,10 +52,8 @@
             <!--Start: 最新报告-->
             <view class="program-wrapper">
                 <view class="program-title">
-                    <view>
-                        <text>最新报告</text>
-                        <text wx:if="{{newlyNums}}" class="new-adding">今日+{{newlyNums}}</text>
-                    </view>
+                    <view class="report-title"><text>最新报告</text><text wx:if="{{newlyNums}}" class="new-adding">今日+{{newlyNums}}</text><view wx:if="{{reportsListCount>0}}" class="chart-analyze" bind:tap="showChartAnalyze"><image src="https://s.luoke101.com/icon%40chart.png"></image>图表分析</view>
+                </view>
                     <text wx:if="{{reportsListCount > 3}}" class="more" bindtap="goToReportMore">更多...</text>
                 </view>
                 <view class="program-body the-last-report" wx:for="{{ reportsList }}" wx:for-item="reportItem" wx:for-index="reportIndex"
@@ -98,7 +96,6 @@
                       data-release-record-id="{{trackItem.releaseRecordId}}">
                     <view class="evaluation-wrapper track-info-wrapper">
                         <view class="evaluation-name">
-<!--                            {{ trackItem.evaluationName }}-->
                             {{ trackItem.releaseName }}
                         </view>
                         <view class="reply-track-info">
@@ -121,7 +118,7 @@
             <!--End: 作答跟踪-->
         </scroll-view>
     </view>
-    <hola-tab-bar active="{{ isWxWorkSuperAdmin ? 1 : 0 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{isWxWorkAdmin}}"/>
+    <hola-tab-bar active="{{ isWxWorkSuperAdmin ? 1 : 1 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{isWxWorkAdmin}}"/>
 </view>
 <!--End: 企业微信端管理员页工作台-->
 <!--Start: 企业微信端非管理员页工作台-测评列表-->
@@ -178,8 +175,8 @@
             <!--Start: 最新报告-->
             <view class="program-wrapper">
                 <view class="program-title">
-                    <view>
-                        <text>最新报告</text><text wx:if="{{newlyNums}}" class="new-adding">今日+{{newlyNums}}</text>
+                    <view class="report-title">
+                        <text>最新报告</text><text wx:if="{{newlyNums}}" class="new-adding">今日+{{newlyNums}}</text><view wx:if="{{reportsListCount>0}}" class="chart-analyze" bind:tap="showChartAnalyze"><image src="https://s.luoke101.com/icon%40chart.png"></image>图表分析</view>
                     </view>
                     <text wx:if="{{reportsListCount > 3}}" class="more" bindtap="goToReportMore">更多...</text>
                 </view>
@@ -225,7 +222,6 @@
                       data-release-record-id="{{trackItem.releaseRecordId}}">
                     <view class="evaluation-wrapper track-info-wrapper">
                         <view class="evaluation-name">
-<!--                            {{ trackItem.evaluationName }}-->
                             {{ trackItem.releaseName }}
                         </view>
                         <view class="reply-track-info">
@@ -333,9 +329,8 @@
                 <!--Start: 最新报告-->
                 <view class="program-wrapper">
                     <view class="program-title">
-                        <view>
-                            <text>最新报告</text>
-                            <text wx:if="{{newlyNums}}" class="new-adding">今日+{{newlyNums}}</text>
+                        <view class="report-title">
+                            <text>最新报告</text><text wx:if="{{newlyNums}}" class="new-adding">今日+{{newlyNums}}</text><view wx:if="{{reportsListCount>0}}" class="chart-analyze" bind:tap="showChartAnalyze"><image src="https://s.luoke101.com/icon%40chart.png"></image>图表分析</view>
                         </view>
                         <text wx:if="{{reportsListCount > 3}}" class="more" bindtap="goToReportMore">更多...</text>
                     </view>
@@ -382,7 +377,6 @@
                           data-release-record-id="{{trackItem.releaseRecordId}}">
                         <view class="evaluation-wrapper track-info-wrapper">
                             <view class="evaluation-name">
-<!--                                {{ trackItem.evaluationName }}-->
                                 {{ trackItem.releaseName }}
                             </view>
                             <view class="reply-track-info">
@@ -419,5 +413,22 @@
 </block>
 <!--End: 代小程序非管理员页工作台-测评列表-->
 <!--------------------------------------------------------------------------------------------------------------------->
+<van-dialog use-slot show="{{ isShowChartAnalyze }}" show-cancel-button="{{false}}" show-confirm-button="{{false}}">
+    <view class="chart-analyze__wrapper">
+        <image class="chart-analyze__cover" src="https://s.luoke101.com/chart-analyze%40cover.png" />
+        <view class="chart-analyze__text-group">
+            <text>图表分析为电脑版高级功能</text>
+            <text>请联系客服体验</text>
+        </view>
+        <view>
+            <button class="contact-service" bind:tap="goToCustomerService">
+                联系客服
+            </button>
+            <button class="contact-service contact-service__is-cancel" bind:tap="hideChartAnalyze">
+                关闭
+            </button>
+        </view>
+    </view>
+</van-dialog>
 <hola-mask isShow="{{ maskTrigger }}"></hola-mask>
 <wxs src="../../utils/util.wxs" module="util"></wxs>

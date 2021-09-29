@@ -112,16 +112,20 @@ page{
   background-image: url("https://s.luoke101.com/ma/image/social.png");
 }
 .home-search{
+  flex: 1;
   display: flex;
   align-items: center;
   padding: 20rpx 30rpx;
+  margin-right: 20rpx;
   font-size: 28rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #A3A3A3;
   line-height: 40rpx;
   background: #FFFFFF;
-  border-radius: 42rpx;
+  box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(192, 192, 192, 0.1);
+  border-radius: 20rpx;
+  border: 2rpx solid rgba(53, 62, 232, 0.05);
 }
 .home-search > text {
   margin-right: 36rpx;
@@ -243,4 +247,14 @@ page{
 }
 .van-sticky-wrap{
   background: #F9FAFC;
+}
+.search__wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 14rpx;
+}
+.search-title{
+  font-weight: 600;
+  color: #727272FF;
 }

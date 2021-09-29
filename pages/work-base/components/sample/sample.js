@@ -23,19 +23,28 @@ Page({
     outSideScrollTop: 0,
     computeScrollTop: 0,
     extraNodes: [],
-    synopses:[]
+    synopses:[],
+    isChapter: true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+      this.setData({
+        receiveRecordId:options.receiveRecordId,
+        isChapter: (()=>{
+            if(options.isChapter == 'false') {
+                options.isChapter = false
+                return false
+            }
+            options.isChapter = true
+            return options.isChapter
+        })()
+    })
     this.loadQuestion(options.receiveRecordId).then(res=>{
         const {synopses} = res
-        this.setData({
-          receiveRecordId:options.receiveRecordId
-        })
-        const sampleQuestions = synopses[options.chapterIndex].sampleQuestions
+        const sampleQuestions = options.isChapter ? synopses[options.chapterIndex].sampleQuestions : res.sampleQuestions;
         var hasVanishImageSetting = Array.apply(null,{length:sampleQuestions.length})
         sampleQuestions.forEach((que,queIndex) => {
           if(que.question.vanishImageSetting){
@@ -45,22 +54,33 @@ Page({
               hasVanishImageSetting.splice(queIndex,1,newObj)
           }
         })
-        this.setData({
-            sampleQuestions,
-            chapterId:options.chapterId,
-            introduction:options.introduction,
-            receiveRecordId:options.receiveRecordId,
-            chapterIndex:options.chapterIndex,
-            chapterTotal:options.chapterTotal,
-            hasVanishImageSetting,
-        })
+        if(options.isChapter){
+            this.setData({
+                sampleQuestions,
+                chapterId:options.chapterId,
+                introduction:options.introduction,
+                chapterIndex:options.chapterIndex,
+                chapterTotal:options.chapterTotal,
+                hasVanishImageSetting,
+            })
+        } else {
+            this.setData({
+                sampleQuestions,
+                introduction: res.introduction,
+                hasVanishImageSetting,
+            })
+        }
     })
   },
-  loadQuestion(receiveRecordId) {
+  loadQuestion(receiveRecordId, hasChapter=true) {
     receiveRecordId = this.data.receiveRecordId || receiveRecordId;
+    let url = `../wework/evaluations/${receiveRecordId}/chapters`;
+    if(hasChapter){
+        url = `../wework/evaluations/${receiveRecordId}/synopsis`
+    }
     const p = new Promise((resolve, reject) => {
         app.doAjax({
-            url: `../wework/evaluations/${receiveRecordId}/chapters`,
+            url,
             method: 'GET',
             success(res){
                 resolve(res);
@@ -334,7 +354,8 @@ Page({
     });
   },
   toAnswer(){
-    const url = `/pages/work-base/components/answering/answering?chapterId=${this.data.chapterId}&receiveRecordId=${this.data.receiveRecordId}`;
+    const {isChapter} = this.data;
+    const url = isChapter ? `/pages/work-base/components/answering/answering?chapterId=${this.data.chapterId}&receiveRecordId=${this.data.receiveRecordId}` : `/pages/work-base/components/answering/answering?receiveRecordId=${this.data.receiveRecordId}`;
     wx.redirectTo({
       url: url
     });

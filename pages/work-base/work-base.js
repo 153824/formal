@@ -42,7 +42,8 @@ Page({
         showEditDialog: false,
         editedTeamName: '',
         companyName: '好啦访客',
-        authCodeCounter: 0
+        authCodeCounter: 0,
+        isShowChartAnalyze: false
     },
 
     onLoad: function (option) {
@@ -522,5 +523,21 @@ Page({
         wx.navigateTo({
             url: "/pages/work-base/components/evaluation-more/evaluation-more"
         })
+    },
+
+    showChartAnalyze() {
+        this.setData({
+            isShowChartAnalyze: true
+        })
+    },
+
+    hideChartAnalyze() {
+        this.setData({
+            isShowChartAnalyze: false
+        })
+    },
+
+    goToCustomerService() {
+        app.openContactService()
     }
 });

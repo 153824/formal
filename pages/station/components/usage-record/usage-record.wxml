@@ -1,0 +1,125 @@
+<scroll-view class="usage-record" scroll-y="{{true}}" style="height: calc(100vh - 130rpx);">
+    <view class="usage-record__header">
+        <image class="usage-record__cover" src="http://img2.luoke101.com/2020-06-17T10:09:43.950ZnormalImg.png"/>
+        <view class="usage-record__title-wrapper">
+            <text class="title">业务代表测评</text>
+            <view class="tips">
+                <text>43题/预计用时20分钟</text>
+                <view class="see-it" bind:tap="goToEvaluationDetail">查看介绍</view>
+            </view>
+            <view class="ticket">
+                <view class="ticket-info__wrapper">
+                    <image src="https://s.luoke101.com/usage-record%40ticket.png"/>
+                    <view class="ticket-info">
+                        <view class="total" data-count="250">累计购买 </view>
+                        <image src="https://s.luoke101.com/usage-record%40tree.png"></image>
+                        <view>
+                            <view class="count-item" data-count="50">
+                                剩余数量
+                            </view>
+                            <view class="count-item" data-count="150">
+                                使用数量
+                            </view>
+                            <view class="count-item" data-count="50">
+                                过期数量
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="usage-record__background"></view>
+    </view>
+    <view class="usage-record__container">
+        <view class="container-title">
+            购买记录
+        </view>
+        <view scroll-y style="margin-top: 30rpx;">
+            <view class="container-item">
+                <view class="container-item__title">2021/08/08</view>
+                <view class="container-item__card">
+                    <view>
+                        <view class="card-title">业务代表测评</view>
+                        <view class="card-tip">有效期至2021/10/09</view>
+                    </view>
+                    <view class="card-count">
+                        50份
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view scroll-y style="margin-top: 30rpx;">
+            <view class="container-item">
+                <view class="container-item__title">2021/08/08</view>
+                <view class="container-item__card">
+                    <view>
+                        <view class="card-title">业务代表测评</view>
+                        <view class="card-tip">有效期至2021/10/09</view>
+                    </view>
+                    <view class="card-count">
+                        50份
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view scroll-y style="margin-top: 30rpx;">
+            <view class="container-item">
+                <view class="container-item__title">2021/08/08</view>
+                <view class="container-item__card">
+                    <view>
+                        <view class="card-title">业务代表测评</view>
+                        <view class="card-tip">有效期至2021/10/09</view>
+                    </view>
+                    <view class="card-count">
+                        50份
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view scroll-y style="margin-top: 30rpx;">
+            <view class="container-item">
+                <view class="container-item__title">2021/08/08</view>
+                <view class="container-item__card">
+                    <view>
+                        <view class="card-title">业务代表测评</view>
+                        <view class="card-tip">有效期至2021/10/09</view>
+                    </view>
+                    <view class="card-count">
+                        50份
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view scroll-y style="margin-top: 30rpx;">
+            <view class="container-item">
+                <view class="container-item__title">2021/08/08</view>
+                <view class="container-item__card">
+                    <view>
+                        <view class="card-title">业务代表测评</view>
+                        <view class="card-tip">有效期至2021/10/09</view>
+                    </view>
+                    <view class="card-count">
+                        50份
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view scroll-y style="margin-top: 30rpx;">
+            <view class="container-item">
+                <view class="container-item__title">2021/08/08</view>
+                <view class="container-item__card">
+                    <view>
+                        <view class="card-title">业务代表测评</view>
+                        <view class="card-tip">有效期至2021/10/09</view>
+                    </view>
+                    <view class="card-count">
+                        50份
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</scroll-view>
+<view class="usage-record__footer" bind:tap="goToGenerate">
+    发放测评
+</view>

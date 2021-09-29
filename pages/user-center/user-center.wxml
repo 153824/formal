@@ -149,7 +149,7 @@
             </scroll-view>
         </view>
     </view>
-    <hola-tab-bar active="{{ isWxWorkSuperAdmin ? 2 : 1 }}" isWxWork="{{isWxWork}}"
+    <hola-tab-bar active="{{ isWxWorkSuperAdmin ? 2 : 2 }}" isWxWork="{{isWxWork}}"
                   isWxWorkAdmin="{{isWxWorkAdmin}}"></hola-tab-bar>
 </view>
 <!--企业微信非管理员端-->
@@ -213,7 +213,7 @@
             </scroll-view>
         </view>
     </view>
-    <hola-tab-bar active="{{ 1 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{!isWxWorkAdmin}}"></hola-tab-bar>
+    <hola-tab-bar active="{{ 2 }}" isWxWork="{{isWxWork}}" isWxWorkAdmin="{{!isWxWorkAdmin}}"></hola-tab-bar>
 </view>
 <!--第三方管理员端-->
 <view wx:elif="{{ is3rd && is3rdAdmin }}">

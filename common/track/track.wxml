@@ -1,5 +1,8 @@
+<view wx:if="{{hasSearch}}" class="track-search__wrapper">
+    <input class="track-search__input" model:value="{{keyword}}" placeholder="搜索发放批次名称" bind:input="search"/>
+</view>
 <view wx:if="{{evaluationTrack.length}}" class="program-wrapper">
-    <scroll-view scroll-y bindscrolltolower="nextPage" style="height:{{windowHeight*pixelRate - 44}}rpx">
+    <scroll-view scroll-y bindscrolltolower="nextPage" style="{{hasSearch ? 'height:calc(100vh - 146rpx);' : 'height: 100vh;'}};">
         <view bindtap="goToTrackDetail" wx:for="{{ evaluationTrack }}" wx:for-item="trackItem" wx:key="unique"
               class="program-body reply-track-body" data-release-record-id="{{trackItem.releaseRecordId}}"
               data-track-index="{{trackIndex}}">
@@ -24,7 +27,7 @@
         </view>
     </scroll-view>
 </view>
-<view wx:if="{{!evaluationTrack.length}}" class="program-wrapper" style="padding-top: 44rpx;">
+<view wx:else class="program-wrapper" style="padding-top: 44rpx;height:100vh;">
     <hola-empty title="暂无记录"></hola-empty>
 </view>
 <wxs module="util" src="../../utils/util.wxs"></wxs>

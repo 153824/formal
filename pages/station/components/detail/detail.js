@@ -25,7 +25,10 @@ Page({
         buttonGroupHeight: 0,
         buttonType: '', // beginner: 免费体验 / upgraded: 立即使用 / unavailable: 联系客服 / available: 剩余可用份数
         availableTotal: '',
-        shareInfo: {}
+        shareInfo: {},
+        isWxWork: false,
+        isWxWorkAdmin: false,
+        isWxWorkSuperAdmin: false,
     },
 
     onLoad(options) {
@@ -73,6 +76,7 @@ Page({
                         }
                     }
                 });
+            app.setDataOfPlatformInfo(that)
         }
         let query = wx.createSelectorQuery();
         query.select('.button-group-wrapper').boundingClientRect(rect=>{

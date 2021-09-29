@@ -17,7 +17,10 @@
     position: absolute;
     top: -50rpx;
 }
-.track-info-left{}
+.track-info-left{
+    flex: 1;
+    padding-right: 40rpx;
+}
 .track-info-right{
     display: flex;
     flex-direction: column;
@@ -39,11 +42,21 @@
     position: absolute;
 }
 .title{
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
     font-size: 36rpx;
     font-family: PingFangSC-Semibold, PingFang SC;
     font-weight: 600;
     color: rgba(7, 9, 34, 0.8);
     line-height: 50rpx;
+}
+.title-text{
+    max-width: 50vw;
+    margin-right: 10rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .record{
     display: flex;
@@ -194,4 +207,54 @@
 }
 .evaluation-operator{
     font-weight: bold;
+}
+.edit-dialog__wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 48rpx 56rpx 48rpx;
+}
+.release-name__input{
+    margin: 40rpx 0;
+    padding: 20rpx 0;
+    background: #FFFFFF;
+    border-radius: 10rpx;
+    border: 2rpx solid #E6E6E6;
+    text-align: center;
+}
+.edit-dialog__bottom{
+    display: flex;
+    justify-content: space-between;
+}
+.edit-dialog__bottom > button{
+    width: 45%;
+    background: #CCCCCC;
+    border-radius: 10rpx;
+    font-size: 28rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 40rpx;
+    margin: unset;
+    padding: 16rpx 0;
+    border: unset;
+}
+.edit-dialog__bottom > button:after{
+    content: unset;
+}
+.edit-dialog__bottom > button:before{
+    content: unset;
+}
+.is-cancel{
+    margin-right: 30rpx;
+}
+.is-confirm{
+    background: #353EE8!important;
+}
+.van-dialog__header{
+    font-size: 32rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600!important;
+    color: #303113!important;
+    line-height: 44rpx;
 }

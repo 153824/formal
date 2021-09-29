@@ -2,6 +2,10 @@
   "component": true,
   "usingComponents": {
     "hola-empty": "../empty/empty",
-    "van-search": "../vant-weapp/dist/search/index"
+    "van-search": "../vant-weapp/dist/search/index",
+    "van-dropdown-menu": "/common/vant-weapp/dist/dropdown-menu/index",
+    "van-dropdown-item": "/common/vant-weapp/dist/dropdown-item/index",
+    "van-icon": "/common/vant-weapp/dist/icon/index",
+    "van-overlay": "/common/vant-weapp/dist/overlay/index"
   }
 }

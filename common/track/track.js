@@ -1,15 +1,20 @@
+import debounce from "../../utils/lodash/debounce"
 const app = getApp()
 Component({
     properties: {
         evaluationTrack: {
             type: Array,
             value: []
+        },
+        hasSearch: {
+            type: Boolean,
+            value: false
         }
     },
     data: {
         page: 1,
-        windowHeight: 0,
-        pixelRate: app.globalData.pixelRate
+        pixelRate: app.globalData.pixelRate,
+        keyword: ''
     },
     methods: {
         goToTrackDetail: function (e) {
@@ -20,7 +25,7 @@ Component({
         },
         loadEvaluationTrack: function (page) {
             const that = this;
-            const {evaluationTrack} = this.data;
+            const {evaluationTrack,keyword} = this.data;
             if(!page){
                 page = this.data.page;
             }
@@ -30,7 +35,8 @@ Component({
                 data: {
                     isEE: app.wxWorkInfo.isWxWork,
                     page: page,
-                    pageSize: 8
+                    pageSize: 8,
+                    keyword
                 },
                 success: function (res) {
                     that.setData({
@@ -48,14 +54,25 @@ Component({
             let {page} = this.data;
             page++;
             this.loadEvaluationTrack(page);
-        }
+        },
+        search: debounce(function (e) {
+            console.log(e);
+            this.setData({
+                page: 1,
+                evaluationTrack: [],
+                keyword: e.detail.value
+            },()=>{
+                this.loadEvaluationTrack()
+            })
+        },500, {
+            leading: false,
+            trailing: true
+        })
     },
     lifetimes: {
         attached() {
-            const systemInfo = wx.getSystemInfoSync();
             this.setData({
-                evaluationTrack: this.properties.evaluationTrack,
-                windowHeight: systemInfo.windowHeight
+                evaluationTrack: this.properties.evaluationTrack
             })
         }
     }

@@ -1,1 +1,3 @@
-<hola-track evaluationTrack="{{evaluationTrack}}"></hola-track>
+<block>
+    <hola-track evaluationTrack="{{evaluationTrack}}" hasSearch="{{true}}"></hola-track>
+</block>

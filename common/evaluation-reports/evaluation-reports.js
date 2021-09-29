@@ -23,7 +23,12 @@ Component({
         pixelRate: app.globalData.pixelRate,
         searchReportList: [],
         keyword: "",
-        searchPage: 1
+        searchPage: 1,
+        evaluationGroup: [],
+        selectEvaluation: {
+            id: '',
+            name: '全部测评'
+        }
     },
     methods: {
         goToReport: function (e) {
@@ -42,6 +47,26 @@ Component({
                     console.log('友盟数据统计',e);
                 }
             }
+        },
+
+        loadEvaluationGroup() {
+            const {keyword} = this.data;
+            const p = new Promise((resolve, reject) => {
+                app.doAjax({
+                    url: 'wework/evaluations/list_by_teamId',
+                    method: 'GET',
+                    data: {
+                        keyword: keyword
+                    },
+                    success(res) {
+                        resolve(res)
+                    },
+                    error(err) {
+                        reject(err)
+                    }
+                })
+            })
+            return p;
         },
 
         loadReportList: function (page) {
@@ -84,7 +109,7 @@ Component({
             this.setData({
                 searchPage,
             });
-            this.searchReport({detail: e.currentTarget.dataset.keyword},false);
+            this.searchReport({detail: {value: e.currentTarget.dataset.keyword}},false);
         },
 
         clearContent: function () {
@@ -98,13 +123,14 @@ Component({
 
         searchReport: debounce(function (e,clean=true) {
             const that = this;
-            let {searchPage, searchReportList} = this.data;
+            let {searchPage, searchReportList, selectEvaluation} = this.data;
             if(clean){
                 searchReportList = [];
             }
             try {
-                if (!e.detail) {
+                if (!e.detail && !selectEvaluation.id) {
                     that.setData({
+                        reportList: [],
                         searchReportList: [],
                         keyword: "",
                         searchPage: 1
@@ -112,8 +138,9 @@ Component({
                     this.loadReportList();
                     return;
                 } else {
+                    console.log(e);
                     that.setData({
-                        keyword: e.detail
+                        keyword: e.detail.value
                     });
                 }
             } catch (e) {
@@ -126,7 +153,8 @@ Component({
                     isEE: app.wxWorkInfo.isWxWork,
                     page: searchPage,
                     pageSize: 8,
-                    keyword: e.detail,
+                    keyword: e.detail.value,
+                    evaluationId: selectEvaluation.id
                 },
                 success: function (res) {
                     if (!res.data.length && !searchReportList.length) {
@@ -157,6 +185,36 @@ Component({
                 const page = 1;
                 this.loadReportList(page);
             }
+        },
+
+        async onEvaluationTap() {
+            const {isShowEvaluationSelect} = this.data;
+            if(!isShowEvaluationSelect){
+                const res = await this.loadEvaluationGroup()
+                this.setData({
+                    isShowEvaluationSelect: !isShowEvaluationSelect,
+                    evaluationGroup: [{id: '', name: '全部测评'}, ...res]
+                })
+            }
+        },
+
+        selectEvaluation(e) {
+            const {keyword} = this.data;
+            this.setData({
+                selectEvaluation: e.currentTarget.dataset.item,
+                searchReportList: [],
+                searchPage: 1
+            },()=>{
+                console.log(keyword);
+                this.searchReport({detail: {value: keyword}},false);
+            })
+            this.hideSelect()
+        },
+
+        hideSelect() {
+            this.setData({
+                isShowEvaluationSelect: false
+            })
         }
     },
     pageLifetimes: {

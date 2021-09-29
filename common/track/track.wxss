@@ -1,7 +1,6 @@
 .program-wrapper{
     padding: 22rpx 44rpx 22rpx 44rpx;
     background-color: rgba(247, 248, 250, 1);
-    height: 100vh;
 }
 .program-body{
     display: flex;
@@ -99,5 +98,16 @@
 }
 .user-answer-evaluation{
     font-size: 26rpx;
-
+}
+.track-search__wrapper{
+    padding: 40rpx 40rpx 0 40rpx;
+    background: #F9FAFC;
+}
+.track-search__input{
+    height: 72rpx;
+    padding: 0 20rpx;
+    background: #FFFFFF;
+    box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(0, 0, 0, 0.05);
+    border-radius: 10rpx;
+    text-align: center;
 }

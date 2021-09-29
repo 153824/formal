@@ -2,7 +2,7 @@
 <block>
     <view class="{{showDlg?'hiddenBack':''}}">
         <!-- 头部信息 -->
-        <view class="box0" style='padding: 36rpx  60rpx 48rpx 60rpx;background: #fff;'>
+        <view class="box0" style='padding: 36rpx 60rpx 48rpx 60rpx;background: #fff;'>
             <view class="paperName">
                 <text class="underLineBg">{{shareInfo.evaluationName}}</text>
             </view>
@@ -275,6 +275,32 @@
                                 </view>
                             </block>
                         </view>
+                    </view>
+                </view>
+                <view wx:elif="{{summaryItem.type === 'PIE_CHART'}}" wx:key="unique" class="summary-chart pie">
+                    <view class="summary-chart__title-wrapper">
+                        <view class="summary-chart__title">{{summaryItem.title}}</view>
+                        <view class="summary-chart__tips">
+                            {{summaryItem.subtitle}}
+                        </view>
+                    </view>
+                    <view class="pie-wrapper" style="height: {{summaryItem.height * 2}}rpx;">
+                        <hola-pie pieChartId="PIE_CHART-{{summaryIndex}}" pieData="{{summaryItem.factors}}"></hola-pie>
+                    </view>
+                </view>
+                <view wx:elif="{{summaryItem.type === 'RADAR_CHART'}}" wx:key="unique" class="summary-chart radar">
+                    <view class="summary-chart__title-wrapper">
+                        <view class="summary-chart__title">{{summaryItem.title}}</view>
+                        <view class="summary-chart__tips">
+                            {{summaryItem.subtitle}}
+                        </view>
+                    </view>
+                    <view class="radar-wrapper" style="height: {{summaryItem.height * 2}}rpx;">
+                        <hola-radar id="{{summaryIndex}}"
+                                    radarIndex="{{-1}}"
+                                    radarIndicator='{{summaryItem.factors}}'
+                                    radarValue="{{summaryItem.grades}}">
+                        </hola-radar>
                     </view>
                 </view>
             </block>
@@ -792,7 +818,7 @@
         </view>
         <!-- 分享报告按钮--普通团队成员无法使用该按钮 -->
         <view class="botbox flex">
-            <button class="sharebtn" open-type="share" bindtap="">
+            <button wx:if="{{buttonType==='SHARE'}}" class="sharebtn" open-type="share">
                 <image src="./images/report@icon-share.png"></image>
                 <text>分享报告</text>
             </button>
@@ -800,6 +826,10 @@
                 <image src="./images/report@icon-share.png"></image>
                 <text>同意被测者查看报告</text>
             </button>
+        </view>
+        <!-- 体验更多测评 -->
+        <view wx:if="{{buttonType==='DISCOVER'}}" class="exp-wrapper" bind:tap="goToExperience">
+            <image style="width:630rpx;height:112rpx;margin: 0rpx 0 30rpx 0;" src="https://s.luoke101.com/report-exp%40icon.png"></image>
         </view>
         <!-- 免责声明 -->
         <view class="bottomMsg" wx:if="{{disclaimer}}">

@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "hola-track": "../../../../common/track/track"
+    "hola-track": "../../../../common/track/track",
+    "van-search": "/common/vant-weapp/dist/search/index"
   },
   "navigationBarTitleText": "作答跟踪"
 }

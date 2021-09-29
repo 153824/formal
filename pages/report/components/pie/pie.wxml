@@ -1,0 +1,2 @@
+<ec-canvas id="mychart{{pieChartId}}" canvas-id="mychartcanvas{{pieChartId}}"
+           ec="{{getPieChartInfoInit}}"></ec-canvas>

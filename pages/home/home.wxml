@@ -44,8 +44,9 @@
         <van-sticky scroll-top="{{ scrollTop }}" offset-top="{{ offsetTop }}" bind:scroll="onSticky">
             <view class="home-item__3 {{isFixed ? 'is-padding' : ''}}">
                 <view class="home-search" bind:tap="goToSearch">
-                    <text>搜索（测评/岗位/类型/场景…)</text>
                     <van-icon name="search" size="20px"/>
+                    <view class="search__wrapper">
+                        <view class="search-title">搜索</view>（测评/岗位/类型/场景…)</view>
                 </view>
                 <button class="home-contact" bind:getphonenumber="{{isGetAccessToken ? '' : 'getPhoneNumber'}}" bind:tap="{{isGetAccessToken ? 'goToCustomerService' : ''}}" open-type="{{isGetAccessToken ? '' : 'getPhoneNumber'}}">
                     <van-icon name="https://s.luoke101.com/ma/image/contact.png" size="16px"/>

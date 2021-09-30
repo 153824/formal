@@ -213,8 +213,8 @@ page{
 .search-by-evaluation-result__wrapper{
     position: absolute;
     top: 140rpx;
-    left: 279rpx;
-    width: 49%;
+    left: 249rpx;
+    width: 53.5%;
     height: 680rpx;
     padding: 30rpx 30rpx;
     background: #FFFFFF;

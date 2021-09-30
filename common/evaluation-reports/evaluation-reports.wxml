@@ -16,13 +16,13 @@
 <!--            custom-class="van-search-custom"-->
 <!--            input-class="van-search-custom-input"-->
 <!--            field-class="van-search-custom-field"/>-->
-    <view class="search-report__wrapper">
+    <view wx:if="{{search}}" class="search-report__wrapper">
         <view class="seacr-report__input search-report__by-name">
             <input bind:input="searchReport" value="{{keyword}}" placeholder="搜索姓名"/>
         </view>
         <view class="seacr-report__input search-report__by-evaluation">
             <input value="{{selectEvaluation.name}}" placeholder="搜索测评" bind:input="onEvaluationInput" bind:tap="onEvaluationTap" style="{{isShowEvaluationSelect ? 'text-align: left;' : ''}}"/>
-            <van-icon name="{{isShowEvaluationSelect ? 'arrow-up' : 'arrow-down'}}"/>
+            <van-icon bind:tap="onEvaluationTap" name="{{isShowEvaluationSelect ? 'arrow-up' : 'arrow-down'}}"/>
             <van-overlay catch:click="hideSelect" show="{{ isShowEvaluationSelect }}" lock-scroll="{{false}}" custom-style="background-color: #00000000;">
                 <scroll-view scroll-y="{{true}}" class="search-by-evaluation-result__wrapper">
                     <block wx:for="{{evaluationGroup}}" wx:for-item="evaluationItem" wx:for-index="evaluationIndex" wx:key="unique">

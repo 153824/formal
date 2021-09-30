@@ -1567,6 +1567,9 @@ swiper, swiper-item {
 }
 .distribute-row-title{
     margin-right: 20rpx;
+    font-size: 24rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
 }
 .distribute-row-item{
     display: flex;

@@ -8,12 +8,12 @@ Component({
           value: 0
         },
         radarValue: {
-            type: Array,
-            value: []
+            type: Array | Object,
+            value: [] | {}
         },
         radarIndicator: {
-            type: Array,
-            value: []
+            type: Array | Object,
+            value: [] | {}
         }
     },
     data: {},

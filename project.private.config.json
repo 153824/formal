@@ -39,13 +39,13 @@
         {
           "name": "分享-报告详情",
           "pathName": "pages/report/report",
-          "query": "receiveRecordId=60324c2bc56b104ef400ec27",
+          "query": "receiveRecordId=6155717009696961431b7ce7",
           "scene": null
         },
         {
           "name": "小程序码领取测评",
           "pathName": "pages/work-base/components/guide/guide",
-          "query": "scene= 614dd96f130e111fafdac568",
+          "query": "scene=6155717009696961431b7ce7",
           "scene": null
         },
         {

@@ -1053,6 +1053,14 @@ App({
     },
 
     openContactService() {
+        const current = 'https://s.luoke101.com/hola-service.jpg'
+        if(this.wxWorkInfo.isWxWork){
+            wx.previewImage({
+                current: current,
+                urls: [current]
+            })
+            return
+        }
         wx.openCustomerServiceChat({
             extInfo:{url:'https://work.weixin.qq.com/kfid/kfcb69223c539250934'},
             corpId:'ww9732798a4d1ac47d',

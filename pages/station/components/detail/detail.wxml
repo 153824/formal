@@ -85,7 +85,7 @@
             </button>
         </view>
         <!--企业微信非管理员-->
-        <view wx:elif="{{isWxWork && !isWxWorkAdmin}}" class="button-group-wrapper {{!iphonex ? 'is-button-group__iosx' : ''}}">
+        <view wx:elif="{{isWxWork && !isWxWorkSuperAdmin}}" class="button-group-wrapper {{!iphonex ? 'is-button-group__iosx' : ''}}">
             <view class="button-group__is-right {{iphonex ? 'is-iosx more-padding' : ''}}"
                   style="width: 100vw;font-size:32rpx;"
                   bind:tap="goToCustomerService">

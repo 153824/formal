@@ -130,7 +130,7 @@
             </block>
         </view>
         <!-- 报告总述 -->
-        <view class="box1" wx:if="{{summary.display}}">
+        <view class="box1" wx:if="{{summary.showGrade || summary.showLevel}}">
             <view class="title report-summary">
                 <text>{{summary.title}}</text>
             </view>
@@ -284,7 +284,7 @@
                             {{summaryItem.subtitle}}
                         </view>
                     </view>
-                    <view class="pie-wrapper" style="height: {{summaryItem.height * 2}}rpx;">
+                    <view class="pie-wrapper" style="height: {{300 * 2}}rpx;">
                         <hola-pie pieChartId="PIE_CHART-{{summaryIndex}}" pieData="{{summaryItem.factors}}"></hola-pie>
                     </view>
                 </view>
@@ -296,7 +296,7 @@
                         </view>
                     </view>
                     <view class="radar-wrapper" style="height: {{summaryItem.height * 2}}rpx;">
-                        <hola-radar id="{{summaryIndex}}"
+                        <hola-radar id="{{-1}}"
                                     radarIndex="{{-1}}"
                                     radarIndicator='{{summaryItem.factors}}'
                                     radarValue="{{summaryItem.grades}}">

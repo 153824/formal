@@ -632,6 +632,7 @@ Page({
                     })
                 },500)
             }
+            console.log(radarValue, radarIndicator);
             return Promise.resolve(res)
         })
             .then(res => {
@@ -734,7 +735,6 @@ Page({
                 that.setData({
                     maskTrigger: false
                 });
-                that.getDistributeRowItemHeight();
                 that.getBarXAxisWidth();
             },500);
             this.getEvaluationQues();

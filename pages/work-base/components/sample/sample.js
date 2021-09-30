@@ -42,9 +42,12 @@ Page({
             return options.isChapter
         })()
     })
-    this.loadQuestion(options.receiveRecordId).then(res=>{
+    this.loadQuestion(options.receiveRecordId, options.isChapter).then(res=>{
         const {synopses} = res
         const sampleQuestions = options.isChapter ? synopses[options.chapterIndex].sampleQuestions : res.sampleQuestions;
+        if(!options.isChapter && (sampleQuestions.length <= 0 || !res.introduction)){
+            this.toAnswer()
+        }
         var hasVanishImageSetting = Array.apply(null,{length:sampleQuestions.length})
         sampleQuestions.forEach((que,queIndex) => {
           if(que.question.vanishImageSetting){
@@ -63,7 +66,8 @@ Page({
                 chapterTotal:options.chapterTotal,
                 hasVanishImageSetting,
             })
-        } else {
+        }
+        else {
             this.setData({
                 sampleQuestions,
                 introduction: res.introduction,
@@ -72,11 +76,11 @@ Page({
         }
     })
   },
-  loadQuestion(receiveRecordId, hasChapter=true) {
+  loadQuestion(receiveRecordId, isChapter=true) {
     receiveRecordId = this.data.receiveRecordId || receiveRecordId;
-    let url = `../wework/evaluations/${receiveRecordId}/chapters`;
-    if(hasChapter){
-        url = `../wework/evaluations/${receiveRecordId}/synopsis`
+    let url = `../wework/evaluations/${receiveRecordId}/synopsis`;
+    if(isChapter){
+        url = `../wework/evaluations/${receiveRecordId}/chapters`
     }
     const p = new Promise((resolve, reject) => {
         app.doAjax({

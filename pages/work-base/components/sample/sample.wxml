@@ -4,7 +4,7 @@
     <text class="sample-explainTitle">说明</text>
     <text class="sample-explainContent">{{introduction}}</text>
   </view>
-  <view class="sample-examplesQue container">
+  <view class="sample-examplesQue container" wx:if="{{sampleQuestions.length}}">
     <text class="sample-examplesQueTitle">例题</text>
       <block wx:for="{{sampleQuestions}}" wx:for-index="quesIndex" wx:for-item="quesItem">
                   <view id="paper-head" class="paperhead">
@@ -13,11 +13,11 @@
                                   nodes="<p>{{quesItem.question.type === 'MULTIPLE'?multipleQuesHTML:''}}{{ quesItem.question.type === 'PROPORTION' ? percentQuesHTML:'' }}{{util.richTextFilter(quesItem.question.stem)}}</p>">
                       </rich-text>
                   </view>
-                  <view wx:if="{{hasVanishImageSetting[quesIndex]&&hasVanishImageSetting[quesIndex].isShow}}" 
+                  <view wx:if="{{hasVanishImageSetting[quesIndex]&&hasVanishImageSetting[quesIndex].isShow}}"
                       data-question-step="{{quesIndex}}" class="titleImgButton" bindtap="openImg">
-                      显示图片 
+                      显示图片
                   </view>
-                  <view wx:elif="{{hasVanishImageSetting[quesIndex]&&hasVanishImageSetting[quesIndex].standingInSeconds>0}}" 
+                  <view wx:elif="{{hasVanishImageSetting[quesIndex]&&hasVanishImageSetting[quesIndex].standingInSeconds>0}}"
                       data-question-step="{{quesIndex}}"   bindtap="openImg" class="showImg">
                       <rich-text class="imgContent" space="nbsp"
                                   nodes="<p>{{util.richTextFilter(hasVanishImageSetting[quesIndex].tag)}}</p>">
@@ -26,7 +26,7 @@
                           <text class="imgTimeout">{{hasVanishImageSetting[quesIndex].standingInSeconds}}s</text><text>后图片将消失</text>
                       </view>
                   </view>
-                  
+
                   <view wx:else class="paperbody {{quesItem.question.type === 'SORTING' ? 'options-padding' : ''}}">
                       <view wx:if="{{hasVanishImageSetting[quesIndex]}}" class="imgQue">
                           <text class="imgQue-title">问：</text>

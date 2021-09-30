@@ -19,7 +19,7 @@ Page({
     fill: false,
     receiveRecordId: '',
     size: 1,
-    scrollTop: 0, 
+    scrollTop: 0,
     outSideScrollTop: 0,
     computeScrollTop: 0,
     extraNodes: [],
@@ -45,7 +45,7 @@ Page({
     this.loadQuestion(options.receiveRecordId, options.isChapter).then(res=>{
         const {synopses} = res
         const sampleQuestions = options.isChapter ? synopses[options.chapterIndex].sampleQuestions : res.sampleQuestions;
-        if(!options.isChapter && (sampleQuestions.length <= 0 || !res.introduction)){
+        if(!options.isChapter && (sampleQuestions.length <= 0 && !res.introduction)){
             this.toAnswer()
         }
         var hasVanishImageSetting = Array.apply(null,{length:sampleQuestions.length})

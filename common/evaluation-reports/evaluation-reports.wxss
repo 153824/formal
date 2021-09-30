@@ -185,6 +185,7 @@ page{
 }
 .seacr-report__input > input{
     text-align: center;
+    font-size: 28rpx;
 }
 .target-evaluation__wrapper{
     display: flex;
@@ -206,6 +207,8 @@ page{
     align-items: center;
     justify-content: space-between;
     padding: 0 30rpx;
+    flex: unset;
+    width: 60%;
 }
 .search-by-evaluation-result__wrapper{
     position: absolute;

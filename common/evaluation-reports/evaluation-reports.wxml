@@ -20,8 +20,8 @@
         <view class="seacr-report__input search-report__by-name">
             <input bind:input="searchReport" value="{{keyword}}" placeholder="搜索姓名"/>
         </view>
-        <view class="seacr-report__input search-report__by-evaluation" style="{{isShowEvaluationSelect ? 'flex: unset;width: 60%;' : ''}}">
-            <input value="{{selectEvaluation.name}}" placeholder="搜索测评" bind:tap="onEvaluationTap" style="{{isShowEvaluationSelect ? 'text-align: left;width: 95%;' : ''}}"/>
+        <view class="seacr-report__input search-report__by-evaluation">
+            <input value="{{selectEvaluation.name}}" placeholder="搜索测评" bind:input="onEvaluationInput" bind:tap="onEvaluationTap" style="{{isShowEvaluationSelect ? 'text-align: left;' : ''}}"/>
             <van-icon name="{{isShowEvaluationSelect ? 'arrow-up' : 'arrow-down'}}"/>
             <van-overlay catch:click="hideSelect" show="{{ isShowEvaluationSelect }}" lock-scroll="{{false}}" custom-style="background-color: #00000000;">
                 <scroll-view scroll-y="{{true}}" class="search-by-evaluation-result__wrapper">

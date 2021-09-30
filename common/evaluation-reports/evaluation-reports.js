@@ -49,14 +49,14 @@ Component({
             }
         },
 
-        loadEvaluationGroup() {
-            const {keyword} = this.data;
+        loadEvaluationGroup(keyword) {
+            console.log('keyword: ', keyword);
             const p = new Promise((resolve, reject) => {
                 app.doAjax({
                     url: 'wework/evaluations/list_by_teamId',
                     method: 'GET',
                     data: {
-                        keyword: keyword
+                        keyword: keyword ? keyword : ''
                     },
                     success(res) {
                         resolve(res)
@@ -198,6 +198,18 @@ Component({
             }
         },
 
+        onEvaluationInput: debounce( function (e){
+            (async ()=>{
+                const res = await this.loadEvaluationGroup(e.detail.value)
+                this.setData({
+                    evaluationGroup: [{id: '', name: '全部测评'}, ...res]
+                })
+            })()
+        },500, {
+            trailing: true,
+            leading: false
+        }),
+
         selectEvaluation(e) {
             const {keyword} = this.data;
             this.setData({
@@ -205,7 +217,6 @@ Component({
                 searchReportList: [],
                 searchPage: 1
             },()=>{
-                console.log(keyword);
                 this.searchReport({detail: {value: keyword}},false);
             })
             this.hideSelect()
@@ -215,12 +226,6 @@ Component({
             this.setData({
                 isShowEvaluationSelect: false
             })
-        }
-    },
-    pageLifetimes: {
-        show: function () {
-        },
-        hide() {
         }
     },
     lifetimes: {

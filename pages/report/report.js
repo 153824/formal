@@ -746,7 +746,9 @@ Page({
     },
 
     goToExperience() {
-        app.openContactService()
+        wx.navigateTo({
+            url: '/pages/home/home'
+        })
     },
 
     getBarXAxisWidth() {

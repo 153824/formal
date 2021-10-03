@@ -829,7 +829,7 @@
         </view>
         <!-- 体验更多测评 -->
         <view wx:if="{{buttonType==='DISCOVER'}}" class="exp-wrapper" bind:tap="goToExperience">
-            <image style="width:630rpx;height:112rpx;margin: 0rpx 0 30rpx 0;" src="https://s.luoke101.com/report-exp%40icon.png"></image>
+            <image style="width:630rpx;height:112rpx;margin: 0rpx 0 30rpx 0;" src="https://s.luoke101.com/exprience.png"></image>
         </view>
         <!-- 免责声明 -->
         <view class="bottomMsg" wx:if="{{disclaimer}}">

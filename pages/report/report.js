@@ -746,7 +746,7 @@ Page({
     },
 
     goToExperience() {
-        wx.navigateTo({
+        wx.switchTab({
             url: '/pages/home/home'
         })
     },

@@ -105,8 +105,8 @@
   ],
   "plugins": {
     "contactPlugin": {
-      "version": "1.4.3",
-      "provider": "wx104a1a20c3f81ec2"
+      "version": "1.2.1",
+      "provider": "wx5917c8c26f85c588"
     }
   },
   "requiredBackgroundModes": ["audio"]

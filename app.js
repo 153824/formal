@@ -46,7 +46,8 @@ qiniuUpload.init({
 });
 App({
     defaultShareObj: {
-        imageUrl: "http://ihola.luoke101.com/wxShareImg.png",
+        imageUrl: "https://s.luoke101.com/hola%40cover.png",
+        title: '给你推荐超好用的人才测评工具，快来试试吧~',
     },
     teamName: "",
     teamId: "",

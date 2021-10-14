@@ -130,32 +130,39 @@
             </block>
         </view>
         <!-- 报告总述 -->
-        <view class="box1" wx:if="{{summary.showGrade || summary.showLevel}}">
+        <view class="box1" wx:if="{{summary.display}}">
             <view class="title report-summary">
                 <text>{{summary.title}}</text>
             </view>
-            <view class="flex temple"
-                  wx:if="{{summary.display}}">
-                <view class="flex-main item noramlTem"
-                      style="padding:56rpx 0;{{!report.summaryRankOrg&&!report.summaryRankAll?'':'margin-right:20rpx;'}}{{(!report.summaryRankOrg||!report.summaryRankAll)&&!summary.showGrade?'height:230rpx;':''}}"
-                      wx:if="{{summary.display}}">
-                    <view style="width: 100%;">
-                        <view class="name">{{summary.levelTitle}}
-                        </view>
-                        <view class="lvName">{{summary.levelConclusion}}</view>
-                        <view class="lvNum" wx:if="{{summary.showGrade}}">
-                            <canvas class="circle" canvas-id="canvasArcCir"></canvas>
-                            <view class="num">{{summary.grade}}分</view>
+            <block wx:for="{{summaries}}" wx:for-item="summaryItem" wx:key="unique">
+                <block wx:if="{{summaryItem.type === 'DEFINITION_TEXT'}}">
+                    <view class="flex temple">
+                        <view class="flex-main item noramlTem"
+                              style="padding:56rpx 0;{{!report.summaryRankOrg&&!report.summaryRankAll?'':'margin-right:20rpx;'}}{{(!report.summaryRankOrg||!report.summaryRankAll)&&!summary.showGrade?'height:230rpx;':''}}">
+                            <view style="width: 100%;">
+                                <view class="name">{{summaryItem.title}}</view>
+                                <view class="lvName">
+                                    <block wx:for="{{summaryItem.contents}}" wx:for-item="contentItem" wx:key="unique">
+                                        {{contentItem}}
+                                    </block>
+                                </view>
+                            </view>
                         </view>
                     </view>
-                </view>
-            </view>
-            <view class="content" wx:if="{{summary.display&&summary.annotation}}">
-                <rich-text nodes="{{summary.annotation}}"></rich-text>
-            </view>
-            <view wx:if="{{coordinate.display}}" class="chartImg" style="display: flex;justify-content: center;align-items: center;margin-top: 40rpx;">
-                <hola-grid axis="{{coordinate.graphAxis}}" area="{{graphQuadrants}}" coordinate="{{coordinate.graphCoordinateIdx}}" type="{{coordinate.graphAxis[0].areas.length===3?'nineCell':'fourCell'}}"></hola-grid>
-            </view>
+                </block>
+                <block wx:if="{{summaryItem.type === 'DESCRIPTION_TEXT'}}">
+                    <view class="content" style="margin-bottom: 10rpx;">
+                        <block wx:for="{{summaryItem.contents}}" wx:for-item="contentItem">
+                            <rich-text nodes="{{contentItem}}"></rich-text>
+                        </block>
+                    </view>
+                </block>
+                <block wx:if="{{summaryItem.type === 'COORDINATE_CHART'}}">
+                    <view class="chartImg" style="display: flex;justify-content: center;align-items: center;margin-top: 40rpx;">
+                        <hola-grid axis="{{summaryItem.graphAxis}}" area="{{util.reverseGraphQuadrant(summaryItem.graphQuadrants)}}" coordinate="{{summaryItem.graphCoordinateIdx}}" type="{{summaryItem.graphAxis[0].areas.length===3?'nineCell':'fourCell'}}"></hola-grid>
+                    </view>
+                </block>
+            </block>
             <block wx:for="{{summaries}}" wx:for-item="summaryItem" wx:for-index="summaryIndex">
                 <view wx:if="{{summaryItem.type === 'DISTRIBUTE_CHART'}}" wx:key="unique" class="summary-chart distribute">
                     <view class="summary-chart__title-wrapper">

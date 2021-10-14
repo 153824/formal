@@ -317,7 +317,6 @@ Page({
         getChartMsg: {
             onInit: getChartMsg
         },
-        graphQuadrants:[],
         getRadarChartInfo: {
             onInit: getRadarChartInfo
         },
@@ -617,6 +616,7 @@ Page({
             that.drawCircle(res.summary.grade);
             res["teamRole"] = (app.teamId == res.releaseTeamId) ? app.teamRole : 1;
             res.maskTrigger = false;
+            console.log(res);
             that.setData(res);
             setTimeout(()=>{
                 that.setData({
@@ -624,15 +624,6 @@ Page({
                     analysisCount:analysisCount,
                 })
             },500)
-            if(res.coordinate.display&&res.coordinate.graphQuadrants){
-                setTimeout(()=>{
-                    that.setData({
-                        graphQuadrants: res.coordinate.graphQuadrants.reverse(),
-                        maskTrigger: false
-                    })
-                },500)
-            }
-            console.log(radarValue, radarIndicator);
             return Promise.resolve(res)
         })
             .then(res => {

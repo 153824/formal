@@ -385,6 +385,10 @@ var gentBarYAxisStyle = function (data, height) {
   return 'grid-template-rows: '+ style +';'
 }
 
+var reverseGraphQuadrant = function (arr) {
+  return arr.reverse()
+}
+
 module.exports = {
   getMonthAndDayByFrag: getMonthAndDayByFrag,
   getHourAndMinByFrag: getHourAndMinByFrag,
@@ -417,5 +421,6 @@ module.exports = {
   gentDistributeStyle: gentDistributeStyle,
   gentRankStyle: gentRankStyle,
   gentBarStyle: gentBarStyle,
-  gentBarYAxisStyle: gentBarYAxisStyle
+  gentBarYAxisStyle: gentBarYAxisStyle,
+  reverseGraphQuadrant: reverseGraphQuadrant
 };

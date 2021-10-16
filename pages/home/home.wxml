@@ -162,4 +162,24 @@
         </view>
     </view>
 </view>
+<van-overlay show="{{true}}" z-index="9999999999999">
+    <view class="home-card__wrapper">
+        <view class="home-card">
+            <view class="home-card__header">
+                <image src="https://s.luoke101.com/home%40welcome.png"/>
+            </view>
+            <view class="home-card__content">
+                <view>
+                    <image class="is-card" src="https://s.luoke101.com/home%40card.png"/>
+                </view>
+                <!--            <view>-->
+                <!--                <image src=""/>-->
+                <!--            </view>-->
+            </view>
+            <view class="home-card__footer">
+                <image src="https://s.luoke101.com/home%40welcome-button.png"/>
+            </view>
+        </view>
+    </view>
+</van-overlay>
 <wxs src="/utils/util.wxs" module="util"></wxs>

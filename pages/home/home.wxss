@@ -258,3 +258,36 @@ page{
   font-weight: 600;
   color: #727272FF;
 }
+.home-card__wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 80rpx 0 80rpx;
+  height: 100vh;
+}
+.home-card{
+
+}
+.home-card__header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.home-card__header image{
+  width: 296rpx;
+  height: 104rpx;
+}
+.is-card{
+  width: 590rpx;
+  height: 340rpx;
+}
+.home-card__content{
+  margin-top: 140rpx;
+}
+.home-card__footer{
+  margin-top: 172rpx;
+}
+.home-card__footer image{
+  width: 590rpx;
+  height: 100rpx;
+}

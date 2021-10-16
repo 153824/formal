@@ -11,7 +11,7 @@
             <view class="complete-content__item">
                 <view class="is-need">企业名称</view>
                 <input class="is-input" value="{{currentKeyword}}" bind:input="loadCompany" placeholder="请输入" placeholder-class="input-placeholder"/>
-                <scroll-view wx:if="{{selectCompanyTrigger && companyList.length || 1}}" class="company-list" scroll-y="{{true}}" style="height: 360rpx">
+                <scroll-view wx:if="{{selectCompanyTrigger && companyList.length}}" class="company-list" scroll-y="{{true}}" style="height: 370rpx">
                     <block wx:if="{{companyList.length}}">
                         <block wx:for="{{companyList}}" wx:for-item="companyItem" wx:for-index="companyIndex">
                             <view catch:tap="selectCompany" class="company-item" data-company="{{companyItem}}">{{companyItem}}</view>

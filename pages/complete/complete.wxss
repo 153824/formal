@@ -27,7 +27,6 @@
     right: 0;
     font-size: 28rpx;
     font-weight: 400;
-    padding: 0rpx 24rpx;
     height: 360rpx;
     background: #FFFFFF;
     border-radius: 5px;

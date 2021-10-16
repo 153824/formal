@@ -27,7 +27,7 @@
         {
           "name": "报告详情",
           "pathName": "pages/report/report",
-          "query": "receiveRecordId=6166925ffd308c0b29e54a81",
+          "query": "receiveRecordId=614afd815bf3af1748f6d209",
           "scene": null
         },
         {
@@ -263,6 +263,12 @@
           "name": "手机号已绑定",
           "pathName": "pages/account/subpages/unbound/unbound",
           "query": "scene=614c1da0c810634af6e69d81",
+          "scene": null
+        },
+        {
+          "name": "完善信息页",
+          "pathName": "pages/complete/complete",
+          "query": "",
           "scene": null
         }
       ]

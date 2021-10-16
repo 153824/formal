@@ -1,0 +1,50 @@
+<scroll-view scroll-y="{{true}}" scroll-x="{{false}}">
+    <view class="complate">
+        <view class="complete-header">
+            <image src="https://s.luoke101.com/complete%40cover.png"/>
+        </view>
+        <view class="complete-content">
+            <view class="complete-content__item">
+                <view class="is-need">您的姓名</view>
+                <input class="is-input" placeholder="请输入" placeholder-class="input-placeholder"/>
+            </view>
+            <view class="complete-content__item">
+                <view class="is-need">企业名称</view>
+                <input class="is-input" value="{{currentKeyword}}" bind:input="loadCompany" placeholder="请输入" placeholder-class="input-placeholder"/>
+                <scroll-view wx:if="{{selectCompanyTrigger && companyList.length || 1}}" class="company-list" scroll-y="{{true}}" style="height: 360rpx">
+                    <block wx:if="{{companyList.length}}">
+                        <block wx:for="{{companyList}}" wx:for-item="companyItem" wx:for-index="companyIndex">
+                            <view catch:tap="selectCompany" class="company-item" data-company="{{companyItem}}">{{companyItem}}</view>
+                        </block>
+                    </block>
+                    <block wx:else>
+                        <view style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;">
+                            <text style="color: #B4B4B4FF;">
+                                暂无数据
+                            </text>
+                        </view>
+                    </block>
+                </scroll-view>
+            </view>
+            <view class="complete-content__item">
+                <view>您的职位</view>
+                <picker bind:change="onPositionChange" value="{{positionIndex}}" range="{{positionList}}">
+                    <view class="picker-content is-input {{positionIndex < 0 ? 'is-placeholder' : ''}}">
+                        {{positionIndex >= 0 ? positionList[positionIndex] : '请选择'}}
+                    </view>
+                </picker>
+            </view>
+            <view class="complete-content__item">
+                <view>企业规模</view>
+                <picker bindchange="onCompanyModelChange" value="{{companyModelIndex}}" range="{{companyModelList}}">
+                    <view class="picker-content is-input {{companyModelIndex < 0 ? 'is-placeholder' : ''}}">
+                        {{companyModelIndex >= 0 ? companyModelList[companyModelIndex] : '请选择'}}
+                    </view>
+                </picker>
+            </view>
+        </view>
+        <view class="complate-footer">
+            <button class="is-disabled">查看报告</button>
+        </view>
+    </view>
+</scroll-view>

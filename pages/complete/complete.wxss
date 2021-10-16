@@ -1,0 +1,82 @@
+.complate{
+
+}
+.complete-header{
+
+}
+.complete-header image {
+    width: 750rpx;
+    height: 620rpx;
+}
+.complete-content{
+    padding: 0 50rpx;
+}
+.complete-content__item{
+    position: relative;
+    margin-top: 40rpx;
+    font-size: 32rpx;
+    font-family: PingFang SC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #393A4E;
+    line-height: 38rpx;
+}
+.company-list{
+    position: absolute;
+    top: 170rpx;
+    left: 0;
+    right: 0;
+    font-size: 28rpx;
+    font-weight: 400;
+    padding: 0rpx 24rpx;
+    height: 360rpx;
+    background: #FFFFFF;
+    border-radius: 5px;
+    border: 1px solid #E9E9E9;
+    z-index: 999;
+}
+.picker-content{
+    height: 40rpx;
+    background: #FFFFFF;
+    border-radius: 10rpx 10rpx 10rpx 10rpx;
+    opacity: 1;
+    border: 2rpx solid #E5E5E5;
+}
+.is-need:before{
+    display: inline-block;
+    content: '*';
+    color: #FF4545;
+}
+.is-input{
+    font-size: 28rpx;
+    margin: 30rpx 0;
+    padding: 22rpx 20rpx;
+    background: #FFFFFF;
+    border-radius: 10rpx 10rpx 10rpx 10rpx;
+    opacity: 1;
+    border: 2rpx solid #E5E5E5;
+    text-align: center;
+}
+.input-placeholder{
+    font-size: 28rpx;
+    color: #B3B3B3;
+}
+.is-placeholder{
+    color: #B3B3B3;
+    font-size: 28rpx;
+}
+.complate-footer{
+    margin-top: 80rpx;
+    padding: 0 50rpx;
+}
+.is-disabled{
+    background: rgba(52, 62, 232, 0.4000000059604645);
+    border-radius: 8rpx 8rpx 8rpx 8rpx;
+    opacity: 1;
+}
+.complate-footer button{
+    padding: 10rpx 0;
+    font-size: 32rpx;
+    font-family: PingFang SC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #FFFFFF;
+}

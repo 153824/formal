@@ -58,7 +58,8 @@
     "pages/station/components/generate/generate",
     "pages/work-base/components/grant/grant",
     "pages/report/components/door/door",
-    "pages/station/components/usage-record/usage-record"
+    "pages/station/components/usage-record/usage-record",
+    "pages/complete/complete"
   ],
   "tabBar": {
     "custom": true,

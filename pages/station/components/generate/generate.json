@@ -6,6 +6,7 @@
     "van-image": "/common/vant-weapp/dist/image/index",
     "van-button": "/common/vant-weapp/dist/button/index",
     "van-loading": "/common/vant-weapp/dist/loading/index",
-    "hola-preview-image": "/common/preview-image/index"
+    "hola-preview-image": "/common/preview-image/index",
+    "van-overlay": "/common/vant-weapp/dist/overlay/index"
   }
 }

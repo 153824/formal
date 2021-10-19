@@ -39,8 +39,9 @@
                 <view class="agree {{canUSeeReport==='agree'?'active':''}}" data-type="agree" bind:tap="setReportAuth">
                     <text>允许</text>
                 </view>
-                <view class="refuse {{canUSeeReport==='refuse'?'active':''}}" data-type="refuse" bind:tap="setReportAuth">
+                <view class="refuse {{canUSeeReport==='refuse'?'active':''}}" data-type="{{canIRefuse ? 'refuse' : 'vip'}}" bind:tap="setReportAuth">
                     <text>不允许</text>
+                    <image class="refuse-image" src="https://s.luoke101.com/generate%40vip.png"/>
                 </view>
             </view>
         </view>
@@ -105,4 +106,16 @@
     </view>
 </view>
 <hola-preview-image id="preview-image" qrcode="{{qrcode}}" releaseRecordId="{{releaseRecordId}}"></hola-preview-image>
+<van-overlay show="{{showVIP}}" z-index="999999999" catch:click="closeOverlay">
+    <view class="generate-vip__wrapper">
+        <view class="generate-vip" catch:tap="openOverlay">
+            <image src="https://s.luoke101.com/generate%40lock.png"/>
+            <view class="generate-vip__tips">
+                <text>不允许受测者查看报告为VIP功能</text>
+                <text>请联系客服开通</text>
+            </view>
+            <view class="contact" catch:tap="goToCustomerService">联系客服</view>
+        </view>
+    </view>
+</van-overlay>
 <wxs src="../../../../utils/util.wxs" module="utils"/>

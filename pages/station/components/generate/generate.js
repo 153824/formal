@@ -41,7 +41,8 @@ Page({
         maxCount: 0,
         shareCover: '',
         releaseRecordId: '',
-        gentKey: new Date().getTime()
+        gentKey: new Date().getTime(),
+        showVIP: false
     },
     onLoad(options) {
         const that = this;
@@ -196,6 +197,10 @@ Page({
     },
     setReportAuth(e) {
         const {type} = e.currentTarget.dataset;
+        if(type === 'vip'){
+            this.openOverlay()
+            return
+        }
         this.setData({
             canUSeeReport: type
         })
@@ -324,6 +329,24 @@ Page({
                 });
             }
         });
+    },
+    goToCustomerService() {
+        try{
+            app.openContactService()
+        }
+        catch (err) {
+            console.error(err);
+        }
+    },
+    closeOverlay() {
+        this.setData({
+            showVIP: false
+        })
+    },
+    openOverlay() {
+        this.setData({
+            showVIP: true
+        })
     },
     onShareAppMessage(options) {
         const {evaluationName, shareCover, releaseRecordId} = this.data;

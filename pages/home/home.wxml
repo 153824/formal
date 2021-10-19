@@ -34,7 +34,7 @@
         </view>
         <view class="home-item__2">
             <view class="home-item__2-is-left" data-type="brain" bind:tap="goToMore">
-                人才盘点
+                免费测评
             </view>
             <view class="home-item__2-is-right">
                 <view class="school" data-type="school" bind:tap="goToMore">校招选才</view>

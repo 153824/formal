@@ -1,4 +1,6 @@
 import {getEnv, getTag, umaEvent, Tracker} from "../../uma.config.js";
+import {loadIsSubscribed, loadSubscriber} from "../../api/home";
+
 const app = getApp();
 Page({
     data: {
@@ -24,7 +26,13 @@ Page({
         },
         bannerRes: [],
         isGetAccessToken: app.checkAccessToken(),
-        authCodeCounter: 0
+        authCodeCounter: 0,
+        joinInShow: true,
+        isSubscribed: true,
+        subscriberInfo: {
+            flag: false,
+            activated: false
+        }
     },
 
     onLoad: function () {
@@ -72,8 +80,7 @@ Page({
         return app.defaultShareObj;
     },
 
-    init() {
-        const that = this;
+    async init() {
         if(app.checkAccessToken()){
             const {isWxWork} = app.wxWorkInfo;
             const {is3rd} = app.wx3rdInfo;
@@ -90,10 +97,12 @@ Page({
                 isWxWork,
                 isWxWorkAdmin,
                 is3rd,
-                isWxWorkSuperAdmin
+                isWxWorkSuperAdmin,
             })
+            await this.getSubscriber()
+            await this.getIsSubscribed()
         } else {
-            app.checkUserInfo=(res)=>{
+            app.checkUserInfo= async (res)=>{
                 console.log(res)
                 this.check({
                     isWxWork: res.isWxWork,
@@ -108,6 +117,10 @@ Page({
                     is3rd: res.is3rd,
                     isWxWorkSuperAdmin: res.isSuperAdmin
                 })
+                if(res.tokenInfo && res.tokenInfo.accessToken){
+                    await this.getSubscriber(res.tokenInfo.accessToken)
+                    await this.getIsSubscribed()
+                }
             };
         }
     },
@@ -293,31 +306,35 @@ Page({
 
     getPhoneNumber(e) {
         const that = this;
+        const {type} = e.target.dataset;
         let {authCodeCounter} = this.data;
         if(authCodeCounter > 5){
             return;
         }
-        app.getAccessToken(e).then(res=>{
-            that.setData({
-                isGetAccessToken: true
-            });
-            that.goToCustomerService();
-            try{
-                const umaConfig = umaEvent.authPhoneSuccess;
-                new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.home});
-            }
-            catch (e) {
-                console.log('友盟数据统计',e);
-            }
-        }).catch(err=>{
-            console.log(err);
-            if(err.code === '401111'){
-                app.prueLogin().then(res=>{
-                    this.getPhoneNumber(e)
-                });
+        app.getAccessToken(e)
+            .then(async res=>{
                 that.setData({
-                    authCodeCounter: authCodeCounter++
-                })
+                    isGetAccessToken: true
+                });
+                that.goToCustomerService();
+                await that.getIsSubscribed();
+                try{
+                    const umaConfig = umaEvent.authPhoneSuccess;
+                    new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.home});
+                }
+                catch (e) {
+                    console.log('友盟数据统计',e);
+                }
+            })
+            .catch(err=>{
+                console.log(err);
+                if(err.code === '401111'){
+                    app.prueLogin().then(res=>{
+                        this.getPhoneNumber(e)
+                    });
+                    that.setData({
+                        authCodeCounter: authCodeCounter++
+                    })
             }
         })
         if(authCodeCounter <= 0){
@@ -330,4 +347,41 @@ Page({
             }
         }
     },
+
+    async getSubscriber(token) {
+       const {flag, activated} = await loadSubscriber({accessToken: token})
+       this.setData({
+           subscriberInfo: {flag, activated}
+       })
+    },
+
+    async getIsSubscribed() {
+        const {subscriberInfo} = this.data;
+        const {subscribed} = await loadIsSubscribed()
+        this.setData({
+            isSubscribed: subscribed
+        })
+        // TODO: 跳转公号二维码页
+        if(subscribed && subscriberInfo.flag){
+
+        }
+    },
+
+    closeOverlay() {
+        this.setData({
+            joinInShow: false
+        })
+    },
+
+    openOverlay() {
+        this.setData({
+            joinInShow: true
+        })
+    },
+
+    goToUserCenter() {
+        wx.switchTab({
+            url: '/pages/user-center/user-center'
+        })
+    }
 });

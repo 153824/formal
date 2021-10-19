@@ -172,7 +172,7 @@ page{
   color: #000000;
   line-height: 44rpx;
 }
-.home-item__4--child > .title:after{
+.home-item__4--child > .home-item__title > .title:after{
   content: '';
   display: block;
   width: 128rpx;
@@ -281,13 +281,35 @@ page{
   width: 590rpx;
   height: 340rpx;
 }
+.is-letter{
+  width: 640rpx;
+  height: 978rpx;
+}
 .home-card__content{
   margin-top: 140rpx;
 }
+.is-letter-content{
+  margin-top: 70rpx;
+}
 .home-card__footer{
   margin-top: 172rpx;
-}
-.home-card__footer image{
-  width: 590rpx;
   height: 100rpx;
+  width: 590rpx;
+  background-image: url("https://s.luoke101.com/home%40welcome-button.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #00000000;
+}
+.is-letter-footer{
+  width: 640rpx;
+  margin-top: 40rpx;
+  background-image: url("https://s.luoke101.com/home%40letter-go.png");
+}
+.home-item__title{
+  display: flex;
+  justify-content: space-between;
+}
+.home-item__title > image{
+  width: 260rpx;
+  height: 60rpx;
 }

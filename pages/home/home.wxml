@@ -56,8 +56,11 @@
         </van-sticky>
         <view class="home-item__4">
             <view class="home-item__4--child">
-                <view class="title">
-                    {{evaluationSection.title}}
+                <view class="home-item__title">
+                    <view class="title">
+                        {{evaluationSection.title}}
+                    </view>
+                    <image wx:if="{{!isGetAccessToken || !subscriberInfo.flag}}" bind:tap="openOverlay" src="https://s.luoke101.com/home%40share.png" />
                 </view>
                 <view class="content">
                     <block wx:for="{{evaluationSection.evaluations}}" wx:for-item="evaluationItem">
@@ -162,23 +165,33 @@
         </view>
     </view>
 </view>
-<van-overlay show="{{true}}" z-index="9999999999999">
+<van-overlay show="{{(!isGetAccessToken || !subscriberInfo.flag) && joinInShow}}" z-index="9999999999999" catch:click="closeOverlay">
     <view class="home-card__wrapper">
-        <view class="home-card">
+        <view class="home-card" catch:tap="openOverlay">
             <view class="home-card__header">
                 <image src="https://s.luoke101.com/home%40welcome.png"/>
             </view>
             <view class="home-card__content">
                 <view>
-                    <image class="is-card" src="https://s.luoke101.com/home%40card.png"/>
+                    <image class="is-card" src="https://s.luoke101.com/home%40card-no-shadow.png"/>
                 </view>
-                <!--            <view>-->
-                <!--                <image src=""/>-->
-                <!--            </view>-->
             </view>
-            <view class="home-card__footer">
-                <image src="https://s.luoke101.com/home%40welcome-button.png"/>
+            <button class="home-card__footer" data-type="join" open-type="getPhoneNumber" catch:getphonenumber="getPhoneNumber"></button>
+        </view>
+    </view>
+</van-overlay>
+<van-overlay show="{{isGetAccessToken && subscriberInfo.flag && joinInShow}}" z-index="9999999999999" catch:click="closeOverlay">
+    <view class="home-card__wrapper">
+        <view class="home-card" catch:tap="openOverlay">
+            <view class="home-card__header">
+                <image src="https://s.luoke101.com/home%40letter-success.png"/>
             </view>
+            <view class="home-card__content is-letter-content">
+                <view>
+                    <image class="is-card is-letter" src="https://s.luoke101.com/home%40letter.png"/>
+                </view>
+            </view>
+            <button class="home-card__footer is-letter-footer" catch:tap="goToUserCenter"></button>
         </view>
     </view>
 </van-overlay>

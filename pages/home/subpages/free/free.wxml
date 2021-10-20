@@ -1,0 +1,14 @@
+<scroll-view scroll-y="{{true}}" bind:scrolltolower="next" style="height: calc(100vh - 0rpx)">
+    <view class="free-wrapper">
+        <block wx:for="{{evaluations}}" wx:for-item="evaluationItem">
+            <hola-card
+                    wx:key="unique"
+                    evaluationId="{{evaluationItem.evaluationId}}"
+                    topic="{{evaluationItem.type}}"
+                    tip="{{evaluationItem.description}}"
+                    tag="{{evaluationItem.tag ? util.subString(evaluationItem.tag, 0, 2) : ''}}"
+                    title="{{evaluationItem.name}}"
+                    cover="{{evaluationItem.imgUrl}}"/>
+        </block>
+    </view>
+</scroll-view>

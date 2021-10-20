@@ -59,7 +59,8 @@
     "pages/work-base/components/grant/grant",
     "pages/report/components/door/door",
     "pages/station/components/usage-record/usage-record",
-    "pages/complete/complete"
+    "pages/complete/complete",
+    "pages/home/subpages/free/free"
   ],
   "tabBar": {
     "custom": true,

@@ -165,6 +165,12 @@ Page({
     goToMore(e) {
         let name = "";
         const {type} = e.target.dataset;
+        if(type === 'brain'){
+            wx.navigateTo({
+                url: `/pages/home/subpages/free/free`
+            });
+            return
+        }
         wx.navigateTo({
             url: `/pages/home/components/more/more?type=${type}`
         });

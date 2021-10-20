@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "hola-card": "../../components/card/card"
+  }
+}

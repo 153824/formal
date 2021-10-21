@@ -1,4 +1,5 @@
 import {getEnv, getTag, Tracker, umaEvent} from "../../../../uma.config";
+import {getWechatMpQrcode} from "../../../../api/detail";
 
 const app = getApp();
 Page({
@@ -15,6 +16,7 @@ Page({
         statusbarHeight: app.globalData.statusbarHeight,
         titleHeight: app.globalData.titleHeight,
         windowHeight: app.globalData.windowHeight,
+        marginBottom: app.rate * 200,
         evaluation: {},
         evaluationId: '',
         releaseInfo: {},
@@ -29,9 +31,13 @@ Page({
         isWxWork: false,
         isWxWorkAdmin: false,
         isWxWorkSuperAdmin: false,
+        inviteInfo: {
+            url: '',
+            qrCodeImg: ''
+        }
     },
 
-    onLoad(options) {
+    async onLoad(options) {
         const {scene} = wx.getLaunchOptionsSync();
         const umaConfig = umaEvent.evaluationDetail;
         if (umaConfig.scene.includes(scene)) {
@@ -43,6 +49,7 @@ Page({
             }
         }
         this.setData({evaluationId: options.id});
+        await this.loadWechatMpQrcode()
     },
 
     async onShow() {
@@ -357,5 +364,18 @@ Page({
             });
         })
         return p;
+    },
+
+    async loadWechatMpQrcode() {
+        const {data} = await getWechatMpQrcode()
+        this.setData({
+            inviteInfo: {
+                ...data
+            }
+        })
+    },
+
+    showInviteOverlay() {
+        this.selectComponent('InviteFriends').show()
     }
 });

@@ -8,6 +8,9 @@
     "free": "../../../../common/free/free",
     "serving": "../../../../common/serving/serving",
     "mask": "../../../../common/mask/mask",
-    "van-overlay": "../../../../common/vant-weapp/dist/overlay/index"
-  }
+    "van-overlay": "../../../../common/vant-weapp/dist/overlay/index",
+    "invite-friends": "/common/invite-friends/invite-friends",
+    "hola-title": "/common/title/title"
+  },
+  "navigationStyle": "custom"
 }

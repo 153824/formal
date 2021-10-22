@@ -16,3 +16,20 @@ export function getWechatMpQrcode() {
     })
     return p
 }
+
+export function getEvaluationExist(data) {
+    const p = new Promise((resolve, reject) => {
+        app.doAjax({
+            url: 'wework/evaluations/column/check_evaluation_exist',
+            method: 'GET',
+            data,
+            success(res) {
+                resolve(res)
+            },
+            error(err) {
+                reject(err)
+            }
+        })
+    })
+    return p
+}

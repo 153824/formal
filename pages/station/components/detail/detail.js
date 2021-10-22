@@ -1,5 +1,5 @@
 import {getEnv, getTag, Tracker, umaEvent} from "../../../../uma.config";
-import {getWechatMpQrcode} from "../../../../api/detail";
+import {getEvaluationExist, getWechatMpQrcode} from "../../../../api/detail";
 
 const app = getApp();
 Page({
@@ -34,7 +34,8 @@ Page({
         inviteInfo: {
             url: '',
             qrCodeImg: ''
-        }
+        },
+        canIUseInvite: false
     },
 
     async onLoad(options) {
@@ -50,6 +51,7 @@ Page({
         }
         this.setData({evaluationId: options.id});
         await this.loadWechatMpQrcode()
+        await this.checkEvaluationExist()
     },
 
     async onShow() {
@@ -377,5 +379,16 @@ Page({
 
     showInviteOverlay() {
         this.selectComponent('InviteFriends').show()
+    },
+
+    async checkEvaluationExist() {
+       const data = {
+           columnId: '616e89add045b16da4f09987',
+           evaluationId: this.data.evaluationId
+       }
+       const {flag} = await getEvaluationExist(data)
+       this.setData({
+           canIUseInvite: flag
+       })
     }
 });

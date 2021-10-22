@@ -51,7 +51,6 @@ Page({
             }
         }
         this.setData({evaluationId: options.id});
-        await this.loadWechatMpQrcode()
         await this.checkEvaluationExist()
     },
 
@@ -379,11 +378,11 @@ Page({
     },
 
     showInviteOverlay() {
-        this.selectComponent('InviteFriends').show()
+        this.selectComponent('#InviteFriends').show()
     },
 
     async checkEvaluationExist() {
-       const data = {
+        const data = {
            columnId: '616e89add045b16da4f09987',
            evaluationId: this.data.evaluationId
        }
@@ -391,5 +390,8 @@ Page({
        this.setData({
            canIUseInvite: flag
        })
+       if(flag){
+           await this.loadWechatMpQrcode()
+       }
     }
 });

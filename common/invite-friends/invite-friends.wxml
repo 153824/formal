@@ -8,6 +8,9 @@
             <view class="invite-friend__content">
                 <image show-menu-by-longpress="true" src="{{image}}"/>
             </view>
+            <view class="invite-friend__footer">
+                <view class="text">长按图片分享给好友或保存图片发送到朋友圈</view>
+            </view>
         </view>
     </view>
 </van-overlay>

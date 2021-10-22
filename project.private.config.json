@@ -33,7 +33,7 @@
         {
           "name": "测评详情",
           "pathName": "pages/station/components/detail/detail",
-          "query": "id=5d9064b9d5de2b0073c8d711",
+          "query": "id=5d9064b9d5de2b0073c8d711&_ttn=610ccdc93451547e683e0450",
           "scene": 1007
         },
         {

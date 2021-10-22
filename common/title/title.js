@@ -79,6 +79,18 @@ Component({
         },
         goToPage: function () {
             const {url} = this.properties;
+            if(getCurrentPages().length <= 1){
+                wx.switchTab({
+                    url: '/pages/home/home'
+                })
+                return;
+            }
+            if(!url){
+                wx.navigateBack({
+                    delta: -1
+                })
+                return
+            }
             wx.reLaunch({
                 url
             })

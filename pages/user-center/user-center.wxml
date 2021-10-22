@@ -26,6 +26,17 @@
                     <text>{{userBaseInfo.nickname || userBaseInfo.realname}}</text>
                 </block>
             </view>
+            <view class="user-card">
+                <view class="user-card__item is-left">
+                    <image class="title" src="https://s.luoke101.com/user%40card-name.png"/>
+                    <view class="tip">
+                        每周免费测评：5份
+                    </view>
+                </view>
+                <view class="user-card__item is-right">
+                    <view class="text" bind:tap="goToFree">立即使用</view>
+                </view>
+            </view>
         </view>
         <view class="content">
             <scroll-view class="content-scroll-area" scroll-y>

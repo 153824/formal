@@ -144,4 +144,10 @@ Page({
         }
         app.openContactService()
     },
+
+    goToFree() {
+        wx.navigateTo({
+            url: '/pages/home/subpages/free/free'
+        })
+    }
 });

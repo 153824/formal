@@ -1,0 +1,48 @@
+.invite-friend__wrapper{
+
+}
+.invite-friend{
+    padding: 210rpx 76rpx 0 76rpx;
+}
+.invite-friend__header{
+    font-size: 36rpx;
+    font-family: PingFang SC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 42rpx;
+    text-align: center;
+}
+.invite-friend__content{
+}
+.invite-friend__content > image{
+    width: 600rpx;
+    height: 1100rpx;
+    margin: 42rpx 0 52rpx 0;
+}
+.invite-friend__footer{
+    display: flex;
+    justify-content: space-around;
+}
+.invite-friend__footer .text{
+    font-size: 26rpx;
+    font-family: PingFang SC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 30rpx;
+}
+.invite-friend__footer-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 26rpx;
+    font-family: PingFang SC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 30rpx;
+}
+.invite-friend__footer-item > image{
+    width: 80rpx;
+    height: 80rpx;
+    margin-bottom: 16rpx;
+}

@@ -1,0 +1,16 @@
+<van-overlay show="{{isShow}}" z-index="9999" catch:click="hide">
+    <view class="invite-friend__wrapper">
+        <view class="invite-friend">
+            <view class="invite-friend__header">
+                <view>邀请好友关注公众号</view>
+                <view>关注后双方各得5张测评兑换券</view>
+            </view>
+            <view class="invite-friend__content">
+                <image show-menu-by-longpress="true" src="{{image}}"/>
+            </view>
+            <view class="invite-friend__footer">
+                <view class="text">长按图片分享给好友或保存图片发送到朋友圈</view>
+            </view>
+        </view>
+    </view>
+</van-overlay>

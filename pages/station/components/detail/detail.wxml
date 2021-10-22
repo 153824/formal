@@ -1,6 +1,6 @@
-<!--station/report.wxml-->
+<hola-title type="navigator"></hola-title>
 <block wx:if="{{ !loading }}">
-    <scroll-view style="background-color: rgba(7,9,34,0.05);margin-bottom: 200rpx;">
+    <scroll-view style="background-color: rgba(7,9,34,0.05);margin-bottom: 200rpx;margin-top:{{ (statusbarHeight + titleHeight) }}px;height: calc(100vh - {{(statusbarHeight + titleHeight + tabbarHeight + marginBottom )*1}}px);">
         <view class="header">
             <view class="header-wrapper">
                 <view class="cover-wrapper">
@@ -170,4 +170,5 @@
         </view>
     </view>
 </van-overlay>
+<invite-friends id="InviteFriends" image="{{inviteInfo.url}}"></invite-friends>
 <wxs src="../../../../utils/util.wxs" module="util"></wxs>

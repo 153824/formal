@@ -8,13 +8,16 @@ page{
 
 }
 .head{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     padding: 28rpx 0 56rpx 0;
-    height: 216rpx;
+    height: 390rpx;
     background-color: #fff;
     z-index: 999999999;
 }
@@ -28,7 +31,7 @@ page{
     background-color: #fff;
 }
 .content{
-    margin-top: 316rpx;
+    margin-top: 490rpx;
     background-color: #fff;
 }
 .user-action-item{
@@ -63,4 +66,48 @@ page{
     color: #CCCCCC55;
     font-size: 30rpx;
     font-weight: normal;
+}
+.user-card{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40rpx 36rpx 28rpx 36rpx;
+    width: 578rpx;
+    height: 88rpx;
+    margin-top: 44rpx;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("https://s.luoke101.com/user%40card.png");
+}
+.user-card__item {}
+.user-card__item.is-left{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+.user-card__item.is-right{
+    border-radius: 30rpx 30rpx 30rpx 30rpx;
+    opacity: 1;
+    border: 2rpx solid #E7C192;
+}
+.user-card__item.is-right > .text{
+    padding: 6rpx 26rpx;
+    font-size: 26rpx;
+    font-family: PingFang SC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #E7C192;
+    line-height: 30rpx;
+}
+.user-card__item > .title{
+    width: 281rpx;
+    height: 32rpx;
+}
+
+.user-card__item > .tip{
+    font-size: 26rpx;
+    font-family: PingFang SC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #E7C192;
+    line-height: 30rpx;
 }

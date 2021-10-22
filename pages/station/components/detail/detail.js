@@ -1,6 +1,5 @@
 import {getEnv, getTag, Tracker, umaEvent} from "../../../../uma.config";
-import lottie from 'lottie-miniprogram';
-import {TICKET_LOTTIE} from '../../../../utils/lottie';
+import {getEvaluationExist, getWechatMpQrcode} from "../../../../api/detail";
 
 const app = getApp();
 
@@ -18,6 +17,7 @@ Page({
         statusbarHeight: app.globalData.statusbarHeight,
         titleHeight: app.globalData.titleHeight,
         windowHeight: app.globalData.windowHeight,
+        marginBottom: app.rate * 200,
         evaluation: {},
         evaluationId: '',
         releaseInfo: {},
@@ -32,9 +32,14 @@ Page({
         isWxWork: false,
         isWxWorkAdmin: false,
         isWxWorkSuperAdmin: false,
+        inviteInfo: {
+            url: '',
+            qrCodeImg: ''
+        },
+        canIUseInvite: false
     },
 
-    onLoad(options) {
+    async onLoad(options) {
         const {scene} = wx.getLaunchOptionsSync();
         const umaConfig = umaEvent.evaluationDetail;
         if (umaConfig.scene.includes(scene)) {
@@ -46,12 +51,11 @@ Page({
             }
         }
         this.setData({evaluationId: options.id});
-        this.initLottie();
-        if(this.inited) this.playLottie();
+        await this.loadWechatMpQrcode()
+        await this.checkEvaluationExist()
     },
 
     async onShow() {
-        console.log(app.rate);
         const that = this;
         const res = await app.loadEvaluationInfo(this.data.evaluationId)
         console.log(res);
@@ -91,32 +95,6 @@ Page({
                 buttonGroupHeight: rect.height
             })
         }).exec();
-    },
-
-    initLottie() {
-        if (this.inited) return
-        wx.createSelectorQuery().selectAll('#ticket-canvas').node(res => {
-            const canvas = res[0].node
-            const context = canvas.getContext('2d')
-
-            canvas.width = 337/app.rate
-            canvas.height = 81/app.rate
-
-            lottie.setup(canvas)
-            this.lottie = lottie.loadAnimation({
-                loop: true,
-                autoplay: true,
-                animationData: TICKET_LOTTIE,
-                rendererSettings: {
-                    context,
-                },
-            })
-            this.inited = true
-        }).exec()
-    },
-
-    playLottie() {
-        this.lottie.play()
     },
 
     goToGuide(e) {
@@ -389,5 +367,29 @@ Page({
             });
         })
         return p;
+    },
+
+    async loadWechatMpQrcode() {
+        const {data} = await getWechatMpQrcode()
+        this.setData({
+            inviteInfo: {
+                ...data
+            }
+        })
+    },
+
+    showInviteOverlay() {
+        this.selectComponent('InviteFriends').show()
+    },
+
+    async checkEvaluationExist() {
+       const data = {
+           columnId: '616e89add045b16da4f09987',
+           evaluationId: this.data.evaluationId
+       }
+       const {flag} = await getEvaluationExist(data)
+       this.setData({
+           canIUseInvite: flag
+       })
     }
 });

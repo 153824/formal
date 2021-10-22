@@ -1,6 +1,9 @@
 import {getEnv, getTag, Tracker, umaEvent} from "../../../../uma.config";
+import lottie from 'lottie-miniprogram';
+import {TICKET_LOTTIE} from '../../../../utils/lottie';
 
 const app = getApp();
+
 Page({
     data: {
         isIos: app.isIos,
@@ -43,9 +46,12 @@ Page({
             }
         }
         this.setData({evaluationId: options.id});
+        this.initLottie();
+        if(this.inited) this.playLottie();
     },
 
     async onShow() {
+        console.log(app.rate);
         const that = this;
         const res = await app.loadEvaluationInfo(this.data.evaluationId)
         console.log(res);
@@ -85,6 +91,32 @@ Page({
                 buttonGroupHeight: rect.height
             })
         }).exec();
+    },
+
+    initLottie() {
+        if (this.inited) return
+        wx.createSelectorQuery().selectAll('#ticket-canvas').node(res => {
+            const canvas = res[0].node
+            const context = canvas.getContext('2d')
+
+            canvas.width = 337/app.rate
+            canvas.height = 81/app.rate
+
+            lottie.setup(canvas)
+            this.lottie = lottie.loadAnimation({
+                loop: true,
+                autoplay: true,
+                animationData: TICKET_LOTTIE,
+                rendererSettings: {
+                    context,
+                },
+            })
+            this.inited = true
+        }).exec()
+    },
+
+    playLottie() {
+        this.lottie.play()
     },
 
     goToGuide(e) {

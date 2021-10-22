@@ -15,6 +15,9 @@
             </view>
         </view>
         <view style="background-color: #fff;margin-top: 20rpx;">
+            <view style="display: flex;align-items: center;justify-content: center;">
+                <canvas id="ticket-canvas" type="2d" style="display: block; width: 674rpx; height: 162rpx;"></canvas>
+            </view>
             <block wx:if="{{ util.isIncludes(assistant,evaluation.evaluationInfo.id) }}">
                 <checkout title="测评简介" type="introduction" info="{{ evaluation.synopsis }}"></checkout>
                 <checkout title="例题" type="assistant" list="{{ evaluation.quesExamples }}" isShow="{{evaluation.quesExamples.length}}"></checkout>

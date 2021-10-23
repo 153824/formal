@@ -32,6 +32,7 @@ SubmitReportForm, 提交报告表单
 EvaluationDetailByHome, 首页访问详情页
 EvaluationDetailByBeginner, 访问测评详情页（新人券）
 PopupFreeCard, 弹出免费测评任用卡
+GetFreeCardRightNow, 立即领取测评任用卡
 CloseFreeCard, 关闭免费测评任用卡
 GetInReceiveCard, 进入领卡二维码界面
 ComeBackAppFromGZH, 通过公众号的小程序卡片回到小程序
@@ -39,5 +40,6 @@ ClickReceiveSuccessAndSee, 点击领取成功前往查看
 ClickInviteGetTicket, 点击分享领券
 PopupInviteCover, 弹出分享图
 ComeBackAppFromInvite, 通过邀请关注后的小程序卡片回到小程序
+GetInGenerate, 通过邀请关注后的小程序卡片回到小程序
 ClickCantWatchReport, 点击不允许查看报告
 ClickReceiveFreeCardInHome, 首页点击领免费测评周卡

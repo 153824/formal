@@ -18,6 +18,7 @@ const umaEvent = {
             brain: '从落地页1',
             school: '从落地页2',
             social: '从落地页3',
+            report: '开通不允许查看报告'
         },
     },
 

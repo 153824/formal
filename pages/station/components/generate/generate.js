@@ -369,6 +369,13 @@ Page({
         catch (err) {
             console.error(err);
         }
+        try{
+            const umaConfig = umaEvent.customerService;
+            new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.report});
+        }
+        catch (e) {
+            console.log('友盟数据统计',e);
+        }
     },
     closeOverlay() {
         this.setData({

@@ -330,7 +330,11 @@ const umaEvent = {
         tag: 'PopupFreeCard'
     },
 
-
+    // 立即领取测评任用卡
+    getFreeCardRightNow: {
+        key: '立即领取测评任用卡',
+        tag: 'GetFreeCardRightNow'
+    }
 }
 
 const scanScene = [1007,1011,1012,1013,1047,1048,1049]

@@ -399,6 +399,13 @@ Page({
         }
         if(subscribed && !subscriberInfo.owned && type !== 'init'){
             await this.postSubscriber()
+            try{
+                const umaConfig = umaEvent.getFreeCardRightNow;
+                new Tracker(wx).generate(umaConfig.tag);
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
         }
     },
 

@@ -1,5 +1,5 @@
 import {getEnv, getTag, umaEvent, Tracker} from "../../uma.config.js";
-import {loadIsSubscribed, loadSubscriber} from "../../api/home";
+import {loadIsSubscribed, loadSubscriber, postCreatSubscriber} from "../../api/home";
 
 const app = getApp();
 Page({
@@ -28,24 +28,29 @@ Page({
         isGetAccessToken: app.checkAccessToken(),
         authCodeCounter: 0,
         joinInShow: true,
-        isSubscribed: true,
+        isSubscribed: false,
         subscriberInfo: {
-            flag: false,
+            hide: false,
+            owned: false,
             activated: false
-        }
+        },
+        popup: ''
     },
 
-    onLoad: function () {
-        this.init();
+    onLoad(options) {
+        this.setData({
+            popup: options.popup
+        })
     },
 
-    onShow: function () {
+    onShow: async function () {
         const that = this;
         setTimeout(()=>{
             that.setData({
                 tabbarHeight: wx.getStorageSync('TAB_BAR_HEIGHT')
             })
-        }, 0)
+        }, 0);
+        await this.init();
     },
 
     onUnload() {
@@ -100,8 +105,9 @@ Page({
                 isWxWorkSuperAdmin,
             })
             await this.getSubscriber()
-            await this.getIsSubscribed()
-        } else {
+            await this.getIsSubscribed(null, 'init')
+        }
+        else {
             app.checkUserInfo= async (res)=>{
                 console.log(res)
                 this.check({
@@ -119,7 +125,7 @@ Page({
                 })
                 if(res.tokenInfo && res.tokenInfo.accessToken){
                     await this.getSubscriber(res.tokenInfo.accessToken)
-                    await this.getIsSubscribed()
+                    await this.getIsSubscribed(null, 'init')
                 }
             };
         }
@@ -323,7 +329,6 @@ Page({
                     isGetAccessToken: true
                 });
                 that.goToCustomerService();
-                await that.getIsSubscribed();
                 try{
                     const umaConfig = umaEvent.authPhoneSuccess;
                     new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.home});
@@ -331,6 +336,7 @@ Page({
                 catch (e) {
                     console.log('友盟数据统计',e);
                 }
+                await that.getIsSubscribed(e);
             })
             .catch(err=>{
                 console.log(err);
@@ -355,21 +361,34 @@ Page({
     },
 
     async getSubscriber(token) {
-       const {flag, activated} = await loadSubscriber({accessToken: token})
+       const {activated, hide, owned} = await loadSubscriber({accessToken: token})
        this.setData({
-           subscriberInfo: {flag, activated}
+           subscriberInfo: {activated, hide, owned}
        })
     },
 
-    async getIsSubscribed() {
+    async getIsSubscribed(e, type) {
         const {subscriberInfo} = this.data;
         const {subscribed} = await loadIsSubscribed()
         this.setData({
-            isSubscribed: subscribed
+            isSubscribed: subscribed,
+            isJoin: e.currentTarget.dataset.join === 'join'
         })
-        // TODO: 跳转公号二维码页
-        if(subscribed && subscriberInfo.flag){
-
+        if(!subscribed && type !== 'init'){
+            wx.navigateTo({
+                url: '/common/webView'
+            })
+            const url =  (() => {
+                if (wx.getAccountInfoSync().miniProgram.appId === 'wx85cde7d3e8f3d949') {
+                    return "http://mp.weixin.qq.com/s?__biz=MzU3MDcwODgwNw==&mid=100025219&idx=1&sn=8c1056e6454739f01152969aa1e1879b&chksm=7ce9a5ab4b9e2cbd9b43625833da0e83dec43b38fe0735456808f3eeafc610a1621d7b206164#rd";
+                } else {
+                    return "http://mp.weixin.qq.com/s?__biz=Mzg4MzMxNTg1MA==&mid=100000013&idx=1&sn=123207cccedb235b93b4c3f2787899f3&chksm=4f4804e8783f8dfe33c4f7aee680cd99c03ced5181bb0e891645a949272b6dd326f97b20db3c#rd";
+                }
+            })()
+            wx.setStorageSync("webView_Url", url)
+        }
+        if(subscribed && !subscriberInfo.owned){
+            await this.postSubscriber()
         }
     },
 
@@ -389,5 +408,9 @@ Page({
         wx.switchTab({
             url: '/pages/user-center/user-center'
         })
+    },
+
+    async postSubscriber() {
+        await postCreatSubscriber()
     }
 });

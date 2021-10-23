@@ -1,4 +1,5 @@
 import {getEnv, getTag, Tracker, umaEvent} from "../../uma.config";
+import {loadSubscriber} from "../../api/home";
 
 const app = getApp();
 Page({
@@ -12,12 +13,17 @@ Page({
         isGetAccessToken: app.checkAccessToken(),
         isGetUserInfo: false,
         canIUseGetUserProfile: !!wx.getUserProfile ? true : false,
-        version: wx.getAccountInfoSync().miniProgram.version
+        version: wx.getAccountInfoSync().miniProgram.version,
+        subscriberInfo: {
+            activated: false,
+            hide: false,
+            owned: false,
+        }
     },
     onLoad: function (options) {
         app.setDataOfPlatformInfo(this);
     },
-    onShow() {
+    async onShow() {
         app.setDataOfPlatformInfo(this);
         this.getUserInformation().then(res=>{
             if(res.avatar){
@@ -33,6 +39,7 @@ Page({
         }).catch(err=>{
             console.error(err)
         });
+        await this.getSubscriber()
     },
     getUserInformation() {
         return app.getUserInformation()
@@ -149,5 +156,16 @@ Page({
         wx.navigateTo({
             url: '/pages/home/subpages/free/free'
         })
-    }
+    },
+
+    getFree() {
+
+    },
+
+    async getSubscriber(token) {
+        const {activated, hide, owned} = await loadSubscriber({accessToken: token})
+        this.setData({
+            subscriberInfo: {activated, hide, owned}
+        })
+    },
 });

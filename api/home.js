@@ -51,3 +51,20 @@ export function getFreeEvaluation(data) {
     })
     return p;
 }
+
+export function postCreatSubscriber(data) {
+    const p = new Promise((resolve, reject) => {
+        app.doAjax({
+            url: `wework/event/subscriber/create`,
+            method: 'GET',
+            data,
+            success(res) {
+                resolve(res)
+            },
+            error(err) {
+                reject(err)
+            }
+        })
+    })
+    return p;
+}

@@ -393,6 +393,10 @@ App({
         return p;
     },
 
+    checkIsExist() {
+
+    },
+
     /**
      * @Description: 时间转换函数
      * @author: WE!D

@@ -2,6 +2,7 @@ import debounce from '../../utils/lodash/debounce';
 import * as echarts from '../../utils/ec-canvas/echarts';
 import {getAge} from "../../utils/utils";
 import {getEnv, getTag, Tracker, umaEvent} from "../../uma.config";
+import {getIsExist} from "../../api/report";
 
 var app = getApp();
 var _this;
@@ -369,7 +370,7 @@ Page({
 			value: ''
         }
     },
-    onLoad: function (options) {
+    async onLoad(options) {
         const that = this;
         ctx = wx.createCanvasContext('canvasArcCir');
         const id = that.data.id || options.receiveRecordId || options.receivedRecordId;
@@ -395,7 +396,11 @@ Page({
                 }
             }
         });
-        this.setData({id});
+        this.setData({id, maskTrigger: true});
+        const {flag} = await getIsExist()
+        if(flag){
+            this.goToAnalyze({receiveRecordId: id})
+        }
     },
 
     onShow: function () {
@@ -1064,7 +1069,9 @@ Page({
         });
     },
 
-    goToAnalyze() {
+    goToAnalyze(res) {
+        const {options} = this.data;
+        const receiveRecordId = res.receiveRecordId || this.data.id || options.receiveRecordId || options.receivedRecordId;
         try {
             const umaConfig = umaEvent.clickMasterParse;
             new Tracker(wx).generate(umaConfig.tag)
@@ -1072,8 +1079,9 @@ Page({
         catch (e) {
             console.log('友盟埋点统计')
         }
-
-        this.selectComponent('#hola-enter').show()
+        wx.navigateTo({
+            url: `/pages/complete/complete?receiveRecordId=${receiveRecordId}`
+        })
     },
 
     onUnload: function () {

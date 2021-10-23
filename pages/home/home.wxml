@@ -60,7 +60,7 @@
                     <view class="title">
                         {{evaluationSection.title}}
                     </view>
-                    <image wx:if="{{!isGetAccessToken || !subscriberInfo.flag}}" bind:tap="openOverlay" src="https://s.luoke101.com/home%40share.png" />
+                    <image wx:if="{{!isGetAccessToken || !subscriberInfo.owned}}" bind:tap="openOverlay" src="https://s.luoke101.com/home%40share.png" />
                 </view>
                 <view class="content">
                     <block wx:for="{{evaluationSection.evaluations}}" wx:for-item="evaluationItem">
@@ -165,7 +165,7 @@
         </view>
     </view>
 </view>
-<van-overlay show="{{(!isGetAccessToken || !subscriberInfo.flag) && joinInShow}}" z-index="9999999999999" catch:click="closeOverlay">
+<van-overlay show="{{(!isGetAccessToken || !subscriberInfo.owned) && joinInShow}}" z-index="9999999999999" catch:click="closeOverlay">
     <view class="home-card__wrapper">
         <view class="home-card" catch:tap="openOverlay">
             <view class="home-card__header">
@@ -176,11 +176,16 @@
                     <image class="is-card" src="https://s.luoke101.com/home%40card-no-shadow.png"/>
                 </view>
             </view>
-            <button class="home-card__footer" data-type="join" open-type="getPhoneNumber" catch:getphonenumber="getPhoneNumber"></button>
+            <block wx:if="{{!isGetAccessToken}}">
+                <button class="home-card__footer" data-type="join" open-type="getPhoneNumber" catch:getphonenumber="getPhoneNumber"></button>
+            </block>
+            <block wx:else>
+                <button class="home-card__footer" data-type="join" bind:tap="getIsSubscribed"></button>
+            </block>
         </view>
     </view>
 </van-overlay>
-<van-overlay show="{{isGetAccessToken && subscriberInfo.flag && joinInShow}}" z-index="9999999999999" catch:click="closeOverlay">
+<van-overlay show="{{((isGetAccessToken && subscriberInfo.owned && isSubscribed && isJoin) || popup === 'fetch_success') && joinInShow}}" z-index="9999999999999" catch:click="closeOverlay">
     <view class="home-card__wrapper">
         <view class="home-card" catch:tap="openOverlay">
             <view class="home-card__header">

@@ -3,7 +3,6 @@
     "pages/home/home",
     "pages/station/components/detail/detail",
     "pages/station/components/sharePaper/sharePaper",
-    "pages/manager/manager",
     "pages/manager/components/evaluationReport/evaluationReport",
     "pages/manager/components/useHistoryDetail/useHistoryDetail",
     "pages/report/report",
@@ -70,12 +69,6 @@
         "text": "主页",
         "iconPath": "images/icon/icon@index-no-active.png",
         "selectedIconPath": "images/icon/icon@index-active.png"
-      },
-      {
-        "pagePath": "pages/manager/manager",
-        "text": "测评管理",
-        "iconPath": "images/icon/icon@evaluation-manager-no-active.png",
-        "selectedIconPath": "images/icon/icon@evaluation-manager-active.png"
       },
       {
         "pagePath": "pages/work-base/work-base",

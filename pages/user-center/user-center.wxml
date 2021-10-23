@@ -1,7 +1,7 @@
 <!--微信小程序端-->
 <view wx:if="{{ !isWxWork && !is3rd }}">
     <view class="user-page-wrapper">
-        <view class="head">
+        <view class="head" style="height:{{subscriberInfo.owned ? 390 : 190}}rpx;">
             <view class="user-personal-info">
                 <block wx:if="{{!isGetUserInfo}}">
                     <block wx:if="{{canIUseGetUserProfile}}">
@@ -26,19 +26,33 @@
                     <text>{{userBaseInfo.nickname || userBaseInfo.realname}}</text>
                 </block>
             </view>
-            <view class="user-card">
-                <view class="user-card__item is-left">
-                    <image class="title" src="https://s.luoke101.com/user%40card-name.png"/>
-                    <view class="tip">
-                        每周免费测评：5份
+            <block wx:if="{{subscriberInfo.owned}}">
+                <view class="user-card">
+                    <view class="user-card__item is-left">
+                        <image class="title" src="https://s.luoke101.com/user%40card-name.png"/>
+                        <block wx:if="{{subscriberInfo.activated}}">
+                            <view class="tip">
+                                每周免费测评：5份
+                            </view>
+                        </block>
+                        <block wx:else>
+                            <view class="tip">
+                                连续一月未使用，已失去权益
+                            </view>
+                        </block>
+                    </view>
+                    <view class="user-card__item is-right">
+                        <block wx:if="{{subscriberInfo.activated}}">
+                            <view class="text" bind:tap="goToFree">立即使用</view>
+                        </block>
+                        <block wx:else>
+                            <view class="text" bind:tap="getFree">激活权益</view>
+                        </block>
                     </view>
                 </view>
-                <view class="user-card__item is-right">
-                    <view class="text" bind:tap="goToFree">立即使用</view>
-                </view>
-            </view>
+            </block>
         </view>
-        <view class="content">
+        <view class="content" style="margin-top:{{subscriberInfo.owned ? 490 : 290}}rpx;">
             <scroll-view class="content-scroll-area" scroll-y>
                 <view class="user-action-item" bindtap="goToReceiveReports">
                     <view class="title">

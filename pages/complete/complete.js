@@ -1,4 +1,6 @@
 import debounce from "../../utils/lodash/debounce";
+import {Tracker, umaEvent} from "../../uma.config";
+import {exchangeEvaluationId, submit} from "../../api/report";
 
 const app = getApp();
 
@@ -29,17 +31,31 @@ Page({
         companyList: [],
         selectCompanyTrigger: false,
         currentCompany: '',
-        currentKeyword: ''
+        currentKeyword: '',
+        isDisabled: true,
+        username: '',
+        evaluationId: ''
     },
 
-    onLoad: function (options) {
-
+    async onLoad(options) {
+        const {evaluationId} = await exchangeEvaluationId({receiveRecordId: options.receiveRecordId})
+        this.setData({
+            evaluationId,
+            receiveRecordId: options.receiveRecordId
+        })
     },
 
     onPositionChange(e) {
         const {value} = e.detail;
         this.setData({
             positionIndex: value
+        })
+    },
+
+    onUsernameInput(e) {
+        console.log(e);
+        this.setData({
+            username: e.detail.value
         })
     },
 
@@ -109,5 +125,47 @@ Page({
             currentKeyword: company,
         });
         this.hideSelectCompany();
+    },
+
+    goToReport() {
+
+    },
+
+    async submit() {
+        const {
+            currentCompany,
+            currentPosition,
+            lastKeyword,
+            currentKeyword,
+            evaluationId,
+            companyModelList,
+            companyModelIndex,
+            positionList,
+            positionIndex,
+            username,
+            receiveRecordId
+        } = this.data;
+        if((currentCompany || lastKeyword || currentKeyword).length <= 2){
+            app.toast('企业名称至少为2个字');
+            return
+        }
+        const data = {
+            companyName: currentCompany || lastKeyword || currentKeyword,
+            position: positionList[positionIndex],
+            evaluationId: evaluationId,
+            memberNum: companyModelList[companyModelIndex],
+            userName: username
+        }
+        await submit(data)
+        wx.navigateTo({
+            url: `/pages/report/report?receiveRecordId=${receiveRecordId}`
+        })
+        try {
+            const umaConfig = umaEvent.submitReportForm;
+            new Tracker(wx).generate(umaConfig.tag)
+        }
+        catch (e) {
+            console.log('友盟埋点统计')
+        }
     },
 });

@@ -6,7 +6,7 @@
         <view class="complete-content">
             <view class="complete-content__item">
                 <view class="is-need">您的姓名</view>
-                <input class="is-input" placeholder="请输入" placeholder-class="input-placeholder"/>
+                <input class="is-input" placeholder="请输入" placeholder-class="input-placeholder" bind:input="onUsernameInput"/>
             </view>
             <view class="complete-content__item">
                 <view class="is-need">企业名称</view>
@@ -44,7 +44,7 @@
             </view>
         </view>
         <view class="complate-footer">
-            <button class="is-disabled">查看报告</button>
+            <button class="{{username && positionIndex >= 0 && companyModelIndex >= 0 && (currentCompany || lastKeyword || currentKeyword) ? 'is-success' : 'is-disabled'}}" bind:tap="submit">查看报告</button>
         </view>
     </view>
 </scroll-view>

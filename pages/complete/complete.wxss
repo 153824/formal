@@ -72,10 +72,25 @@
     border-radius: 8rpx 8rpx 8rpx 8rpx;
     opacity: 1;
 }
+.is-success{
+    background: rgb(52, 62, 232);
+    border-radius: 8rpx 8rpx 8rpx 8rpx;
+    opacity: 1;
+}
 .complate-footer button{
     padding: 10rpx 0;
     font-size: 32rpx;
     font-family: PingFang SC-Semibold, PingFang SC;
     font-weight: 600;
     color: #FFFFFF;
+}
+.company-item{
+    padding-top: 30rpx;
+    padding-bottom: 20rpx;
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #303113;
+    line-height: 40rpx;
+    border-bottom: 2rpx solid #E9E9E9FF;
 }

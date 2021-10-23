@@ -56,7 +56,7 @@ export function postCreatSubscriber(data) {
     const p = new Promise((resolve, reject) => {
         app.doAjax({
             url: `wework/event/subscriber/create`,
-            method: 'GET',
+            method: 'POST',
             data,
             success(res) {
                 resolve(res)

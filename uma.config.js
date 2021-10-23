@@ -382,6 +382,20 @@ const umaEvent = {
     comeBackAppFromInvite: {
         key: '通过邀请关注后的小程序卡片回到小程序',
         tag: 'ComeBackAppFromInvite'
+    },
+
+    // 进入二维码生成界面
+    getInGenerate: {
+        key: '通过邀请关注后的小程序卡片回到小程序',
+        tag: 'GetInGenerate',
+        origin: {
+            bench: '从工作台',
+            detail: '从详情页'
+        },
+        route: {
+            detail: ['pages/station/components/detail/detail'],
+            bench: ['pages/work-base/components/evaluation-more/evaluation-more','pages/work-base/work-base']
+        }
     }
 }
 

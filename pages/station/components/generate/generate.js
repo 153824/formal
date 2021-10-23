@@ -46,7 +46,6 @@ Page({
     },
     onLoad(options) {
         const that = this;
-        console.log(options);
         const {norms=[], evaluationId=""} = options && options.necessaryInfo ? JSON.parse(options.necessaryInfo) : {};
         setTimeout(()=>{
             wx.createSelectorQuery().select('#generate-header').boundingClientRect(res=>{
@@ -80,7 +79,23 @@ Page({
             });
         this.loadEvaluationInfo(evaluationId);
         this.loadEvaluationDetail(evaluationId);
-
+        const umaConfig = umaEvent.getInGenerate;
+        const currentRoute = getCurrentPages()[getCurrentPages().length - 2].route;
+        if(umaConfig.route.bench.includes(currentRoute)){
+            try{
+                new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.bench});
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
+        } else {
+            try{
+                new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.detail});
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
+        }
     },
     onShow() {
         const {evaluationId} = this.data;

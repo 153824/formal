@@ -404,6 +404,13 @@ Page({
                 }
             })()
             wx.setStorageSync("webView_Url", url)
+            try{
+                const umaConfig = umaEvent.getInReceiveCard;
+                new Tracker(wx).generate(umaConfig.tag);
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
         }
         if(subscribed && !subscriberInfo.owned && type !== 'init'){
             await this.postSubscriber()

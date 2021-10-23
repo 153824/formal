@@ -342,6 +342,12 @@ const umaEvent = {
     closeFreeCard: {
         key: '关闭免费测评任用卡',
         tag: 'CloseFreeCard'
+    },
+
+    // 进入领卡二维码界面
+    getInReceiveCard: {
+        key: '进入领卡二维码界面',
+        tag: 'GetInReceiveCard'
     }
 }
 

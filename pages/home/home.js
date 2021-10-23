@@ -365,6 +365,15 @@ Page({
        this.setData({
            subscriberInfo: {activated, hide, owned}
        })
+        if(!owned && !hide){
+            try{
+                const umaConfig = umaEvent.popupFreeCard;
+                new Tracker(wx).generate(umaConfig.tag);
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
+        }
     },
 
     async getIsSubscribed(e, type) {
@@ -388,7 +397,7 @@ Page({
             })()
             wx.setStorageSync("webView_Url", url)
         }
-        if(subscribed && !subscriberInfo.owned){
+        if(subscribed && !subscriberInfo.owned && type !== 'init'){
             await this.postSubscriber()
         }
     },

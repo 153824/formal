@@ -38,3 +38,4 @@ ComeBackAppFromGZH, 通过公众号的小程序卡片回到小程序
 ClickReceiveSuccessAndSee, 点击领取成功前往查看
 ClickInviteGetTicket, 点击分享领券
 PopupInviteCover, 弹出分享图
+ComeBackAppFromInvite, 通过邀请关注后的小程序卡片回到小程序

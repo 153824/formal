@@ -52,6 +52,15 @@ Page({
                 console.log('友盟数据统计',e);
             }
         }
+        if(options.uma === 'invite'){
+            try{
+                const umaConfig = umaEvent.comeBackAppFromInvite;
+                new Tracker(wx).generate(umaConfig.tag);
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
+        }
     },
 
     onShow: async function () {

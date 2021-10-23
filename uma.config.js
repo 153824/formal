@@ -376,6 +376,12 @@ const umaEvent = {
     popupInviteCover: {
         key: '弹出分享图',
         tag: 'PopupInviteCover'
+    },
+
+    // 通过邀请关注后的小程序卡片回到小程序
+    comeBackAppFromInvite: {
+        key: '通过邀请关注后的小程序卡片回到小程序',
+        tag: 'ComeBackAppFromInvite'
     }
 }
 

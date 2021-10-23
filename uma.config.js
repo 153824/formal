@@ -291,6 +291,7 @@ const umaEvent = {
             search: '搜索无结果页联系顾问',
             bench: '工作台登录',
             enjoy: '免费体验',
+            card: '领取免费卡'
         }
     },
 

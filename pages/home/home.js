@@ -351,8 +351,12 @@ Page({
         })
         if(authCodeCounter <= 0){
             try{
+                let origin = 'home'
                 const umaConfig = umaEvent.authPhoneCount;
-                new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.home});
+                if(type === 'join'){
+                    origin = 'card'
+                }
+                new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[origin]});
             }
             catch (e) {
                 console.log('友盟数据统计',e);

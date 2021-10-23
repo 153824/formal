@@ -60,7 +60,7 @@
                     <view class="title">
                         {{evaluationSection.title}}
                     </view>
-                    <image wx:if="{{!isGetAccessToken || !subscriberInfo.owned}}" bind:tap="openOverlay" src="https://s.luoke101.com/home%40share.png" />
+                    <image wx:if="{{(!isGetAccessToken || !subscriberInfo.owned) && !subscriberInfo.hide}}" bind:tap="openOverlay" src="https://s.luoke101.com/home%40share.png" />
                 </view>
                 <view class="content">
                     <block wx:for="{{evaluationSection.evaluations}}" wx:for-item="evaluationItem">

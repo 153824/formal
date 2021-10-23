@@ -491,5 +491,9 @@ Page({
 
     async postSubscriber() {
         await postCreatSubscriber()
+        await this.getSubscriber()
+        this.setData({
+            isJoin: true
+        })
     }
 });

@@ -28,7 +28,7 @@
                 </scroll-view>
             </view>
             <view class="complete-content__item">
-                <view>您的职位</view>
+                <view class="is-need">您的职位</view>
                 <picker bind:change="onPositionChange" value="{{positionIndex}}" range="{{positionList}}">
                     <view class="picker-content is-input {{positionIndex < 0 ? 'is-placeholder' : ''}}">
                         {{positionIndex >= 0 ? positionList[positionIndex] : '请选择'}}
@@ -45,7 +45,7 @@
             </view>
         </view>
         <view class="complate-footer">
-            <button class="{{username && positionIndex >= 0 && companyModelIndex >= 0 && (currentCompany || lastKeyword || currentKeyword) ? 'is-success' : 'is-disabled'}}" bind:tap="submit">查看报告</button>
+            <button class="{{username && positionIndex >= 0 && lastKeyword ? 'is-success' : 'is-disabled'}}" bind:tap="submit">查看报告</button>
         </view>
     </view>
 </scroll-view>

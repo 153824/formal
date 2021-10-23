@@ -335,6 +335,7 @@ Page({
         moveParams: {
             scrollLeft: 0
         },
+        isWxWork: app.wxWorkInfo.isWxWork,
         canvasLoading: true,
         radarIndicator: "",
         radarValue: "",
@@ -397,11 +398,16 @@ Page({
             }
         });
         this.setData({id});
-        const {flag} = await getIsExist()
-        if(!flag){
-            this.goToAnalyze({receiveRecordId: id})
+        if(!this.data.isWxWork){
+            const {flag} = await getIsExist()
+            if(!flag){
+                this.goToAnalyze({receiveRecordId: id})
+            }
+            this.setData({flag});
         }
-        this.setData({flag});
+        else {
+            this.setData({flag: true});
+        }
     },
 
     onShow: function () {

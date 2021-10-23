@@ -1,5 +1,6 @@
 import moment from '../../../../utils/moment'
 import {Tracker, umaEvent} from "../../../../uma.config";
+import {getAssignment} from "../../../../api/detail";
 const app = getApp();
 Page({
     data: {
@@ -42,7 +43,8 @@ Page({
         shareCover: '',
         releaseRecordId: '',
         gentKey: new Date().getTime(),
-        showVIP: false
+        showVIP: false,
+        canIRefuse: false
     },
     onLoad(options) {
         const that = this;
@@ -97,7 +99,7 @@ Page({
             }
         }
     },
-    onShow() {
+    async onShow() {
         const {evaluationId} = this.data;
         const selectedTeam = wx.getStorageSync(`checked-depart-info-${evaluationId}`)
         if(Object.keys(selectedTeam).length){
@@ -111,6 +113,7 @@ Page({
             });
             this.loadDispatchInfo(selectedTeam.value);
         }
+        await this.loadAssignment()
     },
     loadRootDepart() {
         if(!this.data.isWxWork){
@@ -211,8 +214,9 @@ Page({
         })
     },
     setReportAuth(e) {
+        const {canIRefuse} = this.data;
         const {type} = e.currentTarget.dataset;
-        if(type === 'vip'){
+        if(type === 'vip' && !canIRefuse){
             this.openOverlay()
             const umaConfig = umaEvent.clickCantWatchReport;
             const currentRoute = getCurrentPages()[getCurrentPages().length - 2].route;
@@ -241,6 +245,12 @@ Page({
         const {type} = e.currentTarget.dataset;
         this.setData({
             expireModel: type
+        })
+    },
+    async loadAssignment() {
+        const {flag} = await getAssignment();
+        this.setData({
+            canIRefuse: true
         })
     },
     onConfirm(e) {

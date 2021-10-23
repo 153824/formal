@@ -33,3 +33,19 @@ export function getEvaluationExist(data) {
     })
     return p
 }
+
+export function getAssignment(){
+    const p = new Promise((resolve, reject) => {
+        app.doAjax({
+            url: 'wework/evaluations/assignment/settings',
+            method: 'GET',
+            success(res) {
+                resolve(res)
+            },
+            error(err) {
+                reject(err)
+            }
+        })
+    })
+    return p
+}

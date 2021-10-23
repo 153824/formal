@@ -41,7 +41,7 @@
                 </view>
                 <view class="refuse {{canUSeeReport==='refuse'?'active':''}}" data-type="{{canIRefuse ? 'refuse' : 'vip'}}" bind:tap="setReportAuth">
                     <text>不允许</text>
-                    <image class="refuse-image" src="https://s.luoke101.com/generate%40vip.png"/>
+                    <image wx:if="{{!canIRefuse}}" class="refuse-image" src="https://s.luoke101.com/generate%40vip.png"/>
                 </view>
             </view>
         </view>

@@ -330,8 +330,12 @@ Page({
                 });
                 that.goToCustomerService();
                 try{
+                    let origin = 'home'
+                    if(type === 'join'){
+                        origin = 'card'
+                    }
                     const umaConfig = umaEvent.authPhoneSuccess;
-                    new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.home});
+                    new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[origin]});
                 }
                 catch (e) {
                     console.log('友盟数据统计',e);

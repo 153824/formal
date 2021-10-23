@@ -56,6 +56,7 @@ const umaEvent = {
             home: '首页在线咨询',
             search: '搜索无结果页联系顾问',
             bench: '工作台登录',
+            card: '领取免费卡'
         }
     },
 

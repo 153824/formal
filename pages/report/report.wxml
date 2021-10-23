@@ -1,5 +1,5 @@
 <!--admins/report.wxml-->
-<block>
+<block wx:if="{{flag}}">
     <view class="{{showDlg?'hiddenBack':''}}">
         <!-- 头部信息 -->
         <view class="box0" style='padding: 36rpx 60rpx 48rpx 60rpx;background: #fff;'>
@@ -896,5 +896,5 @@
 <!--    </view>-->
 </block>
 <hola-enter id="hola-enter" evaluationId="{{shareInfo.evaluationId}}"></hola-enter>
-<hola-mask isShow="{{maskTrigger}}"></hola-mask>
+<hola-mask isShow="{{maskTrigger || !flag}}"></hola-mask>
 <wxs src="../../utils/util.wxs" module="util"></wxs>

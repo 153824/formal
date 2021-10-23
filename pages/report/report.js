@@ -396,11 +396,12 @@ Page({
                 }
             }
         });
-        this.setData({id, maskTrigger: true});
+        this.setData({id});
         const {flag} = await getIsExist()
         if(!flag){
             this.goToAnalyze({receiveRecordId: id})
         }
+        this.setData({flag});
     },
 
     onShow: function () {

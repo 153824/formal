@@ -323,6 +323,14 @@ const umaEvent = {
         key: '访问测评详情页（新人券）',
         tag: 'EvaluationDetailByBeginner'
     },
+
+    // 弹出免费测评任用卡
+    popupFreeCard: {
+        key: '弹出免费测评任用卡',
+        tag: 'PopupFreeCard'
+    },
+
+
 }
 
 const scanScene = [1007,1011,1012,1013,1047,1048,1049]
@@ -364,14 +372,14 @@ class Tracker {
             tag: this.getTag()
         };
         switch (tagName) {
-            case 'LaunchHome':
-            case 'CustomerService':
-            case 'evaluationDetail':
-            case 'searchByKeyword':
-            case 'authPhoneSuccess':
-            case 'clickStartReplying':
-            case 'submitAnswer':
-            case 'getInReport':
+            // case 'LaunchHome':
+            // case 'CustomerService':
+            // case 'evaluationDetail':
+            // case 'searchByKeyword':
+            // case 'authPhoneSuccess':
+            // case 'clickStartReplying':
+            // case 'submitAnswer':
+            // case 'getInReport':
             default:
                 targetData = Object.assign(targetData, extraData);
         }

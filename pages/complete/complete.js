@@ -41,7 +41,8 @@ Page({
         const {evaluationId} = await exchangeEvaluationId({receiveRecordId: options.receiveRecordId})
         this.setData({
             evaluationId,
-            receiveRecordId: options.receiveRecordId
+            receiveRecordId: options.receiveRecordId,
+            redirectURL: (()=> `/${getCurrentPages()[getCurrentPages().length >= 3 ? getCurrentPages().length  - 3 : 0].route}`)()
         })
     },
 

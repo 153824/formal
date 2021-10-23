@@ -222,7 +222,7 @@ Page({
     },
 
     authPhoneNumber(e) {
-        // enjoy-体验测评 contact-联系客服
+        // enjoy-体验测评 contact-联系客服 invite-分享得券
         const that = this;
         const {type} = e.currentTarget.dataset;
         let {authCodeCounter, isIos} = this.data;
@@ -251,14 +251,19 @@ Page({
                     catch (e) {
                         console.log('友盟数据统计',e);
                     }
-                } else if(type === 'contact' && !isIos){
+                }
+                else if(type === 'invite') {
+
+                }
+                else if(type === 'contact' && !isIos){
                     try{
                         new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.pay});
                     }
                     catch (e) {
                         console.log('友盟数据统计',e);
                     }
-                } else if (type === 'contact' && isIos){
+                }
+                else if (type === 'contact' && isIos){
                     try{
                         new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.contact});
                     }

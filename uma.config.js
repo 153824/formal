@@ -336,6 +336,12 @@ const umaEvent = {
     getFreeCardRightNow: {
         key: '立即领取测评任用卡',
         tag: 'GetFreeCardRightNow'
+    },
+
+    // 关闭免费测评任用卡
+    closeFreeCard: {
+        key: '关闭免费测评任用卡',
+        tag: 'CloseFreeCard'
     }
 }
 

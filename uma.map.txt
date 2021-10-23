@@ -32,3 +32,4 @@ SubmitReportForm, 提交报告表单
 EvaluationDetailByHome, 首页访问详情页
 EvaluationDetailByBeginner, 访问测评详情页（新人券）
 PopupFreeCard, 弹出免费测评任用卡
+CloseFreeCard, 关闭免费测评任用卡

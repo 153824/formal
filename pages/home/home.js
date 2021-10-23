@@ -418,9 +418,19 @@ Page({
     },
 
     closeOverlay() {
+        const {owned} = this.data.subscriberInfo
         this.setData({
             joinInShow: false
         })
+        if(!owned){
+            try{
+                const umaConfig = umaEvent.closeFreeCard;
+                new Tracker(wx).generate(umaConfig.tag);
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
+        }
     },
 
     openOverlay() {

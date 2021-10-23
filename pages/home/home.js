@@ -464,6 +464,13 @@ Page({
         this.setData({
             joinInShow: true
         })
+        try{
+            const umaConfig = umaEvent.clickReceiveFreeCardInHome;
+            new Tracker(wx).generate(umaConfig.tag);
+        }
+        catch (e) {
+            console.log('友盟数据统计',e);
+        }
     },
 
     goToUserCenter() {

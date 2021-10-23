@@ -411,6 +411,12 @@ const umaEvent = {
             detail: ['pages/station/components/detail/detail'],
             bench: ['pages/work-base/components/evaluation-more/evaluation-more','pages/work-base/work-base']
         }
+    },
+
+    // 首页点击领免费测评周卡
+    clickReceiveFreeCardInHome: {
+        key: '首页点击领免费测评周卡',
+        tag: 'ClickReceiveFreeCardInHome',
     }
 }
 

@@ -40,3 +40,4 @@ ClickInviteGetTicket, 点击分享领券
 PopupInviteCover, 弹出分享图
 ComeBackAppFromInvite, 通过邀请关注后的小程序卡片回到小程序
 ClickCantWatchReport, 点击不允许查看报告
+ClickReceiveFreeCardInHome, 首页点击领免费测评周卡

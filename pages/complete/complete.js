@@ -42,7 +42,7 @@ Page({
         this.setData({
             evaluationId,
             receiveRecordId: options.receiveRecordId,
-            redirectURL: (()=> `/${getCurrentPages()[getCurrentPages().length >= 3 ? getCurrentPages().length  - 3 : 0].route}`)()
+            redirectURL: (()=> `/${getCurrentPages()[getCurrentPages().length >= 2 ? getCurrentPages().length  - 2 : 0].route}`)()
         })
     },
 

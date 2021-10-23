@@ -1080,7 +1080,7 @@ Page({
         catch (e) {
             console.log('友盟埋点统计')
         }
-        wx.navigateTo({
+        wx.redirectTo({
             url: `/pages/complete/complete?receiveRecordId=${receiveRecordId}`
         })
     },

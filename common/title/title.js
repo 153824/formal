@@ -33,6 +33,10 @@ Component({
         style: {
             value: "",
             type: String
+        },
+        backgroundColor: {
+            value: "#ffffff",
+            type: String
         }
     },
     data: {

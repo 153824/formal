@@ -28,10 +28,10 @@ Page({
         isGetAccessToken: app.checkAccessToken(),
         authCodeCounter: 0,
         joinInShow: true,
-        isSubscribed: false,
+        isSubscribed: true,
         subscriberInfo: {
             hide: false,
-            owned: false,
+            owned: true,
             activated: false
         },
         popup: ''
@@ -372,8 +372,9 @@ Page({
         const {subscribed} = await loadIsSubscribed()
         this.setData({
             isSubscribed: subscribed,
-            isJoin: e.currentTarget.dataset.join === 'join'
+            isJoin: e && e.currentTarget && e.currentTarget.dataset && e.currentTarget.dataset.join === 'join'
         })
+        // 前往公众号
         if(!subscribed && type !== 'init'){
             wx.navigateTo({
                 url: '/common/webView'

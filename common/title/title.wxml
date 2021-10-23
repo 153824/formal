@@ -46,7 +46,7 @@
     </view>
 </block>
 <block wx:if="{{ type === 'navigator' }}">
-    <view class="bar-wrapper" style="height: {{ statusbarHeight + titleHeight }}px;">
+    <view class="bar-wrapper" style="height: {{ statusbarHeight + titleHeight }}px;background: {{backgroundColor}};">
         <view class="statusbar colorful-bg" style="height: {{ statusbarHeight }}px;"></view>
         <view class="title-bar colorful-bg" style="height: {{ titleHeight }}px;top: {{ statusbarHeight }}px;">
             <van-icon name="arrow-left" size="20" color="rgb(0,0,0)" bind:click="goToPage"/>

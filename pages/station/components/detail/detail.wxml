@@ -2,7 +2,7 @@
 <block wx:if="{{ !loading }}">
     <scroll-view style="background-color: rgba(7,9,34,0.05);margin-bottom: 200rpx;margin-top:{{ (statusbarHeight + titleHeight) }}px;height: calc(100vh - {{(statusbarHeight + titleHeight + tabbarHeight + marginBottom )*1}}px);">
         <view class="header">
-            <view class="header-wrapper" bind:tap="showInviteOverlay">
+            <view class="header-wrapper">
                 <view class="cover-wrapper">
                     <image class="head-cover" src="{{ evaluation.smallImg }}"></image>
                 </view>
@@ -15,7 +15,7 @@
             </view>
         </view>
         <view style="background-color: #fff;margin-top: 20rpx;">
-            <view wx:if="{{canIUseInvite}}" style="display: flex;align-items: center;justify-content: center;">
+            <view wx:if="{{canIUseInvite}}" style="display: flex;align-items: center;justify-content: center;" bind:tap="showInviteOverlay">
                 <image src="https://s.luoke101.com/detail%40ticket.png" style="display: block; width: 674rpx; height: 162rpx;"/>
             </view>
             <block wx:if="{{ util.isIncludes(assistant,evaluation.evaluationInfo.id) }}">

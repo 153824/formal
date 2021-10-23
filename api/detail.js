@@ -3,7 +3,7 @@ const app = getApp()
 export function getWechatMpQrcode() {
     const p = new Promise((resolve, reject) => {
         app.doAjax({
-            url: 'wework/evaluations/wechatMpQrcode',
+            url: 'evaluations/wechatMpQrcode',
             method: 'GET',
             data: {},
             success(res) {

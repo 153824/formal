@@ -1,7 +1,8 @@
 {
   "usingComponents": {
     "van-cell-group": "/common/vant-weapp/dist/cell-group/index",
-    "van-field": "/common/vant-weapp/dist/field/index"
+    "van-field": "/common/vant-weapp/dist/field/index",
+    "hola-title": "/common/title/title"
   },
   "navigationStyle": "custom"
 }

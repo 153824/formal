@@ -383,7 +383,14 @@ Page({
     },
 
     showInviteOverlay() {
-        this.selectComponent('#InviteFriends').show()
+        this.selectComponent('#InviteFriends').show();
+        try{
+            const umaConfig = umaEvent.clickInviteGetTicket;
+            new Tracker(wx).generate(umaConfig.tag);
+        }
+        catch (e) {
+            console.log('友盟数据统计',e);
+        }
     },
 
     async checkEvaluationExist() {

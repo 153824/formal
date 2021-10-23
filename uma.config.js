@@ -364,6 +364,12 @@ const umaEvent = {
             invite: '从分享过来',
             fetch: '从关注二维码过来'
         }
+    },
+
+    // 点击分享领券
+    clickInviteGetTicket: {
+        key: '点击分享领券',
+        tag: 'ClickInviteGetTicket',
     }
 }
 

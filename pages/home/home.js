@@ -34,13 +34,24 @@ Page({
             owned: true,
             activated: false
         },
-        popup: ''
+        popup: '',
+        umaType: '' // invite fetch
     },
 
     onLoad(options) {
         this.setData({
-            popup: options.popup
+            popup: options.popup,
+            umaType: options.uma
         })
+        if(options.uma){
+            try{
+                const umaConfig = umaEvent.comeBackAppFromGZH;
+                new Tracker(wx).generate(umaConfig.tag);
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
+        }
     },
 
     onShow: async function () {

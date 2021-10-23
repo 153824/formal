@@ -34,3 +34,4 @@ EvaluationDetailByBeginner, 访问测评详情页（新人券）
 PopupFreeCard, 弹出免费测评任用卡
 CloseFreeCard, 关闭免费测评任用卡
 GetInReceiveCard, 进入领卡二维码界面
+ComeBackAppFromGZH, 通过公众号的小程序卡片回到小程序

@@ -348,6 +348,12 @@ const umaEvent = {
     getInReceiveCard: {
         key: '进入领卡二维码界面',
         tag: 'GetInReceiveCard'
+    },
+
+    // 通过公众号的小程序卡片回到小程序
+    comeBackAppFromGZH: {
+        key: '通过公众号的小程序卡片回到小程序',
+        tag: 'ComeBackAppFromGZH'
     }
 }
 

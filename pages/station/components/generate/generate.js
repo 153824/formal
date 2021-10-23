@@ -214,6 +214,23 @@ Page({
         const {type} = e.currentTarget.dataset;
         if(type === 'vip'){
             this.openOverlay()
+            const umaConfig = umaEvent.clickCantWatchReport;
+            const currentRoute = getCurrentPages()[getCurrentPages().length - 2].route;
+            if(umaConfig.route.bench.includes(currentRoute)){
+                try{
+                    new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.bench});
+                }
+                catch (e) {
+                    console.log('友盟数据统计',e);
+                }
+            } else {
+                try{
+                    new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.detail});
+                }
+                catch (e) {
+                    console.log('友盟数据统计',e);
+                }
+            }
             return
         }
         this.setData({

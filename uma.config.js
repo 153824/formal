@@ -396,6 +396,20 @@ const umaEvent = {
             detail: ['pages/station/components/detail/detail'],
             bench: ['pages/work-base/components/evaluation-more/evaluation-more','pages/work-base/work-base']
         }
+    },
+
+    // 点击不允许查看报告
+    clickCantWatchReport: {
+        key: '点击不允许查看报告',
+        tag: 'ClickCantWatchReport',
+        origin: {
+            bench: '从工作台',
+            detail: '从详情页'
+        },
+        route: {
+            detail: ['pages/station/components/detail/detail'],
+            bench: ['pages/work-base/components/evaluation-more/evaluation-more','pages/work-base/work-base']
+        }
     }
 }
 

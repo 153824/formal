@@ -458,9 +458,19 @@ Page({
     },
 
     goToUserCenter() {
+        const {umaType} = this.data;
         wx.switchTab({
             url: '/pages/user-center/user-center'
         })
+        if(umaType){
+            try{
+                const umaConfig = umaEvent.clickReceiveSuccessAndSee;
+                new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[umaType]});
+            }
+            catch (e) {
+                console.log('友盟数据统计',e);
+            }
+        }
     },
 
     async postSubscriber() {

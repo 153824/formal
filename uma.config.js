@@ -354,6 +354,16 @@ const umaEvent = {
     comeBackAppFromGZH: {
         key: '通过公众号的小程序卡片回到小程序',
         tag: 'ComeBackAppFromGZH'
+    },
+
+    // 点击领取成功前往查看
+    clickReceiveSuccessAndSee: {
+        key: '点击领取成功前往查看',
+        tag: 'ClickReceiveSuccessAndSee',
+        origin: {
+            invite: '从分享过来',
+            fetch: '从关注二维码过来'
+        }
     }
 }
 

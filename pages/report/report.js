@@ -398,7 +398,7 @@ Page({
         });
         this.setData({id, maskTrigger: true});
         const {flag} = await getIsExist()
-        if(flag){
+        if(!flag){
             this.goToAnalyze({receiveRecordId: id})
         }
     },

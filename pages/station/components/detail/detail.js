@@ -224,7 +224,7 @@ Page({
     authPhoneNumber(e) {
         // enjoy-体验测评 contact-联系客服 invite-分享得券
         const that = this;
-        const {type} = e.currentTarget.dataset;
+        let {type} = e.currentTarget.dataset;
         let {authCodeCounter, isIos} = this.data;
         if (authCodeCounter > 5) {
             return;
@@ -232,6 +232,9 @@ Page({
         if(authCodeCounter < 1){
             const umaConfig = umaEvent.authPhoneCount;
             try{
+                if(type==='invite'){
+                    type = 'card'
+                }
                 new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[type]});
             }
             catch (e) {
@@ -253,7 +256,12 @@ Page({
                     }
                 }
                 else if(type === 'invite') {
-
+                    try{
+                        new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin.card});
+                    }
+                    catch (e) {
+                        console.log('友盟数据统计',e);
+                    }
                 }
                 else if(type === 'contact' && !isIos){
                     try{

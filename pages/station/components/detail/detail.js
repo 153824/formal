@@ -262,6 +262,13 @@ Page({
                     catch (e) {
                         console.log('友盟数据统计',e);
                     }
+                    try{
+                        const umaConfig = umaEvent.clickInviteGetTicket;
+                        new Tracker(wx).generate(umaConfig.tag);
+                    }
+                    catch (e) {
+                        console.log('友盟数据统计',e);
+                    }
                 }
                 else if(type === 'contact' && !isIos){
                     try{
@@ -394,6 +401,13 @@ Page({
         this.selectComponent('#InviteFriends').show();
         try{
             const umaConfig = umaEvent.clickInviteGetTicket;
+            new Tracker(wx).generate(umaConfig.tag);
+        }
+        catch (e) {
+            console.log('友盟数据统计',e);
+        }
+        try{
+            const umaConfig = umaEvent.popupInviteCover;
             new Tracker(wx).generate(umaConfig.tag);
         }
         catch (e) {

@@ -370,6 +370,12 @@ const umaEvent = {
     clickInviteGetTicket: {
         key: '点击分享领券',
         tag: 'ClickInviteGetTicket',
+    },
+
+    // 弹出分享图
+    popupInviteCover: {
+        key: '弹出分享图',
+        tag: 'PopupInviteCover'
     }
 }
 

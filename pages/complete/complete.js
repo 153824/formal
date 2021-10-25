@@ -146,7 +146,7 @@ Page({
             username,
             receiveRecordId
         } = this.data;
-        if((currentCompany || lastKeyword || currentKeyword).length <= 2){
+        if(lastKeyword.length <= 2){
             app.toast('企业名称至少为2个字');
             return
         }

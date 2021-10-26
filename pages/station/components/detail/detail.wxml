@@ -16,10 +16,10 @@
         </view>
         <view style="background-color: #fff;margin-top: 20rpx;">
             <block wx:if="{{!isWxWork}}">
-                <view wx:if="{{!isGetAccessToken}}" style="display: flex;align-items: center;justify-content: center;">
+                <view wx:if="{{!isGetAccessToken}}" class="invite-button__wrapper">
                     <button class="invite-button" bind:getphonenumber="authPhoneNumber" data-type="invite" open-type="getPhoneNumber" style="display: block; width: 674rpx; height: 162rpx;"></button>
                 </view>
-                <view wx:if="{{canIUseInvite && isGetAccessToken}}" style="display: flex;align-items: center;justify-content: center;" bind:tap="showInviteOverlay">
+                <view wx:if="{{canIUseInvite && isGetAccessToken}}" class="invite-button__wrapper" bind:tap="showInviteOverlay">
                     <image src="https://s.luoke101.com/detail%40ticket.png" style="display: block; width: 674rpx; height: 162rpx;"/>
                 </view>
             </block>

@@ -1443,6 +1443,12 @@
 .more-padding{
   padding-bottom: 50rpx;
 }
+.invite-button__wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 45rpx;
+}
 .invite-button{
   background-repeat: no-repeat;
   background-size: cover;

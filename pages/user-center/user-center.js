@@ -159,7 +159,7 @@ Page({
     },
 
     getFree() {
-
+        app.openContactService()
     },
 
     async getSubscriber(token) {

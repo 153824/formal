@@ -21,7 +21,7 @@
         </view>
     </view>
     <block wx:if="{{!!tag}}">
-        <view class="tag {{tag === '热门' ? 'hot' : 'new' }}">
+        <view class="tag {{tag === '热门' ? 'hot' : 'new' }}" style="{{tag === '限免' ? 'background-color: #f66150' : ''}}">
             {{tag}}
         </view>
     </block>

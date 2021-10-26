@@ -250,7 +250,7 @@ Page({
     async loadAssignment() {
         const {flag} = await getAssignment();
         this.setData({
-            canIRefuse: true
+            canIRefuse: flag
         })
     },
     onConfirm(e) {

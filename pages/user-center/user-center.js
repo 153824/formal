@@ -12,7 +12,7 @@ Page({
         userBaseInfo: {},
         isGetAccessToken: app.checkAccessToken(),
         isGetUserInfo: false,
-        canIUseGetUserProfile: !!wx.getUserProfile ? true : false,
+        canIUseGetUserProfile: !!wx.getUserProfile,
         version: wx.getAccountInfoSync().miniProgram.version,
         subscriberInfo: {
             activated: false,

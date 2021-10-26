@@ -1,7 +1,7 @@
 <!--微信小程序端-->
 <view wx:if="{{ !isWxWork && !is3rd }}">
     <view class="user-page-wrapper">
-        <view class="head" style="height:{{subscriberInfo.owned ? 390 : 190}}rpx;">
+        <view class="head {{subscriberInfo.owned && isGetUserInfo ? 'head__is-owned-and-auth' : ''}} {{subscriberInfo.owned && !isGetUserInfo ? 'head__is-owned-and-not-auth' : ''}}">
             <view class="user-personal-info">
                 <block wx:if="{{!isGetUserInfo}}">
                     <block wx:if="{{canIUseGetUserProfile}}">
@@ -52,7 +52,7 @@
                 </view>
             </block>
         </view>
-        <view class="content" style="margin-top:{{subscriberInfo.owned ? 490 : 290}}rpx;">
+        <view class="content {{subscriberInfo.owned && isGetUserInfo ? 'content__is-owend-and-auth' : ''}} {{subscriberInfo.owned && !isGetUserInfo ? 'content__is-owend-and-not-auth' : ''}}">
             <scroll-view class="content-scroll-area" scroll-y>
                 <view class="user-action-item" bindtap="goToReceiveReports">
                     <view class="title">

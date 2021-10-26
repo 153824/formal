@@ -16,10 +16,16 @@ page{
     left: 0;
     right: 0;
     bottom: 0;
+    height: 230rpx;
     padding: 28rpx 0 56rpx 0;
-    height: 190rpx;
     background-color: #fff;
     z-index: 999999999;
+}
+.head__is-owned-and-auth{
+    height: 390rpx;
+}
+.head__is-owned-and-not-auth{
+    height: 430rpx;
 }
 .user-personal-info{
     display: flex;
@@ -31,8 +37,14 @@ page{
     background-color: #fff;
 }
 .content{
-    margin-top: 290rpx;
+    margin-top: 340rpx;
     background-color: #fff;
+}
+.content__is-owend-and-auth{
+    margin-top: 490rpx;
+}
+.content__is-owend-and-not-auth{
+    margin-top: 530rpx;
 }
 .user-action-item{
     position: relative;

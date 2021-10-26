@@ -275,7 +275,7 @@ page{
 }
 .home-card__header image{
   width: 296rpx;
-  height: 104rpx;
+  height: 58rpx;
 }
 .is-card{
   width: 590rpx;

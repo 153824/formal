@@ -165,6 +165,7 @@
         </view>
     </view>
 </view>
+<!--立即领取测评任用卡-->
 <van-overlay show="{{(!isGetAccessToken || !subscriberInfo.owned) && joinInShow && !subscriberInfo.hide}}" z-index="9999999999999" catch:click="closeOverlay">
     <view class="home-card__wrapper">
         <view class="home-card" catch:tap="openOverlay">

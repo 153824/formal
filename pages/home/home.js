@@ -475,7 +475,7 @@ Page({
 
     goToFreeArea() {
         const {umaType} = this.data;
-        wx.switchTab({
+        wx.navigateTo({
             url: '/pages/home/subpages/free/free'
         })
         if(umaType){

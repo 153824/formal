@@ -473,10 +473,10 @@ Page({
         }
     },
 
-    goToUserCenter() {
+    goToFreeArea() {
         const {umaType} = this.data;
         wx.switchTab({
-            url: '/pages/user-center/user-center'
+            url: '/pages/home/subpages/free/free'
         })
         if(umaType){
             try{

@@ -197,7 +197,7 @@
                     <image class="is-card is-letter" src="https://s.luoke101.com/home%40letter.png"/>
                 </view>
             </view>
-            <button class="home-card__footer is-letter-footer" catch:tap="goToUserCenter"></button>
+            <button class="home-card__footer is-letter-footer" catch:tap="goToFreeArea"></button>
         </view>
     </view>
 </van-overlay>

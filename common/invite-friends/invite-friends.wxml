@@ -5,7 +5,7 @@
                 <view>邀请好友关注公众号</view>
                 <view>关注后双方各得5张测评兑换券</view>
             </view>
-            <view class="invite-friend__content">
+            <view class="invite-friend__content" catch:tap="show">
                 <image show-menu-by-longpress="true" src="{{image}}"/>
             </view>
             <view class="invite-friend__footer">

@@ -417,6 +417,12 @@ const umaEvent = {
     clickReceiveFreeCardInHome: {
         key: '首页点击领免费测评周卡',
         tag: 'ClickReceiveFreeCardInHome',
+    },
+
+    // 邀请函长按分享
+    longPressToShare: {
+        key: '邀请函长按分享',
+        tag: 'LongPressToShare'
     }
 }
 

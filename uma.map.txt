@@ -43,3 +43,4 @@ ComeBackAppFromInvite, 通过邀请关注后的小程序卡片回到小程序
 GetInGenerate, 通过邀请关注后的小程序卡片回到小程序
 ClickCantWatchReport, 点击不允许查看报告
 ClickReceiveFreeCardInHome, 首页点击领免费测评周卡
+LongPressToShare, 邀请函长按分享

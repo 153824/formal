@@ -65,7 +65,6 @@ page{
     background-color: #fff !important;
     justify-content: center;
     align-items: center;
-
 }
 .user-info-button::after{
     border: unset !important;

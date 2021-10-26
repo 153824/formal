@@ -186,6 +186,7 @@
         </view>
     </view>
 </van-overlay>
+<!--前往免费专区-->
 <van-overlay show="{{((isGetAccessToken && subscriberInfo.owned && isSubscribed && isJoin) || popup === 'fetch_success') && joinInShow && !subscriberInfo.hide}}" z-index="9999999999999" catch:click="closeOverlay">
     <view class="home-card__wrapper">
         <view class="home-card" catch:tap="openOverlay">

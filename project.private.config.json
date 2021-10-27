@@ -15,7 +15,7 @@
         {
           "name": "首页",
           "pathName": "pages/home/home",
-          "query": "_ttn=6112353a063bed4d8c1294f4&popup=fetch_success",
+          "query": "_ttn=6177cdbfe014255fcb5c2419",
           "scene": 1000
         },
         {
@@ -27,7 +27,7 @@
         {
           "name": "报告详情",
           "pathName": "pages/report/report",
-          "query": "receiveRecordId=614afd815bf3af1748f6d209",
+          "query": "receiveRecordId=6166a0dd09696961431b7d6e",
           "scene": null
         },
         {
@@ -268,7 +268,7 @@
         {
           "name": "完善信息页",
           "pathName": "pages/complete/complete",
-          "query": "",
+          "query": "evaluationId=5f055f20b1ef020006383322&receiveRecordId=61162a5c67ccb77446ae9fbf",
           "scene": null
         },
         {

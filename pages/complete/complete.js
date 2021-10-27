@@ -83,6 +83,9 @@ Page({
         if(!currentKeyword){
             canISearch = false;
         }
+        this.setData({
+            currentKeyword
+        })
         canISearch && this.search(currentKeyword);
     }, 500, {trailing: true, leading: false}),
 
@@ -135,7 +138,6 @@ Page({
     async submit() {
         const {
             currentCompany,
-            currentPosition,
             lastKeyword,
             currentKeyword,
             evaluationId,

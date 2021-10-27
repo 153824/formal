@@ -24,7 +24,9 @@ Page({
     computeScrollTop: 0,
     extraNodes: [],
     synopses:[],
-    isChapter: true
+    isChapter: true,
+    statusbarHeight: app.globalData.statusbarHeight,
+    titleHeight: app.globalData.titleHeight,
   },
 
   /**

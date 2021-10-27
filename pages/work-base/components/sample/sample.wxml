@@ -1,4 +1,4 @@
-<view class="sample">
+<view class="sample" style="margin-top: {{statusbarHeight + titleHeight}}px;">
     <view id='question-scroll-view-0'></view>
   <view class="sample-explain" wx:if="{{introduction}}">
     <text class="sample-explainTitle">说明</text>

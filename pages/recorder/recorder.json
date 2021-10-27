@@ -1,4 +1,6 @@
 {
   "usingComponents": {
-  }
+    "hola-title": "/common/title/title"
+  },
+  "navigationStyle": "custom"
 }

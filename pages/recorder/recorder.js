@@ -29,7 +29,9 @@ Page({
         is3rdAdmin: false,
         authCodeCounter: 0,
         canIUseGetUserProfile: wx.getUserProfile ? true : false,
-        maxDate: `${new Date().getFullYear()}-${new Date().getMonth()+1 > 9 ? new Date().getMonth()+1 > 9 : '0' + (new Date().getMonth()+1)}`
+        maxDate: `${new Date().getFullYear()}-${new Date().getMonth()+1 > 9 ? new Date().getMonth()+1 > 9 : '0' + (new Date().getMonth()+1)}`,
+        statusbarHeight: app.globalData.statusbarHeight,
+        titleHeight: app.globalData.titleHeight,
     },
 
     onLoad: function (options) {

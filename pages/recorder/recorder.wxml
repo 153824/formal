@@ -1,4 +1,5 @@
-<view class="container1 font">
+<hola-title type="navigation"></hola-title>
+<view class="container1 font recorder-content" style="margin-top: {{statusbarHeight + titleHeight}}px;">
     <view class="bigtitle">请填写以下信息</view>
     <text class="smalltitle">请准确填写以确认您的身份，信息仅对测评邀约方可见</text>
     <text class="smalltitle margin-bottom">未经填写人允许，概不向第三方透露</text>
@@ -24,7 +25,7 @@
                 <text>选择学历</text>
                 {{eduArr[education] || ''}}
             </view>
-        </picker> 
+        </picker>
         <block>
             <view wx:if="{{!username||!birthday||(!education&&education!=0)}}" class="graybtn">确认无误，开始作答</view>
             <block wx:else>

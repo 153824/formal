@@ -1,4 +1,3 @@
-<hola-title type="navigation"></hola-title>
 <view class="container1 font recorder-content" style="margin-top: {{statusbarHeight + titleHeight}}px;">
     <view class="bigtitle">请填写以下信息</view>
     <text class="smalltitle">请准确填写以确认您的身份，信息仅对测评邀约方可见</text>

@@ -5,7 +5,9 @@ Page({
     data: {
         redirect: '',
         goldenText: '',
-        isSelf: ''
+        isSelf: '',
+        statusbarHeight: app.globalData.statusbarHeight,
+        titleHeight: app.globalData.titleHeight,
     },
     onLoad: function (options={redirect: {}}) {
         const that = this;

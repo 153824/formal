@@ -1,4 +1,4 @@
-<view class="golden">
+<view class="golden" style="margin-top: {{statusbarHeight + titleHeight}}px;">
     <view class="golden-text-wrapper">
         <view class="golden-title">
             <text class="title">作答承诺书</text>

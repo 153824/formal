@@ -107,6 +107,8 @@ page{
     color: #353EE8FF;
 }
 .evaluation-name{
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 30rpx;
     font-weight: 500;

@@ -276,6 +276,18 @@
           "pathName": "pages/station/components/generate/generate",
           "query": "necessaryInfo=%7B%22evaluationId%22%3A%225d786ea66e9ba10069596a61%22%2C%22norms%22%3A%5B%7B%22normId%22%3A%225f6d5db901f500c06fbe0f50%22%2C%22name%22%3A%22%E9%94%80%E5%94%AE%E5%9F%BA%E7%A1%80%E7%89%B9%E8%B4%A8%E9%80%9A%E7%94%A8%E5%B8%B8%E6%A8%A1%22%2C%22type%22%3A%22GENERAL%22%7D%5D%7D",
           "scene": null
+        },
+        {
+          "name": "作答承诺书",
+          "pathName": "pages/recorder/subpages/golden/golden",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "答题说明",
+          "pathName": "pages/work-base/components/sample/sample",
+          "query": "",
+          "scene": null
         }
       ]
     }

@@ -95,6 +95,9 @@ page{
     flex-wrap: nowrap;
     flex: 1;
     margin-left: 36rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .track-info-wrapper{
     margin-left: 0rpx;

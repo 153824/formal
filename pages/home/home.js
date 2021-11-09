@@ -381,6 +381,10 @@ Page({
                     origin = 'card'
                 }
                 new Tracker(wx).generate(umaConfig.tag, {origin: umaConfig.origin[origin]});
+                {
+                    const umaConfig = umaEvent.getFreeCardRightNow;
+                    new Tracker(wx).generate(umaConfig.tag);
+                }
             }
             catch (e) {
                 console.log('友盟数据统计',e);

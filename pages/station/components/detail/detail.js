@@ -98,7 +98,7 @@ Page({
 
     goToGuide(e) {
         const that = this;
-        const {evaluation, availableTotal, buttonType} = this.data;
+        const {evaluation, availableTotal, buttonType, selectQuizType} = this.data;
         this.loadReleaseSelf()
             .then(res=>{
                 const answeringURL = `/pages/work-base/components/guide/guide?evaluationId=${evaluation.id}&receiveRecordId=${res.receiveRecordId}&type=self&releaseInfo=${JSON.stringify(res)}`;
@@ -118,7 +118,8 @@ Page({
             })
         const umaConfig = umaEvent.clickSelfOffer;
         try{
-            new Tracker(wx).generate(umaConfig.tag, {name: `${evaluation.name}`});
+            const isFree = selectQuizType === 'enjoy' ? '是' : '否';
+            new Tracker(wx).generate(umaConfig.tag, {name: `${evaluation.name}`, isFree});
         }
         catch (e) {
             console.log('友盟数据统计',e);
@@ -127,10 +128,11 @@ Page({
 
     goToDaTi() {
         //发放测评
-        const {evaluation, customNorms, availableTotal} = this.data;
+        const {evaluation, customNorms, availableTotal, selectQuizType} = this.data;
         const umaConfig = umaEvent.clickShareOffer;
         try{
-            new Tracker(wx).generate(umaConfig.tag, {name: `${evaluation.name}`});
+            const isFree = selectQuizType === 'enjoy' ? '是' : '否';
+            new Tracker(wx).generate(umaConfig.tag, {name: `${evaluation.name}`, isFree});
         }
         catch (e) {
             console.log('友盟数据统计',e);
@@ -176,7 +178,8 @@ Page({
     showSelectQuiz(e) {
         const {type} = e.currentTarget.dataset;
         this.setData({
-            showSelectQuiz: true
+            showSelectQuiz: true,
+            selectQuizType: type,
         })
         if(type === 'enjoy'){
             const umaConfig = umaEvent.clickFreeEnjoy;

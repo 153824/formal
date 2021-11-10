@@ -11,7 +11,7 @@
     <view class="bodybox">
         <view class="topic">
             <text class="bodytitle">测评名称</text>
-            <view class="bigtext">{{demonstrateInfo.evaluationNickname}}</view>
+            <view class="bigtext">{{demonstrateInfo.evaluationNickname || demonstrateInfo.evaluationName}}</view>
         </view>
         <view class="topicnum">
             <text class="bodytitle">题量</text>

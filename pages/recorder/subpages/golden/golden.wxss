@@ -1,7 +1,7 @@
 .golden{
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 120rpx);
+    height: calc(100vh - 235rpx);
     padding: 60rpx 40rpx;
     background-color: #F7F8FA;
 }
